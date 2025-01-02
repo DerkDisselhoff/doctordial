@@ -32,7 +32,7 @@ const Hero = () => {
         <div className="relative">
           <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
           <img
-            src="https://images.unsplash.com/photo-1557189750-56d1be9e963a"
+            src="https://images.unsplash.com/photo-1576091160550-2173dba999ef"
             alt="Doctor taking a phone call with AI assistance visualization"
             className="relative rounded-2xl shadow-2xl"
           />
