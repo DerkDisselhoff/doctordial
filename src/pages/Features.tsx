@@ -2,7 +2,7 @@ import { BookDemoForm } from "@/components/BookDemoForm";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Stats from "@/components/Stats";
-import { Brain, Calendar, Speaker, BarChart3, Users, Plug } from "lucide-react";
+import { Brain, Calendar, Mic, BarChart3, Users, Plug } from "lucide-react";
 
 const Features = () => {
   const features = [
@@ -27,7 +27,7 @@ const Features = () => {
       ]
     },
     {
-      icon: Speaker,
+      icon: Mic,
       title: "Voice Customization",
       points: [
         "Natural voice interactions",
