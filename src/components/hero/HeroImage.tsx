@@ -42,10 +42,33 @@ const HeroImage = () => {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      audioRef.current.play().catch((error) => {
+        console.error('Error playing audio:', error);
+        toast({
+          title: "Playback error",
+          description: "There was an error playing the audio file.",
+          variant: "destructive",
+        });
+      });
     }
     setIsPlaying(!isPlaying);
   };
+
+  useEffect(() => {
+    const handleAudioEnded = () => {
+      setIsPlaying(false);
+    };
+
+    if (audioRef.current) {
+      audioRef.current.addEventListener('ended', handleAudioEnded);
+    }
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.removeEventListener('ended', handleAudioEnded);
+      }
+    };
+  }, []);
 
   return (
     <div className="relative animate-fade-down lg:h-[600px]">
@@ -55,15 +78,15 @@ const HeroImage = () => {
           <img
             src={aiAgentImage}
             alt="AI Medical Assistant with holographic interface"
-            className="w-full h-full object-cover" // Changed from object-contain to object-cover
+            className="w-full h-full object-cover"
           />
         ) : (
           <div className="w-full h-full animate-pulse" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent" />
         <AIDemoButton isPlaying={isPlaying} onPlayDemo={handlePlayDemo} />
+        <StatsBadge value="24/7" label="Patient Support" />
       </div>
-      <StatsBadge value="24/7" label="Patient Support" />
       
       <audio
         ref={audioRef}
