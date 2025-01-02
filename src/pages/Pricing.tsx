@@ -55,7 +55,7 @@ const PricingPage = () => {
     {
       name: "Enterprise",
       title: "Keten van praktijken",
-      price: "€7.999",
+      price: "Op aanvraag",
       description: "For healthcare networks",
       features: [
         "40 uren per dag",
@@ -99,7 +99,7 @@ const PricingPage = () => {
                 <CardDescription className="text-gray-400">{plan.description}</CardDescription>
                 <div className="mt-4">
                   <span className="text-4xl font-bold text-white">{plan.price}</span>
-                  <span className="text-gray-400 ml-2">/ month</span>
+                  {plan.name !== "Enterprise" && <span className="text-gray-400 ml-2">/ month</span>}
                 </div>
               </CardHeader>
               
