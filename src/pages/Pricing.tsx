@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -69,6 +70,33 @@ const PricingPage = () => {
     },
   ];
 
+  const faqs = [
+    {
+      question: "How does DoctorDial's AI assistant handle patient calls?",
+      answer: "Our AI assistant uses advanced natural language processing to understand and respond to patient calls 24/7. It follows standard NHG/NVDA protocols to assess urgency, schedule appointments, and handle routine queries, while ensuring human oversight for complex cases."
+    },
+    {
+      question: "Is patient data secure with DoctorDial?",
+      answer: "Yes, we prioritize data security and comply with all healthcare privacy regulations. Our system uses end-to-end encryption and follows strict data protection protocols to ensure patient information remains confidential and secure."
+    },
+    {
+      question: "Can DoctorDial integrate with our existing EHR system?",
+      answer: "Yes, DoctorDial is designed to integrate seamlessly with major Electronic Health Record (EHR) systems. Our team will work with you during onboarding to ensure smooth integration with your existing infrastructure."
+    },
+    {
+      question: "What kind of support do you provide?",
+      answer: "We provide 24/7 technical support, regular system updates, and dedicated account management. Our team is always available to help with any questions or concerns, and we offer comprehensive training during implementation."
+    },
+    {
+      question: "How long does it take to implement DoctorDial?",
+      answer: "Typically, implementation takes 2-4 weeks, including system integration, staff training, and customization to your practice's specific needs. We ensure a smooth transition with minimal disruption to your practice."
+    },
+    {
+      question: "What happens if a patient needs immediate medical attention?",
+      answer: "Our AI system is trained to quickly identify urgent cases using NHG triage protocols. When urgent care is needed, the system immediately escalates the call to appropriate medical staff and can contact emergency services if necessary."
+    }
+  ];
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -122,6 +150,29 @@ const PricingPage = () => {
           <p className="text-gray-400">
             All plans include 24/7 support, automatic updates, and our satisfaction guarantee.
           </p>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="mt-24">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-mint mb-4">Frequently Asked Questions</h2>
+            <p className="text-lg text-gray-400">Everything you need to know about DoctorDial</p>
+          </div>
+          
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="border-mint/20">
+                  <AccordionTrigger className="text-mint hover:text-mint-light">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-300">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </div>
 
