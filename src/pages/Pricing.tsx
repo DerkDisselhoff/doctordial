@@ -13,7 +13,6 @@ const PricingPage = () => {
       price: "€999",
       description: "Perfect for small practices",
       features: [
-        "4 uren per dag",
         "5000 belminuten per maand",
         "Standaard gedragsprotocol doktorsassistent NHG / NVDA",
         "Dashboard basic insights",
@@ -26,7 +25,6 @@ const PricingPage = () => {
       description: "Ideal for growing practices",
       popular: true,
       features: [
-        "7 uren per dag",
         "10000 belminuten per maand",
         "Standaard gedragsprotocol doktorsassistent NHG / NVDA",
         "Dashboard basic insights",
@@ -41,7 +39,6 @@ const PricingPage = () => {
       price: "€2.499",
       description: "For established practices",
       features: [
-        "12 uren per dag",
         "15000 belminuten per maand",
         "Standaard gedragsprotocol doktorsassistent NHG / NVDA",
         "Dashboard basic insights",
@@ -58,7 +55,6 @@ const PricingPage = () => {
       price: "Op aanvraag",
       description: "For healthcare networks",
       features: [
-        "40 uren per dag",
         "50000 belminuten per maand",
         "Standaard gedragsprotocol doktorsassistent NHG / NVDA",
         "Dashboard basic insights",
