@@ -14,7 +14,7 @@ const HeroImage = () => {
     const processImage = async () => {
       try {
         // Fetch the image
-        const response = await fetch('https://images.unsplash.com/photo-1651008376811-b90baee60c1f');
+        const response = await fetch('https://images.unsplash.com/photo-1651008376811-b90baee60c1f?q=80&w=1000&auto=format&fit=crop');
         const imageBlob = await response.blob();
         
         // Load the image
