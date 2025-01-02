@@ -8,7 +8,7 @@ const Features = () => {
       <div className="container mx-auto relative">
         <div className="max-w-3xl mx-auto text-center mb-16 animate-fade-up">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-            What We Offer
+            How Our AI Agent Optimizes Your Incoming Patient Calls
           </h2>
           <p className="text-white/80">Comprehensive solutions for modern GP practices</p>
         </div>
