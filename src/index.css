@@ -29,14 +29,30 @@
 
   body {
     @apply bg-forest text-white antialiased;
-    background-image: radial-gradient(circle at 50% 0%, rgba(100, 255, 218, 0.05), transparent 70%);
-    background-size: 100% 100%;
-    background-position: center;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(100, 255, 218, 0.05), transparent 70%),
+      radial-gradient(circle at 0% 50%, rgba(100, 255, 218, 0.025), transparent 50%),
+      radial-gradient(circle at 100% 50%, rgba(100, 255, 218, 0.025), transparent 50%);
+    background-size: 100% 100%, 50% 100%, 50% 100%;
+    background-position: center top, left center, right center;
     background-repeat: no-repeat;
   }
 
   ::selection {
     @apply bg-mint text-forest;
+  }
+
+  /* Improved scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-forest;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-mint/20 rounded-full hover:bg-mint/30 transition-colors;
   }
 }
 
@@ -44,4 +60,14 @@
   background: rgba(10, 31, 47, 0.8);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Improved focus styles */
+:focus-visible {
+  @apply outline-none ring-2 ring-mint ring-offset-2 ring-offset-forest;
 }

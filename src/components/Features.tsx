@@ -1,12 +1,13 @@
 import React from "react";
-import { Phone, Filter, TrendingUp, Calendar, BarChart, Scale, Clock } from "lucide-react";
+import { Phone, Filter, TrendingUp, Calendar, BarChart, Scale } from "lucide-react";
 
 const Features = () => {
   return (
-    <section className="py-20 px-4">
-      <div className="container mx-auto">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 text-white">
+    <section className="py-20 px-4 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-mint/5 to-transparent opacity-50" />
+      <div className="container mx-auto relative">
+        <div className="max-w-3xl mx-auto text-center mb-16 animate-fade-up">
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
             What We Offer
           </h2>
           <p className="text-white/80">Comprehensive solutions for modern GP practices</p>
@@ -46,13 +47,16 @@ const Features = () => {
           ].map((feature, index) => (
             <div 
               key={index} 
-              className="bg-forest-light p-8 rounded-xl border border-mint/10"
+              className="group bg-forest-light p-8 rounded-xl border border-mint/10 hover:border-mint/30 transition-all duration-300 hover:shadow-lg hover:shadow-mint/5 animate-fade-up"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="w-12 h-12 bg-mint rounded-full flex items-center justify-center mb-6">
-                {React.createElement(feature.icon, { className: "w-6 h-6 text-forest" })}
+              <div className="w-12 h-12 bg-mint/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-mint/20 transition-colors">
+                {React.createElement(feature.icon, { 
+                  className: "w-6 h-6 text-mint group-hover:scale-110 transition-transform" 
+                })}
               </div>
-              <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-              <p className="text-white/80">{feature.description}</p>
+              <h3 className="text-xl font-bold mb-3 text-white group-hover:text-mint transition-colors">{feature.title}</h3>
+              <p className="text-white/80 group-hover:text-white/90 transition-colors">{feature.description}</p>
             </div>
           ))}
         </div>

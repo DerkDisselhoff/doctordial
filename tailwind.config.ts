@@ -20,18 +20,39 @@ export default {
     extend: {
       colors: {
         forest: {
-          DEFAULT: "#0A1F2F", // Main background color
-          light: "#132B41", // Slightly lighter variant for cards/sections
+          DEFAULT: "#0A1F2F",
+          light: "#132B41",
         },
         mint: {
-          DEFAULT: "#64FFDA", // Primary accent color
+          DEFAULT: "#64FFDA",
+          light: "#A7FFE4",
         },
         divine: {
-          DEFAULT: "#FFD700", // Secondary accent color
+          DEFAULT: "#FFD700",
+          light: "#FFE55C",
         }
       },
       fontFamily: {
         sans: ["Inter var", "system-ui", "sans-serif"],
+      },
+      animation: {
+        "fade-up": "fadeUp 0.5s ease-out forwards",
+        "fade-down": "fadeDown 0.5s ease-out forwards",
+        "fade-in": "fadeIn 0.5s ease-out forwards",
+      },
+      keyframes: {
+        fadeUp: {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        fadeDown: {
+          "0%": { opacity: "0", transform: "translateY(-20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
       },
     },
   },
