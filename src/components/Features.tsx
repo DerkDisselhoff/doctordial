@@ -3,12 +3,12 @@ import { Check } from "lucide-react";
 
 const Features = () => {
   const features = [
-    "Smart Urgency Detection",
-    "24/7 Patient Support",
-    "Revenue Optimization",
-    "Patient Query Resolution",
-    "Appointment Optimization",
-    "Data Insights & Control"
+    "Slimme Urgentiedetectie",
+    "24/7 Patiëntondersteuning",
+    "Omzetoptimalisatie",
+    "Patiëntvraag Afhandeling",
+    "Afspraakoptimalisatie",
+    "Data Inzichten & Controle"
   ];
 
   return (
@@ -16,10 +16,10 @@ const Features = () => {
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-white mb-4">
-            How Our AI Agent Optimizes Your Incoming Patient Calls
+            Hoe Onze AI Agent Uw Binnenkomende Patiëntgesprekken Optimaliseert
           </h2>
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            Experience the future of patient communication with our comprehensive AI solution
+            Ervaar de toekomst van patiëntcommunicatie met onze uitgebreide AI-oplossing
           </p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
@@ -35,7 +35,7 @@ const Features = () => {
                 <h3 className="text-xl font-semibold text-white">{feature}</h3>
               </div>
               <p className="text-white/70">
-                Enhance your practice efficiency with our advanced AI capabilities.
+                Verbeter uw praktijkefficiëntie met onze geavanceerde AI-mogelijkheden.
               </p>
             </div>
           ))}

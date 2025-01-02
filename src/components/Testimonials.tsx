@@ -5,27 +5,27 @@ const Testimonials = () => {
     <section className="py-20 px-4">
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">What Our Clients Say</h2>
-          <p className="text-white/80">Trusted by leading GP practices nationwide</p>
+          <h2 className="text-4xl font-bold mb-4">Wat Onze Klanten Zeggen</h2>
+          <p className="text-white/80">Vertrouwd door toonaangevende huisartsenpraktijken in heel Nederland</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
             {
-              quote: "DoctorDial transformed our practice. We can now manage patient calls efficiently without overwhelming our staff.",
+              quote: "DoctorDial heeft onze praktijk getransformeerd. We kunnen nu patiëntgesprekken efficiënt beheren zonder ons personeel te overbelasten.",
               author: "Dr. Sarah Chen",
-              role: "GP Practice Lead",
+              role: "Praktijkleider",
               image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330"
             },
             {
-              quote: "The AI-powered call management system is incredibly accurate. It saved us countless hours of manual work.",
+              quote: "Het AI-aangedreven gespreksbeheersysteem is ongelooflijk nauwkeurig. Het heeft ons talloze uren handwerk bespaard.",
               author: "Dr. Michael Rodriguez",
-              role: "Senior GP Partner",
+              role: "Senior Huisarts Partner",
               image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
             },
             {
-              quote: "Outstanding patient satisfaction and excellent support throughout implementation.",
+              quote: "Uitstekende patiënttevredenheid en excellente ondersteuning tijdens de implementatie.",
               author: "Dr. Emily Watson",
-              role: "Practice Manager",
+              role: "Praktijkmanager",
               image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80"
             }
           ].map((testimonial, index) => (

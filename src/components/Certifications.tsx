@@ -8,9 +8,9 @@ const Certifications = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-mint/10 px-4 py-2 rounded-full border border-mint/20 mb-8">
             <Shield className="w-4 h-4 text-mint" />
-            <span className="text-mint text-sm font-medium">Certified & Compliant</span>
+            <span className="text-mint text-sm font-medium">Gecertificeerd & Conform</span>
           </div>
-          <h3 className="text-3xl font-bold mb-8">Trusted by Dutch Healthcare Institutions</h3>
+          <h3 className="text-3xl font-bold mb-8">Vertrouwd door Nederlandse Zorginstellingen</h3>
           
           <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
             <div className="p-6 rounded-xl bg-forest-light border border-mint/10 space-y-4 hover:border-mint/20 transition-colors">
@@ -28,7 +28,7 @@ const Certifications = () => {
                   NHG-Triage Certified
                 </p>
                 <p className="text-sm text-white/60">
-                  Our AI model is trained on official NHG-Triage protocols
+                  Ons AI-model is getraind op officiële NHG-Triage protocollen
                 </p>
               </div>
             </div>
@@ -48,14 +48,14 @@ const Certifications = () => {
                   NVDA Standards Compliant
                 </p>
                 <p className="text-sm text-white/60">
-                  Fully compliant with NVDA behavioral standards
+                  Volledig conform NVDA gedragsstandaarden
                 </p>
               </div>
             </div>
           </div>
           
           <p className="text-white/60 max-w-2xl mx-auto">
-            Our AI model is meticulously trained on NHG-Triage protocols and adheres to NVDA behavioral standards, ensuring the highest quality of patient care in accordance with Dutch healthcare regulations.
+            Ons AI-model is nauwkeurig getraind op NHG-Triage protocollen en voldoet aan NVDA gedragsstandaarden, wat de hoogste kwaliteit van patiëntenzorg garandeert in overeenstemming met Nederlandse zorgregelgeving.
           </p>
         </div>
       </div>

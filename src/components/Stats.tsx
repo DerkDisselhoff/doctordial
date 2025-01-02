@@ -5,15 +5,15 @@ const Stats = () => {
         <div className="grid md:grid-cols-3 gap-8 text-center">
           <div className="space-y-2">
             <p className="text-4xl font-bold text-mint">50+</p>
-            <p className="text-white/80">Calls Managed Simultaneously</p>
+            <p className="text-white/80">Gelijktijdig Beheerde Gesprekken</p>
           </div>
           <div className="space-y-2">
             <p className="text-4xl font-bold text-mint">24/7</p>
-            <p className="text-white/80">Availability</p>
+            <p className="text-white/80">Beschikbaarheid</p>
           </div>
           <div className="space-y-2">
             <p className="text-4xl font-bold text-mint">40%</p>
-            <p className="text-white/80">Staff Time Saved</p>
+            <p className="text-white/80">Personeelstijd Bespaard</p>
           </div>
         </div>
       </div>

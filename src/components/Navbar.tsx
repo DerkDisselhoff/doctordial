@@ -10,13 +10,13 @@ const Navbar = () => {
         </Link>
         <div className="hidden md:flex items-center space-x-8">
           <Link to="/features" className="text-white/90 hover:text-white transition-colors">
-            Features
+            Functies
           </Link>
           <Link to="/pricing" className="text-white/90 hover:text-white transition-colors">
-            Pricing
+            Prijzen
           </Link>
           <Link to="/about" className="text-white/90 hover:text-white transition-colors">
-            About Us
+            Over Ons
           </Link>
           <Link to="/contact" className="text-white/90 hover:text-white transition-colors">
             Contact
