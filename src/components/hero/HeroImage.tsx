@@ -13,7 +13,6 @@ const HeroImage = () => {
   useEffect(() => {
     const loadAIAgentImage = async () => {
       try {
-        // First try to generate a new image
         const imageUrl = await generateAIAgentImage();
         setAiAgentImage(imageUrl);
       } catch (error) {
@@ -23,7 +22,6 @@ const HeroImage = () => {
           description: "Failed to load the AI agent image. Using fallback image.",
           variant: "destructive",
         });
-        // Use the fallback image
         setAiAgentImage("/lovable-uploads/4ad749ed-c18c-4674-bab0-68b98e32bca5.png");
       }
     };
@@ -57,7 +55,7 @@ const HeroImage = () => {
           <img
             src={aiAgentImage}
             alt="AI Medical Assistant with holographic interface"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover" // Changed from object-contain to object-cover
           />
         ) : (
           <div className="w-full h-full animate-pulse" />
