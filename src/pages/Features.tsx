@@ -11,7 +11,7 @@ const Features = () => {
       icon: Brain,
       title: "Smart Urgency Detection",
       description: "AI-powered triage system that accurately assesses patient needs",
-      image: "/lovable-uploads/910ef275-a96d-49d2-81b8-6e27f7fd70cd.png",
+      image: "/lovable-uploads/urgency-detection.png",
       points: [
         "NHG-certified triage protocols",
         "Real-time urgency assessment",
@@ -23,7 +23,7 @@ const Features = () => {
       icon: Calendar,
       title: "Intelligent Scheduling",
       description: "Optimize your practice's appointment management",
-      image: "/lovable-uploads/62d4662e-ae36-4ab0-89a6-4d95c0a5f245.png",
+      image: "/lovable-uploads/intelligent-scheduling.png",
       points: [
         "Smart appointment allocation",
         "Reduces no-shows by 40%",
@@ -35,7 +35,7 @@ const Features = () => {
       icon: Mic,
       title: "Voice Customization",
       description: "Natural and professional communication with patients",
-      image: "/lovable-uploads/4ad749ed-c18c-4674-bab0-68b98e32bca5.png",
+      image: "/lovable-uploads/voice-customization.png",
       points: [
         "Natural voice interactions",
         "Multiple language support",
@@ -47,7 +47,7 @@ const Features = () => {
       icon: BarChart3,
       title: "Insights Dashboard",
       description: "Comprehensive analytics for better decision making",
-      image: "/lovable-uploads/91d55dd9-47c6-4ecd-b922-6d2271e3dad5.png",
+      image: "/lovable-uploads/insights-dashboard.png",
       points: [
         "Real-time call analytics",
         "Patient flow insights",
@@ -59,7 +59,7 @@ const Features = () => {
       icon: Users,
       title: "High Volume Handling",
       description: "Never miss a patient call again",
-      image: "/lovable-uploads/e3414d74-91fb-4ad7-b8a5-9dd5d82520b9.png",
+      image: "/lovable-uploads/high-volume.png",
       points: [
         "50+ simultaneous calls",
         "Zero wait times",
@@ -71,7 +71,7 @@ const Features = () => {
       icon: Plug,
       title: "System Integrations",
       description: "Seamlessly connects with your existing tools",
-      image: "/lovable-uploads/910ef275-a96d-49d2-81b8-6e27f7fd70cd.png",
+      image: "/lovable-uploads/system-integrations.png",
       points: [
         "EHR system integration",
         "Calendar sync",
