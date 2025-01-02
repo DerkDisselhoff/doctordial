@@ -43,12 +43,6 @@ const Mission = () => {
             </p>
           </div>
         </div>
-
-        <div className="mt-12 max-w-4xl mx-auto text-center animate-fade-up" style={{ animationDelay: "0.3s" }}>
-          <p className="text-lg text-white/80 leading-relaxed">
-            We recognize that GPs cannot handle the growing volume of calls alone, which is why DoctorDial serves as an essential tool to help them maintain their focus on providing quality care while we manage the communication flow efficiently.
-          </p>
-        </div>
       </div>
     </section>
   );
