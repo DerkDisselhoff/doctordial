@@ -41,9 +41,9 @@ const DashboardPreview = () => {
               <div className="relative group">
                 <div className="absolute -inset-0.5 bg-mint/20 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity" />
                 <img
-                  src="/assets/nhg-logo.svg"
+                  src="/lovable-uploads/e3414d74-91fb-4ad7-b8a5-9dd5d82520b9.png"
                   alt="NHG Logo"
-                  className="h-24 mx-auto relative filter brightness-0 invert opacity-90"
+                  className="h-24 mx-auto relative"
                 />
               </div>
               <div className="space-y-2">
