@@ -1,7 +1,31 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Phone, Play } from "lucide-react";
+import { ArrowRight, Phone, Play, Pause } from "lucide-react";
+import { useState, useRef } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
 const Hero = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { toast } = useToast();
+
+  const handlePlayDemo = () => {
+    if (!audioRef.current) {
+      toast({
+        title: "Audio not available",
+        description: "The demo audio file could not be loaded.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <section className="pt-32 pb-20 px-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-mint/5 to-transparent" />
@@ -39,16 +63,37 @@ const Hero = () => {
           <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-mint/10">
             <img
-              src="https://images.unsplash.com/photo-1576091160550-2173dba999ef"
-              alt="Doctor taking a phone call with AI assistance visualization"
-              className="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
+              src="/assets/ai-agent.webp"
+              alt="AI virtual assistant helping with patient calls"
+              className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent" />
+            
+            {/* Interactive AI Demo Button */}
+            <Button
+              onClick={handlePlayDemo}
+              className="absolute bottom-6 right-6 bg-mint hover:bg-mint/90 text-forest font-medium group transition-all duration-300 ease-out hover:shadow-lg hover:shadow-mint/20 rounded-full w-14 h-14 p-0 flex items-center justify-center"
+            >
+              {isPlaying ? (
+                <Pause className="h-6 w-6 transition-transform group-hover:scale-110" />
+              ) : (
+                <Play className="h-6 w-6 transition-transform group-hover:scale-110" />
+              )}
+            </Button>
           </div>
           <div className="absolute -bottom-10 -left-10 bg-forest-light p-6 rounded-xl shadow-xl border border-mint/10 animate-fade-up" style={{ animationDelay: "0.3s" }}>
             <p className="text-mint text-4xl font-bold">24/7</p>
             <p className="text-white/80">Patient Support</p>
           </div>
+          
+          {/* Hidden audio element */}
+          <audio
+            ref={audioRef}
+            onEnded={() => setIsPlaying(false)}
+            className="hidden"
+          >
+            <source src="/assets/demo-conversation.mp3" type="audio/mpeg" />
+          </audio>
         </div>
       </div>
     </section>
