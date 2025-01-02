@@ -63,23 +63,30 @@ const Hero = () => {
           <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-mint/10 h-full">
             <img
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80"
-              alt="Female medical assistant speaking with a patient on the phone"
+              src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80"
+              alt="Female medical assistant speaking with a patient on the phone in a modern medical office"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent" />
             
             {/* Interactive AI Demo Button */}
-            <Button
-              onClick={handlePlayDemo}
-              className="absolute bottom-6 right-6 bg-mint hover:bg-mint/90 text-forest font-medium group transition-all duration-300 ease-out hover:shadow-lg hover:shadow-mint/20 rounded-full w-14 h-14 p-0 flex items-center justify-center"
-            >
-              {isPlaying ? (
-                <Pause className="h-6 w-6 transition-transform group-hover:scale-110" />
-              ) : (
-                <Play className="h-6 w-6 transition-transform group-hover:scale-110" />
-              )}
-            </Button>
+            <div className="absolute top-6 left-6 flex items-center gap-4">
+              <Button
+                onClick={handlePlayDemo}
+                className={`bg-mint hover:bg-mint/90 text-forest font-medium group transition-all duration-300 ease-out hover:shadow-lg hover:shadow-mint/20 rounded-full w-20 h-20 p-0 flex items-center justify-center ${
+                  isPlaying ? 'animate-pulse' : ''
+                }`}
+              >
+                {isPlaying ? (
+                  <Pause className="h-8 w-8 transition-transform group-hover:scale-110" />
+                ) : (
+                  <Play className="h-8 w-8 transition-transform group-hover:scale-110" />
+                )}
+              </Button>
+              <span className="text-white text-lg font-medium bg-forest/60 px-4 py-2 rounded-full">
+                Listen to AI Demo
+              </span>
+            </div>
           </div>
           <div className="absolute -bottom-10 -left-10 bg-forest-light p-6 rounded-xl shadow-xl border border-mint/10 animate-fade-up" style={{ animationDelay: "0.3s" }}>
             <p className="text-mint text-4xl font-bold">24/7</p>
