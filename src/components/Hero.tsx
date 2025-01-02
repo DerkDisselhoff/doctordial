@@ -12,7 +12,7 @@ const Hero = () => {
             <span className="text-mint text-sm font-medium">AI-Powered Call Management</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold leading-tight bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-            Transform
+            Manage
             <br />
             patient calls
             <br />
