@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { BarChart3, LineChart } from "lucide-react";
+import { BarChart3, LineChart, Shield, CheckCircle } from "lucide-react";
 
 const DashboardPreview = () => {
   return (
@@ -28,29 +28,60 @@ const DashboardPreview = () => {
       </div>
 
       {/* Certification Section */}
-      <div className="mt-32 text-center">
-        <h3 className="text-2xl font-bold mb-8">Certified & Compliant</h3>
-        <div className="flex flex-wrap justify-center items-center gap-12">
-          <div className="space-y-4">
-            <img
-              src="/placeholder.svg"
-              alt="NHG Logo"
-              className="h-24 mx-auto filter brightness-0 invert opacity-80"
-            />
-            <p className="text-mint font-medium">NHG-Triage Certified</p>
+      <div className="mt-32">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 bg-mint/10 px-4 py-2 rounded-full border border-mint/20 mb-8">
+            <Shield className="w-4 h-4 text-mint" />
+            <span className="text-mint text-sm font-medium">Certified & Compliant</span>
           </div>
-          <div className="space-y-4">
-            <img
-              src="/placeholder.svg"
-              alt="NVDA Logo"
-              className="h-24 mx-auto filter brightness-0 invert opacity-80"
-            />
-            <p className="text-mint font-medium">NVDA Standards Compliant</p>
+          <h3 className="text-3xl font-bold mb-8">Trusted by Dutch Healthcare Institutions</h3>
+          
+          <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
+            <div className="p-6 rounded-xl bg-forest-light border border-mint/10 space-y-4 hover:border-mint/20 transition-colors">
+              <div className="relative group">
+                <div className="absolute -inset-0.5 bg-mint/20 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity" />
+                <img
+                  src="/assets/nhg-logo.svg"
+                  alt="NHG Logo"
+                  className="h-24 mx-auto relative filter brightness-0 invert opacity-90"
+                />
+              </div>
+              <div className="space-y-2">
+                <p className="text-mint font-medium flex items-center justify-center gap-2">
+                  <CheckCircle className="w-4 h-4" />
+                  NHG-Triage Certified
+                </p>
+                <p className="text-sm text-white/60">
+                  Our AI model is trained on official NHG-Triage protocols
+                </p>
+              </div>
+            </div>
+            
+            <div className="p-6 rounded-xl bg-forest-light border border-mint/10 space-y-4 hover:border-mint/20 transition-colors">
+              <div className="relative group">
+                <div className="absolute -inset-0.5 bg-mint/20 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity" />
+                <img
+                  src="/assets/nvda-logo.svg"
+                  alt="NVDA Logo"
+                  className="h-24 mx-auto relative filter brightness-0 invert opacity-90"
+                />
+              </div>
+              <div className="space-y-2">
+                <p className="text-mint font-medium flex items-center justify-center gap-2">
+                  <CheckCircle className="w-4 h-4" />
+                  NVDA Standards Compliant
+                </p>
+                <p className="text-sm text-white/60">
+                  Fully compliant with NVDA behavioral standards
+                </p>
+              </div>
+            </div>
           </div>
+          
+          <p className="text-white/60 max-w-2xl mx-auto">
+            Our AI model is meticulously trained on NHG-Triage protocols and adheres to NVDA behavioral standards, ensuring the highest quality of patient care in accordance with Dutch healthcare regulations.
+          </p>
         </div>
-        <p className="mt-8 text-white/60 max-w-2xl mx-auto">
-          Our AI model is meticulously trained on NHG-Triage protocols and adheres to NVDA behavioral standards, ensuring the highest quality of patient care in accordance with Dutch healthcare regulations.
-        </p>
       </div>
     </section>
   );
