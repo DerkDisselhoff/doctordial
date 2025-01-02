@@ -2,48 +2,33 @@ import { useRef, useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import AIDemoButton from "./AIDemoButton";
 import StatsBadge from "./StatsBadge";
-import { removeBackground, loadImage } from "@/utils/imageProcessing";
+import { generateAIAgentImage } from "@/services/runwareService";
 
 const HeroImage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [processedImage, setProcessedImage] = useState<string | null>(null);
+  const [aiAgentImage, setAiAgentImage] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
-    const processImage = async () => {
+    const loadAIAgentImage = async () => {
       try {
-        // Fetch the image
-        const response = await fetch('https://images.unsplash.com/photos/a-female-muslim-doctor-with-hijab-over-white-background-studio-BK25mS15dhk');
-        const imageBlob = await response.blob();
-        
-        // Load the image
-        const img = await loadImage(imageBlob);
-        
-        // Remove background
-        const processedBlob = await removeBackground(img);
-        
-        // Create URL for the processed image
-        const processedUrl = URL.createObjectURL(processedBlob);
-        setProcessedImage(processedUrl);
+        // First try to generate a new image
+        const imageUrl = await generateAIAgentImage();
+        setAiAgentImage(imageUrl);
       } catch (error) {
-        console.error('Error processing image:', error);
+        console.error('Error loading AI agent image:', error);
         toast({
-          title: "Error processing image",
-          description: "Failed to process the hero image. Using fallback image.",
+          title: "Error loading image",
+          description: "Failed to load the AI agent image. Using fallback image.",
           variant: "destructive",
         });
+        // Use the fallback image
+        setAiAgentImage("/lovable-uploads/4ad749ed-c18c-4674-bab0-68b98e32bca5.png");
       }
     };
 
-    processImage();
-
-    return () => {
-      // Cleanup URLs when component unmounts
-      if (processedImage) {
-        URL.revokeObjectURL(processedImage);
-      }
-    };
+    loadAIAgentImage();
   }, [toast]);
 
   const handlePlayDemo = () => {
@@ -67,22 +52,21 @@ const HeroImage = () => {
   return (
     <div className="relative animate-fade-down lg:h-[600px]">
       <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
-      <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-mint/10 h-full">
-        {processedImage ? (
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-mint/10 h-full bg-forest-light">
+        {aiAgentImage ? (
           <img
-            src={processedImage}
-            alt="Female medical professional with hijab speaking with a patient on the phone"
+            src={aiAgentImage}
+            alt="AI Medical Assistant with holographic interface"
             className="w-full h-full object-contain"
           />
         ) : (
-          <div className="w-full h-full bg-forest-light animate-pulse" />
+          <div className="w-full h-full animate-pulse" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent" />
         <AIDemoButton isPlaying={isPlaying} onPlayDemo={handlePlayDemo} />
       </div>
       <StatsBadge value="24/7" label="Patient Support" />
       
-      {/* Hidden audio element */}
       <audio
         ref={audioRef}
         onEnded={() => setIsPlaying(false)}
