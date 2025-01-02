@@ -2,19 +2,11 @@ const Stats = () => {
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-8 text-center">
-          <div className="space-y-2">
-            <p className="text-4xl font-bold text-mint">50+</p>
-            <p className="text-white/80">Calls Managed Simultaneously</p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-4xl font-bold text-mint">24/7</p>
-            <p className="text-white/80">Availability</p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-4xl font-bold text-mint">40%</p>
-            <p className="text-white/80">Staff Time Saved</p>
-          </div>
+        <div className="text-center">
+          <h2 className="text-4xl font-bold text-mint mb-4">Transforming GP Practice Communication</h2>
+          <p className="text-white/80 max-w-2xl mx-auto">
+            Our AI solution handles patient calls 24/7, ensuring no call goes unanswered while maintaining the highest standards of Dutch healthcare.
+          </p>
         </div>
       </div>
     </section>

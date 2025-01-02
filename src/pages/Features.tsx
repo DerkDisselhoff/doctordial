@@ -9,6 +9,7 @@ const Features = () => {
     {
       icon: Brain,
       title: "Smart Urgency Detection",
+      description: "AI-powered triage system that accurately assesses patient needs",
       points: [
         "NHG-certified triage protocols",
         "Real-time urgency assessment",
@@ -19,6 +20,7 @@ const Features = () => {
     {
       icon: Calendar,
       title: "Intelligent Scheduling",
+      description: "Optimize your practice's appointment management",
       points: [
         "Smart appointment allocation",
         "Reduces no-shows by 40%",
@@ -29,6 +31,7 @@ const Features = () => {
     {
       icon: Mic,
       title: "Voice Customization",
+      description: "Natural and professional communication with patients",
       points: [
         "Natural voice interactions",
         "Multiple language support",
@@ -39,6 +42,7 @@ const Features = () => {
     {
       icon: BarChart3,
       title: "Insights Dashboard",
+      description: "Comprehensive analytics for better decision making",
       points: [
         "Real-time call analytics",
         "Patient flow insights",
@@ -49,6 +53,7 @@ const Features = () => {
     {
       icon: Users,
       title: "High Volume Handling",
+      description: "Never miss a patient call again",
       points: [
         "50+ simultaneous calls",
         "Zero wait times",
@@ -59,6 +64,7 @@ const Features = () => {
     {
       icon: Plug,
       title: "System Integrations",
+      description: "Seamlessly connects with your existing tools",
       points: [
         "EHR system integration",
         "Calendar sync",
@@ -79,13 +85,12 @@ const Features = () => {
             AI-Powered Features That Transform Your Practice
           </h1>
           <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
-            Handle patient calls intelligently with our comprehensive AI solution
+            Experience the future of patient communication with our comprehensive solution
           </p>
           <BookDemoForm />
         </div>
       </section>
 
-      {/* Stats Section */}
       <Stats />
 
       {/* Features Grid */}
@@ -104,6 +109,9 @@ const Features = () => {
                 <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-mint transition-colors">
                   {feature.title}
                 </h3>
+                <p className="text-white/70 mb-6 group-hover:text-white/90 transition-colors">
+                  {feature.description}
+                </p>
                 <ul className="space-y-3">
                   {feature.points.map((point, pointIndex) => (
                     <li
