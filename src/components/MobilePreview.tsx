@@ -38,12 +38,12 @@ const DashboardPreview = () => {
           
           <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
             <div className="p-6 rounded-xl bg-forest-light border border-mint/10 space-y-4 hover:border-mint/20 transition-colors">
-              <div className="relative group">
+              <div className="relative group h-32 flex items-center justify-center">
                 <div className="absolute -inset-0.5 bg-mint/20 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity" />
                 <img
                   src="/lovable-uploads/e3414d74-91fb-4ad7-b8a5-9dd5d82520b9.png"
                   alt="NHG Logo"
-                  className="h-24 mx-auto relative"
+                  className="h-24 w-auto object-contain relative"
                 />
               </div>
               <div className="space-y-2">
@@ -58,12 +58,12 @@ const DashboardPreview = () => {
             </div>
             
             <div className="p-6 rounded-xl bg-forest-light border border-mint/10 space-y-4 hover:border-mint/20 transition-colors">
-              <div className="relative group">
+              <div className="relative group h-32 flex items-center justify-center">
                 <div className="absolute -inset-0.5 bg-mint/20 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity" />
                 <img
                   src="/lovable-uploads/91d55dd9-47c6-4ecd-b922-6d2271e3dad5.png"
                   alt="NVDA Logo"
-                  className="h-24 mx-auto relative"
+                  className="h-24 w-auto object-contain relative"
                 />
               </div>
               <div className="space-y-2">
