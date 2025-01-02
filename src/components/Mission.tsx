@@ -8,23 +8,23 @@ const Mission = () => {
         <div className="max-w-4xl mx-auto text-center space-y-12">
           <div className="space-y-6">
             <h2 className="text-4xl md:text-5xl font-bold text-white bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-              Waarom DoctorDial Bestaat
+              Why DoctorDial Exists
             </h2>
             <div className="w-20 h-1 bg-mint/30 mx-auto rounded-full" />
           </div>
           
           <div className="grid md:grid-cols-2 gap-8 text-left">
             <div className="space-y-4 p-6 bg-forest-light rounded-xl border border-mint/10 hover:border-mint/20 transition-colors">
-              <h3 className="text-xl font-semibold text-mint">De Uitdaging</h3>
+              <h3 className="text-xl font-semibold text-mint">The Challenge</h3>
               <p className="text-white/80 leading-relaxed">
-                Huisartsenpraktijken worstelen met het beheren van grote belvolumes terwijl ze kwalitatieve patiëntenzorg willen behouden. Gemiste oproepen, lange wachttijden en overbelast personeel zijn veelvoorkomende uitdagingen die zowel de praktijkefficiëntie als de patiënttevredenheid beïnvloeden.
+                GP practices struggle with managing high call volumes while maintaining quality patient care. Missed calls, long wait times, and overwhelmed staff are common challenges that affect both practice efficiency and patient satisfaction.
               </p>
             </div>
             
             <div className="space-y-4 p-6 bg-forest-light rounded-xl border border-mint/10 hover:border-mint/20 transition-colors">
-              <h3 className="text-xl font-semibold text-mint">Onze Oplossing</h3>
+              <h3 className="text-xl font-semibold text-mint">Our Solution</h3>
               <p className="text-white/80 leading-relaxed">
-                We hebben een AI-oplossing ontwikkeld die transformeert hoe praktijken patiëntcommunicatie afhandelen, waarbij we ervoor zorgen dat geen enkele oproep onbeantwoord blijft terwijl we de hoogste standaarden van de Nederlandse gezondheidszorg handhaven. Ons systeem is getraind op NHG-Triage data en voldoet aan NVDA-standaarden.
+                We've developed an AI solution that transforms how practices handle patient communication, ensuring no call goes unanswered while maintaining the highest standards of Dutch healthcare. Our system is trained on NHG-Triage data and compliant with NVDA standards.
               </p>
             </div>
           </div>

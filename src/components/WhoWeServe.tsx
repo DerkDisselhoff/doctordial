@@ -10,24 +10,24 @@ const WhoWeServe = () => {
           {[
             {
               icon: Stethoscope,
-              title: "Voor Huisartsen",
-              description: "We stellen huisartsen in staat zich te concentreren op patiëntenzorg door hun inkomende gesprekken te beheren met AI-technologie, waardoor de administratieve last wordt verminderd en de praktijkefficiëntie wordt geoptimaliseerd.",
+              title: "For General Practitioners",
+              description: "We empower GPs to focus on patient care by managing their incoming calls with AI technology, reducing administrative burden and optimizing practice efficiency.",
               features: [
-                "Verminderde administratieve werkdruk",
-                "Geoptimaliseerde afspraakplanning",
-                "Verbeterde patiënttriage",
-                "Verhoogde praktijkefficiëntie"
+                "Reduced administrative workload",
+                "Optimized appointment scheduling",
+                "Enhanced patient triage",
+                "Improved practice efficiency"
               ]
             },
             {
               icon: Users,
-              title: "Voor Patiënten",
-              description: "We zorgen ervoor dat patiënten tijdige antwoorden en passende zorg krijgen via intelligent gespreksmanagement en efficiënte afspraakplanning.",
+              title: "For Patients",
+              description: "We ensure patients receive timely responses and appropriate care through intelligent call management and efficient appointment scheduling.",
               features: [
-                "24/7 bereikbaarheid",
-                "Snelle reactietijden",
-                "Passende zorgverwijzing",
-                "Naadloze afspraakplanning"
+                "24/7 call availability",
+                "Quick response times",
+                "Appropriate care routing",
+                "Seamless appointment booking"
               ]
             }
           ].map((service, index) => (

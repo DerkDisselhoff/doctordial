@@ -45,14 +45,14 @@ export function BookDemoForm() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Plan een Demo</DialogTitle>
+          <DialogTitle>Book a Demo</DialogTitle>
           <DialogDescription>
-            Vul het onderstaande formulier in en wij nemen contact met u op om uw persoonlijke demo in te plannen.
+            Fill out the form below and we'll get in touch to schedule your personalized demo.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Volledige Naam</Label>
+            <Label htmlFor="name">Full Name</Label>
             <Input
               id="name"
               name="name"
@@ -71,7 +71,7 @@ export function BookDemoForm() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="phone">Telefoonnummer</Label>
+            <Label htmlFor="phone">Phone Number</Label>
             <Input
               id="phone"
               name="phone"
@@ -81,7 +81,7 @@ export function BookDemoForm() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="practice">Bedrijfsnaam</Label>
+            <Label htmlFor="practice">Company Name</Label>
             <Input
               id="practice"
               name="practice"
@@ -90,7 +90,7 @@ export function BookDemoForm() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="practitioners">Aantal Praktijken</Label>
+            <Label htmlFor="practitioners">Number of Practices</Label>
             <Input
               id="practitioners"
               name="practitioners"
@@ -101,7 +101,7 @@ export function BookDemoForm() {
             />
           </div>
           <Button type="submit" className="w-full bg-mint hover:bg-mint/90 text-forest font-medium">
-            Verstuur Aanvraag
+            Submit Request
           </Button>
         </form>
       </DialogContent>
