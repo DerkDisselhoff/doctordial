@@ -1,5 +1,5 @@
 import { BookDemoForm } from "./BookDemoForm";
-import { ArrowRight, Phone, Robot } from "lucide-react";
+import { ArrowRight, Phone, Bot } from "lucide-react";
 
 const Mission = () => {
   return (
@@ -53,7 +53,7 @@ const Mission = () => {
             <div className="relative h-full p-8 bg-forest-light rounded-xl border border-mint/10">
               <div className="flex items-center gap-4 mb-6">
                 <div className="p-3 bg-forest rounded-lg">
-                  <Robot className="w-6 h-6 text-divine" />
+                  <Bot className="w-6 h-6 text-divine" />
                 </div>
                 <h3 className="text-2xl font-semibold text-divine">Our Solution</h3>
               </div>
