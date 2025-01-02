@@ -102,8 +102,8 @@ const PricingPage = () => {
               <CardContent className="space-y-4">
                 <Separator className="bg-mint/20" />
                 {plan.features.map((feature, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <Check className="h-5 w-5 text-mint" />
+                  <div key={index} className="flex items-center gap-3">
+                    <Check className="h-5 w-5 min-w-5 text-mint" />
                     <span className="text-gray-300">{feature}</span>
                   </div>
                 ))}
