@@ -1,12 +1,50 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import AIDemoButton from "./AIDemoButton";
 import StatsBadge from "./StatsBadge";
+import { removeBackground, loadImage } from "@/utils/imageProcessing";
 
 const HeroImage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [processedImage, setProcessedImage] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const processImage = async () => {
+      try {
+        // Fetch the image
+        const response = await fetch('https://images.unsplash.com/photo-1651008376811-b90baee60c1f');
+        const imageBlob = await response.blob();
+        
+        // Load the image
+        const img = await loadImage(imageBlob);
+        
+        // Remove background
+        const processedBlob = await removeBackground(img);
+        
+        // Create URL for the processed image
+        const processedUrl = URL.createObjectURL(processedBlob);
+        setProcessedImage(processedUrl);
+      } catch (error) {
+        console.error('Error processing image:', error);
+        toast({
+          title: "Error processing image",
+          description: "Failed to process the hero image. Using fallback image.",
+          variant: "destructive",
+        });
+      }
+    };
+
+    processImage();
+
+    return () => {
+      // Cleanup URLs when component unmounts
+      if (processedImage) {
+        URL.revokeObjectURL(processedImage);
+      }
+    };
+  }, [toast]);
 
   const handlePlayDemo = () => {
     if (!audioRef.current) {
@@ -30,11 +68,15 @@ const HeroImage = () => {
     <div className="relative animate-fade-down lg:h-[600px]">
       <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
       <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-mint/10 h-full">
-        <img
-          src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80"
-          alt="Female medical assistant speaking with a patient on the phone in a modern medical office"
-          className="w-full h-full object-cover"
-        />
+        {processedImage ? (
+          <img
+            src={processedImage}
+            alt="Female medical professional speaking with a patient on the phone"
+            className="w-full h-full object-contain"
+          />
+        ) : (
+          <div className="w-full h-full bg-forest-light animate-pulse" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent" />
         <AIDemoButton isPlaying={isPlaying} onPlayDemo={handlePlayDemo} />
       </div>
