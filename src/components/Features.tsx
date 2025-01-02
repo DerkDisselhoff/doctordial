@@ -1,5 +1,5 @@
 import React from "react";
-import { Star, Award, ShieldCheck } from "lucide-react";
+import { Phone, Filter, TrendingUp, Calendar, BarChart, Scale, Clock } from "lucide-react";
 
 const Features = () => {
   return (
@@ -7,26 +7,41 @@ const Features = () => {
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 text-white">
-            How it works?
+            What We Offer
           </h2>
-          <p className="text-white/80">Our AI-powered platform simplifies tech recruitment</p>
+          <p className="text-white/80">Comprehensive solutions for modern GP practices</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {[
             {
-              icon: Star,
-              title: "Post Your Requirements",
-              description: "Specify your needs and let our AI match you with the perfect candidates",
+              icon: Phone,
+              title: "24/7 Call Management",
+              description: "Handle patient calls anytime, anywhere, ensuring no patient is left unattended",
             },
             {
-              icon: Award,
-              title: "Review Matches",
-              description: "Get a curated list of pre-screened candidates that match your criteria",
+              icon: Filter,
+              title: "Smart Call Filtering",
+              description: "Filter and categorize calls based on urgency, directing cases to appropriate actions",
             },
             {
-              icon: ShieldCheck,
-              title: "Hire the Best",
-              description: "Interview and hire top tech talent efficiently",
+              icon: TrendingUp,
+              title: "Revenue Optimization",
+              description: "Maximize GP's time and optimize revenue by ensuring efficient appointment scheduling",
+            },
+            {
+              icon: Calendar,
+              title: "Appointment Optimization",
+              description: "Automatically schedule appointments for urgent cases and prevent unnecessary visits",
+            },
+            {
+              icon: BarChart,
+              title: "Data Insights",
+              description: "Access real-time analytics on call trends and service performance",
+            },
+            {
+              icon: Scale,
+              title: "Scalable Solution",
+              description: "Scale seamlessly with increasing patient demand without additional staffing",
             },
           ].map((feature, index) => (
             <div 

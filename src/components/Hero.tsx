@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -7,18 +7,18 @@ const Hero = () => {
       <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-8">
           <div className="flex items-center gap-2 bg-mint/10 w-fit px-4 py-2 rounded-full border border-mint/20">
-            <Star className="w-4 h-4 text-mint" />
-            <span className="text-mint text-sm font-medium">AI-Powered Recruitment</span>
+            <Phone className="w-4 h-4 text-mint" />
+            <span className="text-mint text-sm font-medium">AI-Powered Call Management</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold leading-tight text-white">
-            Hire top
+            Transform
             <br />
-            tech talent
+            patient calls
             <br />
-            wisely
+            effortlessly
           </h1>
           <p className="text-lg text-white/80 max-w-md">
-            Find and hire the best tech professionals for your team with our AI-powered recruitment platform.
+            Revolutionize how your GP practice manages patient communication with our AI-powered virtual front desk.
           </p>
           <div className="flex items-center gap-4">
             <Button className="bg-mint hover:bg-mint/90 text-forest font-medium px-8 py-6 text-lg">
@@ -32,13 +32,13 @@ const Hero = () => {
         <div className="relative">
           <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur opacity-30" />
           <img
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
-            alt="Tech professional"
+            src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
+            alt="Doctor using computer"
             className="relative rounded-2xl shadow-2xl"
           />
           <div className="absolute -bottom-10 -left-10 bg-forest-light p-6 rounded-xl shadow-xl border border-mint/10">
-            <p className="text-mint text-4xl font-bold">124k+</p>
-            <p className="text-white/80">Active candidates</p>
+            <p className="text-mint text-4xl font-bold">24/7</p>
+            <p className="text-white/80">Patient Support</p>
           </div>
         </div>
       </div>

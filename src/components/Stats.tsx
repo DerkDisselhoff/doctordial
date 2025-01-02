@@ -4,16 +4,16 @@ const Stats = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-8 text-center">
           <div className="space-y-2">
-            <p className="text-4xl font-bold text-mint">95%</p>
-            <p className="text-white/80">Placement Rate</p>
+            <p className="text-4xl font-bold text-mint">50+</p>
+            <p className="text-white/80">Calls Managed Simultaneously</p>
           </div>
           <div className="space-y-2">
-            <p className="text-4xl font-bold text-mint">48hrs</p>
-            <p className="text-white/80">Average Response Time</p>
+            <p className="text-4xl font-bold text-mint">24/7</p>
+            <p className="text-white/80">Availability</p>
           </div>
           <div className="space-y-2">
-            <p className="text-4xl font-bold text-mint">10k+</p>
-            <p className="text-white/80">Companies Trust Us</p>
+            <p className="text-4xl font-bold text-mint">40%</p>
+            <p className="text-white/80">Staff Time Saved</p>
           </div>
         </div>
       </div>
