@@ -18,15 +18,18 @@ const Hero = () => {
             effortlessly
           </h1>
           <p className="text-lg text-white/80 max-w-md">
-            Revolutionize how your GP practice manages patient communication with our AI-powered virtual front desk.
+            Revolutionize how your GP practice manages patient communication with our AI-powered virtual front desk, trained on NHG-Triage data and compliant with NVDA standards.
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <Button className="bg-mint hover:bg-mint/90 text-forest font-medium px-8 py-6 text-lg">
               Get Started <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button variant="outline" className="border-mint/20 text-mint hover:bg-mint/10">
               Watch Demo
             </Button>
+            <div className="text-sm text-mint/80 mt-2 sm:mt-0">
+              *Trained on Dutch healthcare standards
+            </div>
           </div>
         </div>
         <div className="relative">
