@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { BookDemoForm } from "./BookDemoForm";
 
 const Navbar = () => {
   return (
@@ -22,9 +22,7 @@ const Navbar = () => {
             Contact
           </Link>
         </div>
-        <Button className="bg-mint hover:bg-mint/90 text-forest font-medium">
-          Book a Demo
-        </Button>
+        <BookDemoForm />
       </div>
     </nav>
   );
