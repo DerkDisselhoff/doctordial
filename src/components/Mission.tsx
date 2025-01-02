@@ -14,8 +14,10 @@ const Mission = () => {
         
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <div className="bg-forest-light p-6 rounded-xl border border-mint/10 space-y-4 animate-fade-up hover:border-mint/30 transition-colors">
-            <div className="w-12 h-12 bg-mint/10 rounded-full flex items-center justify-center mb-4 mx-auto">
-              <UserRound className="w-6 h-6 text-mint" />
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-mint/10 rounded-full flex items-center justify-center">
+                <UserRound className="w-6 h-6 text-mint" />
+              </div>
             </div>
             <h3 className="text-xl font-semibold text-white">Supporting GPs</h3>
             <p className="text-white/80 leading-relaxed">
@@ -24,8 +26,10 @@ const Mission = () => {
           </div>
 
           <div className="bg-forest-light p-6 rounded-xl border border-mint/10 space-y-4 animate-fade-up hover:border-mint/30 transition-colors" style={{ animationDelay: "0.1s" }}>
-            <div className="w-12 h-12 bg-mint/10 rounded-full flex items-center justify-center mb-4 mx-auto">
-              <PhoneCall className="w-6 h-6 text-mint" />
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-mint/10 rounded-full flex items-center justify-center">
+                <PhoneCall className="w-6 h-6 text-mint" />
+              </div>
             </div>
             <h3 className="text-xl font-semibold text-white">Managing Volume</h3>
             <p className="text-white/80 leading-relaxed">
@@ -34,8 +38,10 @@ const Mission = () => {
           </div>
 
           <div className="bg-forest-light p-6 rounded-xl border border-mint/10 space-y-4 animate-fade-up hover:border-mint/30 transition-colors" style={{ animationDelay: "0.2s" }}>
-            <div className="w-12 h-12 bg-mint/10 rounded-full flex items-center justify-center mb-4 mx-auto">
-              <HeartPulse className="w-6 h-6 text-mint" />
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-mint/10 rounded-full flex items-center justify-center">
+                <HeartPulse className="w-6 h-6 text-mint" />
+              </div>
             </div>
             <h3 className="text-xl font-semibold text-white">Right Care, Right Time</h3>
             <p className="text-white/80 leading-relaxed">
