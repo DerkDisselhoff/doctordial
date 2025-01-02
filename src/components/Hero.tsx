@@ -63,7 +63,7 @@ const Hero = () => {
           <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-mint/10 h-full">
             <img
-              src="/placeholder.svg"
+              src="/assets/ai-agent.webp"
               alt="AI virtual assistant helping with patient calls"
               className="w-full h-full object-cover"
             />
