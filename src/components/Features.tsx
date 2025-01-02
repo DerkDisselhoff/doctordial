@@ -1,64 +1,47 @@
-import React from "react";
-import { Phone, Filter, TrendingUp, Calendar, BarChart, Scale } from "lucide-react";
+import { BookDemoForm } from "./BookDemoForm";
+import { Check } from "lucide-react";
 
 const Features = () => {
+  const features = [
+    "Smart Urgency Detection",
+    "24/7 Patient Support",
+    "Revenue Optimization",
+    "Patient Query Resolution",
+    "Appointment Optimization",
+    "Data Insights & Control"
+  ];
+
   return (
-    <section className="py-20 px-4 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-mint/5 to-transparent opacity-50" />
-      <div className="container mx-auto relative">
-        <div className="max-w-3xl mx-auto text-center mb-16 animate-fade-up">
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+    <section className="py-20 px-4 bg-forest-light">
+      <div className="container mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-white mb-4">
             How Our AI Agent Optimizes Your Incoming Patient Calls
           </h2>
-          <p className="text-white/80">Comprehensive solutions for modern GP practices</p>
+          <p className="text-lg text-white/80 max-w-2xl mx-auto">
+            Experience the future of patient communication with our comprehensive AI solution
+          </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            {
-              icon: Phone,
-              title: "24/7 Call Management",
-              description: "Handle patient calls anytime, anywhere, ensuring no patient is left unattended",
-            },
-            {
-              icon: Filter,
-              title: "Smart Urgency Detection",
-              description: "Filter and categorize calls based on urgency, directing cases to appropriate actions",
-            },
-            {
-              icon: TrendingUp,
-              title: "Revenue Optimization",
-              description: "Maximize GP's time and optimize revenue by ensuring efficient appointment scheduling",
-            },
-            {
-              icon: Calendar,
-              title: "Appointment Optimization",
-              description: "Automatically schedule appointments for urgent cases and prevent unnecessary visits",
-            },
-            {
-              icon: BarChart,
-              title: "Data Insights",
-              description: "Access real-time analytics on call trends and service performance",
-            },
-            {
-              icon: Scale,
-              title: "Scalable Solution",
-              description: "Scale seamlessly with increasing patient demand without additional staffing",
-            },
-          ].map((feature, index) => (
-            <div 
-              key={index} 
-              className="group bg-forest-light p-8 rounded-xl border border-mint/10 hover:border-mint/30 transition-all duration-300 hover:shadow-lg hover:shadow-mint/5 animate-fade-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="p-6 rounded-lg border border-mint/10 bg-forest hover:border-mint/30 transition-colors"
             >
-              <div className="w-12 h-12 bg-mint/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-mint/20 transition-colors">
-                {React.createElement(feature.icon, { 
-                  className: "w-6 h-6 text-mint group-hover:scale-110 transition-transform" 
-                })}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 rounded-full bg-mint/10">
+                  <Check className="w-5 h-5 text-mint" />
+                </div>
+                <h3 className="text-xl font-semibold text-white">{feature}</h3>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-white group-hover:text-mint transition-colors">{feature.title}</h3>
-              <p className="text-white/80 group-hover:text-white/90 transition-colors">{feature.description}</p>
+              <p className="text-white/70">
+                Enhance your practice efficiency with our advanced AI capabilities.
+              </p>
             </div>
           ))}
+        </div>
+        <div className="flex justify-center">
+          <BookDemoForm />
         </div>
       </div>
     </section>
