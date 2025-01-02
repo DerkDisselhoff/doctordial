@@ -1,34 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { BarChart3, LineChart, Shield, CheckCircle } from "lucide-react";
+import { Shield, CheckCircle } from "lucide-react";
 
-const DashboardPreview = () => {
+const Certifications = () => {
   return (
     <section className="py-20 px-4">
-      <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-center">
-        <div className="space-y-8">
-          <div className="flex items-center gap-2">
-            <BarChart3 className="w-6 h-6 text-mint" />
-            <h2 className="text-4xl font-bold">Real-time Insights</h2>
-          </div>
-          <p className="text-white/80 max-w-md">
-            Access comprehensive analytics and insights about your practice's call patterns, patient needs, and service performance through our intuitive dashboard.
-          </p>
-          <Button className="bg-mint hover:bg-mint/90 text-forest font-medium">
-            View Demo <LineChart className="ml-2 h-5 w-5" />
-          </Button>
-        </div>
-        <div className="relative">
-          <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
-          <img
-            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71"
-            alt="Analytics dashboard showing patient call patterns and insights"
-            className="rounded-2xl shadow-2xl mx-auto relative"
-          />
-        </div>
-      </div>
-
       {/* Certification Section */}
-      <div className="mt-32">
+      <div>
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-mint/10 px-4 py-2 rounded-full border border-mint/20 mb-8">
             <Shield className="w-4 h-4 text-mint" />
@@ -87,4 +63,4 @@ const DashboardPreview = () => {
   );
 };
 
-export default DashboardPreview;
+export default Certifications;
