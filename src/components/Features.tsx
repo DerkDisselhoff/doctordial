@@ -21,7 +21,7 @@ const Features = () => {
             },
             {
               icon: Filter,
-              title: "Smart Call Filtering",
+              title: "Smart Urgency Detection",
               description: "Filter and categorize calls based on urgency, directing cases to appropriate actions",
             },
             {
