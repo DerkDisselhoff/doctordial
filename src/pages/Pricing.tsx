@@ -11,7 +11,7 @@ const PricingPage = () => {
       name: "Basic",
       title: "Small Practice",
       price: "€999",
-      description: "2000 patients",
+      description: "< 2000 patients",
       features: [
         "5000 call minutes per month",
         "Standard doctor's assistant protocol NHG / NVDA",
@@ -22,7 +22,7 @@ const PricingPage = () => {
       name: "Grow",
       title: "Medium Practice",
       price: "€1.799",
-      description: "4000 patients",
+      description: "< 4000 patients",
       popular: true,
       features: [
         "10000 call minutes per month",
@@ -37,7 +37,7 @@ const PricingPage = () => {
       name: "Scale",
       title: "Large Practice",
       price: "€2.499",
-      description: "8000 patients",
+      description: "< 8000 patients",
       features: [
         "15000 call minutes per month",
         "Standard doctor's assistant protocol NHG / NVDA",
