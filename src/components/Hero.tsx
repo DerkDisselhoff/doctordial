@@ -30,10 +30,10 @@ const Hero = () => {
           </div>
         </div>
         <div className="relative">
-          <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur opacity-30" />
+          <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
           <img
-            src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
-            alt="Doctor using computer"
+            src="https://images.unsplash.com/photo-1557189750-56d1be9e963a"
+            alt="Doctor taking a phone call with AI assistance visualization"
             className="relative rounded-2xl shadow-2xl"
           />
           <div className="absolute -bottom-10 -left-10 bg-forest-light p-6 rounded-xl shadow-xl border border-mint/10">
