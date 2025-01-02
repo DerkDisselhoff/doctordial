@@ -81,16 +81,16 @@ export function BookDemoForm() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="practice">Practice Name</Label>
+            <Label htmlFor="practice">Company Name</Label>
             <Input
               id="practice"
               name="practice"
-              placeholder="Smith Family Practice"
+              placeholder="Smith Medical Group"
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="practitioners">Number of Practitioners</Label>
+            <Label htmlFor="practitioners">Number of Practices</Label>
             <Input
               id="practitioners"
               name="practitioners"
