@@ -1,75 +1,69 @@
-import { Award, Shield, Clock, Brain, PhoneCall, BarChart3 } from "lucide-react";
 import { BookDemoForm } from "@/components/BookDemoForm";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Stats from "@/components/Stats";
+import { Brain, Calendar, Speaker, BarChart3, Users, Plug } from "lucide-react";
 
 const Features = () => {
   const features = [
     {
       icon: Brain,
       title: "Smart Urgency Detection",
-      description: "Our AI analyzes calls in real-time using NHG-certified triage protocols to accurately assess patient urgency levels.",
-      benefits: [
-        "Immediate urgency assessment",
-        "NHG-compliant triage",
-        "Reduced risk of missed emergencies",
-        "Automated priority routing"
+      points: [
+        "NHG-certified triage protocols",
+        "Real-time urgency assessment",
+        "Automatic priority routing",
+        "24/7 emergency detection"
       ]
     },
     {
-      icon: Clock,
-      title: "24/7 Patient Support",
-      description: "Provide round-the-clock availability for your patients with our AI assistant that never sleeps.",
-      benefits: [
-        "Always available",
-        "Consistent service quality",
-        "Zero wait times",
-        "Multilingual support"
+      icon: Calendar,
+      title: "Intelligent Scheduling",
+      points: [
+        "Smart appointment allocation",
+        "Reduces no-shows by 40%",
+        "Optimizes doctor's agenda",
+        "Patient preference matching"
+      ]
+    },
+    {
+      icon: Speaker,
+      title: "Voice Customization",
+      points: [
+        "Natural voice interactions",
+        "Multiple language support",
+        "Customizable voice profiles",
+        "Clear and professional tone"
       ]
     },
     {
       icon: BarChart3,
-      title: "Revenue Optimization",
-      description: "Maximize your practice's efficiency and revenue through intelligent call management and appointment scheduling.",
-      benefits: [
-        "Reduced no-shows",
-        "Optimized scheduling",
-        "Increased patient satisfaction",
-        "Better resource allocation"
-      ]
-    },
-    {
-      icon: PhoneCall,
-      title: "Patient Query Resolution",
-      description: "Handle routine patient inquiries automatically, freeing up your staff for more complex tasks.",
-      benefits: [
-        "Automated responses",
-        "Quick query resolution",
-        "Reduced staff workload",
-        "Consistent information"
-      ]
-    },
-    {
-      icon: Award,
-      title: "Appointment Optimization",
-      description: "Smart scheduling that considers urgency, availability, and patient preferences.",
-      benefits: [
-        "Intelligent slot allocation",
-        "Priority-based scheduling",
-        "Flexible booking options",
-        "Calendar integration"
-      ]
-    },
-    {
-      icon: Shield,
-      title: "Data Insights & Control",
-      description: "Gain valuable insights into your practice's operations with comprehensive analytics and reporting.",
-      benefits: [
-        "Real-time analytics",
+      title: "Insights Dashboard",
+      points: [
+        "Real-time call analytics",
+        "Patient flow insights",
         "Performance metrics",
-        "Trend analysis",
         "Custom reporting"
+      ]
+    },
+    {
+      icon: Users,
+      title: "High Volume Handling",
+      points: [
+        "50+ simultaneous calls",
+        "Zero wait times",
+        "Consistent service quality",
+        "Peak hour management"
+      ]
+    },
+    {
+      icon: Plug,
+      title: "System Integrations",
+      points: [
+        "EHR system integration",
+        "Calendar sync",
+        "Secure data exchange",
+        "API connectivity"
       ]
     }
   ];
@@ -85,7 +79,7 @@ const Features = () => {
             AI-Powered Features That Transform Your Practice
           </h1>
           <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
-            Experience the future of healthcare communication with our comprehensive suite of AI-powered features
+            Handle patient calls intelligently with our comprehensive AI solution
           </p>
           <BookDemoForm />
         </div>
@@ -110,17 +104,14 @@ const Features = () => {
                 <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-mint transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-white/80 mb-6 leading-relaxed">
-                  {feature.description}
-                </p>
                 <ul className="space-y-3">
-                  {feature.benefits.map((benefit, benefitIndex) => (
+                  {feature.points.map((point, pointIndex) => (
                     <li
-                      key={benefitIndex}
+                      key={pointIndex}
                       className="flex items-center text-white/70 group-hover:text-white/90 transition-colors"
                     >
                       <div className="w-1.5 h-1.5 bg-mint rounded-full mr-3" />
-                      {benefit}
+                      {point}
                     </li>
                   ))}
                 </ul>
