@@ -43,7 +43,7 @@ const DashboardPreview = () => {
                 <img
                   src="/lovable-uploads/e3414d74-91fb-4ad7-b8a5-9dd5d82520b9.png"
                   alt="NHG Logo"
-                  className="h-24 w-auto object-contain relative"
+                  className="h-20 w-auto object-contain relative"
                 />
               </div>
               <div className="space-y-2">
@@ -63,7 +63,7 @@ const DashboardPreview = () => {
                 <img
                   src="/lovable-uploads/91d55dd9-47c6-4ecd-b922-6d2271e3dad5.png"
                   alt="NVDA Logo"
-                  className="h-24 w-auto object-contain relative"
+                  className="h-20 w-auto object-contain relative"
                 />
               </div>
               <div className="space-y-2">
