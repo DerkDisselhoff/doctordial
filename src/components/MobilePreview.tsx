@@ -33,7 +33,7 @@ const DashboardPreview = () => {
         <div className="flex flex-wrap justify-center items-center gap-12">
           <div className="space-y-4">
             <img
-              src="https://triagewijzer.nhg.org/assets/images/nhg-logo.svg"
+              src="/placeholder.svg"
               alt="NHG Logo"
               className="h-24 mx-auto filter brightness-0 invert opacity-80"
             />
@@ -41,7 +41,7 @@ const DashboardPreview = () => {
           </div>
           <div className="space-y-4">
             <img
-              src="https://www.nvda.nl/wp-content/themes/nvda/images/logo.svg"
+              src="/placeholder.svg"
               alt="NVDA Logo"
               className="h-24 mx-auto filter brightness-0 invert opacity-80"
             />
