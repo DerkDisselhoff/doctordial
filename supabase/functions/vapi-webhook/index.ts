@@ -13,31 +13,42 @@ serve(async (req) => {
   }
 
   try {
-    console.log('Webhook received - Method:', req.method)
+    // Enhanced logging
+    console.log('==================== NEW WEBHOOK REQUEST ====================')
+    console.log('Request Method:', req.method)
     console.log('Request URL:', req.url)
     
     // Log all headers for debugging
     const headers = Object.fromEntries(req.headers.entries())
     console.log('All request headers:', JSON.stringify(headers, null, 2))
     
-    // Get VAPI secret from request header
+    // Get VAPI secret from request header and compare with env
     const vapiSecret = req.headers.get('x-vapi-secret')
     const expectedSecret = Deno.env.get('VAPI_API_KEY')
     
-    console.log('Received VAPI secret:', vapiSecret ? '[PRESENT]' : '[MISSING]')
-    console.log('Expected VAPI secret:', expectedSecret ? '[PRESENT]' : '[MISSING]')
+    console.log('Authentication check:')
+    console.log('- Received secret header:', vapiSecret ? '[PRESENT]' : '[MISSING]')
+    console.log('- Expected secret in env:', expectedSecret ? '[PRESENT]' : '[MISSING]')
     
-    // Compare secrets safely
+    // More detailed secret comparison logging
     if (vapiSecret && expectedSecret) {
-      console.log('First 4 chars of received secret:', vapiSecret.substring(0, 4))
-      console.log('First 4 chars of expected secret:', expectedSecret.substring(0, 4))
-      console.log('Secret lengths match:', vapiSecret.length === expectedSecret.length)
+      console.log('Secret comparison:')
+      console.log('- First 4 chars of received:', vapiSecret.substring(0, 4))
+      console.log('- First 4 chars of expected:', expectedSecret.substring(0, 4))
+      console.log('- Lengths match:', vapiSecret.length === expectedSecret.length)
+      console.log('- Exact match:', vapiSecret === expectedSecret)
     }
 
     if (!vapiSecret || !expectedSecret) {
       console.error('Missing VAPI authentication credentials')
       return new Response(
-        JSON.stringify({ error: 'Missing VAPI authentication credentials' }),
+        JSON.stringify({ 
+          error: 'Missing VAPI authentication credentials',
+          details: {
+            secretPresent: !!vapiSecret,
+            envSecretPresent: !!expectedSecret
+          }
+        }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 401 
@@ -47,12 +58,19 @@ serve(async (req) => {
 
     if (vapiSecret !== expectedSecret) {
       console.error('Invalid VAPI authentication credentials')
-      console.log('Secret mismatch - lengths:', {
-        received: vapiSecret.length,
-        expected: expectedSecret.length
+      console.log('Secret mismatch details:', {
+        receivedLength: vapiSecret.length,
+        expectedLength: expectedSecret.length,
+        first4CharsMatch: vapiSecret.substring(0, 4) === expectedSecret.substring(0, 4)
       })
       return new Response(
-        JSON.stringify({ error: 'Invalid VAPI authentication credentials' }),
+        JSON.stringify({ 
+          error: 'Invalid VAPI authentication credentials',
+          details: {
+            lengthMismatch: vapiSecret.length !== expectedSecret.length,
+            first4CharsMatch: vapiSecret.substring(0, 4) === expectedSecret.substring(0, 4)
+          }
+        }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 401 
