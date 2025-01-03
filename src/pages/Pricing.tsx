@@ -6,13 +6,7 @@ const Pricing = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#F8FAFF] to-[#EDF2FF]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col lg:flex-row lg:items-start lg:gap-16">
         {/* Left side content */}
-        <div className="lg:w-[45%] mb-8 lg:mb-0 lg:sticky lg:top-8">
-          <img 
-            src="/lovable-uploads/cb3c4bbf-4e87-44de-856b-59e135958c65.png" 
-            alt="DoctorDial Logo" 
-            className="h-8 mb-16" 
-          />
-          
+        <div className="lg:w-[45%] mb-8 lg:mb-0 lg:sticky lg:top-8">          
           <div className="mb-12">
             <p className="text-sm font-medium text-blue-600 mb-4">PRICING REQUEST</p>
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Get a custom quote</h1>
