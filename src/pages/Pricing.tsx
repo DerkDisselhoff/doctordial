@@ -10,7 +10,7 @@ const Pricing = () => {
           <img 
             src="/lovable-uploads/cb3c4bbf-4e87-44de-856b-59e135958c65.png" 
             alt="DoctorDial Logo" 
-            className="w-32 mb-16" 
+            className="h-8 mb-16" 
           />
           
           <div className="mb-12">
