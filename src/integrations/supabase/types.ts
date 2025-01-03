@@ -79,37 +79,34 @@ export type Database = {
         Row: {
           call_id: string
           caller_number: string | null
-          created_at: string
+          created_at: string | null
           duration: number | null
-          id: number
+          id: string
           recipient_number: string | null
           sentiment_analysis: Json | null
           status: string | null
-          timestamp: string | null
           transcription: string | null
         }
         Insert: {
           call_id: string
           caller_number?: string | null
-          created_at?: string
+          created_at?: string | null
           duration?: number | null
-          id?: number
+          id: string
           recipient_number?: string | null
           sentiment_analysis?: Json | null
           status?: string | null
-          timestamp?: string | null
           transcription?: string | null
         }
         Update: {
           call_id?: string
           caller_number?: string | null
-          created_at?: string
+          created_at?: string | null
           duration?: number | null
-          id?: number
+          id?: string
           recipient_number?: string | null
           sentiment_analysis?: Json | null
           status?: string | null
-          timestamp?: string | null
           transcription?: string | null
         }
         Relationships: []
