@@ -14,21 +14,28 @@ serve(async (req) => {
 
   try {
     console.log('Webhook received - Method:', req.method)
+    console.log('Request URL:', req.url)
     
     // Log headers for debugging
-    console.log('Request headers:', Object.fromEntries(req.headers.entries()))
+    const headers = Object.fromEntries(req.headers.entries())
+    console.log('Request headers:', JSON.stringify(headers, null, 2))
     
     // Verify VAPI secret
     const vapiSecret = req.headers.get('x-vapi-secret')
     const expectedSecret = Deno.env.get('VAPI_API_KEY')
     
-    if (!vapiSecret || !expectedSecret) {
-      console.error('Missing VAPI secret or environment variable')
-      throw new Error('Missing authentication credentials')
+    if (!vapiSecret) {
+      console.error('Missing VAPI secret in request headers')
+      throw new Error('Missing x-vapi-secret header')
+    }
+
+    if (!expectedSecret) {
+      console.error('Missing VAPI_API_KEY environment variable')
+      throw new Error('Server configuration error')
     }
 
     if (vapiSecret !== expectedSecret) {
-      console.error('Invalid VAPI secret')
+      console.error('Invalid VAPI secret provided')
       throw new Error('Invalid authentication credentials')
     }
 
