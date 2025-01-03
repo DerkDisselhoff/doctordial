@@ -44,20 +44,10 @@ export const translations = {
     // Who We Serve Section
     "serve.gp.title": "For General Practitioners",
     "serve.gp.description": "We empower GPs to focus on patient care by managing their incoming calls with AI technology, reducing administrative burden and optimizing practice efficiency.",
-    "serve.gp.features": [
-      "Reduced administrative workload",
-      "Optimized appointment scheduling",
-      "Enhanced patient triage",
-      "Improved practice efficiency"
-    ],
+    "serve.gp.features": "Reduced administrative workload,Optimized appointment scheduling,Enhanced patient triage,Improved practice efficiency",
     "serve.patients.title": "For Patients",
     "serve.patients.description": "We ensure patients receive timely responses and appropriate care through intelligent call management and efficient appointment scheduling.",
-    "serve.patients.features": [
-      "24/7 call availability",
-      "Quick response times",
-      "Appropriate care routing",
-      "Seamless appointment booking"
-    ],
+    "serve.patients.features": "24/7 call availability,Quick response times,Appropriate care routing,Seamless appointment booking",
 
     // Features Section
     "features.title": "How Our AI Agent Optimizes Your Incoming Patient Calls",
@@ -74,7 +64,7 @@ export const translations = {
     "footer.privacy": "Privacy",
     "footer.terms": "Terms",
     "footer.security": "Security",
-    "footer.rights": "All rights reserved.",
+    "footer.rights": "All rights reserved."
   },
   nl: {
     // Navigation
@@ -109,20 +99,10 @@ export const translations = {
     // Who We Serve Section
     "serve.gp.title": "Voor Huisartsen",
     "serve.gp.description": "We stellen huisartsen in staat zich te concentreren op patiëntenzorg door hun inkomende gesprekken te beheren met AI-technologie, waardoor de administratieve last wordt verminderd en de praktijkefficiëntie wordt geoptimaliseerd.",
-    "serve.gp.features": [
-      "Verminderde administratieve werkdruk",
-      "Geoptimaliseerde afspraakplanning",
-      "Verbeterde patiënttriage",
-      "Verhoogde praktijkefficiëntie"
-    ],
+    "serve.gp.features": "Verminderde administratieve werkdruk,Geoptimaliseerde afspraakplanning,Verbeterde patiënttriage,Verhoogde praktijkefficiëntie",
     "serve.patients.title": "Voor Patiënten",
     "serve.patients.description": "We zorgen ervoor dat patiënten tijdige reacties en passende zorg ontvangen via intelligente gespreksafhandeling en efficiënte afspraakplanning.",
-    "serve.patients.features": [
-      "24/7 beschikbaarheid",
-      "Snelle reactietijden",
-      "Passende zorgverwijzing",
-      "Naadloze afspraakplanning"
-    ],
+    "serve.patients.features": "24/7 beschikbaarheid,Snelle reactietijden,Passende zorgverwijzing,Naadloze afspraakplanning",
 
     // Features Section
     "features.title": "Hoe Onze AI-Agent Uw Inkomende Patiëntgesprekken Optimaliseert",
@@ -139,15 +119,22 @@ export const translations = {
     "footer.privacy": "Privacy",
     "footer.terms": "Voorwaarden",
     "footer.security": "Beveiliging",
-    "footer.rights": "Alle rechten voorbehouden.",
+    "footer.rights": "Alle rechten voorbehouden."
   }
-};
+} as const;
+
+type TranslationKeys = keyof typeof translations.en;
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en');
 
   const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations[typeof language]] || key;
+    const translation = translations[language][key as TranslationKeys];
+    if (typeof translation === 'string') {
+      return translation;
+    }
+    // If the translation is not found or is not a string, return the key
+    return key;
   };
 
   return (
