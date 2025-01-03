@@ -66,8 +66,8 @@ const VapiCallsList = () => {
                 <TableCell>{call.duration ? `${call.duration}s` : 'N/A'}</TableCell>
                 <TableCell>{call.status || 'N/A'}</TableCell>
                 <TableCell>
-                  {call.timestamp 
-                    ? new Date(call.timestamp).toLocaleString()
+                  {call.created_at 
+                    ? new Date(call.created_at).toLocaleString()
                     : 'N/A'}
                 </TableCell>
               </TableRow>

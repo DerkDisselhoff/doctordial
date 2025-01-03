@@ -7,10 +7,9 @@ export interface VapiCall {
   recipient_number: string | null;
   duration: number | null;
   status: string | null;
-  timestamp: string | null;
+  created_at: string;
   transcription: string | null;
   sentiment_analysis: any | null;
-  created_at: string;
 }
 
 export const fetchVapiCalls = async (): Promise<VapiCall[]> => {
