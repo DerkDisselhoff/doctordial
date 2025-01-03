@@ -16,28 +16,28 @@ serve(async (req) => {
     console.log('Webhook received - Method:', req.method)
     console.log('Request URL:', req.url)
     
-    // Log headers for debugging
+    // Log all headers for debugging
     const headers = Object.fromEntries(req.headers.entries())
-    console.log('Request headers:', JSON.stringify(headers, null, 2))
+    console.log('All request headers:', JSON.stringify(headers, null, 2))
     
-    // Verify VAPI secret
+    // Get VAPI secret from request header
     const vapiSecret = req.headers.get('x-vapi-secret')
     const expectedSecret = Deno.env.get('VAPI_API_KEY')
     
-    console.log('Received secret:', vapiSecret ? '[PRESENT]' : '[MISSING]')
-    console.log('Expected secret:', expectedSecret ? '[PRESENT]' : '[MISSING]')
+    console.log('Received VAPI secret:', vapiSecret ? '[PRESENT]' : '[MISSING]')
+    console.log('Expected VAPI secret:', expectedSecret ? '[PRESENT]' : '[MISSING]')
     
-    // Log the first few characters of each secret for comparison (safely)
+    // Compare secrets safely
     if (vapiSecret && expectedSecret) {
       console.log('First 4 chars of received secret:', vapiSecret.substring(0, 4))
       console.log('First 4 chars of expected secret:', expectedSecret.substring(0, 4))
-      console.log('Lengths match:', vapiSecret.length === expectedSecret.length)
+      console.log('Secret lengths match:', vapiSecret.length === expectedSecret.length)
     }
 
     if (!vapiSecret || !expectedSecret) {
-      console.error('Missing authentication credentials')
+      console.error('Missing VAPI authentication credentials')
       return new Response(
-        JSON.stringify({ error: 'Missing authentication credentials' }),
+        JSON.stringify({ error: 'Missing VAPI authentication credentials' }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 401 
@@ -46,9 +46,13 @@ serve(async (req) => {
     }
 
     if (vapiSecret !== expectedSecret) {
-      console.error('Invalid authentication credentials')
+      console.error('Invalid VAPI authentication credentials')
+      console.log('Secret mismatch - lengths:', {
+        received: vapiSecret.length,
+        expected: expectedSecret.length
+      })
       return new Response(
-        JSON.stringify({ error: 'Invalid authentication credentials' }),
+        JSON.stringify({ error: 'Invalid VAPI authentication credentials' }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 401 
@@ -56,9 +60,11 @@ serve(async (req) => {
       )
     }
 
+    // Log request body
     const body = await req.json()
     console.log('Received VAPI webhook payload:', JSON.stringify(body, null, 2))
 
+    // Initialize Supabase client
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
