@@ -18,13 +18,18 @@ serve(async (req) => {
     // Log headers for debugging
     console.log('Request headers:', Object.fromEntries(req.headers.entries()))
     
-    // Verify VAPI secret if provided
+    // Verify VAPI secret
     const vapiSecret = req.headers.get('x-vapi-secret')
     const expectedSecret = Deno.env.get('VAPI_API_KEY')
     
-    if (expectedSecret && vapiSecret !== expectedSecret) {
+    if (!vapiSecret || !expectedSecret) {
+      console.error('Missing VAPI secret or environment variable')
+      throw new Error('Missing authentication credentials')
+    }
+
+    if (vapiSecret !== expectedSecret) {
       console.error('Invalid VAPI secret')
-      throw new Error('Invalid VAPI secret')
+      throw new Error('Invalid authentication credentials')
     }
 
     const body = await req.json()
