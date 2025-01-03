@@ -13,12 +13,15 @@ serve(async (req) => {
   }
 
   try {
-    console.log('Fetching VAPI calls...')
+    console.log('Starting VAPI calls fetch...')
     
     const vapiKey = Deno.env.get('VAPI_API_KEY')
     if (!vapiKey) {
+      console.error('VAPI API key not found in environment variables')
       throw new Error('VAPI API key not configured')
     }
+
+    console.log('Fetching calls from VAPI API...')
 
     // Fetch calls from VAPI API
     const response = await fetch('https://api.vapi.ai/call/list', {
@@ -29,22 +32,35 @@ serve(async (req) => {
     })
 
     if (!response.ok) {
-      console.error('VAPI API error:', await response.text())
-      throw new Error(`VAPI API returned ${response.status}`)
+      const errorText = await response.text()
+      console.error('VAPI API error:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText
+      })
+      throw new Error(`VAPI API returned ${response.status}: ${errorText}`)
     }
 
     const calls = await response.json()
-    console.log('Received calls from VAPI:', calls)
+    console.log(`Received ${calls.data?.length || 0} calls from VAPI`)
 
     // Initialize Supabase client
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    )
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('Supabase credentials not found')
+      throw new Error('Supabase configuration missing')
+    }
+
+    const supabaseClient = createClient(supabaseUrl, supabaseKey)
+    console.log('Supabase client initialized')
 
     // Process each call
-    for (const call of calls.data) {
+    let processedCalls = 0
+    for (const call of calls.data || []) {
       const id = crypto.randomUUID()
+      console.log(`Processing call ${call.id}...`)
       
       const { error } = await supabaseClient
         .from('vapi_calls')
@@ -61,17 +77,22 @@ serve(async (req) => {
         })
 
       if (error) {
-        console.error('Error inserting call:', error)
+        console.error('Error inserting call:', {
+          callId: call.id,
+          error: error.message,
+          details: error
+        })
         throw error
       }
+      processedCalls++
     }
 
-    console.log('Successfully processed calls')
+    console.log(`Successfully processed ${processedCalls} calls`)
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: `Processed ${calls.data.length} calls` 
+        message: `Processed ${processedCalls} calls` 
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -79,7 +100,11 @@ serve(async (req) => {
       }
     )
   } catch (error) {
-    console.error('Error processing calls:', error)
+    console.error('Error in fetch-vapi-calls function:', {
+      error: error.message,
+      stack: error.stack
+    })
+    
     return new Response(
       JSON.stringify({ 
         error: error.message,
