@@ -1,6 +1,6 @@
 import { RunwareService, GenerateImageParams } from "@/services/runwareService";
 
-const runwareService = new RunwareService(process.env.RUNWARE_API_KEY || '');
+const runwareService = new RunwareService("W2K6F8XHKC9jkj8fbCTgPi5BiTogKxIZ");
 
 export const generateFeatureImage = async (prompt: string) => {
   try {
