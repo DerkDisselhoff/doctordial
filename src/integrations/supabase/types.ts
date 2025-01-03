@@ -75,6 +75,45 @@ export type Database = {
         }
         Relationships: []
       }
+      vapi_calls: {
+        Row: {
+          call_id: string
+          caller_number: string | null
+          created_at: string
+          duration: number | null
+          id: number
+          recipient_number: string | null
+          sentiment_analysis: Json | null
+          status: string | null
+          timestamp: string | null
+          transcription: string | null
+        }
+        Insert: {
+          call_id: string
+          caller_number?: string | null
+          created_at?: string
+          duration?: number | null
+          id?: number
+          recipient_number?: string | null
+          sentiment_analysis?: Json | null
+          status?: string | null
+          timestamp?: string | null
+          transcription?: string | null
+        }
+        Update: {
+          call_id?: string
+          caller_number?: string | null
+          created_at?: string
+          duration?: number | null
+          id?: number
+          recipient_number?: string | null
+          sentiment_analysis?: Json | null
+          status?: string | null
+          timestamp?: string | null
+          transcription?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
