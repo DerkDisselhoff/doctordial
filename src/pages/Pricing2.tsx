@@ -1,3 +1,5 @@
+import { MultiStepPricingForm } from "@/components/pricing2/MultiStepPricingForm";
+
 const Pricing2 = () => {
   return (
     <div className="min-h-screen bg-white flex">
