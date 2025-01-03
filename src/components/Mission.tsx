@@ -1,6 +1,9 @@
 import { BookDemoForm } from "./BookDemoForm";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Mission = () => {
+  const { t } = useLanguage();
+  
   return (
     <section className="py-20 px-4 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-mint/5 to-transparent opacity-50" />
@@ -8,23 +11,23 @@ const Mission = () => {
         <div className="max-w-4xl mx-auto text-center space-y-12">
           <div className="space-y-6">
             <h2 className="text-4xl md:text-5xl font-bold text-white bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-              Why DoctorDial Exists
+              {t("mission.title")}
             </h2>
             <div className="w-20 h-1 bg-mint/30 mx-auto rounded-full" />
           </div>
           
           <div className="grid md:grid-cols-2 gap-8 text-left">
             <div className="space-y-4 p-6 bg-forest-light rounded-xl border border-mint/10 hover:border-mint/20 transition-colors">
-              <h3 className="text-xl font-semibold text-mint">The Challenge</h3>
+              <h3 className="text-xl font-semibold text-mint">{t("mission.challenge.title")}</h3>
               <p className="text-white/80 leading-relaxed">
-                GP practices struggle with managing high call volumes while maintaining quality patient care. Missed calls, long wait times, and overwhelmed staff are common challenges that affect both practice efficiency and patient satisfaction.
+                {t("mission.challenge.description")}
               </p>
             </div>
             
             <div className="space-y-4 p-6 bg-forest-light rounded-xl border border-mint/10 hover:border-mint/20 transition-colors">
-              <h3 className="text-xl font-semibold text-mint">Our Solution</h3>
+              <h3 className="text-xl font-semibold text-mint">{t("mission.solution.title")}</h3>
               <p className="text-white/80 leading-relaxed">
-                We've developed an AI solution that transforms how practices handle patient communication, ensuring no call goes unanswered while maintaining the highest standards of Dutch healthcare. Our system is trained on NHG-Triage data and compliant with NVDA standards.
+                {t("mission.solution.description")}
               </p>
             </div>
           </div>

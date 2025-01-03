@@ -13,12 +13,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { DemoSuccessStep } from "./DemoSuccessStep";
 import { supabase } from "@/integrations/supabase/client";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function BookDemoForm() {
   const [open, setOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,8 +45,8 @@ export function BookDemoForm() {
       
       setIsSubmitted(true);
       toast({
-        title: "Demo Request Received",
-        description: "We'll contact you shortly to schedule your demo.",
+        title: t("demo.success.title"),
+        description: t("demo.success.message"),
       });
     } catch (error) {
       console.error('Error submitting demo request:', error);
@@ -61,7 +63,6 @@ export function BookDemoForm() {
   const handleOpenChange = (open: boolean) => {
     setOpen(open);
     if (!open) {
-      // Reset form state when dialog is closed
       setIsSubmitted(false);
     }
   };
@@ -70,7 +71,7 @@ export function BookDemoForm() {
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className="bg-mint hover:bg-mint/90 text-forest font-medium">
-          Book a Demo
+          {t("nav.bookDemo")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] bg-white p-8">
@@ -78,16 +79,16 @@ export function BookDemoForm() {
           <>
             <DialogHeader className="mb-6">
               <DialogTitle className="text-3xl font-semibold text-forest">
-                See DoctorDial in action
+                {t("demo.title")}
               </DialogTitle>
               <DialogDescription className="text-lg text-gray-600 mt-2">
-                Schedule a 30-minute live product demo with expert Q&A
+                {t("demo.subtitle")}
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-gray-700 font-medium">First Name</Label>
+                  <Label htmlFor="name" className="text-gray-700 font-medium">{t("demo.firstName")}</Label>
                   <Input
                     id="name"
                     name="name"
@@ -97,7 +98,7 @@ export function BookDemoForm() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="lastname" className="text-gray-700 font-medium">Last Name</Label>
+                  <Label htmlFor="lastname" className="text-gray-700 font-medium">{t("demo.lastName")}</Label>
                   <Input
                     id="lastname"
                     name="lastname"
@@ -108,7 +109,7 @@ export function BookDemoForm() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-gray-700 font-medium">Work Email</Label>
+                <Label htmlFor="email" className="text-gray-700 font-medium">{t("demo.email")}</Label>
                 <Input
                   id="email"
                   name="email"
@@ -119,7 +120,7 @@ export function BookDemoForm() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone" className="text-gray-700 font-medium">Phone Number</Label>
+                <Label htmlFor="phone" className="text-gray-700 font-medium">{t("demo.phone")}</Label>
                 <Input
                   id="phone"
                   name="phone"
@@ -130,7 +131,7 @@ export function BookDemoForm() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="practice" className="text-gray-700 font-medium">Practice Name</Label>
+                <Label htmlFor="practice" className="text-gray-700 font-medium">{t("demo.practice")}</Label>
                 <Input
                   id="practice"
                   name="practice"
@@ -140,7 +141,7 @@ export function BookDemoForm() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="practitioners" className="text-gray-700 font-medium">Number of Practices</Label>
+                <Label htmlFor="practitioners" className="text-gray-700 font-medium">{t("demo.practitioners")}</Label>
                 <Input
                   id="practitioners"
                   name="practitioners"
@@ -156,7 +157,7 @@ export function BookDemoForm() {
                 className="w-full bg-forest hover:bg-forest-light text-white h-12 text-lg"
                 disabled={isLoading}
               >
-                {isLoading ? "Submitting..." : "Next"}
+                {isLoading ? t("demo.submitting") : t("demo.submit")}
               </Button>
             </form>
           </>
@@ -166,4 +167,4 @@ export function BookDemoForm() {
       </DialogContent>
     </Dialog>
   );
-}
+};
