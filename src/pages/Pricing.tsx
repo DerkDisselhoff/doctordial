@@ -1,184 +1,54 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { MultiStepPricingForm } from "@/components/pricing2/MultiStepPricingForm";
+import { Quote } from "lucide-react";
 
-const PricingPage = () => {
-  const plans = [
-    {
-      name: "Basic",
-      title: "Small Practice",
-      price: "€999",
-      description: "< 2000 patients",
-      features: [
-        "5000 call minutes per month",
-        "Standard doctor's assistant protocol NHG / NVDA",
-        "Dashboard basic insights",
-      ],
-    },
-    {
-      name: "Grow",
-      title: "Medium Practice",
-      price: "€1.799",
-      description: "< 4000 patients",
-      popular: true,
-      features: [
-        "10000 call minutes per month",
-        "Standard doctor's assistant protocol NHG / NVDA",
-        "Dashboard basic insights",
-        "EHR Integration",
-        "Date of birth/name verification",
-        "Email follow-up",
-      ],
-    },
-    {
-      name: "Scale",
-      title: "Large Practice",
-      price: "€2.499",
-      description: "< 8000 patients",
-      features: [
-        "15000 call minutes per month",
-        "Standard doctor's assistant protocol NHG / NVDA",
-        "Dashboard basic insights",
-        "EHR Integration",
-        "Date of birth/name verification",
-        "Email follow-up",
-        "Customizable doctor's assistant protocol",
-        "Choose your own voice",
-      ],
-    },
-    {
-      name: "Enterprise",
-      title: "Chain of Practices",
-      price: "On Request",
-      description: "For healthcare networks",
-      features: [
-        "50000 call minutes per month",
-        "Standard doctor's assistant protocol NHG / NVDA",
-        "Dashboard basic insights",
-        "EHR Integration",
-        "Date of birth/name verification",
-        "Email follow-up",
-        "Customizable doctor's assistant protocol",
-        "Choose your own voice",
-        "Call sentiment analysis",
-        "Custom system integrations",
-      ],
-    },
-  ];
-
-  const faqs = [
-    {
-      question: "How does DoctorDial's AI assistant handle patient calls?",
-      answer: "Our AI assistant uses advanced natural language processing to understand and respond to patient calls 24/7. It follows standard NHG/NVDA protocols to assess urgency, schedule appointments, and handle routine queries, while ensuring human oversight for complex cases."
-    },
-    {
-      question: "Is patient data secure with DoctorDial?",
-      answer: "Yes, we prioritize data security and comply with all healthcare privacy regulations. Our system uses end-to-end encryption and follows strict data protection protocols to ensure patient information remains confidential and secure."
-    },
-    {
-      question: "Can DoctorDial integrate with our existing EHR system?",
-      answer: "Yes, DoctorDial is designed to integrate seamlessly with major Electronic Health Record (EHR) systems. Our team will work with you during onboarding to ensure smooth integration with your existing infrastructure."
-    },
-    {
-      question: "What kind of support do you provide?",
-      answer: "We provide 24/7 technical support, regular system updates, and dedicated account management. Our team is always available to help with any questions or concerns, and we offer comprehensive training during implementation."
-    },
-    {
-      question: "How long does it take to implement DoctorDial?",
-      answer: "Typically, implementation takes 2-4 weeks, including system integration, staff training, and customization to your practice's specific needs. We ensure a smooth transition with minimal disruption to your practice."
-    },
-    {
-      question: "What happens if a patient needs immediate medical attention?",
-      answer: "Our AI system is trained to quickly identify urgent cases using NHG triage protocols. When urgent care is needed, the system immediately escalates the call to appropriate medical staff and can contact emergency services if necessary."
-    }
-  ];
-
+const Pricing = () => {
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      
-      <div className="container mx-auto px-4 py-24">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-mint mb-4">Simple, transparent pricing</h1>
-          <p className="text-lg text-gray-400">Choose the perfect plan for your practice</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {plans.map((plan) => (
-            <Card key={plan.name} className={`relative bg-forest-light border-mint/20 ${plan.popular ? 'border-mint' : ''}`}>
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="bg-mint text-forest px-3 py-1 rounded-full text-sm font-medium">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              
-              <CardHeader>
-                <CardTitle className="text-mint">{plan.title}</CardTitle>
-                <CardDescription className="text-gray-400">{plan.description}</CardDescription>
-                <div className="mt-4">
-                  <span className="text-4xl font-bold text-white">{plan.price}</span>
-                  {plan.name !== "Enterprise" && <span className="text-gray-400 ml-2">/ month</span>}
-                </div>
-              </CardHeader>
-              
-              <CardContent className="space-y-4">
-                <Separator className="bg-mint/20" />
-                {plan.features.map((feature, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <Check className="h-5 w-5 min-w-5 text-mint" />
-                    <span className="text-gray-300">{feature}</span>
-                  </div>
-                ))}
-              </CardContent>
-              
-              <CardFooter>
-                <Button className="w-full bg-mint hover:bg-mint-light text-forest font-semibold">
-                  Book a Demo
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-
-        <div className="mt-16 text-center">
-          <p className="text-gray-400">
-            All plans include 24/7 support, automatic updates, and our satisfaction guarantee.
-          </p>
-        </div>
-
-        {/* FAQ Section */}
-        <div className="mt-24">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-mint mb-4">Frequently Asked Questions</h2>
-            <p className="text-lg text-gray-400">Everything you need to know about DoctorDial</p>
-          </div>
+    <div className="min-h-screen bg-white flex">
+      {/* Left side content */}
+      <div className="hidden lg:flex lg:w-[60%] p-12 flex-col bg-forest">
+        <div className="mb-12">
+          <img 
+            src="/lovable-uploads/cb3c4bbf-4e87-44de-856b-59e135958c65.png" 
+            alt="DoctorDial Logo" 
+            className="w-32 mb-16" 
+          />
           
-          <div className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="border-mint/20">
-                  <AccordionTrigger className="text-mint hover:text-mint-light">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-300">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+          <div className="mt-8 mb-16">
+            <h1 className="text-4xl font-bold text-white mb-4">Get started with DoctorDial</h1>
+            <p className="text-white/80 max-w-xl text-lg">
+              Join hundreds of medical practices that trust DoctorDial to manage their patient communications efficiently.
+            </p>
+          </div>
+
+          {/* Featured testimonial */}
+          <div className="bg-forest-light p-8 rounded-xl max-w-xl">
+            <Quote className="text-mint w-8 h-8 mb-4" />
+            <p className="text-white/90 text-lg mb-6">
+              "DoctorDial has transformed how we handle patient calls. The AI system is incredibly accurate and has significantly reduced the workload on our staff. It's been a game-changer for our practice."
+            </p>
+            <div className="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
+                alt="Dr. Sarah Chen"
+                className="w-12 h-12 rounded-full object-cover"
+              />
+              <div>
+                <p className="font-medium text-white">Dr. Sarah Chen</p>
+                <p className="text-white/60">GP Practice Lead</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <Footer />
+      {/* Right side form */}
+      <div className="w-full lg:w-[40%] bg-[#F8FAFF] min-h-screen">
+        <div className="max-w-xl mx-auto p-8">
+          <MultiStepPricingForm />
+        </div>
+      </div>
     </div>
   );
 };
 
-export default PricingPage;
+export default Pricing;
