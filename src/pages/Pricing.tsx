@@ -8,6 +8,7 @@ const Pricing = () => {
         {/* Left side content */}
         <div className="lg:w-[45%] mb-8 lg:mb-0 lg:sticky lg:top-8">          
           <div className="mb-12">
+            <h2 className="text-lg font-semibold text-gray-900 mb-6">DoctorDial</h2>
             <p className="text-sm font-medium text-blue-600 mb-4">PRICING REQUEST</p>
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Get a custom quote</h1>
             <p className="text-lg text-gray-600 max-w-xl">
