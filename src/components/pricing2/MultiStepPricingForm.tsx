@@ -6,7 +6,6 @@ import { CompanyDetailsStep } from "./steps/CompanyDetailsStep";
 import { SuccessStep } from "./steps/SuccessStep";
 import { supabase } from "@/lib/supabaseClient";
 import { useToast } from "@/components/ui/use-toast";
-import { Star } from "lucide-react";
 
 export type FormData = {
   practice_count: string;
@@ -58,8 +57,8 @@ export const MultiStepPricingForm = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-8">
-      <Progress value={progress} className="mb-8 bg-blue-100" />
+    <div className="bg-white rounded-xl shadow-lg p-8">
+      <Progress value={progress} className="mb-8 bg-mint/20" />
       
       {step === 1 && (
         <PracticeCountStep
@@ -101,20 +100,6 @@ export const MultiStepPricingForm = () => {
       )}
       
       {step === 4 && <SuccessStep />}
-
-      {/* Rating section */}
-      <div className="mt-8 pt-8 border-t border-gray-100">
-        <p className="text-gray-600 mb-2">Rated #1 medical practice software on G2</p>
-        <div className="flex items-center gap-2">
-          <div className="p-1 bg-gray-100 rounded-full">
-            <Star className="w-5 h-5 text-blue-600" />
-          </div>
-          <div className="flex items-center gap-1">
-            <span className="font-semibold text-gray-900">4.7</span>
-            <span className="text-gray-500">(650 Reviews)</span>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
