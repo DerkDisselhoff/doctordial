@@ -27,8 +27,14 @@
     --radius: 0.5rem;
   }
 
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
-    @apply bg-forest text-white antialiased;
+    @apply bg-forest text-white antialiased tracking-tight;
     background-image: 
       radial-gradient(circle at 50% 0%, rgba(100, 255, 218, 0.05), transparent 70%),
       radial-gradient(circle at 0% 50%, rgba(100, 255, 218, 0.025), transparent 50%),
@@ -36,6 +42,10 @@
     background-size: 100% 100%, 50% 100%, 50% 100%;
     background-position: center top, left center, right center;
     background-repeat: no-repeat;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium tracking-tight;
   }
 
   ::selection {
