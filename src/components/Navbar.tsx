@@ -26,8 +26,8 @@ const Navbar = () => {
             {t("nav.contact")}
           </Link>
           <LanguageSwitcher />
+          <BookDemoForm />
         </div>
-        <BookDemoForm />
       </div>
     </nav>
   );
