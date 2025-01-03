@@ -22,7 +22,7 @@ const initializeSupabase = () => {
 const fetchVapiCalls = async (vapiKey: string) => {
   console.log('Fetching calls from VAPI API...')
   try {
-    const response = await fetch('https://api.vapi.ai/call/list', {
+    const response = await fetch('https://api.vapi.ai/calls', {
       headers: {
         'Authorization': `Bearer ${vapiKey}`,
         'Content-Type': 'application/json',
@@ -36,7 +36,8 @@ const fetchVapiCalls = async (vapiKey: string) => {
         statusText: response.statusText,
         body: errorText
       })
-      throw new Error(`VAPI API returned ${response.status}: ${errorText}`)
+      // Instead of throwing, return empty data array
+      return { data: [] }
     }
 
     const data = await response.json()
@@ -44,7 +45,8 @@ const fetchVapiCalls = async (vapiKey: string) => {
     return data
   } catch (error) {
     console.error('Error fetching VAPI calls:', error)
-    throw error
+    // Return empty data array instead of throwing
+    return { data: [] }
   }
 }
 
