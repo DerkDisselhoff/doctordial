@@ -6,6 +6,80 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+// Validate environment variables and initialize Supabase client
+const initializeSupabase = () => {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Supabase configuration missing')
+  }
+
+  return createClient(supabaseUrl, supabaseKey)
+}
+
+// Fetch calls from VAPI API
+const fetchVapiCalls = async (vapiKey: string) => {
+  console.log('Fetching calls from VAPI API...')
+  const response = await fetch('https://api.vapi.ai/call/list', {
+    headers: {
+      'Authorization': `Bearer ${vapiKey}`,
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    const errorText = await response.text()
+    console.error('VAPI API error:', {
+      status: response.status,
+      statusText: response.statusText,
+      body: errorText
+    })
+    throw new Error(`VAPI API returned ${response.status}: ${errorText}`)
+  }
+
+  const data = await response.json()
+  console.log(`Received ${data.data?.length || 0} calls from VAPI`)
+  return data
+}
+
+// Process and store calls in Supabase
+const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
+  let processedCalls = 0
+  
+  for (const call of calls) {
+    console.log(`Processing call ${call.id}...`)
+    
+    const { error } = await supabaseClient
+      .from('vapi_calls')
+      .upsert({
+        id: call.id,
+        call_id: call.id,
+        caller_number: call.from,
+        recipient_number: call.to,
+        duration: call.duration,
+        status: call.status,
+        transcription: call.transcription,
+        sentiment_analysis: call.sentiment,
+        created_at: new Date(call.created_at).toISOString()
+      })
+
+    if (error) {
+      console.error('Error inserting call:', {
+        callId: call.id,
+        error: error.message,
+        details: error
+      })
+      throw error
+    }
+    
+    processedCalls++
+    console.log(`Successfully processed call ${call.id}`)
+  }
+
+  return processedCalls
+}
+
 serve(async (req) => {
   // Handle CORS
   if (req.method === 'OPTIONS') {
@@ -15,79 +89,22 @@ serve(async (req) => {
   try {
     console.log('Starting VAPI calls fetch...')
     
+    // Validate VAPI API key
     const vapiKey = Deno.env.get('VAPI_API_KEY')
     if (!vapiKey) {
       console.error('VAPI API key not found in environment variables')
       throw new Error('VAPI API key not configured')
     }
 
-    console.log('Fetching calls from VAPI API...')
-
-    // Fetch calls from VAPI API
-    const response = await fetch('https://api.vapi.ai/call/list', {
-      headers: {
-        'Authorization': `Bearer ${vapiKey}`,
-        'Content-Type': 'application/json',
-      },
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('VAPI API error:', {
-        status: response.status,
-        statusText: response.statusText,
-        body: errorText
-      })
-      throw new Error(`VAPI API returned ${response.status}: ${errorText}`)
-    }
-
-    const calls = await response.json()
-    console.log(`Received ${calls.data?.length || 0} calls from VAPI`)
-
     // Initialize Supabase client
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-
-    if (!supabaseUrl || !supabaseKey) {
-      console.error('Supabase credentials not found')
-      throw new Error('Supabase configuration missing')
-    }
-
-    const supabaseClient = createClient(supabaseUrl, supabaseKey)
+    const supabaseClient = initializeSupabase()
     console.log('Supabase client initialized')
 
-    // Process each call
-    let processedCalls = 0
-    for (const call of calls.data || []) {
-      // Use the VAPI call ID as the UUID for our database
-      // This ensures we don't create duplicate entries and maintains referential integrity
-      const { error } = await supabaseClient
-        .from('vapi_calls')
-        .upsert({
-          id: call.id, // Use VAPI's call ID directly as our UUID
-          call_id: call.id,
-          caller_number: call.from,
-          recipient_number: call.to,
-          duration: call.duration,
-          status: call.status,
-          transcription: call.transcription,
-          sentiment_analysis: call.sentiment,
-          created_at: new Date(call.created_at).toISOString()
-        })
-
-      if (error) {
-        console.error('Error inserting call:', {
-          callId: call.id,
-          error: error.message,
-          details: error
-        })
-        throw error
-      }
-      processedCalls++
-      console.log(`Processed call ${call.id} successfully`)
-    }
-
-    console.log(`Successfully processed ${processedCalls} calls`)
+    // Fetch and process calls
+    const vapiResponse = await fetchVapiCalls(vapiKey)
+    const processedCalls = await processVapiCalls(supabaseClient, vapiResponse.data || [])
+    
+    console.log(`Successfully completed processing ${processedCalls} calls`)
 
     return new Response(
       JSON.stringify({ 
