@@ -18,6 +18,15 @@ serve(async (req) => {
     // Log headers for debugging
     console.log('Request headers:', Object.fromEntries(req.headers.entries()))
     
+    // Verify VAPI secret if provided
+    const vapiSecret = req.headers.get('x-vapi-secret')
+    const expectedSecret = Deno.env.get('VAPI_API_KEY')
+    
+    if (expectedSecret && vapiSecret !== expectedSecret) {
+      console.error('Invalid VAPI secret')
+      throw new Error('Invalid VAPI secret')
+    }
+
     const body = await req.json()
     console.log('Received VAPI webhook payload:', JSON.stringify(body, null, 2))
 
@@ -28,16 +37,21 @@ serve(async (req) => {
 
     console.log('Attempting to insert data into vapi_calls table...')
 
+    // Generate a UUID for the id field
+    const id = crypto.randomUUID()
+
     const { data, error } = await supabaseClient
       .from('vapi_calls')
       .insert({
+        id,
         call_id: body.call_id,
         caller_number: body.caller_number,
         recipient_number: body.recipient_number,
         duration: body.duration,
         status: body.status,
         transcription: body.transcription,
-        sentiment_analysis: body.sentiment_analysis
+        sentiment_analysis: body.sentiment_analysis,
+        created_at: new Date().toISOString()
       })
       .select()
 
@@ -61,7 +75,8 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         error: error.message,
-        details: error.toString()
+        details: error.toString(),
+        stack: error.stack
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
