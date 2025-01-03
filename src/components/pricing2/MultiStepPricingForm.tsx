@@ -6,24 +6,25 @@ import { CompanyDetailsStep } from "./steps/CompanyDetailsStep";
 import { SuccessStep } from "./steps/SuccessStep";
 import { supabase } from "@/lib/supabaseClient";
 import { useToast } from "@/components/ui/use-toast";
+import { Star } from "lucide-react";
 
 export type FormData = {
-  practiceCount: string;
+  practice_count: string;
   name: string;
   email: string;
   phone: string;
-  companyName: string;
+  company_name: string;
   role: string;
 };
 
 export const MultiStepPricingForm = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
-    practiceCount: "",
+    practice_count: "",
     name: "",
     email: "",
     phone: "",
-    companyName: "",
+    company_name: "",
     role: "",
   });
   const { toast } = useToast();
@@ -42,7 +43,7 @@ export const MultiStepPricingForm = () => {
         title: "Success!",
         description: "Your information has been submitted successfully.",
       });
-      setStep(4); // Move to success step
+      setStep(4);
     } catch (error) {
       toast({
         title: "Error",
@@ -57,14 +58,14 @@ export const MultiStepPricingForm = () => {
   };
 
   return (
-    <div className="bg-forest p-8 rounded-lg shadow-lg">
-      <Progress value={progress} className="mb-8" />
+    <div className="bg-white rounded-xl shadow-sm p-8">
+      <Progress value={progress} className="mb-8 bg-blue-100" />
       
       {step === 1 && (
         <PracticeCountStep
-          value={formData.practiceCount}
+          value={formData.practice_count}
           onNext={(value) => {
-            updateFormData({ practiceCount: value });
+            updateFormData({ practice_count: value });
             setStep(2);
           }}
         />
@@ -88,7 +89,7 @@ export const MultiStepPricingForm = () => {
       {step === 3 && (
         <CompanyDetailsStep
           data={{
-            companyName: formData.companyName,
+            company_name: formData.company_name,
             role: formData.role,
           }}
           onBack={() => setStep(2)}
@@ -100,6 +101,20 @@ export const MultiStepPricingForm = () => {
       )}
       
       {step === 4 && <SuccessStep />}
+
+      {/* Rating section */}
+      <div className="mt-8 pt-8 border-t border-gray-100">
+        <p className="text-gray-600 mb-2">Rated #1 medical practice software on G2</p>
+        <div className="flex items-center gap-2">
+          <div className="p-1 bg-gray-100 rounded-full">
+            <Star className="w-5 h-5 text-blue-600" />
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="font-semibold text-gray-900">4.7</span>
+            <span className="text-gray-500">(650 Reviews)</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -33,6 +33,39 @@ export type Database = {
         }
         Relationships: []
       }
+      pricing_submissions: {
+        Row: {
+          company_name: string
+          created_at: string
+          email: string
+          id: number
+          name: string
+          phone: string
+          practice_count: string
+          role: string
+        }
+        Insert: {
+          company_name: string
+          created_at?: string
+          email: string
+          id?: never
+          name: string
+          phone: string
+          practice_count: string
+          role: string
+        }
+        Update: {
+          company_name?: string
+          created_at?: string
+          email?: string
+          id?: never
+          name?: string
+          phone?: string
+          practice_count?: string
+          role?: string
+        }
+        Relationships: []
+      }
       table_name: {
         Row: {
           data: Json | null

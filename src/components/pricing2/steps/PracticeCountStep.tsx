@@ -19,25 +19,26 @@ export const PracticeCountStep = ({
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-semibold text-mint mb-2">How many practices do you have?</h2>
-        <p className="text-gray-400">Select the option that best describes your organization</p>
+        <p className="text-sm text-gray-500 mb-2">Step 1 of 3</p>
+        <h2 className="text-2xl font-semibold text-gray-900 mb-2">How many practices do you have?</h2>
+        <p className="text-gray-500">Select the option that best describes your organization</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         {practices.map((practice) => (
           <Card
             key={practice.value}
-            className={`p-6 cursor-pointer transition-all hover:border-mint ${
-              value === practice.value ? "border-mint bg-forest-light" : "border-mint/20"
+            className={`p-4 cursor-pointer transition-all hover:border-blue-500 ${
+              value === practice.value ? "border-blue-500 bg-blue-50" : "border-gray-200"
             }`}
             onClick={() => onNext(practice.value)}
           >
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-full bg-mint/10">
-                <Building2 className="h-6 w-6 text-mint" />
+              <div className="p-2 rounded-full bg-blue-100">
+                <Building2 className="h-5 w-5 text-blue-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-white">{practice.label}</h3>
+                <h3 className="font-medium text-gray-900">{practice.label}</h3>
               </div>
             </div>
           </Card>

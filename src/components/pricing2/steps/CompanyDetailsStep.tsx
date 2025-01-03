@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ChevronLeft } from "lucide-react";
 
 type CompanyDetails = {
-  companyName: string;
+  company_name: string;
   role: string;
 };
 
@@ -20,7 +21,7 @@ export const CompanyDetailsStep = ({
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     onNext({
-      companyName: formData.get('companyName') as string,
+      company_name: formData.get('company_name') as string,
       role: formData.get('role') as string,
     });
   };
@@ -28,29 +29,32 @@ export const CompanyDetailsStep = ({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-semibold text-mint mb-2">Practice Details</h2>
-        <p className="text-gray-400">Tell us about your medical practice</p>
+        <p className="text-sm text-gray-500 mb-2">Step 3 of 3</p>
+        <h2 className="text-2xl font-semibold text-gray-900 mb-2">Practice Details</h2>
+        <p className="text-gray-500">Tell us about your medical practice</p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <Label htmlFor="companyName">Practice Name</Label>
+          <Label htmlFor="company_name" className="text-gray-700">Practice Name</Label>
           <Input
-            id="companyName"
-            name="companyName"
-            defaultValue={data.companyName}
+            id="company_name"
+            name="company_name"
+            defaultValue={data.company_name}
             placeholder="Smith Medical Group"
+            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             required
           />
         </div>
         
         <div>
-          <Label htmlFor="role">Your Role</Label>
+          <Label htmlFor="role" className="text-gray-700">Your Role</Label>
           <Input
             id="role"
             name="role"
             defaultValue={data.role}
             placeholder="General Practitioner"
+            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             required
           />
         </div>
@@ -59,13 +63,14 @@ export const CompanyDetailsStep = ({
       <div className="flex justify-between pt-4">
         <Button
           type="button"
-          variant="outline"
+          variant="ghost"
           onClick={onBack}
-          className="border-mint text-mint hover:bg-mint/10"
+          className="text-gray-600 hover:text-gray-900"
         >
+          <ChevronLeft className="w-4 h-4 mr-2" />
           Back
         </Button>
-        <Button type="submit" className="bg-mint hover:bg-mint/90 text-forest">
+        <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
           Complete
         </Button>
       </div>
