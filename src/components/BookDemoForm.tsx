@@ -26,18 +26,18 @@ export function BookDemoForm() {
     
     const formData = new FormData(e.currentTarget);
     const demoRequest = {
-      first_name: formData.get('name'),
-      last_name: formData.get('lastname'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      practice_name: formData.get('practice'),
-      practice_count: parseInt(formData.get('practitioners') as string),
+      first_name: String(formData.get('name')),
+      last_name: String(formData.get('lastname')),
+      email: String(formData.get('email')),
+      phone: String(formData.get('phone')),
+      practice_name: String(formData.get('practice')),
+      practice_count: parseInt(String(formData.get('practitioners'))),
     };
     
     try {
       const { error } = await supabase
         .from('demo_requests')
-        .insert([demoRequest]);
+        .insert(demoRequest);
         
       if (error) throw error;
       
