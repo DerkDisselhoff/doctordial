@@ -9,30 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      call_logs: {
-        Row: {
-          caller_id: string
-          id: number
-          intent: string | null
-          response: string | null
-          timestamp: string | null
-        }
-        Insert: {
-          caller_id: string
-          id?: number
-          intent?: string | null
-          response?: string | null
-          timestamp?: string | null
-        }
-        Update: {
-          caller_id?: string
-          id?: number
-          intent?: string | null
-          response?: string | null
-          timestamp?: string | null
-        }
-        Relationships: []
-      }
       demo_requests: {
         Row: {
           created_at: string
@@ -96,30 +72,6 @@ export type Database = {
           phone?: string
           practice_count?: string
           role?: string
-        }
-        Relationships: []
-      }
-      table_name: {
-        Row: {
-          data: Json | null
-          id: number
-          inserted_at: string
-          name: string | null
-          updated_at: string
-        }
-        Insert: {
-          data?: Json | null
-          id?: number
-          inserted_at?: string
-          name?: string | null
-          updated_at?: string
-        }
-        Update: {
-          data?: Json | null
-          id?: number
-          inserted_at?: string
-          name?: string | null
-          updated_at?: string
         }
         Relationships: []
       }

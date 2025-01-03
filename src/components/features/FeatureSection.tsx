@@ -1,11 +1,15 @@
+import { useEffect, useState } from "react";
 import { LucideIcon } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { generateFeatureImage } from "@/services/imageService";
+import { toast } from "sonner";
 
 interface FeatureSectionProps {
   icon: LucideIcon;
   title: string;
   description: string;
   image: string;
+  imagePrompt: string;
   points: string[];
   isReversed?: boolean;
 }
@@ -15,9 +19,32 @@ const FeatureSection = ({
   title,
   description,
   image,
+  imagePrompt,
   points,
   isReversed = false,
 }: FeatureSectionProps) => {
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const loadImage = async () => {
+      try {
+        setIsLoading(true);
+        const imageUrl = await generateFeatureImage(imagePrompt);
+        setGeneratedImage(imageUrl);
+      } catch (error) {
+        console.error('Error loading image:', error);
+        toast.error('Failed to load feature image');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (imagePrompt) {
+      loadImage();
+    }
+  }, [imagePrompt]);
+
   return (
     <div
       className={`mb-32 ${
@@ -51,11 +78,17 @@ const FeatureSection = ({
       {/* Image Side */}
       <div className="flex-1 bg-forest-light rounded-xl p-4 shadow-xl shadow-black/20">
         <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-lg">
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover rounded-lg"
-          />
+          {isLoading ? (
+            <div className="w-full h-full flex items-center justify-center bg-forest-light">
+              <div className="animate-pulse w-16 h-16 rounded-full bg-mint/20" />
+            </div>
+          ) : (
+            <img
+              src={generatedImage || image}
+              alt={title}
+              className="w-full h-full object-cover rounded-lg transition-opacity duration-300"
+            />
+          )}
         </AspectRatio>
       </div>
     </div>
