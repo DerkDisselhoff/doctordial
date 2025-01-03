@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Stats from "@/components/Stats";
 import FeaturesHero from "@/components/features/FeaturesHero";
 import FeatureSection from "@/components/features/FeatureSection";
 import FeaturesCTA from "@/components/features/FeaturesCTA";
@@ -11,7 +10,6 @@ const Features = () => {
     <div className="min-h-screen bg-forest">
       <Navbar />
       <FeaturesHero />
-      <Stats />
 
       {/* Features Grid */}
       <section className="py-20 px-4">
