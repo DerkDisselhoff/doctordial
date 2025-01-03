@@ -1,7 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 export interface VapiCall {
-  id: number;
+  id: string;  // Changed from number to string since it's a UUID
   call_id: string;
   caller_number: string | null;
   recipient_number: string | null;
