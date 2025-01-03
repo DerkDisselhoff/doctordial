@@ -44,7 +44,7 @@ export const PersonalDetailsStep = ({
             name="name"
             defaultValue={data.name}
             placeholder="Dr. Jane Smith"
-            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
             required
           />
         </div>
@@ -57,7 +57,7 @@ export const PersonalDetailsStep = ({
             type="email"
             defaultValue={data.email}
             placeholder="jane.smith@practice.com"
-            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
             required
           />
         </div>
@@ -70,7 +70,7 @@ export const PersonalDetailsStep = ({
             type="tel"
             defaultValue={data.phone}
             placeholder="+31 6 12345678"
-            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
             required
           />
         </div>
@@ -86,7 +86,7 @@ export const PersonalDetailsStep = ({
           <ChevronLeft className="w-4 h-4 mr-2" />
           Back
         </Button>
-        <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
+        <Button type="submit" className="bg-forest hover:bg-forest-light text-white">
           Next Step
         </Button>
       </div>

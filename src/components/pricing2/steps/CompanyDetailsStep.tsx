@@ -42,7 +42,7 @@ export const CompanyDetailsStep = ({
             name="company_name"
             defaultValue={data.company_name}
             placeholder="Smith Medical Group"
-            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
             required
           />
         </div>
@@ -54,7 +54,7 @@ export const CompanyDetailsStep = ({
             name="role"
             defaultValue={data.role}
             placeholder="General Practitioner"
-            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
             required
           />
         </div>
@@ -70,7 +70,7 @@ export const CompanyDetailsStep = ({
           <ChevronLeft className="w-4 h-4 mr-2" />
           Back
         </Button>
-        <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
+        <Button type="submit" className="bg-forest hover:bg-forest-light text-white">
           Complete
         </Button>
       </div>

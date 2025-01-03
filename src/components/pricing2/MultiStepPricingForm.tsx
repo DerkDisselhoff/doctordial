@@ -61,7 +61,7 @@ export const MultiStepPricingForm = () => {
       <Progress 
         value={progress} 
         className="mb-8 h-1.5 bg-gray-100" 
-        indicatorClassName="bg-blue-600"
+        indicatorClassName="bg-mint"
       />
       
       {step === 1 && (

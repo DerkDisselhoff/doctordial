@@ -28,14 +28,14 @@ export const PracticeCountStep = ({
         {practices.map((practice) => (
           <Card
             key={practice.value}
-            className={`p-4 cursor-pointer transition-all hover:border-blue-500 ${
-              value === practice.value ? "border-blue-500 bg-blue-50" : "border-gray-200"
+            className={`p-4 cursor-pointer transition-all hover:border-mint ${
+              value === practice.value ? "border-mint bg-mint/5" : "border-gray-200"
             }`}
             onClick={() => onNext(practice.value)}
           >
             <div className="flex items-center gap-4">
-              <div className="p-2 rounded-full bg-blue-100">
-                <Building2 className="h-5 w-5 text-blue-600" />
+              <div className="p-2 rounded-full bg-mint/10">
+                <Building2 className="h-5 w-5 text-mint" />
               </div>
               <div>
                 <h3 className="font-medium text-gray-900">{practice.label}</h3>
