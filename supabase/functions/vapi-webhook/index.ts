@@ -26,6 +26,13 @@ serve(async (req) => {
     
     console.log('Received secret:', vapiSecret ? '[PRESENT]' : '[MISSING]')
     console.log('Expected secret:', expectedSecret ? '[PRESENT]' : '[MISSING]')
+    
+    // Log the first few characters of each secret for comparison (safely)
+    if (vapiSecret && expectedSecret) {
+      console.log('First 4 chars of received secret:', vapiSecret.substring(0, 4))
+      console.log('First 4 chars of expected secret:', expectedSecret.substring(0, 4))
+      console.log('Lengths match:', vapiSecret.length === expectedSecret.length)
+    }
 
     if (!vapiSecret || !expectedSecret) {
       console.error('Missing authentication credentials')
