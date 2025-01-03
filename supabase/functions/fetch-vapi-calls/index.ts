@@ -59,13 +59,12 @@ serve(async (req) => {
     // Process each call
     let processedCalls = 0
     for (const call of calls.data || []) {
-      const id = crypto.randomUUID()
-      console.log(`Processing call ${call.id}...`)
-      
+      // Use the VAPI call ID as the UUID for our database
+      // This ensures we don't create duplicate entries and maintains referential integrity
       const { error } = await supabaseClient
         .from('vapi_calls')
         .upsert({
-          id,
+          id: call.id, // Use VAPI's call ID directly as our UUID
           call_id: call.id,
           caller_number: call.from,
           recipient_number: call.to,
@@ -85,6 +84,7 @@ serve(async (req) => {
         throw error
       }
       processedCalls++
+      console.log(`Processed call ${call.id} successfully`)
     }
 
     console.log(`Successfully processed ${processedCalls} calls`)
