@@ -55,3 +55,21 @@ export class RunwareService {
     }
   }
 }
+
+// Initialize the RunwareService with the API key
+const runwareService = new RunwareService("W2K6F8XHKC9jkj8fbCTgPi5BiTogKxIZ");
+
+export const generateAIAgentImage = async (): Promise<string> => {
+  try {
+    const result = await runwareService.generateImage({
+      positivePrompt: "Professional medical AI assistant, holographic interface, high-tech medical environment, clean and modern design",
+      width: 1024,
+      height: 1024,
+    });
+    return result.imageURL;
+  } catch (error) {
+    console.error('Error generating AI agent image:', error);
+    // Return the fallback image if generation fails
+    return "/lovable-uploads/62d4662e-ae36-4ab0-89a6-4d95c0a5f245.png";
+  }
+};
