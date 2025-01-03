@@ -21,63 +21,86 @@ const initializeSupabase = () => {
 // Fetch calls from VAPI API
 const fetchVapiCalls = async (vapiKey: string) => {
   console.log('Fetching calls from VAPI API...')
-  const response = await fetch('https://api.vapi.ai/call/list', {
-    headers: {
-      'Authorization': `Bearer ${vapiKey}`,
-      'Content-Type': 'application/json',
-    },
-  })
-
-  if (!response.ok) {
-    const errorText = await response.text()
-    console.error('VAPI API error:', {
-      status: response.status,
-      statusText: response.statusText,
-      body: errorText
+  try {
+    const response = await fetch('https://api.vapi.ai/call/list', {
+      headers: {
+        'Authorization': `Bearer ${vapiKey}`,
+        'Content-Type': 'application/json',
+      },
     })
-    throw new Error(`VAPI API returned ${response.status}: ${errorText}`)
-  }
 
-  const data = await response.json()
-  console.log(`Received ${data.data?.length || 0} calls from VAPI`)
-  return data
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error('VAPI API error:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText
+      })
+      throw new Error(`VAPI API returned ${response.status}: ${errorText}`)
+    }
+
+    const data = await response.json()
+    console.log(`Received ${data.data?.length || 0} calls from VAPI`)
+    return data
+  } catch (error) {
+    console.error('Error fetching VAPI calls:', error)
+    throw error
+  }
+}
+
+// Validate UUID format
+const isValidUUID = (uuid: string) => {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+  return uuidRegex.test(uuid)
 }
 
 // Process and store calls in Supabase
 const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
   let processedCalls = 0
+  const errors: any[] = []
   
   for (const call of calls) {
-    console.log(`Processing call ${call.id}...`)
-    
-    const { error } = await supabaseClient
-      .from('vapi_calls')
-      .upsert({
-        id: call.id,
-        call_id: call.id,
-        caller_number: call.from,
-        recipient_number: call.to,
-        duration: call.duration,
-        status: call.status,
-        transcription: call.transcription,
-        sentiment_analysis: call.sentiment,
-        created_at: new Date(call.created_at).toISOString()
-      })
+    try {
+      console.log(`Processing call ${call.id}...`)
+      
+      // Validate UUID format
+      if (!isValidUUID(call.id)) {
+        console.warn(`Invalid UUID format for call ${call.id}, skipping...`)
+        continue
+      }
 
-    if (error) {
-      console.error('Error inserting call:', {
-        callId: call.id,
-        error: error.message,
-        details: error
-      })
-      throw error
+      const { error } = await supabaseClient
+        .from('vapi_calls')
+        .upsert({
+          id: call.id,
+          call_id: call.id,
+          caller_number: call.from,
+          recipient_number: call.to,
+          duration: call.duration,
+          status: call.status,
+          transcription: call.transcription,
+          sentiment_analysis: call.sentiment,
+          created_at: new Date(call.created_at).toISOString()
+        })
+
+      if (error) {
+        console.error('Error inserting call:', {
+          callId: call.id,
+          error: error.message,
+          details: error
+        })
+        errors.push({ id: call.id, error })
+      } else {
+        processedCalls++
+        console.log(`Successfully processed call ${call.id}`)
+      }
+    } catch (error) {
+      console.error(`Error processing call ${call.id}:`, error)
+      errors.push({ id: call.id, error })
     }
-    
-    processedCalls++
-    console.log(`Successfully processed call ${call.id}`)
   }
 
-  return processedCalls
+  return { processedCalls, errors }
 }
 
 serve(async (req) => {
@@ -102,14 +125,18 @@ serve(async (req) => {
 
     // Fetch and process calls
     const vapiResponse = await fetchVapiCalls(vapiKey)
-    const processedCalls = await processVapiCalls(supabaseClient, vapiResponse.data || [])
+    const { processedCalls, errors } = await processVapiCalls(supabaseClient, vapiResponse.data || [])
     
     console.log(`Successfully completed processing ${processedCalls} calls`)
+    if (errors.length > 0) {
+      console.warn(`Encountered ${errors.length} errors while processing calls`)
+    }
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: `Processed ${processedCalls} calls` 
+        message: `Processed ${processedCalls} calls`,
+        errors: errors.length > 0 ? errors : undefined
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
