@@ -13,15 +13,21 @@ serve(async (req) => {
   }
 
   try {
+    console.log('Webhook received - Method:', req.method)
+    
+    // Log headers for debugging
+    console.log('Request headers:', Object.fromEntries(req.headers.entries()))
+    
+    const body = await req.json()
+    console.log('Received VAPI webhook payload:', JSON.stringify(body, null, 2))
+
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    const body = await req.json()
-    console.log('Received VAPI webhook:', body)
+    console.log('Attempting to insert data into vapi_calls table...')
 
-    // Store the call data in Supabase
     const { data, error } = await supabaseClient
       .from('vapi_calls')
       .insert({
@@ -35,7 +41,12 @@ serve(async (req) => {
       })
       .select()
 
-    if (error) throw error
+    if (error) {
+      console.error('Error inserting data:', error)
+      throw error
+    }
+
+    console.log('Successfully inserted data:', data)
 
     return new Response(
       JSON.stringify({ success: true, data }),
@@ -45,9 +56,13 @@ serve(async (req) => {
       }
     )
   } catch (error) {
-    console.error('Error processing VAPI webhook:', error)
+    console.error('Error processing webhook:', error)
+    // Return a more detailed error response
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        details: error.toString()
+      }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 500
