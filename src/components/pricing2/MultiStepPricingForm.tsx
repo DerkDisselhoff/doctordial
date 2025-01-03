@@ -57,8 +57,12 @@ export const MultiStepPricingForm = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-8">
-      <Progress value={progress} className="mb-8 bg-mint/20" />
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+      <Progress 
+        value={progress} 
+        className="mb-8 h-1.5 bg-gray-100" 
+        indicatorClassName="bg-blue-600"
+      />
       
       {step === 1 && (
         <PracticeCountStep
