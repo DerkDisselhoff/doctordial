@@ -12,30 +12,50 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { DemoSuccessStep } from "./DemoSuccessStep";
+import { supabase } from "@/integrations/supabase/client";
 
 export function BookDemoForm() {
   const [open, setOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    setIsLoading(true);
     
-    // Here you would typically send this data to your backend
-    console.log({
-      name: formData.get('name'),
+    const formData = new FormData(e.currentTarget);
+    const demoRequest = {
+      first_name: formData.get('name'),
+      last_name: formData.get('lastname'),
       email: formData.get('email'),
       phone: formData.get('phone'),
-      practice: formData.get('practice'),
-      practitioners: formData.get('practitioners')
-    });
+      practice_name: formData.get('practice'),
+      practice_count: parseInt(formData.get('practitioners') as string),
+    };
     
-    setIsSubmitted(true);
-    toast({
-      title: "Demo Request Received",
-      description: "We'll contact you shortly to schedule your demo.",
-    });
+    try {
+      const { error } = await supabase
+        .from('demo_requests')
+        .insert([demoRequest]);
+        
+      if (error) throw error;
+      
+      setIsSubmitted(true);
+      toast({
+        title: "Demo Request Received",
+        description: "We'll contact you shortly to schedule your demo.",
+      });
+    } catch (error) {
+      console.error('Error submitting demo request:', error);
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your request. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleOpenChange = (open: boolean) => {
@@ -131,8 +151,12 @@ export function BookDemoForm() {
                   required
                 />
               </div>
-              <Button type="submit" className="w-full bg-forest hover:bg-forest-light text-white h-12 text-lg">
-                Next
+              <Button 
+                type="submit" 
+                className="w-full bg-forest hover:bg-forest-light text-white h-12 text-lg"
+                disabled={isLoading}
+              >
+                {isLoading ? "Submitting..." : "Next"}
               </Button>
             </form>
           </>

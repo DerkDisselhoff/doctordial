@@ -33,6 +33,39 @@ export type Database = {
         }
         Relationships: []
       }
+      demo_requests: {
+        Row: {
+          created_at: string
+          email: string
+          first_name: string
+          id: number
+          last_name: string
+          phone: string
+          practice_count: number
+          practice_name: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          first_name: string
+          id?: number
+          last_name: string
+          phone: string
+          practice_count: number
+          practice_name: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: number
+          last_name?: string
+          phone?: string
+          practice_count?: number
+          practice_name?: string
+        }
+        Relationships: []
+      }
       pricing_submissions: {
         Row: {
           company_name: string
