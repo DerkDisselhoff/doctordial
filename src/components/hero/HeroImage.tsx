@@ -73,12 +73,12 @@ const HeroImage = () => {
   return (
     <div className="relative animate-fade-down lg:h-[600px]">
       <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
-      <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-mint/10 h-full bg-forest-light">
+      <div className="relative rounded-2xl overflow-visible shadow-2xl border border-mint/10 h-full bg-forest-light">
         {aiAgentImage ? (
           <img
             src={aiAgentImage}
             alt="AI Medical Assistant with holographic interface"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-2xl"
           />
         ) : (
           <div className="w-full h-full animate-pulse" />
