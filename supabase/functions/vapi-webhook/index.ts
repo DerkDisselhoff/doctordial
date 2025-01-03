@@ -3,7 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-vapi-secret',
 }
 
 serve(async (req) => {
@@ -24,19 +24,29 @@ serve(async (req) => {
     const vapiSecret = req.headers.get('x-vapi-secret')
     const expectedSecret = Deno.env.get('VAPI_API_KEY')
     
-    if (!vapiSecret) {
-      console.error('Missing VAPI secret in request headers')
-      throw new Error('Missing x-vapi-secret header')
-    }
+    console.log('Received secret:', vapiSecret ? '[PRESENT]' : '[MISSING]')
+    console.log('Expected secret:', expectedSecret ? '[PRESENT]' : '[MISSING]')
 
-    if (!expectedSecret) {
-      console.error('Missing VAPI_API_KEY environment variable')
-      throw new Error('Server configuration error')
+    if (!vapiSecret || !expectedSecret) {
+      console.error('Missing authentication credentials')
+      return new Response(
+        JSON.stringify({ error: 'Missing authentication credentials' }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 401 
+        }
+      )
     }
 
     if (vapiSecret !== expectedSecret) {
-      console.error('Invalid VAPI secret provided')
-      throw new Error('Invalid authentication credentials')
+      console.error('Invalid authentication credentials')
+      return new Response(
+        JSON.stringify({ error: 'Invalid authentication credentials' }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 401 
+        }
+      )
     }
 
     const body = await req.json()
@@ -83,12 +93,10 @@ serve(async (req) => {
     )
   } catch (error) {
     console.error('Error processing webhook:', error)
-    // Return a more detailed error response
     return new Response(
       JSON.stringify({ 
         error: error.message,
-        details: error.toString(),
-        stack: error.stack
+        details: error.toString()
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
