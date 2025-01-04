@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, PhoneCall, Clock, Calendar } from "lucide-react";
+import { Users, PhoneCall, Clock, Calendar, DollarSign } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
