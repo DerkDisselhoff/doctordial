@@ -97,7 +97,7 @@
 
 /* Dropdown styling fixes */
 [data-radix-popper-content-wrapper] {
-  @apply bg-white !important;
+  @apply !bg-white;
 }
 
 .glass-nav {
