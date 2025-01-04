@@ -57,7 +57,7 @@ const Practices = () => {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="p-8 space-y-8">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

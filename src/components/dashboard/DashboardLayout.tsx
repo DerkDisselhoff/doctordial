@@ -7,9 +7,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen flex w-full bg-[#F1F0FB]">
         <AdminSidebar />
         <main className="flex-1 overflow-y-auto">
-          <div className="p-8">
-            {children}
-          </div>
+          {children}
         </main>
       </div>
     </SidebarProvider>
