@@ -71,168 +71,61 @@
   }
 }
 
-/* Sidebar specific styles */
-.sidebar-nav {
-  @apply bg-forest-light/95 backdrop-blur-xl border-r border-mint/10;
-}
+@layer components {
+  /* Sidebar and Dropdown Menu shared styles */
+  .menu-base {
+    @apply bg-forest-light/95 backdrop-blur-xl text-gray-300;
+  }
 
-.sidebar-item {
-  @apply flex items-center space-x-2 px-4 py-2 text-gray-300 
-         hover:text-white hover:bg-mint/10 rounded-lg transition-all
-         data-[active=true]:bg-mint/20 data-[active=true]:text-white;
-}
+  .menu-item {
+    @apply flex items-center space-x-2 px-4 py-2 text-sm
+           hover:text-white hover:bg-mint/10 rounded-lg transition-all
+           data-[active=true]:bg-mint/20 data-[active=true]:text-white;
+  }
 
-.sidebar-section {
-  @apply space-y-1;
-}
+  .menu-icon {
+    @apply w-4 h-4 text-gray-400 group-hover:text-mint transition-colors;
+  }
 
-.sidebar-section-title {
-  @apply text-xs font-bold text-gray-400 uppercase tracking-wider px-3 mb-3;
-}
+  /* Sidebar specific styles */
+  .sidebar-nav {
+    @apply menu-base border-r border-mint/10;
+  }
 
-.sidebar-profile {
-  @apply mt-auto border-t border-mint/10 bg-forest-light/5;
-}
+  .sidebar-item {
+    @apply menu-item;
+  }
 
-.sidebar-profile-button {
-  @apply w-full justify-start p-4 hover:bg-mint/5;
-}
+  .sidebar-section {
+    @apply space-y-1;
+  }
 
-.sidebar-profile-avatar {
-  @apply h-9 w-9 mr-3 ring-2 ring-mint/20;
-}
+  .sidebar-profile {
+    @apply mt-auto border-t border-mint/10 bg-forest-light/5;
+  }
 
-/* Dashboard specific styles */
-.dashboard-content {
-  @apply p-8;
-}
+  .sidebar-profile-button {
+    @apply w-full justify-start p-4 hover:bg-mint/5;
+  }
 
-/* Form elements */
-.form-input, 
-.form-select, 
-.form-textarea {
-  @apply bg-white border border-gray-200 rounded-md px-4 py-2 text-forest 
-         focus:ring-2 focus:ring-mint/20 focus:border-mint transition-colors;
-}
+  .sidebar-profile-avatar {
+    @apply h-9 w-9 mr-3 ring-2 ring-mint/20;
+  }
 
-/* Label styling */
-.form-label {
-  @apply block text-sm font-medium text-forest mb-1;
-}
+  /* Dropdown Menu specific styles */
+  .dropdown-content {
+    @apply menu-base rounded-lg border border-mint/10 shadow-lg min-w-[200px];
+  }
 
-/* Button consistency */
-.btn-primary {
-  @apply bg-mint hover:bg-mint/90 text-forest font-medium 
-         transition-colors duration-200 transform hover:scale-[1.02];
-}
+  .dropdown-item {
+    @apply menu-item;
+  }
 
-.btn-secondary {
-  @apply bg-forest hover:bg-forest-light text-white font-medium
-         transition-colors duration-200 transform hover:scale-[1.02];
-}
+  .dropdown-label {
+    @apply px-3 py-2 text-sm text-gray-400 font-medium;
+  }
 
-/* Card styling */
-.dashboard-card {
-  @apply bg-white border-0 shadow-sm rounded-lg p-6 
-         hover:shadow-md transition-shadow duration-200;
-}
-
-/* Dropdown styling fixes */
-[data-radix-popper-content-wrapper] {
-  @apply !bg-white;
-}
-
-.select-content {
-  @apply bg-white border border-gray-200 shadow-lg rounded-lg 
-         overflow-hidden min-w-[8rem] p-1;
-}
-
-.select-item {
-  @apply relative flex cursor-pointer select-none items-center rounded-sm 
-         px-2 py-1.5 text-sm outline-none transition-colors
-         text-forest data-[highlighted]:bg-mint/10 data-[highlighted]:text-forest;
-}
-
-/* Sidebar styling */
-.sidebar-nav {
-  @apply bg-forest-light/95 backdrop-blur-xl border-r border-mint/10;
-}
-
-.sidebar-item {
-  @apply flex items-center space-x-2 px-4 py-2 text-gray-300 
-         hover:text-white hover:bg-mint/10 rounded-lg transition-all
-         data-[active=true]:bg-mint/20 data-[active=true]:text-white;
-}
-
-/* Table styling */
-.table-header {
-  @apply bg-gray-50 text-left text-xs font-medium text-gray-500 
-         uppercase tracking-wider py-3 px-4;
-}
-
-.table-cell {
-  @apply px-4 py-3 text-sm text-gray-900 border-b border-gray-200;
-}
-
-/* Stats card */
-.stat-card {
-  @apply relative p-6 bg-white rounded-lg border border-gray-200
-         hover:shadow-lg transition-shadow duration-200;
-}
-
-.stat-value {
-  @apply text-2xl font-bold text-forest;
-}
-
-.stat-label {
-  @apply text-sm text-gray-600;
-}
-
-/* Chart container */
-.chart-container {
-  @apply bg-white p-6 rounded-lg border border-gray-200 
-         hover:shadow-lg transition-shadow duration-200;
-}
-
-/* Animation utilities */
-.hover-scale {
-  @apply transition-transform duration-200 hover:scale-105;
-}
-
-/* Glass effect */
-.glass-panel {
-  @apply bg-white/90 backdrop-blur-lg border border-gray-200/50 
-         shadow-lg rounded-lg;
-}
-
-/* Navigation breadcrumb */
-.breadcrumb {
-  @apply flex items-center space-x-2 text-sm text-gray-600;
-}
-
-.breadcrumb-item {
-  @apply hover:text-mint transition-colors;
-}
-
-/* Modal styling */
-.modal-content {
-  @apply bg-white rounded-lg shadow-xl p-6 max-w-2xl w-full mx-4;
-}
-
-/* Form validation states */
-.input-error {
-  @apply border-red-500 focus:border-red-500 focus:ring-red-200;
-}
-
-.input-success {
-  @apply border-green-500 focus:border-green-500 focus:ring-green-200;
-}
-
-/* Loading states */
-.loading-overlay {
-  @apply absolute inset-0 bg-white/80 flex items-center justify-center;
-}
-
-.loading-spinner {
-  @apply animate-spin text-mint;
+  .dropdown-separator {
+    @apply -mx-1 my-1 border-t border-mint/10;
+  }
 }

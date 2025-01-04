@@ -20,6 +20,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { SidebarHeader } from "./sidebar/SidebarHeader";
 import { SidebarSection } from "./sidebar/SidebarSection";
 import { SidebarProfile } from "./sidebar/SidebarProfile";
+import { cn } from "@/lib/utils";
 
 export function AdminSidebar() {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
@@ -76,7 +77,9 @@ export function AdminSidebar() {
 
   return (
     <Sidebar>
-      <div className="flex flex-col h-full bg-forest-light/95 backdrop-blur-xl border-r border-mint/10">
+      <div className={cn(
+        "flex flex-col h-full bg-forest-light/95 backdrop-blur-xl border-r border-mint/10",
+      )}>
         <SidebarHeader />
         <SidebarContent className="flex-1 px-3 py-6">
           <SidebarGroup>
@@ -85,16 +88,10 @@ export function AdminSidebar() {
                 <>
                   <SidebarSection items={adminMenuItems} />
                   <div className="mt-8">
-                    <SidebarSection 
-                      title="Analytics & Reports" 
-                      items={analyticsItems} 
-                    />
+                    <SidebarSection items={analyticsItems} />
                   </div>
                   <div className="mt-8">
-                    <SidebarSection 
-                      title="Business" 
-                      items={businessItems} 
-                    />
+                    <SidebarSection items={businessItems} />
                   </div>
                 </>
               ) : (
