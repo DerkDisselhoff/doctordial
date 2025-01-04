@@ -3,27 +3,67 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Clock, ThumbsUp, AlertTriangle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 
 const Calls = () => {
-  const { data: calls } = useQuery({
+  const { data: calls, isLoading: isLoadingCalls } = useQuery({
     queryKey: ['vapi-calls'],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('vapi_calls')
         .select('*')
         .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching calls:', error);
+        throw error;
+      }
+      
       return data || [];
     },
   });
+
+  const { data: subscription, isLoading: isLoadingSubscription } = useQuery({
+    queryKey: ['subscription'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('No user found');
+
+      const { data, error } = await supabase
+        .from('company_subscriptions')
+        .select('package_name')
+        .eq('profile_id', user.id)
+        .maybeSingle();
+      
+      if (error) {
+        console.error('Error fetching subscription:', error);
+        throw error;
+      }
+      
+      return data;
+    },
+  });
+
+  if (isLoadingCalls || isLoadingSubscription) {
+    return <div className="p-8">Loading...</div>;
+  }
+
+  // If no subscription is found, show a message
+  if (!subscription) {
+    return (
+      <DashboardLayout>
+        <div className="p-8">
+          <Card className="bg-white">
+            <CardContent className="p-6">
+              <h2 className="text-2xl font-bold text-forest mb-4">No Active Subscription</h2>
+              <p className="text-gray-600">
+                Please subscribe to a package to access call analytics.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   const stats = [
     {
