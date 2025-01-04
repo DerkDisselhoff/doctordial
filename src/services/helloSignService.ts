@@ -22,6 +22,7 @@ export async function createSignatureRequest({
   paymentFrequency,
 }: SignatureRequest) {
   try {
+    console.log("Fetching HelloSign API key from Supabase...");
     const { data: secretData, error: secretError } = await supabase
       .from('secrets')
       .select('value')
@@ -68,15 +69,24 @@ export async function createSignatureRequest({
       })
     });
 
+    const responseText = await response.text();
+    console.log('Raw API response:', responseText);
+
+    let errorData;
+    try {
+      errorData = JSON.parse(responseText);
+    } catch (e) {
+      console.error('Failed to parse API response:', e);
+      throw new Error('Invalid API response format');
+    }
+
     if (!response.ok) {
-      const errorData = await response.json();
       console.error('HelloSign API error response:', errorData);
       throw new Error(`Failed to create signature request: ${errorData.error?.error_msg || 'Unknown error'}`);
     }
 
-    const data = await response.json();
-    console.log('HelloSign API response:', data);
-    return data;
+    console.log('HelloSign API response:', errorData);
+    return errorData;
   } catch (error) {
     console.error('Error in createSignatureRequest:', error);
     throw error;
@@ -110,15 +120,24 @@ export async function getSignatureStatus(signatureId: string) {
       }
     });
 
+    const responseText = await response.text();
+    console.log('Raw API response:', responseText);
+
+    let errorData;
+    try {
+      errorData = JSON.parse(responseText);
+    } catch (e) {
+      console.error('Failed to parse API response:', e);
+      throw new Error('Invalid API response format');
+    }
+
     if (!response.ok) {
-      const errorData = await response.json();
       console.error('HelloSign API error response:', errorData);
       throw new Error(`Failed to get signature status: ${errorData.error?.error_msg || 'Unknown error'}`);
     }
 
-    const data = await response.json();
-    console.log('HelloSign API status response:', data);
-    return data;
+    console.log('HelloSign API status response:', errorData);
+    return errorData;
   } catch (error) {
     console.error('Error in getSignatureStatus:', error);
     throw error;

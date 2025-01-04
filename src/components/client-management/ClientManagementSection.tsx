@@ -43,6 +43,7 @@ export const ClientManagementSection = () => {
     setIsLoading(true);
 
     try {
+      console.log("Starting signature request process...");
       const request = {
         title: "DoctorDial Service Agreement",
         subject: "Welcome to DoctorDial - Your Service Agreement",
@@ -54,7 +55,8 @@ export const ClientManagementSection = () => {
         paymentFrequency: formData.paymentFrequency,
       };
 
-      await createSignatureRequest(request);
+      const response = await createSignatureRequest(request);
+      console.log("Signature request response:", response);
 
       toast({
         title: "Client Invited Successfully",
@@ -70,9 +72,10 @@ export const ClientManagementSection = () => {
         paymentFrequency: "",
       });
     } catch (error) {
+      console.error("Error in handleInviteClient:", error);
       toast({
         title: "Error",
-        description: "Failed to send client invitation. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to send client invitation. Please try again.",
         variant: "destructive",
       });
     } finally {
