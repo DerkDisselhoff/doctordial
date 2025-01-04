@@ -6,6 +6,9 @@ export interface VapiCall {
   duration: number | null;
   status: string | null;
   transcription: string | null;
-  sentiment_analysis: any | null;
+  sentiment_analysis: {
+    sentiment: string;
+    urgency: string;
+  } | null;
   created_at: string | null;
 }

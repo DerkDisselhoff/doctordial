@@ -11,6 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { VapiCall } from "@/integrations/supabase/types/tables/vapi-calls";
 
 const Calls = () => {
   const { data: calls, isLoading: isLoadingCalls } = useQuery({
@@ -107,7 +108,7 @@ const Calls = () => {
 
   // Prepare data for the chart
   const chartData = calls?.map(call => ({
-    date: new Date(call.created_at).toLocaleDateString(),
+    date: new Date(call.created_at || '').toLocaleDateString(),
     duration: call.duration,
   })) || [];
 
