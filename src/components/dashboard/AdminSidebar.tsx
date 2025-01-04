@@ -1,4 +1,14 @@
-import { BarChart3, Users, Phone, Settings, Home } from "lucide-react";
+import { 
+  BarChart3, 
+  Users, 
+  Phone, 
+  Settings, 
+  Home,
+  Building2,
+  DollarSign,
+  FileText,
+  Activity
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -14,8 +24,12 @@ import { useNavigate } from "react-router-dom";
 const menuItems = [
   { title: "Overview", icon: Home, path: "/dashboard" },
   { title: "Clients", icon: Users, path: "/dashboard/clients" },
+  { title: "Practices", icon: Building2, path: "/dashboard/practices" },
   { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
   { title: "Reports", icon: BarChart3, path: "/dashboard/reports" },
+  { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
+  { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
+  { title: "Activity", icon: Activity, path: "/dashboard/activity" },
   { title: "Settings", icon: Settings, path: "/dashboard/settings" },
 ];
 
