@@ -39,14 +39,14 @@ export function Sidebar({ className, children }: React.HTMLAttributes<HTMLDivEle
 
 export function SidebarContent({ className, children }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("flex flex-col gap-4 p-4", className)}>
+    <div className={cn("flex-1 overflow-y-auto py-4", className)}>
       {children}
     </div>
   )
 }
 
 export function SidebarGroup({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-2">{children}</div>
+  return <div className="space-y-4">{children}</div>
 }
 
 export function SidebarGroupLabel({ children }: { children: React.ReactNode }) {
@@ -55,7 +55,7 @@ export function SidebarGroupLabel({ children }: { children: React.ReactNode }) {
 
   return (
     <div className={cn(
-      "text-sm font-semibold text-forest", 
+      "text-sm font-medium text-forest/70 px-4", 
       context.collapsed && "sr-only"
     )}>
       {children}
@@ -64,11 +64,11 @@ export function SidebarGroupLabel({ children }: { children: React.ReactNode }) {
 }
 
 export function SidebarGroupContent({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-1">{children}</div>
+  return <div className="space-y-1">{children}</div>
 }
 
 export function SidebarMenu({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-1">{children}</div>
+  return <nav className="space-y-1">{children}</nav>
 }
 
 export function SidebarMenuItem({ children }: { children: React.ReactNode }) {
@@ -96,7 +96,7 @@ export function SidebarMenuButton({
     return (
       <div
         className={cn(
-          "flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-forest transition-colors hover:bg-mint/10 hover:text-forest",
+          "flex items-center gap-2 rounded-lg px-4 py-2 text-sm text-forest/80 transition-colors hover:bg-mint/5 hover:text-forest",
           context.collapsed && "justify-center",
           className
         )}
@@ -110,7 +110,7 @@ export function SidebarMenuButton({
   return (
     <button
       className={cn(
-        "flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-forest transition-colors hover:bg-mint/10 hover:text-forest",
+        "flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-forest/80 transition-colors hover:bg-mint/5 hover:text-forest",
         context.collapsed && "justify-center",
         className
       )}

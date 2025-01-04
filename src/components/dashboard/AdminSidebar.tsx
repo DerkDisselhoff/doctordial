@@ -22,7 +22,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import {
@@ -35,9 +35,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 export function AdminSidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
   const [userProfile, setUserProfile] = useState<{
     username?: string | null;
@@ -70,11 +72,15 @@ export function AdminSidebar() {
     { title: "Overview", icon: Home, path: "/dashboard" },
     { title: "Clients", icon: Users, path: "/dashboard/clients" },
     { title: "Practices", icon: Building2, path: "/dashboard/practices" },
-    { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
-    { title: "Reports", icon: BarChart3, path: "/dashboard/reports" },
-    { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
-    { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
-    { title: "Activity", icon: Activity, path: "/dashboard/activity" },
+    { section: "Analytics & Reports", items: [
+      { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
+      { title: "Reports", icon: BarChart3, path: "/dashboard/reports" },
+    ]},
+    { section: "Business", items: [
+      { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
+      { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
+      { title: "Activity", icon: Activity, path: "/dashboard/activity" },
+    ]},
     { title: "Settings", icon: Settings, path: "/dashboard/settings" },
   ];
 
@@ -91,25 +97,56 @@ export function AdminSidebar() {
 
   const menuItems = userRole === 'admin' ? adminMenuItems : clientMenuItems;
 
+  const isActive = (path: string) => location.pathname === path;
+
   return (
     <Sidebar>
       <div className="flex flex-col h-full">
-        <div className="p-4 border-b border-mint/10">
+        <div className="p-6 border-b border-mint/10">
           <h1 className="text-xl font-semibold text-forest tracking-tight">
             DoctorDial
           </h1>
         </div>
-        <SidebarContent>
+        <SidebarContent className="flex-1">
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-                {menuItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton onClick={() => navigate(item.path)}>
-                      <item.icon className="w-4 h-4 mr-2" />
-                      <span>{item.title}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                {menuItems.map((item, index) => (
+                  'section' in item ? (
+                    <div key={item.section} className="mt-6 first:mt-0">
+                      <div className="px-4 mb-2">
+                        <p className="text-xs font-medium text-forest/60 uppercase tracking-wider">
+                          {item.section}
+                        </p>
+                      </div>
+                      {item.items.map((subItem) => (
+                        <SidebarMenuItem key={subItem.title}>
+                          <SidebarMenuButton 
+                            onClick={() => navigate(subItem.path)}
+                            className={isActive(subItem.path) ? 
+                              "bg-mint/10 text-forest font-medium" : undefined}
+                          >
+                            <subItem.icon className="w-4 h-4 mr-2" />
+                            <span>{subItem.title}</span>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                      {index < menuItems.length - 1 && (
+                        <Separator className="my-4 bg-mint/10" />
+                      )}
+                    </div>
+                  ) : (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton 
+                        onClick={() => navigate(item.path)}
+                        className={isActive(item.path) ? 
+                          "bg-mint/10 text-forest font-medium" : undefined}
+                      >
+                        <item.icon className="w-4 h-4 mr-2" />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )
                 ))}
               </SidebarMenu>
             </SidebarGroupContent>
@@ -119,7 +156,7 @@ export function AdminSidebar() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="w-full justify-start p-4 hover:bg-mint/5">
-                <Avatar className="h-8 w-8 mr-2">
+                <Avatar className="h-8 w-8 mr-3 ring-2 ring-mint/20">
                   <AvatarImage src={userProfile?.avatar_url || ''} />
                   <AvatarFallback className="bg-mint/10 text-forest">
                     {userProfile?.username?.[0]?.toUpperCase() || 'U'}
