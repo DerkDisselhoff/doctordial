@@ -1,7 +1,7 @@
 export const fetchVapiCalls = async (vapiKey: string) => {
   console.log('Fetching calls from VAPI API...')
   try {
-    const response = await fetch('https://api.vapi.ai/calls', {
+    const response = await fetch('https://api.vapi.ai/call/list', {
       headers: {
         'Authorization': `Bearer ${vapiKey}`,
         'Content-Type': 'application/json',
@@ -13,8 +13,11 @@ export const fetchVapiCalls = async (vapiKey: string) => {
       console.error('VAPI API error:', {
         status: response.status,
         statusText: response.statusText,
-        body: errorText
+        body: errorText,
+        endpoint: '/call/list'
       })
+      
+      // Instead of throwing, return empty data array
       return { data: [] }
     }
 
@@ -22,7 +25,10 @@ export const fetchVapiCalls = async (vapiKey: string) => {
     console.log(`Received ${data.data?.length || 0} calls from VAPI`)
     return data
   } catch (error) {
-    console.error('Error fetching VAPI calls:', error)
+    console.error('Error fetching VAPI calls:', {
+      error: error.message,
+      stack: error.stack
+    })
     return { data: [] }
   }
 }
