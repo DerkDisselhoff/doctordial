@@ -1,8 +1,16 @@
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Phone, Clock, ThumbsUp, AlertTriangle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 const Calls = () => {
   const { data: calls, isLoading: isLoadingCalls } = useQuery({
@@ -50,18 +58,16 @@ const Calls = () => {
   // If no subscription is found, show a message
   if (!subscription) {
     return (
-      <DashboardLayout>
-        <div className="p-8">
-          <Card className="bg-white">
-            <CardContent className="p-6">
-              <h2 className="text-2xl font-bold text-forest mb-4">No Active Subscription</h2>
-              <p className="text-gray-600">
-                Please subscribe to a package to access call analytics.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </DashboardLayout>
+      <div className="p-8">
+        <Card className="bg-white">
+          <CardContent className="p-6">
+            <h2 className="text-2xl font-bold text-forest mb-4">No Active Subscription</h2>
+            <p className="text-gray-600">
+              Please subscribe to a package to access call analytics.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
@@ -70,119 +76,86 @@ const Calls = () => {
       title: "Total Calls",
       value: calls?.length || 0,
       icon: Phone,
-      description: "All time",
+      color: "text-blue-500",
     },
     {
       title: "Average Duration",
-      value: "2m 34s",
+      value: calls?.reduce((acc, call) => acc + (call.duration || 0), 0) / (calls?.length || 1),
       icon: Clock,
-      description: "Per call",
+      color: "text-green-500",
+      suffix: "min",
     },
     {
-      title: "Satisfaction Rate",
-      value: "92%",
+      title: "Positive Sentiment",
+      value: calls?.filter(call => 
+        call.sentiment_analysis && 
+        call.sentiment_analysis.sentiment === 'positive'
+      ).length || 0,
       icon: ThumbsUp,
-      description: "Based on analysis",
+      color: "text-yellow-500",
     },
     {
       title: "Urgent Cases",
-      value: "8%",
+      value: calls?.filter(call => 
+        call.sentiment_analysis && 
+        call.sentiment_analysis.urgency === 'high'
+      ).length || 0,
       icon: AlertTriangle,
-      description: "Of total calls",
+      color: "text-red-500",
     },
   ];
 
+  // Prepare data for the chart
+  const chartData = calls?.map(call => ({
+    date: new Date(call.created_at).toLocaleDateString(),
+    duration: call.duration,
+  })) || [];
+
   return (
-    <DashboardLayout>
-      <div className="space-y-8">
-        <div>
-          <h2 className="text-3xl font-bold text-forest">Call Analytics</h2>
-          <p className="text-gray-500">Monitor and analyze call patterns and performance</p>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
-            <Card key={stat.title} className="bg-white">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-forest">
-                  {stat.title}
-                </CardTitle>
-                <stat.icon className="h-4 w-4 text-mint" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-forest">{stat.value}</div>
-                <p className="text-xs text-gray-500">{stat.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <Card className="bg-white">
-          <CardHeader>
-            <CardTitle>Call Volume Trends</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={[
-                  { time: '00:00', calls: 12 },
-                  { time: '04:00', calls: 8 },
-                  { time: '08:00', calls: 45 },
-                  { time: '12:00', calls: 67 },
-                  { time: '16:00', calls: 52 },
-                  { time: '20:00', calls: 23 },
-                ]}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="time" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="calls" stroke="#64FFDA" />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-forest">Recent Calls</h3>
-          <div className="space-y-4">
-            {calls?.slice(0, 5).map((call) => (
-              <Card key={call.id} className="bg-white">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-10 h-10 bg-mint/10 rounded-full flex items-center justify-center">
-                        <Phone className="w-5 h-5 text-mint" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-forest">
-                          {call.caller_number || 'Unknown Caller'}
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          Duration: {call.duration}s
-                        </p>
-                      </div>
-                    </div>
-                    <span className={`px-3 py-1 text-xs rounded-full ${
-                      call.status === 'completed'
-                        ? 'bg-green-100 text-green-600'
-                        : 'bg-yellow-100 text-yellow-600'
-                    }`}>
-                      {call.status}
-                    </span>
-                  </div>
-                  {call.transcription && (
-                    <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                      <p className="text-sm text-gray-600">{call.transcription}</p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
+    <div className="space-y-6 p-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {stats.map((stat, index) => (
+          <Card key={index} className="bg-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">{stat.title}</p>
+                  <h3 className="text-2xl font-bold mt-1">
+                    {stat.value}
+                    {stat.suffix && <span className="text-sm ml-1">{stat.suffix}</span>}
+                  </h3>
+                </div>
+                <div className={`p-3 rounded-full bg-gray-100 ${stat.color}`}>
+                  <stat.icon className="w-6 h-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
-    </DashboardLayout>
+
+      <Card className="bg-white">
+        <CardContent className="p-6">
+          <h3 className="text-xl font-semibold mb-4">Call Duration Trends</h3>
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Line 
+                  type="monotone" 
+                  dataKey="duration" 
+                  stroke="#4F46E5" 
+                  strokeWidth={2} 
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
