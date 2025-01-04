@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FileText, Search, Filter } from "lucide-react";
 
+// Mock data for demonstration
 const mockContracts = [
   {
     id: 1,
@@ -32,9 +34,18 @@ const mockContracts = [
 ];
 
 const Contracts = () => {
+  const [filter, setFilter] = useState("all");
+
+  const filteredContracts = mockContracts.filter((contract) => {
+    if (filter === "active") return contract.status === "active";
+    if (filter === "pending") return contract.status === "pending";
+    if (filter === "inactive") return contract.status === "inactive";
+    return true;
+  });
+
   return (
-    <div className="p-8 space-y-8">
-      <div>
+    <div className="space-y-8">
+      <div className="mb-6">
         <h2 className="text-3xl font-bold text-forest">Contract Management</h2>
         <p className="text-gray-500">Manage and monitor client contracts</p>
       </div>
@@ -53,13 +64,39 @@ const Contracts = () => {
             Filters
           </Button>
         </div>
+        <div className="flex space-x-2">
+          <Button
+            variant={filter === "all" ? "default" : "outline"}
+            onClick={() => setFilter("all")}
+          >
+            All
+          </Button>
+          <Button
+            variant={filter === "active" ? "default" : "outline"}
+            onClick={() => setFilter("active")}
+          >
+            Active
+          </Button>
+          <Button
+            variant={filter === "pending" ? "default" : "outline"}
+            onClick={() => setFilter("pending")}
+          >
+            Pending
+          </Button>
+          <Button
+            variant={filter === "inactive" ? "default" : "outline"}
+            onClick={() => setFilter("inactive")}
+          >
+            Inactive
+          </Button>
+        </div>
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
-            Active Contracts
+            Contract Overview
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -75,9 +112,9 @@ const Contracts = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mockContracts.map((contract) => (
+              {filteredContracts.map((contract) => (
                 <TableRow key={contract.id}>
-                  <TableCell className="font-medium">{contract.client}</TableCell>
+                  <TableCell className="font-medium text-forest">{contract.client}</TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       contract.status === 'active' 
@@ -89,9 +126,9 @@ const Contracts = () => {
                       {contract.status}
                     </span>
                   </TableCell>
-                  <TableCell>{contract.practices}</TableCell>
-                  <TableCell>{contract.startDate}</TableCell>
-                  <TableCell>{contract.endDate || '-'}</TableCell>
+                  <TableCell className="text-gray-600">{contract.practices}</TableCell>
+                  <TableCell className="text-gray-600">{contract.startDate}</TableCell>
+                  <TableCell className="text-gray-600">{contract.endDate || '-'}</TableCell>
                   <TableCell>
                     <Button variant="ghost" size="sm">View Details</Button>
                   </TableCell>
