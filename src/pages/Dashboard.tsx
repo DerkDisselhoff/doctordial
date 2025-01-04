@@ -29,16 +29,18 @@ const Dashboard = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Routes>
-        <Route path="/" element={<OverviewDashboard />} />
-        <Route path="/clients" element={<Clients />} />
-        <Route path="/practices" element={<Practices />} />
-        <Route path="/calls" element={<Calls />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/billing" element={<Billing />} />
-        <Route path="/activity" element={<Activity />} />
-        <Route path="/settings" element={<Settings />} />
-      </Routes>
+      <DashboardLayout>
+        <Routes>
+          <Route path="/" element={<OverviewDashboard />} />
+          <Route path="/clients" element={<Clients />} />
+          <Route path="/practices" element={<Practices />} />
+          <Route path="/calls" element={<Calls />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/billing" element={<Billing />} />
+          <Route path="/activity" element={<Activity />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </DashboardLayout>
     </QueryClientProvider>
   );
 };
