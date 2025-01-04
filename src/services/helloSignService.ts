@@ -28,12 +28,20 @@ export async function createSignatureRequest({
       .eq('name', 'HELLOSIGN_API_KEY')
       .single();
 
-    if (secretError) throw new Error('Failed to get HelloSign API key');
-    if (!secretData?.value) throw new Error('HelloSign API key not found');
+    if (secretError) {
+      console.error('Error fetching HelloSign API key:', secretError);
+      throw new Error('Failed to get HelloSign API key');
+    }
+    if (!secretData?.value) {
+      console.error('HelloSign API key not found in secrets');
+      throw new Error('HelloSign API key not found');
+    }
 
     const apiKey = secretData.value;
+    // Add a colon after the API key for Basic Auth
     const authHeader = Buffer.from(`${apiKey}:`).toString('base64');
 
+    console.log('Making request to HelloSign API...');
     const response = await fetch('https://api.hellosign.com/v3/signature_request/send', {
       method: 'POST',
       headers: {
@@ -62,14 +70,15 @@ export async function createSignatureRequest({
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('HelloSign API error:', errorData);
-      throw new Error('Failed to create signature request');
+      console.error('HelloSign API error response:', errorData);
+      throw new Error(`Failed to create signature request: ${errorData.error?.error_msg || 'Unknown error'}`);
     }
 
     const data = await response.json();
+    console.log('HelloSign API response:', data);
     return data;
   } catch (error) {
-    console.error('Error creating signature request:', error);
+    console.error('Error in createSignatureRequest:', error);
     throw error;
   }
 }
@@ -82,12 +91,19 @@ export async function getSignatureStatus(signatureId: string) {
       .eq('name', 'HELLOSIGN_API_KEY')
       .single();
 
-    if (secretError) throw new Error('Failed to get HelloSign API key');
-    if (!secretData?.value) throw new Error('HelloSign API key not found');
+    if (secretError) {
+      console.error('Error fetching HelloSign API key:', secretError);
+      throw new Error('Failed to get HelloSign API key');
+    }
+    if (!secretData?.value) {
+      console.error('HelloSign API key not found in secrets');
+      throw new Error('HelloSign API key not found');
+    }
 
     const apiKey = secretData.value;
     const authHeader = Buffer.from(`${apiKey}:`).toString('base64');
 
+    console.log('Fetching signature status from HelloSign API...');
     const response = await fetch(`https://api.hellosign.com/v3/signature_request/${signatureId}`, {
       headers: {
         'Authorization': `Basic ${authHeader}`
@@ -96,14 +112,15 @@ export async function getSignatureStatus(signatureId: string) {
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('HelloSign API error:', errorData);
-      throw new Error('Failed to get signature status');
+      console.error('HelloSign API error response:', errorData);
+      throw new Error(`Failed to get signature status: ${errorData.error?.error_msg || 'Unknown error'}`);
     }
 
     const data = await response.json();
+    console.log('HelloSign API status response:', data);
     return data;
   } catch (error) {
-    console.error('Error getting signature status:', error);
+    console.error('Error in getSignatureStatus:', error);
     throw error;
   }
 }
