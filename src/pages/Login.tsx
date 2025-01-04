@@ -8,10 +8,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is already logged in
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        navigate("/");
+        navigate("/dashboard");
       }
     });
   }, [navigate]);
@@ -36,13 +35,10 @@ const Login = () => {
                 },
               },
             },
-            className: {
-              container: 'auth-container',
-              button: 'auth-button',
-              input: 'auth-input',
-            },
           }}
           providers={[]}
+          view="sign_in"
+          showLinks={false}
         />
       </div>
     </div>
