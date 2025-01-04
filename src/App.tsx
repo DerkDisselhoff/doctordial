@@ -8,11 +8,13 @@ import BillingPage from "@/pages/dashboard/BillingPage";
 import ContractsPage from "@/pages/dashboard/ContractsPage";
 import ActivityPage from "@/pages/dashboard/ActivityPage";
 import SettingsPage from "@/pages/dashboard/SettingsPage";
+import Index from "@/pages/Index";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Index />} />
         <Route 
           path="/dashboard" 
           element={
