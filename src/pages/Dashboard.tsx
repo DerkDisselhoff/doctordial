@@ -3,6 +3,9 @@ import { OverviewDashboard } from "@/components/dashboard/OverviewDashboard";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -18,9 +21,11 @@ const Dashboard = () => {
   }, [navigate]);
 
   return (
-    <DashboardLayout>
-      <OverviewDashboard />
-    </DashboardLayout>
+    <QueryClientProvider client={queryClient}>
+      <DashboardLayout>
+        <OverviewDashboard />
+      </DashboardLayout>
+    </QueryClientProvider>
   );
 };
 

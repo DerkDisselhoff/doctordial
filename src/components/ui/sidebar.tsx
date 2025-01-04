@@ -74,20 +74,22 @@ export function SidebarMenuItem({ children }: { children: React.ReactNode }) {
   return <div>{children}</div>
 }
 
+interface SidebarMenuButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean
+}
+
 export function SidebarMenuButton({
   className,
   children,
   asChild,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  asChild?: boolean
-}) {
-  const Comp = asChild ? "div" : "button"
+}: SidebarMenuButtonProps) {
+  const Component = asChild ? "div" : "button"
   const context = React.useContext(SidebarContext)
   if (!context) throw new Error("SidebarMenuButton must be used within SidebarProvider")
 
   return (
-    <Comp
+    <Component
       className={cn(
         "flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
         context.collapsed && "justify-center",
@@ -96,6 +98,6 @@ export function SidebarMenuButton({
       {...props}
     >
       {children}
-    </Comp>
+    </Component>
   )
 }
