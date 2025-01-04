@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { OverviewDashboard } from "@/components/dashboard/OverviewDashboard";
 import PracticesPage from "@/pages/dashboard/PracticesPage";
@@ -13,7 +13,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route 
+          path="/dashboard" 
+          element={
+            <DashboardLayout>
+              <Outlet />
+            </DashboardLayout>
+          }
+        >
           <Route index element={<OverviewDashboard />} />
           <Route path="practices" element={<PracticesPage />} />
           <Route path="calls" element={<CallAnalyticsPage />} />
