@@ -74,14 +74,19 @@ export function SidebarMenuItem({ children }: { children: React.ReactNode }) {
   return <div>{children}</div>
 }
 
-interface SidebarMenuButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type SidebarMenuButtonProps = {
   asChild?: boolean
-}
+  className?: string
+  children: React.ReactNode
+} & (
+  | ({ asChild: true } & React.HTMLAttributes<HTMLDivElement>)
+  | ({ asChild?: false } & React.ButtonHTMLAttributes<HTMLButtonElement>)
+)
 
 export function SidebarMenuButton({
   className,
   children,
-  asChild,
+  asChild = false,
   ...props
 }: SidebarMenuButtonProps) {
   const Component = asChild ? "div" : "button"
