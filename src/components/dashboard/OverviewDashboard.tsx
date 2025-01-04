@@ -1,3 +1,7 @@
+import { MetricsCards } from "./metrics/MetricsCards";
+import { DashboardCharts } from "./charts/DashboardCharts";
+import { RecentCalls } from "./calls/RecentCalls";
+
 export function OverviewDashboard() {
   return (
     <div className="p-8 space-y-8">

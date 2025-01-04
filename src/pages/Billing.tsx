@@ -4,13 +4,18 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
 
 const Billing = () => {
-  const { data: billingInfo } = useQuery({
-    queryKey: ['billingInfo'],
+  const { data: subscription } = useQuery({
+    queryKey: ['subscription'],
     queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('No user found');
+
       const { data } = await supabase
-        .from('billing')
+        .from('company_subscriptions')
         .select('*')
+        .eq('profile_id', user.id)
         .single();
+      
       return data;
     },
   });
@@ -27,8 +32,8 @@ const Billing = () => {
           <CardTitle className="text-forest">Current Subscription</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-500">Plan: {billingInfo?.plan}</p>
-          <p className="text-gray-500">Next Billing Date: {billingInfo?.next_billing_date}</p>
+          <p className="text-gray-500">Plan: {subscription?.package_name || 'No active subscription'}</p>
+          <p className="text-gray-500">Status: {subscription?.status || 'Inactive'}</p>
           <Button className="mt-4">Update Subscription</Button>
         </CardContent>
       </Card>
@@ -38,14 +43,7 @@ const Billing = () => {
           <CardTitle className="text-forest">Billing History</CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="space-y-2">
-            {billingInfo?.history.map((item) => (
-              <li key={item.id} className="flex justify-between">
-                <span>{item.date}</span>
-                <span>${item.amount}</span>
-              </li>
-            ))}
-          </ul>
+          <p className="text-gray-500">No billing history available</p>
         </CardContent>
       </Card>
     </div>

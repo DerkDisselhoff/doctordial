@@ -13,6 +13,43 @@ import {
 } from "recharts";
 import { VapiCall } from "@/integrations/supabase/types/tables/vapi-calls";
 
+const stats = [
+  {
+    title: "Total Calls",
+    value: "1,234",
+    icon: Phone,
+    color: "text-mint",
+  },
+  {
+    title: "Average Duration",
+    value: "3m 45s",
+    icon: Clock,
+    color: "text-mint",
+  },
+  {
+    title: "Positive Sentiment",
+    value: "85%",
+    icon: ThumbsUp,
+    color: "text-mint",
+  },
+  {
+    title: "Urgent Cases",
+    value: "12",
+    icon: AlertTriangle,
+    color: "text-mint",
+  },
+];
+
+const chartData = [
+  { date: "Mon", duration: 240 },
+  { date: "Tue", duration: 300 },
+  { date: "Wed", duration: 280 },
+  { date: "Thu", duration: 320 },
+  { date: "Fri", duration: 290 },
+  { date: "Sat", duration: 220 },
+  { date: "Sun", duration: 200 },
+];
+
 const Calls = () => {
   const { data: calls, isLoading: isLoadingCalls } = useQuery({
     queryKey: ['vapi-calls'],
@@ -87,7 +124,6 @@ const Calls = () => {
                   <p className="text-sm text-gray-500">{stat.title}</p>
                   <h3 className="text-2xl font-bold mt-1">
                     {stat.value}
-                    {stat.suffix && <span className="text-sm ml-1">{stat.suffix}</span>}
                   </h3>
                 </div>
                 <div className={`p-3 rounded-full bg-gray-100 ${stat.color}`}>
