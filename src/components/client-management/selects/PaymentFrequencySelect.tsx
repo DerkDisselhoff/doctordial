@@ -15,17 +15,17 @@ const paymentFrequencies = [
 export const PaymentFrequencySelect = ({ value, onChange }: PaymentFrequencySelectProps) => {
   return (
     <div className="space-y-2">
-      <Label className="text-forest">Payment Frequency</Label>
+      <Label className="text-forest font-medium">Payment Frequency</Label>
       <Select value={value} onValueChange={onChange} required>
-        <SelectTrigger className="bg-white border-gray-200">
+        <SelectTrigger className="bg-white border-gray-200 text-forest">
           <SelectValue placeholder="Select payment frequency" />
         </SelectTrigger>
-        <SelectContent className="bg-white border border-gray-200">
+        <SelectContent className="bg-white border border-gray-200 shadow-lg">
           {paymentFrequencies.map((frequency) => (
             <SelectItem 
               key={frequency.id} 
               value={frequency.id}
-              className="hover:bg-gray-100"
+              className="text-forest hover:bg-mint/10"
             >
               {frequency.name}
             </SelectItem>

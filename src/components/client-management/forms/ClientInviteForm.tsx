@@ -73,29 +73,29 @@ export const ClientInviteForm = () => {
   };
 
   return (
-    <form onSubmit={handleInviteClient} className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <form onSubmit={handleInviteClient} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="clientName" className="text-forest">Client Name</Label>
+          <Label htmlFor="clientName" className="text-forest font-medium">Client Name</Label>
           <Input
             id="clientName"
             value={formData.clientName}
             onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
             placeholder="Dr. Jane Smith"
-            className="bg-white border-gray-200"
+            className="bg-white border-gray-200 text-forest placeholder:text-gray-400"
             required
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="clientEmail" className="text-forest">Client Email</Label>
+          <Label htmlFor="clientEmail" className="text-forest font-medium">Client Email</Label>
           <Input
             id="clientEmail"
             type="email"
             value={formData.clientEmail}
             onChange={(e) => setFormData({ ...formData, clientEmail: e.target.value })}
             placeholder="jane.smith@practice.com"
-            className="bg-white border-gray-200"
+            className="bg-white border-gray-200 text-forest placeholder:text-gray-400"
             required
           />
         </div>
@@ -118,7 +118,8 @@ export const ClientInviteForm = () => {
 
       <Button
         type="submit"
-        className="w-full md:w-auto bg-mint hover:bg-mint/90 text-forest"
+        className="w-full md:w-auto bg-mint hover:bg-mint/90 text-forest font-medium
+                   transition-all duration-200 transform hover:scale-[1.02]"
         disabled={isLoading}
       >
         {isLoading ? (

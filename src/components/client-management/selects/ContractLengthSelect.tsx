@@ -15,17 +15,17 @@ const contractLengths = [
 export const ContractLengthSelect = ({ value, onChange }: ContractLengthSelectProps) => {
   return (
     <div className="space-y-2">
-      <Label className="text-forest">Contract Length</Label>
+      <Label className="text-forest font-medium">Contract Length</Label>
       <Select value={value} onValueChange={onChange} required>
-        <SelectTrigger className="bg-white border-gray-200">
+        <SelectTrigger className="bg-white border-gray-200 text-forest">
           <SelectValue placeholder="Select contract length" />
         </SelectTrigger>
-        <SelectContent className="bg-white border border-gray-200">
+        <SelectContent className="bg-white border border-gray-200 shadow-lg">
           {contractLengths.map((length) => (
             <SelectItem 
               key={length.id} 
               value={length.id}
-              className="hover:bg-gray-100"
+              className="text-forest hover:bg-mint/10"
             >
               {length.name}
             </SelectItem>
