@@ -1,6 +1,6 @@
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, ArrowDown, ArrowUp, Phone } from "lucide-react";
+import { Activity, ArrowDown, ArrowUp, Phone, Users } from "lucide-react";
 
 const ActivityPage = () => {
   const activities = [
