@@ -27,7 +27,7 @@ const Calls = () => {
         throw error;
       }
       
-      return data || [];
+      return data as VapiCall[];
     },
   });
 
@@ -41,7 +41,7 @@ const Calls = () => {
         .from('company_subscriptions')
         .select('package_name')
         .eq('profile_id', user.id)
-        .maybeSingle();  // Changed from .single() to .maybeSingle()
+        .maybeSingle();
       
       if (error) {
         console.error('Error fetching subscription:', error);
@@ -56,7 +56,6 @@ const Calls = () => {
     return <div className="p-8">Loading...</div>;
   }
 
-  // If no subscription is found, show a message
   if (!subscription) {
     return (
       <div className="p-8">
@@ -106,7 +105,6 @@ const Calls = () => {
     },
   ];
 
-  // Prepare data for the chart
   const chartData = calls?.map(call => ({
     date: new Date(call.created_at || '').toLocaleDateString(),
     duration: call.duration,
