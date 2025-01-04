@@ -40,14 +40,14 @@ const mockInvoices = [
 
 const Billing = () => {
   return (
-    <div className="p-8 space-y-8">
+    <div className="space-y-8">
       <div>
         <h2 className="text-3xl font-bold text-forest">Billing & Subscriptions</h2>
-        <p className="text-gray-500">Manage client subscriptions and billing</p>
+        <p className="text-gray-500">Monitor client subscriptions and billing</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
+        <Card className="bg-white border-0 shadow-sm">
           <CardContent className="p-6">
             <div className="flex items-center space-x-4">
               <div className="p-3 rounded-full bg-mint/10">
@@ -55,13 +55,13 @@ const Billing = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Monthly Revenue</p>
-                <h3 className="text-2xl font-bold">€12,499</h3>
+                <h3 className="text-2xl font-bold text-forest">€12,499</h3>
               </div>
             </div>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="bg-white border-0 shadow-sm">
           <CardContent className="p-6">
             <div className="flex items-center space-x-4">
               <div className="p-3 rounded-full bg-mint/10">
@@ -69,13 +69,13 @@ const Billing = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Active Subscriptions</p>
-                <h3 className="text-2xl font-bold">24</h3>
+                <h3 className="text-2xl font-bold text-forest">24</h3>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white border-0 shadow-sm">
           <CardContent className="p-6">
             <div className="flex items-center space-x-4">
               <div className="p-3 rounded-full bg-mint/10">
@@ -83,32 +83,32 @@ const Billing = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Pending Invoices</p>
-                <h3 className="text-2xl font-bold">3</h3>
+                <h3 className="text-2xl font-bold text-forest">3</h3>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <Card>
+      <Card className="bg-white border-0 shadow-sm">
         <CardHeader>
-          <CardTitle>Active Subscriptions</CardTitle>
+          <CardTitle className="text-forest">Active Subscriptions</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Client</TableHead>
-                <TableHead>Package</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Next Billing</TableHead>
+              <TableRow className="hover:bg-gray-50/50">
+                <TableHead className="text-forest font-medium">Client</TableHead>
+                <TableHead className="text-forest font-medium">Package</TableHead>
+                <TableHead className="text-forest font-medium">Status</TableHead>
+                <TableHead className="text-forest font-medium">Amount</TableHead>
+                <TableHead className="text-forest font-medium">Next Billing</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {mockSubscriptions.map((sub) => (
-                <TableRow key={sub.id}>
-                  <TableCell className="font-medium">{sub.client}</TableCell>
+                <TableRow key={sub.id} className="hover:bg-gray-50/50">
+                  <TableCell className="font-medium text-forest">{sub.client}</TableCell>
                   <TableCell>{sub.package}</TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 rounded-full text-xs ${
@@ -128,25 +128,25 @@ const Billing = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-white border-0 shadow-sm">
         <CardHeader>
-          <CardTitle>Recent Invoices</CardTitle>
+          <CardTitle className="text-forest">Recent Invoices</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Invoice ID</TableHead>
-                <TableHead>Client</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Date</TableHead>
+              <TableRow className="hover:bg-gray-50/50">
+                <TableHead className="text-forest font-medium">Invoice ID</TableHead>
+                <TableHead className="text-forest font-medium">Client</TableHead>
+                <TableHead className="text-forest font-medium">Amount</TableHead>
+                <TableHead className="text-forest font-medium">Status</TableHead>
+                <TableHead className="text-forest font-medium">Date</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {mockInvoices.map((invoice) => (
-                <TableRow key={invoice.id}>
-                  <TableCell className="font-medium">{invoice.id}</TableCell>
+                <TableRow key={invoice.id} className="hover:bg-gray-50/50">
+                  <TableCell className="font-medium text-forest">{invoice.id}</TableCell>
                   <TableCell>{invoice.client}</TableCell>
                   <TableCell>{invoice.amount}</TableCell>
                   <TableCell>

@@ -13,8 +13,8 @@ import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
-  SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -38,6 +38,11 @@ export function AdminSidebar() {
 
   return (
     <Sidebar>
+      <div className="p-4 border-b border-mint/10">
+        <h1 className="text-xl font-semibold text-mint tracking-tight">
+          DoctorDial
+        </h1>
+      </div>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Admin Dashboard</SidebarGroupLabel>
