@@ -50,22 +50,25 @@ export function SidebarProfile({ userProfile, userRole }: SidebarProfileProps) {
             </div>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56" align="end" side="right">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate('/dashboard/settings')}>
-            <UserCog className="mr-2 h-4 w-4" />
+        <DropdownMenuContent className="dropdown-content w-56" align="end" side="right">
+          <DropdownMenuLabel className="dropdown-label">My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator className="dropdown-separator" />
+          <DropdownMenuItem className="dropdown-item" onClick={() => navigate('/dashboard/settings')}>
+            <UserCog className="w-4 h-4 mr-2 text-gray-400" />
             <span>Profile Settings</span>
           </DropdownMenuItem>
           {userRole === 'admin' && (
-            <DropdownMenuItem onClick={() => navigate('/dashboard/clients')}>
-              <Users className="mr-2 h-4 w-4" />
+            <DropdownMenuItem className="dropdown-item" onClick={() => navigate('/dashboard/clients')}>
+              <Users className="w-4 h-4 mr-2 text-gray-400" />
               <span>Manage Clients</span>
             </DropdownMenuItem>
           )}
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout} className="text-red-600">
-            <LogOut className="mr-2 h-4 w-4" />
+          <DropdownMenuSeparator className="dropdown-separator" />
+          <DropdownMenuItem 
+            className="dropdown-item text-red-400 hover:text-red-300 hover:bg-red-500/10" 
+            onClick={handleLogout}
+          >
+            <LogOut className="w-4 h-4 mr-2" />
             <span>Log out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
