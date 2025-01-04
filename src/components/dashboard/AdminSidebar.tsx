@@ -7,8 +7,7 @@ import {
   Building2,
   DollarSign,
   FileText,
-  Activity,
-  LogOut
+  Activity
 } from "lucide-react";
 import {
   Sidebar,
@@ -21,8 +20,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/lib/supabaseClient";
-import { toast } from "sonner";
 
 const menuItems = [
   { title: "Overview", icon: Home, path: "/dashboard" },
@@ -39,18 +36,6 @@ const menuItems = [
 export function AdminSidebar() {
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-      navigate("/");
-      toast.success("Successfully logged out");
-    } catch (error) {
-      console.error("Error logging out:", error);
-      toast.error("Error logging out");
-    }
-  };
-
   return (
     <Sidebar>
       <SidebarContent>
@@ -66,17 +51,6 @@ export function AdminSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
-              <div className="mt-auto pt-4 border-t border-gray-200">
-                <SidebarMenuItem>
-                  <SidebarMenuButton 
-                    onClick={handleLogout}
-                    className="text-red-500 hover:text-red-600 hover:bg-red-50"
-                  >
-                    <LogOut className="w-4 h-4 mr-2" />
-                    <span>Logout</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </div>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
