@@ -11,27 +11,29 @@ const data = [
 
 export function UrgencyLevelChart() {
   return (
-    <Card className="bg-white shadow-lg border-none">
+    <Card className="dashboard-card">
       <CardHeader>
-        <CardTitle className="text-forest">Call Urgency Distribution</CardTitle>
+        <CardTitle className="dashboard-card-title">Call Urgency Distribution</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
-              <XAxis dataKey="urgency" stroke="#0A1F2F" />
-              <YAxis stroke="#0A1F2F" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
+              <XAxis dataKey="urgency" stroke="#ffffff80" />
+              <YAxis stroke="#ffffff80" />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: 'white',
-                  border: '1px solid #e2e8f0',
+                  backgroundColor: '#132B41',
+                  border: '1px solid rgba(100, 255, 218, 0.1)',
                   borderRadius: '8px',
+                  color: '#fff',
                 }}
               />
               <Bar 
                 dataKey="calls" 
                 fill="#64FFDA"
+                opacity={0.8}
                 radius={[4, 4, 0, 0]}
               />
             </BarChart>
