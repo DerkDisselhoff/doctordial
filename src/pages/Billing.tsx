@@ -1,49 +1,168 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/lib/supabaseClient";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { DollarSign, CreditCard, Receipt } from "lucide-react";
+
+const mockSubscriptions = [
+  {
+    id: 1,
+    client: "Central Medical Group",
+    package: "Enterprise",
+    status: "active",
+    amount: "€2,499",
+    nextBilling: "2024-03-01",
+  },
+  {
+    id: 2,
+    client: "West End Clinic",
+    package: "Professional",
+    status: "overdue",
+    amount: "€999",
+    nextBilling: "2024-02-15",
+  },
+];
+
+const mockInvoices = [
+  {
+    id: "INV-2024-001",
+    client: "Central Medical Group",
+    amount: "€2,499",
+    status: "paid",
+    date: "2024-02-01",
+  },
+  {
+    id: "INV-2024-002",
+    client: "West End Clinic",
+    amount: "€999",
+    status: "pending",
+    date: "2024-02-15",
+  },
+];
 
 const Billing = () => {
-  const { data: subscription } = useQuery({
-    queryKey: ['subscription'],
-    queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('No user found');
-
-      const { data } = await supabase
-        .from('company_subscriptions')
-        .select('*')
-        .eq('profile_id', user.id)
-        .maybeSingle();
-      
-      return data;
-    },
-  });
-
   return (
     <div className="p-8 space-y-8">
       <div>
         <h2 className="text-3xl font-bold text-forest">Billing & Subscriptions</h2>
-        <p className="text-gray-500">Manage your billing and subscription details</p>
+        <p className="text-gray-500">Manage client subscriptions and billing</p>
       </div>
 
-      <Card className="bg-white">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 rounded-full bg-mint/10">
+                <DollarSign className="h-6 w-6 text-mint" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Monthly Revenue</p>
+                <h3 className="text-2xl font-bold">€12,499</h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 rounded-full bg-mint/10">
+                <CreditCard className="h-6 w-6 text-mint" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Active Subscriptions</p>
+                <h3 className="text-2xl font-bold">24</h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 rounded-full bg-mint/10">
+                <Receipt className="h-6 w-6 text-mint" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Pending Invoices</p>
+                <h3 className="text-2xl font-bold">3</h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card>
         <CardHeader>
-          <CardTitle className="text-forest">Current Subscription</CardTitle>
+          <CardTitle>Active Subscriptions</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-500">Plan: {subscription?.package_name || 'No active subscription'}</p>
-          <p className="text-gray-500">Status: {subscription?.status || 'Inactive'}</p>
-          <Button className="mt-4">Update Subscription</Button>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Client</TableHead>
+                <TableHead>Package</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Amount</TableHead>
+                <TableHead>Next Billing</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {mockSubscriptions.map((sub) => (
+                <TableRow key={sub.id}>
+                  <TableCell className="font-medium">{sub.client}</TableCell>
+                  <TableCell>{sub.package}</TableCell>
+                  <TableCell>
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      sub.status === 'active' 
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-red-100 text-red-700'
+                    }`}>
+                      {sub.status}
+                    </span>
+                  </TableCell>
+                  <TableCell>{sub.amount}</TableCell>
+                  <TableCell>{sub.nextBilling}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </CardContent>
       </Card>
 
-      <Card className="bg-white">
+      <Card>
         <CardHeader>
-          <CardTitle className="text-forest">Billing History</CardTitle>
+          <CardTitle>Recent Invoices</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-500">No billing history available</p>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Invoice ID</TableHead>
+                <TableHead>Client</TableHead>
+                <TableHead>Amount</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Date</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {mockInvoices.map((invoice) => (
+                <TableRow key={invoice.id}>
+                  <TableCell className="font-medium">{invoice.id}</TableCell>
+                  <TableCell>{invoice.client}</TableCell>
+                  <TableCell>{invoice.amount}</TableCell>
+                  <TableCell>
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      invoice.status === 'paid' 
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-yellow-100 text-yellow-700'
+                    }`}>
+                      {invoice.status}
+                    </span>
+                  </TableCell>
+                  <TableCell>{invoice.date}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </CardContent>
       </Card>
     </div>

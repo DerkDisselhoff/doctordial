@@ -9,14 +9,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 
 const practiceData = [
   { name: "Mon", calls: 45 },
@@ -62,18 +54,6 @@ const Practices = () => {
         <h2 className="text-3xl font-bold text-forest">Practice Overview</h2>
         <p className="text-gray-500">Monitor practice performance and metrics</p>
       </div>
-
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Practices</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (

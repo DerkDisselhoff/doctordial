@@ -28,10 +28,13 @@ export function Sidebar({ className, children }: React.HTMLAttributes<HTMLDivEle
     <div
       className={cn(
         "bg-white shadow-lg transition-all duration-300",
-        context.collapsed ? "w-16" : "w-64",
+        context.collapsed ? "w-14" : "w-56",
         className
       )}
     >
+      <div className="p-4 border-b border-gray-100">
+        <img src="/assets/nhg-logo.svg" alt="DoctorDial" className="h-8 w-auto" />
+      </div>
       {children}
     </div>
   )
