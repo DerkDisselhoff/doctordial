@@ -45,35 +45,35 @@ const VapiCallsList = () => {
   }
 
   return (
-    <div className="rounded-md border border-gray-200">
-      <Table>
-        <TableHeader>
-          <TableRow className="bg-gray-50">
-            <TableHead className="text-forest">Call ID</TableHead>
-            <TableHead className="text-forest">Caller</TableHead>
-            <TableHead className="text-forest">Recipient</TableHead>
-            <TableHead className="text-forest">Duration</TableHead>
-            <TableHead className="text-forest">Status</TableHead>
-            <TableHead className="text-forest">Timestamp</TableHead>
+    <div className="dashboard-card">
+      <Table className="dashboard-table">
+        <TableHeader className="dashboard-table-header">
+          <TableRow>
+            <TableHead>Call ID</TableHead>
+            <TableHead>Caller</TableHead>
+            <TableHead>Recipient</TableHead>
+            <TableHead>Duration</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Timestamp</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {calls.map((call) => (
-            <TableRow key={call.id} className="hover:bg-gray-50">
-              <TableCell className="font-medium">{call.call_id}</TableCell>
-              <TableCell>{call.caller_number || 'N/A'}</TableCell>
-              <TableCell>{call.recipient_number || 'N/A'}</TableCell>
-              <TableCell>{call.duration ? `${call.duration}s` : 'N/A'}</TableCell>
-              <TableCell>
-                <span className={`px-2 py-1 rounded-full text-xs ${
-                  call.status === 'completed' ? 'bg-green-100 text-green-800' :
-                  call.status === 'failed' ? 'bg-red-100 text-red-800' :
-                  'bg-yellow-100 text-yellow-800'
+            <TableRow key={call.id} className="dashboard-table-row">
+              <TableCell className="dashboard-table-cell font-medium">{call.call_id}</TableCell>
+              <TableCell className="dashboard-table-cell">{call.caller_number || 'N/A'}</TableCell>
+              <TableCell className="dashboard-table-cell">{call.recipient_number || 'N/A'}</TableCell>
+              <TableCell className="dashboard-table-cell">{call.duration ? `${call.duration}s` : 'N/A'}</TableCell>
+              <TableCell className="dashboard-table-cell">
+                <span className={`status-badge ${
+                  call.status === 'completed' ? 'status-badge-success' :
+                  call.status === 'failed' ? 'status-badge-error' :
+                  'status-badge-pending'
                 }`}>
                   {call.status || 'N/A'}
                 </span>
               </TableCell>
-              <TableCell className="text-gray-500">
+              <TableCell className="dashboard-table-cell">
                 {call.created_at 
                   ? new Date(call.created_at).toLocaleString()
                   : 'N/A'}
