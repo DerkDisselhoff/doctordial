@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { BookDemoForm } from "./BookDemoForm";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { LogIn } from "lucide-react";
 
 const Navbar = () => {
   const { t } = useLanguage();
@@ -31,6 +32,13 @@ const Navbar = () => {
           </div>
           <div className="flex items-center space-x-4">
             <LanguageSwitcher />
+            <Link 
+              to="/login"
+              className="inline-flex items-center px-4 py-2 rounded-md bg-mint/10 text-mint hover:bg-mint/20 transition-colors border border-mint/20"
+            >
+              <LogIn className="w-4 h-4 mr-2" />
+              {t("nav.login")}
+            </Link>
             <BookDemoForm />
           </div>
         </div>
