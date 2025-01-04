@@ -41,7 +41,7 @@ const Calls = () => {
         .from('company_subscriptions')
         .select('package_name')
         .eq('profile_id', user.id)
-        .maybeSingle();
+        .maybeSingle();  // Changed from .single() to .maybeSingle()
       
       if (error) {
         console.error('Error fetching subscription:', error);
