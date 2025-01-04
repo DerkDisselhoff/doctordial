@@ -9,12 +9,21 @@ import ContractsPage from "@/pages/dashboard/ContractsPage";
 import ActivityPage from "@/pages/dashboard/ActivityPage";
 import SettingsPage from "@/pages/dashboard/SettingsPage";
 import Index from "@/pages/Index";
+import Features from "@/pages/Features";
+import Pricing from "@/pages/Pricing";
+import Login from "@/pages/Login";
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* Marketing/Public Routes */}
         <Route path="/" element={<Index />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/login" element={<Login />} />
+
+        {/* Dashboard Routes */}
         <Route 
           path="/dashboard" 
           element={
