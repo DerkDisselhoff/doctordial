@@ -1,6 +1,10 @@
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell, Lock, User, Globe, Phone, Building2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Bell, Lock, User, Globe } from "lucide-react";
 
 const SettingsPage = () => {
   return (
@@ -8,108 +12,125 @@ const SettingsPage = () => {
       <div className="space-y-8">
         <h1 className="text-3xl font-bold text-forest">Settings</h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid gap-8">
           <Card className="bg-white shadow-lg border-none">
-            <CardHeader className="flex flex-row items-center space-x-2">
-              <User className="h-5 w-5 text-mint" />
-              <CardTitle className="text-forest">Profile Settings</CardTitle>
+            <CardHeader className="flex flex-row items-center space-x-4">
+              <User className="h-6 w-6 text-mint" />
+              <div>
+                <CardTitle className="text-forest">Profile Settings</CardTitle>
+              </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-forest">Full Name</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border rounded-md"
-                  placeholder="John Doe"
-                />
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Full Name</Label>
+                  <Input id="name" placeholder="John Doe" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input id="email" type="email" placeholder="john@example.com" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input id="phone" placeholder="+31 6 1234 5678" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="company">Company Name</Label>
+                  <Input id="company" placeholder="Amsterdam Medical Center" />
+                </div>
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-forest">Email</label>
-                <input
-                  type="email"
-                  className="w-full px-3 py-2 border rounded-md"
-                  placeholder="john@example.com"
-                />
+              <Button className="bg-mint hover:bg-mint-light text-white">
+                Save Changes
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white shadow-lg border-none">
+            <CardHeader className="flex flex-row items-center space-x-4">
+              <Bell className="h-6 w-6 text-mint" />
+              <div>
+                <CardTitle className="text-forest">Notification Preferences</CardTitle>
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-forest">Phone</label>
-                <input
-                  type="tel"
-                  className="w-full px-3 py-2 border rounded-md"
-                  placeholder="+1 (555) 000-0000"
-                />
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label>Email Notifications</Label>
+                    <p className="text-sm text-forest/60">Receive email updates about your account</p>
+                  </div>
+                  <Switch />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label>SMS Notifications</Label>
+                    <p className="text-sm text-forest/60">Get important updates via SMS</p>
+                  </div>
+                  <Switch />
+                </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-white shadow-lg border-none">
-            <CardHeader className="flex flex-row items-center space-x-2">
-              <Building2 className="h-5 w-5 text-mint" />
-              <CardTitle className="text-forest">Practice Information</CardTitle>
+            <CardHeader className="flex flex-row items-center space-x-4">
+              <Lock className="h-6 w-6 text-mint" />
+              <div>
+                <CardTitle className="text-forest">Security Settings</CardTitle>
+              </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-forest">Practice Name</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border rounded-md"
-                  placeholder="Medical Center Name"
-                />
+                <Label htmlFor="current-password">Current Password</Label>
+                <Input id="current-password" type="password" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-forest">Address</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border rounded-md"
-                  placeholder="123 Practice Street"
-                />
+                <Label htmlFor="new-password">New Password</Label>
+                <Input id="new-password" type="password" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-forest">License Number</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border rounded-md"
-                  placeholder="License #"
-                />
+                <Label htmlFor="confirm-password">Confirm New Password</Label>
+                <Input id="confirm-password" type="password" />
               </div>
+              <Button className="bg-mint hover:bg-mint-light text-white">
+                Update Password
+              </Button>
             </CardContent>
           </Card>
 
           <Card className="bg-white shadow-lg border-none">
-            <CardHeader className="flex flex-row items-center space-x-2">
-              <Bell className="h-5 w-5 text-mint" />
-              <CardTitle className="text-forest">Notification Settings</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-forest">Email Notifications</span>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" className="sr-only peer" checked />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-mint/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-mint"></div>
-                </label>
+            <CardHeader className="flex flex-row items-center space-x-4">
+              <Globe className="h-6 w-6 text-mint" />
+              <div>
+                <CardTitle className="text-forest">Language & Region</CardTitle>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-forest">SMS Notifications</span>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" className="sr-only peer" />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-mint/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-mint"></div>
-                </label>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white shadow-lg border-none">
-            <CardHeader className="flex flex-row items-center space-x-2">
-              <Lock className="h-5 w-5 text-mint" />
-              <CardTitle className="text-forest">Security Settings</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <button className="w-full px-4 py-2 text-sm font-medium text-white bg-mint rounded-md hover:bg-mint-light transition-colors">
-                Change Password
-              </button>
-              <button className="w-full px-4 py-2 text-sm font-medium text-white bg-mint rounded-md hover:bg-mint-light transition-colors">
-                Enable Two-Factor Authentication
-              </button>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="language">Language</Label>
+                  <select
+                    id="language"
+                    className="w-full p-2 border rounded-md bg-white"
+                  >
+                    <option value="en">English</option>
+                    <option value="nl">Dutch</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="timezone">Timezone</Label>
+                  <select
+                    id="timezone"
+                    className="w-full p-2 border rounded-md bg-white"
+                  >
+                    <option value="europe/amsterdam">Europe/Amsterdam</option>
+                    <option value="europe/london">Europe/London</option>
+                  </select>
+                </div>
+              </div>
+              <Button className="bg-mint hover:bg-mint-light text-white">
+                Save Preferences
+              </Button>
             </CardContent>
           </Card>
         </div>
