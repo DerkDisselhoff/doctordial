@@ -1,27 +1,44 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 import { ClientDistributionChart } from "./ClientDistributionChart";
 import { CallVolumeChart } from "./CallVolumeChart";
+import { ActivityList } from "../client/ActivityList";
+import { UrgencyLevelChart } from "../client/UrgencyLevelChart";
 
 export function DashboardCharts() {
+  const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
+
+  useEffect(() => {
+    const checkUserRole = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .single();
+        
+        setUserRole(profile?.role || null);
+      }
+    };
+
+    checkUserRole();
+  }, []);
+
+  if (userRole === 'client') {
+    return (
+      <div className="grid grid-cols-1 gap-8">
+        <ActivityList />
+        <UrgencyLevelChart />
+      </div>
+    );
+  }
+
+  // Return original admin view
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <Card className="bg-white shadow-lg border-none">
-        <CardHeader>
-          <CardTitle className="text-forest">Client Distribution</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ClientDistributionChart />
-        </CardContent>
-      </Card>
-
-      <Card className="bg-white shadow-lg border-none">
-        <CardHeader>
-          <CardTitle className="text-forest">Call Volume Trend</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CallVolumeChart />
-        </CardContent>
-      </Card>
+      <ClientDistributionChart />
+      <CallVolumeChart />
     </div>
   );
 }
