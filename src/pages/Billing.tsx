@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 
 type PricingPackage = {
   name: string;
@@ -58,40 +59,82 @@ const pricingPackages: PricingPackage[] = [
 
 const Billing = () => {
   const [currentPackage, setCurrentPackage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate('/login');
-        return;
-      }
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          navigate('/login');
+          return;
+        }
 
-      // Fetch user's current package from company_subscriptions
-      const { data: subscription, error } = await supabase
-        .from('company_subscriptions')
-        .select('package_name')
-        .eq('profile_id', session.user.id)
-        .single();
+        // Fetch user's current package from company_subscriptions
+        const { data: subscription, error } = await supabase
+          .from('company_subscriptions')
+          .select('package_name')
+          .eq('profile_id', session.user.id)
+          .maybeSingle();
 
-      if (subscription) {
-        setCurrentPackage(subscription.package_name);
+        if (error) {
+          console.error('Error fetching subscription:', error);
+          toast({
+            title: "Error",
+            description: "Failed to fetch subscription details. Please try again later.",
+            variant: "destructive"
+          });
+        } else {
+          setCurrentPackage(subscription?.package_name || null);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        toast({
+          title: "Error",
+          description: "An unexpected error occurred. Please try again later.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
       }
     };
 
     checkAuth();
-  }, [navigate]);
+  }, [navigate, toast]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-forest flex items-center justify-center">
+        <div className="text-mint">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-forest py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-white mb-4">Your Subscription</h1>
-          {currentPackage && (
+          {currentPackage ? (
             <div className="bg-forest-light p-4 rounded-lg inline-block">
               <p className="text-mint">Current Package: <span className="font-bold">{currentPackage}</span></p>
+            </div>
+          ) : (
+            <div className="bg-forest-light p-4 rounded-lg inline-block">
+              <p className="text-mint">No active subscription</p>
+              <Button 
+                className="mt-2 bg-mint text-forest hover:bg-mint/90"
+                onClick={() => {
+                  toast({
+                    title: "Contact Support",
+                    description: "Please contact your account manager to set up a subscription.",
+                  });
+                }}
+              >
+                Contact Support
+              </Button>
             </div>
           )}
         </div>
