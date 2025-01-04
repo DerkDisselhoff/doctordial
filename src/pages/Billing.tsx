@@ -14,7 +14,7 @@ const Billing = () => {
         .from('company_subscriptions')
         .select('*')
         .eq('profile_id', user.id)
-        .single();
+        .maybeSingle();
       
       return data;
     },
