@@ -3,68 +3,61 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Euro, Users, Building2, ArrowUpRight } from "lucide-react";
 
-type PricingPackage = {
-  name: string;
-  price: string;
-  features: string[];
-  isPopular?: boolean;
-};
-
-const pricingPackages: PricingPackage[] = [
-  {
-    name: "Starter",
-    price: "€199/month",
-    features: [
-      "Up to 500 calls per month",
-      "Basic call analytics",
-      "Email support",
-      "Standard response time"
-    ]
-  },
-  {
-    name: "Growth",
-    price: "€399/month",
-    features: [
-      "Up to 2000 calls per month",
-      "Advanced analytics",
-      "Priority support",
-      "Custom voice configuration"
-    ],
-    isPopular: true
-  },
-  {
-    name: "Scale",
-    price: "€799/month",
-    features: [
-      "Up to 5000 calls per month",
-      "Enterprise analytics",
-      "24/7 support",
-      "Custom integrations",
-      "Dedicated account manager"
-    ]
-  },
-  {
-    name: "Enterprise",
-    price: "Custom",
-    features: [
-      "Unlimited calls",
-      "Custom solutions",
-      "White-label options",
-      "API access",
-      "SLA guarantees"
-    ]
-  }
-];
+interface Subscription {
+  id: string;
+  profile_id: string;
+  package_name: string;
+  status: string;
+  created_at: string;
+  company_name: string | null;
+}
 
 const Billing = () => {
-  const [currentPackage, setCurrentPackage] = useState<string | null>(null);
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
   const navigate = useNavigate();
 
+  const stats = [
+    {
+      title: "Total Revenue",
+      value: "€24,500",
+      description: "Monthly recurring revenue",
+      icon: Euro,
+    },
+    {
+      title: "Active Clients",
+      value: "32",
+      description: "Subscribed practices",
+      icon: Users,
+    },
+    {
+      title: "Practices",
+      value: "45",
+      description: "Total locations",
+      icon: Building2,
+    },
+  ];
+
   useEffect(() => {
-    const checkAuth = async () => {
+    const fetchSubscriptions = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
@@ -72,28 +65,36 @@ const Billing = () => {
           return;
         }
 
-        // Fetch user's current package from company_subscriptions
-        const { data: subscription, error } = await supabase
+        // Fetch subscriptions with company names from profiles
+        const { data, error } = await supabase
           .from('company_subscriptions')
-          .select('package_name')
-          .eq('profile_id', session.user.id)
-          .maybeSingle();
+          .select(`
+            *,
+            profiles (
+              company_name
+            )
+          `)
+          .order('created_at', { ascending: false });
 
         if (error) {
-          console.error('Error fetching subscription:', error);
+          console.error('Error fetching subscriptions:', error);
           toast({
             title: "Error",
-            description: "Failed to fetch subscription details. Please try again later.",
+            description: "Failed to fetch subscription details.",
             variant: "destructive"
           });
         } else {
-          setCurrentPackage(subscription?.package_name || null);
+          const formattedSubscriptions = data.map(sub => ({
+            ...sub,
+            company_name: sub.profiles?.company_name
+          }));
+          setSubscriptions(formattedSubscriptions);
         }
       } catch (error) {
         console.error('Error:', error);
         toast({
           title: "Error",
-          description: "An unexpected error occurred. Please try again later.",
+          description: "An unexpected error occurred.",
           variant: "destructive"
         });
       } finally {
@@ -101,98 +102,105 @@ const Billing = () => {
       }
     };
 
-    checkAuth();
+    fetchSubscriptions();
   }, [navigate, toast]);
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-forest flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="text-mint">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-forest py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4">Your Subscription</h1>
-          {currentPackage ? (
-            <div className="bg-forest-light p-4 rounded-lg inline-block">
-              <p className="text-mint">Current Package: <span className="font-bold">{currentPackage}</span></p>
-            </div>
-          ) : (
-            <div className="bg-forest-light p-4 rounded-lg inline-block">
-              <p className="text-mint">No active subscription</p>
-              <Button 
-                className="mt-2 bg-mint text-forest hover:bg-mint/90"
-                onClick={() => {
-                  toast({
-                    title: "Contact Support",
-                    description: "Please contact your account manager to set up a subscription.",
-                  });
-                }}
-              >
-                Contact Support
-              </Button>
-            </div>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {pricingPackages.map((pkg) => (
-            <div
-              key={pkg.name}
-              className={`relative bg-forest-light rounded-xl p-6 border ${
-                currentPackage === pkg.name
-                  ? 'border-mint'
-                  : 'border-mint/20'
-              }`}
-            >
-              {pkg.isPopular && (
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-mint text-forest px-3 py-1 rounded-full text-sm font-medium">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              <div className="text-center">
-                <h3 className="text-xl font-semibold text-white mb-2">{pkg.name}</h3>
-                <p className="text-2xl font-bold text-mint mb-6">{pkg.price}</p>
-                <ul className="space-y-3 text-gray-300 mb-6">
-                  {pkg.features.map((feature, index) => (
-                    <li key={index} className="flex items-center">
-                      <svg
-                        className="w-5 h-5 text-mint mr-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-12 text-center">
-          <p className="text-gray-300">
-            Need to change your plan? Contact your account manager or{" "}
-            <a href="mailto:support@doctordial.com" className="text-mint hover:text-mint-light">
-              reach out to support
-            </a>
-          </p>
-        </div>
+    <div className="p-6 space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-semibold text-white">Billing & Subscriptions</h1>
+        <Button 
+          className="bg-mint text-forest hover:bg-mint/90"
+          onClick={() => navigate('/dashboard/clients/new')}
+        >
+          New Client
+        </Button>
       </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {stats.map((stat) => (
+          <Card key={stat.title} className="bg-forest-light border-mint/20">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-mint text-lg font-medium">
+                {stat.title}
+              </CardTitle>
+              <stat.icon className="h-5 w-5 text-mint" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-white">{stat.value}</div>
+              <p className="text-sm text-gray-400 mt-1">{stat.description}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Subscriptions Table */}
+      <Card className="bg-forest-light border-mint/20">
+        <CardHeader>
+          <CardTitle>Active Subscriptions</CardTitle>
+          <CardDescription>Overview of all client subscriptions</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow className="border-mint/10">
+                <TableHead className="text-mint">Company</TableHead>
+                <TableHead className="text-mint">Package</TableHead>
+                <TableHead className="text-mint">Status</TableHead>
+                <TableHead className="text-mint">Start Date</TableHead>
+                <TableHead className="text-mint text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {subscriptions.map((subscription) => (
+                <TableRow 
+                  key={subscription.id}
+                  className="border-mint/10 hover:bg-forest transition-colors"
+                >
+                  <TableCell className="font-medium text-white">
+                    {subscription.company_name || 'Unknown Company'}
+                  </TableCell>
+                  <TableCell className="text-gray-300">{subscription.package_name}</TableCell>
+                  <TableCell>
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      subscription.status === 'active' 
+                        ? 'bg-green-500/20 text-green-400'
+                        : subscription.status === 'pending'
+                        ? 'bg-yellow-500/20 text-yellow-400'
+                        : 'bg-red-500/20 text-red-400'
+                    }`}>
+                      {subscription.status}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-gray-300">
+                    {new Date(subscription.created_at).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => navigate(`/dashboard/clients/${subscription.profile_id}`)}
+                      className="text-mint hover:text-mint/80 hover:bg-mint/10"
+                    >
+                      <span className="mr-2">View Details</span>
+                      <ArrowUpRight className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
     </div>
   );
 };
