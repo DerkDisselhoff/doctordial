@@ -15,22 +15,13 @@ function App() {
 
   useEffect(() => {
     // Check authentication status
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    supabase.auth.onAuthStateChange((event, session) => {
       setIsAuthenticated(!!session);
     });
-
-    return () => {
-      subscription.unsubscribe();
-    };
   }, []);
 
-  // Show loading state while checking authentication
-  if (isAuthenticated === null) {
-    return null;
-  }
-
   // If on app subdomain but not authenticated, redirect to login
-  if (isAppSubdomain && !isAuthenticated) {
+  if (isAppSubdomain && isAuthenticated === false) {
     return <Navigate to="/login" replace />;
   }
 
