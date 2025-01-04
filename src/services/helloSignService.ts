@@ -50,6 +50,7 @@ export async function createSignatureRequest({
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        test_mode: 1,
         title,
         subject,
         message,
@@ -64,29 +65,28 @@ export async function createSignatureRequest({
           package_name: packageName,
           contract_length: contractLength,
           payment_frequency: paymentFrequency
-        },
-        test_mode: 1
+        }
       })
     });
 
     const responseText = await response.text();
     console.log('Raw API response:', responseText);
 
-    let errorData;
+    let data;
     try {
-      errorData = JSON.parse(responseText);
+      data = JSON.parse(responseText);
     } catch (e) {
       console.error('Failed to parse API response:', e);
       throw new Error('Invalid API response format');
     }
 
     if (!response.ok) {
-      console.error('HelloSign API error response:', errorData);
-      throw new Error(`Failed to create signature request: ${errorData.error?.error_msg || 'Unknown error'}`);
+      console.error('HelloSign API error response:', data);
+      throw new Error(`Failed to create signature request: ${data.error?.error_msg || 'Unknown error'}`);
     }
 
-    console.log('HelloSign API response:', errorData);
-    return errorData;
+    console.log('HelloSign API response:', data);
+    return data;
   } catch (error) {
     console.error('Error in createSignatureRequest:', error);
     throw error;

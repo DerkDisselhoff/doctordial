@@ -5,8 +5,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { createSignatureRequest, getSignatureStatus } from "@/services/helloSignService";
-import { UserPlus, Send } from "lucide-react";
+import { createSignatureRequest } from "@/services/helloSignService";
+import { UserPlus, Send, Loader } from "lucide-react";
 
 const packages = [
   { id: "starter", name: "Starter" },
@@ -182,8 +182,17 @@ export const ClientManagementSection = () => {
             className="w-full md:w-auto bg-forest hover:bg-forest-light text-white"
             disabled={isLoading}
           >
-            <Send className="w-4 h-4 mr-2" />
-            {isLoading ? "Sending Invitation..." : "Send Contract & Invitation"}
+            {isLoading ? (
+              <>
+                <Loader className="w-4 h-4 mr-2 animate-spin" />
+                Sending Invitation...
+              </>
+            ) : (
+              <>
+                <Send className="w-4 h-4 mr-2" />
+                Send Contract & Invitation
+              </>
+            )}
           </Button>
         </form>
       </div>
