@@ -87,9 +87,9 @@ const Billing = () => {
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-semibold text-white">Billing & Subscriptions</h1>
+        <h1 className="text-3xl font-semibold text-forest">Billing & Subscriptions</h1>
         <Button 
-          className="bg-mint text-forest hover:bg-mint/90"
+          className="bg-mint text-forest hover:bg-mint/90 transition-colors"
           onClick={() => navigate('/dashboard/clients/new')}
         >
           New Client
@@ -98,10 +98,10 @@ const Billing = () => {
 
       <BillingStats />
 
-      <Card className="bg-forest-light border-mint/20">
+      <Card className="bg-white border border-gray-200">
         <CardHeader>
-          <CardTitle>Active Subscriptions</CardTitle>
-          <CardDescription>Overview of all client subscriptions</CardDescription>
+          <CardTitle className="text-forest">Active Subscriptions</CardTitle>
+          <CardDescription className="text-gray-600">Overview of all client subscriptions</CardDescription>
         </CardHeader>
         <CardContent>
           <SubscriptionsTable subscriptions={subscriptions} />
