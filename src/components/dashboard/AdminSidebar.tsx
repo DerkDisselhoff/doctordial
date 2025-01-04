@@ -10,7 +10,7 @@ import {
   Activity,
   LogOut,
   UserCog,
-  User
+  Stethoscope
 } from "lucide-react";
 import {
   Sidebar,
@@ -102,20 +102,23 @@ export function AdminSidebar() {
   return (
     <Sidebar>
       <div className="flex flex-col h-full">
-        <div className="p-6 border-b border-mint/10">
-          <h1 className="text-xl font-semibold text-forest tracking-tight">
-            DoctorDial
-          </h1>
+        <div className="p-5 border-b border-mint/10">
+          <div className="flex items-center space-x-2">
+            <Stethoscope className="w-6 h-6 text-forest" />
+            <h1 className="text-xl font-semibold text-forest tracking-tight">
+              DoctorDial
+            </h1>
+          </div>
         </div>
-        <SidebarContent className="flex-1">
+        <SidebarContent className="flex-1 px-3">
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
                 {menuItems.map((item, index) => (
                   'section' in item ? (
-                    <div key={item.section} className="mt-6 first:mt-0">
-                      <div className="px-4 mb-2">
-                        <p className="text-xs font-medium text-forest/60 uppercase tracking-wider">
+                    <div key={item.section} className="mt-8 first:mt-4">
+                      <div className="px-3 mb-3">
+                        <p className="text-sm font-bold text-forest/70 uppercase tracking-wider">
                           {item.section}
                         </p>
                       </div>
@@ -123,10 +126,16 @@ export function AdminSidebar() {
                         <SidebarMenuItem key={subItem.title}>
                           <SidebarMenuButton 
                             onClick={() => navigate(subItem.path)}
-                            className={isActive(subItem.path) ? 
-                              "bg-mint/10 text-forest font-medium" : undefined}
+                            className={cn(
+                              "w-full rounded-lg px-3 py-2.5 text-sm transition-colors",
+                              "hover:bg-mint/10 hover:text-forest",
+                              "flex items-center space-x-3",
+                              isActive(subItem.path) ? 
+                                "bg-mint/15 text-forest font-medium shadow-sm" : 
+                                "text-forest/70"
+                            )}
                           >
-                            <subItem.icon className="w-4 h-4 mr-2" />
+                            <subItem.icon className="w-4.5 h-4.5 flex-shrink-0" />
                             <span>{subItem.title}</span>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
@@ -139,10 +148,16 @@ export function AdminSidebar() {
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton 
                         onClick={() => navigate(item.path)}
-                        className={isActive(item.path) ? 
-                          "bg-mint/10 text-forest font-medium" : undefined}
+                        className={cn(
+                          "w-full rounded-lg px-3 py-2.5 text-sm transition-colors",
+                          "hover:bg-mint/10 hover:text-forest",
+                          "flex items-center space-x-3",
+                          isActive(item.path) ? 
+                            "bg-mint/15 text-forest font-medium shadow-sm" : 
+                            "text-forest/70"
+                        )}
                       >
-                        <item.icon className="w-4 h-4 mr-2" />
+                        <item.icon className="w-4.5 h-4.5 flex-shrink-0" />
                         <span>{item.title}</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -152,13 +167,13 @@ export function AdminSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
-        <div className="mt-auto border-t border-mint/10">
+        <div className="mt-auto border-t border-mint/10 bg-forest-light/5">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="w-full justify-start p-4 hover:bg-mint/5">
-                <Avatar className="h-8 w-8 mr-3 ring-2 ring-mint/20">
+                <Avatar className="h-9 w-9 mr-3 ring-2 ring-mint/20">
                   <AvatarImage src={userProfile?.avatar_url || ''} />
-                  <AvatarFallback className="bg-mint/10 text-forest">
+                  <AvatarFallback className="bg-mint/10 text-forest font-medium">
                     {userProfile?.username?.[0]?.toUpperCase() || 'U'}
                   </AvatarFallback>
                 </Avatar>
