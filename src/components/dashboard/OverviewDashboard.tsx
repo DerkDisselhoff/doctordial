@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, PhoneCall, Clock, TrendingUp } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
-import { VapiCallsList } from "@/components/VapiCallsList";
+import VapiCallsList from "@/components/VapiCallsList";
 import { ClientDistributionChart } from "./charts/ClientDistributionChart";
 import { CallVolumeChart } from "./charts/CallVolumeChart";
 
