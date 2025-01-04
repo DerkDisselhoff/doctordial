@@ -88,47 +88,53 @@ export const ClientManagementSection = () => {
       <div className="space-y-6">
         <div className="flex items-center space-x-2">
           <UserPlus className="w-6 h-6 text-mint" />
-          <h2 className="text-2xl font-semibold text-gray-900">Invite New Client</h2>
+          <h2 className="text-2xl font-semibold text-forest">Invite New Client</h2>
         </div>
 
         <form onSubmit={handleInviteClient} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="clientName">Client Name</Label>
+              <Label htmlFor="clientName" className="text-forest">Client Name</Label>
               <Input
                 id="clientName"
                 value={formData.clientName}
                 onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
                 placeholder="Dr. Jane Smith"
+                className="bg-white border-gray-200"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="clientEmail">Client Email</Label>
+              <Label htmlFor="clientEmail" className="text-forest">Client Email</Label>
               <Input
                 id="clientEmail"
                 type="email"
                 value={formData.clientEmail}
                 onChange={(e) => setFormData({ ...formData, clientEmail: e.target.value })}
                 placeholder="jane.smith@practice.com"
+                className="bg-white border-gray-200"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label>Package</Label>
+              <Label className="text-forest">Package</Label>
               <Select
                 value={formData.packageName}
                 onValueChange={(value) => setFormData({ ...formData, packageName: value })}
                 required
               >
-                <SelectTrigger>
+                <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Select a package" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white border border-gray-200">
                   {packages.map((pkg) => (
-                    <SelectItem key={pkg.id} value={pkg.id}>
+                    <SelectItem 
+                      key={pkg.id} 
+                      value={pkg.id}
+                      className="hover:bg-gray-100"
+                    >
                       {pkg.name}
                     </SelectItem>
                   ))}
@@ -137,18 +143,22 @@ export const ClientManagementSection = () => {
             </div>
 
             <div className="space-y-2">
-              <Label>Contract Length</Label>
+              <Label className="text-forest">Contract Length</Label>
               <Select
                 value={formData.contractLength}
                 onValueChange={(value) => setFormData({ ...formData, contractLength: value })}
                 required
               >
-                <SelectTrigger>
+                <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Select contract length" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white border border-gray-200">
                   {contractLengths.map((length) => (
-                    <SelectItem key={length.id} value={length.id}>
+                    <SelectItem 
+                      key={length.id} 
+                      value={length.id}
+                      className="hover:bg-gray-100"
+                    >
                       {length.name}
                     </SelectItem>
                   ))}
@@ -157,18 +167,22 @@ export const ClientManagementSection = () => {
             </div>
 
             <div className="space-y-2">
-              <Label>Payment Frequency</Label>
+              <Label className="text-forest">Payment Frequency</Label>
               <Select
                 value={formData.paymentFrequency}
                 onValueChange={(value) => setFormData({ ...formData, paymentFrequency: value })}
                 required
               >
-                <SelectTrigger>
+                <SelectTrigger className="bg-white border-gray-200">
                   <SelectValue placeholder="Select payment frequency" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white border border-gray-200">
                   {paymentFrequencies.map((frequency) => (
-                    <SelectItem key={frequency.id} value={frequency.id}>
+                    <SelectItem 
+                      key={frequency.id} 
+                      value={frequency.id}
+                      className="hover:bg-gray-100"
+                    >
                       {frequency.name}
                     </SelectItem>
                   ))}
@@ -179,7 +193,7 @@ export const ClientManagementSection = () => {
 
           <Button
             type="submit"
-            className="w-full md:w-auto bg-forest hover:bg-forest-light text-white"
+            className="w-full md:w-auto bg-mint hover:bg-mint/90 text-forest"
             disabled={isLoading}
           >
             {isLoading ? (

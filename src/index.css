@@ -66,6 +66,40 @@
   }
 }
 
+/* Dashboard specific styles */
+.dashboard-content {
+  @apply p-8 bg-[#F1F0FB];
+}
+
+/* Dropdown menu styling */
+.dropdown-content {
+  @apply bg-white border border-gray-200 shadow-lg rounded-lg;
+}
+
+/* Button consistency */
+.btn-primary {
+  @apply bg-mint hover:bg-mint/90 text-forest font-medium;
+}
+
+.btn-secondary {
+  @apply bg-forest hover:bg-forest-light text-white font-medium;
+}
+
+/* Card styling */
+.dashboard-card {
+  @apply bg-white border-0 shadow-sm;
+}
+
+/* Form elements */
+.form-input {
+  @apply bg-white border border-gray-200;
+}
+
+/* Dropdown styling fixes */
+[data-radix-popper-content-wrapper] {
+  @apply bg-white !important;
+}
+
 .glass-nav {
   background: rgba(10, 31, 47, 0.8);
   backdrop-filter: blur(20px);

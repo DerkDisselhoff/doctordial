@@ -56,7 +56,7 @@ const Clients = () => {
         </div>
         <Button 
           onClick={() => setShowInviteForm(true)}
-          className="bg-forest hover:bg-forest-light text-white"
+          className="bg-mint hover:bg-mint/90 text-forest"
         >
           <UserPlus className="w-4 h-4 mr-2" />
           New Client
@@ -100,14 +100,14 @@ const Clients = () => {
 
       <Card className="bg-white">
         <CardHeader>
-          <CardTitle>Recent Clients</CardTitle>
+          <CardTitle className="text-forest">Recent Clients</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {profiles?.slice(0, 5).map((profile) => (
               <div
                 key={profile.id}
-                className="flex items-center justify-between p-4 border rounded-lg"
+                className="flex items-center justify-between p-4 border rounded-lg bg-white"
               >
                 <div className="flex items-center space-x-4">
                   <div className="w-10 h-10 bg-mint/10 rounded-full flex items-center justify-center">
