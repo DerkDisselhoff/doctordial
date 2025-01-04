@@ -8,13 +8,33 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is already logged in
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
+        // After successful signup/login, update profile with company info
+        if (event === 'SIGNED_IN') {
+          const metadata = session.user.user_metadata;
+          if (metadata.company_name) {
+            updateProfile(session.user.id, metadata);
+          }
+        }
         navigate("/");
       }
     });
   }, [navigate]);
+
+  const updateProfile = async (userId: string, metadata: any) => {
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        company_name: metadata.company_name,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', userId);
+
+    if (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-forest flex items-center justify-center px-4">
@@ -43,6 +63,17 @@ const Login = () => {
             },
           }}
           providers={[]}
+          options={{
+            emailRedirectTo: `${window.location.origin}/dashboard`,
+            additionalSignUpFields: [
+              {
+                key: 'company_name',
+                label: 'Company/Practice Name',
+                type: 'text',
+                required: true,
+              }
+            ],
+          }}
         />
       </div>
     </div>
