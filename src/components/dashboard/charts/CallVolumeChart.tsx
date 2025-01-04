@@ -22,11 +22,23 @@ export function CallVolumeChart() {
             bottom: 0,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Area type="monotone" dataKey="calls" stroke="#8884d8" fill="#8884d8" />
+          <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
+          <XAxis dataKey="name" stroke="#0A1F2F" />
+          <YAxis stroke="#0A1F2F" />
+          <Tooltip 
+            contentStyle={{
+              backgroundColor: 'white',
+              border: '1px solid #e2e8f0',
+              borderRadius: '8px',
+            }}
+          />
+          <Area 
+            type="monotone" 
+            dataKey="calls" 
+            stroke="#64FFDA" 
+            fill="#64FFDA" 
+            fillOpacity={0.2}
+          />
         </AreaChart>
       </ResponsiveContainer>
     </div>

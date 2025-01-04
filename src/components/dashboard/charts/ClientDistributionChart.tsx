@@ -6,7 +6,7 @@ const data = [
   { name: 'Starter', value: 20 },
 ];
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28'];
+const COLORS = ['#64FFDA', '#A7FFE4', '#132B41'];
 
 export function ClientDistributionChart() {
   return (
@@ -26,7 +26,13 @@ export function ClientDistributionChart() {
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip 
+            contentStyle={{
+              backgroundColor: 'white',
+              border: '1px solid #e2e8f0',
+              borderRadius: '8px',
+            }}
+          />
           <Legend />
         </PieChart>
       </ResponsiveContainer>
