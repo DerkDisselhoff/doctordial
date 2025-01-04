@@ -48,7 +48,7 @@ const Clients = () => {
   ];
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-3xl font-bold text-forest">Client Management</h2>
