@@ -22,17 +22,22 @@ export async function createSignatureRequest({
   paymentFrequency,
 }: SignatureRequest) {
   try {
-    const { data: { HELLOSIGN_API_KEY }, error: secretError } = await supabase
-      .functions.invoke('get-secret', {
-        body: { name: 'HELLOSIGN_API_KEY' }
-      });
+    const { data: secretData, error: secretError } = await supabase
+      .from('secrets')
+      .select('value')
+      .eq('name', 'HELLOSIGN_API_KEY')
+      .single();
 
     if (secretError) throw new Error('Failed to get HelloSign API key');
+    if (!secretData?.value) throw new Error('HelloSign API key not found');
+
+    const apiKey = secretData.value;
+    const authHeader = Buffer.from(`${apiKey}:`).toString('base64');
 
     const response = await fetch('https://api.hellosign.com/v3/signature_request/send', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${HELLOSIGN_API_KEY}`,
+        'Authorization': `Basic ${authHeader}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -56,6 +61,8 @@ export async function createSignatureRequest({
     });
 
     if (!response.ok) {
+      const errorData = await response.json();
+      console.error('HelloSign API error:', errorData);
       throw new Error('Failed to create signature request');
     }
 
@@ -69,20 +76,27 @@ export async function createSignatureRequest({
 
 export async function getSignatureStatus(signatureId: string) {
   try {
-    const { data: { HELLOSIGN_API_KEY }, error: secretError } = await supabase
-      .functions.invoke('get-secret', {
-        body: { name: 'HELLOSIGN_API_KEY' }
-      });
+    const { data: secretData, error: secretError } = await supabase
+      .from('secrets')
+      .select('value')
+      .eq('name', 'HELLOSIGN_API_KEY')
+      .single();
 
     if (secretError) throw new Error('Failed to get HelloSign API key');
+    if (!secretData?.value) throw new Error('HelloSign API key not found');
+
+    const apiKey = secretData.value;
+    const authHeader = Buffer.from(`${apiKey}:`).toString('base64');
 
     const response = await fetch(`https://api.hellosign.com/v3/signature_request/${signatureId}`, {
       headers: {
-        'Authorization': `Bearer ${HELLOSIGN_API_KEY}`
+        'Authorization': `Basic ${authHeader}`
       }
     });
 
     if (!response.ok) {
+      const errorData = await response.json();
+      console.error('HelloSign API error:', errorData);
       throw new Error('Failed to get signature status');
     }
 
