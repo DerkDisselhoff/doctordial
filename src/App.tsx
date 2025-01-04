@@ -25,9 +25,9 @@ function App() {
     return <Navigate to="/login" replace />;
   }
 
-  // If on marketing site but authenticated, redirect to dashboard
-  if (!isAppSubdomain && isAuthenticated) {
-    window.location.href = `https://app.${hostname}/dashboard`;
+  // If on marketing site but authenticated and trying to access dashboard, redirect to app subdomain
+  if (!isAppSubdomain && isAuthenticated && window.location.pathname.startsWith('/dashboard')) {
+    window.location.href = `https://app.${hostname.replace('www.', '')}/dashboard`;
     return null;
   }
 
