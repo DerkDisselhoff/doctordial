@@ -12,28 +12,38 @@ const data = [
 export function UrgencyLevelChart() {
   return (
     <Card className="dashboard-card">
-      <CardHeader>
+      <CardHeader className="border-b border-gray-100 pb-6">
         <CardTitle className="dashboard-card-title">Call Urgency Distribution</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-6">
         <div className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
-              <XAxis dataKey="urgency" stroke="#ffffff80" />
-              <YAxis stroke="#ffffff80" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+              <XAxis 
+                dataKey="urgency" 
+                stroke="#0A1F2F"
+                fontSize={12}
+                tickLine={false}
+              />
+              <YAxis 
+                stroke="#0A1F2F"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#132B41',
-                  border: '1px solid rgba(100, 255, 218, 0.1)',
+                  backgroundColor: '#FFFFFF',
+                  border: '1px solid #E5E7EB',
                   borderRadius: '8px',
-                  color: '#fff',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
                 }}
+                cursor={{ fill: 'rgba(100, 255, 218, 0.1)' }}
               />
               <Bar 
                 dataKey="calls" 
                 fill="#64FFDA"
-                opacity={0.8}
                 radius={[4, 4, 0, 0]}
               />
             </BarChart>
