@@ -41,7 +41,7 @@ const mockInvoices = [
 const Billing = () => {
   return (
     <div className="space-y-8">
-      <div>
+      <div className="mb-6">
         <h2 className="text-3xl font-bold text-forest">Billing & Subscriptions</h2>
         <p className="text-gray-500">Monitor client subscriptions and billing</p>
       </div>
@@ -109,7 +109,7 @@ const Billing = () => {
               {mockSubscriptions.map((sub) => (
                 <TableRow key={sub.id} className="hover:bg-gray-50/50">
                   <TableCell className="font-medium text-forest">{sub.client}</TableCell>
-                  <TableCell>{sub.package}</TableCell>
+                  <TableCell className="text-gray-600">{sub.package}</TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       sub.status === 'active' 
@@ -119,8 +119,8 @@ const Billing = () => {
                       {sub.status}
                     </span>
                   </TableCell>
-                  <TableCell>{sub.amount}</TableCell>
-                  <TableCell>{sub.nextBilling}</TableCell>
+                  <TableCell className="text-gray-600">{sub.amount}</TableCell>
+                  <TableCell className="text-gray-600">{sub.nextBilling}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -147,8 +147,8 @@ const Billing = () => {
               {mockInvoices.map((invoice) => (
                 <TableRow key={invoice.id} className="hover:bg-gray-50/50">
                   <TableCell className="font-medium text-forest">{invoice.id}</TableCell>
-                  <TableCell>{invoice.client}</TableCell>
-                  <TableCell>{invoice.amount}</TableCell>
+                  <TableCell className="text-gray-600">{invoice.client}</TableCell>
+                  <TableCell className="text-gray-600">{invoice.amount}</TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       invoice.status === 'paid' 
@@ -158,7 +158,7 @@ const Billing = () => {
                       {invoice.status}
                     </span>
                   </TableCell>
-                  <TableCell>{invoice.date}</TableCell>
+                  <TableCell className="text-gray-600">{invoice.date}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

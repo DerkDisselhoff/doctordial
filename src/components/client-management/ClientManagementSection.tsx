@@ -5,7 +5,7 @@ import { ClientInviteForm } from "./forms/ClientInviteForm";
 export const ClientManagementSection = () => {
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-6">
         <div>
           <h2 className="text-3xl font-bold text-forest">Client Management</h2>
           <p className="text-gray-500">Invite and manage medical practice clients</p>

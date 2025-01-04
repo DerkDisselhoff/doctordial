@@ -33,7 +33,9 @@ export function Sidebar({ className, children }: React.HTMLAttributes<HTMLDivEle
       )}
     >
       <div className="p-4 border-b border-gray-100">
-        <img src="/assets/nhg-logo.svg" alt="DoctorDial" className="h-8 w-auto" />
+        <h1 className="text-xl font-semibold text-forest tracking-tight">
+          DoctorDial
+        </h1>
       </div>
       {children}
     </div>
