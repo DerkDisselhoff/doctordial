@@ -4,14 +4,13 @@ import Stats from "@/components/Stats";
 import Mission from "@/components/Mission";
 import Features from "@/components/Features";
 import Certifications from "@/components/Certifications";
+import WhoWeServe from "@/components/WhoWeServe";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
-import WhoWeServe from "@/components/WhoWeServe";
-import VapiCallsList from "@/components/VapiCallsList";
 
 const Index = () => {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-forest">
       <Navbar />
       <Hero />
       <Stats />
@@ -19,7 +18,6 @@ const Index = () => {
       <Certifications />
       <WhoWeServe />
       <Features />
-      <VapiCallsList />
       <Testimonials />
       <Footer />
     </main>
