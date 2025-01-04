@@ -50,7 +50,7 @@ const chartData = [
 const Calls = () => {
   return (
     <div className="p-8 space-y-8">
-      <div>
+      <div className="mb-8">
         <h2 className="text-3xl font-bold text-forest">Call Analytics Overview</h2>
         <p className="text-gray-500">Monitor and analyze call performance across all practices</p>
       </div>

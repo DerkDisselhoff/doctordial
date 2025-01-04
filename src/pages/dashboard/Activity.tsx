@@ -50,7 +50,7 @@ const Activity = () => {
 
   return (
     <div className="p-8 space-y-8">
-      <div>
+      <div className="mb-8">
         <h2 className="text-3xl font-bold text-forest">Activity Log</h2>
         <p className="text-gray-500">Track all system activities and events</p>
       </div>
