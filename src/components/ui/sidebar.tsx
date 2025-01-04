@@ -27,7 +27,7 @@ export function Sidebar({ className, children }: React.HTMLAttributes<HTMLDivEle
   return (
     <div
       className={cn(
-        "bg-white shadow-lg transition-all duration-300",
+        "h-screen bg-white shadow-lg transition-all duration-300 flex flex-col",
         context.collapsed ? "w-14" : "w-56",
         className
       )}
