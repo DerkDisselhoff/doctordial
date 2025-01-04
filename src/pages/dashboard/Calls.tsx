@@ -71,47 +71,13 @@ const Calls = () => {
     );
   }
 
-  const stats = [
-    {
-      title: "Total Calls",
-      value: calls?.length || 0,
-      icon: Phone,
-      color: "text-blue-500",
-    },
-    {
-      title: "Average Duration",
-      value: calls?.reduce((acc, call) => acc + (call.duration || 0), 0) / (calls?.length || 1),
-      icon: Clock,
-      color: "text-green-500",
-      suffix: "min",
-    },
-    {
-      title: "Positive Sentiment",
-      value: calls?.filter(call => 
-        call.sentiment_analysis && 
-        call.sentiment_analysis.sentiment === 'positive'
-      ).length || 0,
-      icon: ThumbsUp,
-      color: "text-yellow-500",
-    },
-    {
-      title: "Urgent Cases",
-      value: calls?.filter(call => 
-        call.sentiment_analysis && 
-        call.sentiment_analysis.urgency === 'high'
-      ).length || 0,
-      icon: AlertTriangle,
-      color: "text-red-500",
-    },
-  ];
-
-  const chartData = calls?.map(call => ({
-    date: new Date(call.created_at || '').toLocaleDateString(),
-    duration: call.duration,
-  })) || [];
-
   return (
-    <div className="space-y-6 p-8">
+    <div className="p-8 space-y-8">
+      <div>
+        <h2 className="text-3xl font-bold text-forest">Call Analytics</h2>
+        <p className="text-gray-500">Monitor and analyze your call data</p>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
           <Card key={index} className="bg-white">

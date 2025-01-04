@@ -57,7 +57,12 @@ const Practices = () => {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="p-8 space-y-8">
+      <div>
+        <h2 className="text-3xl font-bold text-forest">Practice Overview</h2>
+        <p className="text-gray-500">Monitor practice performance and metrics</p>
+      </div>
+
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -69,11 +74,6 @@ const Practices = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-
-      <div>
-        <h2 className="text-3xl font-bold text-forest">Practice Overview</h2>
-        <p className="text-gray-500">Monitor practice performance and metrics</p>
-      </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (

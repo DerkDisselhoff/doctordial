@@ -4,7 +4,7 @@ import { Settings as SettingsIcon, Bell, Shield, Phone, Globe, Palette } from "l
 
 const Settings = () => {
   return (
-    <div className="space-y-8">
+    <div className="p-8 space-y-8">
       <div>
         <h2 className="text-3xl font-bold text-forest">Settings</h2>
         <p className="text-gray-500">Manage your account and application preferences</p>
