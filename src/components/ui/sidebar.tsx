@@ -27,7 +27,7 @@ export function Sidebar({ className, children }: React.HTMLAttributes<HTMLDivEle
   return (
     <div
       className={cn(
-        "border-r bg-background transition-all duration-300",
+        "bg-white shadow-lg transition-all duration-300",
         context.collapsed ? "w-16" : "w-64",
         className
       )}
@@ -54,7 +54,8 @@ export function SidebarGroupLabel({ children }: { children: React.ReactNode }) {
   if (!context) throw new Error("SidebarGroupLabel must be used within SidebarProvider")
 
   return (
-    <div className={cn("text-sm font-semibold text-muted-foreground", 
+    <div className={cn(
+      "text-sm font-semibold text-forest", 
       context.collapsed && "sr-only"
     )}>
       {children}
@@ -95,7 +96,7 @@ export function SidebarMenuButton({
     return (
       <div
         className={cn(
-          "flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
+          "flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-forest transition-colors hover:bg-mint/10 hover:text-forest",
           context.collapsed && "justify-center",
           className
         )}
@@ -109,7 +110,7 @@ export function SidebarMenuButton({
   return (
     <button
       className={cn(
-        "flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
+        "flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-forest transition-colors hover:bg-mint/10 hover:text-forest",
         context.collapsed && "justify-center",
         className
       )}
