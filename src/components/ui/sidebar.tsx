@@ -32,11 +32,6 @@ export function Sidebar({ className, children }: React.HTMLAttributes<HTMLDivEle
         className
       )}
     >
-      <div className="p-4 border-b border-gray-100">
-        <h1 className="text-xl font-semibold text-forest tracking-tight">
-          DoctorDial
-        </h1>
-      </div>
       {children}
     </div>
   )
