@@ -45,7 +45,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-medium tracking-tight text-white;
+    @apply font-medium tracking-tight text-forest;
   }
 
   h1 { @apply text-3xl md:text-4xl; }
@@ -92,11 +92,11 @@
   }
 
   .dashboard-card-header {
-    @apply text-forest-light;
+    @apply text-forest-light font-medium;
   }
 
   .dashboard-card-title {
-    @apply text-lg font-medium text-forest;
+    @apply text-lg font-semibold text-forest;
   }
 
   .dashboard-card-content {
@@ -109,7 +109,7 @@
   }
 
   .dashboard-table-header {
-    @apply bg-gray-50;
+    @apply bg-gray-50/80;
   }
 
   .dashboard-table-header th {
@@ -164,5 +164,18 @@
 
   .status-badge-error {
     @apply bg-red-100 text-red-700 border border-red-200;
+  }
+
+  /* Section Headers */
+  .section-header {
+    @apply mb-6;
+  }
+
+  .section-title {
+    @apply text-2xl font-semibold text-forest mb-1;
+  }
+
+  .section-description {
+    @apply text-sm text-gray-500;
   }
 }
