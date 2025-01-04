@@ -1,6 +1,6 @@
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, LineChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, LineChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Download, Filter } from "lucide-react";
 
 const data = [
@@ -43,7 +43,7 @@ const ReportsPage = () => {
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
-                    <LineChart type="monotone" dataKey="calls" stroke="#64FFDA" />
+                    <Line type="monotone" dataKey="calls" stroke="#64FFDA" />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
