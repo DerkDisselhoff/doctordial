@@ -19,31 +19,21 @@ export function UrgencyLevelChart() {
         <div className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis 
-                dataKey="urgency" 
-                stroke="#0A1F2F" 
-                fontSize={12}
-                tickLine={false}
-              />
-              <YAxis 
-                stroke="#0A1F2F" 
-                fontSize={12}
-                tickLine={false}
-                axisLine={false}
-              />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
+              <XAxis dataKey="urgency" stroke="#ffffff80" />
+              <YAxis stroke="#ffffff80" />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #e5e7eb',
+                  backgroundColor: '#132B41',
+                  border: '1px solid rgba(100, 255, 218, 0.1)',
                   borderRadius: '8px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-                  color: '#0A1F2F',
+                  color: '#fff',
                 }}
               />
               <Bar 
                 dataKey="calls" 
                 fill="#64FFDA"
+                opacity={0.8}
                 radius={[4, 4, 0, 0]}
               />
             </BarChart>
