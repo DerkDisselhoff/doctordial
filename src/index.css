@@ -70,7 +70,7 @@
   }
 
   .menu-item {
-    @apply flex items-center space-x-2 px-4 py-2 text-sm
+    @apply flex items-center space-x-2 px-4 py-2 text-sm text-white/70
            hover:text-white hover:bg-mint/10 rounded-lg transition-all
            data-[active=true]:bg-mint/20 data-[active=true]:text-white;
   }

@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, UserCog, Users } from "lucide-react";
+import { LogOut, UserCog } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 
@@ -30,7 +30,7 @@ export function SidebarProfile({ userProfile, userRole }: SidebarProfileProps) {
   };
 
   return (
-    <div className="mt-auto border-t border-mint/10 bg-forest-light/5">
+    <div className="mt-auto border-t border-mint/10">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="w-full justify-start p-4 hover:bg-mint/5 group">
@@ -44,31 +44,34 @@ export function SidebarProfile({ userProfile, userRole }: SidebarProfileProps) {
               <span className="text-sm font-medium text-white">
                 {userProfile?.username || 'User'}
               </span>
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-white/60">
                 {userProfile?.company_name || (userRole === 'admin' ? 'Administrator' : 'Client')}
               </span>
             </div>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="dropdown-content w-56" align="end" side="right">
-          <DropdownMenuLabel className="dropdown-label">My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator className="dropdown-separator" />
-          <DropdownMenuItem className="dropdown-item" onClick={() => navigate('/dashboard/settings')}>
-            <UserCog className="w-4 h-4 mr-2 text-gray-400" />
+        <DropdownMenuContent 
+          className="w-56 bg-forest-light border-mint/10" 
+          align="end" 
+          side="right"
+        >
+          <DropdownMenuLabel className="text-white/70">
+            My Account
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator className="bg-mint/10" />
+          <DropdownMenuItem 
+            className="menu-item group" 
+            onClick={() => navigate('/dashboard/settings')}
+          >
+            <UserCog className="menu-icon" />
             <span>Profile Settings</span>
           </DropdownMenuItem>
-          {userRole === 'admin' && (
-            <DropdownMenuItem className="dropdown-item" onClick={() => navigate('/dashboard/clients')}>
-              <Users className="w-4 h-4 mr-2 text-gray-400" />
-              <span>Manage Clients</span>
-            </DropdownMenuItem>
-          )}
-          <DropdownMenuSeparator className="dropdown-separator" />
+          <DropdownMenuSeparator className="bg-mint/10" />
           <DropdownMenuItem 
-            className="dropdown-item text-red-400 hover:text-red-300 hover:bg-red-500/10" 
+            className="menu-item group text-red-400 hover:text-red-300 hover:bg-red-500/10 focus:bg-red-500/10 focus:text-red-300" 
             onClick={handleLogout}
           >
-            <LogOut className="w-4 h-4 mr-2" />
+            <LogOut className="w-4 h-4 mr-2 text-red-400 group-hover:text-red-300" />
             <span>Log out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
