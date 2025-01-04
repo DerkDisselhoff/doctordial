@@ -1,9 +1,16 @@
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { OverviewDashboard } from "@/components/dashboard/OverviewDashboard";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Clients from "./dashboard/Clients";
+import Practices from "./dashboard/Practices";
+import Calls from "./dashboard/Calls";
+import Reports from "./dashboard/Reports";
+import Billing from "./Billing";
+import Activity from "./dashboard/Activity";
+import Settings from "./dashboard/Settings";
 
 const queryClient = new QueryClient();
 
@@ -22,9 +29,16 @@ const Dashboard = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <DashboardLayout>
-        <OverviewDashboard />
-      </DashboardLayout>
+      <Routes>
+        <Route path="/" element={<OverviewDashboard />} />
+        <Route path="/clients" element={<Clients />} />
+        <Route path="/practices" element={<Practices />} />
+        <Route path="/calls" element={<Calls />} />
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/billing" element={<Billing />} />
+        <Route path="/activity" element={<Activity />} />
+        <Route path="/settings" element={<Settings />} />
+      </Routes>
     </QueryClientProvider>
   );
 };
