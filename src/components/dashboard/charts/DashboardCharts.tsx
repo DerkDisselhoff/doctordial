@@ -5,7 +5,7 @@ import { CallVolumeChart } from "./CallVolumeChart";
 export function DashboardCharts() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <Card className="bg-white/50 backdrop-blur-sm border border-gray-200">
+      <Card className="bg-white shadow-lg border-none">
         <CardHeader>
           <CardTitle className="text-forest">Client Distribution</CardTitle>
         </CardHeader>
@@ -14,7 +14,7 @@ export function DashboardCharts() {
         </CardContent>
       </Card>
 
-      <Card className="bg-white/50 backdrop-blur-sm border border-gray-200">
+      <Card className="bg-white shadow-lg border-none">
         <CardHeader>
           <CardTitle className="text-forest">Call Volume Trend</CardTitle>
         </CardHeader>

@@ -3,7 +3,7 @@ import VapiCallsList from "@/components/VapiCallsList";
 
 export function RecentCalls() {
   return (
-    <Card className="bg-white/50 backdrop-blur-sm border border-gray-200">
+    <Card className="bg-white shadow-lg border-none">
       <CardHeader>
         <CardTitle className="text-forest">Recent Calls</CardTitle>
       </CardHeader>

@@ -27,7 +27,7 @@ export function MetricsCards() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <Card className="bg-white/50 backdrop-blur-sm border border-gray-200">
+      <Card className="bg-white shadow-lg border-none">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium text-forest">Total Clients</CardTitle>
           <Users className="h-4 w-4 text-mint" />
@@ -38,7 +38,7 @@ export function MetricsCards() {
         </CardContent>
       </Card>
       
-      <Card className="bg-white/50 backdrop-blur-sm border border-gray-200">
+      <Card className="bg-white shadow-lg border-none">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium text-forest">Total Calls</CardTitle>
           <PhoneCall className="h-4 w-4 text-mint" />
@@ -49,7 +49,7 @@ export function MetricsCards() {
         </CardContent>
       </Card>
       
-      <Card className="bg-white/50 backdrop-blur-sm border border-gray-200">
+      <Card className="bg-white shadow-lg border-none">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium text-forest">Avg. Call Duration</CardTitle>
           <Clock className="h-4 w-4 text-mint" />
@@ -60,7 +60,7 @@ export function MetricsCards() {
         </CardContent>
       </Card>
       
-      <Card className="bg-white/50 backdrop-blur-sm border border-gray-200">
+      <Card className="bg-white shadow-lg border-none">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium text-forest">Monthly Revenue</CardTitle>
           <DollarSign className="h-4 w-4 text-mint" />

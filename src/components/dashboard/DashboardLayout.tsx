@@ -4,7 +4,7 @@ import { AdminSidebar } from "./AdminSidebar";
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-white">
+      <div className="min-h-screen flex w-full bg-[#F1F0FB]">
         <AdminSidebar />
         <main className="flex-1 overflow-y-auto">
           {children}
