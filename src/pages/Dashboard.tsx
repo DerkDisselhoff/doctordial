@@ -11,6 +11,7 @@ import Reports from "./dashboard/Reports";
 import Billing from "./Billing";
 import Activity from "./dashboard/Activity";
 import Settings from "./dashboard/Settings";
+import Contracts from "./dashboard/Contracts";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const Dashboard = () => {
           <Route path="/calls" element={<Calls />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/billing" element={<Billing />} />
+          <Route path="/contracts" element={<Contracts />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
