@@ -1,30 +1,22 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Index from "./pages/Index";
+import Features from "./pages/Features";
+import Pricing from "./pages/Pricing";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 import { LanguageProvider } from "./contexts/LanguageContext";
-import { MarketingRoutes } from "./routes/MarketingRoutes";
-import { AppRoutes } from "./routes/AppRoutes";
-import { useEffect, useState } from "react";
-import { supabase } from "./lib/supabaseClient";
 
 function App() {
-  const [isApp, setIsApp] = useState(false);
-
-  useEffect(() => {
-    // Check if we're on the app subdomain
-    setIsApp(window.location.host.startsWith('app.'));
-  }, []);
-
-  if (isApp) {
-    return (
-      <Router>
-        <AppRoutes />
-      </Router>
-    );
-  }
-
   return (
     <LanguageProvider>
       <Router>
-        <MarketingRoutes />
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
       </Router>
     </LanguageProvider>
   );
