@@ -77,7 +77,7 @@ const CallAnalyticsPage = () => {
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
-                    <Line dataKey="calls" stroke="#64FFDA" />
+                    <Line type="monotone" dataKey="calls" stroke="#64FFDA" />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
