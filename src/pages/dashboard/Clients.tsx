@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
 import { Users, UserPlus, UserCheck, UserMinus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ClientManagementSection } from "@/components/client-management/ClientManagementSection";
 
 const Clients = () => {
+  const [showInviteForm, setShowInviteForm] = useState(false);
+  
   const { data: profiles } = useQuery({
     queryKey: ['profiles'],
     queryFn: async () => {
@@ -44,9 +49,18 @@ const Clients = () => {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-3xl font-bold text-forest">Client Management</h2>
-        <p className="text-gray-500">Monitor and manage your medical practice clients</p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-3xl font-bold text-forest">Client Management</h2>
+          <p className="text-gray-500">Monitor and manage your medical practice clients</p>
+        </div>
+        <Button 
+          onClick={() => setShowInviteForm(true)}
+          className="bg-forest hover:bg-forest-light text-white"
+        >
+          <UserPlus className="w-4 h-4 mr-2" />
+          New Client
+        </Button>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -65,6 +79,24 @@ const Clients = () => {
           </Card>
         ))}
       </div>
+
+      {showInviteForm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-semibold text-forest">Invite New Client</h3>
+              <Button
+                variant="ghost"
+                onClick={() => setShowInviteForm(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ✕
+              </Button>
+            </div>
+            <ClientManagementSection />
+          </div>
+        </div>
+      )}
 
       <Card className="bg-white">
         <CardHeader>
