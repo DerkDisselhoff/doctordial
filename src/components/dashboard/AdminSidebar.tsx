@@ -7,7 +7,8 @@ import {
   Building2,
   DollarSign,
   FileText,
-  Activity
+  Activity,
+  Bot
 } from "lucide-react";
 import {
   Sidebar,
@@ -72,6 +73,7 @@ export function AdminSidebar() {
   const clientMenuItems = [
     { title: "Overview", icon: Home, path: "/dashboard" },
     { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
+    { title: "Assistant", icon: Bot, path: "/dashboard/assistant" },
     { title: "Settings", icon: Settings, path: "/dashboard/settings" },
   ];
 
