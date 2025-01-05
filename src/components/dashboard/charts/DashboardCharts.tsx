@@ -4,6 +4,7 @@ import { ClientDistributionChart } from "./ClientDistributionChart";
 import { CallVolumeChart } from "./CallVolumeChart";
 import { ActivityList } from "../client/ActivityList";
 import { UrgencyLevelChart } from "../client/UrgencyLevelChart";
+import { UrgentCases } from "../client/UrgentCases";
 
 export function DashboardCharts() {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
@@ -28,6 +29,7 @@ export function DashboardCharts() {
   if (userRole === 'client') {
     return (
       <div className="grid grid-cols-1 gap-8">
+        <UrgentCases />
         <ActivityList />
         <UrgencyLevelChart />
       </div>
