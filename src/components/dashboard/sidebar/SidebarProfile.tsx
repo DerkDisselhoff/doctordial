@@ -28,19 +28,29 @@ export function SidebarProfile({ userProfile, userRole }: SidebarProfileProps) {
 
   const handleLogout = async () => {
     try {
-      // First check if we have a session
-      const { data: { session } } = await supabase.auth.getSession();
+      // Get the current session
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
       
-      if (!session) {
-        // If no session exists, just clear local state and redirect
+      if (sessionError) {
+        console.error('Session error:', sessionError);
+        // If there's a session error, just redirect to home
         navigate("/");
         return;
       }
 
-      // Proceed with logout
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error('Logout error:', error);
+      if (!session) {
+        // No active session, just redirect
+        navigate("/");
+        return;
+      }
+
+      // Attempt to sign out
+      const { error: signOutError } = await supabase.auth.signOut({
+        scope: 'local'  // Only clear the current tab's session
+      });
+
+      if (signOutError) {
+        console.error('Logout error:', signOutError);
         toast({
           title: "Error logging out",
           description: "Please try again",
