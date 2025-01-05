@@ -21,9 +21,16 @@ serve(async (req) => {
     const supabaseClient = initializeSupabase()
     console.log('Supabase client initialized')
 
-    // Fetch and process calls
+    // Fetch calls from VAPI
     const vapiResponse = await fetchVapiCalls(vapiKey)
-    const { processedCalls, errors } = await processVapiCalls(supabaseClient, vapiResponse.data || [])
+    console.log('VAPI Response:', JSON.stringify(vapiResponse, null, 2))
+
+    if (!vapiResponse.data) {
+      throw new Error('No data received from VAPI')
+    }
+
+    // Process the calls
+    const { processedCalls, errors } = await processVapiCalls(supabaseClient, vapiResponse.data)
     
     console.log(`Successfully completed processing ${processedCalls} calls`)
     if (errors.length > 0) {

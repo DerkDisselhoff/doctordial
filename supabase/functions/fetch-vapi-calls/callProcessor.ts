@@ -8,16 +8,14 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
     try {
       console.log(`Processing call ${call.id}...`)
       
-      if (!isValidUUID(call.id)) {
-        console.warn(`Invalid UUID format for call ${call.id}, skipping...`)
-        continue
-      }
-
+      // Generate a new UUID for each call if the ID isn't a valid UUID
+      const callId = isValidUUID(call.id) ? call.id : crypto.randomUUID()
+      
       const { error } = await supabaseClient
         .from('vapi_calls')
         .upsert({
-          id: call.id,
-          call_id: call.id,
+          id: callId,
+          call_id: call.id, // Keep original VAPI ID as call_id
           caller_number: call.from,
           recipient_number: call.to,
           duration: call.duration,
