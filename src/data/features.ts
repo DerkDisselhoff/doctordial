@@ -5,8 +5,7 @@ export const features = [
     icon: Brain,
     title: "Smart Urgency Detection",
     description: "AI-powered triage system that accurately assesses patient needs",
-    image: "/lovable-uploads/urgency-detection.png",
-    imagePrompt: "Professional medical dashboard showing AI-powered triage system with color-coded urgency levels, modern interface design, clean layout, dark theme, medical symbols",
+    component: "UrgencyLevels",
     points: [
       "NHG-certified triage protocols",
       "Real-time urgency assessment",
@@ -18,8 +17,7 @@ export const features = [
     icon: Calendar,
     title: "Intelligent Scheduling",
     description: "Optimize your practice's appointment management",
-    image: "/lovable-uploads/intelligent-scheduling.png",
-    imagePrompt: "Modern calendar interface showing smart appointment scheduling, AI suggestions for optimal time slots, clean design with mint accents, medical scheduling dashboard",
+    component: "DailyCallsChart",
     points: [
       "Smart appointment allocation",
       "Reduces no-shows by 40%",
@@ -31,8 +29,7 @@ export const features = [
     icon: Mic,
     title: "Voice Customization",
     description: "Natural and professional communication with patients",
-    image: "/lovable-uploads/voice-customization.png",
-    imagePrompt: "Voice customization interface with waveform visualization, language selection options, voice profile settings, modern UI design with mint accent colors",
+    component: "CallDetail",
     points: [
       "Natural voice interactions",
       "Multiple language support",
@@ -44,8 +41,7 @@ export const features = [
     icon: BarChart3,
     title: "Insights Dashboard",
     description: "Comprehensive analytics for better decision making",
-    image: "/lovable-uploads/insights-dashboard.png",
-    imagePrompt: "Medical analytics dashboard showing patient flow metrics, call statistics, performance indicators, modern data visualization with charts and graphs",
+    component: "ClientDistribution",
     points: [
       "Real-time call analytics",
       "Patient flow insights",
@@ -57,8 +53,7 @@ export const features = [
     icon: Users,
     title: "High Volume Handling",
     description: "Never miss a patient call again",
-    image: "/lovable-uploads/high-volume.png",
-    imagePrompt: "Call management interface showing multiple concurrent calls being handled by AI, queue visualization, call status indicators, modern design",
+    component: "CallVolume",
     points: [
       "50+ simultaneous calls",
       "Zero wait times",
@@ -70,8 +65,7 @@ export const features = [
     icon: Plug,
     title: "System Integrations",
     description: "Seamlessly connects with your existing tools",
-    image: "/lovable-uploads/system-integrations.png",
-    imagePrompt: "Integration hub interface showing connected healthcare systems, EHR integration status, API connections, secure data exchange visualization",
+    component: "ActivityList",
     points: [
       "EHR system integration",
       "Calendar sync",

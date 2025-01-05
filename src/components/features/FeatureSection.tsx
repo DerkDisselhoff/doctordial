@@ -1,49 +1,40 @@
 import { useEffect, useState } from "react";
 import { LucideIcon } from "lucide-react";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { generateFeatureImage } from "@/services/imageService";
-import { toast } from "sonner";
+import { Card } from "@/components/ui/card";
+import { UrgencyLevels } from "./feature-previews/UrgencyLevels";
+import { DailyCallsPreview } from "./feature-previews/DailyCallsPreview";
+import { CallDetailPreview } from "./feature-previews/CallDetailPreview";
+import { ClientDistributionPreview } from "./feature-previews/ClientDistributionPreview";
+import { CallVolumePreview } from "./feature-previews/CallVolumePreview";
+import { ActivityListPreview } from "./feature-previews/ActivityListPreview";
 
 interface FeatureSectionProps {
   icon: LucideIcon;
   title: string;
   description: string;
-  image: string;
-  imagePrompt: string;
+  component: string;
   points: string[];
   isReversed?: boolean;
 }
+
+const ComponentMap = {
+  UrgencyLevels,
+  DailyCallsChart: DailyCallsPreview,
+  CallDetail: CallDetailPreview,
+  ClientDistribution: ClientDistributionPreview,
+  CallVolume: CallVolumePreview,
+  ActivityList: ActivityListPreview,
+};
 
 const FeatureSection = ({
   icon: Icon,
   title,
   description,
-  image,
-  imagePrompt,
+  component,
   points,
   isReversed = false,
 }: FeatureSectionProps) => {
-  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const loadImage = async () => {
-      try {
-        setIsLoading(true);
-        const imageUrl = await generateFeatureImage(imagePrompt);
-        setGeneratedImage(imageUrl);
-      } catch (error) {
-        console.error('Error loading image:', error);
-        toast.error('Failed to load feature image');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (imagePrompt) {
-      loadImage();
-    }
-  }, [imagePrompt]);
+  const PreviewComponent = ComponentMap[component as keyof typeof ComponentMap];
 
   return (
     <div
@@ -75,21 +66,11 @@ const FeatureSection = ({
         </ul>
       </div>
 
-      {/* Image Side */}
-      <div className="flex-1 bg-forest-light rounded-xl p-4 shadow-xl shadow-black/20">
-        <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-lg">
-          {isLoading ? (
-            <div className="w-full h-full flex items-center justify-center bg-forest-light">
-              <div className="animate-pulse w-16 h-16 rounded-full bg-mint/20" />
-            </div>
-          ) : (
-            <img
-              src={generatedImage || image}
-              alt={title}
-              className="w-full h-full object-cover rounded-lg transition-opacity duration-300"
-            />
-          )}
-        </AspectRatio>
+      {/* Preview Component Side */}
+      <div className="flex-1">
+        <Card className="bg-forest-light/95 backdrop-blur-xl border-mint/10 overflow-hidden">
+          <PreviewComponent />
+        </Card>
       </div>
     </div>
   );
