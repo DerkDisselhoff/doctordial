@@ -6,6 +6,11 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
   
   for (const call of calls) {
     try {
+      if (!call || typeof call !== 'object') {
+        console.error('Invalid call object:', call)
+        continue
+      }
+
       console.log(`Processing call ${call.id}...`)
       console.log('Raw VAPI call data:', JSON.stringify(call, null, 2))
       
@@ -21,7 +26,7 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
         createdAt = new Date().toISOString()
       }
 
-      // Extract and validate assistant info
+      // Extract and validate assistant info with detailed logging
       const assistantInfo = call.assistant || {}
       console.log('Assistant info:', assistantInfo)
       
@@ -34,13 +39,15 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       try {
         console.log('Raw sentiment data:', call.sentiment)
         if (call.sentiment) {
-          // Handle different possible sentiment data structures
           if (typeof call.sentiment === 'string') {
             sentimentAnalysis.sentiment = call.sentiment
           } else if (typeof call.sentiment === 'object') {
-            sentimentAnalysis = {
-              sentiment: call.sentiment.overall || call.sentiment.sentiment || 'neutral',
-              urgency: call.sentiment.urgency || 'low'
+            // Handle different possible sentiment data structures
+            if (call.sentiment.overall || call.sentiment.sentiment) {
+              sentimentAnalysis.sentiment = call.sentiment.overall || call.sentiment.sentiment
+            }
+            if (call.sentiment.urgency) {
+              sentimentAnalysis.urgency = call.sentiment.urgency
             }
           }
         }
@@ -51,7 +58,7 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
 
       // Calculate urgency score with logging
       const urgencyMap = { high: 3, medium: 2, low: 1 }
-      const urgencyScore = urgencyMap[sentimentAnalysis.urgency] || 1
+      const urgencyScore = urgencyMap[sentimentAnalysis.urgency as keyof typeof urgencyMap] || 1
       console.log('Calculated urgency score:', urgencyScore)
 
       // Process duration with detailed validation
@@ -61,7 +68,6 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
           if (typeof call.duration === 'string') {
             duration = parseInt(call.duration, 10)
           } else if (typeof call.duration === 'number') {
-            // If duration is in milliseconds (greater than 100000), convert to seconds
             duration = call.duration > 100000 ? Math.round(call.duration / 1000) : Math.round(call.duration)
           }
         }
@@ -101,13 +107,17 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       // Process metadata with validation
       const metadata = call.metadata || {}
       console.log('Call metadata:', metadata)
+
+      // Extract caller information with fallbacks
+      const callerName = call.caller_name || metadata.caller_name || call.from || null
+      const callerNumber = call.from || call.caller_number || metadata.caller_number || null
       
       const callData = {
         id: supabaseId,
-        call_id: call.id,
-        caller_number: call.from || call.caller_number || null,
-        recipient_number: call.to || call.recipient_number || null,
-        duration: duration,
+        call_id: call.id || `CALL-${Date.now()}`,
+        caller_number: callerNumber,
+        recipient_number: call.to || call.recipient_number || metadata.recipient_number || null,
+        duration: duration || null,
         status: call.status || 'completed',
         transcription: call.transcript || call.transcription || null,
         sentiment_analysis: sentimentAnalysis,
@@ -116,7 +126,7 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
         urgency_score: urgencyScore,
         assistant_name: assistantInfo.name || metadata.assistant_name || 'Vapi Assistant',
         assistant_id: assistantInfo.id || metadata.assistant_id || null,
-        caller_name: call.caller_name || metadata.caller_name || null,
+        caller_name: callerName,
         language: call.language || metadata.language || 'en',
         recording_url: call.recording_url || metadata.recording_url || null,
         tags: tags,

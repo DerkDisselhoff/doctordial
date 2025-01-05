@@ -3,6 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { corsHeaders } from '../fetch-vapi-calls/cors.ts'
 import { processVapiCalls } from '../fetch-vapi-calls/callProcessor.ts'
 import { fetchVapiCalls } from '../fetch-vapi-calls/vapiClient.ts'
+import { validateVapiKey } from '../fetch-vapi-calls/utils.ts'
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -11,6 +12,9 @@ serve(async (req) => {
   }
 
   try {
+    // Get VAPI API key
+    const vapiKey = validateVapiKey()
+
     // Create Supabase client
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -18,7 +22,7 @@ serve(async (req) => {
     )
 
     console.log('Fetching VAPI calls...')
-    const calls = await fetchVapiCalls()
+    const calls = await fetchVapiCalls(vapiKey)
     console.log(`Fetched ${calls.length} calls from VAPI`)
 
     const { processedCalls, errors } = await processVapiCalls(supabaseClient, calls)

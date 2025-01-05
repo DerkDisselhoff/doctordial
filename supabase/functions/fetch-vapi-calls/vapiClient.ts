@@ -1,6 +1,10 @@
 export const fetchVapiCalls = async (vapiKey: string) => {
   console.log('Fetching calls from VAPI API...')
   try {
+    if (!vapiKey) {
+      throw new Error('VAPI API key is required')
+    }
+
     const response = await fetch('https://api.vapi.ai/call?limit=200', {
       method: 'GET',
       headers: {
@@ -28,6 +32,7 @@ export const fetchVapiCalls = async (vapiKey: string) => {
     }
 
     console.log(`Received ${data.length || 0} calls from VAPI`)
+    console.log('Sample call data:', JSON.stringify(data[0], null, 2))
     return data
   } catch (error) {
     console.error('Error fetching VAPI calls:', {
