@@ -11,6 +11,15 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       // Always generate a new UUID for Supabase
       const supabaseId = crypto.randomUUID()
       
+      // Safely handle the created_at date
+      let createdAt
+      try {
+        createdAt = call.created_at ? new Date(call.created_at).toISOString() : new Date().toISOString()
+      } catch (dateError) {
+        console.warn(`Invalid date for call ${call.id}, using current timestamp`)
+        createdAt = new Date().toISOString()
+      }
+
       // Log the data we're about to insert
       console.log('Inserting call data:', {
         id: supabaseId,
@@ -20,7 +29,8 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
         duration: call.duration,
         status: call.status,
         transcription: call.transcript,
-        sentiment_analysis: call.sentiment
+        sentiment_analysis: call.sentiment,
+        created_at: createdAt
       })
 
       const { error } = await supabaseClient
@@ -34,7 +44,7 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
           status: call.status,
           transcription: call.transcript,
           sentiment_analysis: call.sentiment,
-          created_at: new Date(call.created_at).toISOString()
+          created_at: createdAt
         })
 
       if (error) {
