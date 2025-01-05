@@ -57,16 +57,32 @@
     @apply bg-mint text-forest;
   }
 
-  ::-webkit-scrollbar {
+  /* Updated scrollbar styles */
+  .dashboard-card ::-webkit-scrollbar,
+  .dashboard-table ::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
   }
 
-  ::-webkit-scrollbar-track {
-    @apply bg-forest;
+  .dashboard-card ::-webkit-scrollbar-track,
+  .dashboard-table ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+    border-radius: 8px;
   }
 
-  ::-webkit-scrollbar-thumb {
-    @apply bg-mint/20 rounded-full hover:bg-mint/30 transition-colors;
+  .dashboard-card ::-webkit-scrollbar-thumb,
+  .dashboard-table ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 hover:bg-gray-400 transition-colors;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  /* Firefox scrollbar styles */
+  .dashboard-card,
+  .dashboard-table {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.300') theme('colors.gray.100');
   }
 }
 
