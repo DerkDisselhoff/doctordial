@@ -5,7 +5,8 @@ export const fetchVapiCalls = async (vapiKey: string) => {
       throw new Error('VAPI API key is required')
     }
 
-    const response = await fetch('https://api.vapi.ai/call?limit=200&include=assistant', {
+    // Fetch calls with complete data including workflow and assistant info
+    const response = await fetch('https://api.vapi.ai/call?include=assistant,workflow,messages,variables', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${vapiKey}`,
@@ -31,14 +32,38 @@ export const fetchVapiCalls = async (vapiKey: string) => {
       throw new Error('Invalid response format from VAPI')
     }
 
-    console.log(`Received ${data.length || 0} calls from VAPI`)
-    console.log('Sample call data:', JSON.stringify(data[0], null, 2))
-    return data
+    // Fetch additional data for each call
+    const enrichedCalls = await Promise.all(data.map(async (call) => {
+      try {
+        // Fetch detailed call data including output schema
+        const detailResponse = await fetch(`https://api.vapi.ai/call/${call.id}?include=workflow,messages,variables`, {
+          headers: {
+            'Authorization': `Bearer ${vapiKey}`,
+            'Content-Type': 'application/json',
+          }
+        });
+        
+        if (!detailResponse.ok) {
+          console.warn(`Could not fetch details for call ${call.id}`);
+          return call;
+        }
+        
+        const detailData = await detailResponse.json();
+        return { ...call, ...detailData };
+      } catch (error) {
+        console.warn(`Error fetching details for call ${call.id}:`, error);
+        return call;
+      }
+    }));
+
+    console.log(`Received ${enrichedCalls.length} enriched calls from VAPI`);
+    console.log('Sample enriched call data:', JSON.stringify(enrichedCalls[0], null, 2));
+    return enrichedCalls;
   } catch (error) {
     console.error('Error fetching VAPI calls:', {
       error: error.message,
       stack: error.stack
     })
-    throw error
+    throw error;
   }
 }
