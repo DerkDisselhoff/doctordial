@@ -174,8 +174,12 @@ export type Database = {
         Row: {
           assistant_id: string | null
           assistant_name: string | null
+          block_id: string | null
+          block_name: string | null
+          block_outputs: Json | null
           call_id: string
           call_type: string | null
+          call_variables: Json | null
           callback_number: string | null
           caller_name: string | null
           caller_number: string | null
@@ -186,6 +190,8 @@ export type Database = {
           follow_up_required: boolean | null
           id: string
           language: string | null
+          messages: Json[] | null
+          output_schema: Json | null
           priority_level: string | null
           recipient_number: string | null
           recording_url: string | null
@@ -196,12 +202,19 @@ export type Database = {
           tags: Json | null
           transcription: string | null
           urgency_score: number | null
+          workflow_id: string | null
+          workflow_name: string | null
+          workflow_variables: Json | null
         }
         Insert: {
           assistant_id?: string | null
           assistant_name?: string | null
+          block_id?: string | null
+          block_name?: string | null
+          block_outputs?: Json | null
           call_id: string
           call_type?: string | null
+          call_variables?: Json | null
           callback_number?: string | null
           caller_name?: string | null
           caller_number?: string | null
@@ -212,6 +225,8 @@ export type Database = {
           follow_up_required?: boolean | null
           id: string
           language?: string | null
+          messages?: Json[] | null
+          output_schema?: Json | null
           priority_level?: string | null
           recipient_number?: string | null
           recording_url?: string | null
@@ -222,12 +237,19 @@ export type Database = {
           tags?: Json | null
           transcription?: string | null
           urgency_score?: number | null
+          workflow_id?: string | null
+          workflow_name?: string | null
+          workflow_variables?: Json | null
         }
         Update: {
           assistant_id?: string | null
           assistant_name?: string | null
+          block_id?: string | null
+          block_name?: string | null
+          block_outputs?: Json | null
           call_id?: string
           call_type?: string | null
+          call_variables?: Json | null
           callback_number?: string | null
           caller_name?: string | null
           caller_number?: string | null
@@ -238,6 +260,8 @@ export type Database = {
           follow_up_required?: boolean | null
           id?: string
           language?: string | null
+          messages?: Json[] | null
+          output_schema?: Json | null
           priority_level?: string | null
           recipient_number?: string | null
           recording_url?: string | null
@@ -248,6 +272,9 @@ export type Database = {
           tags?: Json | null
           transcription?: string | null
           urgency_score?: number | null
+          workflow_id?: string | null
+          workflow_name?: string | null
+          workflow_variables?: Json | null
         }
         Relationships: []
       }

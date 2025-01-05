@@ -1,69 +1,31 @@
-export const fetchVapiCalls = async (vapiKey: string) => {
-  console.log('Fetching calls from VAPI API...')
-  try {
-    if (!vapiKey) {
-      throw new Error('VAPI API key is required')
-    }
+const VAPI_API_URL = 'https://api.vapi.ai/api/call';
 
-    // Fetch calls with complete data including workflow and assistant info
-    const response = await fetch('https://api.vapi.ai/call?include=assistant,workflow,messages,variables', {
+export const fetchVapiCalls = async (apiKey: string) => {
+  console.log('Fetching VAPI calls...');
+  
+  try {
+    const response = await fetch(VAPI_API_URL, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${vapiKey}`,
-        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
       }
-    })
+    });
 
     if (!response.ok) {
-      const errorText = await response.text()
-      console.error('VAPI API error:', {
-        status: response.status,
-        statusText: response.statusText,
-        body: errorText,
-        endpoint: '/call'
-      })
-      throw new Error(`VAPI API error: ${errorText}`)
+      throw new Error(`VAPI API request failed with status ${response.status}`);
     }
 
-    const data = await response.json()
-    
-    if (!data || !Array.isArray(data)) {
-      console.error('Invalid response format from VAPI:', data)
-      throw new Error('Invalid response format from VAPI')
+    const data = await response.json();
+    console.log('VAPI API Response:', JSON.stringify(data, null, 2));
+
+    if (!Array.isArray(data)) {
+      throw new Error('Invalid response format from VAPI API');
     }
 
-    // Fetch additional data for each call
-    const enrichedCalls = await Promise.all(data.map(async (call) => {
-      try {
-        // Fetch detailed call data including output schema
-        const detailResponse = await fetch(`https://api.vapi.ai/call/${call.id}?include=workflow,messages,variables`, {
-          headers: {
-            'Authorization': `Bearer ${vapiKey}`,
-            'Content-Type': 'application/json',
-          }
-        });
-        
-        if (!detailResponse.ok) {
-          console.warn(`Could not fetch details for call ${call.id}`);
-          return call;
-        }
-        
-        const detailData = await detailResponse.json();
-        return { ...call, ...detailData };
-      } catch (error) {
-        console.warn(`Error fetching details for call ${call.id}:`, error);
-        return call;
-      }
-    }));
-
-    console.log(`Received ${enrichedCalls.length} enriched calls from VAPI`);
-    console.log('Sample enriched call data:', JSON.stringify(enrichedCalls[0], null, 2));
-    return enrichedCalls;
+    return data;
   } catch (error) {
-    console.error('Error fetching VAPI calls:', {
-      error: error.message,
-      stack: error.stack
-    })
+    console.error('Error fetching VAPI calls:', error);
     throw error;
   }
 }

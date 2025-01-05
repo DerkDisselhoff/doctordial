@@ -30,13 +30,15 @@ const processAssistantInfo = (call: any) => {
 
 const processWorkflowData = (call: any) => {
   const workflow = call.workflow || {};
+  const block = call.block || {};
+  
   return {
     workflow_id: workflow.id || null,
     workflow_name: workflow.name || null,
-    block_id: call.block_id || null,
-    block_name: call.block_name || null,
+    block_id: block.id || call.block_id || null,
+    block_name: block.name || call.block_name || null,
     output_schema: call.output_schema || {},
-    workflow_variables: call.workflow_variables || {},
+    workflow_variables: workflow.variables || call.workflow_variables || {},
     block_outputs: call.block_outputs || {},
     call_variables: call.variables || {}
   };
@@ -55,15 +57,36 @@ const processSentimentAndUrgency = (call: any) => {
     if (call.output_schema.sentiment) {
       sentiment = call.output_schema.sentiment;
     }
+    if (call.output_schema.urgency_score) {
+      urgencyScore = parseInt(call.output_schema.urgency_score);
+    }
   }
 
-  // Map urgency levels to scores
-  const urgencyMap = { high: 3, medium: 2, low: 1 };
-  urgencyScore = urgencyMap[urgency as keyof typeof urgencyMap] || 1;
+  // Map urgency levels to scores if not explicitly provided
+  if (!call.output_schema?.urgency_score) {
+    const urgencyMap = { high: 3, medium: 2, low: 1 };
+    urgencyScore = urgencyMap[urgency as keyof typeof urgencyMap] || 1;
+  }
 
   return {
     sentiment_analysis: { sentiment, urgency },
     urgency_score: urgencyScore
+  };
+}
+
+const processCallMetadata = (call: any) => {
+  return {
+    call_type: call.type || call.call_type || null,
+    department: call.department || null,
+    priority_level: call.priority_level || call.priority || null,
+    resolution_status: call.resolution_status || call.status || null,
+    callback_number: call.callback_number || null,
+    follow_up_required: call.follow_up_required || false,
+    follow_up_notes: call.follow_up_notes || null,
+    language: call.language || 'nl',
+    recording_url: call.recording_url || null,
+    tags: Array.isArray(call.tags) ? call.tags : [],
+    messages: Array.isArray(call.messages) ? call.messages : []
   };
 }
 
@@ -84,6 +107,7 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       const { assistantName, assistantId } = processAssistantInfo(call);
       const workflowData = processWorkflowData(call);
       const { sentiment_analysis, urgency_score } = processSentimentAndUrgency(call);
+      const metadata = processCallMetadata(call);
       
       const callData = {
         id: supabaseId,
@@ -98,11 +122,9 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
         assistant_name: assistantName,
         assistant_id: assistantId,
         caller_name: call.caller_name || null,
-        language: call.language || 'en',
-        recording_url: call.recording_url || null,
-        tags: Array.isArray(call.tags) ? call.tags : [],
         sentiment_analysis,
         urgency_score,
+        ...metadata,
         ...workflowData
       };
 
