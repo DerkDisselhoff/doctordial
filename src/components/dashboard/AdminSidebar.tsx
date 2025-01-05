@@ -1,113 +1,107 @@
+import { 
+  BarChart3, 
+  Users, 
+  Phone, 
+  Settings, 
+  Home,
+  Building2,
+  DollarSign,
+  FileText,
+  Activity
+} from "lucide-react";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+} from "@/components/ui/sidebar";
 import { useEffect, useState } from "react";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, Building2, Phone, BarChart3, Receipt, FileText, Activity, Settings, LogOut, Bot } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
-import { SidebarMenuItem } from "./sidebar/SidebarMenuItem";
+import { SidebarHeader } from "./sidebar/SidebarHeader";
+import { SidebarSection } from "./sidebar/SidebarSection";
+import { SidebarProfile } from "./sidebar/SidebarProfile";
+import { cn } from "@/lib/utils";
 
 export function AdminSidebar() {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
+  const [userProfile, setUserProfile] = useState<{
+    username?: string | null;
+    avatar_url?: string | null;
+    company_name?: string | null;
+  } | null>(null);
 
   useEffect(() => {
-    const checkRole = async () => {
+    const fetchUserProfile = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('role')
+          .select('role, username, avatar_url, company_name')
           .eq('id', session.user.id)
           .single();
         
         setUserRole(profile?.role || null);
+        setUserProfile({
+          username: profile?.username || session.user.email?.split('@')[0],
+          avatar_url: profile?.avatar_url,
+          company_name: profile?.company_name,
+        });
       }
     };
-    checkRole();
+    fetchUserProfile();
   }, []);
 
+  const adminMenuItems = [
+    { title: "Overview", icon: Home, path: "/dashboard" },
+    { title: "Clients", icon: Users, path: "/dashboard/clients" },
+    { title: "Practices", icon: Building2, path: "/dashboard/practices" },
+  ];
+
+  const analyticsItems = [
+    { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
+    { title: "Reports", icon: BarChart3, path: "/dashboard/reports" },
+  ];
+
+  const businessItems = [
+    { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
+    { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
+    { title: "Activity", icon: Activity, path: "/dashboard/activity" },
+    { title: "Settings", icon: Settings, path: "/dashboard/settings" },
+  ];
+
+  const clientMenuItems = [
+    { title: "Overview", icon: Home, path: "/dashboard" },
+    { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
+    { title: "Settings", icon: Settings, path: "/dashboard/settings" },
+  ];
+
   return (
-    <aside className="fixed top-0 left-0 z-40 h-screen w-56 bg-white border-r border-gray-200">
-      <div className="p-5 border-b border-mint/10">
-        <div className="flex items-center space-x-3 transition-all hover:opacity-80">
-          <h1 className="text-xl font-semibold text-white tracking-tight">
-            DoctorDial
-          </h1>
-        </div>
+    <Sidebar>
+      <div className={cn(
+        "flex flex-col h-full bg-forest-light/95 backdrop-blur-xl border-r border-mint/10",
+      )}>
+        <SidebarHeader />
+        <SidebarContent className="flex-1 px-3 py-6">
+          <SidebarGroup>
+            <SidebarGroupContent>
+              {userRole === 'admin' ? (
+                <>
+                  <SidebarSection items={adminMenuItems} />
+                  <div className="mt-8">
+                    <SidebarSection items={analyticsItems} />
+                  </div>
+                  <div className="mt-8">
+                    <SidebarSection items={businessItems} />
+                  </div>
+                </>
+              ) : (
+                <SidebarSection items={clientMenuItems} />
+              )}
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarProfile userProfile={userProfile} userRole={userRole} />
       </div>
-      <div className="flex flex-col justify-between flex-1 h-full pb-4 overflow-y-auto">
-        <div className="py-4 px-3">
-          <ul className="space-y-2">
-            <SidebarMenuItem
-              icon={LayoutDashboard}
-              title="Overview"
-              path="/dashboard"
-            />
-            {userRole === 'admin' ? (
-              <>
-                <SidebarMenuItem
-                  icon={Users}
-                  title="Clients"
-                  path="/dashboard/clients"
-                />
-                <SidebarMenuItem
-                  icon={Building2}
-                  title="Practices"
-                  path="/dashboard/practices"
-                />
-              </>
-            ) : null}
-            <SidebarMenuItem
-              icon={Phone}
-              title="Calls"
-              path="/dashboard/calls"
-            />
-            {userRole === 'admin' ? (
-              <>
-                <SidebarMenuItem
-                  icon={BarChart3}
-                  title="Reports"
-                  path="/dashboard/reports"
-                />
-                <SidebarMenuItem
-                  icon={Receipt}
-                  title="Billing"
-                  path="/dashboard/billing"
-                />
-                <SidebarMenuItem
-                  icon={FileText}
-                  title="Contracts"
-                  path="/dashboard/contracts"
-                />
-                <SidebarMenuItem
-                  icon={Activity}
-                  title="Activity"
-                  path="/dashboard/activity"
-                />
-              </>
-            ) : null}
-            {userRole === 'client' && (
-              <SidebarMenuItem
-                icon={Bot}
-                title="Assistant"
-                path="/dashboard/assistant"
-              />
-            )}
-          </ul>
-        </div>
-        <div className="px-3">
-          <ul className="space-y-2">
-            <SidebarMenuItem
-              icon={Settings}
-              title="Settings"
-              path="/dashboard/settings"
-            />
-            <SidebarMenuItem
-              icon={LogOut}
-              title="Logout"
-              path="/"
-            />
-          </ul>
-        </div>
-      </div>
-    </aside>
+    </Sidebar>
   );
 }
