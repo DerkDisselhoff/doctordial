@@ -40,7 +40,7 @@ export function DashboardCharts() {
     );
   }
 
-  // Return original admin view
+  // Return original admin view with improved styling
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <ClientDistributionChart />
