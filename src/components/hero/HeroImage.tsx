@@ -41,6 +41,7 @@ const HeroImage = () => {
 
     if (isPlaying) {
       audioRef.current.pause();
+      audioRef.current.currentTime = 0; // Reset audio to start
     } else {
       audioRef.current.play().catch((error) => {
         console.error('Error playing audio:', error);
@@ -93,7 +94,7 @@ const HeroImage = () => {
         onEnded={() => setIsPlaying(false)}
         className="hidden"
       >
-        <source src="/assets/demo-conversation.mp3" type="audio/mpeg" />
+        <source src="https://ngtckhrzlxgfuprgfjyp.supabase.co/storage/v1/object/public/audiofiles%20public/25330f53-1a14-4f87-98ee-5b8145d63bc9-1736009751738-dfd2cfcf-0811-4fe8-9036-dec12c763e7d-stereo.mp3" type="audio/mpeg" />
       </audio>
     </div>
   );
