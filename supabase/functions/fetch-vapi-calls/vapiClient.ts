@@ -5,7 +5,7 @@ export const fetchVapiCalls = async (vapiKey: string) => {
       throw new Error('VAPI API key is required')
     }
 
-    const response = await fetch('https://api.vapi.ai/call?limit=200', {
+    const response = await fetch('https://api.vapi.ai/call?limit=200&include=assistant', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${vapiKey}`,

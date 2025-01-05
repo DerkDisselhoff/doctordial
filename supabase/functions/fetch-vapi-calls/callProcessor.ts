@@ -27,10 +27,64 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       }
 
       // Extract and validate assistant info with detailed logging
-      const assistantInfo = call.assistant || {}
-      console.log('Assistant info:', assistantInfo)
+      let assistantName = 'Vapi Assistant' // Default fallback
+      let assistantId = null
       
-      // Parse and validate the sentiment analysis with detailed logging
+      console.log('Processing assistant information:', {
+        rawAssistant: call.assistant,
+        rawMetadata: call.metadata
+      })
+
+      // Enhanced assistant information extraction
+      if (call.assistant) {
+        if (typeof call.assistant === 'string') {
+          // If assistant is directly a string, use it as the name
+          assistantName = call.assistant
+        } else if (typeof call.assistant === 'object') {
+          // Handle different possible assistant data structures
+          if (call.assistant.name) {
+            assistantName = call.assistant.name
+          } else if (call.assistant.model) {
+            assistantName = call.assistant.model
+          }
+          
+          // Extract assistant ID from various possible locations
+          assistantId = call.assistant.id || 
+                       call.assistant.assistant_id || 
+                       call.assistant.model_id ||
+                       null
+        }
+      } else if (call.metadata?.assistant) {
+        // Try to get assistant info from metadata
+        if (typeof call.metadata.assistant === 'object') {
+          assistantName = call.metadata.assistant.name || 
+                         call.metadata.assistant.model ||
+                         'Vapi Assistant'
+          assistantId = call.metadata.assistant.id || 
+                       call.metadata.assistant.assistant_id ||
+                       null
+        } else if (typeof call.metadata.assistant === 'string') {
+          assistantName = call.metadata.assistant
+        }
+      }
+
+      // Map known assistant names to their proper names based on the VAPI dashboard
+      const assistantNameMap: { [key: string]: string } = {
+        'alloy': 'Medicall AI expensive version',
+        'marta': 'Medicall AI cheap version NL',
+        'nova': 'Hoofd model NL - rime ai',
+        'MqvxHuZP0MWXPlNUh65f': 'Vapi model + openal'
+      }
+
+      // Update assistant name if it matches any known mappings
+      assistantName = assistantNameMap[assistantName.toLowerCase()] || assistantName
+
+      console.log('Processed assistant information:', {
+        assistantName,
+        assistantId
+      })
+      
+      // Parse and validate the sentiment analysis
       let sentimentAnalysis = {
         sentiment: 'neutral',
         urgency: 'low'
@@ -42,7 +96,6 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
           if (typeof call.sentiment === 'string') {
             sentimentAnalysis.sentiment = call.sentiment
           } else if (typeof call.sentiment === 'object') {
-            // Handle different possible sentiment data structures
             if (call.sentiment.overall || call.sentiment.sentiment) {
               sentimentAnalysis.sentiment = call.sentiment.overall || call.sentiment.sentiment
             }
@@ -54,14 +107,12 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       } catch (error) {
         console.warn(`Error parsing sentiment for call ${call.id}:`, error)
       }
-      console.log('Processed sentiment analysis:', sentimentAnalysis)
 
-      // Calculate urgency score with logging
+      // Calculate urgency score
       const urgencyMap = { high: 3, medium: 2, low: 1 }
       const urgencyScore = urgencyMap[sentimentAnalysis.urgency as keyof typeof urgencyMap] || 1
-      console.log('Calculated urgency score:', urgencyScore)
 
-      // Process duration with detailed validation
+      // Process duration
       let duration = 0
       try {
         if (call.duration) {
@@ -74,7 +125,6 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       } catch (error) {
         console.warn(`Error processing duration for call ${call.id}:`, error)
       }
-      console.log('Processed duration:', duration)
 
       // Extract and validate tags
       const tags = (() => {
@@ -87,9 +137,8 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
           return []
         }
       })()
-      console.log('Processed tags:', tags)
 
-      // Determine follow-up requirement with detailed logic
+      // Determine follow-up requirement
       const followUpRequired = (() => {
         try {
           if (call.follow_up_required === true) return true
@@ -102,13 +151,11 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
           return false
         }
       })()
-      console.log('Follow-up required:', followUpRequired)
 
-      // Process metadata with validation
+      // Process metadata
       const metadata = call.metadata || {}
-      console.log('Call metadata:', metadata)
 
-      // Extract caller information with fallbacks
+      // Extract caller information
       const callerName = call.caller_name || metadata.caller_name || call.from || null
       const callerNumber = call.from || call.caller_number || metadata.caller_number || null
       
@@ -124,8 +171,8 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
         created_at: createdAt,
         summary: call.summary || call.transcript?.substring(0, 200) || call.transcription?.substring(0, 200) || null,
         urgency_score: urgencyScore,
-        assistant_name: assistantInfo.name || metadata.assistant_name || 'Vapi Assistant',
-        assistant_id: assistantInfo.id || metadata.assistant_id || null,
+        assistant_name: assistantName,
+        assistant_id: assistantId,
         caller_name: callerName,
         language: call.language || metadata.language || 'en',
         recording_url: call.recording_url || metadata.recording_url || null,
