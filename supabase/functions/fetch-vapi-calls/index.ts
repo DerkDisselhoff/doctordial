@@ -12,25 +12,18 @@ serve(async (req) => {
   }
 
   try {
-    console.log('Starting VAPI calls fetch process...')
+    console.log('Starting VAPI calls fetch...')
     
     // Validate VAPI API key
     const vapiKey = validateVapiKey()
-    console.log('VAPI key validation successful')
 
     // Initialize Supabase client
     const supabaseClient = initializeSupabase()
     console.log('Supabase client initialized')
 
-    // Fetch calls from VAPI with enhanced logging
-    console.log('Initiating VAPI API call...')
+    // Fetch calls from VAPI
     const vapiCalls = await fetchVapiCalls(vapiKey)
-    
-    console.log('VAPI API Response Summary:', {
-      totalCalls: vapiCalls.length,
-      sampleCallIds: vapiCalls.slice(0, 3).map(call => call.id),
-      timestamp: new Date().toISOString()
-    })
+    console.log('VAPI Response:', JSON.stringify(vapiCalls, null, 2))
 
     if (!Array.isArray(vapiCalls)) {
       throw new Error('Invalid response format from VAPI')
@@ -39,18 +32,16 @@ serve(async (req) => {
     // Process the calls
     const { processedCalls, errors } = await processVapiCalls(supabaseClient, vapiCalls)
     
-    console.log('Processing Summary:', {
-      totalProcessed: processedCalls,
-      errorCount: errors.length,
-      timestamp: new Date().toISOString()
-    })
+    console.log(`Successfully completed processing ${processedCalls} calls`)
+    if (errors.length > 0) {
+      console.warn(`Encountered ${errors.length} errors while processing calls`)
+    }
 
     return new Response(
       JSON.stringify({ 
         success: true, 
         message: `Processed ${processedCalls} calls`,
-        errors: errors.length > 0 ? errors : undefined,
-        timestamp: new Date().toISOString()
+        errors: errors.length > 0 ? errors : undefined
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -60,15 +51,13 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in fetch-vapi-calls function:', {
       error: error.message,
-      stack: error.stack,
-      timestamp: new Date().toISOString()
+      stack: error.stack
     })
     
     return new Response(
       JSON.stringify({ 
         error: error.message,
-        details: error.toString(),
-        timestamp: new Date().toISOString()
+        details: error.toString()
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
