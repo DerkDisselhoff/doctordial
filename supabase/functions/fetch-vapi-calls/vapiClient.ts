@@ -1,4 +1,4 @@
-const VAPI_API_URL = 'https://api.vapi.ai/api/call';
+const VAPI_API_URL = 'https://api.vapi.ai/api/calls'; // Changed from /call to /calls
 
 export const fetchVapiCalls = async (apiKey: string) => {
   console.log('Fetching VAPI calls...');
@@ -8,19 +8,27 @@ export const fetchVapiCalls = async (apiKey: string) => {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       }
     });
 
     if (!response.ok) {
-      throw new Error(`VAPI API request failed with status ${response.status}`);
+      const errorText = await response.text();
+      console.error('VAPI API Error Response:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText
+      });
+      throw new Error(`VAPI API request failed with status ${response.status}: ${errorText}`);
     }
 
     const data = await response.json();
-    console.log('VAPI API Response:', JSON.stringify(data, null, 2));
+    console.log('VAPI API Response Data Structure:', JSON.stringify(data, null, 2));
 
     if (!Array.isArray(data)) {
-      throw new Error('Invalid response format from VAPI API');
+      console.error('Invalid response format:', data);
+      throw new Error('Invalid response format from VAPI API - expected array');
     }
 
     return data;

@@ -4,6 +4,7 @@ const processAssistantInfo = (call: any) => {
   let assistantName = 'Unknown Assistant';
   let assistantId = null;
   
+  // First try to get assistant info from the direct fields
   if (call.assistant) {
     if (typeof call.assistant === 'string') {
       assistantId = call.assistant;
@@ -11,6 +12,12 @@ const processAssistantInfo = (call: any) => {
       assistantId = call.assistant.id || call.assistant.assistant_id;
       assistantName = call.assistant.name || call.assistant.model || 'Unknown Assistant';
     }
+  }
+
+  // Then check workflow data for assistant info
+  if (call.workflow?.assistant) {
+    assistantId = call.workflow.assistant.id || call.workflow.assistant;
+    assistantName = call.workflow.assistant.name || assistantName;
   }
 
   // Map known assistant IDs to proper names
@@ -25,6 +32,7 @@ const processAssistantInfo = (call: any) => {
     assistantName = assistantMap[assistantId.toLowerCase()];
   }
 
+  console.log('Processed assistant info:', { assistantId, assistantName });
   return { assistantName, assistantId };
 }
 
@@ -37,7 +45,7 @@ const processWorkflowData = (call: any) => {
     workflow_name: workflow.name || null,
     block_id: block.id || call.block_id || null,
     block_name: block.name || call.block_name || null,
-    output_schema: call.output_schema || {},
+    output_schema: call.output_schema || workflow.output_schema || {},
     workflow_variables: workflow.variables || call.workflow_variables || {},
     block_outputs: call.block_outputs || {},
     call_variables: call.variables || {}
@@ -62,12 +70,22 @@ const processSentimentAndUrgency = (call: any) => {
     }
   }
 
+  // Also check block outputs for urgency information
+  if (call.block_outputs) {
+    Object.values(call.block_outputs).forEach((output: any) => {
+      if (output?.urgency) urgency = output.urgency;
+      if (output?.sentiment) sentiment = output.sentiment;
+      if (output?.urgency_score) urgencyScore = parseInt(output.urgency_score);
+    });
+  }
+
   // Map urgency levels to scores if not explicitly provided
-  if (!call.output_schema?.urgency_score) {
+  if (!urgencyScore) {
     const urgencyMap = { high: 3, medium: 2, low: 1 };
     urgencyScore = urgencyMap[urgency as keyof typeof urgencyMap] || 1;
   }
 
+  console.log('Processed sentiment and urgency:', { sentiment, urgency, urgencyScore });
   return {
     sentiment_analysis: { sentiment, urgency },
     urgency_score: urgencyScore
@@ -102,6 +120,7 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       }
 
       console.log(`Processing call ${call.id}...`);
+      console.log('Raw call data:', JSON.stringify(call, null, 2));
       
       const supabaseId = crypto.randomUUID();
       const { assistantName, assistantId } = processAssistantInfo(call);
