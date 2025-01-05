@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, PhoneCall, Clock, Calendar, DollarSign } from "lucide-react";
+import { Users, PhoneCall, Clock, Calendar, ThumbsUp, AlertCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
@@ -25,7 +25,7 @@ export function MetricsCards() {
 
   if (userRole === 'client') {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         <Card className="bg-white shadow-lg border-none">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-forest">Total Calls</CardTitle>
@@ -56,6 +56,28 @@ export function MetricsCards() {
           <CardContent>
             <div className="text-2xl font-bold text-forest">285</div>
             <p className="text-xs text-forest/60">+45 from last month</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-white shadow-lg border-none">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-forest">Positive Sentiment</CardTitle>
+            <ThumbsUp className="h-4 w-4 text-mint" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-forest">85%</div>
+            <p className="text-xs text-forest/60">+5% from last month</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-white shadow-lg border-none">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-forest">Urgent Cases</CardTitle>
+            <AlertCircle className="h-4 w-4 text-mint" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-forest">12</div>
+            <p className="text-xs text-forest/60">-3 from last month</p>
           </CardContent>
         </Card>
       </div>
