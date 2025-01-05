@@ -28,23 +28,24 @@ export function SidebarProfile({ userProfile, userRole }: SidebarProfileProps) {
 
   const handleLogout = async () => {
     try {
-      // First, get the current session
-      const { data: { session } } = await supabase.auth.getSession();
+      // Clear all local storage first
+      localStorage.clear();
       
-      if (!session) {
-        // If no session exists, just navigate to home
-        navigate("/");
+      // Attempt to sign out without checking session
+      const { error } = await supabase.auth.signOut({
+        scope: 'local'
+      });
+      
+      if (error) {
+        console.error('Logout error:', error);
+        toast({
+          title: "Error logging out",
+          description: "Please try again",
+          variant: "destructive",
+        });
         return;
       }
 
-      // Attempt to sign out
-      const { error } = await supabase.auth.signOut();
-      
-      if (error) throw error;
-
-      // Clear any stored data
-      localStorage.clear();
-      
       // Navigate to home page
       navigate("/");
       
