@@ -1,10 +1,13 @@
-const VAPI_API_URL = 'https://api.vapi.ai/api/v1/calls'; // Updated based on working solution
+const VAPI_API_URL = 'https://api.vapi.ai/api/v1/calls';
 
 export const fetchVapiCalls = async (apiKey: string) => {
   console.log('Fetching VAPI calls...');
   
   try {
-    const response = await fetch(VAPI_API_URL, {
+    const url = `${VAPI_API_URL}?limit=200`;
+    console.log('Request URL:', url);
+
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
@@ -19,7 +22,7 @@ export const fetchVapiCalls = async (apiKey: string) => {
         status: response.status,
         statusText: response.statusText,
         body: errorText,
-        url: VAPI_API_URL,
+        url: url,
         headers: Object.fromEntries(response.headers.entries())
       });
       throw new Error(`VAPI API request failed with status ${response.status}: ${errorText}`);
