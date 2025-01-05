@@ -4,6 +4,7 @@ import { BookDemoForm } from "./BookDemoForm";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { LogIn, Menu, X } from "lucide-react";
+import { Logo } from "./Logo";
 
 const Navbar = () => {
   const { t } = useLanguage();
@@ -16,9 +17,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-8">
-            <Link to="/" className="text-2xl font-bold text-white">
-              DoctorDial
-            </Link>
+            <Logo className="text-white" />
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/features" className="text-white/90 hover:text-white transition-colors">
                 {t("nav.features")}
