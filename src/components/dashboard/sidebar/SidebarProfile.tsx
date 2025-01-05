@@ -28,8 +28,18 @@ export function SidebarProfile({ userProfile, userRole }: SidebarProfileProps) {
 
   const handleLogout = async () => {
     try {
+      // Clear any stored session data
+      localStorage.removeItem('supabase.auth.token');
+      
+      // Sign out from Supabase
       await supabase.auth.signOut();
+      
+      // Clear any remaining auth state
+      await supabase.auth.clearSession();
+      
+      // Navigate to home page
       navigate("/");
+      
       toast({
         title: "Logged out successfully",
         description: "You have been logged out of your account",
