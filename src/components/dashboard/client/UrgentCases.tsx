@@ -110,31 +110,31 @@ export function UrgentCases() {
           <Table>
             <TableHeader className="dashboard-table-header">
               <TableRow>
-                <TableHead>Patient Name</TableHead>
-                <TableHead>Summary</TableHead>
-                <TableHead>Follow-up</TableHead>
-                <TableHead>Urgency</TableHead>
-                <TableHead>Appointment</TableHead>
+                <TableHead className="text-left">Patient Name</TableHead>
+                <TableHead className="text-left">Summary</TableHead>
+                <TableHead className="text-left">Follow-up</TableHead>
+                <TableHead className="text-left">Urgency</TableHead>
+                <TableHead className="text-left">Appointment</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredCases.map((case_) => (
                 <TableRow key={case_.id} className="dashboard-table-row">
-                  <TableCell className="dashboard-table-cell font-medium">
+                  <TableCell className="dashboard-table-cell font-medium border-l-2 border-mint/20 pl-4 text-left">
                     {case_.patientName}
                   </TableCell>
-                  <TableCell className="dashboard-table-cell">
+                  <TableCell className="dashboard-table-cell text-left">
                     {case_.summary}
                   </TableCell>
-                  <TableCell className="dashboard-table-cell">
+                  <TableCell className="dashboard-table-cell text-left">
                     {case_.followUp}
                   </TableCell>
-                  <TableCell className="dashboard-table-cell">
+                  <TableCell className="dashboard-table-cell text-left">
                     <span className={`urgency-badge urgency-badge-${case_.urgencyLevel.toLowerCase()}`}>
                       {case_.urgencyLevel}
                     </span>
                   </TableCell>
-                  <TableCell className="dashboard-table-cell">
+                  <TableCell className="dashboard-table-cell text-left">
                     {case_.appointmentMade ? (
                       <div className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
