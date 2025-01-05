@@ -11,6 +11,7 @@ import {
 import { LogOut, UserCog, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
+import { useToast } from "@/components/ui/use-toast";
 
 interface SidebarProfileProps {
   userProfile: {
@@ -23,10 +24,39 @@ interface SidebarProfileProps {
 
 export function SidebarProfile({ userProfile, userRole }: SidebarProfileProps) {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/");
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Logout error:', error);
+        toast({
+          title: "Error logging out",
+          description: "Please try again",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      // Clear any local storage or state if needed
+      localStorage.removeItem('supabase.auth.token');
+      
+      // Navigate to home page
+      navigate("/");
+      
+      toast({
+        title: "Logged out successfully",
+        description: "You have been logged out of your account",
+      });
+    } catch (error) {
+      console.error('Unexpected error during logout:', error);
+      toast({
+        title: "Error logging out",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
