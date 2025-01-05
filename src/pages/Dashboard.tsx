@@ -12,6 +12,7 @@ import Billing from "./Billing";
 import Activity from "./dashboard/Activity";
 import Settings from "./dashboard/Settings";
 import Contracts from "./dashboard/Contracts";
+import Assistant from "./dashboard/Assistant";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,7 @@ const Dashboard = () => {
           {/* Routes available to both admin and client users */}
           <Route path="/calls" element={<Calls />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/assistant" element={<Assistant />} />
         </Routes>
       </DashboardLayout>
     </QueryClientProvider>
