@@ -1,7 +1,7 @@
 export const fetchVapiCalls = async (vapiKey: string) => {
   console.log('Fetching calls from VAPI API...')
   try {
-    const response = await fetch('https://api.vapi.ai/calls', {
+    const response = await fetch('https://api.vapi.ai/call?limit=200', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${vapiKey}`,
@@ -15,7 +15,7 @@ export const fetchVapiCalls = async (vapiKey: string) => {
         status: response.status,
         statusText: response.statusText,
         body: errorText,
-        endpoint: '/calls'
+        endpoint: '/call'
       })
       throw new Error(`VAPI API error: ${errorText}`)
     }

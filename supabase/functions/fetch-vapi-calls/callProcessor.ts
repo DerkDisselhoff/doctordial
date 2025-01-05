@@ -19,7 +19,7 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
         recipient_number: call.to,
         duration: call.duration,
         status: call.status,
-        transcription: call.transcript, // Note: changed from transcription to transcript
+        transcription: call.transcript,
         sentiment_analysis: call.sentiment
       })
 
@@ -32,7 +32,7 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
           recipient_number: call.to,
           duration: call.duration,
           status: call.status,
-          transcription: call.transcript, // Note: changed from transcription to transcript
+          transcription: call.transcript,
           sentiment_analysis: call.sentiment,
           created_at: new Date(call.created_at).toISOString()
         })
