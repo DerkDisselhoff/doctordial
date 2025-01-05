@@ -1,107 +1,112 @@
-import { 
-  BarChart3, 
-  Users, 
-  Phone, 
-  Settings, 
-  Home,
-  Building2,
-  DollarSign,
-  FileText,
-  Activity
-} from "lucide-react";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-} from "@/components/ui/sidebar";
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
-import { SidebarHeader } from "./sidebar/SidebarHeader";
-import { SidebarSection } from "./sidebar/SidebarSection";
-import { SidebarProfile } from "./sidebar/SidebarProfile";
+import { useSidebar } from "@/components/ui/sidebar";
+import { SidebarHeader, SidebarProfile, SidebarMenuItem } from "@/components/ui/sidebar";
+import { LayoutDashboard, Users, Building2, Phone, BarChart3, Receipt, FileText, Activity, Settings, LogOut, Bot } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/lib/supabaseClient";
 
 export function AdminSidebar() {
+  const { isOpen } = useSidebar();
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
-  const [userProfile, setUserProfile] = useState<{
-    username?: string | null;
-    avatar_url?: string | null;
-    company_name?: string | null;
-  } | null>(null);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
+    const checkRole = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('role, username, avatar_url, company_name')
+          .select('role')
           .eq('id', session.user.id)
           .single();
         
         setUserRole(profile?.role || null);
-        setUserProfile({
-          username: profile?.username || session.user.email?.split('@')[0],
-          avatar_url: profile?.avatar_url,
-          company_name: profile?.company_name,
-        });
       }
     };
-    fetchUserProfile();
+    checkRole();
   }, []);
 
-  const adminMenuItems = [
-    { title: "Overview", icon: Home, path: "/dashboard" },
-    { title: "Clients", icon: Users, path: "/dashboard/clients" },
-    { title: "Practices", icon: Building2, path: "/dashboard/practices" },
-  ];
-
-  const analyticsItems = [
-    { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
-    { title: "Reports", icon: BarChart3, path: "/dashboard/reports" },
-  ];
-
-  const businessItems = [
-    { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
-    { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
-    { title: "Activity", icon: Activity, path: "/dashboard/activity" },
-    { title: "Settings", icon: Settings, path: "/dashboard/settings" },
-  ];
-
-  const clientMenuItems = [
-    { title: "Overview", icon: Home, path: "/dashboard" },
-    { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
-    { title: "Settings", icon: Settings, path: "/dashboard/settings" },
-  ];
-
   return (
-    <Sidebar>
-      <div className={cn(
-        "flex flex-col h-full bg-forest-light/95 backdrop-blur-xl border-r border-mint/10",
-      )}>
-        <SidebarHeader />
-        <SidebarContent className="flex-1 px-3 py-6">
-          <SidebarGroup>
-            <SidebarGroupContent>
-              {userRole === 'admin' ? (
-                <>
-                  <SidebarSection items={adminMenuItems} />
-                  <div className="mt-8">
-                    <SidebarSection items={analyticsItems} />
-                  </div>
-                  <div className="mt-8">
-                    <SidebarSection items={businessItems} />
-                  </div>
-                </>
-              ) : (
-                <SidebarSection items={clientMenuItems} />
-              )}
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-        <SidebarProfile userProfile={userProfile} userRole={userRole} />
+    <aside className={cn(
+      "fixed top-0 left-0 z-40 h-screen transition-transform bg-white border-r border-gray-200",
+      isOpen ? "w-56" : "w-16"
+    )}>
+      <SidebarHeader />
+      <div className="flex flex-col justify-between flex-1 h-full pb-4 overflow-y-auto">
+        <div className="py-4 px-3">
+          <ul className="space-y-2">
+            <SidebarMenuItem
+              to="/dashboard"
+              icon={<LayoutDashboard className="w-5 h-5" />}
+              label="Overview"
+            />
+            {userRole === 'admin' ? (
+              <>
+                <SidebarMenuItem
+                  to="/dashboard/clients"
+                  icon={<Users className="w-5 h-5" />}
+                  label="Clients"
+                />
+                <SidebarMenuItem
+                  to="/dashboard/practices"
+                  icon={<Building2 className="w-5 h-5" />}
+                  label="Practices"
+                />
+              </>
+            ) : null}
+            <SidebarMenuItem
+              to="/dashboard/calls"
+              icon={<Phone className="w-5 h-5" />}
+              label="Calls"
+            />
+            {userRole === 'admin' ? (
+              <>
+                <SidebarMenuItem
+                  to="/dashboard/reports"
+                  icon={<BarChart3 className="w-5 h-5" />}
+                  label="Reports"
+                />
+                <SidebarMenuItem
+                  to="/dashboard/billing"
+                  icon={<Receipt className="w-5 h-5" />}
+                  label="Billing"
+                />
+                <SidebarMenuItem
+                  to="/dashboard/contracts"
+                  icon={<FileText className="w-5 h-5" />}
+                  label="Contracts"
+                />
+                <SidebarMenuItem
+                  to="/dashboard/activity"
+                  icon={<Activity className="w-5 h-5" />}
+                  label="Activity"
+                />
+              </>
+            ) : null}
+            {userRole === 'client' && (
+              <SidebarMenuItem
+                to="/dashboard/assistant"
+                icon={<Bot className="w-5 h-5" />}
+                label="Assistant"
+              />
+            )}
+          </ul>
+        </div>
+        <div className="px-3">
+          <ul className="space-y-2">
+            <SidebarMenuItem
+              to="/dashboard/settings"
+              icon={<Settings className="w-5 h-5" />}
+              label="Settings"
+            />
+            <SidebarMenuItem
+              to="/"
+              icon={<LogOut className="w-5 h-5" />}
+              label="Logout"
+            />
+          </ul>
+        </div>
       </div>
-    </Sidebar>
+      <SidebarProfile />
+    </aside>
   );
 }
