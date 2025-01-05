@@ -15,14 +15,14 @@ export const features = [
   },
   {
     icon: Calendar,
-    title: "Intelligent Scheduling",
-    description: "Optimize your practice's appointment management",
-    component: "DailyCallsChart",
+    title: "Recent Activity",
+    description: "Track and monitor all patient interactions in real-time",
+    component: "ActivityList",
     points: [
-      "Smart appointment allocation",
-      "Reduces no-shows by 40%",
-      "Optimizes doctor's agenda",
-      "Patient preference matching"
+      "Real-time call monitoring",
+      "Detailed interaction history",
+      "Patient communication tracking",
+      "Comprehensive activity logs"
     ]
   },
   {
