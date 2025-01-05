@@ -19,3 +19,7 @@ verify_jwt = false
 [[functions]]
 name = "fetch-vapi-calls"
 verify_jwt = false
+
+[[functions]]
+name = "vapi-data-sync"
+verify_jwt = false

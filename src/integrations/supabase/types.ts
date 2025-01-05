@@ -9,6 +9,63 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      call_logs: {
+        Row: {
+          assistant_id: string | null
+          call_id: string | null
+          conversation_summary: string | null
+          cost: number | null
+          created_at: string | null
+          duration_seconds: number | null
+          end_time: string | null
+          ended_reason: string | null
+          id: string
+          intent: string | null
+          metadata: Json | null
+          phone_number: string | null
+          sentiment_score: number | null
+          start_time: string | null
+          transcript: string | null
+          type: string | null
+        }
+        Insert: {
+          assistant_id?: string | null
+          call_id?: string | null
+          conversation_summary?: string | null
+          cost?: number | null
+          created_at?: string | null
+          duration_seconds?: number | null
+          end_time?: string | null
+          ended_reason?: string | null
+          id?: string
+          intent?: string | null
+          metadata?: Json | null
+          phone_number?: string | null
+          sentiment_score?: number | null
+          start_time?: string | null
+          transcript?: string | null
+          type?: string | null
+        }
+        Update: {
+          assistant_id?: string | null
+          call_id?: string | null
+          conversation_summary?: string | null
+          cost?: number | null
+          created_at?: string | null
+          duration_seconds?: number | null
+          end_time?: string | null
+          ended_reason?: string | null
+          id?: string
+          intent?: string | null
+          metadata?: Json | null
+          phone_number?: string | null
+          sentiment_score?: number | null
+          start_time?: string | null
+          transcript?: string | null
+          type?: string | null
+        }
+        Relationships: []
+      }
       company_subscriptions: {
         Row: {
           created_at: string
