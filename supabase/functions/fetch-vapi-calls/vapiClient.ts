@@ -1,4 +1,4 @@
-const VAPI_API_URL = 'https://api.vapi.ai/v1/calls'; // Updated to use the correct v1 endpoint
+const VAPI_API_URL = 'https://api.vapi.ai/calls'; // Removed /v1 prefix as per working Retool setup
 
 export const fetchVapiCalls = async (apiKey: string) => {
   console.log('Fetching VAPI calls...');
