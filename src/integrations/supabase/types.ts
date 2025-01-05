@@ -172,37 +172,82 @@ export type Database = {
       }
       vapi_calls: {
         Row: {
+          assistant_id: string | null
+          assistant_name: string | null
           call_id: string
+          call_type: string | null
+          callback_number: string | null
+          caller_name: string | null
           caller_number: string | null
           created_at: string | null
+          department: string | null
           duration: number | null
+          follow_up_notes: string | null
+          follow_up_required: boolean | null
           id: string
+          language: string | null
+          priority_level: string | null
           recipient_number: string | null
+          recording_url: string | null
+          resolution_status: string | null
           sentiment_analysis: Json | null
           status: string | null
+          summary: string | null
+          tags: Json | null
           transcription: string | null
+          urgency_score: number | null
         }
         Insert: {
+          assistant_id?: string | null
+          assistant_name?: string | null
           call_id: string
+          call_type?: string | null
+          callback_number?: string | null
+          caller_name?: string | null
           caller_number?: string | null
           created_at?: string | null
+          department?: string | null
           duration?: number | null
+          follow_up_notes?: string | null
+          follow_up_required?: boolean | null
           id: string
+          language?: string | null
+          priority_level?: string | null
           recipient_number?: string | null
+          recording_url?: string | null
+          resolution_status?: string | null
           sentiment_analysis?: Json | null
           status?: string | null
+          summary?: string | null
+          tags?: Json | null
           transcription?: string | null
+          urgency_score?: number | null
         }
         Update: {
+          assistant_id?: string | null
+          assistant_name?: string | null
           call_id?: string
+          call_type?: string | null
+          callback_number?: string | null
+          caller_name?: string | null
           caller_number?: string | null
           created_at?: string | null
+          department?: string | null
           duration?: number | null
+          follow_up_notes?: string | null
+          follow_up_required?: boolean | null
           id?: string
+          language?: string | null
+          priority_level?: string | null
           recipient_number?: string | null
+          recording_url?: string | null
+          resolution_status?: string | null
           sentiment_analysis?: Json | null
           status?: string | null
+          summary?: string | null
+          tags?: Json | null
           transcription?: string | null
+          urgency_score?: number | null
         }
         Relationships: []
       }
