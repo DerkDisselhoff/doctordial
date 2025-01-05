@@ -7,7 +7,7 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
   for (const call of calls) {
     try {
       console.log(`Processing call ${call.id}...`)
-      console.log('Raw VAPI call data:', call)
+      console.log('Raw VAPI call data:', JSON.stringify(call, null, 2))
       
       // Always generate a new UUID for Supabase
       const supabaseId = crypto.randomUUID()
@@ -21,77 +21,115 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
         createdAt = new Date().toISOString()
       }
 
-      // Extract assistant info from the call object
+      // Extract and validate assistant info
       const assistantInfo = call.assistant || {}
+      console.log('Assistant info:', assistantInfo)
       
-      // Parse and validate the sentiment analysis
+      // Parse and validate the sentiment analysis with detailed logging
       let sentimentAnalysis = {
         sentiment: 'neutral',
         urgency: 'low'
       }
       
       try {
+        console.log('Raw sentiment data:', call.sentiment)
         if (call.sentiment) {
-          sentimentAnalysis = {
-            sentiment: call.sentiment.overall || 'neutral',
-            urgency: call.sentiment.urgency || 'low'
+          // Handle different possible sentiment data structures
+          if (typeof call.sentiment === 'string') {
+            sentimentAnalysis.sentiment = call.sentiment
+          } else if (typeof call.sentiment === 'object') {
+            sentimentAnalysis = {
+              sentiment: call.sentiment.overall || call.sentiment.sentiment || 'neutral',
+              urgency: call.sentiment.urgency || 'low'
+            }
           }
         }
       } catch (error) {
         console.warn(`Error parsing sentiment for call ${call.id}:`, error)
       }
+      console.log('Processed sentiment analysis:', sentimentAnalysis)
 
-      // Calculate urgency score based on sentiment
+      // Calculate urgency score with logging
       const urgencyMap = { high: 3, medium: 2, low: 1 }
       const urgencyScore = urgencyMap[sentimentAnalysis.urgency] || 1
+      console.log('Calculated urgency score:', urgencyScore)
 
-      // Process duration (ensure it's in seconds)
-      const duration = call.duration 
-        ? typeof call.duration === 'string' 
-          ? parseInt(call.duration, 10) 
-          : Math.round(call.duration)
-        : 0
+      // Process duration with detailed validation
+      let duration = 0
+      try {
+        if (call.duration) {
+          if (typeof call.duration === 'string') {
+            duration = parseInt(call.duration, 10)
+          } else if (typeof call.duration === 'number') {
+            // If duration is in milliseconds (greater than 100000), convert to seconds
+            duration = call.duration > 100000 ? Math.round(call.duration / 1000) : Math.round(call.duration)
+          }
+        }
+      } catch (error) {
+        console.warn(`Error processing duration for call ${call.id}:`, error)
+      }
+      console.log('Processed duration:', duration)
 
-      // Extract tags from the call metadata
-      const tags = Array.isArray(call.tags) 
-        ? call.tags 
-        : call.metadata?.tags || []
+      // Extract and validate tags
+      const tags = (() => {
+        try {
+          if (Array.isArray(call.tags)) return call.tags
+          if (call.metadata?.tags) return call.metadata.tags
+          return []
+        } catch (error) {
+          console.warn(`Error processing tags for call ${call.id}:`, error)
+          return []
+        }
+      })()
+      console.log('Processed tags:', tags)
 
-      // Determine if follow-up is required based on sentiment and tags
-      const followUpRequired = sentimentAnalysis.urgency === 'high' || 
-        tags.some((tag: string) => tag.toLowerCase().includes('follow'))
+      // Determine follow-up requirement with detailed logic
+      const followUpRequired = (() => {
+        try {
+          if (call.follow_up_required === true) return true
+          if (sentimentAnalysis.urgency === 'high') return true
+          if (tags.some((tag: string) => tag.toLowerCase().includes('follow'))) return true
+          if (call.follow_up_notes) return true
+          return false
+        } catch (error) {
+          console.warn(`Error determining follow-up for call ${call.id}:`, error)
+          return false
+        }
+      })()
+      console.log('Follow-up required:', followUpRequired)
 
-      // Process call type and department from metadata
+      // Process metadata with validation
       const metadata = call.metadata || {}
+      console.log('Call metadata:', metadata)
       
       const callData = {
         id: supabaseId,
         call_id: call.id,
-        caller_number: call.from || null,
-        recipient_number: call.to || null,
+        caller_number: call.from || call.caller_number || null,
+        recipient_number: call.to || call.recipient_number || null,
         duration: duration,
         status: call.status || 'completed',
-        transcription: call.transcript || null,
+        transcription: call.transcript || call.transcription || null,
         sentiment_analysis: sentimentAnalysis,
         created_at: createdAt,
-        summary: call.summary || call.transcript?.substring(0, 200) || null,
+        summary: call.summary || call.transcript?.substring(0, 200) || call.transcription?.substring(0, 200) || null,
         urgency_score: urgencyScore,
-        assistant_name: assistantInfo.name || 'Vapi model + openai',
-        assistant_id: assistantInfo.id || null,
-        caller_name: call.caller_name || call.metadata?.caller_name || null,
-        language: call.language || call.metadata?.language || 'en',
-        recording_url: call.recording_url || null,
+        assistant_name: assistantInfo.name || metadata.assistant_name || 'Vapi Assistant',
+        assistant_id: assistantInfo.id || metadata.assistant_id || null,
+        caller_name: call.caller_name || metadata.caller_name || null,
+        language: call.language || metadata.language || 'en',
+        recording_url: call.recording_url || metadata.recording_url || null,
         tags: tags,
         follow_up_required: followUpRequired,
-        follow_up_notes: call.follow_up_notes || null,
-        call_type: metadata.call_type || 'general',
-        department: metadata.department || 'general',
-        priority_level: sentimentAnalysis.urgency || 'low',
+        follow_up_notes: call.follow_up_notes || metadata.follow_up_notes || null,
+        call_type: metadata.call_type || call.call_type || 'general',
+        department: metadata.department || call.department || 'general',
+        priority_level: sentimentAnalysis.urgency || call.priority_level || 'low',
         resolution_status: call.status === 'completed' ? 'resolved' : 'pending',
-        callback_number: call.callback_number || call.from || null
+        callback_number: call.callback_number || call.from || metadata.callback_number || null
       }
 
-      console.log('Processed call data:', callData)
+      console.log('Final processed call data:', JSON.stringify(callData, null, 2))
 
       const { error } = await supabaseClient
         .from('vapi_calls')
