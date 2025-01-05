@@ -74,7 +74,7 @@ export function UrgencyLevels() {
           <tbody>
             {mockUrgentCases.map((case_) => (
               <tr key={case_.id} className="border-b border-mint/5">
-                <td className="py-3 text-sm text-white">
+                <td className="py-3 text-sm text-white border-l-2 border-mint/20 pl-4">
                   {case_.patientName}
                 </td>
                 <td className="py-3 text-sm text-white/70">
