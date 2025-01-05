@@ -1,4 +1,4 @@
-const VAPI_API_URL = 'https://api.vapi.ai/calls';  // Remove /api/v1 as it's added by VAPI internally
+const VAPI_API_URL = 'https://api.vapi.ai/v1/calls';  // Correct endpoint URL format
 
 export const fetchVapiCalls = async (apiKey: string) => {
   console.log('Fetching VAPI calls...');
