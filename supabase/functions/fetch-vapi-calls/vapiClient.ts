@@ -1,10 +1,10 @@
-const VAPI_API_URL = 'https://api.vapi.ai/v1';  // Base URL without the /calls endpoint
+const VAPI_API_URL = 'https://api.vapi.ai';  // Base URL without version or endpoint
 
 export const fetchVapiCalls = async (apiKey: string) => {
   console.log('Fetching VAPI calls...');
   
   try {
-    const url = `${VAPI_API_URL}/calls?limit=200`;
+    const url = `${VAPI_API_URL}/calls?limit=200`;  // Removed /v1 as it was causing 404s
     console.log('Request URL:', url);
 
     const response = await fetch(url, {
