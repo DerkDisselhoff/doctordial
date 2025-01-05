@@ -3,9 +3,46 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { fetchVapiCalls, VapiCall } from "@/services/vapiService";
+import { VapiCall } from "@/services/vapiService";
 import { ChevronLeft, ChevronRight, Clock, MessageCircle, User, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
+// Generate mock data
+const generateMockCalls = (count: number): VapiCall[] => {
+  const sentiments = ['positive', 'negative', 'neutral'];
+  const urgencyLevels = ['high', 'medium', 'low'];
+  const subjects = [
+    'Prescription renewal request',
+    'Scheduling routine check-up',
+    'Discussing test results',
+    'Emergency consultation',
+    'Follow-up appointment',
+    'Medication side effects',
+    'General health inquiry',
+    'Specialist referral request'
+  ];
+  const patientNames = [
+    'John Smith', 'Emma Wilson', 'Michael Brown', 'Sarah Davis',
+    'James Johnson', 'Lisa Anderson', 'Robert Taylor', 'Maria Garcia',
+    'David Miller', 'Jennifer White'
+  ];
+  const statuses = ['completed', 'scheduled', 'missed', 'rescheduled'];
+
+  return Array.from({ length: count }, (_, i) => ({
+    id: `mock-${i + 1}`,
+    call_id: `CALL-${String(i + 1).padStart(4, '0')}`,
+    caller_number: patientNames[Math.floor(Math.random() * patientNames.length)],
+    recipient_number: '+31612345678',
+    duration: Math.floor(Math.random() * 600) + 60, // 1-10 minutes
+    status: statuses[Math.floor(Math.random() * statuses.length)],
+    transcription: subjects[Math.floor(Math.random() * subjects.length)],
+    sentiment_analysis: {
+      sentiment: sentiments[Math.floor(Math.random() * sentiments.length)],
+      urgency: urgencyLevels[Math.floor(Math.random() * urgencyLevels.length)]
+    },
+    created_at: new Date(Date.now() - Math.floor(Math.random() * 7776000000)).toISOString() // Last 90 days
+  }));
+};
 
 export function DetailedCallsList() {
   const [calls, setCalls] = useState<VapiCall[]>([]);
@@ -17,24 +54,12 @@ export function DetailedCallsList() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    const loadCalls = async () => {
-      try {
-        const data = await fetchVapiCalls();
-        setCalls(data);
-        setTotalPages(Math.ceil(data.length / itemsPerPage));
-      } catch (error) {
-        toast({
-          title: "Error loading calls",
-          description: "Failed to load call data. Please try again later.",
-          variant: "destructive",
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadCalls();
-  }, [toast]);
+    // Load mock data instead of fetching
+    const mockCalls = generateMockCalls(100);
+    setCalls(mockCalls);
+    setTotalPages(Math.ceil(mockCalls.length / itemsPerPage));
+    setLoading(false);
+  }, []);
 
   const paginatedCalls = calls.slice(
     (currentPage - 1) * itemsPerPage,
@@ -81,10 +106,10 @@ export function DetailedCallsList() {
                   {new Date(call.created_at || '').toLocaleString()}
                 </TableCell>
                 <TableCell className="text-forest">
-                  {call.caller_number || 'Unknown'}
+                  {call.caller_number}
                 </TableCell>
                 <TableCell className="text-forest max-w-xs truncate">
-                  {call.transcription || 'No transcription available'}
+                  {call.transcription}
                 </TableCell>
                 <TableCell>
                   <span className={`px-2 py-1 rounded-full text-xs
@@ -109,10 +134,10 @@ export function DetailedCallsList() {
                   </span>
                 </TableCell>
                 <TableCell className="text-forest">
-                  {call.status || 'N/A'}
+                  {call.status}
                 </TableCell>
                 <TableCell>
-                  {call.status === 'completed' ? (
+                  {call.status === 'completed' || call.status === 'scheduled' ? (
                     <span className="px-2 py-1 rounded-full text-xs bg-mint/10 text-mint">
                       Yes
                     </span>
