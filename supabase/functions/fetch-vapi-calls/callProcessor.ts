@@ -14,8 +14,12 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       console.log(`Processing call ${call.id}...`)
       console.log('Raw VAPI call data:', JSON.stringify(call, null, 2))
       
-      // Always generate a new UUID for Supabase
-      const supabaseId = crypto.randomUUID()
+      // Use the VAPI call ID as our unique identifier
+      const callId = call.id
+      if (!callId) {
+        console.error('Call is missing ID:', call)
+        continue
+      }
       
       // Safely handle the created_at date
       let createdAt
@@ -42,7 +46,6 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
           if (typeof call.sentiment === 'string') {
             sentimentAnalysis.sentiment = call.sentiment
           } else if (typeof call.sentiment === 'object') {
-            // Handle different possible sentiment data structures
             if (call.sentiment.overall || call.sentiment.sentiment) {
               sentimentAnalysis.sentiment = call.sentiment.overall || call.sentiment.sentiment
             }
@@ -113,8 +116,8 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       const callerNumber = call.from || call.caller_number || metadata.caller_number || null
       
       const callData = {
-        id: supabaseId,
-        call_id: call.id || `CALL-${Date.now()}`,
+        id: callId, // Use the VAPI call ID directly
+        call_id: callId,
         caller_number: callerNumber,
         recipient_number: call.to || call.recipient_number || metadata.recipient_number || null,
         duration: duration || null,
@@ -141,12 +144,16 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
 
       console.log('Final processed call data:', JSON.stringify(callData, null, 2))
 
+      // Use upsert with call_id as the unique identifier
       const { error } = await supabaseClient
         .from('vapi_calls')
-        .upsert(callData)
+        .upsert(callData, { 
+          onConflict: 'call_id',  // Use call_id as the conflict resolution key
+          ignoreDuplicates: false // Update existing records
+        })
 
       if (error) {
-        console.error('Error inserting call:', {
+        console.error('Error upserting call:', {
           callId: call.id,
           error: error.message,
           details: error
@@ -154,7 +161,7 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
         errors.push({ id: call.id, error })
       } else {
         processedCalls++
-        console.log(`Successfully processed call ${call.id} with Supabase ID ${supabaseId}`)
+        console.log(`Successfully processed call ${call.id}`)
       }
     } catch (error) {
       console.error(`Error processing call ${call.id}:`, error)
