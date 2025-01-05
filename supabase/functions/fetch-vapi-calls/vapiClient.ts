@@ -1,10 +1,10 @@
-const VAPI_API_URL = 'https://api.vapi.ai/v1/calls';  // Correct endpoint URL format
+const VAPI_API_URL = 'https://api.vapi.ai/v1';  // Base URL without the /calls endpoint
 
 export const fetchVapiCalls = async (apiKey: string) => {
   console.log('Fetching VAPI calls...');
   
   try {
-    const url = `${VAPI_API_URL}?limit=200`;
+    const url = `${VAPI_API_URL}/calls?limit=200`;
     console.log('Request URL:', url);
 
     const response = await fetch(url, {
