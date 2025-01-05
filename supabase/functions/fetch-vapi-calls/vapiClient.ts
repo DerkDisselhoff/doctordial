@@ -1,4 +1,4 @@
-const VAPI_API_URL = 'https://api.vapi.ai/api/calls'; // Changed from /call to /calls
+const VAPI_API_URL = 'https://api.vapi.ai/v1/calls'; // Updated to use the correct v1 endpoint
 
 export const fetchVapiCalls = async (apiKey: string) => {
   console.log('Fetching VAPI calls...');
@@ -18,7 +18,9 @@ export const fetchVapiCalls = async (apiKey: string) => {
       console.error('VAPI API Error Response:', {
         status: response.status,
         statusText: response.statusText,
-        body: errorText
+        body: errorText,
+        url: VAPI_API_URL,
+        headers: Object.fromEntries(response.headers.entries())
       });
       throw new Error(`VAPI API request failed with status ${response.status}: ${errorText}`);
     }
