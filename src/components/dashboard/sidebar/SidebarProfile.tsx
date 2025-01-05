@@ -28,14 +28,22 @@ export function SidebarProfile({ userProfile, userRole }: SidebarProfileProps) {
 
   const handleLogout = async () => {
     try {
-      // Clear any stored session data
-      localStorage.removeItem('supabase.auth.token');
+      // First, get the current session
+      const { data: { session } } = await supabase.auth.getSession();
       
-      // Sign out from Supabase
-      await supabase.auth.signOut();
+      if (!session) {
+        // If no session exists, just navigate to home
+        navigate("/");
+        return;
+      }
+
+      // Attempt to sign out
+      const { error } = await supabase.auth.signOut();
       
-      // Clear any remaining auth state
-      await supabase.auth.clearSession();
+      if (error) throw error;
+
+      // Clear any stored data
+      localStorage.clear();
       
       // Navigate to home page
       navigate("/");
