@@ -1,44 +1,44 @@
-const VAPI_API_URL = 'https://api.vapi.ai';  // Base URL without version or endpoint
-
-export const fetchVapiCalls = async (apiKey: string) => {
-  console.log('Fetching VAPI calls...');
-  
+export const fetchVapiCalls = async (vapiKey: string) => {
+  console.log('Fetching calls from VAPI API...')
   try {
-    const url = `${VAPI_API_URL}/calls?limit=200`;  // Removed /v1 as it was causing 404s
-    console.log('Request URL:', url);
+    if (!vapiKey) {
+      throw new Error('VAPI API key is required')
+    }
 
-    const response = await fetch(url, {
+    const response = await fetch('https://api.vapi.ai/call?limit=200', {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${vapiKey}`,
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
       }
-    });
+    })
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('VAPI API Error Response:', {
+      const errorText = await response.text()
+      console.error('VAPI API error:', {
         status: response.status,
         statusText: response.statusText,
         body: errorText,
-        url: url,
-        headers: Object.fromEntries(response.headers.entries())
-      });
-      throw new Error(`VAPI API request failed with status ${response.status}: ${errorText}`);
+        endpoint: '/call'
+      })
+      throw new Error(`VAPI API error: ${errorText}`)
     }
 
-    const data = await response.json();
-    console.log('VAPI API Response Data Structure:', JSON.stringify(data, null, 2));
-
-    if (!Array.isArray(data)) {
-      console.error('Invalid response format:', data);
-      throw new Error('Invalid response format from VAPI API - expected array');
+    const data = await response.json()
+    
+    if (!data || !Array.isArray(data)) {
+      console.error('Invalid response format from VAPI:', data)
+      throw new Error('Invalid response format from VAPI')
     }
 
-    return data;
+    console.log(`Received ${data.length || 0} calls from VAPI`)
+    console.log('Sample call data:', JSON.stringify(data[0], null, 2))
+    return data
   } catch (error) {
-    console.error('Error fetching VAPI calls:', error);
-    throw error;
+    console.error('Error fetching VAPI calls:', {
+      error: error.message,
+      stack: error.stack
+    })
+    throw error
   }
 }
