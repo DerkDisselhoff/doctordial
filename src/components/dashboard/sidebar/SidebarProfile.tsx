@@ -11,7 +11,7 @@ import {
 import { LogOut, UserCog, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface SidebarProfileProps {
   userProfile: {
@@ -28,6 +28,16 @@ export function SidebarProfile({ userProfile, userRole }: SidebarProfileProps) {
 
   const handleLogout = async () => {
     try {
+      // First check if we have a session
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        // If no session exists, just clear local state and redirect
+        navigate("/");
+        return;
+      }
+
+      // Proceed with logout
       const { error } = await supabase.auth.signOut();
       if (error) {
         console.error('Logout error:', error);
@@ -38,9 +48,6 @@ export function SidebarProfile({ userProfile, userRole }: SidebarProfileProps) {
         });
         return;
       }
-      
-      // Clear any local storage or state if needed
-      localStorage.removeItem('supabase.auth.token');
       
       // Navigate to home page
       navigate("/");
