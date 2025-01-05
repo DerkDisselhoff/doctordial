@@ -28,40 +28,8 @@ export function SidebarProfile({ userProfile, userRole }: SidebarProfileProps) {
 
   const handleLogout = async () => {
     try {
-      // Get the current session
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      
-      if (sessionError) {
-        console.error('Session error:', sessionError);
-        // If there's a session error, just redirect to home
-        navigate("/");
-        return;
-      }
-
-      if (!session) {
-        // No active session, just redirect
-        navigate("/");
-        return;
-      }
-
-      // Attempt to sign out
-      const { error: signOutError } = await supabase.auth.signOut({
-        scope: 'local'  // Only clear the current tab's session
-      });
-
-      if (signOutError) {
-        console.error('Logout error:', signOutError);
-        toast({
-          title: "Error logging out",
-          description: "Please try again",
-          variant: "destructive",
-        });
-        return;
-      }
-      
-      // Navigate to home page
+      await supabase.auth.signOut();
       navigate("/");
-      
       toast({
         title: "Logged out successfully",
         description: "You have been logged out of your account",
