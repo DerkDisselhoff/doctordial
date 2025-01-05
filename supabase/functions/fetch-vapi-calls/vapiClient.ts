@@ -5,12 +5,17 @@ export const fetchVapiCalls = async (vapiKey: string) => {
     const requestId = crypto.randomUUID()
     console.log('Using request ID:', requestId)
 
-    const response = await fetch(`https://api.vapi.ai/call/list?id=${requestId}`, {
-      method: 'GET',
+    const response = await fetch('https://api.vapi.ai/call/list', {
+      method: 'POST', // Changed to POST method
       headers: {
         'Authorization': `Bearer ${vapiKey}`,
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        id: requestId,
+        page: 1,
+        limit: 100 // Adjust this value based on your needs
+      })
     })
 
     if (!response.ok) {

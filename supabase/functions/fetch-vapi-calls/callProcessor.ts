@@ -11,11 +11,23 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       // Always generate a new UUID for Supabase
       const supabaseId = crypto.randomUUID()
       
+      // Log the data we're about to insert
+      console.log('Inserting call data:', {
+        id: supabaseId,
+        call_id: call.id,
+        caller_number: call.from,
+        recipient_number: call.to,
+        duration: call.duration,
+        status: call.status,
+        transcription: call.transcription,
+        sentiment_analysis: call.sentiment
+      })
+
       const { error } = await supabaseClient
         .from('vapi_calls')
         .upsert({
           id: supabaseId,
-          call_id: call.id, // Store original VAPI ID as call_id
+          call_id: call.id,
           caller_number: call.from,
           recipient_number: call.to,
           duration: call.duration,
