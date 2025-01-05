@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Check, X } from "lucide-react";
+import { format } from "date-fns";
 
 // Mock data for urgent cases
 const mockUrgentCases = [
@@ -12,6 +13,7 @@ const mockUrgentCases = [
     summary: "Severe chest pain, referred to emergency",
     followUp: "Schedule cardiology consultation",
     appointmentMade: true,
+    appointmentDate: "2024-03-20T14:30:00",
     urgencyLevel: "U1",
     timestamp: "2024-03-15T09:30:00",
   },
@@ -21,6 +23,7 @@ const mockUrgentCases = [
     summary: "High fever and difficulty breathing",
     followUp: "Monitor symptoms, follow-up in 24h",
     appointmentMade: false,
+    appointmentDate: null,
     urgencyLevel: "U2",
     timestamp: "2024-03-15T10:15:00",
   },
@@ -30,6 +33,7 @@ const mockUrgentCases = [
     summary: "Severe allergic reaction",
     followUp: "Allergy specialist referral",
     appointmentMade: true,
+    appointmentDate: "2024-03-22T11:00:00",
     urgencyLevel: "U1",
     timestamp: "2024-03-15T11:00:00",
   },
@@ -39,6 +43,7 @@ const mockUrgentCases = [
     summary: "Acute abdominal pain",
     followUp: "Schedule ultrasound",
     appointmentMade: true,
+    appointmentDate: "2024-03-21T09:15:00",
     urgencyLevel: "U3",
     timestamp: "2024-03-15T11:45:00",
   },
@@ -48,6 +53,7 @@ const mockUrgentCases = [
     summary: "Severe migraine, unresponsive to medication",
     followUp: "Neurologist consultation",
     appointmentMade: false,
+    appointmentDate: null,
     urgencyLevel: "U2",
     timestamp: "2024-03-15T12:30:00",
   },
@@ -66,34 +72,34 @@ export function UrgentCases() {
         <CardTitle className="dashboard-card-title">Urgent Cases</CardTitle>
         <div className="flex gap-2">
           <Button
-            variant={selectedUrgency === "all" ? "default" : "outline"}
+            variant={selectedUrgency === "all" ? "default" : "secondary"}
             size="sm"
             onClick={() => setSelectedUrgency("all")}
-            className="text-xs"
+            className="text-xs bg-forest hover:bg-forest-light text-white"
           >
             All
           </Button>
           <Button
-            variant={selectedUrgency === "U1" ? "default" : "outline"}
+            variant={selectedUrgency === "U1" ? "default" : "secondary"}
             size="sm"
             onClick={() => setSelectedUrgency("U1")}
-            className="text-xs"
+            className="text-xs bg-red-500 hover:bg-red-600 text-white"
           >
             U1
           </Button>
           <Button
-            variant={selectedUrgency === "U2" ? "default" : "outline"}
+            variant={selectedUrgency === "U2" ? "default" : "secondary"}
             size="sm"
             onClick={() => setSelectedUrgency("U2")}
-            className="text-xs"
+            className="text-xs bg-orange-500 hover:bg-orange-600 text-white"
           >
             U2
           </Button>
           <Button
-            variant={selectedUrgency === "U3" ? "default" : "outline"}
+            variant={selectedUrgency === "U3" ? "default" : "secondary"}
             size="sm"
             onClick={() => setSelectedUrgency("U3")}
-            className="text-xs"
+            className="text-xs bg-yellow-500 hover:bg-yellow-600 text-white"
           >
             U3
           </Button>
@@ -130,7 +136,12 @@ export function UrgentCases() {
                   </TableCell>
                   <TableCell className="dashboard-table-cell">
                     {case_.appointmentMade ? (
-                      <Check className="h-4 w-4 text-green-500" />
+                      <div className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        <span className="text-sm text-gray-600">
+                          {format(new Date(case_.appointmentDate!), "MMM d, HH:mm")}
+                        </span>
+                      </div>
                     ) : (
                       <X className="h-4 w-4 text-red-500" />
                     )}
