@@ -117,7 +117,7 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       
       const callData = {
         id: callId, // Use the VAPI call ID directly
-        call_id: callId,
+        call_id: callId, // This is now our unique constraint
         caller_number: callerNumber,
         recipient_number: call.to || call.recipient_number || metadata.recipient_number || null,
         duration: duration || null,
@@ -139,7 +139,16 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
         department: metadata.department || call.department || 'general',
         priority_level: sentimentAnalysis.urgency || call.priority_level || 'low',
         resolution_status: call.status === 'completed' ? 'resolved' : 'pending',
-        callback_number: call.callback_number || call.from || metadata.callback_number || null
+        callback_number: call.callback_number || call.from || metadata.callback_number || null,
+        workflow_id: call.workflow_id || metadata.workflow_id || null,
+        workflow_name: call.workflow_name || metadata.workflow_name || null,
+        block_id: call.block_id || metadata.block_id || null,
+        block_name: call.block_name || metadata.block_name || null,
+        output_schema: call.output_schema || metadata.output_schema || {},
+        messages: call.messages || [],
+        workflow_variables: call.workflow_variables || metadata.workflow_variables || {},
+        block_outputs: call.block_outputs || metadata.block_outputs || {},
+        call_variables: call.call_variables || metadata.call_variables || {}
       }
 
       console.log('Final processed call data:', JSON.stringify(callData, null, 2))
