@@ -64,26 +64,26 @@ export function UrgencyLevels() {
         <table className="w-full">
           <thead>
             <tr className="text-left border-b border-mint/10">
-              <th className="pb-3 text-sm font-medium text-white/70">Patient Name</th>
-              <th className="pb-3 text-sm font-medium text-white/70">Summary</th>
-              <th className="pb-3 text-sm font-medium text-white/70">Follow-up</th>
-              <th className="pb-3 text-sm font-medium text-white/70">Urgency</th>
-              <th className="pb-3 text-sm font-medium text-white/70">Appointment</th>
+              <th className="pb-3 text-sm font-medium text-white/70 text-left">Patient Name</th>
+              <th className="pb-3 text-sm font-medium text-white/70 text-left">Summary</th>
+              <th className="pb-3 text-sm font-medium text-white/70 text-left">Follow-up</th>
+              <th className="pb-3 text-sm font-medium text-white/70 text-left">Urgency</th>
+              <th className="pb-3 text-sm font-medium text-white/70 text-left">Appointment</th>
             </tr>
           </thead>
           <tbody>
             {mockUrgentCases.map((case_) => (
               <tr key={case_.id} className="border-b border-mint/5">
-                <td className="py-3 text-sm text-white border-l-2 border-mint/20 pl-4">
+                <td className="py-3 text-sm text-white border-l-2 border-mint/20 pl-4 text-left">
                   {case_.patientName}
                 </td>
-                <td className="py-3 text-sm text-white/70">
+                <td className="py-3 text-sm text-white/70 text-left">
                   {case_.summary}
                 </td>
-                <td className="py-3 text-sm text-white/70">
+                <td className="py-3 text-sm text-white/70 text-left">
                   {case_.followUp}
                 </td>
-                <td className="py-3">
+                <td className="py-3 text-left">
                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                     case_.urgencyLevel === 'U1' 
                       ? 'bg-red-100 text-red-700'
@@ -94,7 +94,7 @@ export function UrgencyLevels() {
                     {case_.urgencyLevel}
                   </span>
                 </td>
-                <td className="py-3">
+                <td className="py-3 text-left">
                   {case_.appointmentMade ? (
                     <div className="flex items-center gap-2">
                       <Check className="h-4 w-4 text-green-500" />
