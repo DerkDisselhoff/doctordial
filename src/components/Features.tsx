@@ -7,7 +7,7 @@ const Features = () => {
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-white mb-4">
-            How Our AI Agent Optimizes Your Incoming Patient Calls
+            Transform Patient Calls into Practice Efficiency
           </h2>
           <p className="text-lg text-white/80 max-w-2xl mx-auto mb-12">
             Our advanced AI-powered triage system accurately assesses patient needs in real-time, 
