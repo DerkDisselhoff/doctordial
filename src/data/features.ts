@@ -1,4 +1,4 @@
-import { Brain, Calendar, Mic, BarChart3, Users, Plug } from "lucide-react";
+import { Brain, Calendar, Mic, Users } from "lucide-react";
 
 export const features = [
   {
@@ -38,18 +38,6 @@ export const features = [
     ]
   },
   {
-    icon: BarChart3,
-    title: "Insights Dashboard",
-    description: "Comprehensive analytics for better decision making",
-    component: "ClientDistribution",
-    points: [
-      "Real-time call analytics",
-      "Patient flow insights",
-      "Performance metrics",
-      "Custom reporting"
-    ]
-  },
-  {
     icon: Users,
     title: "High Volume Handling",
     description: "Never miss a patient call again",
@@ -59,18 +47,6 @@ export const features = [
       "Zero wait times",
       "Consistent service quality",
       "Peak hour management"
-    ]
-  },
-  {
-    icon: Plug,
-    title: "System Integrations",
-    description: "Seamlessly connects with your existing tools",
-    component: "ActivityList",
-    points: [
-      "EHR system integration",
-      "Calendar sync",
-      "Secure data exchange",
-      "API connectivity"
     ]
   }
 ];
