@@ -8,9 +8,9 @@ const Certifications = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-mint/10 px-4 py-2 rounded-full border border-mint/20 mb-8">
             <Shield className="w-4 h-4 text-mint" />
-            <span className="text-mint text-sm font-medium">Certified & Compliant</span>
+            <span className="text-mint text-sm font-medium">Trained on medical data</span>
           </div>
-          <h3 className="text-3xl font-bold mb-8">Trusted by Dutch Healthcare Institutions</h3>
+          <h3 className="text-3xl font-bold mb-8 text-white/80">Trained on data from Dutch Healthcare Institutions</h3>
           
           <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
             <div className="p-6 rounded-xl bg-forest-light border border-mint/10 space-y-4 hover:border-mint/20 transition-colors">
@@ -25,7 +25,7 @@ const Certifications = () => {
               <div className="space-y-2">
                 <p className="text-mint font-medium flex items-center justify-center gap-2">
                   <CheckCircle className="w-4 h-4" />
-                  NHG-Triage Certified
+                  NHG-Triage
                 </p>
                 <p className="text-sm text-white/60">
                   Our AI model is trained on official NHG-Triage protocols
@@ -45,7 +45,7 @@ const Certifications = () => {
               <div className="space-y-2">
                 <p className="text-mint font-medium flex items-center justify-center gap-2">
                   <CheckCircle className="w-4 h-4" />
-                  NVDA Standards Compliant
+                  NVDA Standards
                 </p>
                 <p className="text-sm text-white/60">
                   Fully compliant with NVDA behavioral standards
