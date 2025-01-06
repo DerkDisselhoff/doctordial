@@ -71,6 +71,7 @@ serve(async (req) => {
     const { data, error } = await supabaseClient
       .from('vapi_calls')
       .upsert({
+        // Existing fields
         call_id: body.call_id,
         caller_number: body.caller_number,
         recipient_number: body.recipient_number,
@@ -101,7 +102,19 @@ serve(async (req) => {
         messages: body.messages,
         workflow_variables: body.workflow_variables,
         block_outputs: body.block_outputs,
-        call_variables: body.call_variables
+        call_variables: body.call_variables,
+        // New fields
+        patient_id: body.patient_id,
+        patient_name: body.patient_name,
+        patient_phone: body.patient_phone,
+        patient_email: body.patient_email,
+        appointment_status: body.appointment_status,
+        appointment_date: body.appointment_date,
+        medical_notes: body.medical_notes,
+        symptoms: Array.isArray(body.symptoms) ? body.symptoms : [],
+        action_required: body.action_required || false,
+        action_type: body.action_type,
+        action_deadline: body.action_deadline
       }, {
         onConflict: 'call_id'
       })

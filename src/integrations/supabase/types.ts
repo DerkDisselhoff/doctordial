@@ -229,6 +229,11 @@ export type Database = {
       }
       vapi_calls: {
         Row: {
+          action_deadline: string | null
+          action_required: boolean | null
+          action_type: string | null
+          appointment_date: string | null
+          appointment_status: string | null
           assistant_id: string | null
           assistant_name: string | null
           block_id: string | null
@@ -247,8 +252,13 @@ export type Database = {
           follow_up_required: boolean | null
           id: string
           language: string | null
+          medical_notes: string | null
           messages: Json[] | null
           output_schema: Json | null
+          patient_email: string | null
+          patient_id: string | null
+          patient_name: string | null
+          patient_phone: string | null
           priority_level: string | null
           recipient_number: string | null
           recording_url: string | null
@@ -256,6 +266,7 @@ export type Database = {
           sentiment_analysis: Json | null
           status: string | null
           summary: string | null
+          symptoms: string[] | null
           tags: Json | null
           transcription: string | null
           urgency_score: number | null
@@ -264,6 +275,11 @@ export type Database = {
           workflow_variables: Json | null
         }
         Insert: {
+          action_deadline?: string | null
+          action_required?: boolean | null
+          action_type?: string | null
+          appointment_date?: string | null
+          appointment_status?: string | null
           assistant_id?: string | null
           assistant_name?: string | null
           block_id?: string | null
@@ -282,8 +298,13 @@ export type Database = {
           follow_up_required?: boolean | null
           id: string
           language?: string | null
+          medical_notes?: string | null
           messages?: Json[] | null
           output_schema?: Json | null
+          patient_email?: string | null
+          patient_id?: string | null
+          patient_name?: string | null
+          patient_phone?: string | null
           priority_level?: string | null
           recipient_number?: string | null
           recording_url?: string | null
@@ -291,6 +312,7 @@ export type Database = {
           sentiment_analysis?: Json | null
           status?: string | null
           summary?: string | null
+          symptoms?: string[] | null
           tags?: Json | null
           transcription?: string | null
           urgency_score?: number | null
@@ -299,6 +321,11 @@ export type Database = {
           workflow_variables?: Json | null
         }
         Update: {
+          action_deadline?: string | null
+          action_required?: boolean | null
+          action_type?: string | null
+          appointment_date?: string | null
+          appointment_status?: string | null
           assistant_id?: string | null
           assistant_name?: string | null
           block_id?: string | null
@@ -317,8 +344,13 @@ export type Database = {
           follow_up_required?: boolean | null
           id?: string
           language?: string | null
+          medical_notes?: string | null
           messages?: Json[] | null
           output_schema?: Json | null
+          patient_email?: string | null
+          patient_id?: string | null
+          patient_name?: string | null
+          patient_phone?: string | null
           priority_level?: string | null
           recipient_number?: string | null
           recording_url?: string | null
@@ -326,6 +358,7 @@ export type Database = {
           sentiment_analysis?: Json | null
           status?: string | null
           summary?: string | null
+          symptoms?: string[] | null
           tags?: Json | null
           transcription?: string | null
           urgency_score?: number | null
