@@ -11,6 +11,11 @@ export type Database = {
     Tables: {
       call_logs: {
         Row: {
+          action_deadline: string | null
+          action_required: boolean | null
+          action_type: string | null
+          appointment_date: string | null
+          appointment_status: string | null
           assistant_id: string | null
           call_id: string | null
           conversation_summary: string | null
@@ -21,14 +26,25 @@ export type Database = {
           ended_reason: string | null
           id: string
           intent: string | null
+          medical_notes: string | null
           metadata: Json | null
+          patient_email: string | null
+          patient_id: string | null
+          patient_name: string | null
+          patient_phone: string | null
           phone_number: string | null
           sentiment_score: number | null
           start_time: string | null
+          symptoms: string[] | null
           transcript: string | null
           type: string | null
         }
         Insert: {
+          action_deadline?: string | null
+          action_required?: boolean | null
+          action_type?: string | null
+          appointment_date?: string | null
+          appointment_status?: string | null
           assistant_id?: string | null
           call_id?: string | null
           conversation_summary?: string | null
@@ -39,14 +55,25 @@ export type Database = {
           ended_reason?: string | null
           id?: string
           intent?: string | null
+          medical_notes?: string | null
           metadata?: Json | null
+          patient_email?: string | null
+          patient_id?: string | null
+          patient_name?: string | null
+          patient_phone?: string | null
           phone_number?: string | null
           sentiment_score?: number | null
           start_time?: string | null
+          symptoms?: string[] | null
           transcript?: string | null
           type?: string | null
         }
         Update: {
+          action_deadline?: string | null
+          action_required?: boolean | null
+          action_type?: string | null
+          appointment_date?: string | null
+          appointment_status?: string | null
           assistant_id?: string | null
           call_id?: string | null
           conversation_summary?: string | null
@@ -57,10 +84,16 @@ export type Database = {
           ended_reason?: string | null
           id?: string
           intent?: string | null
+          medical_notes?: string | null
           metadata?: Json | null
+          patient_email?: string | null
+          patient_id?: string | null
+          patient_name?: string | null
+          patient_phone?: string | null
           phone_number?: string | null
           sentiment_score?: number | null
           start_time?: string | null
+          symptoms?: string[] | null
           transcript?: string | null
           type?: string | null
         }
