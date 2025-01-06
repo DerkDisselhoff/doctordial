@@ -13,7 +13,6 @@ serve(async (req) => {
   }
 
   try {
-    // Enhanced logging
     console.log('==================== NEW WEBHOOK REQUEST ====================')
     console.log('Request Method:', req.method)
     console.log('Request URL:', req.url)
@@ -30,15 +29,6 @@ serve(async (req) => {
     console.log('- Received secret header:', vapiSecret ? '[PRESENT]' : '[MISSING]')
     console.log('- Expected secret in env:', expectedSecret ? '[PRESENT]' : '[MISSING]')
     
-    // More detailed secret comparison logging
-    if (vapiSecret && expectedSecret) {
-      console.log('Secret comparison:')
-      console.log('- First 4 chars of received:', vapiSecret.substring(0, 4))
-      console.log('- First 4 chars of expected:', expectedSecret.substring(0, 4))
-      console.log('- Lengths match:', vapiSecret.length === expectedSecret.length)
-      console.log('- Exact match:', vapiSecret === expectedSecret)
-    }
-
     if (!vapiSecret || !expectedSecret) {
       console.error('Missing VAPI authentication credentials')
       return new Response(
@@ -58,19 +48,8 @@ serve(async (req) => {
 
     if (vapiSecret !== expectedSecret) {
       console.error('Invalid VAPI authentication credentials')
-      console.log('Secret mismatch details:', {
-        receivedLength: vapiSecret.length,
-        expectedLength: expectedSecret.length,
-        first4CharsMatch: vapiSecret.substring(0, 4) === expectedSecret.substring(0, 4)
-      })
       return new Response(
-        JSON.stringify({ 
-          error: 'Invalid VAPI authentication credentials',
-          details: {
-            lengthMismatch: vapiSecret.length !== expectedSecret.length,
-            first4CharsMatch: vapiSecret.substring(0, 4) === expectedSecret.substring(0, 4)
-          }
-        }),
+        JSON.stringify({ error: 'Invalid VAPI authentication credentials' }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 401 
@@ -78,25 +57,20 @@ serve(async (req) => {
       )
     }
 
-    // Log request body
-    const body = await req.json()
-    console.log('Received VAPI webhook payload:', JSON.stringify(body, null, 2))
-
     // Initialize Supabase client
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    console.log('Attempting to insert data into vapi_calls table...')
+    // Log webhook payload
+    const body = await req.json()
+    console.log('Received VAPI webhook payload:', JSON.stringify(body, null, 2))
 
-    // Generate a UUID for the id field
-    const id = crypto.randomUUID()
-
+    // Process the webhook data and insert into vapi_calls table
     const { data, error } = await supabaseClient
       .from('vapi_calls')
-      .insert({
-        id,
+      .upsert({
         call_id: body.call_id,
         caller_number: body.caller_number,
         recipient_number: body.recipient_number,
@@ -104,16 +78,40 @@ serve(async (req) => {
         status: body.status,
         transcription: body.transcription,
         sentiment_analysis: body.sentiment_analysis,
-        created_at: new Date().toISOString()
+        summary: body.summary,
+        urgency_score: body.urgency_score,
+        assistant_name: body.assistant_name,
+        assistant_id: body.assistant_id,
+        caller_name: body.caller_name,
+        language: body.language,
+        recording_url: body.recording_url,
+        tags: body.tags,
+        follow_up_required: body.follow_up_required,
+        follow_up_notes: body.follow_up_notes,
+        call_type: body.call_type,
+        department: body.department,
+        priority_level: body.priority_level,
+        resolution_status: body.resolution_status,
+        callback_number: body.callback_number,
+        workflow_id: body.workflow_id,
+        workflow_name: body.workflow_name,
+        block_id: body.block_id,
+        block_name: body.block_name,
+        output_schema: body.output_schema,
+        messages: body.messages,
+        workflow_variables: body.workflow_variables,
+        block_outputs: body.block_outputs,
+        call_variables: body.call_variables
+      }, {
+        onConflict: 'call_id'
       })
-      .select()
 
     if (error) {
       console.error('Error inserting data:', error)
       throw error
     }
 
-    console.log('Successfully inserted data:', data)
+    console.log('Successfully processed webhook data')
 
     return new Response(
       JSON.stringify({ success: true, data }),
