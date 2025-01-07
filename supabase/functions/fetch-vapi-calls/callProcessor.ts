@@ -18,14 +18,21 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
         continue
       }
       
-      let createdAt
+      // Parse dates properly
+      let startTime = null
+      let endTime = null
+      let createdAt = null
+
       try {
+        startTime = call.startedAt ? new Date(call.startedAt).toISOString() : null
+        endTime = call.endedAt ? new Date(call.endedAt).toISOString() : null
         createdAt = call.created_at ? new Date(call.created_at).toISOString() : new Date().toISOString()
       } catch (dateError) {
         console.warn(`Invalid date for call ${call.id}, using current timestamp`)
         createdAt = new Date().toISOString()
       }
 
+      // Extract assistant info properly
       const assistantInfo = call.assistant || {}
       console.log('Assistant info:', assistantInfo)
       
@@ -56,53 +63,53 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
         console.warn(`Error processing duration for call ${call.id}:`, error)
       }
 
-      // Common data for both tables
+      // Common data for both tables with proper field mapping
       const commonData = {
         call_id: callId,
-        assistant_id: assistantInfo.id || null,
-        assistant_name: assistantInfo.name || null,
+        assistant_id: assistantInfo.id || call.assistantId || null,
+        assistant_name: assistantInfo.name || call.assistantName || null,
         type: call.type || null,
         duration: duration,
         duration_seconds: duration,
-        start_time: call.start_time ? new Date(call.start_time).toISOString() : null,
-        end_time: call.end_time ? new Date(call.end_time).toISOString() : null,
-        ended_reason: call.ended_reason || null,
+        start_time: startTime,
+        end_time: endTime,
+        ended_reason: call.endedReason || call.ended_reason || null,
         conversation_summary: call.summary || null,
-        transcript: call.transcript || null,
+        transcript: call.transcript || call.transcription || null,
         sentiment_score: sentimentAnalysis,
         intent: call.intent || null,
         metadata: call.metadata || {},
         created_at: createdAt,
-        patient_id: call.patient_id || null,
-        patient_name: call.patient_name || null,
-        patient_phone: call.patient_phone || null,
-        patient_email: call.patient_email || null,
-        appointment_status: call.appointment_status || null,
+        patient_id: call.patient_id || call.patientId || null,
+        patient_name: call.patient_name || call.patientName || null,
+        patient_phone: call.patient_phone || call.patientPhone || null,
+        patient_email: call.patient_email || call.patientEmail || null,
+        appointment_status: call.appointment_status || call.appointmentStatus || null,
         appointment_date: call.appointment_date ? new Date(call.appointment_date).toISOString() : null,
-        medical_notes: call.medical_notes || null,
+        medical_notes: call.medical_notes || call.medicalNotes || null,
         symptoms: Array.isArray(call.symptoms) ? call.symptoms : [],
-        action_required: call.action_required || false,
-        action_type: call.action_type || null,
+        action_required: call.action_required || call.actionRequired || false,
+        action_type: call.action_type || call.actionType || null,
         action_deadline: call.action_deadline ? new Date(call.action_deadline).toISOString() : null,
-        workflow_id: call.workflow_id || null,
-        workflow_name: call.workflow_name || null,
-        block_id: call.block_id || null,
-        block_name: call.block_name || null,
-        output_schema: call.output_schema || {},
+        workflow_id: call.workflow_id || call.workflowId || null,
+        workflow_name: call.workflow_name || call.workflowName || null,
+        block_id: call.block_id || call.blockId || null,
+        block_name: call.block_name || call.blockName || null,
+        output_schema: call.output_schema || call.outputSchema || {},
         messages: Array.isArray(call.messages) ? call.messages : [],
-        workflow_variables: call.workflow_variables || {},
-        block_outputs: call.block_outputs || {},
-        call_variables: call.call_variables || {},
-        recording_url: call.recording_url || null,
+        workflow_variables: call.workflow_variables || call.workflowVariables || {},
+        block_outputs: call.block_outputs || call.blockOutputs || {},
+        call_variables: call.call_variables || call.callVariables || {},
+        recording_url: call.recording_url || call.recordingUrl || null,
         language: call.language || null,
         tags: call.tags || null,
-        follow_up_required: call.follow_up_required || false,
-        follow_up_notes: call.follow_up_notes || null,
+        follow_up_required: call.follow_up_required || call.followUpRequired || false,
+        follow_up_notes: call.follow_up_notes || call.followUpNotes || null,
         department: call.department || null,
-        priority_level: call.priority_level || null,
-        resolution_status: call.resolution_status || null,
-        callback_number: call.callback_number || null,
-        urgency_score: call.urgency_score || null
+        priority_level: call.priority_level || call.priorityLevel || null,
+        resolution_status: call.resolution_status || call.resolutionStatus || null,
+        callback_number: call.callback_number || call.callbackNumber || null,
+        urgency_score: call.urgency_score || call.urgencyScore || null
       }
 
       // Insert into both tables
@@ -123,10 +130,10 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
           .upsert({
             ...commonData,
             id: call.id,
-            caller_number: call.caller_number || null,
-            recipient_number: call.recipient_number || null,
+            caller_number: call.caller_number || call.from || null,
+            recipient_number: call.recipient_number || call.to || null,
             status: call.status || null,
-            transcription: call.transcription || null,
+            transcription: call.transcription || call.transcript || null,
             sentiment_analysis: call.sentiment_analysis || {},
             summary: call.summary || null,
             caller_name: call.caller_name || null
