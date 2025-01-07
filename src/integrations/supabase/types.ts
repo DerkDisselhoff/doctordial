@@ -17,27 +17,47 @@ export type Database = {
           appointment_date: string | null
           appointment_status: string | null
           assistant_id: string | null
+          assistant_name: string | null
+          block_id: string | null
+          block_name: string | null
+          block_outputs: Json | null
           call_id: string | null
+          call_variables: Json | null
+          callback_number: string | null
           conversation_summary: string | null
           cost: number | null
           created_at: string | null
+          department: string | null
           duration_seconds: number | null
           end_time: string | null
           ended_reason: string | null
+          follow_up_notes: string | null
+          follow_up_required: boolean | null
           id: string
           intent: string | null
+          language: string | null
           medical_notes: string | null
+          messages: Json[] | null
           metadata: Json | null
+          output_schema: Json | null
           patient_email: string | null
           patient_id: string | null
           patient_name: string | null
           patient_phone: string | null
           phone_number: string | null
+          priority_level: string | null
+          recording_url: string | null
+          resolution_status: string | null
           sentiment_score: number | null
           start_time: string | null
           symptoms: string[] | null
+          tags: Json | null
           transcript: string | null
           type: string | null
+          urgency_score: number | null
+          workflow_id: string | null
+          workflow_name: string | null
+          workflow_variables: Json | null
         }
         Insert: {
           action_deadline?: string | null
@@ -46,27 +66,47 @@ export type Database = {
           appointment_date?: string | null
           appointment_status?: string | null
           assistant_id?: string | null
+          assistant_name?: string | null
+          block_id?: string | null
+          block_name?: string | null
+          block_outputs?: Json | null
           call_id?: string | null
+          call_variables?: Json | null
+          callback_number?: string | null
           conversation_summary?: string | null
           cost?: number | null
           created_at?: string | null
+          department?: string | null
           duration_seconds?: number | null
           end_time?: string | null
           ended_reason?: string | null
+          follow_up_notes?: string | null
+          follow_up_required?: boolean | null
           id?: string
           intent?: string | null
+          language?: string | null
           medical_notes?: string | null
+          messages?: Json[] | null
           metadata?: Json | null
+          output_schema?: Json | null
           patient_email?: string | null
           patient_id?: string | null
           patient_name?: string | null
           patient_phone?: string | null
           phone_number?: string | null
+          priority_level?: string | null
+          recording_url?: string | null
+          resolution_status?: string | null
           sentiment_score?: number | null
           start_time?: string | null
           symptoms?: string[] | null
+          tags?: Json | null
           transcript?: string | null
           type?: string | null
+          urgency_score?: number | null
+          workflow_id?: string | null
+          workflow_name?: string | null
+          workflow_variables?: Json | null
         }
         Update: {
           action_deadline?: string | null
@@ -75,27 +115,47 @@ export type Database = {
           appointment_date?: string | null
           appointment_status?: string | null
           assistant_id?: string | null
+          assistant_name?: string | null
+          block_id?: string | null
+          block_name?: string | null
+          block_outputs?: Json | null
           call_id?: string | null
+          call_variables?: Json | null
+          callback_number?: string | null
           conversation_summary?: string | null
           cost?: number | null
           created_at?: string | null
+          department?: string | null
           duration_seconds?: number | null
           end_time?: string | null
           ended_reason?: string | null
+          follow_up_notes?: string | null
+          follow_up_required?: boolean | null
           id?: string
           intent?: string | null
+          language?: string | null
           medical_notes?: string | null
+          messages?: Json[] | null
           metadata?: Json | null
+          output_schema?: Json | null
           patient_email?: string | null
           patient_id?: string | null
           patient_name?: string | null
           patient_phone?: string | null
           phone_number?: string | null
+          priority_level?: string | null
+          recording_url?: string | null
+          resolution_status?: string | null
           sentiment_score?: number | null
           start_time?: string | null
           symptoms?: string[] | null
+          tags?: Json | null
           transcript?: string | null
           type?: string | null
+          urgency_score?: number | null
+          workflow_id?: string | null
+          workflow_name?: string | null
+          workflow_variables?: Json | null
         }
         Relationships: []
       }
