@@ -10,6 +10,7 @@ export const fetchVapiCalls = async (vapiKey: string) => {
       headers: {
         'Authorization': `Bearer ${vapiKey}`,
         'Content-Type': 'application/json',
+        'Accept': 'application/json'
       }
     })
 
@@ -32,7 +33,9 @@ export const fetchVapiCalls = async (vapiKey: string) => {
     }
 
     console.log(`Received ${data.length || 0} calls from VAPI`)
-    console.log('Sample call data:', JSON.stringify(data[0], null, 2))
+    if (data.length > 0) {
+      console.log('Sample call data:', JSON.stringify(data[0], null, 2))
+    }
     return data
   } catch (error) {
     console.error('Error fetching VAPI calls:', {

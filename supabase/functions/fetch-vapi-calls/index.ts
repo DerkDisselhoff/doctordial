@@ -8,7 +8,10 @@ import { processVapiCalls } from './callProcessor.ts'
 serve(async (req) => {
   // Handle CORS
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders })
+    return new Response(null, { 
+      headers: corsHeaders,
+      status: 204
+    })
   }
 
   try {
@@ -16,14 +19,20 @@ serve(async (req) => {
     
     // Validate VAPI API key
     const vapiKey = validateVapiKey()
+    if (!vapiKey) {
+      throw new Error('VAPI API key not found')
+    }
 
     // Initialize Supabase client
     const supabaseClient = initializeSupabase()
+    if (!supabaseClient) {
+      throw new Error('Failed to initialize Supabase client')
+    }
     console.log('Supabase client initialized')
 
     // Fetch calls from VAPI
     const vapiCalls = await fetchVapiCalls(vapiKey)
-    console.log('VAPI Response:', JSON.stringify(vapiCalls, null, 2))
+    console.log(`Fetched ${vapiCalls?.length || 0} calls from VAPI`)
 
     if (!Array.isArray(vapiCalls)) {
       throw new Error('Invalid response format from VAPI')
@@ -44,7 +53,10 @@ serve(async (req) => {
         errors: errors.length > 0 ? errors : undefined
       }),
       { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { 
+          ...corsHeaders, 
+          'Content-Type': 'application/json'
+        },
         status: 200 
       }
     )
@@ -60,7 +72,10 @@ serve(async (req) => {
         details: error.toString()
       }),
       { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { 
+          ...corsHeaders, 
+          'Content-Type': 'application/json'
+        },
         status: 500
       }
     )
