@@ -1,175 +1,137 @@
 export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
-  let processedCalls = 0
-  const errors: any[] = []
+  let processedCalls = 0;
+  const errors: any[] = [];
   
   for (const call of calls) {
     try {
       if (!call || typeof call !== 'object') {
-        console.error('Invalid call object:', call)
-        continue
+        console.error('Invalid call object:', call);
+        continue;
       }
 
-      console.log(`Processing call ${call.id}...`)
-      console.log('Raw VAPI call data:', JSON.stringify(call, null, 2))
+      console.log('Processing raw call data:', JSON.stringify(call, null, 2));
       
-      const callId = call.id
+      const callId = call.id;
       if (!callId) {
-        console.error('Call is missing ID:', call)
-        continue
-      }
-      
-      // Parse dates properly
-      let startTime = null
-      let endTime = null
-      let createdAt = null
-
-      try {
-        startTime = call.startedAt ? new Date(call.startedAt).toISOString() : null
-        endTime = call.endedAt ? new Date(call.endedAt).toISOString() : null
-        createdAt = call.created_at ? new Date(call.created_at).toISOString() : new Date().toISOString()
-      } catch (dateError) {
-        console.warn(`Invalid date for call ${call.id}, using current timestamp`)
-        createdAt = new Date().toISOString()
+        console.error('Call is missing ID:', call);
+        continue;
       }
 
-      // Extract assistant info properly
-      const assistantInfo = call.assistant || {}
-      console.log('Assistant info:', assistantInfo)
+      // Extract assistant info with better error handling
+      let assistantId = null;
+      let assistantName = null;
       
-      let sentimentAnalysis = null
+      if (call.assistant) {
+        console.log('Assistant data found:', call.assistant);
+        assistantId = call.assistant.id || call.assistantId;
+        assistantName = call.assistant.name || call.assistantName;
+      } else {
+        console.log('No assistant object found, checking direct properties');
+        assistantId = call.assistant_id || call.assistantId;
+        assistantName = call.assistant_name || call.assistantName;
+      }
+      
+      console.log('Extracted assistant info:', { assistantId, assistantName });
+
+      // Parse dates with validation
+      let startTime = null;
+      let endTime = null;
+      let createdAt = null;
+
       try {
-        console.log('Raw sentiment data:', call.sentiment)
-        if (call.sentiment) {
-          if (typeof call.sentiment === 'string') {
-            sentimentAnalysis = call.sentiment
-          } else if (typeof call.sentiment === 'object') {
-            sentimentAnalysis = call.sentiment.overall || call.sentiment.sentiment
-          }
+        if (call.startedAt || call.started_at || call.start_time) {
+          startTime = new Date(call.startedAt || call.started_at || call.start_time).toISOString();
+          console.log('Parsed start time:', startTime);
         }
-      } catch (error) {
-        console.warn(`Error parsing sentiment for call ${call.id}:`, error)
+        
+        if (call.endedAt || call.ended_at || call.end_time) {
+          endTime = new Date(call.endedAt || call.ended_at || call.end_time).toISOString();
+          console.log('Parsed end time:', endTime);
+        }
+        
+        createdAt = call.created_at ? 
+          new Date(call.created_at).toISOString() : 
+          new Date().toISOString();
+      } catch (dateError) {
+        console.error('Error parsing dates:', dateError);
+        console.log('Raw date values:', {
+          startedAt: call.startedAt,
+          started_at: call.started_at,
+          start_time: call.start_time,
+          endedAt: call.endedAt,
+          ended_at: call.ended_at,
+          end_time: call.end_time
+        });
       }
 
-      let duration = null
+      // Process duration
+      let duration = null;
       try {
         if (call.duration) {
-          if (typeof call.duration === 'string') {
-            duration = parseInt(call.duration, 10)
-          } else if (typeof call.duration === 'number') {
-            duration = call.duration > 100000 ? Math.round(call.duration / 1000) : Math.round(call.duration)
+          duration = typeof call.duration === 'string' ? 
+            parseInt(call.duration, 10) : 
+            call.duration;
+          
+          // Convert to seconds if in milliseconds
+          if (duration > 100000) {
+            duration = Math.round(duration / 1000);
           }
+          console.log('Processed duration:', duration);
         }
-      } catch (error) {
-        console.warn(`Error processing duration for call ${call.id}:`, error)
+      } catch (durationError) {
+        console.error('Error processing duration:', durationError);
       }
 
-      // Common data for both tables with proper field mapping
+      // Common data with explicit logging
       const commonData = {
         call_id: callId,
-        assistant_id: assistantInfo.id || call.assistantId || null,
-        assistant_name: assistantInfo.name || call.assistantName || null,
-        type: call.type || null,
+        assistant_id: assistantId,
+        assistant_name: assistantName,
+        type: call.type || 'webCall', // Default to webCall if not specified
         duration: duration,
         duration_seconds: duration,
         start_time: startTime,
         end_time: endTime,
         ended_reason: call.endedReason || call.ended_reason || null,
-        conversation_summary: call.summary || null,
-        transcript: call.transcript || call.transcription || null,
-        sentiment_score: sentimentAnalysis,
-        intent: call.intent || null,
-        metadata: call.metadata || {},
         created_at: createdAt,
-        patient_id: call.patient_id || call.patientId || null,
-        patient_name: call.patient_name || call.patientName || null,
-        patient_phone: call.patient_phone || call.patientPhone || null,
-        patient_email: call.patient_email || call.patientEmail || null,
-        appointment_status: call.appointment_status || call.appointmentStatus || null,
-        appointment_date: call.appointment_date ? new Date(call.appointment_date).toISOString() : null,
-        medical_notes: call.medical_notes || call.medicalNotes || null,
-        symptoms: Array.isArray(call.symptoms) ? call.symptoms : [],
-        action_required: call.action_required || call.actionRequired || false,
-        action_type: call.action_type || call.actionType || null,
-        action_deadline: call.action_deadline ? new Date(call.action_deadline).toISOString() : null,
-        workflow_id: call.workflow_id || call.workflowId || null,
-        workflow_name: call.workflow_name || call.workflowName || null,
-        block_id: call.block_id || call.blockId || null,
-        block_name: call.block_name || call.blockName || null,
-        output_schema: call.output_schema || call.outputSchema || {},
-        messages: Array.isArray(call.messages) ? call.messages : [],
-        workflow_variables: call.workflow_variables || call.workflowVariables || {},
-        block_outputs: call.block_outputs || call.blockOutputs || {},
-        call_variables: call.call_variables || call.callVariables || {},
-        recording_url: call.recording_url || call.recordingUrl || null,
-        language: call.language || null,
-        tags: call.tags || null,
-        follow_up_required: call.follow_up_required || call.followUpRequired || false,
-        follow_up_notes: call.follow_up_notes || call.followUpNotes || null,
-        department: call.department || null,
-        priority_level: call.priority_level || call.priorityLevel || null,
-        resolution_status: call.resolution_status || call.resolutionStatus || null,
-        callback_number: call.callback_number || call.callbackNumber || null,
-        urgency_score: call.urgency_score || call.urgencyScore || null
-      }
+        cost: call.cost || null,
+        phone_number: call.phone_number || call.phoneNumber || call.from || null,
+      };
 
-      // Insert into both tables
-      const [callLogsResult, vapiCallsResult] = await Promise.all([
-        supabaseClient
-          .from('call_logs')
-          .upsert({
-            ...commonData,
-            phone_number: call.phone_number || call.from || null,
-            cost: call.cost || null
-          }, {
-            onConflict: 'call_id',
-            ignoreDuplicates: false
-          }),
+      console.log('Prepared common data for insertion:', commonData);
 
-        supabaseClient
-          .from('vapi_calls')
-          .upsert({
-            ...commonData,
-            id: call.id,
-            caller_number: call.caller_number || call.from || null,
-            recipient_number: call.recipient_number || call.to || null,
-            status: call.status || null,
-            transcription: call.transcription || call.transcript || null,
-            sentiment_analysis: call.sentiment_analysis || {},
-            summary: call.summary || null,
-            caller_name: call.caller_name || null
-          }, {
-            onConflict: 'call_id',
-            ignoreDuplicates: false
-          })
-      ])
+      // Insert into call_logs
+      const callLogsResult = await supabaseClient
+        .from('call_logs')
+        .upsert({
+          ...commonData,
+          conversation_summary: call.summary || null,
+          transcript: call.transcript || call.transcription || null,
+          sentiment_score: call.sentiment_score || null,
+          intent: call.intent || null,
+          metadata: call.metadata || {},
+        }, {
+          onConflict: 'call_id',
+          ignoreDuplicates: false
+        });
 
       if (callLogsResult.error) {
         console.error('Error upserting into call_logs:', {
-          callId: call.id,
           error: callLogsResult.error.message,
-          details: callLogsResult.error
-        })
-        errors.push({ id: call.id, table: 'call_logs', error: callLogsResult.error })
+          details: callLogsResult.error,
+          data: commonData
+        });
+        errors.push({ id: callId, table: 'call_logs', error: callLogsResult.error });
+      } else {
+        console.log('Successfully inserted into call_logs');
+        processedCalls++;
       }
 
-      if (vapiCallsResult.error) {
-        console.error('Error upserting into vapi_calls:', {
-          callId: call.id,
-          error: vapiCallsResult.error.message,
-          details: vapiCallsResult.error
-        })
-        errors.push({ id: call.id, table: 'vapi_calls', error: vapiCallsResult.error })
-      }
-
-      if (!callLogsResult.error && !vapiCallsResult.error) {
-        processedCalls++
-        console.log(`Successfully processed call ${call.id} in both tables`)
-      }
     } catch (error) {
-      console.error(`Error processing call ${call.id}:`, error)
-      errors.push({ id: call.id, error })
+      console.error(`Error processing call ${call?.id}:`, error);
+      errors.push({ id: call?.id, error });
     }
   }
 
-  return { processedCalls, errors }
-}
+  return { processedCalls, errors };
+};
