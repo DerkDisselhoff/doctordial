@@ -320,6 +320,72 @@ export type Database = {
         }
         Relationships: []
       }
+      vapi_conversations: {
+        Row: {
+          additional_questions: string | null
+          appointment_date: string | null
+          assistant_id: string | null
+          conversation_output: Json | null
+          created_at: string | null
+          ended_at: string | null
+          ended_reason: string | null
+          follow_up_action: string | null
+          follow_up_step: string | null
+          id: string
+          patient_name: string | null
+          patient_question: string | null
+          sentiment: string | null
+          started_at: string | null
+          summary: string | null
+          summary_question: string | null
+          updated_at: string | null
+          urgency_score: number | null
+          vapi_id: string
+        }
+        Insert: {
+          additional_questions?: string | null
+          appointment_date?: string | null
+          assistant_id?: string | null
+          conversation_output?: Json | null
+          created_at?: string | null
+          ended_at?: string | null
+          ended_reason?: string | null
+          follow_up_action?: string | null
+          follow_up_step?: string | null
+          id?: string
+          patient_name?: string | null
+          patient_question?: string | null
+          sentiment?: string | null
+          started_at?: string | null
+          summary?: string | null
+          summary_question?: string | null
+          updated_at?: string | null
+          urgency_score?: number | null
+          vapi_id: string
+        }
+        Update: {
+          additional_questions?: string | null
+          appointment_date?: string | null
+          assistant_id?: string | null
+          conversation_output?: Json | null
+          created_at?: string | null
+          ended_at?: string | null
+          ended_reason?: string | null
+          follow_up_action?: string | null
+          follow_up_step?: string | null
+          id?: string
+          patient_name?: string | null
+          patient_question?: string | null
+          sentiment?: string | null
+          started_at?: string | null
+          summary?: string | null
+          summary_question?: string | null
+          updated_at?: string | null
+          urgency_score?: number | null
+          vapi_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
