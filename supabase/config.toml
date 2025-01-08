@@ -12,14 +12,18 @@ port = 54322
 enabled = true
 port = 54323
 
-[[functions]]
+[[experimental.functions]]
 name = "vapi-webhook"
 verify_jwt = false
 
-[[functions]]
+[[experimental.functions]]
 name = "fetch-vapi-calls"
 verify_jwt = false
 
-[[functions]]
+[[experimental.functions]]
 name = "vapi-data-sync"
+verify_jwt = false
+
+[[experimental.functions]]
+name = "fetch-assistant-calls"
 verify_jwt = false
