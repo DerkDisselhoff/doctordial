@@ -3,7 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-vapi-secret',
 }
 
 serve(async (req) => {
@@ -13,36 +13,49 @@ serve(async (req) => {
   }
 
   try {
-    const ASSISTANT_ID = '9a324826-2acb-4baa-8d93-e9ef8d0d6dbb'
-    const vapiKey = Deno.env.get('VAPI_API_KEY')
+    console.log('==================== NEW WEBHOOK REQUEST ====================')
+    console.log('Request Method:', req.method)
+    console.log('Request URL:', req.url)
     
-    if (!vapiKey) {
-      throw new Error('VAPI API key not found in environment variables')
+    // Log all headers for debugging
+    const headers = Object.fromEntries(req.headers.entries())
+    console.log('All request headers:', JSON.stringify(headers, null, 2))
+    
+    // Get VAPI secret from request header and compare with env
+    const vapiSecret = req.headers.get('x-vapi-secret')
+    const expectedSecret = Deno.env.get('VAPI_API_KEY')
+    
+    console.log('Authentication check:')
+    console.log('- Received secret header:', vapiSecret ? '[PRESENT]' : '[MISSING]')
+    console.log('- Expected secret in env:', expectedSecret ? '[PRESENT]' : '[MISSING]')
+    
+    if (!vapiSecret || !expectedSecret) {
+      console.error('Missing VAPI authentication credentials')
+      return new Response(
+        JSON.stringify({ 
+          error: 'Missing VAPI authentication credentials',
+          details: {
+            secretPresent: !!vapiSecret,
+            envSecretPresent: !!expectedSecret
+          }
+        }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 401 
+        }
+      )
     }
 
-    console.log('Fetching calls for assistant:', ASSISTANT_ID)
-
-    const response = await fetch(`https://api.vapi.ai/call?assistant_id=${ASSISTANT_ID}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${vapiKey}`,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('VAPI API error:', {
-        status: response.status,
-        statusText: response.statusText,
-        body: errorText
-      })
-      throw new Error(`VAPI API error: ${errorText}`)
+    if (vapiSecret !== expectedSecret) {
+      console.error('Invalid VAPI authentication credentials')
+      return new Response(
+        JSON.stringify({ error: 'Invalid VAPI authentication credentials' }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 401 
+        }
+      )
     }
-
-    const data = await response.json()
-    console.log(`Successfully fetched ${data.length || 0} calls`)
 
     // Initialize Supabase client
     const supabaseClient = createClient(
@@ -50,72 +63,113 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    // Insert data into vapi_conversations table
-    if (Array.isArray(data) && data.length > 0) {
-      for (const call of data) {
-        const conversationOutput = call.conversation_output || {}
-        
-        const mappedData = {
-          vapi_id: call.id,
-          assistant_id: call.assistant_id,
-          started_at: call.started_at,
-          ended_at: call.ended_at,
-          summary: call.summary,
-          ended_reason: call.ended_reason,
-          conversation_output: call.conversation_output,
-          sentiment: conversationOutput.sentiment,
-          urgency_score: conversationOutput.urgencyscore,
-          summary_question: conversationOutput.samenvattingvraag,
-          patient_question: conversationOutput.vraagpatient,
-          patient_name: conversationOutput.Naam,
-          appointment_date: conversationOutput.Datum,
-          follow_up_step: conversationOutput.vervolgstap,
-          follow_up_action: conversationOutput.vervolgactie,
-          additional_questions: conversationOutput.overige_vragen
-        }
+    // Log webhook payload
+    const body = await req.json()
+    console.log('Received VAPI webhook payload:', JSON.stringify(body, null, 2))
 
-        const { error } = await supabaseClient
-          .from('vapi_conversations')
-          .upsert(mappedData, { 
-            onConflict: 'vapi_id',
-            ignoreDuplicates: false 
-          })
+    // Process the webhook data and insert into both tables
+    const [vapiCallsResult, callLogsResult] = await Promise.all([
+      // Insert into vapi_conversations
+      supabaseClient
+        .from('vapi_conversations')
+        .upsert({
+          vapi_id: body.call_id,
+          assistant_id: body.assistant_id,
+          started_at: body.started_at,
+          ended_at: body.ended_at,
+          summary: body.summary,
+          ended_reason: body.ended_reason,
+          conversation_output: body.conversation_output || {},
+          sentiment: body.sentiment,
+          urgency_score: body.urgency_score,
+          summary_question: body.summary_question,
+          patient_question: body.patient_question,
+          patient_name: body.patient_name,
+          appointment_date: body.appointment_date,
+          follow_up_step: body.follow_up_step,
+          follow_up_action: body.follow_up_action,
+          additional_questions: body.additional_questions
+        }, {
+          onConflict: 'vapi_id'
+        }),
 
-        if (error) {
-          console.error('Error inserting call data:', error)
-          throw error
-        }
-      }
-      
-      console.log(`Successfully processed ${data.length} calls`)
+      // Insert into call_logs
+      supabaseClient
+        .from('call_logs')
+        .upsert({
+          call_id: body.call_id,
+          assistant_id: body.assistant_id,
+          type: body.call_type,
+          phone_number: body.caller_number,
+          cost: body.cost,
+          start_time: body.start_time,
+          end_time: body.end_time,
+          duration_seconds: body.duration,
+          ended_reason: body.ended_reason,
+          conversation_summary: body.summary,
+          transcript: body.transcription,
+          sentiment_score: body.sentiment_analysis?.score,
+          intent: body.intent,
+          metadata: body.metadata,
+          recording_url: body.recording_url,
+          language: body.language,
+          tags: body.tags,
+          follow_up_required: body.follow_up_required,
+          follow_up_notes: body.follow_up_notes,
+          department: body.department,
+          priority_level: body.priority_level,
+          resolution_status: body.resolution_status,
+          callback_number: body.callback_number,
+          urgency_score: body.urgency_score,
+          assistant_name: body.assistant_name,
+          workflow_id: body.workflow_id,
+          workflow_name: body.workflow_name,
+          block_id: body.block_id,
+          block_name: body.block_name,
+          output_schema: body.output_schema || {},
+          messages: body.messages || [],
+          workflow_variables: body.workflow_variables || {},
+          block_outputs: body.block_outputs || {},
+          call_variables: body.call_variables || {}
+        }, {
+          onConflict: 'call_id'
+        })
+    ])
+
+    if (vapiCallsResult.error) {
+      console.error('Error inserting into vapi_conversations:', vapiCallsResult.error)
+      throw vapiCallsResult.error
     }
+
+    if (callLogsResult.error) {
+      console.error('Error inserting into call_logs:', callLogsResult.error)
+      throw callLogsResult.error
+    }
+
+    console.log('Successfully processed webhook data')
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: `Processed ${data.length || 0} calls` 
+        data: {
+          vapi_conversations: vapiCallsResult.data,
+          call_logs: callLogsResult.data
+        }
       }),
       { 
-        headers: { 
-          ...corsHeaders,
-          'Content-Type': 'application/json'
-        },
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200 
       }
     )
-
   } catch (error) {
-    console.error('Error in fetch-assistant-calls function:', error)
-    
+    console.error('Error processing webhook:', error)
     return new Response(
       JSON.stringify({ 
-        error: error.message 
+        error: error.message,
+        details: error.toString()
       }),
       { 
-        headers: { 
-          ...corsHeaders,
-          'Content-Type': 'application/json'
-        },
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 500
       }
     )
