@@ -320,144 +320,69 @@ export type Database = {
         }
         Relationships: []
       }
-      vapi_calls: {
+      vapi_conversations: {
         Row: {
-          action_deadline: string | null
-          action_required: boolean | null
-          action_type: string | null
+          additional_questions: string | null
           appointment_date: string | null
-          appointment_status: string | null
           assistant_id: string | null
-          assistant_name: string | null
-          block_id: string | null
-          block_name: string | null
-          block_outputs: Json | null
-          call_id: string
-          call_type: string | null
-          call_variables: Json | null
-          callback_number: string | null
-          caller_name: string | null
-          caller_number: string | null
+          conversation_output: Json | null
           created_at: string | null
-          department: string | null
-          duration: number | null
-          follow_up_notes: string | null
-          follow_up_required: boolean | null
+          ended_at: string | null
+          ended_reason: string | null
+          follow_up_action: string | null
+          follow_up_step: string | null
           id: string
-          language: string | null
-          medical_notes: string | null
-          messages: Json[] | null
-          output_schema: Json | null
-          patient_email: string | null
-          patient_id: string | null
           patient_name: string | null
-          patient_phone: string | null
-          priority_level: string | null
-          recipient_number: string | null
-          recording_url: string | null
-          resolution_status: string | null
-          sentiment_analysis: Json | null
-          status: string | null
+          patient_question: string | null
+          sentiment: string | null
+          started_at: string | null
           summary: string | null
-          symptoms: string[] | null
-          tags: Json | null
-          transcription: string | null
+          summary_question: string | null
+          updated_at: string | null
           urgency_score: number | null
-          workflow_id: string | null
-          workflow_name: string | null
-          workflow_variables: Json | null
+          vapi_id: string
         }
         Insert: {
-          action_deadline?: string | null
-          action_required?: boolean | null
-          action_type?: string | null
+          additional_questions?: string | null
           appointment_date?: string | null
-          appointment_status?: string | null
           assistant_id?: string | null
-          assistant_name?: string | null
-          block_id?: string | null
-          block_name?: string | null
-          block_outputs?: Json | null
-          call_id: string
-          call_type?: string | null
-          call_variables?: Json | null
-          callback_number?: string | null
-          caller_name?: string | null
-          caller_number?: string | null
+          conversation_output?: Json | null
           created_at?: string | null
-          department?: string | null
-          duration?: number | null
-          follow_up_notes?: string | null
-          follow_up_required?: boolean | null
-          id: string
-          language?: string | null
-          medical_notes?: string | null
-          messages?: Json[] | null
-          output_schema?: Json | null
-          patient_email?: string | null
-          patient_id?: string | null
+          ended_at?: string | null
+          ended_reason?: string | null
+          follow_up_action?: string | null
+          follow_up_step?: string | null
+          id?: string
           patient_name?: string | null
-          patient_phone?: string | null
-          priority_level?: string | null
-          recipient_number?: string | null
-          recording_url?: string | null
-          resolution_status?: string | null
-          sentiment_analysis?: Json | null
-          status?: string | null
+          patient_question?: string | null
+          sentiment?: string | null
+          started_at?: string | null
           summary?: string | null
-          symptoms?: string[] | null
-          tags?: Json | null
-          transcription?: string | null
+          summary_question?: string | null
+          updated_at?: string | null
           urgency_score?: number | null
-          workflow_id?: string | null
-          workflow_name?: string | null
-          workflow_variables?: Json | null
+          vapi_id: string
         }
         Update: {
-          action_deadline?: string | null
-          action_required?: boolean | null
-          action_type?: string | null
+          additional_questions?: string | null
           appointment_date?: string | null
-          appointment_status?: string | null
           assistant_id?: string | null
-          assistant_name?: string | null
-          block_id?: string | null
-          block_name?: string | null
-          block_outputs?: Json | null
-          call_id?: string
-          call_type?: string | null
-          call_variables?: Json | null
-          callback_number?: string | null
-          caller_name?: string | null
-          caller_number?: string | null
+          conversation_output?: Json | null
           created_at?: string | null
-          department?: string | null
-          duration?: number | null
-          follow_up_notes?: string | null
-          follow_up_required?: boolean | null
+          ended_at?: string | null
+          ended_reason?: string | null
+          follow_up_action?: string | null
+          follow_up_step?: string | null
           id?: string
-          language?: string | null
-          medical_notes?: string | null
-          messages?: Json[] | null
-          output_schema?: Json | null
-          patient_email?: string | null
-          patient_id?: string | null
           patient_name?: string | null
-          patient_phone?: string | null
-          priority_level?: string | null
-          recipient_number?: string | null
-          recording_url?: string | null
-          resolution_status?: string | null
-          sentiment_analysis?: Json | null
-          status?: string | null
+          patient_question?: string | null
+          sentiment?: string | null
+          started_at?: string | null
           summary?: string | null
-          symptoms?: string[] | null
-          tags?: Json | null
-          transcription?: string | null
+          summary_question?: string | null
+          updated_at?: string | null
           urgency_score?: number | null
-          workflow_id?: string | null
-          workflow_name?: string | null
-          workflow_variables?: Json | null
+          vapi_id?: string
         }
         Relationships: []
       }

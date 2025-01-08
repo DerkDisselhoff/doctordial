@@ -158,4 +158,20 @@ export const fetchVapiCallById = async (id: string): Promise<VapiCall | null> =>
     });
     throw error;
   }
-};
+}
+
+export const fetchAssistantCalls = async () => {
+  try {
+    const { data, error } = await supabase.functions.invoke('fetch-assistant-calls')
+    
+    if (error) {
+      console.error('Error fetching assistant calls:', error)
+      throw error
+    }
+
+    return data
+  } catch (error) {
+    console.error('Error in fetchAssistantCalls:', error)
+    throw error
+  }
+}
