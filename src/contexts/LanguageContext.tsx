@@ -48,7 +48,7 @@ const translations = {
       title: "Why DoctorDial Exists",
       challenge: {
         title: "The Challenge",
-        description: "Medical practices struggle with managing high call volumes while maintaining quality patient care."
+        description: "Medical practices struggle with managing high call volumes while maintaining quality patient care, compounded by a growing shortage of doctors' assistants."
       },
       solution: {
         title: "Our Solution",
@@ -106,7 +106,7 @@ const translations = {
       title: "Waarom DoctorDial Bestaat",
       challenge: {
         title: "De Uitdaging",
-        description: "Medische praktijken worstelen met het beheren van grote belvolumes terwijl ze kwaliteitszorg willen blijven leveren."
+        description: "Medische praktijken worstelen met het beheren van grote belvolumes terwijl ze kwaliteitszorg willen blijven leveren, versterkt door een groeiend tekort aan doktersassistenten."
       },
       solution: {
         title: "Onze Oplossing",
