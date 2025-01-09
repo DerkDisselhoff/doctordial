@@ -18,7 +18,7 @@ const initialNodes = [
       icon: Phone,
     },
     position: { x: 0, y: 100 },
-    className: 'process-node'
+    className: 'process-node incoming'
   },
   {
     id: 'doctordial',
@@ -27,7 +27,7 @@ const initialNodes = [
       icon: Brain,
     },
     position: { x: 250, y: 100 },
-    className: 'process-node'
+    className: 'process-node assistant'
   },
   {
     id: 'assistant',
@@ -36,7 +36,7 @@ const initialNodes = [
       icon: Stethoscope,
     },
     position: { x: 250, y: 0 },
-    className: 'process-node'
+    className: 'process-node assistant'
   },
   {
     id: 'triage',
@@ -45,7 +45,7 @@ const initialNodes = [
       icon: Hospital,
     },
     position: { x: 500, y: 100 },
-    className: 'process-node process-node-rect'
+    className: 'process-node triage'
   },
   {
     id: 'scheduler',
@@ -54,7 +54,7 @@ const initialNodes = [
       icon: Calendar,
     },
     position: { x: 750, y: 100 },
-    className: 'process-node process-node-rect'
+    className: 'process-node scheduler'
   },
   {
     id: 'his',
@@ -72,7 +72,7 @@ const initialNodes = [
       icon: Clock,
     },
     position: { x: 500, y: 200 },
-    className: 'process-node process-node-rect'
+    className: 'process-node callback'
   },
 ];
 
