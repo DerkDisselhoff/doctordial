@@ -1,0 +1,56 @@
+.process-flow {
+  background: transparent;
+}
+
+.process-node {
+  padding: 15px;
+  border-radius: 50%;
+  min-width: 150px;
+  min-height: 150px;
+  background: white;
+  border: 2px solid theme('colors.mint.DEFAULT');
+  color: theme('colors.forest.DEFAULT');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: 500;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.process-node-rect {
+  border-radius: 12px;
+}
+
+.process-node svg {
+  width: 24px;
+  height: 24px;
+  color: theme('colors.mint.DEFAULT');
+}
+
+.process-edge {
+  stroke: theme('colors.mint.DEFAULT');
+}
+
+.process-edge-u12 {
+  stroke: #ef4444;
+}
+
+.process-edge-u34 {
+  stroke: #eab308;
+}
+
+.process-edge-u5 {
+  stroke: #22c55e;
+}
+
+.process-edge path {
+  stroke-width: 2;
+}
+
+.process-edge .react-flow__edge-text {
+  font-size: 12px;
+  font-weight: 500;
+  fill: theme('colors.forest.DEFAULT');
+}

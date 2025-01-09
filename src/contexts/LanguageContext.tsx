@@ -65,6 +65,10 @@ const translations = {
       satisfaction: "Patient Satisfaction Rate",
       availability: "Availability",
       reduction: "Workload Reduction"
+    },
+    process: {
+      title: "Process Overview of DoctorDial",
+      subtitle: "See how DoctorDial streamlines your practice's call management through intelligent routing and automated scheduling."
     }
   },
   nl: {
@@ -123,6 +127,10 @@ const translations = {
       satisfaction: "Patiënttevredenheid",
       availability: "Beschikbaarheid",
       reduction: "Werkdrukvermindering"
+    },
+    process: {
+      title: "Procesoverzicht van DoctorDial",
+      subtitle: "Ontdek hoe DoctorDial het beheer van uw praktijkgesprekken stroomlijnt door intelligente routering en geautomatiseerde planning."
     }
   }
 };

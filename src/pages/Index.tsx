@@ -7,6 +7,7 @@ import Certifications from "@/components/Certifications";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import WhoWeServe from "@/components/WhoWeServe";
+import ProcessOverview from "@/components/process/ProcessOverview";
 
 const Index = () => {
   return (
@@ -15,6 +16,7 @@ const Index = () => {
       <Hero />
       <Stats />
       <Mission />
+      <ProcessOverview />
       <Features />
       <WhoWeServe />
       <Certifications />
