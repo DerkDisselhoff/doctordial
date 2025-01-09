@@ -1,148 +1,36 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import {
-  ReactFlow,
-  Background,
-  useNodesState,
-  useEdgesState,
-  MarkerType,
-} from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
 import { Phone, Calendar, Brain, Stethoscope, Clock, Hospital } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const initialNodes = [
-  {
-    id: 'incoming',
-    type: 'input',
-    data: { 
-      label: 'Incoming Patient Call',
-      icon: Phone,
-    },
-    position: { x: 0, y: 100 },
-    className: 'process-node incoming'
-  },
-  {
-    id: 'doctordial',
-    data: { 
-      label: 'AI Agent DoctorDial',
-      icon: Brain,
-    },
-    position: { x: 250, y: 100 },
-    className: 'process-node assistant'
-  },
-  {
-    id: 'assistant',
-    data: { 
-      label: "Doctor's Assistant",
-      icon: Stethoscope,
-    },
-    position: { x: 250, y: 0 },
-    className: 'process-node assistant'
-  },
-  {
-    id: 'triage',
-    data: { 
-      label: 'Triage',
-      icon: Hospital,
-    },
-    position: { x: 500, y: 100 },
-    className: 'process-node triage'
-  },
-  {
-    id: 'scheduler',
-    data: { 
-      label: 'Appointment Scheduler',
-      icon: Calendar,
-    },
-    position: { x: 750, y: 100 },
-    className: 'process-node scheduler'
-  },
-  {
-    id: 'his',
-    data: { 
-      label: 'HIS System',
-      icon: Brain,
-    },
-    position: { x: 750, y: 0 },
-    className: 'process-node his'
-  },
-  {
-    id: 'callback',
-    data: { 
-      label: 'Advise to call back later',
-      icon: Clock,
-    },
-    position: { x: 500, y: 200 },
-    className: 'process-node callback'
-  },
-];
+const ProcessNode = ({ 
+  icon: Icon, 
+  label, 
+  className 
+}: { 
+  icon: any; 
+  label: string; 
+  className?: string;
+}) => (
+  <div className={cn("process-node", className)}>
+    <Icon className="w-6 h-6" />
+    <span className="text-sm font-medium mt-2">{label}</span>
+  </div>
+);
 
-const initialEdges = [
-  {
-    id: 'incoming-doctordial',
-    source: 'incoming',
-    target: 'doctordial',
-    animated: true,
-    label: 'Direct',
-    className: 'process-edge',
-    markerEnd: { type: MarkerType.ArrowClosed },
-  },
-  {
-    id: 'doctordial-triage',
-    source: 'doctordial',
-    target: 'triage',
-    animated: true,
-    className: 'process-edge',
-    markerEnd: { type: MarkerType.ArrowClosed },
-  },
-  {
-    id: 'triage-scheduler',
-    source: 'triage',
-    target: 'scheduler',
-    animated: true,
-    label: 'U3/U4',
-    className: 'process-edge process-edge-u34',
-    markerEnd: { type: MarkerType.ArrowClosed },
-  },
-  {
-    id: 'triage-callback',
-    source: 'triage',
-    target: 'callback',
-    animated: true,
-    label: 'U5',
-    className: 'process-edge process-edge-u5',
-    markerEnd: { type: MarkerType.ArrowClosed },
-  },
-  {
-    id: 'triage-assistant',
-    source: 'triage',
-    target: 'assistant',
-    animated: true,
-    label: 'U1/U2',
-    className: 'process-edge process-edge-u12',
-    markerEnd: { type: MarkerType.ArrowClosed },
-  },
-  {
-    id: 'scheduler-his',
-    source: 'scheduler',
-    target: 'his',
-    animated: true,
-    className: 'process-edge',
-    markerEnd: { type: MarkerType.ArrowClosed },
-  },
-  {
-    id: 'his-scheduler',
-    source: 'his',
-    target: 'scheduler',
-    animated: true,
-    className: 'process-edge',
-    markerEnd: { type: MarkerType.ArrowClosed },
-  },
-];
+const ProcessArrow = ({ 
+  label, 
+  className 
+}: { 
+  label?: string;
+  className?: string;
+}) => (
+  <div className={cn("process-arrow", className)}>
+    {label && <span className="process-arrow-label">{label}</span>}
+  </div>
+);
 
 const ProcessOverview = () => {
   const { t } = useLanguage();
-  const [nodes] = useNodesState(initialNodes);
-  const [edges] = useEdgesState(initialEdges);
 
   return (
     <section className="py-24 overflow-hidden">
@@ -155,15 +43,69 @@ const ProcessOverview = () => {
             {t("process.subtitle")}
           </p>
         </div>
-        <div className="mt-16 h-[500px] w-full border border-mint/20 rounded-xl bg-forest-light/5 shadow-xl">
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            fitView
-            className="process-flow"
-          >
-            <Background />
-          </ReactFlow>
+        
+        <div className="mt-16 relative w-full min-h-[500px] border border-mint/20 rounded-xl bg-forest-light/5 p-8">
+          <div className="process-grid">
+            {/* First Row */}
+            <div className="process-row">
+              <ProcessNode 
+                icon={Phone} 
+                label="Incoming Patient Call" 
+                className="incoming"
+              />
+              <ProcessArrow />
+              <ProcessNode 
+                icon={Brain} 
+                label="AI Agent DoctorDial" 
+                className="assistant"
+              />
+              <ProcessArrow />
+              <ProcessNode 
+                icon={Hospital} 
+                label="Triage" 
+                className="triage"
+              />
+            </div>
+
+            {/* Second Row - Branching */}
+            <div className="process-branches">
+              {/* U1/U2 Branch */}
+              <div className="process-branch">
+                <ProcessArrow label="U1/U2" className="urgent" />
+                <ProcessNode 
+                  icon={Stethoscope} 
+                  label="Doctor's Assistant" 
+                  className="assistant"
+                />
+              </div>
+
+              {/* U3/U4 Branch */}
+              <div className="process-branch">
+                <ProcessArrow label="U3/U4" className="normal" />
+                <ProcessNode 
+                  icon={Calendar} 
+                  label="Appointment Scheduler" 
+                  className="scheduler"
+                />
+                <ProcessArrow />
+                <ProcessNode 
+                  icon={Brain} 
+                  label="HIS System" 
+                  className="his"
+                />
+              </div>
+
+              {/* U5 Branch */}
+              <div className="process-branch">
+                <ProcessArrow label="U5" className="low" />
+                <ProcessNode 
+                  icon={Clock} 
+                  label="Advise to call back later" 
+                  className="callback"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,91 +1,180 @@
-.process-flow {
-  background: transparent;
+.process-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  height: 100%;
+}
+
+.process-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.process-branches {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.process-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .process-node {
-  padding: 15px;
+  padding: 1.5rem;
   border-radius: 12px;
   min-width: 150px;
-  min-height: 60px;
-  background: linear-gradient(135deg, theme('colors.forest.light'), theme('colors.forest.DEFAULT'));
-  border: 2px solid theme('colors.mint.DEFAULT');
-  color: theme('colors.mint.DEFAULT');
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   font-weight: 500;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  transition: all 0.3s ease;
 }
 
 .process-node.incoming {
   background: linear-gradient(135deg, #8AB8E6, #7AA8D6);
-  border-color: #8AB8E6;
+  border: 2px solid #8AB8E6;
   color: white;
 }
 
 .process-node.assistant {
   background: linear-gradient(135deg, #6EBF8B, #5EAF7B);
-  border-color: #6EBF8B;
+  border: 2px solid #6EBF8B;
   color: white;
 }
 
 .process-node.triage {
   background: linear-gradient(135deg, #F4C859, #E4B849);
-  border-color: #F4C859;
+  border: 2px solid #F4C859;
   color: white;
 }
 
 .process-node.scheduler {
   background: linear-gradient(135deg, #B8E986, #A8D976);
-  border-color: #B8E986;
+  border: 2px solid #B8E986;
   color: white;
 }
 
 .process-node.callback {
   background: linear-gradient(135deg, #A0D9CE, #90C9BE);
-  border-color: #A0D9CE;
+  border: 2px solid #A0D9CE;
   color: white;
 }
 
 .process-node.his {
   background: linear-gradient(135deg, theme('colors.forest.light'), theme('colors.forest.DEFAULT'));
-  border-color: theme('colors.mint.DEFAULT');
+  border: 2px solid theme('colors.mint.DEFAULT');
   color: theme('colors.mint.DEFAULT');
 }
 
-.process-node svg {
-  width: 24px;
-  height: 24px;
-  color: currentColor;
+.process-arrow {
+  position: relative;
+  width: 60px;
+  height: 2px;
+  background: theme('colors.mint.DEFAULT');
+  opacity: 0.6;
 }
 
-.process-edge {
-  stroke: theme('colors.mint.DEFAULT');
+.process-arrow::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid theme('colors.mint.DEFAULT');
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
 }
 
-.process-edge-u12 {
-  stroke: #F57A7A;
-}
-
-.process-edge-u34 {
-  stroke: #FFCF56;
-}
-
-.process-edge-u5 {
-  stroke: #8FDCA0;
-}
-
-.process-edge path {
-  stroke-width: 2;
-}
-
-.process-edge .react-flow__edge-text {
-  font-size: 12px;
-  font-weight: 500;
-  fill: theme('colors.mint.DEFAULT');
-  background-color: theme('colors.forest.DEFAULT');
-  padding: 2px 4px;
+.process-arrow-label {
+  position: absolute;
+  top: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: theme('colors.mint.DEFAULT');
+  color: theme('colors.forest.DEFAULT');
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.process-arrow.urgent {
+  background: #F57A7A;
+}
+
+.process-arrow.urgent::after {
+  border-left-color: #F57A7A;
+}
+
+.process-arrow.urgent .process-arrow-label {
+  background: #F57A7A;
+  color: white;
+}
+
+.process-arrow.normal {
+  background: #FFCF56;
+}
+
+.process-arrow.normal::after {
+  border-left-color: #FFCF56;
+}
+
+.process-arrow.normal .process-arrow-label {
+  background: #FFCF56;
+  color: theme('colors.forest.DEFAULT');
+}
+
+.process-arrow.low {
+  background: #8FDCA0;
+}
+
+.process-arrow.low::after {
+  border-left-color: #8FDCA0;
+}
+
+.process-arrow.low .process-arrow-label {
+  background: #8FDCA0;
+  color: theme('colors.forest.DEFAULT');
+}
+
+@media (max-width: 768px) {
+  .process-grid {
+    gap: 1rem;
+  }
+
+  .process-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .process-branches {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .process-arrow {
+    transform: rotate(90deg);
+    margin: 1rem 0;
+  }
+
+  .process-arrow-label {
+    transform: translateX(-50%) rotate(-90deg);
+    top: -2rem;
+  }
 }
