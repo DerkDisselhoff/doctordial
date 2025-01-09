@@ -65,6 +65,37 @@ const translations = {
       satisfaction: "Patient Satisfaction Rate",
       availability: "Availability",
       reduction: "Workload Reduction"
+    },
+    process: {
+      title: "Process Overview of DoctorDial",
+      incoming: {
+        title: "Incoming Calls",
+        description: "All patient calls enter our system"
+      },
+      management: {
+        title: "Flexible Management",
+        description: "Use GP assistants or fully automated handling"
+      },
+      entry: {
+        title: "Entry Points",
+        description: "First contact or queue management"
+      },
+      urgency: {
+        title: "Smart Routing",
+        description: "Automated urgency-based handling",
+        u1: "Hospital forwarding",
+        u2: "GP forwarding",
+        u34: "Direct scheduling",
+        u5: "Callback advice"
+      },
+      insights: {
+        title: "Comprehensive Insights",
+        description: "Track sentiment, urgency, and follow-ups"
+      },
+      resolution: {
+        title: "Resolution",
+        description: "Successful completion of patient queries"
+      }
     }
   },
   nl: {
@@ -123,6 +154,37 @@ const translations = {
       satisfaction: "Patiënttevredenheid",
       availability: "Beschikbaarheid",
       reduction: "Werkdrukvermindering"
+    },
+    process: {
+      title: "Procesoverzicht van DoctorDial",
+      incoming: {
+        title: "Inkomende Gesprekken",
+        description: "Alle patiëntgesprekken komen binnen in ons systeem"
+      },
+      management: {
+        title: "Flexibel Beheer",
+        description: "Gebruik doktersassistenten of volledig geautomatiseerde afhandeling"
+      },
+      entry: {
+        title: "Toegangspunten",
+        description: "Eerste contact of wachtrijbeheer"
+      },
+      urgency: {
+        title: "Slimme Routering",
+        description: "Geautomatiseerde urgentie-gebaseerde afhandeling",
+        u1: "Doorschakeling naar ziekenhuis",
+        u2: "Doorschakeling naar huisarts",
+        u34: "Direct inplannen",
+        u5: "Terugbeladvies"
+      },
+      insights: {
+        title: "Uitgebreide Inzichten",
+        description: "Volg sentiment, urgentie en vervolgacties"
+      },
+      resolution: {
+        title: "Afronding",
+        description: "Succesvolle afhandeling van patiëntvragen"
+      }
     }
   }
 };
