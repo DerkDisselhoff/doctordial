@@ -65,33 +65,6 @@ const translations = {
       satisfaction: "Patient Satisfaction Rate",
       availability: "Availability",
       reduction: "Workload Reduction"
-    },
-    process: {
-      title: "Process Overview of DoctorDial",
-      incomingCalls: {
-        title: "Incoming Calls",
-        description: "Seamlessly handle all incoming patient calls through our integrated system"
-      },
-      flexibility: {
-        title: "Flexible Management",
-        description: "Choose between using your own assistants or fully relying on DoctorDial"
-      },
-      entryPoints: {
-        title: "Multiple Entry Points",
-        description: "Handle calls as first point of contact or manage existing queue"
-      },
-      urgency: {
-        title: "Smart Urgency Routing",
-        description: "Automatically route calls based on urgency levels (U1-U5) for optimal care"
-      },
-      overview: {
-        title: "Comprehensive Insights",
-        description: "Track sentiment, urgency levels, and manage follow-ups efficiently"
-      },
-      planning: {
-        title: "Integrated Planning",
-        description: "Direct integration with your planning system for seamless scheduling"
-      }
     }
   },
   nl: {
@@ -150,33 +123,6 @@ const translations = {
       satisfaction: "Patiënttevredenheid",
       availability: "Beschikbaarheid",
       reduction: "Werkdrukvermindering"
-    },
-    process: {
-      title: "Procesoverzicht van DoctorDial",
-      incomingCalls: {
-        title: "Inkomende Gesprekken",
-        description: "Verwerk alle inkomende patiëntgesprekken naadloos via ons geïntegreerde systeem"
-      },
-      flexibility: {
-        title: "Flexibel Beheer",
-        description: "Kies tussen eigen assistenten of volledig vertrouwen op DoctorDial"
-      },
-      entryPoints: {
-        title: "Meerdere Ingangspunten",
-        description: "Behandel gesprekken als eerste contactpunt of beheer bestaande wachtrij"
-      },
-      urgency: {
-        title: "Slimme Urgentie Routing",
-        description: "Automatische routering van gesprekken op basis van urgentieniveaus (U1-U5)"
-      },
-      overview: {
-        title: "Uitgebreide Inzichten",
-        description: "Volg sentiment, urgentieniveaus en beheer vervolgacties efficiënt"
-      },
-      planning: {
-        title: "Geïntegreerde Planning",
-        description: "Directe integratie met uw planningssysteem voor naadloze afspraken"
-      }
     }
   }
 };
