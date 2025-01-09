@@ -148,10 +148,10 @@ const ProcessOverview = () => {
     <section className="py-24 overflow-hidden">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center text-center space-y-4">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-forest">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white">
             {t("process.title")}
           </h2>
-          <p className="max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+          <p className="max-w-[700px] text-mint/80 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
             {t("process.subtitle")}
           </p>
         </div>
