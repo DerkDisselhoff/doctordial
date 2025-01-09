@@ -63,7 +63,7 @@ const initialNodes = [
       icon: Brain,
     },
     position: { x: 750, y: 0 },
-    className: 'process-node'
+    className: 'process-node his'
   },
   {
     id: 'callback',
