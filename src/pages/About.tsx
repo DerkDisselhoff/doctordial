@@ -33,7 +33,7 @@ const About = () => {
                 Amsterdam-Based Innovation
               </h2>
               <p className="text-white/80 leading-relaxed">
-                Founded in Amsterdam, DoctorDial combines Dutch healthcare excellence 
+                Founded in Amsterdam in 2025, DoctorDial combines Dutch healthcare excellence 
                 with cutting-edge AI technology. Our team of medical professionals and 
                 tech experts work together to create solutions that truly understand 
                 and address the challenges faced by modern medical practices.
@@ -46,17 +46,17 @@ const About = () => {
                 {
                   icon: <Building2 className="w-8 h-8 text-mint" />,
                   label: "Founded in Amsterdam",
-                  value: "2023"
+                  value: "2025"
                 },
                 {
                   icon: <Users className="w-8 h-8 text-mint" />,
-                  label: "Healthcare Providers",
+                  label: "AI Assistants",
                   value: "50+"
                 },
                 {
                   icon: <Stethoscope className="w-8 h-8 text-mint" />,
                   label: "Medical Expertise",
-                  value: "15+ Years"
+                  value: "50 Years"
                 },
                 {
                   icon: <Globe2 className="w-8 h-8 text-mint" />,
@@ -86,7 +86,7 @@ const About = () => {
                 Medical Expertise Meets AI Innovation
               </h2>
               <p className="text-white/80 leading-relaxed">
-                Our team combines decades of medical experience with advanced AI technology. 
+                Our team combines 50 years of medical experience with advanced AI technology. 
                 We understand the unique challenges of healthcare communication because 
                 we've lived them. This firsthand experience drives us to create solutions 
                 that make a real difference in patient care and practice management.
