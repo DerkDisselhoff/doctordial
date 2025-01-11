@@ -41,41 +41,41 @@ const ProcessFlow = () => {
           <circle cx="500" cy="120" r="40" className="fill-forest-light stroke-mint stroke-2" />
           <circle cx="500" cy="280" r="40" className="fill-forest-light stroke-mint stroke-2" />
           <circle cx="700" cy="200" r="40" className="fill-forest-light stroke-mint stroke-2" />
-          <circle cx="700" cy="360" r="40" className="fill-forest-light stroke-mint stroke-2" />
+          <circle cx="500" cy="360" r="40" className="fill-forest-light stroke-mint stroke-2" />
 
           {/* Connecting Lines */}
           <path
             d="M 140 200 L 260 200"
-            className="stroke-mint stroke-2"
+            className="stroke-mint stroke-[1.5]"
             markerEnd="url(#arrowhead)"
           />
           <path
             d="M 340 200 L 420 200 L 460 120"
-            className="stroke-mint stroke-2"
-            markerEnd="url(#arrowhead)"
+            className="stroke-red-500 stroke-[1.5]"
+            markerEnd="url(#arrowhead-urgent)"
           />
           <path
             d="M 340 200 L 420 200 L 460 280"
-            className="stroke-mint stroke-2"
+            className="stroke-mint stroke-[1.5]"
             markerEnd="url(#arrowhead)"
+          />
+          <path
+            d="M 340 200 L 420 200 L 460 360"
+            className="stroke-divine stroke-[1.5]"
+            markerEnd="url(#arrowhead-callback)"
           />
           <path
             d="M 540 120 L 620 160 L 660 200"
-            className="stroke-mint stroke-2"
-            markerEnd="url(#arrowhead)"
+            className="stroke-red-500 stroke-[1.5]"
+            markerEnd="url(#arrowhead-urgent)"
           />
           <path
             d="M 540 280 L 620 240 L 660 200"
-            className="stroke-mint stroke-2"
-            markerEnd="url(#arrowhead)"
-          />
-          <path
-            d="M 540 280 L 620 320 L 660 360"
-            className="stroke-mint stroke-2"
+            className="stroke-mint stroke-[1.5]"
             markerEnd="url(#arrowhead)"
           />
 
-          {/* Arrow Marker */}
+          {/* Arrow Markers */}
           <defs>
             <marker
               id="arrowhead"
@@ -88,6 +88,32 @@ const ProcessFlow = () => {
               <polygon
                 points="0 0, 10 3.5, 0 7"
                 className="fill-mint"
+              />
+            </marker>
+            <marker
+              id="arrowhead-urgent"
+              markerWidth="10"
+              markerHeight="7"
+              refX="9"
+              refY="3.5"
+              orient="auto"
+            >
+              <polygon
+                points="0 0, 10 3.5, 0 7"
+                className="fill-red-500"
+              />
+            </marker>
+            <marker
+              id="arrowhead-callback"
+              markerWidth="10"
+              markerHeight="7"
+              refX="9"
+              refY="3.5"
+              orient="auto"
+            >
+              <polygon
+                points="0 0, 10 3.5, 0 7"
+                className="fill-divine"
               />
             </marker>
           </defs>
@@ -118,30 +144,30 @@ const ProcessFlow = () => {
             <tspan x="700" dy="20">Resolution</tspan>
           </text>
 
-          <text x="700" y="360" textAnchor="middle" className="fill-white text-sm font-medium">
-            <tspan x="700" dy="-5">Call Back</tspan>
-            <tspan x="700" dy="20">Later (U5)</tspan>
+          <text x="500" y="360" textAnchor="middle" className="fill-white text-sm font-medium">
+            <tspan x="500" dy="-5">Call Back</tspan>
+            <tspan x="500" dy="20">Later (U5)</tspan>
           </text>
 
           {/* Urgency Labels */}
           <text x="380" y="160" className="fill-red-500 text-xs font-medium">U1/U2</text>
           <text x="380" y="250" className="fill-mint text-xs font-medium">U3/U4</text>
-          <text x="580" y="320" className="fill-divine text-xs font-medium">U5</text>
+          <text x="380" y="320" className="fill-divine text-xs font-medium">U5</text>
         </svg>
 
         {/* Legend */}
         <div className="mt-8 flex justify-center gap-6 text-sm">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <span className="text-white/70">Urgent Cases</span>
+            <span className="text-white/70">Urgent Cases (U1/U2)</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-mint"></div>
-            <span className="text-white/70">Non-urgent Cases</span>
+            <span className="text-white/70">Non-urgent Cases (U3/U4)</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-divine"></div>
-            <span className="text-white/70">Call Back Later</span>
+            <span className="text-white/70">Call Back Later (U5)</span>
           </div>
         </div>
       </div>
