@@ -3,7 +3,6 @@ import Footer from "@/components/Footer";
 import FeaturesHero from "@/components/features/FeaturesHero";
 import FeatureSection from "@/components/features/FeatureSection";
 import FeaturesCTA from "@/components/features/FeaturesCTA";
-import { ProcessFlow } from "@/components/features/ProcessFlow";
 import { features } from "@/data/features";
 
 const Features = () => {
@@ -11,9 +10,6 @@ const Features = () => {
     <div className="min-h-screen bg-forest">
       <Navbar />
       <FeaturesHero />
-
-      {/* Process Flow */}
-      <ProcessFlow />
 
       {/* Features Grid */}
       <section className="py-20 px-4">

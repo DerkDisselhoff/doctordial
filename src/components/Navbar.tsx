@@ -28,6 +28,9 @@ const Navbar = () => {
               <Link to="/about" className="text-white/90 hover:text-white transition-colors">
                 {t("nav.about")}
               </Link>
+              <Link to="/contact" className="text-white/90 hover:text-white transition-colors">
+                {t("nav.contact")}
+              </Link>
             </div>
           </div>
           
@@ -75,6 +78,13 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t("nav.about")}
+              </Link>
+              <Link 
+                to="/contact" 
+                className="text-white/90 hover:text-white transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.contact")}
               </Link>
             </div>
             <div className="flex flex-col space-y-4 pt-4 border-t border-mint/10">
