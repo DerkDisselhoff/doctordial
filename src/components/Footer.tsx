@@ -27,7 +27,6 @@ const Footer = () => {
             <h4 className="font-medium mb-4">Company</h4>
             <ul className="space-y-2">
               <li><Link to="/about" className="text-white/60 hover:text-mint transition-colors">{t("footer.about")}</Link></li>
-              <li><Link to="/careers" className="text-white/60 hover:text-mint transition-colors">{t("footer.careers")}</Link></li>
               <li><Link to="/blog" className="text-white/60 hover:text-mint transition-colors">{t("footer.blog")}</Link></li>
             </ul>
           </div>
@@ -36,7 +35,6 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><Link to="/privacy" className="text-white/60 hover:text-mint transition-colors">{t("footer.privacy")}</Link></li>
               <li><Link to="/terms" className="text-white/60 hover:text-mint transition-colors">{t("footer.terms")}</Link></li>
-              <li><Link to="/security" className="text-white/60 hover:text-mint transition-colors">{t("footer.security")}</Link></li>
             </ul>
           </div>
         </div>
