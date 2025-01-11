@@ -38,7 +38,7 @@ export const PracticeCountStep = ({
                 <Building2 className="h-5 w-5 text-mint" />
               </div>
               <div>
-                <h3 className="font-medium text-gray-900">{practice.label}</h3>
+                <h3 className="font-medium text-gray-900 text-sm">{practice.label}</h3>
               </div>
             </div>
           </Card>
