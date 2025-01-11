@@ -2,9 +2,9 @@ import React from 'react';
 
 const ProcessFlow = () => {
   return (
-    <div className="w-full bg-[#F1F0FB] rounded-xl p-8 overflow-hidden">
-      <h3 className="text-2xl font-semibold text-forest mb-8 text-center">
-        Patient Call Process Flow
+    <div className="w-full bg-forest-light/95 backdrop-blur-xl border border-mint/10 rounded-xl p-8 overflow-hidden">
+      <h3 className="text-2xl font-semibold text-white mb-8 text-center">
+        Process Overview of DoctorDial
       </h3>
       
       <div className="relative w-full max-w-4xl mx-auto">
@@ -19,19 +19,29 @@ const ProcessFlow = () => {
               <path
                 d="M 40 0 L 0 0 0 40"
                 fill="none"
-                stroke="#E5E7EB"
+                stroke="rgba(100, 255, 218, 0.05)"
                 strokeWidth="0.5"
               />
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" opacity="0.5" />
+          <rect width="100%" height="100%" fill="url(#grid)" />
+
+          {/* Moving Dot Animation */}
+          <circle className="moving-dot" r="4">
+            <animateMotion
+              dur="4s"
+              repeatCount="indefinite"
+              path="M 100 200 L 260 200 L 300 200 L 420 200 L 460 120 L 540 120 L 620 160 L 660 200 L 700 200"
+            />
+          </circle>
 
           {/* Circles */}
-          <circle cx="100" cy="200" r="40" className="fill-mint/10 stroke-mint stroke-2" />
-          <circle cx="300" cy="200" r="40" className="fill-mint/10 stroke-mint stroke-2" />
-          <circle cx="500" cy="120" r="40" className="fill-mint/10 stroke-mint stroke-2" />
-          <circle cx="500" cy="280" r="40" className="fill-mint/10 stroke-mint stroke-2" />
-          <circle cx="700" cy="200" r="40" className="fill-mint/10 stroke-mint stroke-2" />
+          <circle cx="100" cy="200" r="40" className="fill-forest-light stroke-mint stroke-2" />
+          <circle cx="300" cy="200" r="40" className="fill-forest-light stroke-mint stroke-2" />
+          <circle cx="500" cy="120" r="40" className="fill-forest-light stroke-mint stroke-2" />
+          <circle cx="500" cy="280" r="40" className="fill-forest-light stroke-mint stroke-2" />
+          <circle cx="700" cy="200" r="40" className="fill-forest-light stroke-mint stroke-2" />
+          <circle cx="700" cy="360" r="40" className="fill-forest-light stroke-mint stroke-2" />
 
           {/* Connecting Lines */}
           <path
@@ -59,6 +69,11 @@ const ProcessFlow = () => {
             className="stroke-mint stroke-2"
             markerEnd="url(#arrowhead)"
           />
+          <path
+            d="M 540 280 L 620 320 L 660 360"
+            className="stroke-mint stroke-2"
+            markerEnd="url(#arrowhead)"
+          />
 
           {/* Arrow Marker */}
           <defs>
@@ -78,48 +93,65 @@ const ProcessFlow = () => {
           </defs>
 
           {/* Labels */}
-          <text x="100" y="200" textAnchor="middle" className="fill-forest text-sm font-medium">
+          <text x="100" y="200" textAnchor="middle" className="fill-white text-sm font-medium">
             <tspan x="100" dy="-5">Incoming</tspan>
             <tspan x="100" dy="20">Patient Call</tspan>
           </text>
           
-          <text x="300" y="200" textAnchor="middle" className="fill-forest text-sm font-medium">
+          <text x="300" y="200" textAnchor="middle" className="fill-white text-sm font-medium">
             <tspan x="300" dy="-5">AI Agent</tspan>
             <tspan x="300" dy="20">DoctorDial</tspan>
           </text>
           
-          <text x="500" y="120" textAnchor="middle" className="fill-forest text-sm font-medium">
+          <text x="500" y="120" textAnchor="middle" className="fill-white text-sm font-medium">
             <tspan x="500" dy="-5">Doctor's</tspan>
             <tspan x="500" dy="20">Assistant</tspan>
           </text>
           
-          <text x="500" y="280" textAnchor="middle" className="fill-forest text-sm font-medium">
+          <text x="500" y="280" textAnchor="middle" className="fill-white text-sm font-medium">
             <tspan x="500" dy="-5">Appointment</tspan>
             <tspan x="500" dy="20">Scheduler</tspan>
           </text>
           
-          <text x="700" y="200" textAnchor="middle" className="fill-forest text-sm font-medium">
+          <text x="700" y="200" textAnchor="middle" className="fill-white text-sm font-medium">
             <tspan x="700" dy="-5">Patient</tspan>
             <tspan x="700" dy="20">Resolution</tspan>
           </text>
 
+          <text x="700" y="360" textAnchor="middle" className="fill-white text-sm font-medium">
+            <tspan x="700" dy="-5">Call Back</tspan>
+            <tspan x="700" dy="20">Later (U5)</tspan>
+          </text>
+
           {/* Urgency Labels */}
           <text x="380" y="160" className="fill-red-500 text-xs font-medium">U1/U2</text>
-          <text x="380" y="250" className="fill-blue-500 text-xs font-medium">U3/U4/U5</text>
+          <text x="380" y="250" className="fill-mint text-xs font-medium">U3/U4</text>
+          <text x="580" y="320" className="fill-divine text-xs font-medium">U5</text>
         </svg>
 
         {/* Legend */}
         <div className="mt-8 flex justify-center gap-6 text-sm">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <span className="text-forest">Urgent Cases</span>
+            <span className="text-white/70">Urgent Cases</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-            <span className="text-forest">Non-urgent Cases</span>
+            <div className="w-3 h-3 rounded-full bg-mint"></div>
+            <span className="text-white/70">Non-urgent Cases</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-divine"></div>
+            <span className="text-white/70">Call Back Later</span>
           </div>
         </div>
       </div>
+
+      <style>{`
+        .moving-dot {
+          fill: #64FFDA;
+          filter: drop-shadow(0 0 4px #64FFDA);
+        }
+      `}</style>
     </div>
   );
 };
