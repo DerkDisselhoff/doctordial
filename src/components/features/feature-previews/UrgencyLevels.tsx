@@ -82,7 +82,6 @@ export function UrgencyLevels() {
       <div className="p-6">
         <div className="flex items-center gap-4 mb-4">
           <Logo className="text-white" />
-          <h3 className="text-lg font-semibold text-white">Patient Triage Overview</h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">

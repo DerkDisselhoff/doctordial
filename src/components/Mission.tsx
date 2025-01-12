@@ -11,7 +11,7 @@ const Mission = () => {
         <div className="max-w-4xl mx-auto text-center space-y-12">
           <div className="space-y-6">
             <h2 className="text-4xl md:text-5xl font-bold text-white bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-              {t("mission.title")}
+              Why DoctorDial
             </h2>
             <div className="w-20 h-1 bg-mint/30 mx-auto rounded-full" />
           </div>
