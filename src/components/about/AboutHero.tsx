@@ -6,7 +6,7 @@ const AboutHero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-mint/5 to-transparent" />
       <div className="container mx-auto text-center relative">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-up">
-          Transforming Healthcare Communication
+          The next era of Healthcare, driven by AI
         </h1>
         <p className="text-lg text-mint/80 mb-6 animate-fade-up">
           Founded in 2025, Amsterdam
