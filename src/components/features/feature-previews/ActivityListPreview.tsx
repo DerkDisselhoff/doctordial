@@ -38,18 +38,22 @@ export function ActivityListPreview() {
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-forest border-mint/10">
-              <TableHead className="text-white">Time</TableHead>
-              <TableHead className="text-white">Caller</TableHead>
-              <TableHead className="text-white">Summary</TableHead>
-              <TableHead className="text-white">Status</TableHead>
+              <TableHead className="text-white whitespace-nowrap">Time</TableHead>
+              <TableHead className="text-white whitespace-nowrap">Caller</TableHead>
+              <TableHead className="text-white whitespace-nowrap">Summary</TableHead>
+              <TableHead className="text-white whitespace-nowrap">Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {mockCalls.map((call) => (
               <TableRow key={call.id} className="hover:bg-forest border-mint/10">
-                <TableCell className="text-white/70">{call.timestamp}</TableCell>
-                <TableCell className="text-white/70">{call.caller}</TableCell>
-                <TableCell className="text-white/70">{call.summary}</TableCell>
+                <TableCell className="text-white/70 whitespace-nowrap">{call.timestamp}</TableCell>
+                <TableCell className="text-white/70 whitespace-nowrap">{call.caller}</TableCell>
+                <TableCell className="text-white/70">
+                  <div className="max-w-[200px] truncate" title={call.summary}>
+                    {call.summary}
+                  </div>
+                </TableCell>
                 <TableCell>
                   <span className={`px-2 py-1 rounded-full text-xs ${
                     call.urgency === 'high' 
