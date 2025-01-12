@@ -1,18 +1,6 @@
-import { Brain, Calendar, Mic, Users } from "lucide-react";
+import { Calendar, Mic, Users } from "lucide-react";
 
 export const features = [
-  {
-    icon: Brain,
-    title: "Smart Urgency Detection",
-    description: "AI-powered triage system that accurately assesses patient needs",
-    component: "UrgencyLevels",
-    points: [
-      "NHG-certified triage protocols",
-      "Real-time urgency assessment",
-      "Automatic priority routing",
-      "24/7 emergency detection"
-    ]
-  },
   {
     icon: Calendar,
     title: "Recent Activity",
