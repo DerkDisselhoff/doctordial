@@ -28,7 +28,7 @@ const Stats = () => {
             <div className="p-3 bg-mint/10 rounded-full">
               <BarChart3 className="w-6 h-6 text-mint" />
             </div>
-            <h3 className="text-4xl font-bold text-white">30%</h3>
+            <h3 className="text-4xl font-bold text-white">60%</h3>
             <p className="text-white/80">{t("stats.reduction")}</p>
           </div>
         </div>
