@@ -11,6 +11,7 @@ const mockUrgentCases = [
     urgencyLevel: "U1",
     appointmentMade: true,
     appointmentDate: "Mar 20, 14:30",
+    resolution: "Referred to cardiology, emergency care provided"
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ const mockUrgentCases = [
     followUp: "Monitor symptoms, follow-up in 24h",
     urgencyLevel: "U2",
     appointmentMade: false,
+    resolution: "Prescribed medication, home care instructions given"
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ const mockUrgentCases = [
     urgencyLevel: "U1",
     appointmentMade: true,
     appointmentDate: "Mar 22, 11:00",
+    resolution: "Emergency antihistamines administered, specialist referral"
   },
   {
     id: 4,
@@ -37,6 +40,7 @@ const mockUrgentCases = [
     urgencyLevel: "U3",
     appointmentMade: true,
     appointmentDate: "Mar 21, 09:15",
+    resolution: "Diagnostic tests scheduled, pain management plan"
   },
   {
     id: 5,
@@ -45,6 +49,7 @@ const mockUrgentCases = [
     followUp: "Neurologist consultation",
     urgencyLevel: "U2",
     appointmentMade: false,
+    resolution: "Alternative medication prescribed, follow-up scheduled"
   },
 ];
 
@@ -69,6 +74,7 @@ export function UrgencyLevels() {
               <th className="pb-3 text-sm font-medium text-white/70 text-left">Follow-up</th>
               <th className="pb-3 text-sm font-medium text-white/70 text-left">Urgency</th>
               <th className="pb-3 text-sm font-medium text-white/70 text-left">Appointment</th>
+              <th className="pb-3 text-sm font-medium text-white/70 text-left">Resolution</th>
             </tr>
           </thead>
           <tbody>
@@ -103,6 +109,9 @@ export function UrgencyLevels() {
                   ) : (
                     <X className="h-4 w-4 text-red-500" />
                   )}
+                </td>
+                <td className="py-3 text-sm text-white/70 text-left">
+                  {case_.resolution}
                 </td>
               </tr>
             ))}
