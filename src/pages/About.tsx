@@ -15,7 +15,7 @@ const About = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-mint/5 to-transparent" />
         <div className="container mx-auto text-center relative">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 animate-fade-up">
-            About DoctorDial
+            Why DoctorDial
           </h1>
           <p className="text-xl text-white/80 max-w-2xl mx-auto animate-fade-up">
             Revolutionizing healthcare communication from the heart of Amsterdam
@@ -24,7 +24,7 @@ const About = () => {
       </section>
 
       {/* Why Story Section */}
-      <section className="py-20 px-4 bg-forest-light/5">
+      <section className="py-8 px-4 bg-forest-light/5">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto space-y-16">
             {/* Challenge Section */}
@@ -178,21 +178,8 @@ const About = () => {
             </div>
           </div>
 
-          {/* Mission Section */}
+          {/* Values Grid */}
           <div className="mt-20 space-y-12">
-            <div className="max-w-3xl mx-auto text-center space-y-6">
-              <h2 className="text-3xl font-bold text-white">
-                Medical Expertise Meets AI Innovation
-              </h2>
-              <p className="text-white/80 leading-relaxed">
-                Our team combines 50 years of medical experience with advanced AI technology. 
-                We understand the unique challenges of healthcare communication because 
-                we've lived them. This firsthand experience drives us to create solutions 
-                that make a real difference in patient care and practice management.
-              </p>
-            </div>
-
-            {/* Values Grid */}
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
