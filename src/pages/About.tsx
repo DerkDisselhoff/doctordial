@@ -7,6 +7,8 @@ import SolutionSection from "@/components/about/SolutionSection";
 import VisionSection from "@/components/about/VisionSection";
 import CompanyStats from "@/components/about/CompanyStats";
 import CompanyValues from "@/components/about/CompanyValues";
+import Timeline from "@/components/about/Timeline";
+import HealthcareStats from "@/components/about/HealthcareStats";
 
 const About = () => {
   return (
@@ -20,6 +22,8 @@ const About = () => {
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto space-y-16">
             <ChallengeSection />
+            <HealthcareStats />
+            <Timeline />
             <SolutionSection />
             <VisionSection />
           </div>
