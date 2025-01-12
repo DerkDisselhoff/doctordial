@@ -183,25 +183,29 @@ export function EnhancedUrgencyDashboard() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-mint/10">
-                    <th className="text-left p-4 text-white/70">Patient</th>
-                    <th className="text-left p-4 text-white/70">Symptoms</th>
-                    <th className="text-left p-4 text-white/70">Urgency</th>
-                    <th className="text-left p-4 text-white/70">Status</th>
-                    <th className="text-left p-4 text-white/70">Actions</th>
-                    <th className="text-left p-4 text-white/70">Resolution</th>
+                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Patient</th>
+                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Symptoms</th>
+                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Urgency</th>
+                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Status</th>
+                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Actions</th>
+                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Resolution</th>
                   </tr>
                 </thead>
                 <tbody>
                   {mockUrgentCases.map((case_) => (
                     <tr key={case_.id} className="border-b border-mint/5">
-                      <td className="p-4 text-white">{case_.patientName}</td>
-                      <td className="p-4 text-white/70">{case_.symptoms}</td>
-                      <td className="p-4">
+                      <td className="p-4 text-white whitespace-nowrap">{case_.patientName}</td>
+                      <td className="p-4 text-white/70">
+                        <div className="max-w-[200px] truncate" title={case_.symptoms}>
+                          {case_.symptoms}
+                        </div>
+                      </td>
+                      <td className="p-4 whitespace-nowrap">
                         <span className={`px-2 py-1 rounded-full text-xs ${getUrgencyColor(case_.urgencyLevel)}`}>
                           {case_.urgencyLevel}
                         </span>
                       </td>
-                      <td className="p-4">
+                      <td className="p-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
                           <span className={`px-2 py-1 rounded-full text-xs ${
                             case_.appointmentStatus === 'Scheduled' 
@@ -217,19 +221,24 @@ export function EnhancedUrgencyDashboard() {
                           )}
                         </div>
                       </td>
-                      <td className="p-4">
+                      <td className="p-4 whitespace-nowrap">
                         <div className="flex gap-2">
                           {case_.actions.map((action, i) => (
                             <span 
                               key={i}
                               className="px-2 py-1 text-xs bg-mint/10 text-mint rounded-full"
+                              title={action}
                             >
-                              {action}
+                              {action.length > 20 ? `${action.substring(0, 17)}...` : action}
                             </span>
                           ))}
                         </div>
                       </td>
-                      <td className="p-4 text-white/70">{case_.resolution}</td>
+                      <td className="p-4 text-white/70">
+                        <div className="max-w-[200px] truncate" title={case_.resolution}>
+                          {case_.resolution}
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
