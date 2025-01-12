@@ -9,7 +9,7 @@ const AboutHero = () => {
           Why DoctorDial
         </h1>
         <p className="text-xl text-white/80 max-w-2xl mx-auto animate-fade-up">
-          Revolutionizing healthcare communication from the heart of Amsterdam
+          Empowering healthcare providers to focus on what matters most: patient care
         </p>
       </div>
     </section>

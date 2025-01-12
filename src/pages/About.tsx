@@ -20,17 +20,21 @@ const About = () => {
       {/* Main Content with consistent spacing */}
       <section className="py-12 px-4 bg-forest-light/5">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto space-y-12">
-            {/* Market Context */}
-            <HealthcareStats />
-            <Timeline />
+          <div className="max-w-6xl mx-auto">
+            {/* Two-column layout for Healthcare Evolution and Market Insights */}
+            <div className="grid md:grid-cols-2 gap-12 mb-12">
+              <Timeline />
+              <HealthcareStats />
+            </div>
             
-            {/* Problem and Solution */}
-            <ChallengeSection />
-            <SolutionSection />
-            
-            {/* Vision and Values */}
-            <VisionSection />
+            <div className="max-w-4xl mx-auto space-y-12">
+              {/* Problem and Solution */}
+              <ChallengeSection />
+              <SolutionSection />
+              
+              {/* Vision and Values */}
+              <VisionSection />
+            </div>
           </div>
         </div>
       </section>
