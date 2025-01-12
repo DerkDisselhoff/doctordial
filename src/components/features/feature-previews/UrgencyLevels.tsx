@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Calendar, Clock, AlertCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Logo } from "@/components/Logo";
 
 const mockUrgentCases = [
   {
@@ -79,7 +80,10 @@ export function UrgencyLevels() {
   return (
     <TooltipProvider>
       <div className="p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Patient Triage Overview</h3>
+        <div className="flex items-center gap-4 mb-4">
+          <Logo className="text-white" />
+          <h3 className="text-lg font-semibold text-white">Patient Triage Overview</h3>
+        </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
