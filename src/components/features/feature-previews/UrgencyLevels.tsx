@@ -5,7 +5,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 const mockUrgentCases = [
   {
     id: 1,
-    patientName: "D. Disselhoff",
+    patientName: "J. van der Berg",
     symptoms: "Severe chest pain",
     urgencyLevel: "U1",
     appointmentStatus: "Scheduled",
@@ -51,6 +51,16 @@ const mockUrgentCases = [
     appointmentDate: "Mar 21, 09:15",
     actions: ["Schedule ultrasound"],
     resolution: "Diagnostic tests scheduled"
+  },
+  {
+    id: 6,
+    patientName: "R. de Boer",
+    symptoms: "Mild headache, no other symptoms",
+    urgencyLevel: "U5",
+    appointmentStatus: "Advised",
+    appointmentDate: null,
+    actions: ["Call back if symptoms worsen"],
+    resolution: "Self-care advice given, no immediate appointment needed"
   }
 ];
 
@@ -69,7 +79,7 @@ export function UrgencyLevels() {
   return (
     <TooltipProvider>
       <div className="p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Urgent Cases Overview</h3>
+        <h3 className="text-lg font-semibold text-white mb-4">Patient Triage Overview</h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -90,7 +100,7 @@ export function UrgencyLevels() {
                     index % 2 === 0 ? 'bg-forest-light/30' : ''
                   }`}
                 >
-                  <td className="py-4 text-sm text-white">
+                  <td className="py-4 text-sm text-white text-left">
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div className="cursor-help">
@@ -102,7 +112,7 @@ export function UrgencyLevels() {
                       </TooltipContent>
                     </Tooltip>
                   </td>
-                  <td className="py-4 text-sm text-white/70">
+                  <td className="py-4 text-sm text-white/70 text-left">
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div className="cursor-help truncate max-w-[200px]">
@@ -114,12 +124,12 @@ export function UrgencyLevels() {
                       </TooltipContent>
                     </Tooltip>
                   </td>
-                  <td className="py-4">
+                  <td className="py-4 text-left">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getUrgencyColor(case_.urgencyLevel)}`}>
                       {case_.urgencyLevel}
                     </span>
                   </td>
-                  <td className="py-4 text-sm text-white/70">
+                  <td className="py-4 text-sm text-white/70 text-left">
                     <div className="flex items-center gap-2">
                       <span className={`px-2 py-1 rounded-full text-xs ${
                         case_.appointmentStatus === 'Scheduled' 
@@ -136,7 +146,7 @@ export function UrgencyLevels() {
                       )}
                     </div>
                   </td>
-                  <td className="py-4 text-sm">
+                  <td className="py-4 text-sm text-left">
                     <div className="flex gap-2">
                       {case_.actions.map((action, i) => (
                         <span 
@@ -148,7 +158,7 @@ export function UrgencyLevels() {
                       ))}
                     </div>
                   </td>
-                  <td className="py-4 text-sm text-white/70">
+                  <td className="py-4 text-sm text-white/70 text-left">
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div className="cursor-help truncate max-w-[200px]">
