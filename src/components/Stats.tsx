@@ -13,15 +13,15 @@ const Stats = () => {
               <UserCheck className="w-6 h-6 text-mint" />
             </div>
             <h3 className="text-4xl font-bold text-white">95%</h3>
-            <p className="text-white/80">{t("stats.satisfaction")}</p>
+            <p className="text-white/80">{t("stats.accuracy")}</p>
           </div>
 
           <div className="flex flex-col items-center text-center space-y-4 animate-fade-up p-6 rounded-lg hover:bg-mint/5 transition-colors" style={{ animationDelay: "150ms" }}>
             <div className="p-3 bg-mint/10 rounded-full">
               <Clock className="w-6 h-6 text-mint" />
             </div>
-            <h3 className="text-4xl font-bold text-white">24/7</h3>
-            <p className="text-white/80">{t("stats.availability")}</p>
+            <h3 className="text-4xl font-bold text-white">20s</h3>
+            <p className="text-white/80">{t("stats.handling")}</p>
           </div>
 
           <div className="flex flex-col items-center text-center space-y-4 animate-fade-up p-6 rounded-lg hover:bg-mint/5 transition-colors" style={{ animationDelay: "300ms" }}>

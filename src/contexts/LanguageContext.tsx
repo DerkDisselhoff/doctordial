@@ -62,8 +62,8 @@ const translations = {
       trainedOn: "Trained on millions of medical conversations"
     },
     stats: {
-      satisfaction: "Patient Satisfaction Rate",
-      availability: "Availability",
+      accuracy: "Triage Accuracy",
+      handling: "AI Action Handling Time",
       reduction: "Workload Reduction"
     }
   },
@@ -120,8 +120,8 @@ const translations = {
       trainedOn: "Getraind op miljoenen medische gesprekken"
     },
     stats: {
-      satisfaction: "Patiënttevredenheid",
-      availability: "Beschikbaarheid",
+      accuracy: "Triage Nauwkeurigheid",
+      handling: "AI Actie Verwerkingstijd",
       reduction: "Werkdrukvermindering"
     }
   }
