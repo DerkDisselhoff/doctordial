@@ -9,7 +9,7 @@ const HealthcareStats = () => {
         <h3 className="text-xl font-semibold text-mint">Healthcare Market Insights</h3>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="space-y-6">
         {[
           {
             icon: <Clock className="w-8 h-8 text-mint" />,
