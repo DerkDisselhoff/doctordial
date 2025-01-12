@@ -3,59 +3,53 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 const mockCalls = [
   {
     id: 1,
-    timestamp: "2024-03-15 09:30",
-    caller: "Emma Thompson",
-    summary: "Prescription renewal request",
+    timestamp: "10:30",
+    caller: "Emma T.",
+    summary: "Prescription renewal",
     urgency: "medium",
-    sentiment: "positive",
-    outcome: "completed",
   },
   {
     id: 2,
-    timestamp: "2024-03-15 10:15",
-    caller: "James Wilson",
-    summary: "Scheduling routine check-up",
+    timestamp: "11:15",
+    caller: "James W.",
+    summary: "Routine check-up",
     urgency: "low",
-    sentiment: "neutral",
-    outcome: "scheduled",
   },
   {
     id: 3,
-    timestamp: "2024-03-15 11:00",
-    caller: "Sarah Davis",
-    summary: "Discussing test results",
+    timestamp: "12:00",
+    caller: "Sarah D.",
+    summary: "Urgent consultation",
     urgency: "high",
-    sentiment: "negative",
-    outcome: "escalated",
   },
 ];
 
 export function ActivityListPreview() {
   return (
-    <div className="p-6">
-      <h3 className="text-lg font-semibold text-white mb-4">Recent Activity</h3>
+    <div className="p-4">
+      <h3 className="text-sm font-medium text-white mb-3">Recent Activity</h3>
       <div className="rounded-lg overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-forest border-mint/10">
-              <TableHead className="text-white whitespace-nowrap">Time</TableHead>
-              <TableHead className="text-white whitespace-nowrap">Caller</TableHead>
-              <TableHead className="text-white whitespace-nowrap">Summary</TableHead>
-              <TableHead className="text-white whitespace-nowrap">Status</TableHead>
+              <TableHead className="text-white/70 text-xs whitespace-nowrap py-2">Time</TableHead>
+              <TableHead className="text-white/70 text-xs whitespace-nowrap py-2">Patient</TableHead>
+              <TableHead className="text-white/70 text-xs whitespace-nowrap py-2">Summary</TableHead>
+              <TableHead className="text-white/70 text-xs whitespace-nowrap py-2">Priority</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {mockCalls.map((call) => (
               <TableRow key={call.id} className="hover:bg-forest border-mint/10">
-                <TableCell className="text-white/70 whitespace-nowrap">{call.timestamp}</TableCell>
-                <TableCell className="text-white/70 whitespace-nowrap">{call.caller}</TableCell>
-                <TableCell className="text-white/70">
-                  <div className="max-w-[200px] truncate" title={call.summary}>
+                <TableCell className="text-white/70 text-xs whitespace-nowrap py-2">{call.timestamp}</TableCell>
+                <TableCell className="text-white/70 text-xs whitespace-nowrap py-2">{call.caller}</TableCell>
+                <TableCell className="text-white/70 text-xs">
+                  <div className="max-w-[120px] truncate" title={call.summary}>
                     {call.summary}
                   </div>
                 </TableCell>
-                <TableCell>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
+                <TableCell className="py-2">
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] ${
                     call.urgency === 'high' 
                       ? 'bg-red-100 text-red-700'
                       : call.urgency === 'medium'
