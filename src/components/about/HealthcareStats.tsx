@@ -1,33 +1,33 @@
 import React from 'react';
-import { LineChart, PieChart, Activity } from 'lucide-react';
+import { LineChart, Users, Clock } from 'lucide-react';
 
 const HealthcareStats = () => {
   return (
-    <div className="py-12">
+    <div className="py-16">
       <div className="flex items-center gap-3 text-mint mb-8">
-        <Activity className="w-6 h-6" />
-        <h3 className="text-xl font-semibold text-mint">Healthcare Insights</h3>
+        <LineChart className="w-6 h-6" />
+        <h3 className="text-xl font-semibold text-mint">Healthcare Market Insights</h3>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
         {[
           {
-            icon: <LineChart className="w-8 h-8 text-mint" />,
-            stat: "40%",
-            label: "Increase in GP workload since 2019",
+            icon: <Clock className="w-8 h-8 text-mint" />,
+            stat: "45%",
+            label: "Of GP time spent on administrative tasks",
             source: "Dutch Healthcare Authority (NZa)"
           },
           {
-            icon: <Activity className="w-8 h-8 text-mint" />,
-            stat: "15-20",
-            label: "Average minutes saved per patient call",
-            source: "DoctorDial Analysis"
+            icon: <Users className="w-8 h-8 text-mint" />,
+            stat: "3.2M",
+            label: "Patient calls handled by Dutch GPs annually",
+            source: "CBS Healthcare Statistics"
           },
           {
-            icon: <PieChart className="w-8 h-8 text-mint" />,
-            stat: "30%",
-            label: "Of calls can be handled without GP intervention",
-            source: "Healthcare Innovation Study"
+            icon: <LineChart className="w-8 h-8 text-mint" />,
+            stat: "28%",
+            label: "Increase in healthcare demand by 2030",
+            source: "RIVM Healthcare Forecast"
           }
         ].map((stat, index) => (
           <div 

@@ -9,6 +9,7 @@ import CompanyStats from "@/components/about/CompanyStats";
 import CompanyValues from "@/components/about/CompanyValues";
 import Timeline from "@/components/about/Timeline";
 import HealthcareStats from "@/components/about/HealthcareStats";
+import InteractiveDemo from "@/components/about/InteractiveDemo";
 
 const About = () => {
   return (
@@ -17,24 +18,31 @@ const About = () => {
       
       <AboutHero />
 
-      {/* Why Story Section */}
-      <section className="py-8 px-4 bg-forest-light/5">
+      {/* Main Content with consistent spacing */}
+      <section className="py-16 px-4 bg-forest-light/5">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto space-y-16">
-            <ChallengeSection />
+            {/* Market Context */}
             <HealthcareStats />
             <Timeline />
+            
+            {/* Problem and Solution */}
+            <ChallengeSection />
             <SolutionSection />
+            
+            {/* Interactive Demo */}
+            <InteractiveDemo />
+            
+            {/* Vision and Values */}
             <VisionSection />
           </div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="py-20 px-4">
+      {/* Company Information */}
+      <section className="py-16 px-4">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Company Story */}
             <div className="space-y-6 animate-fade-up">
               <h2 className="text-3xl font-bold text-white">
                 Amsterdam-Based Innovation
@@ -50,8 +58,7 @@ const About = () => {
             <CompanyStats />
           </div>
 
-          {/* Values Grid */}
-          <div className="mt-20 space-y-12">
+          <div className="mt-16 space-y-12">
             <CompanyValues />
           </div>
         </div>
