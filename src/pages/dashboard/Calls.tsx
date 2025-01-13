@@ -12,7 +12,7 @@ const Calls = () => {
 
       <Routes>
         <Route path="/" element={<DetailedCallsList />} />
-        <Route path="/:callId" element={<CallDetail />} />
+        <Route path=":callId" element={<CallDetail />} />
       </Routes>
     </div>
   );
