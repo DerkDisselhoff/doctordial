@@ -3,9 +3,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { ClientDistributionChart } from "./ClientDistributionChart";
 import { CallVolumeChart } from "./CallVolumeChart";
 import { ActivityList } from "../client/ActivityList";
-import { UrgencyLevelChart } from "../client/UrgencyLevelChart";
 import { UrgentCases } from "../client/UrgentCases";
-import { DailyCallsChart } from "./DailyCallsChart";
 
 export function DashboardCharts() {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
@@ -32,10 +30,6 @@ export function DashboardCharts() {
       <div className="grid grid-cols-1 gap-8">
         <UrgentCases />
         <ActivityList />
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <UrgencyLevelChart />
-          <DailyCallsChart />
-        </div>
       </div>
     );
   }
