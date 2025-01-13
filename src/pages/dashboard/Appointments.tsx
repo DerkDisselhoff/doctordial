@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import { Calendar, Clock, User, Phone, FileText, AlertCircle } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useNavigate } from "react-router-dom";
 
 const Appointments = () => {
   const [activeTab, setActiveTab] = useState<"upcoming" | "past">("upcoming");
+  const navigate = useNavigate();
 
   const { data: appointments, isLoading } = useQuery({
     queryKey: ['appointments'],
@@ -32,7 +34,11 @@ const Appointments = () => {
                         appointment.urgentiescore === 'medium' ? 'yellow' : 'green';
 
     return (
-      <Card key={appointment.id} className="bg-forest-light/50 border-mint/10 mb-4">
+      <Card 
+        key={appointment.id} 
+        className="bg-forest-light/50 border-mint/10 mb-4 cursor-pointer hover:bg-forest-light/70 transition-colors"
+        onClick={() => navigate(`/dashboard/appointments/${appointment.id}`)}
+      >
         <CardContent className="pt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="flex items-start space-x-3">

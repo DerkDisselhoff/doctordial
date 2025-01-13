@@ -15,6 +15,7 @@ import Settings from "./dashboard/Settings";
 import Contracts from "./dashboard/Contracts";
 import Assistant from "./dashboard/Assistant";
 import Appointments from "./dashboard/Appointments";
+import AppointmentDetail from "./dashboard/AppointmentDetail";
 import GeneralSettings from "./dashboard/settings/General";
 import BillingSettings from "./dashboard/settings/Billing";
 import InvoicesSettings from "./dashboard/settings/Invoices";
@@ -79,14 +80,17 @@ const Dashboard = () => {
               <Route path="/activity" element={<Activity />} />
             </>
           ) : null}
+
           {/* Routes available to both admin and client users */}
           <Route path="/calls" element={<Calls />} />
           <Route path="/appointments" element={<Appointments />} />
+          <Route path="/appointments/:id" element={<AppointmentDetail />} />
           <Route path="/settings/*" element={<Settings />} />
           <Route path="/settings/general" element={<GeneralSettings />} />
           <Route path="/settings/billing" element={<BillingSettings />} />
           <Route path="/settings/invoices" element={<InvoicesSettings />} />
           <Route path="/settings/security" element={<SecuritySettings />} />
+
           {/* Client-only routes */}
           {userRole === 'client' && (
             <Route path="/assistant" element={<Assistant />} />
