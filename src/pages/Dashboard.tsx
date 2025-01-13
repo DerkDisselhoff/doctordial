@@ -14,6 +14,7 @@ import Activity from "./dashboard/Activity";
 import Settings from "./dashboard/Settings";
 import Contracts from "./dashboard/Contracts";
 import Assistant from "./dashboard/Assistant";
+import Appointments from "./dashboard/Appointments";
 import GeneralSettings from "./dashboard/settings/General";
 import BillingSettings from "./dashboard/settings/Billing";
 import InvoicesSettings from "./dashboard/settings/Invoices";
@@ -80,6 +81,7 @@ const Dashboard = () => {
           ) : null}
           {/* Routes available to both admin and client users */}
           <Route path="/calls" element={<Calls />} />
+          <Route path="/appointments" element={<Appointments />} />
           <Route path="/settings/*" element={<Settings />} />
           <Route path="/settings/general" element={<GeneralSettings />} />
           <Route path="/settings/billing" element={<BillingSettings />} />

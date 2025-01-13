@@ -13,7 +13,8 @@ import {
   Shield,
   CreditCard,
   Grid,
-  Receipt
+  Receipt,
+  Calendar
 } from "lucide-react";
 import {
   Sidebar,
@@ -93,6 +94,7 @@ export function AdminSidebar() {
     { title: "Clients", icon: Users, path: "/dashboard/clients" },
     { title: "Practices", icon: Building2, path: "/dashboard/practices" },
     { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
+    { title: "Appointments", icon: Calendar, path: "/dashboard/appointments" },
     { title: "Reports", icon: BarChart3, path: "/dashboard/reports" },
     { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
     { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
