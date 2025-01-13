@@ -2,13 +2,15 @@ import { Card } from "@/components/ui/card";
 import { Users, PhoneCall, Clock, Calendar, ThumbsUp, AlertCircle, DollarSign } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { Toggle } from "@/components/ui/toggle";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
-export function MetricsCards() {
+interface MetricsCardsProps {
+  timeFilter?: TimeFilter;
+}
+
+export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
-  const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
 
   useEffect(() => {
     const checkUserRole = async () => {
@@ -94,68 +96,37 @@ export function MetricsCards() {
     const comparisonText = getComparisonText(timeFilter);
 
     return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-end space-x-2 bg-forest-light/30 p-2 rounded-lg">
-          <Toggle
-            variant="outline"
-            size="sm"
-            pressed={timeFilter === 'today'}
-            onPressedChange={() => setTimeFilter('today')}
-            className="data-[state=on]:bg-mint/20 data-[state=on]:text-mint"
-          >
-            Today
-          </Toggle>
-          <Toggle
-            variant="outline"
-            size="sm"
-            pressed={timeFilter === 'week'}
-            onPressedChange={() => setTimeFilter('week')}
-            className="data-[state=on]:bg-mint/20 data-[state=on]:text-mint"
-          >
-            Last Week
-          </Toggle>
-          <Toggle
-            variant="outline"
-            size="sm"
-            pressed={timeFilter === 'month'}
-            onPressedChange={() => setTimeFilter('month')}
-            className="data-[state=on]:bg-mint/20 data-[state=on]:text-mint"
-          >
-            Last Month
-          </Toggle>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-          <StatCard 
-            icon={PhoneCall}
-            label="Total Calls"
-            value={metricsData.calls}
-            subtext={`+30 ${comparisonText}`}
-          />
-          <StatCard 
-            icon={Clock}
-            label="Avg. Call Duration"
-            value={metricsData.duration}
-            subtext={`-15s ${comparisonText}`}
-          />
-          <StatCard 
-            icon={Calendar}
-            label="Appointments Made"
-            value={metricsData.appointments}
-            subtext={`+15 ${comparisonText}`}
-          />
-          <StatCard 
-            icon={ThumbsUp}
-            label="Positive Sentiment"
-            value={metricsData.sentiment}
-            subtext={`+2% ${comparisonText}`}
-          />
-          <StatCard 
-            icon={AlertCircle}
-            label="Urgent Cases"
-            value={metricsData.urgent}
-            subtext={`-1 ${comparisonText}`}
-          />
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <StatCard 
+          icon={PhoneCall}
+          label="Total Calls"
+          value={metricsData.calls}
+          subtext={`+30 ${comparisonText}`}
+        />
+        <StatCard 
+          icon={Clock}
+          label="Avg. Call Duration"
+          value={metricsData.duration}
+          subtext={`-15s ${comparisonText}`}
+        />
+        <StatCard 
+          icon={Calendar}
+          label="Appointments Made"
+          value={metricsData.appointments}
+          subtext={`+15 ${comparisonText}`}
+        />
+        <StatCard 
+          icon={ThumbsUp}
+          label="Positive Sentiment"
+          value={metricsData.sentiment}
+          subtext={`+2% ${comparisonText}`}
+        />
+        <StatCard 
+          icon={AlertCircle}
+          label="Urgent Cases"
+          value={metricsData.urgent}
+          subtext={`-1 ${comparisonText}`}
+        />
       </div>
     );
   }
