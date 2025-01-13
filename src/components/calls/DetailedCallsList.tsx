@@ -182,15 +182,16 @@ export function DetailedCallsList() {
         </div>
       </CardHeader>
       <CardContent className="p-0">
-        <Table>
-          <CallsTableHeader />
-          <TableBody>
-            {paginatedCalls.map((call) => (
-              <CallsTableRow key={call.id} call={call} />
-            ))}
-          </TableBody>
-        </Table>
-        
+        <div className="overflow-x-auto">
+          <Table>
+            <CallsTableHeader />
+            <TableBody>
+              {paginatedCalls.map((call) => (
+                <CallsTableRow key={call.id} call={call} />
+              ))}
+            </TableBody>
+          </Table>
+        </div>
         <CallsPagination 
           currentPage={currentPage}
           totalPages={totalPages}
