@@ -4,6 +4,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import { DayContentProps } from "react-day-picker";
 
 interface CalendarViewProps {
   view: "month" | "week" | "day";
@@ -55,19 +56,24 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
     }
   };
 
-  const renderDayContent = (day: Date) => {
+  const renderDayContent = (props: DayContentProps) => {
     const dayAppointments = appointments.filter(
-      app => format(app.date, "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
+      app => format(app.date, "yyyy-MM-dd") === format(props.date, "yyyy-MM-dd") &&
       (selectedDoctor === "all" || app.doctor === selectedDoctor)
     );
 
-    return dayAppointments.length > 0 ? (
-      <div className="absolute bottom-0 left-0 right-0 flex justify-center">
-        <Badge variant="outline" className={getUrgencyColor(dayAppointments[0].urgentiescore)}>
-          {dayAppointments.length} appt{dayAppointments.length > 1 ? "s" : ""}
-        </Badge>
+    return (
+      <div className="relative w-full h-full min-h-[60px] p-1">
+        <span>{format(props.date, "d")}</span>
+        {dayAppointments.length > 0 ? (
+          <div className="absolute bottom-0 left-0 right-0 flex justify-center">
+            <Badge variant="outline" className={getUrgencyColor(dayAppointments[0].urgentiescore)}>
+              {dayAppointments.length} appt{dayAppointments.length > 1 ? "s" : ""}
+            </Badge>
+          </div>
+        ) : null}
       </div>
-    ) : null;
+    );
   };
 
   if (view === "month") {
@@ -79,12 +85,7 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
           onSelect={handleDateSelect}
           className="bg-forest-light/50 border-mint/10 rounded-md text-white"
           components={{
-            DayContent: ({ day }) => (
-              <div className="relative w-full h-full min-h-[60px] p-1">
-                <span>{format(day, "d")}</span>
-                {renderDayContent(day)}
-              </div>
-            ),
+            DayContent: renderDayContent
           }}
         />
       </div>
