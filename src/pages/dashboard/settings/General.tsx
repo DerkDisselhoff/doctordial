@@ -1,8 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Globe, Bell } from "lucide-react";
+import { Globe, Bell, UserPlus } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 
 const GeneralSettings = () => {
+  const { toast } = useToast();
+
+  const handleInviteTeamMember = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // In a real app, this would send an invitation email
+    toast({
+      title: "Invitation Sent",
+      description: "Your team member will receive an email invitation shortly.",
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="mb-6">
@@ -53,6 +67,53 @@ const GeneralSettings = () => {
               </div>
             ))}
           </div>
+        </CardContent>
+      </Card>
+
+      {/* New Team Members Section */}
+      <Card className="bg-forest-light/50 border-mint/10">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle className="text-white">Team Members</CardTitle>
+            <p className="text-sm text-white/60 mt-1">Invite and manage your team members</p>
+          </div>
+          <UserPlus className="h-5 w-5 text-mint" />
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleInviteTeamMember} className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label className="text-white">Name</Label>
+                <Input
+                  placeholder="John Doe"
+                  className="bg-forest border-mint/20 text-white placeholder:text-white/40"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-white">Email</Label>
+                <Input
+                  type="email"
+                  placeholder="john@example.com"
+                  className="bg-forest border-mint/20 text-white placeholder:text-white/40"
+                  required
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-white">Role</Label>
+              <select className="w-full p-2 bg-forest border border-mint/20 rounded-md text-white">
+                <option value="doctor">Doctor</option>
+                <option value="nurse">Nurse</option>
+                <option value="receptionist">Receptionist</option>
+                <option value="admin">Administrator</option>
+              </select>
+            </div>
+            <Button type="submit" className="bg-mint hover:bg-mint/90 text-forest">
+              <UserPlus className="h-4 w-4 mr-2" />
+              Send Invitation
+            </Button>
+          </form>
         </CardContent>
       </Card>
     </div>
