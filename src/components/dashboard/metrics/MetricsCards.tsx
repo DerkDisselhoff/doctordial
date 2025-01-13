@@ -23,112 +23,89 @@ export function MetricsCards() {
     checkUserRole();
   }, []);
 
+  const StatCard = ({ icon: Icon, label, value, subtext }: { 
+    icon: any, 
+    label: string, 
+    value: string, 
+    subtext?: string 
+  }) => (
+    <Card className="bg-forest-light/50 border-mint/10 p-4">
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="text-white/70 text-sm">{label}</p>
+          <h4 className="text-2xl font-bold text-white mt-1">{value}</h4>
+          {subtext && <p className="text-xs text-white/50 mt-1">{subtext}</p>}
+        </div>
+        <div className="p-2 bg-mint/10 rounded-lg">
+          <Icon className="w-5 h-5 text-mint" />
+        </div>
+      </div>
+    </Card>
+  );
+
   if (userRole === 'client') {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        <Card className="bg-white shadow-lg border-none">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-forest">Total Calls</CardTitle>
-            <PhoneCall className="h-4 w-4 text-mint" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-forest">1,280</div>
-            <p className="text-xs text-forest/60">+210 from last month</p>
-          </CardContent>
-        </Card>
-        
-        <Card className="bg-white shadow-lg border-none">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-forest">Avg. Call Duration</CardTitle>
-            <Clock className="h-4 w-4 text-mint" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-forest">3m 45s</div>
-            <p className="text-xs text-forest/60">-30s from last month</p>
-          </CardContent>
-        </Card>
-        
-        <Card className="bg-white shadow-lg border-none">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-forest">Appointments Made</CardTitle>
-            <Calendar className="h-4 w-4 text-mint" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-forest">285</div>
-            <p className="text-xs text-forest/60">+45 from last month</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white shadow-lg border-none">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-forest">Positive Sentiment</CardTitle>
-            <ThumbsUp className="h-4 w-4 text-mint" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-forest">85%</div>
-            <p className="text-xs text-forest/60">+5% from last month</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white shadow-lg border-none">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-forest">Urgent Cases</CardTitle>
-            <AlertCircle className="h-4 w-4 text-mint" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-forest">12</div>
-            <p className="text-xs text-forest/60">-3 from last month</p>
-          </CardContent>
-        </Card>
+        <StatCard 
+          icon={PhoneCall}
+          label="Total Calls"
+          value="1,280"
+          subtext="+210 from last month"
+        />
+        <StatCard 
+          icon={Clock}
+          label="Avg. Call Duration"
+          value="3m 45s"
+          subtext="-30s from last month"
+        />
+        <StatCard 
+          icon={Calendar}
+          label="Appointments Made"
+          value="285"
+          subtext="+45 from last month"
+        />
+        <StatCard 
+          icon={ThumbsUp}
+          label="Positive Sentiment"
+          value="85%"
+          subtext="+5% from last month"
+        />
+        <StatCard 
+          icon={AlertCircle}
+          label="Urgent Cases"
+          value="12"
+          subtext="-3 from last month"
+        />
       </div>
     );
   }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <Card className="bg-white shadow-lg border-none">
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-medium text-forest">Total Clients</CardTitle>
-          <Users className="h-4 w-4 text-mint" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-forest">2,350</div>
-          <p className="text-xs text-forest/60">+180 from last month</p>
-        </CardContent>
-      </Card>
-      
-      <Card className="bg-white shadow-lg border-none">
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-medium text-forest">Total Calls</CardTitle>
-          <PhoneCall className="h-4 w-4 text-mint" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-forest">15,280</div>
-          <p className="text-xs text-forest/60">+2,100 from last month</p>
-        </CardContent>
-      </Card>
-      
-      <Card className="bg-white shadow-lg border-none">
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-medium text-forest">Avg. Call Duration</CardTitle>
-          <Clock className="h-4 w-4 text-mint" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-forest">3m 45s</div>
-          <p className="text-xs text-forest/60">-30s from last month</p>
-        </CardContent>
-      </Card>
-      
-      <Card className="bg-white shadow-lg border-none">
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-medium text-forest">Monthly Revenue</CardTitle>
-          <DollarSign className="h-4 w-4 text-mint" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-forest">$23,500</div>
-          <p className="text-xs text-forest/60">+$4,500 from last month</p>
-        </CardContent>
-      </Card>
+      <StatCard 
+        icon={Users}
+        label="Total Clients"
+        value="2,350"
+        subtext="+180 from last month"
+      />
+      <StatCard 
+        icon={PhoneCall}
+        label="Total Calls"
+        value="15,280"
+        subtext="+2,100 from last month"
+      />
+      <StatCard 
+        icon={Clock}
+        label="Avg. Call Duration"
+        value="3m 45s"
+        subtext="-30s from last month"
+      />
+      <StatCard 
+        icon={DollarSign}
+        label="Monthly Revenue"
+        value="$23,500"
+        subtext="+$4,500 from last month"
+      />
     </div>
   );
 }
