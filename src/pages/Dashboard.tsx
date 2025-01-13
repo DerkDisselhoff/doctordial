@@ -84,7 +84,7 @@ const Dashboard = () => {
           ) : null}
 
           {/* Routes available to both admin and client users */}
-          <Route path="/calls" element={<Calls />} />
+          <Route path="/calls/*" element={<Calls />} />
           <Route path="/appointments" element={<Appointments />} />
           <Route path="/appointments/:id" element={<AppointmentDetail />} />
           <Route path="/settings/*" element={<Settings />} />
