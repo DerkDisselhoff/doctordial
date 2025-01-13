@@ -24,9 +24,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-forest">
       <SidebarProvider>
-        <div className="flex min-h-screen">
-          <AdminSidebar />
-          <div className="flex-1 p-6">
+        <div className="flex min-h-screen w-full">
+          <div className="fixed top-0 left-0 h-full z-40">
+            <AdminSidebar />
+          </div>
+          <div className="flex-1 ml-64 p-8">
             {children}
           </div>
         </div>

@@ -135,7 +135,7 @@
   }
 
   .dashboard-card {
-    @apply bg-forest-light/50 border-mint/10;
+    @apply bg-forest-light/50 border border-mint/10 rounded-xl;
   }
 
   .dashboard-card-header {
@@ -214,5 +214,31 @@
   .form-select {
     @apply w-full px-3 py-2 bg-forest-light/50 border border-mint/20 rounded-lg 
            text-white focus:border-mint focus:ring-1 focus:ring-mint;
+  }
+
+  /* Dashboard Sidebar */
+  .dashboard-sidebar {
+    @apply w-64 h-full bg-forest-light/95 backdrop-blur-xl border-r border-mint/10;
+  }
+
+  .dashboard-sidebar-header {
+    @apply p-6 border-b border-mint/10;
+  }
+
+  .dashboard-sidebar-content {
+    @apply flex-1 px-3 py-6;
+  }
+
+  .dashboard-sidebar-footer {
+    @apply border-t border-mint/10 p-4;
+  }
+
+  /* Dashboard Layout */
+  .dashboard-main {
+    @apply flex-1 p-8;
+  }
+
+  .dashboard-grid {
+    @apply grid gap-6;
   }
 }
