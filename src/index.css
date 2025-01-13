@@ -56,64 +56,6 @@
   ::selection {
     @apply bg-mint text-forest;
   }
-
-  /* Updated scrollbar styles */
-  .dashboard-card ::-webkit-scrollbar,
-  .dashboard-table ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-
-  .dashboard-card ::-webkit-scrollbar-track,
-  .dashboard-table ::-webkit-scrollbar-track {
-    @apply bg-gray-100;
-    border-radius: 8px;
-  }
-
-  .dashboard-card ::-webkit-scrollbar-thumb,
-  .dashboard-table ::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 hover:bg-gray-400 transition-colors;
-    border-radius: 8px;
-    border: 2px solid transparent;
-    background-clip: padding-box;
-  }
-
-  /* Firefox scrollbar styles */
-  .dashboard-card,
-  .dashboard-table {
-    scrollbar-width: thin;
-    scrollbar-color: theme('colors.gray.300') theme('colors.gray.100');
-  }
-
-  /* Updated chart styles for better readability */
-  .recharts-cartesian-grid-horizontal line,
-  .recharts-cartesian-grid-vertical line {
-    @apply stroke-mint/10;
-  }
-
-  .recharts-text {
-    @apply fill-white/70 text-sm;
-  }
-
-  .recharts-tooltip-wrapper {
-    @apply !bg-forest-light/95 border border-mint/10 rounded-lg shadow-lg;
-  }
-
-  .recharts-default-tooltip {
-    @apply !bg-transparent !border-none;
-  }
-
-  .recharts-tooltip-label {
-    @apply text-white/90 !important;
-  }
-
-  .recharts-tooltip-item {
-    @apply text-mint !important;
-  }
-
-  .recharts-active-dot {
-    @apply fill-mint stroke-forest;
-  }
 }
 
 @layer components {
@@ -240,5 +182,35 @@
 
   .dashboard-grid {
     @apply grid gap-6;
+  }
+
+  /* Chart Styles */
+  .recharts-cartesian-grid-horizontal line,
+  .recharts-cartesian-grid-vertical line {
+    @apply stroke-mint/10;
+  }
+
+  .recharts-text {
+    @apply fill-white/70 text-sm;
+  }
+
+  .recharts-tooltip-wrapper {
+    @apply !bg-forest-light/95 border border-mint/10 rounded-lg shadow-lg;
+  }
+
+  .recharts-default-tooltip {
+    @apply !bg-transparent !border-none;
+  }
+
+  .recharts-tooltip-label {
+    @apply text-white/90 !important;
+  }
+
+  .recharts-tooltip-item {
+    @apply text-mint !important;
+  }
+
+  .recharts-active-dot {
+    @apply fill-mint stroke-forest;
   }
 }

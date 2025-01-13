@@ -11,10 +11,10 @@ const Settings = () => {
       </div>
 
       <div className="grid gap-6">
-        <Card className="dashboard-card">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="dashboard-card-title">Profile Settings</CardTitle>
+              <CardTitle>Profile Settings</CardTitle>
               <p className="dashboard-card-content">Manage your account information</p>
             </div>
             <SettingsIcon className="w-5 h-5 text-mint" />
@@ -23,31 +23,31 @@ const Settings = () => {
             <div className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-forest">Practice Name</label>
+                  <label className="form-label">Practice Name</label>
                   <input
                     type="text"
-                    className="w-full p-2 border rounded-md"
+                    className="form-input"
                     placeholder="Enter practice name"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-forest">Email Address</label>
+                  <label className="form-label">Email Address</label>
                   <input
                     type="email"
-                    className="w-full p-2 border rounded-md"
+                    className="form-input"
                     placeholder="Enter email"
                   />
                 </div>
               </div>
-              <Button>Save Changes</Button>
+              <Button className="bg-mint hover:bg-mint/90 text-forest">Save Changes</Button>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="dashboard-card">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="dashboard-card-title">Notifications</CardTitle>
+              <CardTitle>Notifications</CardTitle>
               <p className="dashboard-card-content">Configure how you receive notifications</p>
             </div>
             <Bell className="w-5 h-5 text-mint" />
@@ -61,10 +61,10 @@ const Settings = () => {
                 "New feature announcements",
               ].map((setting) => (
                 <div key={setting} className="flex items-center justify-between">
-                  <span className="text-forest">{setting}</span>
+                  <span className="text-white/70">{setting}</span>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" className="sr-only peer" />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-mint/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-mint"></div>
+                    <div className="w-11 h-6 bg-forest-light peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-mint/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-mint"></div>
                   </label>
                 </div>
               ))}
@@ -73,33 +73,33 @@ const Settings = () => {
         </Card>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <Card className="dashboard-card">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle className="dashboard-card-title">Security</CardTitle>
+                <CardTitle>Security</CardTitle>
                 <p className="dashboard-card-content">Manage security settings</p>
               </div>
               <Shield className="w-5 h-5 text-mint" />
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button variant="outline" className="w-full justify-start text-forest hover:text-forest">
+                <Button variant="outline" className="w-full justify-start text-white/70 hover:text-white hover:bg-mint/10">
                   Change Password
                 </Button>
-                <Button variant="outline" className="w-full justify-start text-forest hover:text-forest">
+                <Button variant="outline" className="w-full justify-start text-white/70 hover:text-white hover:bg-mint/10">
                   Two-Factor Authentication
                 </Button>
-                <Button variant="outline" className="w-full justify-start text-forest hover:text-forest">
+                <Button variant="outline" className="w-full justify-start text-white/70 hover:text-white hover:bg-mint/10">
                   Login History
                 </Button>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="dashboard-card">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle className="dashboard-card-title">Preferences</CardTitle>
+                <CardTitle>Preferences</CardTitle>
                 <p className="dashboard-card-content">Customize your experience</p>
               </div>
               <Palette className="w-5 h-5 text-mint" />
@@ -107,15 +107,15 @@ const Settings = () => {
             <CardContent>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-forest">Language</label>
-                  <select className="w-full p-2 border rounded-md text-gray-600">
+                  <label className="form-label">Language</label>
+                  <select className="form-select">
                     <option>English</option>
                     <option>Dutch</option>
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-forest">Time Zone</label>
-                  <select className="w-full p-2 border rounded-md text-gray-600">
+                  <label className="form-label">Time Zone</label>
+                  <select className="form-select">
                     <option>UTC+01:00 Amsterdam</option>
                     <option>UTC+00:00 London</option>
                   </select>
@@ -125,10 +125,10 @@ const Settings = () => {
           </Card>
         </div>
 
-        <Card className="dashboard-card">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="dashboard-card-title">Call Settings</CardTitle>
+              <CardTitle>Call Settings</CardTitle>
               <p className="dashboard-card-content">Configure call handling preferences</p>
             </div>
             <Phone className="w-5 h-5 text-mint" />
@@ -136,29 +136,29 @@ const Settings = () => {
           <CardContent>
             <div className="space-y-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-forest">Business Hours</label>
+                <label className="form-label">Business Hours</label>
                 <div className="grid gap-4 md:grid-cols-2">
                   <input
                     type="time"
-                    className="w-full p-2 border rounded-md text-gray-600"
+                    className="form-input"
                     defaultValue="09:00"
                   />
                   <input
                     type="time"
-                    className="w-full p-2 border rounded-md text-gray-600"
+                    className="form-input"
                     defaultValue="17:00"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-forest">Voice Settings</label>
-                <select className="w-full p-2 border rounded-md text-gray-600">
+                <label className="form-label">Voice Settings</label>
+                <select className="form-select">
                   <option>Natural voice</option>
                   <option>Professional voice</option>
                   <option>Friendly voice</option>
                 </select>
               </div>
-              <Button>Update Call Settings</Button>
+              <Button className="bg-mint hover:bg-mint/90 text-forest">Update Call Settings</Button>
             </div>
           </CardContent>
         </Card>
