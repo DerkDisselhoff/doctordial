@@ -113,7 +113,7 @@ export function EnhancedUrgencyDashboard() {
   return (
     <div className="p-6 bg-forest-light rounded-xl border border-mint/10">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8 hidden md:flex">
+      <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
           <Logo className="text-white" />
           <div className="border-l border-mint/10 pl-4">
