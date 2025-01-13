@@ -3,9 +3,16 @@ import { Button } from "../ui/button";
 import { BookDemoForm } from "../BookDemoForm";
 import StatsBadge from "./StatsBadge";
 import AIDemoButton from "./AIDemoButton";
+import { useState } from "react";
 
 const HeroContent = () => {
   const { t } = useLanguage();
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlayDemo = () => {
+    setIsPlaying(!isPlaying);
+    // Add audio playback logic here if needed
+  };
 
   return (
     <div className="relative">
@@ -26,10 +33,16 @@ const HeroContent = () => {
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <BookDemoForm />
-          <AIDemoButton />
+          <AIDemoButton 
+            isPlaying={isPlaying}
+            onPlayDemo={handlePlayDemo}
+          />
         </div>
 
-        <StatsBadge />
+        <StatsBadge 
+          value="95%"
+          label="Patient Satisfaction Rate"
+        />
 
         <p className="text-sm text-white/60">
           {t("hero.trainedOn")}
