@@ -1,19 +1,13 @@
 import { useState } from "react";
-import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, Filter } from "lucide-react";
-import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
+import { format, startOfWeek, endOfWeek, eachDayOfInterval, addHours, startOfDay } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CalendarView } from "@/components/dashboard/calendar/CalendarView";
-import { AppointmentQuickView } from "@/components/dashboard/calendar/AppointmentQuickView";
-import { DoctorSchedule } from "@/components/dashboard/calendar/DoctorSchedule";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const CalendarPage = () => {
+const Calendar = () => {
   const [date, setDate] = useState<Date>(new Date());
-  const [view, setView] = useState<"month" | "week" | "day">("month");
   const [selectedDoctor, setSelectedDoctor] = useState<string>("all");
 
   const doctors = [
@@ -22,73 +16,192 @@ const CalendarPage = () => {
     { id: "3", name: "Dr. Emma Williams" },
   ];
 
+  // Mock appointments data
+  const appointments = [
+    {
+      id: 1,
+      title: "Regular Check-up",
+      patient: "John Smith",
+      time: "09:00",
+      duration: 30,
+      doctor: "1",
+      urgencyScore: "U3",
+      day: new Date().setHours(9, 0, 0, 0),
+    },
+    {
+      id: 2,
+      title: "Follow-up Consultation",
+      patient: "Emma Johnson",
+      time: "11:00",
+      duration: 45,
+      doctor: "2",
+      urgencyScore: "U2",
+      day: new Date().setHours(11, 0, 0, 0),
+    },
+    {
+      id: 3,
+      title: "Emergency Visit",
+      patient: "Michael Brown",
+      time: "14:30",
+      duration: 60,
+      doctor: "1",
+      urgencyScore: "U1",
+      day: new Date().setHours(14, 30, 0, 0),
+    },
+  ];
+
+  const weekStart = startOfWeek(date);
+  const weekEnd = endOfWeek(date);
+  const days = eachDayOfInterval({ start: weekStart, end: weekEnd });
+  const hours = Array.from({ length: 13 }, (_, i) => i + 7); // 7 AM to 7 PM
+
+  const getUrgencyColor = (score: string) => {
+    switch (score) {
+      case "U1": return "bg-red-500/20 border-red-500/30 text-red-500";
+      case "U2": return "bg-orange-500/20 border-orange-500/30 text-orange-500";
+      case "U3": return "bg-yellow-500/20 border-yellow-500/30 text-yellow-500";
+      case "U4": return "bg-blue-500/20 border-blue-500/30 text-blue-500";
+      case "U5": return "bg-green-500/20 border-green-500/30 text-green-500";
+      default: return "bg-gray-500/20 border-gray-500/30 text-gray-500";
+    }
+  };
+
+  const getAppointmentsForSlot = (day: Date, hour: number) => {
+    return appointments.filter(apt => {
+      const aptDate = new Date(apt.day);
+      return (
+        format(aptDate, "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
+        Math.floor(aptDate.getHours()) === hour &&
+        (selectedDoctor === "all" || apt.doctor === selectedDoctor)
+      );
+    });
+  };
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex flex-col space-y-4">
-        <h1 className="text-2xl font-bold text-white">Practice Calendar</h1>
+        <h1 className="text-2xl font-bold text-white">Calendar</h1>
         <p className="text-white/60">Manage appointments and schedules</p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-[1fr_300px]">
-        <div className="space-y-6">
-          <Card className="bg-forest-light/50 border-mint/10">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-              <div className="space-y-1">
-                <CardTitle className="text-white">Calendar</CardTitle>
-                <div className="text-sm text-white/60">
-                  {format(date, "MMMM yyyy")}
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <Select value={selectedDoctor} onValueChange={setSelectedDoctor}>
-                  <SelectTrigger className="w-[180px] bg-forest-light border-mint/10 text-white">
-                    <SelectValue placeholder="Select doctor" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-forest-light border-mint/10">
-                    <SelectItem value="all">All Doctors</SelectItem>
-                    {doctors.map((doctor) => (
-                      <SelectItem key={doctor.id} value={doctor.id}>
-                        {doctor.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button variant="outline" size="icon" className="text-white">
-                  <Filter className="h-4 w-4" />
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <Tabs value={view} onValueChange={(v) => setView(v as "month" | "week" | "day")}>
-                <TabsList className="bg-forest-light/50 border-mint/10">
-                  <TabsTrigger value="month" className="text-white data-[state=active]:bg-mint/10">
-                    Month
-                  </TabsTrigger>
-                  <TabsTrigger value="week" className="text-white data-[state=active]:bg-mint/10">
-                    Week
-                  </TabsTrigger>
-                  <TabsTrigger value="day" className="text-white data-[state=active]:bg-mint/10">
-                    Day
-                  </TabsTrigger>
-                </TabsList>
-                <CalendarView 
-                  view={view}
-                  date={date}
-                  selectedDoctor={selectedDoctor}
-                  onDateChange={setDate}
-                />
-              </Tabs>
-            </CardContent>
-          </Card>
+      <Card className="bg-forest-light/50 border-mint/10 p-4">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-4">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setDate(new Date())}
+              className="text-white hover:text-mint"
+            >
+              Today
+            </Button>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setDate(d => addHours(d, -24 * 7))}
+                className="text-white hover:text-mint"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setDate(d => addHours(d, 24 * 7))}
+                className="text-white hover:text-mint"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+            <h2 className="text-lg font-semibold text-white">
+              {format(date, "MMMM yyyy")}
+            </h2>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            <Select value={selectedDoctor} onValueChange={setSelectedDoctor}>
+              <SelectTrigger className="w-[180px] bg-forest-light border-mint/10 text-white">
+                <SelectValue placeholder="Select doctor" />
+              </SelectTrigger>
+              <SelectContent className="bg-forest-light border-mint/10">
+                <SelectItem value="all">All Doctors</SelectItem>
+                {doctors.map((doctor) => (
+                  <SelectItem key={doctor.id} value={doctor.id}>
+                    {doctor.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button className="bg-mint hover:bg-mint/90 text-forest">
+              <Plus className="h-4 w-4 mr-2" />
+              New Appointment
+            </Button>
+          </div>
         </div>
 
-        <div className="space-y-6">
-          <AppointmentQuickView date={date} selectedDoctor={selectedDoctor} />
-          <DoctorSchedule doctors={doctors} date={date} />
+        <div className="grid grid-cols-8 gap-px bg-mint/10 rounded-lg overflow-hidden">
+          {/* Time column */}
+          <div className="bg-forest-light">
+            <div className="h-12" /> {/* Header spacer */}
+            {hours.map((hour) => (
+              <div
+                key={hour}
+                className="h-20 border-b border-mint/10 px-2 py-1"
+              >
+                <span className="text-xs text-white/60">
+                  {format(new Date().setHours(hour, 0), "h:mm a")}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Days columns */}
+          {days.map((day, dayIdx) => (
+            <div key={day.toString()} className="bg-forest-light">
+              {/* Day header */}
+              <div className="h-12 border-b border-mint/10 p-2 sticky top-0 bg-forest-light">
+                <div className="text-sm font-medium text-white">
+                  {format(day, "EEE")}
+                </div>
+                <div className="text-2xl font-bold text-white">
+                  {format(day, "d")}
+                </div>
+              </div>
+
+              {/* Time slots */}
+              {hours.map((hour) => (
+                <div
+                  key={`${day}-${hour}`}
+                  className="h-20 border-b border-mint/10 relative group"
+                >
+                  {getAppointmentsForSlot(day, hour).map((apt) => (
+                    <div
+                      key={apt.id}
+                      className={cn(
+                        "absolute left-0 right-0 mx-1 p-2 rounded-md border",
+                        "cursor-pointer transition-all duration-200 hover:translate-y-0.5",
+                        getUrgencyColor(apt.urgencyScore)
+                      )}
+                      style={{
+                        top: "4px",
+                        minHeight: "40px",
+                      }}
+                    >
+                      <div className="text-xs font-medium">{apt.time}</div>
+                      <div className="text-xs truncate">{apt.patient}</div>
+                      <div className="text-xs opacity-75 truncate">
+                        {apt.title}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
-      </div>
+      </Card>
     </div>
   );
 };
 
-export default CalendarPage;
+export default Calendar;
