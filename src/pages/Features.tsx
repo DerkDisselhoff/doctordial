@@ -12,8 +12,8 @@ const Features = () => {
       <Navbar />
       <FeaturesHero />
 
-      {/* Enhanced Dashboard Preview */}
-      <section className="py-20 px-4">
+      {/* Enhanced Dashboard Preview - Hidden on mobile, visible from md breakpoint up */}
+      <section className="hidden md:block py-20 px-4">
         <div className="container mx-auto">
           <EnhancedUrgencyDashboard />
         </div>
