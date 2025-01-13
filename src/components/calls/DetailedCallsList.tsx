@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { VapiCall } from "@/services/vapiService";
 import { CallsTableHeader } from "./table/CallsTableHeader";
 import { CallsTableRow } from "./table/CallsTableRow";
 import { CallsPagination } from "./table/CallsPagination";
+import { Search, Filter } from "lucide-react";
 
-// Generate mock data
 const generateMockCalls = (count: number): VapiCall[] => {
   const sentiments = ['positive', 'negative', 'neutral'];
   const urgencyLevels = ['high', 'medium', 'low'];
@@ -73,20 +75,55 @@ const generateMockCalls = (count: number): VapiCall[] => {
 
 export function DetailedCallsList() {
   const [calls, setCalls] = useState<VapiCall[]>([]);
+  const [filteredCalls, setFilteredCalls] = useState<VapiCall[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [urgencyFilter, setUrgencyFilter] = useState("all");
+  const [sentimentFilter, setSentimentFilter] = useState("all");
   const { toast } = useToast();
   const itemsPerPage = 10;
 
   useEffect(() => {
     const mockCalls = generateMockCalls(100);
     setCalls(mockCalls);
+    setFilteredCalls(mockCalls);
     setTotalPages(Math.ceil(mockCalls.length / itemsPerPage));
     setLoading(false);
   }, []);
 
-  const paginatedCalls = calls.slice(
+  useEffect(() => {
+    let filtered = [...calls];
+
+    // Apply search filter
+    if (searchQuery) {
+      filtered = filtered.filter(call => 
+        call.caller_number?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        call.transcription?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    // Apply urgency filter
+    if (urgencyFilter !== "all") {
+      filtered = filtered.filter(call => 
+        call.sentiment_analysis?.urgency === urgencyFilter
+      );
+    }
+
+    // Apply sentiment filter
+    if (sentimentFilter !== "all") {
+      filtered = filtered.filter(call => 
+        call.sentiment_analysis?.sentiment === sentimentFilter
+      );
+    }
+
+    setFilteredCalls(filtered);
+    setTotalPages(Math.ceil(filtered.length / itemsPerPage));
+    setCurrentPage(1);
+  }, [searchQuery, urgencyFilter, sentimentFilter, calls]);
+
+  const paginatedCalls = filteredCalls.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -105,6 +142,44 @@ export function DetailedCallsList() {
     <Card className="bg-forest-light/50 border-mint/10">
       <CardHeader className="border-b border-mint/10">
         <CardTitle className="text-white">Call History</CardTitle>
+        <div className="mt-4 space-y-4">
+          <div className="flex items-center gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+              <Input
+                placeholder="Search calls..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 bg-forest border-mint/20 text-white placeholder:text-white/40"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-white/40" />
+              <Select value={urgencyFilter} onValueChange={setUrgencyFilter}>
+                <SelectTrigger className="w-[140px] bg-forest border-mint/20">
+                  <SelectValue placeholder="Urgency" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Urgencies</SelectItem>
+                  <SelectItem value="high">High</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="low">Low</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={sentimentFilter} onValueChange={setSentimentFilter}>
+                <SelectTrigger className="w-[140px] bg-forest border-mint/20">
+                  <SelectValue placeholder="Sentiment" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Sentiments</SelectItem>
+                  <SelectItem value="positive">Positive</SelectItem>
+                  <SelectItem value="negative">Negative</SelectItem>
+                  <SelectItem value="neutral">Neutral</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
       </CardHeader>
       <CardContent className="p-0">
         <Table>

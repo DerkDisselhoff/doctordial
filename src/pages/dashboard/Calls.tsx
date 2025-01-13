@@ -6,8 +6,8 @@ const Calls = () => {
   return (
     <div className="p-8 space-y-8">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-forest">Call Analytics</h2>
-        <p className="text-gray-500">Monitor and analyze call performance</p>
+        <h2 className="text-3xl font-bold text-white/90">Call Analytics</h2>
+        <p className="text-white/60">Monitor and analyze call performance</p>
       </div>
 
       <Routes>

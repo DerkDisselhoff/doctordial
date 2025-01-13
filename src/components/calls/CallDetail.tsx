@@ -1,36 +1,42 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { fetchVapiCallById, VapiCall } from "@/services/vapiService";
-import { useToast } from "@/components/ui/use-toast";
-import { Phone, Clock, MessageCircle, User, ThumbsUp, AlertCircle } from "lucide-react";
+import { Phone, Clock, MessageCircle, User, ThumbsUp, AlertCircle, Calendar, ArrowRight } from "lucide-react";
+import { VapiCall } from "@/services/vapiService";
 
 export function CallDetail() {
   const { callId } = useParams();
   const [call, setCall] = useState<VapiCall | null>(null);
   const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
 
   useEffect(() => {
-    const loadCall = async () => {
-      if (!callId) return;
-      
-      try {
-        const data = await fetchVapiCallById(callId);
-        setCall(data);
-      } catch (error) {
-        toast({
-          title: "Error loading call details",
-          description: "Failed to load call details. Please try again later.",
-          variant: "destructive",
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadCall();
-  }, [callId, toast]);
+    // Simulate API call with mock data
+    setTimeout(() => {
+      const mockCall: VapiCall = {
+        id: "mock-1",
+        call_id: callId || "",
+        caller_number: "John Smith",
+        duration: 180,
+        status: "completed",
+        created_at: new Date().toISOString(),
+        transcription: "Hello, I'd like to schedule a follow-up appointment with Dr. Johnson for next week. I've been experiencing some mild discomfort in my lower back, and I want to discuss the effectiveness of the prescribed treatment.",
+        sentiment_analysis: {
+          sentiment: "positive",
+          urgency: "medium"
+        },
+        summary: "Patient requesting follow-up appointment for back pain assessment",
+        urgency_score: 3,
+        follow_up_required: true,
+        follow_up_notes: "Schedule follow-up within 7 days",
+        department: "General Practice",
+        priority_level: "medium",
+        resolution_status: "scheduled",
+        callback_number: "+31612345678"
+      };
+      setCall(mockCall);
+      setLoading(false);
+    }, 1000);
+  }, [callId]);
 
   if (loading) {
     return (
@@ -52,9 +58,9 @@ export function CallDetail() {
 
   return (
     <div className="space-y-6">
-      <Card>
+      <Card className="bg-forest-light/50 border-mint/10">
         <CardHeader>
-          <CardTitle>Call Details</CardTitle>
+          <CardTitle className="text-white">Call Overview</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
@@ -69,8 +75,8 @@ export function CallDetail() {
             <div className="flex items-center space-x-3">
               <User className="h-5 w-5 text-mint" />
               <div>
-                <p className="text-sm text-white/60">Caller</p>
-                <p className="text-white font-medium">{call.caller_number || 'Unknown'}</p>
+                <p className="text-sm text-white/60">Patient</p>
+                <p className="text-white font-medium">{call.caller_number}</p>
               </div>
             </div>
 
@@ -78,8 +84,16 @@ export function CallDetail() {
               <Clock className="h-5 w-5 text-mint" />
               <div>
                 <p className="text-sm text-white/60">Duration</p>
+                <p className="text-white font-medium">{call.duration} seconds</p>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <Calendar className="h-5 w-5 text-mint" />
+              <div>
+                <p className="text-sm text-white/60">Date & Time</p>
                 <p className="text-white font-medium">
-                  {call.duration ? `${call.duration} seconds` : 'N/A'}
+                  {new Date(call.created_at).toLocaleString()}
                 </p>
               </div>
             </div>
@@ -122,16 +136,56 @@ export function CallDetail() {
               <MessageCircle className="h-5 w-5 text-mint" />
               <div>
                 <p className="text-sm text-white/60">Status</p>
-                <p className="text-white font-medium">{call.status || 'N/A'}</p>
+                <p className="text-white font-medium">{call.status}</p>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-forest-light/50 border-mint/10">
         <CardHeader>
-          <CardTitle>Transcription</CardTitle>
+          <CardTitle className="text-white">Call Summary</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-white/70 mb-6">{call.summary}</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white mb-3">Follow-up Details</h3>
+              <div className="p-4 bg-forest rounded-lg border border-mint/10">
+                <div className="flex items-start space-x-3">
+                  <ArrowRight className="h-5 w-5 text-mint mt-0.5" />
+                  <div>
+                    <p className="text-white font-medium mb-1">Required Action</p>
+                    <p className="text-white/70">{call.follow_up_notes}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white mb-3">Department Info</h3>
+              <div className="p-4 bg-forest rounded-lg border border-mint/10">
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-white/60 text-sm">Department</p>
+                    <p className="text-white">{call.department}</p>
+                  </div>
+                  <div>
+                    <p className="text-white/60 text-sm">Priority Level</p>
+                    <p className="text-white">{call.priority_level}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-forest-light/50 border-mint/10">
+        <CardHeader>
+          <CardTitle className="text-white">Transcription</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-white/70 whitespace-pre-wrap">
