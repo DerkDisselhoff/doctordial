@@ -38,28 +38,28 @@ const FeatureSection = ({
 
   return (
     <div
-      className={`mb-32 ${
+      className={`mb-16 md:mb-32 ${
         isReversed ? 'md:flex-row-reverse' : 'md:flex-row'
-      } flex flex-col md:flex-row items-center gap-12 animate-fade-up`}
+      } flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fade-up`}
     >
       {/* Content Side */}
-      <div className="flex-1 space-y-6">
-        <div className="w-16 h-16 bg-mint/10 rounded-full flex items-center justify-center mb-6">
-          <Icon className="w-8 h-8 text-mint" />
+      <div className="flex-1 space-y-4 md:space-y-6">
+        <div className="w-12 h-12 md:w-16 md:h-16 bg-mint/10 rounded-full flex items-center justify-center mb-4 md:mb-6">
+          <Icon className="w-6 h-6 md:w-8 md:h-8 text-mint" />
         </div>
-        <h3 className="text-3xl font-bold text-white">
+        <h3 className="text-2xl md:text-3xl font-bold text-white">
           {title}
         </h3>
-        <p className="text-lg text-white/70">
+        <p className="text-base md:text-lg text-white/70">
           {description}
         </p>
-        <ul className="space-y-4">
+        <ul className="space-y-3 md:space-y-4">
           {points.map((point, pointIndex) => (
             <li
               key={pointIndex}
-              className="flex items-center text-white/70"
+              className="flex items-center text-sm md:text-base text-white/70"
             >
-              <div className="w-1.5 h-1.5 bg-mint rounded-full mr-3" />
+              <div className="w-1.5 h-1.5 bg-mint rounded-full mr-3 flex-shrink-0" />
               {point}
             </li>
           ))}
@@ -67,7 +67,7 @@ const FeatureSection = ({
       </div>
 
       {/* Preview Component Side */}
-      <div className="flex-1">
+      <div className="flex-1 w-full">
         <Card className="bg-forest-light/95 backdrop-blur-xl border-mint/10 overflow-hidden">
           <PreviewComponent />
         </Card>

@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Calendar, Clock, AlertCircle } from "lucide-react";
+import { Clock, AlertCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Logo } from "@/components/Logo";
 
@@ -79,21 +79,21 @@ const getUrgencyColor = (level: string) => {
 export function UrgencyLevels() {
   return (
     <TooltipProvider>
-      <div className="p-4 md:p-6">
-        <div className="flex items-center gap-4 mb-4">
-          <Logo className="text-white w-8 h-8 md:w-auto md:h-auto" />
+      <div className="p-3 md:p-6">
+        <div className="flex items-center gap-2 md:gap-4 mb-4">
+          <Logo className="text-white w-6 h-6 md:w-8 md:h-8" />
         </div>
-        <div className="overflow-x-auto -mx-4 md:mx-0">
-          <div className="min-w-[768px] md:min-w-0"> {/* Minimum width for mobile scroll */}
+        <div className="overflow-x-auto -mx-3 md:mx-0">
+          <div className="min-w-[640px] md:min-w-0">
             <table className="w-full">
               <thead>
                 <tr className="text-left border-b border-mint/10">
-                  <th className="pb-3 text-sm font-bold text-white/90 px-4">Patient</th>
-                  <th className="pb-3 text-sm font-bold text-white/90 px-4">Symptoms</th>
-                  <th className="pb-3 text-sm font-bold text-white/90 px-4">Urgency</th>
-                  <th className="pb-3 text-sm font-bold text-white/90 px-4">Appointment</th>
-                  <th className="pb-3 text-sm font-bold text-white/90 px-4">Actions</th>
-                  <th className="pb-3 text-sm font-bold text-white/90 px-4">Resolution</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Patient</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Symptoms</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Urgency</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Appointment</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Actions</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Resolution</th>
                 </tr>
               </thead>
               <tbody>
@@ -104,7 +104,7 @@ export function UrgencyLevels() {
                       index % 2 === 0 ? 'bg-forest-light/30' : ''
                     }`}
                   >
-                    <td className="py-4 text-sm text-white px-4">
+                    <td className="py-2 md:py-4 text-xs md:text-sm text-white px-2 md:px-4">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <div className="cursor-help">
@@ -112,30 +112,30 @@ export function UrgencyLevels() {
                           </div>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Patient ID: {case_.id}</p>
+                          <p className="text-xs">Patient ID: {case_.id}</p>
                         </TooltipContent>
                       </Tooltip>
                     </td>
-                    <td className="py-4 text-sm text-white/70 px-4">
+                    <td className="py-2 md:py-4 text-xs md:text-sm text-white/70 px-2 md:px-4">
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <div className="cursor-help truncate max-w-[120px] md:max-w-[200px]">
+                          <div className="cursor-help truncate max-w-[80px] md:max-w-[200px]">
                             {case_.symptoms}
                           </div>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>{case_.symptoms}</p>
+                          <p className="text-xs">{case_.symptoms}</p>
                         </TooltipContent>
                       </Tooltip>
                     </td>
-                    <td className="py-4 px-4">
-                      <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium border ${getUrgencyColor(case_.urgencyLevel)}`}>
+                    <td className="py-2 md:py-4 px-2 md:px-4">
+                      <span className={`inline-flex px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-[10px] md:text-xs font-medium border ${getUrgencyColor(case_.urgencyLevel)}`}>
                         {case_.urgencyLevel}
                       </span>
                     </td>
-                    <td className="py-4 text-sm text-white/70 px-4">
-                      <div className="flex flex-col md:flex-row items-start md:items-center gap-2">
-                        <span className={`inline-flex px-2 py-1 rounded-full text-xs ${
+                    <td className="py-2 md:py-4 text-xs md:text-sm text-white/70 px-2 md:px-4">
+                      <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-2">
+                        <span className={`inline-flex px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-[10px] md:text-xs ${
                           case_.appointmentStatus === 'Scheduled' 
                             ? 'bg-mint/10 text-mint' 
                             : 'bg-yellow-500/10 text-yellow-500'
@@ -143,34 +143,34 @@ export function UrgencyLevels() {
                           {case_.appointmentStatus}
                         </span>
                         {case_.appointmentDate && (
-                          <span className="flex items-center gap-1 text-white/50 text-xs">
-                            <Calendar className="h-3 w-3" />
+                          <span className="flex items-center gap-1 text-white/50 text-[10px] md:text-xs">
+                            <Calendar className="h-2.5 w-2.5 md:h-3 md:w-3" />
                             {case_.appointmentDate}
                           </span>
                         )}
                       </div>
                     </td>
-                    <td className="py-4 text-sm px-4">
-                      <div className="flex flex-wrap gap-2">
+                    <td className="py-2 md:py-4 text-xs md:text-sm px-2 md:px-4">
+                      <div className="flex flex-wrap gap-1 md:gap-2">
                         {case_.actions.map((action, i) => (
                           <span 
                             key={i}
-                            className="px-2 py-1 text-xs bg-mint/10 text-mint rounded-full whitespace-nowrap"
+                            className="px-1.5 md:px-2 py-0.5 md:py-1 text-[10px] md:text-xs bg-mint/10 text-mint rounded-full whitespace-nowrap"
                           >
                             {action}
                           </span>
                         ))}
                       </div>
                     </td>
-                    <td className="py-4 text-sm text-white/70 px-4">
+                    <td className="py-2 md:py-4 text-xs md:text-sm text-white/70 px-2 md:px-4">
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <div className="cursor-help truncate max-w-[120px] md:max-w-[200px]">
+                          <div className="cursor-help truncate max-w-[80px] md:max-w-[200px]">
                             {case_.resolution}
                           </div>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>{case_.resolution}</p>
+                          <p className="text-xs">{case_.resolution}</p>
                         </TooltipContent>
                       </Tooltip>
                     </td>
