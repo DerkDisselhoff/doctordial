@@ -1,6 +1,13 @@
 import { TableCell, TableRow } from "@/components/ui/table";
 import { VapiCall } from "@/services/vapiService";
 import { useNavigate } from "react-router-dom";
+import { Edit2, Trash2, MoreVertical } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface CallsTableRowProps {
   call: VapiCall;
@@ -9,11 +16,20 @@ interface CallsTableRowProps {
 export function CallsTableRow({ call }: CallsTableRowProps) {
   const navigate = useNavigate();
 
+  const handleRowClick = (e: React.MouseEvent) => {
+    // Prevent navigation when clicking on the actions dropdown
+    if ((e.target as HTMLElement).closest('.actions-dropdown')) {
+      e.stopPropagation();
+      return;
+    }
+    navigate(`/dashboard/calls/${call.call_id}`);
+  };
+
   return (
     <TableRow 
       key={call.id}
       className="border-b border-mint/5 hover:bg-mint/5 cursor-pointer transition-colors"
-      onClick={() => navigate(`/dashboard/calls/${call.call_id}`)}
+      onClick={handleRowClick}
     >
       <TableCell className="p-4 text-white whitespace-nowrap">
         {new Date(call.created_at || '').toLocaleString()}
@@ -29,10 +45,10 @@ export function CallsTableRow({ call }: CallsTableRowProps) {
       <TableCell className="p-4 whitespace-nowrap">
         <span className={`px-2 py-1 rounded-full text-xs ${
           call.sentiment_analysis?.urgency === 'high' 
-            ? 'bg-red-500/10 text-red-500' 
+            ? 'bg-red-100 text-red-700 border border-red-200' 
             : call.sentiment_analysis?.urgency === 'medium'
-            ? 'bg-yellow-500/10 text-yellow-500'
-            : 'bg-green-500/10 text-green-500'
+            ? 'bg-orange-100 text-orange-700 border border-orange-200'
+            : 'bg-green-100 text-green-700 border border-green-200'
         }`}>
           {call.sentiment_analysis?.urgency || 'N/A'}
         </span>
@@ -48,8 +64,18 @@ export function CallsTableRow({ call }: CallsTableRowProps) {
           {call.sentiment_analysis?.sentiment || 'N/A'}
         </span>
       </TableCell>
-      <TableCell className="p-4 text-white/70 whitespace-nowrap">
-        {call.status}
+      <TableCell className="p-4 whitespace-nowrap">
+        <span className={`px-2 py-1 rounded-full text-xs ${
+          call.status === 'completed'
+            ? 'bg-green-100 text-green-700 border border-green-200'
+            : call.status === 'scheduled'
+            ? 'bg-blue-100 text-blue-700 border border-blue-200'
+            : call.status === 'missed'
+            ? 'bg-red-100 text-red-700 border border-red-200'
+            : 'bg-yellow-100 text-yellow-700 border border-yellow-200'
+        }`}>
+          {call.status}
+        </span>
       </TableCell>
       <TableCell className="p-4 whitespace-nowrap">
         {call.status === 'completed' || call.status === 'scheduled' ? (
@@ -64,6 +90,25 @@ export function CallsTableRow({ call }: CallsTableRowProps) {
       </TableCell>
       <TableCell className="p-4 text-white/70 whitespace-nowrap">
         {call.duration ? `${call.duration}s` : 'N/A'}
+      </TableCell>
+      <TableCell className="p-4 whitespace-nowrap">
+        <div className="actions-dropdown">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="focus:outline-none">
+              <MoreVertical className="h-4 w-4 text-white/70 hover:text-white" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-forest-light border-mint/10">
+              <DropdownMenuItem className="text-white hover:bg-mint/10 cursor-pointer">
+                <Edit2 className="h-4 w-4 mr-2" />
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-red-500 hover:bg-red-500/10 cursor-pointer">
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </TableCell>
     </TableRow>
   );
