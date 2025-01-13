@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Phone, Clock, MessageCircle, User, ThumbsUp, AlertCircle, Calendar, ArrowRight } from "lucide-react";
+import { Phone, Clock, MessageCircle, User, ThumbsUp, AlertCircle, Calendar, ArrowRight, Tag, Building2, FileCheck } from "lucide-react";
 import { VapiCall } from "@/services/vapiService";
 
 export function CallDetail() {
@@ -10,47 +10,12 @@ export function CallDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate API call with mock data
+    // Simulate API call with mock data generator
+    const mockCalls = generateMockCalls(100);
+    const foundCall = mockCalls.find(c => c.call_id === callId);
+    
     setTimeout(() => {
-      const mockCall: VapiCall = {
-        id: "mock-1",
-        call_id: callId || "",
-        caller_number: "John Smith",
-        recipient_number: "+31612345678",
-        duration: 180,
-        status: "completed",
-        created_at: new Date().toISOString(),
-        transcription: "Hello, I'd like to schedule a follow-up appointment with Dr. Johnson for next week. I've been experiencing some mild discomfort in my lower back, and I want to discuss the effectiveness of the prescribed treatment.",
-        sentiment_analysis: {
-          sentiment: "positive",
-          urgency: "medium"
-        },
-        summary: "Patient requesting follow-up appointment for back pain assessment",
-        urgency_score: 3,
-        assistant_name: "Dr. AI",
-        assistant_id: "ai-123",
-        caller_name: "John Smith",
-        language: "en",
-        recording_url: "https://example.com/recording-123.mp3",
-        tags: ["follow-up", "back-pain"],
-        follow_up_required: true,
-        follow_up_notes: "Schedule follow-up within 7 days",
-        call_type: "inbound",
-        department: "General Practice",
-        priority_level: "medium",
-        resolution_status: "scheduled",
-        callback_number: "+31612345678",
-        workflow_id: "wf-123",
-        workflow_name: "Patient Follow-up",
-        block_id: "block-123",
-        block_name: "Initial Assessment",
-        output_schema: {},
-        messages: [],
-        workflow_variables: {},
-        block_outputs: {},
-        call_variables: {}
-      };
-      setCall(mockCall);
+      setCall(foundCall || null);
       setLoading(false);
     }, 1000);
   }, [callId]);
@@ -123,10 +88,10 @@ export function CallDetail() {
                 <p className="text-sm text-white/60">Sentiment</p>
                 <span className={`px-2 py-1 rounded-full text-xs font-medium
                   ${call.sentiment_analysis?.sentiment === 'positive'
-                    ? 'bg-green-500/10 text-green-400'
+                    ? 'bg-green-100 text-green-700 border border-green-200'
                     : call.sentiment_analysis?.sentiment === 'negative'
-                    ? 'bg-red-500/10 text-red-400'
-                    : 'bg-gray-500/10 text-gray-400'
+                    ? 'bg-red-100 text-red-700 border border-red-200'
+                    : 'bg-gray-100 text-gray-700 border border-gray-200'
                   }`}>
                   {call.sentiment_analysis?.sentiment || 'N/A'}
                 </span>
@@ -139,10 +104,10 @@ export function CallDetail() {
                 <p className="text-sm text-white/60">Urgency</p>
                 <span className={`px-2 py-1 rounded-full text-xs font-medium
                   ${call.sentiment_analysis?.urgency === 'high'
-                    ? 'bg-red-500/10 text-red-400'
+                    ? 'bg-red-100 text-red-700 border border-red-200'
                     : call.sentiment_analysis?.urgency === 'medium'
-                    ? 'bg-yellow-500/10 text-yellow-400'
-                    : 'bg-green-500/10 text-green-400'
+                    ? 'bg-orange-100 text-orange-700 border border-orange-200'
+                    : 'bg-green-100 text-green-700 border border-green-200'
                   }`}>
                   {call.sentiment_analysis?.urgency || 'N/A'}
                 </span>
@@ -153,7 +118,17 @@ export function CallDetail() {
               <MessageCircle className="h-5 w-5 text-mint" />
               <div>
                 <p className="text-sm text-white/60">Status</p>
-                <p className="text-white font-medium">{call.status}</p>
+                <span className={`px-2 py-1 rounded-full text-xs font-medium
+                  ${call.status === 'completed'
+                    ? 'bg-green-100 text-green-700 border border-green-200'
+                    : call.status === 'scheduled'
+                    ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                    : call.status === 'missed'
+                    ? 'bg-red-100 text-red-700 border border-red-200'
+                    : 'bg-yellow-100 text-yellow-700 border border-yellow-200'
+                  }`}>
+                  {call.status}
+                </span>
               </div>
             </div>
           </div>
@@ -175,7 +150,7 @@ export function CallDetail() {
                   <ArrowRight className="h-5 w-5 text-mint mt-0.5" />
                   <div>
                     <p className="text-white font-medium mb-1">Required Action</p>
-                    <p className="text-white/70">{call.follow_up_notes}</p>
+                    <p className="text-white/70">{call.follow_up_notes || 'No follow-up required'}</p>
                   </div>
                 </div>
               </div>
@@ -185,13 +160,26 @@ export function CallDetail() {
               <h3 className="text-lg font-semibold text-white mb-3">Department Info</h3>
               <div className="p-4 bg-forest rounded-lg border border-mint/10">
                 <div className="space-y-3">
-                  <div>
-                    <p className="text-white/60 text-sm">Department</p>
-                    <p className="text-white">{call.department}</p>
+                  <div className="flex items-center space-x-3">
+                    <Building2 className="h-5 w-5 text-mint" />
+                    <div>
+                      <p className="text-white/60 text-sm">Department</p>
+                      <p className="text-white">{call.department}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-white/60 text-sm">Priority Level</p>
-                    <p className="text-white">{call.priority_level}</p>
+                  <div className="flex items-center space-x-3">
+                    <Tag className="h-5 w-5 text-mint" />
+                    <div>
+                      <p className="text-white/60 text-sm">Priority Level</p>
+                      <p className="text-white">{call.priority_level}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <FileCheck className="h-5 w-5 text-mint" />
+                    <div>
+                      <p className="text-white/60 text-sm">Resolution Status</p>
+                      <p className="text-white">{call.resolution_status}</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -213,3 +201,65 @@ export function CallDetail() {
     </div>
   );
 }
+
+// Helper function to generate mock calls
+const generateMockCalls = (count: number): VapiCall[] => {
+  const sentiments = ['positive', 'negative', 'neutral'];
+  const urgencyLevels = ['high', 'medium', 'low'];
+  const subjects = [
+    'Prescription renewal request',
+    'Scheduling routine check-up',
+    'Discussing test results',
+    'Emergency consultation',
+    'Follow-up appointment',
+    'Medication side effects',
+    'General health inquiry',
+    'Specialist referral request'
+  ];
+  const patientNames = [
+    'John Smith', 'Emma Wilson', 'Michael Brown', 'Sarah Davis',
+    'James Johnson', 'Lisa Anderson', 'Robert Taylor', 'Maria Garcia',
+    'David Miller', 'Jennifer White'
+  ];
+  const statuses = ['completed', 'scheduled', 'missed', 'rescheduled'];
+  const departments = ['General Practice', 'Emergency', 'Pediatrics', 'Internal Medicine'];
+
+  return Array.from({ length: count }, (_, i) => ({
+    id: `mock-${i + 1}`,
+    call_id: `CALL-${String(i + 1).padStart(4, '0')}`,
+    caller_number: patientNames[Math.floor(Math.random() * patientNames.length)],
+    recipient_number: '+31612345678',
+    duration: Math.floor(Math.random() * 600) + 60,
+    status: statuses[Math.floor(Math.random() * statuses.length)],
+    transcription: `Patient called regarding ${subjects[Math.floor(Math.random() * subjects.length)].toLowerCase()}. Discussion focused on symptoms and next steps.`,
+    sentiment_analysis: {
+      sentiment: sentiments[Math.floor(Math.random() * sentiments.length)],
+      urgency: urgencyLevels[Math.floor(Math.random() * urgencyLevels.length)]
+    },
+    created_at: new Date(Date.now() - Math.floor(Math.random() * 7776000000)).toISOString(),
+    summary: subjects[Math.floor(Math.random() * subjects.length)],
+    urgency_score: Math.floor(Math.random() * 5) + 1,
+    assistant_name: 'Dr. AI',
+    assistant_id: `assistant-${i + 1}`,
+    caller_name: patientNames[Math.floor(Math.random() * patientNames.length)],
+    language: 'en',
+    recording_url: `https://example.com/recording-${i + 1}.mp3`,
+    tags: ['urgent', 'follow-up', 'prescription'],
+    follow_up_required: Math.random() > 0.5,
+    follow_up_notes: Math.random() > 0.5 ? 'Schedule follow-up appointment within 2 weeks' : null,
+    call_type: 'inbound',
+    department: departments[Math.floor(Math.random() * departments.length)],
+    priority_level: urgencyLevels[Math.floor(Math.random() * urgencyLevels.length)],
+    resolution_status: Math.random() > 0.5 ? 'resolved' : 'pending',
+    callback_number: '+31612345678',
+    workflow_id: `workflow-${i + 1}`,
+    workflow_name: 'Standard Patient Intake',
+    block_id: `block-${i + 1}`,
+    block_name: 'Initial Assessment',
+    output_schema: {},
+    messages: [],
+    workflow_variables: {},
+    block_outputs: {},
+    call_variables: {}
+  }));
+};
