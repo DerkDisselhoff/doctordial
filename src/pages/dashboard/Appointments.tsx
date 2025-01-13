@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const mockAppointments = [
   {
-    id: '1',
+    id: '123e4567-e89b-12d3-a456-426614174000',
     appointment_date: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
     naam: "John Smith",
     patient_id: "P12345",
@@ -22,7 +22,7 @@ const mockAppointments = [
     symptoms: ["headache", "fatigue"]
   },
   {
-    id: '2',
+    id: '123e4567-e89b-12d3-a456-426614174001',
     appointment_date: new Date(Date.now() + 172800000).toISOString(), // Day after tomorrow
     naam: "Emma Johnson",
     patient_id: "P12346",
@@ -33,7 +33,7 @@ const mockAppointments = [
     symptoms: ["high blood pressure", "dizziness"]
   },
   {
-    id: '3',
+    id: '123e4567-e89b-12d3-a456-426614174002',
     appointment_date: new Date(Date.now() - 86400000).toISOString(), // Yesterday
     naam: "Michael Brown",
     patient_id: "P12347",
