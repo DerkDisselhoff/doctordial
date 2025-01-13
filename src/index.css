@@ -213,4 +213,38 @@
   .recharts-active-dot {
     @apply fill-mint stroke-forest;
   }
+
+  /* Dark Theme Components */
+  .dark-card {
+    @apply bg-forest-light/50 border-mint/10 text-white;
+  }
+
+  .dark-card-header {
+    @apply border-b border-mint/10;
+  }
+
+  .dark-text-primary {
+    @apply text-white;
+  }
+
+  .dark-text-secondary {
+    @apply text-white/70;
+  }
+
+  .dark-hover {
+    @apply hover:bg-mint/5;
+  }
+
+  /* Chart Styles */
+  .dark-chart-grid {
+    @apply stroke-mint/10;
+  }
+
+  .dark-chart-text {
+    @apply fill-white text-sm;
+  }
+
+  .dark-chart-tooltip {
+    @apply !bg-forest-light/95 border border-mint/10 rounded-lg shadow-lg;
+  }
 }

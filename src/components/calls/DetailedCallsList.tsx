@@ -95,7 +95,7 @@ export function DetailedCallsList() {
 
   if (loading) {
     return (
-      <Card className="bg-white">
+      <Card className="bg-forest-light/50 border-mint/10">
         <CardContent className="flex justify-center p-8">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-mint"></div>
         </CardContent>
@@ -104,47 +104,47 @@ export function DetailedCallsList() {
   }
 
   return (
-    <Card className="bg-white">
-      <CardHeader className="border-b border-gray-100">
-        <CardTitle className="text-xl font-semibold text-forest">Call History</CardTitle>
+    <Card className="bg-forest-light/50 border-mint/10">
+      <CardHeader className="border-b border-mint/10">
+        <CardTitle className="text-white">Call History</CardTitle>
       </CardHeader>
       <CardContent className="p-0">
         <Table>
           <TableHeader>
-            <TableRow className="bg-gray-50">
-              <TableHead className="text-forest"><Calendar className="h-4 w-4" /></TableHead>
-              <TableHead className="text-forest"><User className="h-4 w-4" /></TableHead>
-              <TableHead className="text-forest"><MessageCircle className="h-4 w-4" /></TableHead>
-              <TableHead className="text-forest">Urgency</TableHead>
-              <TableHead className="text-forest">Sentiment</TableHead>
-              <TableHead className="text-forest">Outcome</TableHead>
-              <TableHead className="text-forest">Appointment</TableHead>
-              <TableHead className="text-forest"><Clock className="h-4 w-4" /></TableHead>
+            <TableRow className="border-b border-mint/10">
+              <TableHead className="text-white/70"><Calendar className="h-4 w-4" /></TableHead>
+              <TableHead className="text-white/70"><User className="h-4 w-4" /></TableHead>
+              <TableHead className="text-white/70"><MessageCircle className="h-4 w-4" /></TableHead>
+              <TableHead className="text-white/70">Urgency</TableHead>
+              <TableHead className="text-white/70">Sentiment</TableHead>
+              <TableHead className="text-white/70">Outcome</TableHead>
+              <TableHead className="text-white/70">Appointment</TableHead>
+              <TableHead className="text-white/70"><Clock className="h-4 w-4" /></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {paginatedCalls.map((call) => (
               <TableRow 
                 key={call.id}
-                className="hover:bg-gray-50 cursor-pointer"
+                className="hover:bg-mint/5 cursor-pointer border-b border-mint/5"
                 onClick={() => navigate(`/dashboard/calls/${call.call_id}`)}
               >
-                <TableCell className="text-forest">
+                <TableCell className="text-white/70">
                   {new Date(call.created_at || '').toLocaleString()}
                 </TableCell>
-                <TableCell className="text-forest">
+                <TableCell className="text-white">
                   {call.caller_number}
                 </TableCell>
-                <TableCell className="text-forest max-w-xs truncate">
+                <TableCell className="text-white/70 max-w-xs truncate">
                   {call.transcription}
                 </TableCell>
                 <TableCell>
                   <span className={`px-2 py-1 rounded-full text-xs
                     ${call.sentiment_analysis?.urgency === 'high' 
-                      ? 'bg-red-100 text-red-700'
+                      ? 'bg-red-500/10 text-red-500'
                       : call.sentiment_analysis?.urgency === 'medium'
-                      ? 'bg-yellow-100 text-yellow-700'
-                      : 'bg-green-100 text-green-700'
+                      ? 'bg-yellow-500/10 text-yellow-500'
+                      : 'bg-green-500/10 text-green-500'
                     }`}>
                     {call.sentiment_analysis?.urgency || 'N/A'}
                   </span>
@@ -152,15 +152,15 @@ export function DetailedCallsList() {
                 <TableCell>
                   <span className={`px-2 py-1 rounded-full text-xs
                     ${call.sentiment_analysis?.sentiment === 'positive'
-                      ? 'bg-green-100 text-green-700'
+                      ? 'bg-green-500/10 text-green-500'
                       : call.sentiment_analysis?.sentiment === 'negative'
-                      ? 'bg-red-100 text-red-700'
-                      : 'bg-gray-100 text-gray-700'
+                      ? 'bg-red-500/10 text-red-500'
+                      : 'bg-gray-500/10 text-gray-400'
                     }`}>
                     {call.sentiment_analysis?.sentiment || 'N/A'}
                   </span>
                 </TableCell>
-                <TableCell className="text-forest">
+                <TableCell className="text-white/70">
                   {call.status}
                 </TableCell>
                 <TableCell>
@@ -169,12 +169,12 @@ export function DetailedCallsList() {
                       Yes
                     </span>
                   ) : (
-                    <span className="px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-700">
+                    <span className="px-2 py-1 rounded-full text-xs bg-gray-500/10 text-gray-400">
                       No
                     </span>
                   )}
                 </TableCell>
-                <TableCell className="text-forest">
+                <TableCell className="text-white/70">
                   {call.duration ? `${call.duration}s` : 'N/A'}
                 </TableCell>
               </TableRow>
@@ -182,24 +182,24 @@ export function DetailedCallsList() {
           </TableBody>
         </Table>
         
-        <div className="flex items-center justify-between p-4 border-t border-gray-100">
+        <div className="flex items-center justify-between p-4 border-t border-mint/10">
           <Button
             variant="outline"
             onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="text-forest"
+            className="text-white hover:bg-mint/10 border-mint/20"
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
             Previous
           </Button>
-          <span className="text-sm text-forest">
+          <span className="text-white/70">
             Page {currentPage} of {totalPages}
           </span>
           <Button
             variant="outline"
             onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="text-forest"
+            className="text-white hover:bg-mint/10 border-mint/20"
           >
             Next
             <ChevronRight className="h-4 w-4 ml-2" />
