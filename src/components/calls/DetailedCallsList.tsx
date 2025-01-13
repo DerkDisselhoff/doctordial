@@ -12,7 +12,7 @@ import { Search, Filter } from "lucide-react";
 
 const generateMockCalls = (count: number): VapiCall[] => {
   const sentiments = ['positive', 'negative', 'neutral'];
-  const urgencyLevels = ['high', 'medium', 'low'];
+  const urgencyLevels = ['U1', 'U2', 'U3', 'U4', 'U5'];
   const subjects = [
     'Prescription renewal request',
     'Scheduling routine check-up',

@@ -18,7 +18,7 @@ const mockAppointments = [
     patient_phone: "+31 6 12345678",
     patient_email: "john.smith@email.com",
     follow_up_notes: "Regular check-up, patient mentioned mild headaches",
-    urgentiescore: "low",
+    urgentiescore: "U4",
     symptoms: ["headache", "fatigue"]
   },
   {
@@ -29,7 +29,7 @@ const mockAppointments = [
     patient_phone: "+31 6 23456789",
     patient_email: "emma.j@email.com",
     follow_up_notes: "Follow-up on previous treatment, blood pressure check required",
-    urgentiescore: "medium",
+    urgentiescore: "U2",
     symptoms: ["high blood pressure", "dizziness"]
   },
   {
@@ -40,7 +40,7 @@ const mockAppointments = [
     patient_phone: "+31 6 34567890",
     patient_email: "m.brown@email.com",
     follow_up_notes: "Post-surgery check-up completed, recovery progressing well",
-    urgentiescore: "high",
+    urgentiescore: "U1",
     symptoms: ["post-surgery pain", "limited mobility"]
   }
 ];
