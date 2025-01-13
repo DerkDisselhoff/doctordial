@@ -9,6 +9,42 @@ import { supabase } from "@/lib/supabaseClient";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useNavigate } from "react-router-dom";
 
+const mockAppointments = [
+  {
+    id: '1',
+    appointment_date: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
+    naam: "John Smith",
+    patient_id: "P12345",
+    patient_phone: "+31 6 12345678",
+    patient_email: "john.smith@email.com",
+    follow_up_notes: "Regular check-up, patient mentioned mild headaches",
+    urgentiescore: "low",
+    symptoms: ["headache", "fatigue"]
+  },
+  {
+    id: '2',
+    appointment_date: new Date(Date.now() + 172800000).toISOString(), // Day after tomorrow
+    naam: "Emma Johnson",
+    patient_id: "P12346",
+    patient_phone: "+31 6 23456789",
+    patient_email: "emma.j@email.com",
+    follow_up_notes: "Follow-up on previous treatment, blood pressure check required",
+    urgentiescore: "medium",
+    symptoms: ["high blood pressure", "dizziness"]
+  },
+  {
+    id: '3',
+    appointment_date: new Date(Date.now() - 86400000).toISOString(), // Yesterday
+    naam: "Michael Brown",
+    patient_id: "P12347",
+    patient_phone: "+31 6 34567890",
+    patient_email: "m.brown@email.com",
+    follow_up_notes: "Post-surgery check-up completed, recovery progressing well",
+    urgentiescore: "high",
+    symptoms: ["post-surgery pain", "limited mobility"]
+  }
+];
+
 const Appointments = () => {
   const [activeTab, setActiveTab] = useState<"upcoming" | "past">("upcoming");
   const navigate = useNavigate();
@@ -16,6 +52,11 @@ const Appointments = () => {
   const { data: appointments, isLoading } = useQuery({
     queryKey: ['appointments'],
     queryFn: async () => {
+      // For development, return mock data
+      return mockAppointments;
+      
+      // When ready to use real data, uncomment this:
+      /*
       const { data, error } = await supabase
         .from('call_logs')
         .select('*')
@@ -24,6 +65,7 @@ const Appointments = () => {
       
       if (error) throw error;
       return data;
+      */
     }
   });
 
