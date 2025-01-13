@@ -20,6 +20,7 @@ import GeneralSettings from "./dashboard/settings/General";
 import BillingSettings from "./dashboard/settings/Billing";
 import InvoicesSettings from "./dashboard/settings/Invoices";
 import SecuritySettings from "./dashboard/settings/Security";
+import Calendar from "./dashboard/Calendar";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +71,7 @@ const Dashboard = () => {
       <DashboardLayout>
         <Routes>
           <Route path="/" element={<OverviewDashboard />} />
+          <Route path="/calendar" element={<Calendar />} />
           {userRole === 'admin' ? (
             <>
               <Route path="/clients" element={<Clients />} />

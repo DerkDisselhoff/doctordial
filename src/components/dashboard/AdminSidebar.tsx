@@ -91,6 +91,7 @@ export function AdminSidebar() {
 
   const adminMenuItems = [
     { title: "Overview", icon: Home, path: "/dashboard" },
+    { title: "Calendar", icon: Calendar, path: "/dashboard/calendar" },
     { title: "Clients", icon: Users, path: "/dashboard/clients" },
     { title: "Practices", icon: Building2, path: "/dashboard/practices" },
     { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
