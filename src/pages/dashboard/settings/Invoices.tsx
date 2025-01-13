@@ -28,33 +28,33 @@ const InvoicesSettings = () => {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-forest">Invoices</h2>
-        <p className="text-gray-500">View and download your invoices</p>
+        <h2 className="text-2xl font-bold text-white">Invoices</h2>
+        <p className="text-white/60">View and download your invoices</p>
       </div>
 
-      <Card>
+      <Card className="bg-forest-light/50 border-mint/10">
         <CardHeader>
-          <CardTitle className="text-forest">Invoice History</CardTitle>
+          <CardTitle className="text-white">Invoice History</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow className="hover:bg-gray-50/50">
-                <TableHead className="text-forest font-medium">Invoice</TableHead>
-                <TableHead className="text-forest font-medium">Date</TableHead>
-                <TableHead className="text-forest font-medium">Amount</TableHead>
-                <TableHead className="text-forest font-medium">Status</TableHead>
-                <TableHead className="text-forest font-medium text-right">Actions</TableHead>
+              <TableRow className="hover:bg-mint/5 border-mint/10">
+                <TableHead className="text-white font-medium">Invoice</TableHead>
+                <TableHead className="text-white font-medium">Date</TableHead>
+                <TableHead className="text-white font-medium">Amount</TableHead>
+                <TableHead className="text-white font-medium">Status</TableHead>
+                <TableHead className="text-white font-medium text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {invoices.map((invoice) => (
-                <TableRow key={invoice.id} className="hover:bg-gray-50/50">
-                  <TableCell className="font-medium text-forest">{invoice.id}</TableCell>
-                  <TableCell>{invoice.date}</TableCell>
-                  <TableCell>{invoice.amount}</TableCell>
+                <TableRow key={invoice.id} className="hover:bg-mint/5 border-mint/10">
+                  <TableCell className="font-medium text-white">{invoice.id}</TableCell>
+                  <TableCell className="text-white/70">{invoice.date}</TableCell>
+                  <TableCell className="text-white/70">{invoice.amount}</TableCell>
                   <TableCell>
-                    <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-700">
+                    <span className="px-2 py-1 rounded-full text-xs bg-mint/10 text-mint">
                       {invoice.status}
                     </span>
                   </TableCell>
@@ -62,7 +62,7 @@ const InvoicesSettings = () => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-forest hover:text-forest hover:bg-mint/10"
+                      className="text-white hover:text-white hover:bg-mint/10"
                     >
                       <Download className="h-4 w-4 mr-2" />
                       Download

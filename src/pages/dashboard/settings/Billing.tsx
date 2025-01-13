@@ -6,22 +6,22 @@ const BillingSettings = () => {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-forest">Billing Settings</h2>
-        <p className="text-gray-500">Manage your billing information and subscription</p>
+        <h2 className="text-2xl font-bold text-white">Billing Settings</h2>
+        <p className="text-white/60">Manage your billing information and subscription</p>
       </div>
 
-      <Card>
+      <Card className="bg-forest-light/50 border-mint/10">
         <CardHeader>
-          <CardTitle className="text-forest">Current Plan</CardTitle>
+          <CardTitle className="text-white">Current Plan</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="p-4 bg-mint/10 rounded-lg">
+          <div className="p-4 bg-forest border border-mint/10 rounded-lg">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-lg font-semibold text-forest">Professional Plan</h3>
-                <p className="text-sm text-gray-600">€99/month</p>
+                <h3 className="text-lg font-semibold text-white">Professional Plan</h3>
+                <p className="text-sm text-white/60">€99/month</p>
               </div>
-              <Button variant="outline" className="border-mint text-forest hover:bg-mint/10">
+              <Button variant="outline" className="border-mint text-white hover:bg-mint/10">
                 Upgrade Plan
               </Button>
             </div>
@@ -29,19 +29,19 @@ const BillingSettings = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-forest-light/50 border-mint/10">
         <CardHeader>
-          <CardTitle className="text-forest">Payment Method</CardTitle>
+          <CardTitle className="text-white">Payment Method</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center space-x-4 p-4 border rounded-lg">
+          <div className="flex items-center space-x-4 p-4 border border-mint/10 rounded-lg bg-forest">
             <CreditCard className="h-6 w-6 text-mint" />
             <div>
-              <p className="font-medium text-forest">•••• •••• •••• 4242</p>
-              <p className="text-sm text-gray-500">Expires 12/24</p>
+              <p className="font-medium text-white">•••• •••• •••• 4242</p>
+              <p className="text-sm text-white/60">Expires 12/24</p>
             </div>
           </div>
-          <Button variant="outline" className="border-mint text-forest hover:bg-mint/10">
+          <Button variant="outline" className="border-mint text-white hover:bg-mint/10">
             Update Payment Method
           </Button>
         </CardContent>

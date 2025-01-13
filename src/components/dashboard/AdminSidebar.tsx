@@ -32,10 +32,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuPortal,
-  DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 
@@ -156,7 +152,8 @@ export function AdminSidebar() {
         <DropdownMenuContent
           className="w-56 bg-forest-light border-mint/10"
           align="start"
-          side="right"
+          alignOffset={0}
+          sideOffset={2}
         >
           {settingsMenuItems.map((item) => (
             <DropdownMenuItem
