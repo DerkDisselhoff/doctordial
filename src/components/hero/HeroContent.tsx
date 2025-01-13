@@ -15,7 +15,7 @@ const HeroContent = () => {
         {t("hero.title")}
       </h1>
       <p className="text-base md:text-lg text-white/80 max-w-md leading-relaxed">
-        {t("hero.subtitle")}
+        Let our AI-driven Triage handle your practice's calls while maintaining the personal touch your patients expect.
       </p>
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <BookDemoForm />
