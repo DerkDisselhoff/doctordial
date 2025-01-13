@@ -16,6 +16,7 @@ export function CallDetail() {
         id: "mock-1",
         call_id: callId || "",
         caller_number: "John Smith",
+        recipient_number: "+31612345678",
         duration: 180,
         status: "completed",
         created_at: new Date().toISOString(),
@@ -26,12 +27,28 @@ export function CallDetail() {
         },
         summary: "Patient requesting follow-up appointment for back pain assessment",
         urgency_score: 3,
+        assistant_name: "Dr. AI",
+        assistant_id: "ai-123",
+        caller_name: "John Smith",
+        language: "en",
+        recording_url: "https://example.com/recording-123.mp3",
+        tags: ["follow-up", "back-pain"],
         follow_up_required: true,
         follow_up_notes: "Schedule follow-up within 7 days",
+        call_type: "inbound",
         department: "General Practice",
         priority_level: "medium",
         resolution_status: "scheduled",
-        callback_number: "+31612345678"
+        callback_number: "+31612345678",
+        workflow_id: "wf-123",
+        workflow_name: "Patient Follow-up",
+        block_id: "block-123",
+        block_name: "Initial Assessment",
+        output_schema: {},
+        messages: [],
+        workflow_variables: {},
+        block_outputs: {},
+        call_variables: {}
       };
       setCall(mockCall);
       setLoading(false);
