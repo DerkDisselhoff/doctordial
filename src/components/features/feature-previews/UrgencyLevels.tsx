@@ -88,12 +88,12 @@ export function UrgencyLevels() {
             <table className="w-full">
               <thead>
                 <tr className="text-left border-b border-mint/10">
-                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Patient</th>
-                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Symptoms</th>
-                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Urgency</th>
-                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Appointment</th>
-                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Actions</th>
-                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4">Resolution</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4 text-left">Patient</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4 text-left">Symptoms</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4 text-left">Urgency</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4 text-left">Appointment</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4 text-left">Actions</th>
+                  <th className="pb-2 md:pb-3 text-xs md:text-sm font-bold text-white/90 px-2 md:px-4 text-left">Resolution</th>
                 </tr>
               </thead>
               <tbody>
@@ -104,7 +104,7 @@ export function UrgencyLevels() {
                       index % 2 === 0 ? 'bg-forest-light/30' : ''
                     }`}
                   >
-                    <td className="py-2 md:py-4 text-xs md:text-sm text-white px-2 md:px-4">
+                    <td className="py-2 md:py-4 text-xs md:text-sm text-white px-2 md:px-4 text-left">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <div className="cursor-help">
@@ -116,7 +116,7 @@ export function UrgencyLevels() {
                         </TooltipContent>
                       </Tooltip>
                     </td>
-                    <td className="py-2 md:py-4 text-xs md:text-sm text-white/70 px-2 md:px-4">
+                    <td className="py-2 md:py-4 text-xs md:text-sm text-white/70 px-2 md:px-4 text-left">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <div className="cursor-help truncate max-w-[80px] md:max-w-[200px]">
@@ -128,12 +128,12 @@ export function UrgencyLevels() {
                         </TooltipContent>
                       </Tooltip>
                     </td>
-                    <td className="py-2 md:py-4 px-2 md:px-4">
+                    <td className="py-2 md:py-4 px-2 md:px-4 text-left">
                       <span className={`inline-flex px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-[10px] md:text-xs font-medium border ${getUrgencyColor(case_.urgencyLevel)}`}>
                         {case_.urgencyLevel}
                       </span>
                     </td>
-                    <td className="py-2 md:py-4 text-xs md:text-sm text-white/70 px-2 md:px-4">
+                    <td className="py-2 md:py-4 text-xs md:text-sm text-white/70 px-2 md:px-4 text-left">
                       <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-2">
                         <span className={`inline-flex px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-[10px] md:text-xs ${
                           case_.appointmentStatus === 'Scheduled' 
@@ -150,7 +150,7 @@ export function UrgencyLevels() {
                         )}
                       </div>
                     </td>
-                    <td className="py-2 md:py-4 text-xs md:text-sm px-2 md:px-4">
+                    <td className="py-2 md:py-4 text-xs md:text-sm px-2 md:px-4 text-left">
                       <div className="flex flex-wrap gap-1 md:gap-2">
                         {case_.actions.map((action, i) => (
                           <span 
@@ -162,7 +162,7 @@ export function UrgencyLevels() {
                         ))}
                       </div>
                     </td>
-                    <td className="py-2 md:py-4 text-xs md:text-sm text-white/70 px-2 md:px-4">
+                    <td className="py-2 md:py-4 text-xs md:text-sm text-white/70 px-2 md:px-4 text-left">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <div className="cursor-help truncate max-w-[80px] md:max-w-[200px]">

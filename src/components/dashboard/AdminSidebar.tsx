@@ -39,7 +39,11 @@ export function AdminSidebar() {
     username?: string | null;
     avatar_url?: string | null;
     company_name?: string | null;
-  } | null>(null);
+  }>({
+    username: "Dr. Sarah Johnson",
+    avatar_url: "/assets/ai-agent.webp",
+    company_name: "Centrum Medical"
+  });
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -144,7 +148,7 @@ export function AdminSidebar() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="w-full justify-start gap-3 px-2 hover:bg-mint/5">
-                <Avatar className="h-8 w-8">
+                <Avatar className="h-8 w-8 ring-2 ring-mint/20">
                   <AvatarImage src={userProfile?.avatar_url || ''} />
                   <AvatarFallback className="bg-mint/10 text-forest">
                     {userProfile?.username?.[0]?.toUpperCase() || 'U'}
