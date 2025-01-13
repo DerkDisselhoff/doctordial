@@ -28,7 +28,7 @@ export const PracticeCountStep = ({
         {practices.map((practice) => (
           <Card
             key={practice.value}
-            className={`p-4 cursor-pointer transition-all hover:border-mint ${
+            className={`p-4 cursor-pointer transition-all bg-gray-50 hover:bg-gray-100 ${
               value === practice.value ? "border-mint bg-mint/5" : "border-gray-200"
             }`}
             onClick={() => onNext(practice.value)}
