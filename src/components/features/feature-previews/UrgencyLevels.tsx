@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Clock, AlertCircle } from "lucide-react";
+import { Clock, AlertCircle, Calendar } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Logo } from "@/components/Logo";
 
