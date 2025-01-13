@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
 import Clients from "./dashboard/Clients";
 import Practices from "./dashboard/Practices";
 import Calls from "./dashboard/Calls";
@@ -19,6 +20,7 @@ const queryClient = new QueryClient();
 const Dashboard = () => {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -35,9 +37,22 @@ const Dashboard = () => {
         .single();
 
       setUserRole(profile?.role || null);
+      
+      // Show loader for 1 second
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     };
     checkAuth();
   }, [navigate]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-forest">
+        <Loader2 className="w-8 h-8 text-mint animate-spin" />
+      </div>
+    );
+  }
 
   if (!userRole) {
     return <div className="flex items-center justify-center min-h-screen">
