@@ -1,6 +1,5 @@
 import { MetricsCards } from "./metrics/MetricsCards";
 import { DashboardCharts } from "./charts/DashboardCharts";
-import { RecentCalls } from "./calls/RecentCalls";
 
 export function OverviewDashboard() {
   return (
@@ -12,7 +11,6 @@ export function OverviewDashboard() {
       
       <MetricsCards />
       <DashboardCharts />
-      <RecentCalls />
     </div>
   );
 }
