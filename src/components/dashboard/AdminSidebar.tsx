@@ -9,7 +9,11 @@ import {
   FileText,
   Activity,
   Bot,
-  LogOut
+  LogOut,
+  Shield,
+  CreditCard,
+  Grid,
+  Receipt
 } from "lucide-react";
 import {
   Sidebar,
@@ -19,7 +23,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Logo } from "../Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -28,11 +32,16 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuPortal,
+  DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 
 export function AdminSidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
   const [userProfile, setUserProfile] = useState<{
@@ -92,26 +101,77 @@ export function AdminSidebar() {
     { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
     { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
     { title: "Activity", icon: Activity, path: "/dashboard/activity" },
-    { title: "Settings", icon: Settings, path: "/dashboard/settings" },
+  ];
+
+  const settingsMenuItems = [
+    { title: "General", icon: Grid, path: "/dashboard/settings/general" },
+    { title: "Billing", icon: CreditCard, path: "/dashboard/settings/billing" },
+    { title: "Invoices", icon: Receipt, path: "/dashboard/settings/invoices" },
+    { title: "Security & Privacy", icon: Shield, path: "/dashboard/settings/security" },
   ];
 
   const clientMenuItems = [
     { title: "Overview", icon: Home, path: "/dashboard" },
     { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
     { title: "Assistant", icon: Bot, path: "/dashboard/assistant" },
-    { title: "Settings", icon: Settings, path: "/dashboard/settings" },
   ];
 
-  const MenuItem = ({ icon: Icon, title, path }: { icon: any; title: string; path: string }) => (
-    <Button
-      variant="ghost"
-      className="w-full justify-start gap-3 px-3 py-2 text-white/70 hover:bg-mint/10 hover:text-white"
-      onClick={() => navigate(path)}
-    >
-      <Icon className="h-5 w-5" />
-      <span>{title}</span>
-    </Button>
-  );
+  const MenuItem = ({ icon: Icon, title, path }: { icon: any; title: string; path: string }) => {
+    const isActive = location.pathname === path;
+    
+    return (
+      <Button
+        variant="ghost"
+        className={`w-full justify-start gap-3 px-3 py-2 ${
+          isActive 
+            ? 'bg-mint/10 text-white' 
+            : 'text-white/70 hover:bg-mint/10 hover:text-white'
+        }`}
+        onClick={() => navigate(path)}
+      >
+        <Icon className="h-5 w-5" />
+        <span>{title}</span>
+      </Button>
+    );
+  };
+
+  const SettingsMenuItem = () => {
+    const isSettingsActive = location.pathname.includes('/dashboard/settings');
+    
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className={`w-full justify-start gap-3 px-3 py-2 ${
+              isSettingsActive 
+                ? 'bg-mint/10 text-white' 
+                : 'text-white/70 hover:bg-mint/10 hover:text-white'
+            }`}
+          >
+            <Settings className="h-5 w-5" />
+            <span>Settings</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          className="w-56 bg-forest-light border-mint/10"
+          align="start"
+          side="right"
+        >
+          {settingsMenuItems.map((item) => (
+            <DropdownMenuItem
+              key={item.title}
+              className="text-white/70 hover:text-white hover:bg-mint/5 cursor-pointer"
+              onClick={() => navigate(item.path)}
+            >
+              <item.icon className="mr-2 h-4 w-4" />
+              <span>{item.title}</span>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  };
 
   return (
     <Sidebar>
@@ -131,13 +191,19 @@ export function AdminSidebar() {
             <SidebarGroupContent>
               <div className="space-y-1">
                 {userRole === 'admin' ? (
-                  adminMenuItems.map((item) => (
-                    <MenuItem key={item.title} {...item} />
-                  ))
+                  <>
+                    {adminMenuItems.map((item) => (
+                      <MenuItem key={item.title} {...item} />
+                    ))}
+                    <SettingsMenuItem />
+                  </>
                 ) : (
-                  clientMenuItems.map((item) => (
-                    <MenuItem key={item.title} {...item} />
-                  ))
+                  <>
+                    {clientMenuItems.map((item) => (
+                      <MenuItem key={item.title} {...item} />
+                    ))}
+                    <SettingsMenuItem />
+                  </>
                 )}
               </div>
             </SidebarGroupContent>

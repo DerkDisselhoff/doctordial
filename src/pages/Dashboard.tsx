@@ -14,6 +14,10 @@ import Activity from "./dashboard/Activity";
 import Settings from "./dashboard/Settings";
 import Contracts from "./dashboard/Contracts";
 import Assistant from "./dashboard/Assistant";
+import GeneralSettings from "./dashboard/settings/General";
+import BillingSettings from "./dashboard/settings/Billing";
+import InvoicesSettings from "./dashboard/settings/Invoices";
+import SecuritySettings from "./dashboard/settings/Security";
 
 const queryClient = new QueryClient();
 
@@ -38,7 +42,6 @@ const Dashboard = () => {
 
       setUserRole(profile?.role || null);
       
-      // Show loader for 1 second
       setTimeout(() => {
         setIsLoading(false);
       }, 1000);
@@ -77,7 +80,11 @@ const Dashboard = () => {
           ) : null}
           {/* Routes available to both admin and client users */}
           <Route path="/calls" element={<Calls />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings/*" element={<Settings />} />
+          <Route path="/settings/general" element={<GeneralSettings />} />
+          <Route path="/settings/billing" element={<BillingSettings />} />
+          <Route path="/settings/invoices" element={<InvoicesSettings />} />
+          <Route path="/settings/security" element={<SecuritySettings />} />
           {/* Client-only routes */}
           {userRole === 'client' && (
             <Route path="/assistant" element={<Assistant />} />
