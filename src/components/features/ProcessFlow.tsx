@@ -2,17 +2,18 @@ import React from 'react';
 
 const ProcessFlow = () => {
   return (
-    <div className="w-full bg-forest-light/95 backdrop-blur-xl border border-mint/10 rounded-xl p-8 overflow-hidden">
-      <h3 className="text-2xl font-semibold text-white mb-8 text-center">
+    <div className="w-full bg-forest-light/95 backdrop-blur-xl border border-mint/10 rounded-xl p-4 md:p-8 overflow-hidden">
+      <h3 className="text-xl md:text-2xl font-semibold text-white mb-6 md:mb-8 text-center animate-fade-up">
         Process Overview of DoctorDial
       </h3>
       
-      <div className="relative w-full max-w-4xl mx-auto">
-        <svg
-          viewBox="0 0 800 400"
-          className="w-full h-auto"
-          style={{ fontFamily: 'SF Pro Display, system-ui, sans-serif' }}
-        >
+      <div className="relative w-full max-w-4xl mx-auto overflow-x-auto pb-4">
+        <div className="min-w-[800px]"> {/* Minimum width to prevent diagram distortion */}
+          <svg
+            viewBox="0 0 800 400"
+            className="w-full h-auto"
+            style={{ fontFamily: 'SF Pro Display, system-ui, sans-serif' }}
+          >
           {/* Background Grid */}
           <defs>
             <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -153,21 +154,22 @@ const ProcessFlow = () => {
           <text x="380" y="160" className="fill-red-500 text-xs font-medium">U1/U2</text>
           <text x="380" y="250" className="fill-mint text-xs font-medium">U3/U4</text>
           <text x="380" y="320" className="fill-divine text-xs font-medium">U5</text>
-        </svg>
+          </svg>
+        </div>
 
-        {/* Legend */}
-        <div className="mt-8 flex justify-center gap-6 text-sm">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <span className="text-white/70">Urgent Cases (U1/U2)</span>
+        {/* Mobile-friendly legend with better touch targets */}
+        <div className="mt-6 md:mt-8 flex flex-col md:flex-row justify-center gap-4 md:gap-6 text-sm px-4">
+          <div className="flex items-center gap-3 touch-manipulation">
+            <div className="w-4 h-4 rounded-full bg-red-500"></div>
+            <span className="text-white/70 text-base">Urgent Cases (U1/U2)</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-mint"></div>
-            <span className="text-white/70">Non-urgent Cases (U3/U4)</span>
+          <div className="flex items-center gap-3 touch-manipulation">
+            <div className="w-4 h-4 rounded-full bg-mint"></div>
+            <span className="text-white/70 text-base">Non-urgent Cases (U3/U4)</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-divine"></div>
-            <span className="text-white/70">Call Back Later (U5)</span>
+          <div className="flex items-center gap-3 touch-manipulation">
+            <div className="w-4 h-4 rounded-full bg-divine"></div>
+            <span className="text-white/70 text-base">Call Back Later (U5)</span>
           </div>
         </div>
       </div>
@@ -176,6 +178,12 @@ const ProcessFlow = () => {
         .moving-dot {
           fill: #64FFDA;
           filter: drop-shadow(0 0 4px #64FFDA);
+        }
+        
+        @media (max-width: 768px) {
+          .moving-dot {
+            r: 6; /* Larger dot for mobile */
+          }
         }
       `}</style>
     </div>

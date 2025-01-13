@@ -3,23 +3,23 @@ import { UrgencyLevels } from "./features/feature-previews/UrgencyLevels";
 
 const Features = () => {
   return (
-    <section className="py-20 px-4 bg-forest-light">
+    <section className="py-12 md:py-20 px-4 bg-forest-light">
       <div className="container mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 animate-fade-up">
             Transform Patient Calls into Practice Efficiency
           </h2>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto mb-12">
+          <p className="text-base md:text-lg text-white/80 max-w-2xl mx-auto mb-8 md:mb-12 animate-fade-up delay-100">
             Our advanced AI-powered triage system accurately assesses patient needs in real-time, 
             ensuring urgent cases receive immediate attention while efficiently managing routine inquiries. 
             This smart urgency detection helps practices prioritize patient care effectively.
           </p>
-          <div className="max-w-6xl mx-auto bg-forest rounded-xl border border-mint/10 mb-12">
+          <div className="max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-forest rounded-xl border border-mint/10 mb-8 md:mb-12 animate-fade-up delay-200 overflow-x-auto">
             <UrgencyLevels />
           </div>
           <Link 
             to="/features" 
-            className="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-forest bg-mint hover:bg-mint/90 rounded-lg transition-colors"
+            className="inline-flex items-center justify-center px-6 md:px-8 py-3 text-sm md:text-base font-medium text-forest bg-mint hover:bg-mint/90 rounded-lg transition-colors animate-fade-up delay-300 touch-manipulation"
           >
             See all features
           </Link>
