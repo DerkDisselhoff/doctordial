@@ -10,10 +10,9 @@ const Navbar = () => {
   const { t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const isHomePage = location.pathname === "/";
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 ${isHomePage ? 'bg-forest-light/95 backdrop-blur-sm' : 'glass-nav'}`}>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-forest-light/95 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-8">
@@ -53,7 +52,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className={`md:hidden absolute top-full left-0 right-0 ${isHomePage ? 'bg-forest-light/95 backdrop-blur-sm' : 'bg-forest-light'} border-t border-mint/10 p-4 space-y-4`}>
+          <div className="md:hidden absolute top-full left-0 right-0 bg-forest-light/95 backdrop-blur-sm border-t border-mint/10 p-4 space-y-4">
             <div className="flex flex-col space-y-4">
               <Link 
                 to="/features" 
