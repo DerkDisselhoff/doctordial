@@ -47,6 +47,7 @@ export function UrgencyLevelChart() {
                 fontSize={14}
                 tickLine={false}
                 axisLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
+                tick={{ fill: '#FFFFFF' }}
               />
               <YAxis 
                 stroke="#FFFFFF"
@@ -54,6 +55,7 @@ export function UrgencyLevelChart() {
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(value) => `${value}`}
+                tick={{ fill: '#FFFFFF' }}
               />
               <Tooltip
                 cursor={{ fill: 'rgba(100, 255, 218, 0.1)' }}
