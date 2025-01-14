@@ -203,7 +203,7 @@ const BillingSettings = () => {
                       {currentPackage.minutes_included && `${currentPackage.minutes_included.toLocaleString()} minutes included`}
                     </p>
                     <p className="text-sm text-white/60">
-                      {currentPackage.fte_count && `Up to ${currentPackage.fte_count} FTE`}
+                      {currentPackage.overage_fee && `€${currentPackage.overage_fee}/minute overage fee`}
                     </p>
                     <p className="text-sm text-mint">
                       {formatPrice(currentPackage.monthly_price)}/month
