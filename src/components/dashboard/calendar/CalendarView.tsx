@@ -18,7 +18,9 @@ interface CalendarViewProps {
   onDateChange: (date: Date) => void;
 }
 
-export function CalendarView({ view, date, selectedDoctor, onDateChange }: CalendarViewProps) {
+export function CalendarView({ view, date: initialDate, selectedDoctor: initialDoctor, onDateChange }: CalendarViewProps) {
+  const [date, setDate] = useState<Date>(initialDate);
+  const [selectedDoctor, setSelectedDoctor] = useState<string>(initialDoctor);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(date);
 
   // Mock appointments data
@@ -65,6 +67,15 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
     }
   };
 
+  const handleDateChange = (newDate: Date) => {
+    setDate(newDate);
+    onDateChange(newDate);
+  };
+
+  const handleDoctorChange = (value: string) => {
+    setSelectedDoctor(value);
+  };
+
   return (
     <div className="mt-4">
       <Card className="bg-forest-light/50 border-mint/10 p-4 relative overflow-hidden">
@@ -78,7 +89,7 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setDate(new Date())}
+              onClick={() => handleDateChange(new Date())}
               className="text-white hover:text-mint border-mint/20 hover:bg-mint/10 transition-colors"
             >
               Today
@@ -87,7 +98,7 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setDate(d => addDays(d, -7))}
+                onClick={() => handleDateChange(addDays(date, -7))}
                 className="text-white hover:text-mint"
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -95,7 +106,7 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setDate(d => addDays(d, 7))}
+                onClick={() => handleDateChange(addDays(date, 7))}
                 className="text-white hover:text-mint"
               >
                 <ChevronRight className="h-4 w-4" />
@@ -107,7 +118,7 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
           </div>
 
           <div className="flex items-center space-x-4">
-            <Select value={selectedDoctor} onValueChange={setSelectedDoctor}>
+            <Select value={selectedDoctor} onValueChange={handleDoctorChange}>
               <SelectTrigger className="w-[180px] bg-forest-light/80 border-mint/10 text-white backdrop-blur-sm">
                 <SelectValue placeholder="Select doctor" />
               </SelectTrigger>
