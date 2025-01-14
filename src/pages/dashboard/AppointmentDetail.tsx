@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/integ/supabase/client";
 import { format } from "date-fns";
 import { 
   Calendar, 
@@ -46,9 +46,11 @@ const AppointmentDetail = () => {
       
       return data;
     },
-    onError: (error) => {
-      toast.error(error instanceof Error ? error.message : 'Failed to load appointment');
-      navigate('/dashboard/appointments');
+    meta: {
+      onError: (error: Error) => {
+        toast.error(error.message || 'Failed to load appointment');
+        navigate('/dashboard/appointments');
+      }
     }
   });
 
