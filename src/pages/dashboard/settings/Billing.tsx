@@ -4,16 +4,19 @@ import { Button } from "@/components/ui/button";
 import { CreditCard, Package, Receipt } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { Json } from "@/integrations/supabase/types";
 
 interface PackageFeature {
   id: string;
-  package_name: string;
+  package_name: "starter" | "growth" | "professional" | "enterprise";
   features: string[];
   minutes_included: number | null;
   overage_fee: number | null;
   fte_count: number | null;
   price_per_hour: number | null;
   monthly_price: number | null;
+  created_at: string;
+  updated_at: string;
 }
 
 const BillingSettings = () => {
@@ -30,10 +33,19 @@ const BillingSettings = () => {
           .select('*');
 
         if (error) throw error;
-        setPackages(data || []);
+
+        // Transform the data to ensure features is always a string array
+        const transformedData = (data || []).map(pkg => ({
+          ...pkg,
+          features: Array.isArray(pkg.features) ? pkg.features : 
+                   typeof pkg.features === 'string' ? JSON.parse(pkg.features) :
+                   []
+        })) as PackageFeature[];
+
+        setPackages(transformedData);
         
         // For demo purposes, set professional as current package
-        setCurrentPackage(data?.find(pkg => pkg.package_name === 'professional') || null);
+        setCurrentPackage(transformedData?.find(pkg => pkg.package_name === 'professional') || null);
       } catch (error) {
         console.error('Error fetching packages:', error);
         toast({
