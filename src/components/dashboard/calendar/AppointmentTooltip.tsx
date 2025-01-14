@@ -1,7 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { format } from "date-fns";
 import { Phone, Mail, FileText, AlertCircle, Edit, Trash, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";

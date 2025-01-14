@@ -3,8 +3,8 @@ import { format, addDays, startOfWeek, endOfWeek, eachDayOfInterval } from "date
 import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useNavigate } from "react-router-dom";
 import { DayContentProps } from "react-day-picker";
+import { AppointmentTooltip } from "./AppointmentTooltip";
 
 interface CalendarViewProps {
   view: "month" | "week" | "day";
@@ -14,7 +14,6 @@ interface CalendarViewProps {
 }
 
 export function CalendarView({ view, date, selectedDoctor, onDateChange }: CalendarViewProps) {
-  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(date);
 
   // Mock appointments data
@@ -23,19 +22,26 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
       id: "123e4567-e89b-12d3-a456-426614174000",
       title: "Regular Check-up",
       patient: "John Smith",
+      time: "09:00",
+      duration: 30,
       doctor: "1",
-      date: new Date(2024, 3, 15, 9, 0),
-      urgentiescore: "U4",
+      urgencyScore: "U4",
+      patientPhone: "+1234567890",
+      patientEmail: "john@example.com",
+      notes: "Regular check-up appointment",
     },
     {
       id: "123e4567-e89b-12d3-a456-426614174001",
       title: "Follow-up",
       patient: "Emma Johnson",
+      time: "14:30",
+      duration: 45,
       doctor: "2",
-      date: new Date(2024, 3, 15, 14, 30),
-      urgentiescore: "U2",
+      urgencyScore: "U2",
+      patientPhone: "+0987654321",
+      patientEmail: "emma@example.com",
+      notes: "Follow-up after previous treatment",
     },
-    // Add more mock appointments as needed
   ];
 
   const getUrgencyColor = (score: string) => {
@@ -58,7 +64,7 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
 
   const renderDayContent = (props: DayContentProps) => {
     const dayAppointments = appointments.filter(
-      app => format(app.date, "yyyy-MM-dd") === format(props.date, "yyyy-MM-dd") &&
+      app => format(new Date(), "yyyy-MM-dd") === format(props.date, "yyyy-MM-dd") &&
       (selectedDoctor === "all" || app.doctor === selectedDoctor)
     );
 
@@ -67,7 +73,7 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
         <span>{format(props.date, "d")}</span>
         {dayAppointments.length > 0 ? (
           <div className="absolute bottom-0 left-0 right-0 flex justify-center">
-            <Badge variant="outline" className={getUrgencyColor(dayAppointments[0].urgentiescore)}>
+            <Badge variant="outline" className={getUrgencyColor(dayAppointments[0].urgencyScore)}>
               {dayAppointments.length} appt{dayAppointments.length > 1 ? "s" : ""}
             </Badge>
           </div>
@@ -108,26 +114,24 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
             {appointments
               .filter(
                 app => 
-                  format(app.date, "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
+                  format(new Date(), "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
                   (selectedDoctor === "all" || app.doctor === selectedDoctor)
               )
               .map((app) => (
-                <div
-                  key={app.id}
-                  className="mb-2 p-2 rounded bg-mint/10 cursor-pointer hover:bg-mint/20"
-                  onClick={() => navigate(`/dashboard/appointments/${app.id}`)}
-                >
-                  <div className="text-xs font-medium text-white">
-                    {format(app.date, "HH:mm")}
+                <AppointmentTooltip key={app.id} appointment={app}>
+                  <div className="mb-2 p-2 rounded bg-mint/10 cursor-pointer hover:bg-mint/20">
+                    <div className="text-xs font-medium text-white">
+                      {app.time}
+                    </div>
+                    <div className="text-xs text-white/60">{app.patient}</div>
+                    <Badge 
+                      variant="outline" 
+                      className={getUrgencyColor(app.urgencyScore)}
+                    >
+                      {app.urgencyScore}
+                    </Badge>
                   </div>
-                  <div className="text-xs text-white/60">{app.patient}</div>
-                  <Badge 
-                    variant="outline" 
-                    className={`mt-1 ${getUrgencyColor(app.urgentiescore)}`}
-                  >
-                    {app.urgentiescore}
-                  </Badge>
-                </div>
+                </AppointmentTooltip>
               ))}
           </Card>
         ))}
@@ -148,25 +152,23 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
               {appointments
                 .filter(
                   app => 
-                    format(app.date, "yyyy-MM-dd") === format(date, "yyyy-MM-dd") &&
-                    new Date(app.date).getHours() === hour &&
+                    format(new Date(), "yyyy-MM-dd") === format(date, "yyyy-MM-dd") &&
+                    parseInt(app.time.split(":")[0]) === hour &&
                     (selectedDoctor === "all" || app.doctor === selectedDoctor)
                 )
                 .map((app) => (
-                  <div
-                    key={app.id}
-                    className="p-2 rounded bg-mint/10 cursor-pointer hover:bg-mint/20"
-                    onClick={() => navigate(`/dashboard/appointments/${app.id}`)}
-                  >
-                    <div className="text-sm font-medium text-white">{app.patient}</div>
-                    <div className="text-xs text-white/60">{app.title}</div>
-                    <Badge 
-                      variant="outline" 
-                      className={`mt-1 ${getUrgencyColor(app.urgentiescore)}`}
-                    >
-                      {app.urgentiescore}
-                    </Badge>
-                  </div>
+                  <AppointmentTooltip key={app.id} appointment={app}>
+                    <div className="p-2 rounded bg-mint/10 cursor-pointer hover:bg-mint/20">
+                      <div className="text-sm font-medium text-white">{app.patient}</div>
+                      <div className="text-xs text-white/60">{app.title}</div>
+                      <Badge 
+                        variant="outline" 
+                        className={getUrgencyColor(app.urgencyScore)}
+                      >
+                        {app.urgencyScore}
+                      </Badge>
+                    </div>
+                  </AppointmentTooltip>
                 ))}
             </div>
           </div>
