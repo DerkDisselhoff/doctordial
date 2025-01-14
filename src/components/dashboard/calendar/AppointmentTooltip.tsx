@@ -2,7 +2,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, FileText, AlertCircle, Edit, Trash, Calendar } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 interface AppointmentTooltipProps {
@@ -22,8 +21,6 @@ interface AppointmentTooltipProps {
 }
 
 export function AppointmentTooltip({ appointment, children }: AppointmentTooltipProps) {
-  const navigate = useNavigate();
-
   const getUrgencyColor = (score: string) => {
     switch (score) {
       case "U1": return "text-red-500 border-red-500/20";
@@ -36,7 +33,8 @@ export function AppointmentTooltip({ appointment, children }: AppointmentTooltip
   };
 
   const handleEdit = () => {
-    navigate(`/dashboard/appointments/${appointment.id}`);
+    // In a real app, this would open an edit modal
+    toast.info("Edit functionality coming soon");
   };
 
   const handleDelete = () => {

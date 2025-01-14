@@ -5,6 +5,11 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DayContentProps } from "react-day-picker";
 import { AppointmentTooltip } from "./AppointmentTooltip";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { NewAppointmentModal } from "./NewAppointmentModal";
 
 interface CalendarViewProps {
   view: "month" | "week" | "day";
@@ -44,15 +49,36 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
     },
   ];
 
+  const weekStart = startOfWeek(date);
+  const weekEnd = endOfWeek(date);
+  const days = eachDayOfInterval({ start: weekStart, end: weekEnd });
+  const hours = Array.from({ length: 13 }, (_, i) => i + 7); // 7 AM to 7 PM
+
   const getUrgencyColor = (score: string) => {
     switch (score) {
-      case "U1": return "text-red-500 border-red-500/20";
-      case "U2": return "text-orange-500 border-orange-500/20";
-      case "U3": return "text-yellow-500 border-yellow-500/20";
-      case "U4": return "text-blue-500 border-blue-500/20";
-      case "U5": return "text-green-500 border-green-500/20";
-      default: return "text-gray-500 border-gray-500/20";
+      case "U1": return "bg-red-500/20 border-red-500/30 text-red-500";
+      case "U2": return "bg-orange-500/20 border-orange-500/30 text-orange-500";
+      case "U3": return "bg-yellow-500/20 border-yellow-500/30 text-yellow-500";
+      case "U4": return "bg-blue-500/20 border-blue-500/30 text-blue-500";
+      case "U5": return "bg-green-500/20 border-green-500/30 text-green-500";
+      default: return "bg-gray-500/20 border-gray-500/30 text-gray-500";
     }
+  };
+
+  const getAppointmentsForSlot = (day: Date, hour: number) => {
+    return appointments.filter(
+      app => {
+        const aptDate = new Date(app.day);
+        return format(aptDate, "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
+          Math.floor(aptDate.getHours()) === hour &&
+          (selectedDoctor === "all" || app.doctor === selectedDoctor);
+      }
+    );
+  };
+
+  const handleAppointmentCreated = () => {
+    // Refresh appointments data
+    // In a real application, this would fetch updated data from the backend
   };
 
   const handleDateSelect = (date: Date | undefined) => {
@@ -100,10 +126,6 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
 
   // Week view
   if (view === "week") {
-    const weekStart = startOfWeek(date);
-    const weekEnd = endOfWeek(date);
-    const days = eachDayOfInterval({ start: weekStart, end: weekEnd });
-
     return (
       <div className="mt-4 grid grid-cols-7 gap-2">
         {days.map((day) => (
