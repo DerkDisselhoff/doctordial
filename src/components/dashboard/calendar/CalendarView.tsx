@@ -140,7 +140,13 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
               )
               .map((app) => (
                 <AppointmentTooltip key={app.id} appointment={app}>
-                  <div className="mb-2 p-2 rounded bg-mint/10 cursor-pointer hover:bg-mint/20">
+                  <div 
+                    className="mb-2 p-2 rounded bg-mint/10 cursor-pointer hover:bg-mint/20"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                  >
                     <div className="text-xs font-medium text-white">
                       {app.time}
                     </div>
@@ -179,7 +185,13 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
                 )
                 .map((app) => (
                   <AppointmentTooltip key={app.id} appointment={app}>
-                    <div className="p-2 rounded bg-mint/10 cursor-pointer hover:bg-mint/20">
+                    <div 
+                      className="p-2 rounded bg-mint/10 cursor-pointer hover:bg-mint/20"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }}
+                    >
                       <div className="text-sm font-medium text-white">{app.patient}</div>
                       <div className="text-xs text-white/60">{app.title}</div>
                       <Badge 
