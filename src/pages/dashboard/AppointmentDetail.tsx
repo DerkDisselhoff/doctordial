@@ -84,11 +84,11 @@ const AppointmentDetail = () => {
   }
 
   const appointmentDate = new Date(appointment.appointment_date);
-  const urgencyColor = appointment.urgentiescore === 'U1' ? 'red' : 
-                      appointment.urgentiescore === 'U2' ? 'orange' :
-                      appointment.urgentiescore === 'U3' ? 'yellow' :
-                      appointment.urgentiescore === 'U4' ? 'blue' :
-                      appointment.urgentiescore === 'U5' ? 'green' : 'gray';
+  const urgencyColor = appointment.Urgencylevel === 'U1' ? 'red' : 
+                      appointment.Urgencylevel === 'U2' ? 'orange' :
+                      appointment.Urgencylevel === 'U3' ? 'yellow' :
+                      appointment.Urgencylevel === 'U4' ? 'blue' :
+                      appointment.Urgencylevel === 'U5' ? 'green' : 'gray';
 
   return (
     <div className="space-y-6 p-6">
@@ -105,7 +105,7 @@ const AppointmentDetail = () => {
           variant="outline" 
           className={`text-${urgencyColor}-500 border-${urgencyColor}-500/20`}
         >
-          {appointment.urgentiescore || 'No urgency score'}
+          {appointment.Urgencylevel || 'No urgency score'}
         </Badge>
       </div>
 
@@ -119,7 +119,7 @@ const AppointmentDetail = () => {
               <User className="h-5 w-5 text-mint flex-shrink-0" />
               <div>
                 <p className="text-sm font-medium text-white">Name</p>
-                <p className="text-sm text-white/70">{appointment.naam || 'Not specified'}</p>
+                <p className="text-sm text-white/70">{appointment.Name || 'Not specified'}</p>
               </div>
             </div>
 
@@ -184,13 +184,13 @@ const AppointmentDetail = () => {
               </div>
             </div>
 
-            {appointment.symptoms && appointment.symptoms.length > 0 && (
+            {appointment.Symptoms && appointment.Symptoms.length > 0 && (
               <div className="flex items-start space-x-3 md:col-span-2">
                 <AlertCircle className="h-5 w-5 text-mint flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-white">Symptoms</p>
                   <div className="flex flex-wrap gap-2 mt-2">
-                    {appointment.symptoms.map((symptom, index) => (
+                    {appointment.Symptoms.map((symptom: string, index: number) => (
                       <Badge 
                         key={index}
                         variant="outline" 

@@ -50,8 +50,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   // Add auth state change listener
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_OUT' || event === 'USER_DELETED') {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event) => {
+      if (event === 'SIGNED_OUT') {
         navigate('/login');
       }
     });
