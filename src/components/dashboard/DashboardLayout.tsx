@@ -3,9 +3,15 @@ import { AdminSidebar } from "./AdminSidebar";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { data: profile } = useQuery({
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const { data: profile, error } = useQuery({
     queryKey: ['profile'],
     queryFn: async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -20,6 +26,40 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       return data;
     },
   });
+
+  useEffect(() => {
+    const handleAuthError = async () => {
+      if (error?.message?.includes('refresh_token_not_found') || 
+          error?.message?.includes('Invalid Refresh Token')) {
+        // Clear any invalid session data
+        await supabase.auth.signOut();
+        
+        // Redirect to login
+        navigate('/login');
+        
+        toast({
+          title: "Session Expired",
+          description: "Please sign in again to continue.",
+          variant: "destructive",
+        });
+      }
+    };
+
+    handleAuthError();
+  }, [error, navigate, toast]);
+
+  // Add auth state change listener
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT' || event === 'USER_DELETED') {
+        navigate('/login');
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-forest">
