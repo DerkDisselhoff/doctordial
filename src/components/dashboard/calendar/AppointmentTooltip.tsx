@@ -33,17 +33,14 @@ export function AppointmentTooltip({ appointment, children }: AppointmentTooltip
   };
 
   const handleEdit = () => {
-    // In a real app, this would open an edit modal
     toast.info("Edit functionality coming soon");
   };
 
   const handleDelete = () => {
-    // In a real app, this would call an API to delete the appointment
     toast.success("Appointment deleted successfully");
   };
 
   const handleReschedule = () => {
-    // In a real app, this would open a rescheduling modal
     toast.info("Rescheduling functionality coming soon");
   };
 
