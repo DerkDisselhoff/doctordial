@@ -6,7 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { Phone, Clock, Bot, Calendar, User, MessageSquare, Settings, ArrowUp, ArrowDown } from "lucide-react";
+import { Phone, Clock, Bot, Calendar, Settings, ArrowUp } from "lucide-react";
 
 const Assistant = () => {
   const { toast } = useToast();
@@ -68,7 +68,10 @@ const Assistant = () => {
               <Label className="text-white font-medium">Active Outside Work Hours</Label>
               <p className="text-white/70">Enable AI assistant during non-business hours</p>
             </div>
-            <Switch className="bg-mint/20" onCheckedChange={handleSettingChange} />
+            <Switch 
+              className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+              onCheckedChange={handleSettingChange} 
+            />
           </div>
         </CardContent>
       </Card>
@@ -111,7 +114,7 @@ const Assistant = () => {
       <Card className="bg-forest-light/50 border-mint/10">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <MessageSquare className="w-5 h-5 text-mint" />
+            <Bot className="w-5 h-5 text-mint" />
             Greeting Settings
           </CardTitle>
         </CardHeader>
@@ -119,7 +122,10 @@ const Assistant = () => {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <Label className="text-white font-medium">Use Greeting Variations</Label>
-              <Switch className="bg-mint/20" onCheckedChange={handleSettingChange} />
+              <Switch 
+                className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+                onCheckedChange={handleSettingChange} 
+              />
             </div>
             <div className="space-y-2">
               <Label className="text-white font-medium">Default Greeting</Label>
@@ -146,64 +152,32 @@ const Assistant = () => {
             <Label className="text-white font-medium">Allowed Appointment Types</Label>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <Switch className="bg-mint/20" onCheckedChange={handleSettingChange} />
+                <Switch 
+                  className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+                  onCheckedChange={handleSettingChange} 
+                />
                 <Label className="text-white/70">Regular Consultations</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <Switch className="bg-mint/20" onCheckedChange={handleSettingChange} />
+                <Switch 
+                  className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+                  onCheckedChange={handleSettingChange} 
+                />
                 <Label className="text-white/70">Vaccinations</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <Switch className="bg-mint/20" onCheckedChange={handleSettingChange} />
+                <Switch 
+                  className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+                  onCheckedChange={handleSettingChange} 
+                />
                 <Label className="text-white/70">Follow-up Appointments</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <Switch className="bg-mint/20" onCheckedChange={handleSettingChange} />
+                <Switch 
+                  className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+                  onCheckedChange={handleSettingChange} 
+                />
                 <Label className="text-white/70">Blood Tests</Label>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Forwarding Settings */}
-      <Card className="bg-forest-light/50 border-mint/10">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <Phone className="w-5 h-5 text-mint" />
-            Call Forwarding
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid gap-6">
-            <div className="space-y-4">
-              <Label className="text-white font-medium">Doctor's Assistant</Label>
-              <div className="grid grid-cols-2 gap-4">
-                <Input 
-                  placeholder="Name"
-                  className="bg-forest border-mint/20"
-                  onChange={handleSettingChange}
-                />
-                <Input 
-                  placeholder="Phone Number"
-                  className="bg-forest border-mint/20"
-                  onChange={handleSettingChange}
-                />
-              </div>
-            </div>
-            <div className="space-y-4">
-              <Label className="text-white font-medium">General Practitioner</Label>
-              <div className="grid grid-cols-2 gap-4">
-                <Input 
-                  placeholder="Name"
-                  className="bg-forest border-mint/20"
-                  onChange={handleSettingChange}
-                />
-                <Input 
-                  placeholder="Phone Number"
-                  className="bg-forest border-mint/20"
-                  onChange={handleSettingChange}
-                />
               </div>
             </div>
           </div>
@@ -226,7 +200,7 @@ const Assistant = () => {
                 defaultValue={[1]} 
                 max={2} 
                 step={0.1} 
-                className="w-full"
+                className="w-full [&_[role=slider]]:bg-mint [&_[role=slider]]:border-mint [&_[role=slider]]:shadow-mint/20 [&_[role=slider]]:hover:bg-mint-light [&_[role=slider]]:focus:ring-mint/50 [&>[role=slider]]:h-5 [&>[role=slider]]:w-5"
                 onValueChange={handleSettingChange}
               />
               <div className="flex justify-between text-white/70 text-sm">
@@ -240,7 +214,7 @@ const Assistant = () => {
                 defaultValue={[0.7]} 
                 max={1} 
                 step={0.1}
-                className="w-full"
+                className="w-full [&_[role=slider]]:bg-mint [&_[role=slider]]:border-mint [&_[role=slider]]:shadow-mint/20 [&_[role=slider]]:hover:bg-mint-light [&_[role=slider]]:focus:ring-mint/50 [&>[role=slider]]:h-5 [&>[role=slider]]:w-5"
                 onValueChange={handleSettingChange}
               />
               <div className="flex justify-between text-white/70 text-sm">
