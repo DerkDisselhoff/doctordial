@@ -22,7 +22,7 @@ export function CallDetail() {
 
   if (loading) {
     return (
-      <div className="flex justify-center p-8">
+      <div className="flex justify-center p-4">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-mint"></div>
       </div>
     );
@@ -31,7 +31,7 @@ export function CallDetail() {
   if (!call) {
     return (
       <Card>
-        <CardContent className="p-8">
+        <CardContent className="p-4">
           <p className="text-center text-white/70">Call not found</p>
         </CardContent>
       </Card>
@@ -39,113 +39,117 @@ export function CallDetail() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <Card className="bg-forest-light/50 border-mint/10">
-        <CardHeader>
+        <CardHeader className="pb-2">
           <CardTitle className="text-white">Call Overview</CardTitle>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <Phone className="h-5 w-5 text-mint" />
-              <div>
-                <p className="text-sm text-white/60">Call ID</p>
-                <p className="text-white font-medium">{call.call_id}</p>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <Phone className="h-5 w-5 text-mint" />
+                <div>
+                  <p className="text-sm text-white/60">Call ID</p>
+                  <p className="text-white font-medium">{call.call_id}</p>
+                </div>
               </div>
-            </div>
-            
-            <div className="flex items-center space-x-3">
-              <User className="h-5 w-5 text-mint" />
-              <div>
-                <p className="text-sm text-white/60">Patient</p>
-                <p className="text-white font-medium">{call.caller_number}</p>
+              
+              <div className="flex items-center space-x-3">
+                <User className="h-5 w-5 text-mint" />
+                <div>
+                  <p className="text-sm text-white/60">Patient</p>
+                  <p className="text-white font-medium">{call.caller_number}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <Clock className="h-5 w-5 text-mint" />
+                <div>
+                  <p className="text-sm text-white/60">Duration</p>
+                  <p className="text-white font-medium">{call.duration} seconds</p>
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center space-x-3">
-              <Clock className="h-5 w-5 text-mint" />
-              <div>
-                <p className="text-sm text-white/60">Duration</p>
-                <p className="text-white font-medium">{call.duration} seconds</p>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <Calendar className="h-5 w-5 text-mint" />
+                <div>
+                  <p className="text-sm text-white/60">Date & Time</p>
+                  <p className="text-white font-medium">
+                    {new Date(call.created_at).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <ThumbsUp className="h-5 w-5 text-mint" />
+                <div>
+                  <p className="text-sm text-white/60">Sentiment</p>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium
+                    ${call.sentiment_analysis?.sentiment === 'positive'
+                      ? 'bg-green-100 text-green-700 border border-green-200'
+                      : call.sentiment_analysis?.sentiment === 'negative'
+                      ? 'bg-red-100 text-red-700 border border-red-200'
+                      : 'bg-gray-100 text-gray-700 border border-gray-200'
+                    }`}>
+                    {call.sentiment_analysis?.sentiment || 'N/A'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <AlertCircle className="h-5 w-5 text-mint" />
+                <div>
+                  <p className="text-sm text-white/60">Urgency</p>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium
+                    ${call.sentiment_analysis?.urgency === 'high'
+                      ? 'bg-red-100 text-red-700 border border-red-200'
+                      : call.sentiment_analysis?.urgency === 'medium'
+                      ? 'bg-orange-100 text-orange-700 border border-orange-200'
+                      : 'bg-green-100 text-green-700 border border-green-200'
+                    }`}>
+                    {call.sentiment_analysis?.urgency || 'N/A'}
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center space-x-3">
-              <Calendar className="h-5 w-5 text-mint" />
-              <div>
-                <p className="text-sm text-white/60">Date & Time</p>
-                <p className="text-white font-medium">
-                  {new Date(call.created_at).toLocaleString()}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <ThumbsUp className="h-5 w-5 text-mint" />
-              <div>
-                <p className="text-sm text-white/60">Sentiment</p>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium
-                  ${call.sentiment_analysis?.sentiment === 'positive'
-                    ? 'bg-green-100 text-green-700 border border-green-200'
-                    : call.sentiment_analysis?.sentiment === 'negative'
-                    ? 'bg-red-100 text-red-700 border border-red-200'
-                    : 'bg-gray-100 text-gray-700 border border-gray-200'
-                  }`}>
-                  {call.sentiment_analysis?.sentiment || 'N/A'}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-3">
-              <AlertCircle className="h-5 w-5 text-mint" />
-              <div>
-                <p className="text-sm text-white/60">Urgency</p>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium
-                  ${call.sentiment_analysis?.urgency === 'high'
-                    ? 'bg-red-100 text-red-700 border border-red-200'
-                    : call.sentiment_analysis?.urgency === 'medium'
-                    ? 'bg-orange-100 text-orange-700 border border-orange-200'
-                    : 'bg-green-100 text-green-700 border border-green-200'
-                  }`}>
-                  {call.sentiment_analysis?.urgency || 'N/A'}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-3">
-              <MessageCircle className="h-5 w-5 text-mint" />
-              <div>
-                <p className="text-sm text-white/60">Status</p>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium
-                  ${call.status === 'completed'
-                    ? 'bg-green-100 text-green-700 border border-green-200'
-                    : call.status === 'scheduled'
-                    ? 'bg-blue-100 text-blue-700 border border-blue-200'
-                    : call.status === 'missed'
-                    ? 'bg-red-100 text-red-700 border border-red-200'
-                    : 'bg-yellow-100 text-yellow-700 border border-yellow-200'
-                  }`}>
-                  {call.status}
-                </span>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <MessageCircle className="h-5 w-5 text-mint" />
+                <div>
+                  <p className="text-sm text-white/60">Status</p>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium
+                    ${call.status === 'completed'
+                      ? 'bg-green-100 text-green-700 border border-green-200'
+                      : call.status === 'scheduled'
+                      ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                      : call.status === 'missed'
+                      ? 'bg-red-100 text-red-700 border border-red-200'
+                      : 'bg-yellow-100 text-yellow-700 border border-yellow-200'
+                    }`}>
+                    {call.status}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-forest-light/50 border-mint/10">
-        <CardHeader>
-          <CardTitle className="text-white">Call Summary</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white/70 mb-6">{call.summary}</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white mb-3">Follow-up Details</h3>
-              <div className="p-4 bg-forest rounded-lg border border-mint/10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card className="bg-forest-light/50 border-mint/10">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-white">Call Summary</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-white/70 mb-4">{call.summary}</p>
+            
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-white">Follow-up Details</h3>
+              <div className="p-3 bg-forest rounded-lg border border-mint/10">
                 <div className="flex items-start space-x-3">
                   <ArrowRight className="h-5 w-5 text-mint mt-0.5" />
                   <div>
@@ -155,41 +159,43 @@ export function CallDetail() {
                 </div>
               </div>
             </div>
+          </CardContent>
+        </Card>
 
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white mb-3">Department Info</h3>
-              <div className="p-4 bg-forest rounded-lg border border-mint/10">
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    <Building2 className="h-5 w-5 text-mint" />
-                    <div>
-                      <p className="text-white/60 text-sm">Department</p>
-                      <p className="text-white">{call.department}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Tag className="h-5 w-5 text-mint" />
-                    <div>
-                      <p className="text-white/60 text-sm">Priority Level</p>
-                      <p className="text-white">{call.priority_level}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <FileCheck className="h-5 w-5 text-mint" />
-                    <div>
-                      <p className="text-white/60 text-sm">Resolution Status</p>
-                      <p className="text-white">{call.resolution_status}</p>
-                    </div>
-                  </div>
+        <Card className="bg-forest-light/50 border-mint/10">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-white">Department Info</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <Building2 className="h-5 w-5 text-mint" />
+                <div>
+                  <p className="text-white/60 text-sm">Department</p>
+                  <p className="text-white">{call.department}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Tag className="h-5 w-5 text-mint" />
+                <div>
+                  <p className="text-white/60 text-sm">Priority Level</p>
+                  <p className="text-white">{call.priority_level}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <FileCheck className="h-5 w-5 text-mint" />
+                <div>
+                  <p className="text-white/60 text-sm">Resolution Status</p>
+                  <p className="text-white">{call.resolution_status}</p>
                 </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
 
       <Card className="bg-forest-light/50 border-mint/10">
-        <CardHeader>
+        <CardHeader className="pb-2">
           <CardTitle className="text-white">Transcription</CardTitle>
         </CardHeader>
         <CardContent>
