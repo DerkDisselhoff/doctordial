@@ -18,9 +18,11 @@ interface AppointmentTooltipProps {
     notes?: string;
   };
   children: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function AppointmentTooltip({ appointment, children }: AppointmentTooltipProps) {
+export function AppointmentTooltip({ appointment, children, open, onOpenChange }: AppointmentTooltipProps) {
   const getUrgencyColor = (score: string) => {
     switch (score) {
       case "U1": return "text-red-500 border-red-500/20";
@@ -45,7 +47,7 @@ export function AppointmentTooltip({ appointment, children }: AppointmentTooltip
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>

@@ -14,6 +14,8 @@ import { NewAppointmentModal } from "@/components/dashboard/calendar/NewAppointm
 const CalendarPage = () => {
   const [date, setDate] = useState<Date>(new Date());
   const [selectedDoctor, setSelectedDoctor] = useState<string>("all");
+  const [selectedAppointment, setSelectedAppointment] = useState<any>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   // Mock appointments data
   const appointments = [
@@ -59,16 +61,16 @@ const CalendarPage = () => {
     }
   };
 
-  const getAppointmentsForSlot = (hour: number) => {
-    return appointments.filter(apt => {
-      const [aptHour] = apt.time.split(':').map(Number);
-      return aptHour === hour && (selectedDoctor === "all" || apt.doctor === selectedDoctor);
-    });
+  const handleAppointmentClick = (appointment: any, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setSelectedAppointment(appointment);
+    setDialogOpen(true);
   };
 
-  const handleAppointmentCreated = () => {
-    // Refresh appointments data
-    // In a real application, this would fetch updated data from the backend
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    setSelectedAppointment(null);
   };
 
   return (
@@ -178,7 +180,15 @@ const CalendarPage = () => {
                              (selectedDoctor === "all" || apt.doctor === selectedDoctor);
                     })
                     .map((apt) => (
-                      <AppointmentTooltip key={apt.id} appointment={apt}>
+                      <AppointmentTooltip 
+                        key={apt.id} 
+                        appointment={apt}
+                        open={selectedAppointment?.id === apt.id && dialogOpen}
+                        onOpenChange={(open) => {
+                          setDialogOpen(open);
+                          if (!open) setSelectedAppointment(null);
+                        }}
+                      >
                         <div
                           className={cn(
                             "absolute left-0 right-0 mx-1 p-2 rounded-md border cursor-pointer",
@@ -189,10 +199,7 @@ const CalendarPage = () => {
                             top: "4px",
                             minHeight: "40px",
                           }}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                          }}
+                          onClick={(e) => handleAppointmentClick(apt, e)}
                         >
                           <div className="text-xs font-medium">{apt.time}</div>
                           <div className="text-xs truncate">{apt.patient}</div>
