@@ -1,16 +1,14 @@
 import { useState } from "react";
-import { format, startOfWeek, endOfWeek, eachDayOfInterval, addHours, startOfDay } from "date-fns";
+import { format, addHours, startOfWeek, endOfWeek, eachDayOfInterval } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useNavigate } from "react-router-dom";
 import { NewAppointmentModal } from "@/components/dashboard/calendar/NewAppointmentModal";
 import { AppointmentTooltip } from "@/components/dashboard/calendar/AppointmentTooltip";
 
 const Calendar = () => {
-  const navigate = useNavigate();
   const [date, setDate] = useState<Date>(new Date());
   const [selectedDoctor, setSelectedDoctor] = useState<string>("all");
 
@@ -33,7 +31,6 @@ const Calendar = () => {
       patientPhone: "+31 6 12345678",
       patientEmail: "john.smith@email.com",
       notes: "Patient mentioned recurring headaches",
-      day: new Date().setHours(9, 0, 0, 0),
     },
     {
       id: "2",
@@ -46,7 +43,6 @@ const Calendar = () => {
       patientPhone: "+31 6 23456789",
       patientEmail: "emma.j@email.com",
       notes: "Post-surgery check-up",
-      day: new Date().setHours(11, 0, 0, 0),
     },
     {
       id: "3",
@@ -59,7 +55,6 @@ const Calendar = () => {
       patientPhone: "+31 6 34567890",
       patientEmail: "m.brown@email.com",
       notes: "Severe chest pain",
-      day: new Date().setHours(14, 30, 0, 0),
     },
   ];
 
@@ -79,19 +74,11 @@ const Calendar = () => {
     }
   };
 
-  const getAppointmentsForSlot = (day: Date, hour: number) => {
+  const getAppointmentsForSlot = (hour: number) => {
     return appointments.filter(apt => {
-      const aptDate = new Date(apt.day);
-      return (
-        format(aptDate, "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
-        Math.floor(aptDate.getHours()) === hour &&
-        (selectedDoctor === "all" || apt.doctor === selectedDoctor)
-      );
+      const [aptHour] = apt.time.split(':').map(Number);
+      return aptHour === hour && (selectedDoctor === "all" || apt.doctor === selectedDoctor);
     });
-  };
-
-  const handleAppointmentClick = (appointmentId: string) => {
-    navigate(`/dashboard/appointments/${appointmentId}`);
   };
 
   const handleAppointmentCreated = () => {
@@ -179,7 +166,7 @@ const Calendar = () => {
           </div>
 
           {/* Days columns */}
-          {days.map((day, dayIdx) => (
+          {days.map((day) => (
             <div key={day.toString()} className="bg-forest-light">
               {/* Day header */}
               <div className="h-12 border-b border-mint/10 p-2 sticky top-0 bg-forest-light">
@@ -197,7 +184,7 @@ const Calendar = () => {
                   key={`${day}-${hour}`}
                   className="h-20 border-b border-mint/10 relative group"
                 >
-                  {getAppointmentsForSlot(day, hour).map((apt) => (
+                  {getAppointmentsForSlot(hour).map((apt) => (
                     <AppointmentTooltip key={apt.id} appointment={apt}>
                       <div
                         className={cn(
@@ -209,7 +196,10 @@ const Calendar = () => {
                           top: "4px",
                           minHeight: "40px",
                         }}
-                        onClick={() => handleAppointmentClick(apt.id)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }}
                       >
                         <div className="text-xs font-medium">{apt.time}</div>
                         <div className="text-xs truncate">{apt.patient}</div>
