@@ -78,7 +78,7 @@ export function CalendarView({ view, date: initialDate, selectedDoctor: initialD
 
   return (
     <div className="mt-4">
-      <Card className="bg-forest-light/50 border-mint/10 p-4 relative overflow-hidden group">
+      <Card className="bg-forest-light/50 border-mint/10 p-4 relative overflow-hidden group transition-all duration-300">
         {/* Enhanced gradient overlay with animation */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-r from-mint/5 via-transparent to-mint/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -145,11 +145,11 @@ export function CalendarView({ view, date: initialDate, selectedDoctor: initialD
           </div>
         </div>
 
-        {/* Calendar Grid with enhanced styling */}
+        {/* Enhanced Calendar Grid */}
         <div className="grid grid-cols-8 gap-px bg-mint/5 rounded-lg overflow-hidden shadow-xl">
           {/* Time column with enhanced frosted glass effect */}
           <div className="bg-forest-light/80 backdrop-blur-sm border-r border-mint/10">
-            <div className="h-12" />
+            <div className="h-12" /> {/* Spacer for alignment with day headers */}
             {Array.from({ length: 13 }, (_, i) => i + 7).map((hour) => (
               <div
                 key={hour}
@@ -162,12 +162,12 @@ export function CalendarView({ view, date: initialDate, selectedDoctor: initialD
             ))}
           </div>
 
-          {/* Days header - Floating above the grid */}
-          <div className="col-span-7 grid grid-cols-7 gap-px sticky top-0 z-20">
+          {/* Days header - Now floating above the grid */}
+          <div className="col-span-7 grid grid-cols-7 gap-px">
             {eachDayOfInterval({ start: startOfWeek(date), end: endOfWeek(date) }).map((day) => (
               <div
                 key={day.toString()}
-                className="p-3 bg-forest-light/95 backdrop-blur-sm border-b border-mint/10 text-center"
+                className="p-3 bg-forest-light/95 backdrop-blur-sm border-b border-mint/10 text-center sticky top-0 z-20 shadow-lg"
               >
                 <div className="text-sm font-medium text-white/70">
                   {format(day, "EEE")}
