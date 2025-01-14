@@ -226,38 +226,77 @@ const BillingSettings = () => {
 
       {/* Change Plan Dialog */}
       <Dialog open={isChangePlanOpen} onOpenChange={setIsChangePlanOpen}>
-        <DialogContent className="bg-forest-light border-mint/10 text-white">
+        <DialogContent className="bg-forest-light border-mint/10 text-white max-w-5xl">
           <DialogHeader>
             <DialogTitle>Change Subscription Plan</DialogTitle>
             <DialogDescription className="text-white/60">
-              Your current plan: <span className="text-mint">{currentPackage?.package_name}</span>
+              Your current plan: <span className="text-mint capitalize">{currentPackage?.package_name}</span>
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {packages.map((pkg) => (
               <div
                 key={pkg.id}
-                className={`p-4 border rounded-lg ${
+                className={`p-4 border rounded-lg transition-all ${
                   pkg.id === currentPackage?.id
                     ? 'border-mint bg-mint/10'
                     : 'border-mint/10 bg-forest hover:bg-forest-light/50'
                 }`}
               >
-                <div className="flex justify-between items-center">
+                <div className="space-y-4">
                   <div>
-                    <h3 className="text-lg font-semibold capitalize">{pkg.package_name}</h3>
-                    <p className="text-sm text-white/60">
-                      {pkg.minutes_included} minutes/month
+                    <h3 className="text-lg font-semibold capitalize mb-1">{pkg.package_name}</h3>
+                    <p className="text-mint text-xl font-bold">
+                      {formatPrice(pkg.monthly_price)}<span className="text-sm font-normal">/month</span>
                     </p>
-                    <p className="text-mint">{formatPrice(pkg.monthly_price)}/month</p>
                   </div>
+                  
+                  <div className="space-y-2">
+                    <div className="text-white/80">
+                      <p className="font-medium">Minutes Included</p>
+                      <p className="text-mint">{pkg.minutes_included?.toLocaleString()} minutes/month</p>
+                    </div>
+                    <div className="text-white/80">
+                      <p className="font-medium">Overage Fee</p>
+                      <p className="text-mint">€{pkg.overage_fee}/minute</p>
+                    </div>
+                    {pkg.fte_count && (
+                      <div className="text-white/80">
+                        <p className="font-medium">Team Size</p>
+                        <p className="text-mint">Up to {pkg.fte_count} FTE</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <p className="font-medium text-white/80">Features</p>
+                    <ul className="space-y-2">
+                      {Array.isArray(pkg.features) && pkg.features.map((feature, index) => (
+                        <li key={index} className="flex items-center text-sm text-white/70">
+                          <div className="w-1.5 h-1.5 rounded-full bg-mint mr-2"></div>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
                   <Button
                     variant="outline"
-                    className="border-mint text-white hover:bg-mint/10"
+                    className="w-full border-mint text-white hover:bg-mint/10"
                     onClick={() => handleChangePlan(pkg)}
                     disabled={pkg.id === currentPackage?.id}
                   >
-                    {pkg.id === currentPackage?.id ? 'Current Plan' : 'Select Plan'}
+                    {pkg.id === currentPackage?.id ? (
+                      <span className="flex items-center">
+                        <Package className="w-4 h-4 mr-2" />
+                        Current Plan
+                      </span>
+                    ) : (
+                      <span className="flex items-center">
+                        <Package className="w-4 h-4 mr-2" />
+                        Select Plan
+                      </span>
+                    )}
                   </Button>
                 </div>
               </div>
