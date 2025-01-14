@@ -310,11 +310,20 @@ const BillingSettings = () => {
           <CardTitle className="text-white">Payment Method</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center space-x-4 p-4 border border-mint/10 rounded-lg bg-forest">
-            <CreditCard className="h-6 w-6 text-mint" />
-            <div>
-              <p className="font-medium text-white">•••• •••• •••• 4242</p>
-              <p className="text-sm text-white/60">Expires 12/24</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex items-center space-x-4 p-4 border border-mint/10 rounded-lg bg-forest">
+              <CreditCard className="h-6 w-6 text-mint" />
+              <div>
+                <p className="font-medium text-white">•••• •••• •••• 4242</p>
+                <p className="text-sm text-white/60">Expires 12/24</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4 p-4 border border-mint/10 rounded-lg bg-forest">
+              <Receipt className="h-6 w-6 text-mint" />
+              <div>
+                <p className="font-medium text-white">Direct Debit</p>
+                <p className="text-sm text-white/60">IBAN ending in 3456</p>
+              </div>
             </div>
           </div>
           <Button 
