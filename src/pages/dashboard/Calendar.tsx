@@ -188,8 +188,8 @@ const Calendar = () => {
                     <AppointmentTooltip key={apt.id} appointment={apt}>
                       <div
                         className={cn(
-                          "absolute left-0 right-0 mx-1 p-2 rounded-md border",
-                          "cursor-pointer transition-all duration-200 hover:translate-y-0.5",
+                          "absolute left-0 right-0 mx-1 p-2 rounded-md border cursor-pointer",
+                          "transition-all duration-200 hover:translate-y-0.5",
                           getUrgencyColor(apt.urgencyScore)
                         )}
                         style={{
