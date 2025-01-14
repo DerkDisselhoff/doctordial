@@ -51,7 +51,7 @@ export function AppointmentTooltip({ appointment, children, open, onOpenChange }
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="bg-forest-light border-mint/10 text-white">
+      <DialogContent className="bg-forest-light/95 border-mint/10 text-white backdrop-blur-sm">
         <DialogHeader>
           <div className="flex justify-between items-start">
             <div>
