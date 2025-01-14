@@ -263,7 +263,7 @@ const BillingSettings = () => {
                     {pkg.fte_count && (
                       <div className="text-white/80">
                         <p className="font-medium">Saved FTE</p>
-                        <p className="text-mint">Up to {pkg.fte_count} FTE</p>
+                        <p className="text-mint">~ Up to {pkg.fte_count} FTE</p>
                       </div>
                     )}
                   </div>
