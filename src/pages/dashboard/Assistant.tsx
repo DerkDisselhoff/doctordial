@@ -19,7 +19,6 @@ const Assistant = () => {
   };
 
   const handleSave = () => {
-    // Here you would typically save all settings to your backend
     toast({
       title: "Settings saved",
       description: "Your AI assistant settings have been updated successfully.",
@@ -282,9 +281,13 @@ const Assistant = () => {
               <Slider 
                 defaultValue={[1]} 
                 max={2} 
-                step={0.1} 
-                className="w-full [&_[role=slider]]:bg-mint [&_[role=slider]]:border-mint [&_[role=slider]]:shadow-mint/20 [&_[role=slider]]:hover:bg-mint-light [&_[role=slider]]:focus:ring-mint/50 [&>[role=slider]]:h-5 [&>[role=slider]]:w-5"
+                step={0.1}
                 onValueChange={handleSettingChange}
+                className="w-full [&>.relative]:bg-mint/20 [&>.relative]:h-2 [&>.relative]:rounded-full 
+                          [&_[role=slider]]:bg-mint [&_[role=slider]]:border-mint [&_[role=slider]]:shadow-mint/20 
+                          [&_[role=slider]]:hover:bg-mint-light [&_[role=slider]]:focus:ring-mint/50 
+                          [&_[role=slider]]:h-5 [&_[role=slider]]:w-5 [&_[role=slider]]:rounded-full
+                          [&>.relative>[data-orientation=horizontal]]:bg-mint"
               />
               <div className="flex justify-between text-white/70 text-sm">
                 <span>Slower</span>
@@ -297,8 +300,12 @@ const Assistant = () => {
                 defaultValue={[0.7]} 
                 max={1} 
                 step={0.1}
-                className="w-full [&_[role=slider]]:bg-mint [&_[role=slider]]:border-mint [&_[role=slider]]:shadow-mint/20 [&_[role=slider]]:hover:bg-mint-light [&_[role=slider]]:focus:ring-mint/50 [&>[role=slider]]:h-5 [&>[role=slider]]:w-5"
                 onValueChange={handleSettingChange}
+                className="w-full [&>.relative]:bg-mint/20 [&>.relative]:h-2 [&>.relative]:rounded-full 
+                          [&_[role=slider]]:bg-mint [&_[role=slider]]:border-mint [&_[role=slider]]:shadow-mint/20 
+                          [&_[role=slider]]:hover:bg-mint-light [&_[role=slider]]:focus:ring-mint/50 
+                          [&_[role=slider]]:h-5 [&_[role=slider]]:w-5 [&_[role=slider]]:rounded-full
+                          [&>.relative>[data-orientation=horizontal]]:bg-mint"
               />
               <div className="flex justify-between text-white/70 text-sm">
                 <span>Professional</span>
