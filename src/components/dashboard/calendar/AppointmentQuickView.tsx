@@ -11,7 +11,7 @@ interface AppointmentQuickViewProps {
 export function AppointmentQuickView({ date, selectedDoctor }: AppointmentQuickViewProps) {
   const navigate = useNavigate();
 
-  // Mock appointments for the selected date
+  // Mock appointments with proper UUID format
   const appointments = [
     {
       id: "123e4567-e89b-12d3-a456-426614174000",
