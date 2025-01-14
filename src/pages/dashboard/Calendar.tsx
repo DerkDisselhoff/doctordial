@@ -1,21 +1,15 @@
 import { useState } from "react";
 import { format, addDays, startOfWeek, endOfWeek, eachDayOfInterval } from "date-fns";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { DayContentProps } from "react-day-picker";
-import { AppointmentTooltip } from "@/components/dashboard/calendar/AppointmentTooltip";
-import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NewAppointmentModal } from "@/components/dashboard/calendar/NewAppointmentModal";
+import { AppointmentTooltip } from "@/components/dashboard/calendar/AppointmentTooltip";
 
 const CalendarPage = () => {
   const [date, setDate] = useState<Date>(new Date());
   const [selectedDoctor, setSelectedDoctor] = useState<string>("all");
-  const [selectedAppointment, setSelectedAppointment] = useState<any>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   // Mock appointments data
   const appointments = [
@@ -45,32 +39,8 @@ const CalendarPage = () => {
     },
   ];
 
-  const weekStart = startOfWeek(date);
-  const weekEnd = endOfWeek(date);
-  const days = eachDayOfInterval({ start: weekStart, end: weekEnd });
-  const hours = Array.from({ length: 13 }, (_, i) => i + 7); // 7 AM to 7 PM
-
-  const getUrgencyColor = (score: string) => {
-    switch (score) {
-      case "U1": return "bg-red-500/20 border-red-500/30 text-red-500";
-      case "U2": return "bg-orange-500/20 border-orange-500/30 text-orange-500";
-      case "U3": return "bg-yellow-500/20 border-yellow-500/30 text-yellow-500";
-      case "U4": return "bg-blue-500/20 border-blue-500/30 text-blue-500";
-      case "U5": return "bg-green-500/20 border-green-500/30 text-green-500";
-      default: return "bg-gray-500/20 border-gray-500/30 text-gray-500";
-    }
-  };
-
-  const handleAppointmentClick = (appointment: any, e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setSelectedAppointment(appointment);
-    setDialogOpen(true);
-  };
-
-  const handleDialogClose = () => {
-    setDialogOpen(false);
-    setSelectedAppointment(null);
+  const handleDateChange = (newDate: Date) => {
+    setDate(newDate);
   };
 
   return (
@@ -80,14 +50,21 @@ const CalendarPage = () => {
         <p className="text-white/60">Manage appointments and schedules</p>
       </div>
 
-      <Card className="bg-forest-light/50 border-mint/10 p-4">
-        <div className="flex items-center justify-between mb-6">
+      <div className="dashboard-card relative overflow-hidden group transition-all duration-300">
+        {/* Enhanced gradient overlay with animation */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-r from-mint/5 via-transparent to-mint/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          <div className="absolute inset-0 bg-gradient-to-b from-mint/10 to-transparent opacity-25" />
+        </div>
+
+        {/* Calendar Header with frosted glass effect */}
+        <div className="relative z-10 flex items-center justify-between mb-6 p-4 rounded-lg bg-forest-light/80 backdrop-blur-sm border border-mint/10 shadow-lg">
           <div className="flex items-center space-x-4">
             <Button
               variant="outline"
-              size="icon"
+              size="sm"
               onClick={() => setDate(new Date())}
-              className="text-white hover:text-mint"
+              className="text-white hover:text-mint border-mint/20 hover:bg-mint/10 transition-colors"
             >
               Today
             </Button>
@@ -116,10 +93,10 @@ const CalendarPage = () => {
 
           <div className="flex items-center space-x-4">
             <Select value={selectedDoctor} onValueChange={setSelectedDoctor}>
-              <SelectTrigger className="w-[180px] bg-forest-light border-mint/10 text-white">
+              <SelectTrigger className="w-[180px] bg-forest-light/80 border-mint/10 text-white backdrop-blur-sm">
                 <SelectValue placeholder="Select doctor" />
               </SelectTrigger>
-              <SelectContent className="bg-forest-light border-mint/10">
+              <SelectContent className="bg-forest-light/95 border-mint/10 backdrop-blur-sm">
                 <SelectItem value="all">All Doctors</SelectItem>
                 {[
                   { id: "1", name: "Dr. Sarah Johnson" },
@@ -140,10 +117,11 @@ const CalendarPage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-8 gap-px bg-mint/10 rounded-lg overflow-hidden">
-          {/* Time column */}
-          <div className="bg-forest-light">
-            <div className="h-12" />
+        {/* Enhanced Calendar Grid */}
+        <div className="grid grid-cols-8 gap-px bg-mint/5 rounded-lg overflow-hidden shadow-xl">
+          {/* Time column with frosted glass effect */}
+          <div className="bg-forest-light/80 backdrop-blur-sm border-r border-mint/10">
+            <div className="h-12" /> {/* Spacer for header alignment */}
             {Array.from({ length: 13 }, (_, i) => i + 7).map((hour) => (
               <div
                 key={hour}
@@ -156,65 +134,71 @@ const CalendarPage = () => {
             ))}
           </div>
 
-          {/* Days columns */}
-          {eachDayOfInterval({ start: startOfWeek(date), end: endOfWeek(date) }).map((day) => (
-            <div key={day.toString()} className="bg-forest-light">
-              <div className="h-12 border-b border-mint/10 p-2 sticky top-0 bg-forest-light">
-                <div className="text-sm font-medium text-white">
+          {/* Days columns with enhanced appointment styling */}
+          <div className="col-span-7 grid grid-cols-7 gap-px">
+            {/* Days header row */}
+            {eachDayOfInterval({ start: startOfWeek(date), end: endOfWeek(date) }).map((day) => (
+              <div
+                key={day.toString()}
+                className="p-3 bg-forest-light/95 backdrop-blur-sm border-b border-mint/10 text-center sticky top-0 z-20 shadow-lg"
+              >
+                <div className="text-sm font-medium text-white/70">
                   {format(day, "EEE")}
                 </div>
                 <div className="text-2xl font-bold text-white">
                   {format(day, "d")}
                 </div>
               </div>
+            ))}
 
-              {Array.from({ length: 13 }, (_, i) => i + 7).map((hour) => (
-                <div
-                  key={`${day}-${hour}`}
-                  className="h-20 border-b border-mint/10 relative group"
-                >
-                  {appointments
-                    .filter(apt => {
-                      const [aptHour] = apt.time.split(':').map(Number);
-                      return aptHour === hour && 
-                             (selectedDoctor === "all" || apt.doctor === selectedDoctor);
-                    })
-                    .map((apt) => (
-                      <AppointmentTooltip 
-                        key={apt.id} 
-                        appointment={apt}
-                        open={selectedAppointment?.id === apt.id && dialogOpen}
-                        onOpenChange={(open) => {
-                          setDialogOpen(open);
-                          if (!open) setSelectedAppointment(null);
-                        }}
-                      >
-                        <div
-                          className={cn(
-                            "absolute left-0 right-0 mx-1 p-2 rounded-md border cursor-pointer",
-                            "transition-all duration-200 hover:translate-y-0.5",
-                            getUrgencyColor(apt.urgencyScore)
-                          )}
-                          style={{
-                            top: "4px",
-                            minHeight: "40px",
-                          }}
-                          onClick={(e) => handleAppointmentClick(apt, e)}
+            {/* Time slots and appointments */}
+            {eachDayOfInterval({ start: startOfWeek(date), end: endOfWeek(date) }).map((day) => (
+              <div key={day.toString()} className="bg-forest-light/50 backdrop-blur-sm">
+                <div className="h-12" /> {/* Spacer for header alignment */}
+                {Array.from({ length: 13 }, (_, i) => i + 7).map((hour) => (
+                  <div
+                    key={`${day}-${hour}`}
+                    className="h-20 border-b border-mint/10 relative group hover:bg-mint/5 transition-colors"
+                  >
+                    {/* Enhanced appointment cards */}
+                    {appointments
+                      .filter(apt => {
+                        const [aptHour] = apt.time.split(':').map(Number);
+                        return aptHour === hour && 
+                               (selectedDoctor === "all" || apt.doctor === selectedDoctor);
+                      })
+                      .map((apt) => (
+                        <AppointmentTooltip 
+                          key={apt.id} 
+                          appointment={apt}
                         >
-                          <div className="text-xs font-medium">{apt.time}</div>
-                          <div className="text-xs truncate">{apt.patient}</div>
-                          <div className="text-xs opacity-75 truncate">
-                            {apt.title}
+                          <div
+                            className={cn(
+                              "absolute left-0 right-0 mx-1 p-2 rounded-md border",
+                              "transition-all duration-300 hover:translate-y-0.5 hover:shadow-lg",
+                              "cursor-pointer backdrop-blur-sm group-hover:scale-[1.02]",
+                              getUrgencyColor(apt.urgencyScore)
+                            )}
+                            style={{
+                              top: "4px",
+                              minHeight: "40px",
+                            }}
+                          >
+                            <div className="text-xs font-medium">{apt.time}</div>
+                            <div className="text-xs truncate">{apt.patient}</div>
+                            <div className="text-xs opacity-75 truncate">
+                              {apt.title}
+                            </div>
                           </div>
-                        </div>
-                      </AppointmentTooltip>
-                    ))}
-                </div>
-              ))}
-            </div>
-          ))}
+                        </AppointmentTooltip>
+                      ))}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };
