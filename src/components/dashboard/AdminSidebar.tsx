@@ -107,6 +107,8 @@ export function AdminSidebar() {
     { title: "Billing", icon: CreditCard, path: "/dashboard/settings/billing" },
     { title: "Invoices", icon: Receipt, path: "/dashboard/settings/invoices" },
     { title: "Security & Privacy", icon: Shield, path: "/dashboard/settings/security" },
+    { title: "Team", icon: Users, path: "/dashboard/settings/team" },
+    { title: "Integrations", icon: Building2, path: "/dashboard/settings/integrations" },
   ];
 
   const clientMenuItems = [

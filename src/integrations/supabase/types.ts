@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       call_logs: {
         Row: {
+          Action: string | null
           action_required: boolean | null
           appointment_date: string | null
           assistant_id: string | null
@@ -25,22 +26,22 @@ export type Database = {
           id: string
           intent: string | null
           metadata: Json | null
-          naam: string | null
+          Name: string | null
           patient_email: string | null
           patient_id: string | null
           patient_phone: string | null
           phone_number: string | null
-          samenvattingvraag: string | null
-          sentiment: string | null
+          "Question Summary": string | null
+          Sentiment: string | null
           start_time: string | null
-          symptoms: string[] | null
+          Status: string | null
+          Symptoms: string[] | null
           transcript: string | null
           type: string | null
-          urgentiescore: string | null
-          vervolgactie: string | null
-          vervolgstap: string | null
+          Urgencylevel: string | null
         }
         Insert: {
+          Action?: string | null
           action_required?: boolean | null
           appointment_date?: string | null
           assistant_id?: string | null
@@ -55,22 +56,22 @@ export type Database = {
           id?: string
           intent?: string | null
           metadata?: Json | null
-          naam?: string | null
+          Name?: string | null
           patient_email?: string | null
           patient_id?: string | null
           patient_phone?: string | null
           phone_number?: string | null
-          samenvattingvraag?: string | null
-          sentiment?: string | null
+          "Question Summary"?: string | null
+          Sentiment?: string | null
           start_time?: string | null
-          symptoms?: string[] | null
+          Status?: string | null
+          Symptoms?: string[] | null
           transcript?: string | null
           type?: string | null
-          urgentiescore?: string | null
-          vervolgactie?: string | null
-          vervolgstap?: string | null
+          Urgencylevel?: string | null
         }
         Update: {
+          Action?: string | null
           action_required?: boolean | null
           appointment_date?: string | null
           assistant_id?: string | null
@@ -85,20 +86,19 @@ export type Database = {
           id?: string
           intent?: string | null
           metadata?: Json | null
-          naam?: string | null
+          Name?: string | null
           patient_email?: string | null
           patient_id?: string | null
           patient_phone?: string | null
           phone_number?: string | null
-          samenvattingvraag?: string | null
-          sentiment?: string | null
+          "Question Summary"?: string | null
+          Sentiment?: string | null
           start_time?: string | null
-          symptoms?: string[] | null
+          Status?: string | null
+          Symptoms?: string[] | null
           transcript?: string | null
           type?: string | null
-          urgentiescore?: string | null
-          vervolgactie?: string | null
-          vervolgstap?: string | null
+          Urgencylevel?: string | null
         }
         Relationships: []
       }

@@ -20,6 +20,8 @@ import GeneralSettings from "./dashboard/settings/General";
 import BillingSettings from "./dashboard/settings/Billing";
 import InvoicesSettings from "./dashboard/settings/Invoices";
 import SecuritySettings from "./dashboard/settings/Security";
+import TeamSettings from "./dashboard/settings/Team";
+import IntegrationsSettings from "./dashboard/settings/Integrations";
 import Calendar from "./dashboard/Calendar";
 
 const queryClient = new QueryClient();
@@ -92,6 +94,8 @@ const Dashboard = () => {
           <Route path="/settings/billing" element={<BillingSettings />} />
           <Route path="/settings/invoices" element={<InvoicesSettings />} />
           <Route path="/settings/security" element={<SecuritySettings />} />
+          <Route path="/settings/team" element={<TeamSettings />} />
+          <Route path="/settings/integrations" element={<IntegrationsSettings />} />
 
           {/* Client-only routes */}
           {userRole === 'client' && (
