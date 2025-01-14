@@ -16,14 +16,25 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
 
 const AppointmentDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data: appointment, isLoading } = useQuery({
+  // Validate UUID format
+  const isValidUUID = (uuid: string) => {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(uuid);
+  };
+
+  const { data: appointment, isLoading, error } = useQuery({
     queryKey: ['appointment', id],
     queryFn: async () => {
+      if (!id || !isValidUUID(id)) {
+        throw new Error('Invalid appointment ID format');
+      }
+
       const { data, error } = await supabase
         .from('call_logs')
         .select('*')
@@ -31,7 +42,13 @@ const AppointmentDetail = () => {
         .maybeSingle();
       
       if (error) throw error;
+      if (!data) throw new Error('Appointment not found');
+      
       return data;
+    },
+    onError: (error) => {
+      toast.error(error instanceof Error ? error.message : 'Failed to load appointment');
+      navigate('/dashboard/appointments');
     }
   });
 
@@ -65,8 +82,11 @@ const AppointmentDetail = () => {
   }
 
   const appointmentDate = new Date(appointment.appointment_date);
-  const urgencyColor = appointment.urgentiescore === 'high' ? 'red' : 
-                      appointment.urgentiescore === 'medium' ? 'yellow' : 'green';
+  const urgencyColor = appointment.urgentiescore === 'U1' ? 'red' : 
+                      appointment.urgentiescore === 'U2' ? 'orange' :
+                      appointment.urgentiescore === 'U3' ? 'yellow' :
+                      appointment.urgentiescore === 'U4' ? 'blue' :
+                      appointment.urgentiescore === 'U5' ? 'green' : 'gray';
 
   return (
     <div className="space-y-6 p-6">
