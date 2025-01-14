@@ -287,4 +287,46 @@
     animation: gradient 15s ease infinite;
     background-size: 200% 200%;
   }
+
+  /* Enhanced Calendar Specific Styles */
+  .calendar-card {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+
+  .calendar-card-header {
+    @apply sticky top-0 z-20 bg-forest-light/95 backdrop-blur-sm border-b border-mint/10 
+           shadow-lg transition-colors duration-300;
+  }
+
+  .calendar-time-column {
+    @apply bg-forest-light/80 backdrop-blur-sm border-r border-mint/10 
+           transition-colors duration-300;
+  }
+
+  .calendar-grid-cell {
+    @apply h-20 border-b border-mint/10 relative group 
+           hover:bg-mint/5 transition-all duration-300;
+  }
+
+  .calendar-appointment-card {
+    @apply absolute left-0 right-0 mx-1 p-2 rounded-md border 
+           transition-all duration-300 hover:translate-y-0.5 hover:shadow-lg 
+           cursor-pointer backdrop-blur-sm;
+  }
+
+  /* Current time indicator animation */
+  @keyframes pulse-mint {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.5; }
+  }
+
+  .current-time-indicator {
+    @apply absolute left-0 right-0 h-0.5 bg-mint/50 z-10;
+  }
+
+  .current-time-dot {
+    @apply absolute -left-1 -top-1 w-2 h-2 rounded-full bg-mint;
+    animation: pulse-mint 2s infinite;
+  }
 }

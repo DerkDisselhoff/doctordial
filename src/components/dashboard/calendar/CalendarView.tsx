@@ -78,13 +78,15 @@ export function CalendarView({ view, date: initialDate, selectedDoctor: initialD
 
   return (
     <div className="mt-4">
-      <Card className="bg-forest-light/50 border-mint/10 p-4 relative overflow-hidden">
-        {/* Shiny gradient overlay */}
+      <Card className="bg-forest-light/50 border-mint/10 p-4 relative overflow-hidden group">
+        {/* Enhanced gradient overlay with animation */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-r from-mint/5 via-transparent to-mint/5 animate-gradient" />
+          <div className="absolute inset-0 bg-gradient-to-r from-mint/5 via-transparent to-mint/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          <div className="absolute inset-0 bg-gradient-to-b from-mint/10 to-transparent opacity-25" />
         </div>
 
-        <div className="flex items-center justify-between mb-6 relative z-10">
+        {/* Calendar Header with frosted glass effect */}
+        <div className="relative z-10 flex items-center justify-between mb-6 p-4 rounded-lg bg-forest-light/80 backdrop-blur-sm border border-mint/10 shadow-lg">
           <div className="flex items-center space-x-4">
             <Button
               variant="outline"
@@ -143,11 +145,12 @@ export function CalendarView({ view, date: initialDate, selectedDoctor: initialD
           </div>
         </div>
 
-        <div className="grid grid-cols-8 gap-px bg-mint/5 rounded-lg overflow-hidden">
-          {/* Time column with frosted glass effect */}
-          <div className="bg-forest-light/80 backdrop-blur-sm">
+        {/* Calendar Grid with enhanced styling */}
+        <div className="grid grid-cols-8 gap-px bg-mint/5 rounded-lg overflow-hidden shadow-xl">
+          {/* Time column with enhanced frosted glass effect */}
+          <div className="bg-forest-light/80 backdrop-blur-sm border-r border-mint/10">
             <div className="h-12" />
-            {hours.map((hour) => (
+            {Array.from({ length: 13 }, (_, i) => i + 7).map((hour) => (
               <div
                 key={hour}
                 className="h-20 border-b border-mint/10 px-2 py-1"
@@ -159,12 +162,12 @@ export function CalendarView({ view, date: initialDate, selectedDoctor: initialD
             ))}
           </div>
 
-          {/* Days header - Now floating above the grid */}
-          <div className="col-span-7 grid grid-cols-7 gap-px sticky top-0 z-20 bg-forest-light/95 backdrop-blur-sm border-b border-mint/10">
-            {days.map((day) => (
+          {/* Days header - Floating above the grid */}
+          <div className="col-span-7 grid grid-cols-7 gap-px sticky top-0 z-20">
+            {eachDayOfInterval({ start: startOfWeek(date), end: endOfWeek(date) }).map((day) => (
               <div
                 key={day.toString()}
-                className="p-2 text-center"
+                className="p-3 bg-forest-light/95 backdrop-blur-sm border-b border-mint/10 text-center"
               >
                 <div className="text-sm font-medium text-white/70">
                   {format(day, "EEE")}
@@ -176,16 +179,16 @@ export function CalendarView({ view, date: initialDate, selectedDoctor: initialD
             ))}
           </div>
 
-          {/* Days columns with appointments */}
-          {days.map((day) => (
+          {/* Days columns with enhanced appointment styling */}
+          {eachDayOfInterval({ start: startOfWeek(date), end: endOfWeek(date) }).map((day) => (
             <div key={day.toString()} className="bg-forest-light/50 backdrop-blur-sm">
               <div className="h-12" /> {/* Spacer for header alignment */}
-              {hours.map((hour) => (
+              {Array.from({ length: 13 }, (_, i) => i + 7).map((hour) => (
                 <div
                   key={`${day}-${hour}`}
                   className="h-20 border-b border-mint/10 relative group hover:bg-mint/5 transition-colors"
                 >
-                  {/* Current time indicator */}
+                  {/* Current time indicator with pulsing effect */}
                   {format(new Date(), "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
                    new Date().getHours() === hour && (
                     <div className="absolute left-0 right-0 h-0.5 bg-mint/50 z-10">
@@ -193,7 +196,7 @@ export function CalendarView({ view, date: initialDate, selectedDoctor: initialD
                     </div>
                   )}
 
-                  {/* Appointments */}
+                  {/* Enhanced appointment cards */}
                   {appointments
                     .filter(apt => {
                       const [aptHour] = apt.time.split(':').map(Number);
@@ -208,8 +211,8 @@ export function CalendarView({ view, date: initialDate, selectedDoctor: initialD
                         <div
                           className={cn(
                             "absolute left-0 right-0 mx-1 p-2 rounded-md border",
-                            "transition-all duration-200 hover:translate-y-0.5 hover:shadow-lg",
-                            "cursor-pointer backdrop-blur-sm",
+                            "transition-all duration-300 hover:translate-y-0.5 hover:shadow-lg",
+                            "cursor-pointer backdrop-blur-sm group-hover:scale-[1.02]",
                             getUrgencyColor(apt.urgencyScore)
                           )}
                           style={{
