@@ -52,7 +52,7 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
   const weekStart = startOfWeek(date);
   const weekEnd = endOfWeek(date);
   const days = eachDayOfInterval({ start: weekStart, end: weekEnd });
-  const hours = Array.from({ length: 13 }, (_, i) => i + 7); // 7 AM to 7 PM
+  const hours = Array.from({ length: 13 }, (_, i) => i + 7);
 
   const getUrgencyColor = (score: string) => {
     switch (score) {
@@ -65,148 +65,161 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
     }
   };
 
-  const getAppointmentsForSlot = (day: Date, hour: number) => {
-    return appointments.filter(app => {
-      // Parse the time string to get hours
-      const [appHour] = app.time.split(':').map(Number);
-      // Check if the appointment hour matches the slot hour
-      return appHour === hour && 
-             (selectedDoctor === "all" || app.doctor === selectedDoctor);
-    });
-  };
-
-  const handleAppointmentCreated = () => {
-    // Refresh appointments data
-    // In a real application, this would fetch updated data from the backend
-  };
-
-  const handleDateSelect = (date: Date | undefined) => {
-    if (date) {
-      setSelectedDate(date);
-      onDateChange(date);
-    }
-  };
-
-  const renderDayContent = (props: DayContentProps) => {
-    const dayAppointments = appointments.filter(
-      app => format(new Date(), "yyyy-MM-dd") === format(props.date, "yyyy-MM-dd") &&
-      (selectedDoctor === "all" || app.doctor === selectedDoctor)
-    );
-
-    return (
-      <div className="relative w-full h-full min-h-[60px] p-1">
-        <span>{format(props.date, "d")}</span>
-        {dayAppointments.length > 0 ? (
-          <div className="absolute bottom-0 left-0 right-0 flex justify-center">
-            <Badge variant="outline" className={getUrgencyColor(dayAppointments[0].urgencyScore)}>
-              {dayAppointments.length} appt{dayAppointments.length > 1 ? "s" : ""}
-            </Badge>
-          </div>
-        ) : null}
-      </div>
-    );
-  };
-
-  if (view === "month") {
-    return (
-      <div className="mt-4">
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={handleDateSelect}
-          className="bg-forest-light/50 border-mint/10 rounded-md text-white"
-          components={{
-            DayContent: renderDayContent
-          }}
-        />
-      </div>
-    );
-  }
-
-  // Week view
-  if (view === "week") {
-    return (
-      <div className="mt-4 grid grid-cols-7 gap-2">
-        {days.map((day) => (
-          <Card key={day.toString()} className="p-2 bg-forest-light/50 border-mint/10">
-            <div className="text-sm font-medium text-white mb-2">
-              {format(day, "EEE d")}
-            </div>
-            {appointments
-              .filter(
-                app => 
-                  format(new Date(), "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
-                  (selectedDoctor === "all" || app.doctor === selectedDoctor)
-              )
-              .map((app) => (
-                <AppointmentTooltip key={app.id} appointment={app}>
-                  <div 
-                    className="mb-2 p-2 rounded bg-mint/10 cursor-pointer hover:bg-mint/20"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                  >
-                    <div className="text-xs font-medium text-white">
-                      {app.time}
-                    </div>
-                    <div className="text-xs text-white/60">{app.patient}</div>
-                    <Badge 
-                      variant="outline" 
-                      className={getUrgencyColor(app.urgencyScore)}
-                    >
-                      {app.urgencyScore}
-                    </Badge>
-                  </div>
-                </AppointmentTooltip>
-              ))}
-          </Card>
-        ))}
-      </div>
-    );
-  }
-
-  // Day view
   return (
-    <div className="mt-4 space-y-4">
-      {Array.from({ length: 9 }, (_, i) => i + 9).map((hour) => (
-        <Card key={hour} className="p-4 bg-forest-light/50 border-mint/10">
-          <div className="flex items-start">
-            <div className="w-20 text-sm font-medium text-white">
-              {`${hour}:00`}
+    <div className="mt-4">
+      <Card className="bg-forest-light/50 border-mint/10 p-4 relative overflow-hidden">
+        {/* Shiny gradient overlay */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-r from-mint/5 via-transparent to-mint/5 animate-gradient" />
+        </div>
+
+        <div className="flex items-center justify-between mb-6 relative z-10">
+          <div className="flex items-center space-x-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setDate(new Date())}
+              className="text-white hover:text-mint border-mint/20 hover:bg-mint/10 transition-colors"
+            >
+              Today
+            </Button>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setDate(d => addDays(d, -7))}
+                className="text-white hover:text-mint"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setDate(d => addDays(d, 7))}
+                className="text-white hover:text-mint"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
             </div>
-            <div className="flex-1">
-              {appointments
-                .filter(
-                  app => 
-                    format(new Date(), "yyyy-MM-dd") === format(date, "yyyy-MM-dd") &&
-                    parseInt(app.time.split(":")[0]) === hour &&
-                    (selectedDoctor === "all" || app.doctor === selectedDoctor)
-                )
-                .map((app) => (
-                  <AppointmentTooltip key={app.id} appointment={app}>
-                    <div 
-                      className="p-2 rounded bg-mint/10 cursor-pointer hover:bg-mint/20"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                      }}
-                    >
-                      <div className="text-sm font-medium text-white">{app.patient}</div>
-                      <div className="text-xs text-white/60">{app.title}</div>
-                      <Badge 
-                        variant="outline" 
-                        className={getUrgencyColor(app.urgencyScore)}
-                      >
-                        {app.urgencyScore}
-                      </Badge>
-                    </div>
-                  </AppointmentTooltip>
-                ))}
-            </div>
+            <h2 className="text-lg font-semibold text-white">
+              {format(date, "MMMM yyyy")}
+            </h2>
           </div>
-        </Card>
-      ))}
+
+          <div className="flex items-center space-x-4">
+            <Select value={selectedDoctor} onValueChange={setSelectedDoctor}>
+              <SelectTrigger className="w-[180px] bg-forest-light/80 border-mint/10 text-white backdrop-blur-sm">
+                <SelectValue placeholder="Select doctor" />
+              </SelectTrigger>
+              <SelectContent className="bg-forest-light/95 border-mint/10 backdrop-blur-sm">
+                <SelectItem value="all">All Doctors</SelectItem>
+                {[
+                  { id: "1", name: "Dr. Sarah Johnson" },
+                  { id: "2", name: "Dr. Michael Chen" },
+                  { id: "3", name: "Dr. Emma Williams" },
+                ].map((doctor) => (
+                  <SelectItem key={doctor.id} value={doctor.id}>
+                    {doctor.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <NewAppointmentModal
+              selectedDate={date}
+              selectedDoctor={selectedDoctor}
+              onAppointmentCreated={() => {}}
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-8 gap-px bg-mint/5 rounded-lg overflow-hidden">
+          {/* Time column with frosted glass effect */}
+          <div className="bg-forest-light/80 backdrop-blur-sm">
+            <div className="h-12" />
+            {hours.map((hour) => (
+              <div
+                key={hour}
+                className="h-20 border-b border-mint/10 px-2 py-1"
+              >
+                <span className="text-xs text-white/60">
+                  {format(new Date().setHours(hour, 0), "h:mm a")}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Days header - Now floating above the grid */}
+          <div className="col-span-7 grid grid-cols-7 gap-px sticky top-0 z-20 bg-forest-light/95 backdrop-blur-sm border-b border-mint/10">
+            {days.map((day) => (
+              <div
+                key={day.toString()}
+                className="p-2 text-center"
+              >
+                <div className="text-sm font-medium text-white/70">
+                  {format(day, "EEE")}
+                </div>
+                <div className="text-2xl font-bold text-white">
+                  {format(day, "d")}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Days columns with appointments */}
+          {days.map((day) => (
+            <div key={day.toString()} className="bg-forest-light/50 backdrop-blur-sm">
+              <div className="h-12" /> {/* Spacer for header alignment */}
+              {hours.map((hour) => (
+                <div
+                  key={`${day}-${hour}`}
+                  className="h-20 border-b border-mint/10 relative group hover:bg-mint/5 transition-colors"
+                >
+                  {/* Current time indicator */}
+                  {format(new Date(), "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
+                   new Date().getHours() === hour && (
+                    <div className="absolute left-0 right-0 h-0.5 bg-mint/50 z-10">
+                      <div className="absolute -left-1 -top-1 w-2 h-2 rounded-full bg-mint animate-pulse" />
+                    </div>
+                  )}
+
+                  {/* Appointments */}
+                  {appointments
+                    .filter(apt => {
+                      const [aptHour] = apt.time.split(':').map(Number);
+                      return aptHour === hour && 
+                             (selectedDoctor === "all" || apt.doctor === selectedDoctor);
+                    })
+                    .map((apt) => (
+                      <AppointmentTooltip 
+                        key={apt.id} 
+                        appointment={apt}
+                      >
+                        <div
+                          className={cn(
+                            "absolute left-0 right-0 mx-1 p-2 rounded-md border",
+                            "transition-all duration-200 hover:translate-y-0.5 hover:shadow-lg",
+                            "cursor-pointer backdrop-blur-sm",
+                            getUrgencyColor(apt.urgencyScore)
+                          )}
+                          style={{
+                            top: "4px",
+                            minHeight: "40px",
+                          }}
+                        >
+                          <div className="text-xs font-medium">{apt.time}</div>
+                          <div className="text-xs truncate">{apt.patient}</div>
+                          <div className="text-xs opacity-75 truncate">
+                            {apt.title}
+                          </div>
+                        </div>
+                      </AppointmentTooltip>
+                    ))}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </Card>
     </div>
   );
 }

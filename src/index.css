@@ -247,4 +247,44 @@
   .dark-chart-tooltip {
     @apply !bg-forest-light/95 border border-mint/10 rounded-lg shadow-lg;
   }
+
+  /* Calendar Specific Styles */
+  .calendar-grid {
+    @apply grid gap-px bg-mint/5 rounded-lg overflow-hidden;
+  }
+
+  .calendar-time-column {
+    @apply bg-forest-light/80 backdrop-blur-sm;
+  }
+
+  .calendar-header {
+    @apply sticky top-0 z-20 bg-forest-light/95 backdrop-blur-sm border-b border-mint/10;
+  }
+
+  .calendar-cell {
+    @apply h-20 border-b border-mint/10 relative group hover:bg-mint/5 transition-colors;
+  }
+
+  .calendar-appointment {
+    @apply absolute left-0 right-0 mx-1 p-2 rounded-md border transition-all duration-200 
+           hover:translate-y-0.5 hover:shadow-lg cursor-pointer backdrop-blur-sm;
+  }
+
+  /* Animation for the gradient background */
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient {
+    animation: gradient 15s ease infinite;
+    background-size: 200% 200%;
+  }
 }
