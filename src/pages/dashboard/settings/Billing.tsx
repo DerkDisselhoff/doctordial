@@ -237,13 +237,13 @@ const BillingSettings = () => {
             {packages.map((pkg) => (
               <div
                 key={pkg.id}
-                className={`p-4 border rounded-lg transition-all ${
+                className={`p-4 border rounded-lg transition-all h-full flex flex-col ${
                   pkg.id === currentPackage?.id
                     ? 'border-mint bg-mint/10'
                     : 'border-mint/10 bg-forest hover:bg-forest-light/50'
                 }`}
               >
-                <div className="space-y-4">
+                <div className="flex-1 space-y-4">
                   <div>
                     <h3 className="text-lg font-semibold capitalize mb-1">{pkg.package_name}</h3>
                     <p className="text-mint text-xl font-bold">
@@ -262,7 +262,7 @@ const BillingSettings = () => {
                     </div>
                     {pkg.fte_count && (
                       <div className="text-white/80">
-                        <p className="font-medium">Team Size</p>
+                        <p className="font-medium">Saved FTE</p>
                         <p className="text-mint">Up to {pkg.fte_count} FTE</p>
                       </div>
                     )}
@@ -279,26 +279,26 @@ const BillingSettings = () => {
                       ))}
                     </ul>
                   </div>
-
-                  <Button
-                    variant="outline"
-                    className="w-full border-mint text-white hover:bg-mint/10"
-                    onClick={() => handleChangePlan(pkg)}
-                    disabled={pkg.id === currentPackage?.id}
-                  >
-                    {pkg.id === currentPackage?.id ? (
-                      <span className="flex items-center">
-                        <Package className="w-4 h-4 mr-2" />
-                        Current Plan
-                      </span>
-                    ) : (
-                      <span className="flex items-center">
-                        <Package className="w-4 h-4 mr-2" />
-                        Select Plan
-                      </span>
-                    )}
-                  </Button>
                 </div>
+
+                <Button
+                  variant="outline"
+                  className="w-full border-mint text-white hover:bg-mint/10 mt-4"
+                  onClick={() => handleChangePlan(pkg)}
+                  disabled={pkg.id === currentPackage?.id}
+                >
+                  {pkg.id === currentPackage?.id ? (
+                    <span className="flex items-center">
+                      <Package className="w-4 h-4 mr-2" />
+                      Current Plan
+                    </span>
+                  ) : (
+                    <span className="flex items-center">
+                      <Package className="w-4 h-4 mr-2" />
+                      Select Plan
+                    </span>
+                  )}
+                </Button>
               </div>
             ))}
           </div>
