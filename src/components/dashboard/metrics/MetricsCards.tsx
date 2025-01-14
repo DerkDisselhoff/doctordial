@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Users, PhoneCall, Clock, Calendar, ThumbsUp, AlertCircle, DollarSign } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
@@ -11,6 +12,7 @@ interface MetricsCardsProps {
 
 export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkUserRole = async () => {
@@ -29,7 +31,6 @@ export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
     checkUserRole();
   }, []);
 
-  // Helper function to get the comparison text based on the time filter
   const getComparisonText = (filter: TimeFilter) => {
     switch (filter) {
       case 'today':
@@ -71,14 +72,30 @@ export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
     }
   };
 
-  const StatCard = ({ icon: Icon, label, value, subtext }: { 
+  const StatCard = ({ 
+    icon: Icon, 
+    label, 
+    value, 
+    subtext,
+    navigateTo 
+  }: { 
     icon: any, 
     label: string, 
     value: string, 
-    subtext?: string 
+    subtext?: string,
+    navigateTo: string
   }) => (
-    <Card className="bg-forest-light/50 border-mint/10 p-4">
-      <div className="flex items-start justify-between">
+    <Card 
+      className="bg-forest-light/50 border-mint/10 p-4 cursor-pointer transition-all duration-300
+                hover:border-mint/30 hover:shadow-[0_0_15px_rgba(100,255,218,0.1)]
+                relative overflow-hidden group"
+      onClick={() => navigate(navigateTo)}
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-mint/0 via-mint/5 to-mint/0 
+                    translate-x-[-100%] group-hover:translate-x-[100%] 
+                    transition-transform duration-1000 pointer-events-none" 
+      />
+      <div className="flex items-start justify-between relative">
         <div>
           <p className="text-white/70 text-sm">{label}</p>
           <h4 className="text-2xl font-bold text-white mt-1">{value}</h4>
@@ -102,30 +119,35 @@ export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
           label="Total Calls"
           value={metricsData.calls}
           subtext={`+30 ${comparisonText}`}
+          navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={Clock}
           label="Avg. Call Duration"
           value={metricsData.duration}
           subtext={`-15s ${comparisonText}`}
+          navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={Calendar}
           label="Appointments Made"
           value={metricsData.appointments}
           subtext={`+15 ${comparisonText}`}
+          navigateTo="/dashboard/appointments"
         />
         <StatCard 
           icon={ThumbsUp}
           label="Positive Sentiment"
           value={metricsData.sentiment}
           subtext={`+2% ${comparisonText}`}
+          navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={AlertCircle}
           label="Urgent Cases"
           value={metricsData.urgent}
           subtext={`-1 ${comparisonText}`}
+          navigateTo="/dashboard/calls"
         />
       </div>
     );
@@ -138,24 +160,28 @@ export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
         label="Total Clients"
         value="2,350"
         subtext="+180 from last month"
+        navigateTo="/dashboard/clients"
       />
       <StatCard 
         icon={PhoneCall}
         label="Total Calls"
         value="15,280"
         subtext="+2,100 from last month"
+        navigateTo="/dashboard/calls"
       />
       <StatCard 
         icon={Clock}
         label="Avg. Call Duration"
         value="3m 45s"
         subtext="-30s from last month"
+        navigateTo="/dashboard/calls"
       />
       <StatCard 
         icon={DollarSign}
         label="Monthly Revenue"
         value="$23,500"
         subtext="+$4,500 from last month"
+        navigateTo="/dashboard/billing"
       />
     </div>
   );
