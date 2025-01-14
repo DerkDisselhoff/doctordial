@@ -176,6 +176,45 @@ export type Database = {
         }
         Relationships: []
       }
+      package_features: {
+        Row: {
+          created_at: string
+          features: Json
+          fte_count: number | null
+          id: string
+          minutes_included: number | null
+          monthly_price: number | null
+          overage_fee: number | null
+          package_name: Database["public"]["Enums"]["subscription_package"]
+          price_per_hour: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          features: Json
+          fte_count?: number | null
+          id?: string
+          minutes_included?: number | null
+          monthly_price?: number | null
+          overage_fee?: number | null
+          package_name: Database["public"]["Enums"]["subscription_package"]
+          price_per_hour?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          features?: Json
+          fte_count?: number | null
+          id?: string
+          minutes_included?: number | null
+          monthly_price?: number | null
+          overage_fee?: number | null
+          package_name?: Database["public"]["Enums"]["subscription_package"]
+          price_per_hour?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       pricing_submissions: {
         Row: {
           company_name: string
@@ -337,6 +376,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      subscription_package: "starter" | "growth" | "professional" | "enterprise"
       user_role: "admin" | "client"
     }
     CompositeTypes: {
