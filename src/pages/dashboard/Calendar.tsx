@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { format, addDays, startOfWeek, endOfWeek, eachDayOfInterval } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DayContentProps } from "react-day-picker";
@@ -11,9 +11,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NewAppointmentModal } from "@/components/dashboard/calendar/NewAppointmentModal";
 
-// ... keep existing code (imports and type definitions)
-
-const Calendar = () => {
+const CalendarPage = () => {
   const [date, setDate] = useState<Date>(new Date());
   const [selectedDoctor, setSelectedDoctor] = useState<string>("all");
 
@@ -214,4 +212,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default CalendarPage;
