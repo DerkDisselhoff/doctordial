@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integ/supabase/client";
+import { supabase } from "@/lib/supabaseClient";
 import { format } from "date-fns";
 import { 
   Calendar, 
