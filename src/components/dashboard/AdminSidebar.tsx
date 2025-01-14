@@ -89,13 +89,22 @@ export function AdminSidebar() {
     }
   };
 
+  const clientMenuItems = [
+    { title: "Overview", icon: Home, path: "/dashboard" },
+    { title: "Assistant", icon: Bot, path: "/dashboard/assistant" },
+    { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
+    { title: "Appointments", icon: Calendar, path: "/dashboard/appointments" },
+    { title: "Calendar", icon: Calendar, path: "/dashboard/calendar" },
+  ];
+
   const adminMenuItems = [
     { title: "Overview", icon: Home, path: "/dashboard" },
+    { title: "Assistant", icon: Bot, path: "/dashboard/assistant" },
+    { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
+    { title: "Appointments", icon: Calendar, path: "/dashboard/appointments" },
     { title: "Calendar", icon: Calendar, path: "/dashboard/calendar" },
     { title: "Clients", icon: Users, path: "/dashboard/clients" },
     { title: "Practices", icon: Building2, path: "/dashboard/practices" },
-    { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
-    { title: "Appointments", icon: Calendar, path: "/dashboard/appointments" },
     { title: "Reports", icon: BarChart3, path: "/dashboard/reports" },
     { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
     { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
@@ -109,14 +118,6 @@ export function AdminSidebar() {
     { title: "Security & Privacy", icon: Shield, path: "/dashboard/settings/security" },
     { title: "Team", icon: Users, path: "/dashboard/settings/team" },
     { title: "Integrations", icon: Building2, path: "/dashboard/settings/integrations" },
-  ];
-
-  const clientMenuItems = [
-    { title: "Overview", icon: Home, path: "/dashboard" },
-    { title: "Calendar", icon: Calendar, path: "/dashboard/calendar" },
-    { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
-    { title: "Appointments", icon: Calendar, path: "/dashboard/appointments" },
-    { title: "Assistant", icon: Bot, path: "/dashboard/assistant" },
   ];
 
   const MenuItem = ({ icon: Icon, title, path }: { icon: any; title: string; path: string }) => {
