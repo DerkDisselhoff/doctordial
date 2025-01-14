@@ -3,10 +3,14 @@ import { format, startOfWeek, endOfWeek, eachDayOfInterval, addHours, startOfDay
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
+import { NewAppointmentModal } from "@/components/dashboard/calendar/NewAppointmentModal";
+import { AppointmentTooltip } from "@/components/dashboard/calendar/AppointmentTooltip";
 
 const Calendar = () => {
+  const navigate = useNavigate();
   const [date, setDate] = useState<Date>(new Date());
   const [selectedDoctor, setSelectedDoctor] = useState<string>("all");
 
@@ -16,36 +20,45 @@ const Calendar = () => {
     { id: "3", name: "Dr. Emma Williams" },
   ];
 
-  // Mock appointments data
+  // Mock appointments data with extended information
   const appointments = [
     {
-      id: 1,
+      id: "1",
       title: "Regular Check-up",
       patient: "John Smith",
       time: "09:00",
       duration: 30,
       doctor: "1",
       urgencyScore: "U3",
+      patientPhone: "+31 6 12345678",
+      patientEmail: "john.smith@email.com",
+      notes: "Patient mentioned recurring headaches",
       day: new Date().setHours(9, 0, 0, 0),
     },
     {
-      id: 2,
+      id: "2",
       title: "Follow-up Consultation",
       patient: "Emma Johnson",
       time: "11:00",
       duration: 45,
       doctor: "2",
       urgencyScore: "U2",
+      patientPhone: "+31 6 23456789",
+      patientEmail: "emma.j@email.com",
+      notes: "Post-surgery check-up",
       day: new Date().setHours(11, 0, 0, 0),
     },
     {
-      id: 3,
+      id: "3",
       title: "Emergency Visit",
       patient: "Michael Brown",
       time: "14:30",
       duration: 60,
       doctor: "1",
       urgencyScore: "U1",
+      patientPhone: "+31 6 34567890",
+      patientEmail: "m.brown@email.com",
+      notes: "Severe chest pain",
       day: new Date().setHours(14, 30, 0, 0),
     },
   ];
@@ -75,6 +88,15 @@ const Calendar = () => {
         (selectedDoctor === "all" || apt.doctor === selectedDoctor)
       );
     });
+  };
+
+  const handleAppointmentClick = (appointmentId: string) => {
+    navigate(`/dashboard/appointments/${appointmentId}`);
+  };
+
+  const handleAppointmentCreated = () => {
+    // Refresh appointments data
+    // In a real application, this would fetch updated data from the backend
   };
 
   return (
@@ -132,17 +154,18 @@ const Calendar = () => {
                 ))}
               </SelectContent>
             </Select>
-            <Button className="bg-mint hover:bg-mint/90 text-forest">
-              <Plus className="h-4 w-4 mr-2" />
-              New Appointment
-            </Button>
+            <NewAppointmentModal
+              selectedDate={date}
+              selectedDoctor={selectedDoctor}
+              onAppointmentCreated={handleAppointmentCreated}
+            />
           </div>
         </div>
 
         <div className="grid grid-cols-8 gap-px bg-mint/10 rounded-lg overflow-hidden">
           {/* Time column */}
           <div className="bg-forest-light">
-            <div className="h-12" /> {/* Header spacer */}
+            <div className="h-12" />
             {hours.map((hour) => (
               <div
                 key={hour}
@@ -175,24 +198,26 @@ const Calendar = () => {
                   className="h-20 border-b border-mint/10 relative group"
                 >
                   {getAppointmentsForSlot(day, hour).map((apt) => (
-                    <div
-                      key={apt.id}
-                      className={cn(
-                        "absolute left-0 right-0 mx-1 p-2 rounded-md border",
-                        "cursor-pointer transition-all duration-200 hover:translate-y-0.5",
-                        getUrgencyColor(apt.urgencyScore)
-                      )}
-                      style={{
-                        top: "4px",
-                        minHeight: "40px",
-                      }}
-                    >
-                      <div className="text-xs font-medium">{apt.time}</div>
-                      <div className="text-xs truncate">{apt.patient}</div>
-                      <div className="text-xs opacity-75 truncate">
-                        {apt.title}
+                    <AppointmentTooltip key={apt.id} appointment={apt}>
+                      <div
+                        className={cn(
+                          "absolute left-0 right-0 mx-1 p-2 rounded-md border",
+                          "cursor-pointer transition-all duration-200 hover:translate-y-0.5",
+                          getUrgencyColor(apt.urgencyScore)
+                        )}
+                        style={{
+                          top: "4px",
+                          minHeight: "40px",
+                        }}
+                        onClick={() => handleAppointmentClick(apt.id)}
+                      >
+                        <div className="text-xs font-medium">{apt.time}</div>
+                        <div className="text-xs truncate">{apt.patient}</div>
+                        <div className="text-xs opacity-75 truncate">
+                          {apt.title}
+                        </div>
                       </div>
-                    </div>
+                    </AppointmentTooltip>
                   ))}
                 </div>
               ))}
