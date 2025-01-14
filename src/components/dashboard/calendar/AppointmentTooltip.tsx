@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, FileText, AlertCircle, Edit, Trash, Calendar } from "lucide-react";
 import { toast } from "sonner";
+import { getUrgencyColor } from "@/utils/urgencyUtils";
 
 interface AppointmentTooltipProps {
   appointment: {
@@ -23,17 +24,6 @@ interface AppointmentTooltipProps {
 }
 
 export function AppointmentTooltip({ appointment, children, open, onOpenChange }: AppointmentTooltipProps) {
-  const getUrgencyColor = (score: string) => {
-    switch (score) {
-      case "U1": return "text-red-500 border-red-500/20";
-      case "U2": return "text-orange-500 border-orange-500/20";
-      case "U3": return "text-yellow-500 border-yellow-500/20";
-      case "U4": return "text-blue-500 border-blue-500/20";
-      case "U5": return "text-green-500 border-green-500/20";
-      default: return "text-gray-500 border-gray-500/20";
-    }
-  };
-
   const handleEdit = () => {
     toast.info("Edit functionality coming soon");
   };

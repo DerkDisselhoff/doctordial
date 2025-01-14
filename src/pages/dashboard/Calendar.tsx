@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NewAppointmentModal } from "@/components/dashboard/calendar/NewAppointmentModal";
 import { AppointmentTooltip } from "@/components/dashboard/calendar/AppointmentTooltip";
+import { getUrgencyColor } from "@/utils/urgencyUtils";
 
 const CalendarPage = () => {
   const [date, setDate] = useState<Date>(new Date());
