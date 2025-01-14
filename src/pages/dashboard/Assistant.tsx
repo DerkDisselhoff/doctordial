@@ -6,20 +6,29 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { Phone, Clock, Bot, Calendar, Settings, ArrowUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Phone, Clock, Bot, Calendar, Settings, ArrowUp, Save } from "lucide-react";
+import { useState } from "react";
 
 const Assistant = () => {
   const { toast } = useToast();
+  const [hasChanges, setHasChanges] = useState(false);
 
   const handleSettingChange = () => {
+    setHasChanges(true);
+  };
+
+  const handleSave = () => {
+    // Here you would typically save all settings to your backend
     toast({
-      title: "Settings updated",
-      description: "Your changes have been saved successfully.",
+      title: "Settings saved",
+      description: "Your AI assistant settings have been updated successfully.",
     });
+    setHasChanges(false);
   };
 
   return (
-    <div className="space-y-6 p-8">
+    <div className="space-y-6 p-8 relative pb-20">
       <h1 className="text-3xl font-semibold text-white">AI Assistant Settings</h1>
       
       {/* Flow Settings */}
@@ -238,6 +247,26 @@ const Assistant = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Floating Save Button */}
+      {hasChanges && (
+        <div className="fixed bottom-8 right-8 flex gap-2 z-50">
+          <Button
+            onClick={() => setHasChanges(false)}
+            variant="outline"
+            className="bg-forest text-white hover:bg-forest-light"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSave}
+            className="bg-mint text-forest hover:bg-mint-light flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            Save Changes
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
