@@ -66,14 +66,13 @@ export function CalendarView({ view, date, selectedDoctor, onDateChange }: Calen
   };
 
   const getAppointmentsForSlot = (day: Date, hour: number) => {
-    return appointments.filter(
-      app => {
-        const aptDate = new Date(app.day);
-        return format(aptDate, "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
-          Math.floor(aptDate.getHours()) === hour &&
-          (selectedDoctor === "all" || app.doctor === selectedDoctor);
-      }
-    );
+    return appointments.filter(app => {
+      // Parse the time string to get hours
+      const [appHour] = app.time.split(':').map(Number);
+      // Check if the appointment hour matches the slot hour
+      return appHour === hour && 
+             (selectedDoctor === "all" || app.doctor === selectedDoctor);
+    });
   };
 
   const handleAppointmentCreated = () => {
