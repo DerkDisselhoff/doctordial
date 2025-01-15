@@ -3,12 +3,62 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Bot } from "lucide-react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface IdentitySettingsCardProps {
   onSettingChange: () => void;
 }
 
 export const IdentitySettingsCard = ({ onSettingChange }: IdentitySettingsCardProps) => {
+  const [assistantName, setAssistantName] = useState('Assistant');
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchAssistantName = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { data: statusData } = await supabase
+          .from('assistant_status')
+          .select('assistant_name')
+          .eq('profile_id', session.user.id)
+          .maybeSingle();
+
+        if (statusData?.assistant_name) {
+          setAssistantName(statusData.assistant_name);
+        }
+      }
+    };
+
+    fetchAssistantName();
+  }, []);
+
+  const handleNameChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newName = e.target.value;
+    setAssistantName(newName);
+    
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      const { error } = await supabase
+        .from('assistant_status')
+        .update({ assistant_name: newName })
+        .eq('profile_id', session.user.id);
+
+      if (error) {
+        console.error('Error updating assistant name:', error);
+        toast({
+          title: "Error",
+          description: "Failed to update assistant name. Please try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      onSettingChange();
+    }
+  };
+
   return (
     <Card className="bg-forest-light/50 border-mint/10">
       <CardHeader>
@@ -24,7 +74,8 @@ export const IdentitySettingsCard = ({ onSettingChange }: IdentitySettingsCardPr
             <Input 
               placeholder="Sarah" 
               className="bg-forest border-mint/20"
-              onChange={onSettingChange}
+              value={assistantName}
+              onChange={handleNameChange}
             />
           </div>
           <div className="space-y-2">

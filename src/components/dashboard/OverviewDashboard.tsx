@@ -11,6 +11,7 @@ export function OverviewDashboard() {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
   const [isAssistantLive, setIsAssistantLive] = useState(false);
+  const [assistantName, setAssistantName] = useState('Assistant');
 
   useEffect(() => {
     const checkUserRole = async () => {
@@ -24,14 +25,15 @@ export function OverviewDashboard() {
         
         setUserRole(profile?.role || null);
 
-        // Fetch assistant status
+        // Fetch assistant status and name
         const { data: statusData } = await supabase
           .from('assistant_status')
-          .select('is_live')
+          .select('is_live, assistant_name')
           .eq('profile_id', session.user.id)
           .maybeSingle();
 
         setIsAssistantLive(statusData?.is_live || false);
+        setAssistantName(statusData?.assistant_name || 'Assistant');
       }
     };
 
@@ -43,13 +45,16 @@ export function OverviewDashboard() {
       .on(
         'postgres_changes',
         {
-          event: 'UPDATE',
+          event: '*',
           schema: 'public',
           table: 'assistant_status',
           filter: `profile_id=eq.${supabase.auth.getSession().then(({ data }) => data.session?.user.id)}`
         },
         (payload) => {
-          setIsAssistantLive(payload.new.is_live);
+          if (payload.new) {
+            setIsAssistantLive(payload.new.is_live);
+            setAssistantName(payload.new.assistant_name || 'Assistant');
+          }
         }
       )
       .subscribe();
@@ -73,12 +78,12 @@ export function OverviewDashboard() {
                 {isAssistantLive ? (
                   <>
                     <CirclePlay className="w-4 h-4 text-mint animate-pulse" />
-                    <span className="text-sm text-mint">Assistant Active</span>
+                    <span className="text-sm text-mint">{assistantName} Active</span>
                   </>
                 ) : (
                   <>
                     <CirclePause className="w-4 h-4 text-white/50" />
-                    <span className="text-sm text-white/50">Assistant Offline</span>
+                    <span className="text-sm text-white/50">{assistantName} Offline</span>
                   </>
                 )}
               </div>

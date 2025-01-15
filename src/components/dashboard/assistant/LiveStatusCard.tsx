@@ -23,6 +23,7 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
   const { toast } = useToast();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [pendingLiveState, setPendingLiveState] = useState(false);
+  const [assistantName, setAssistantName] = useState('Assistant');
 
   useEffect(() => {
     const fetchInitialStatus = async () => {
@@ -30,28 +31,58 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
       if (session) {
         const { data: statusData } = await supabase
           .from('assistant_status')
-          .select('is_live')
+          .select('is_live, assistant_name')
           .eq('profile_id', session.user.id)
           .maybeSingle();
 
         if (statusData) {
           onStatusChange(statusData.is_live);
+          setAssistantName(statusData.assistant_name || 'Assistant');
         } else {
           // Create initial status record if it doesn't exist
           const { error } = await supabase
             .from('assistant_status')
-            .insert([{ profile_id: session.user.id, is_live: false }]);
+            .insert([{ 
+              profile_id: session.user.id, 
+              is_live: false,
+              assistant_name: 'Assistant'
+            }]);
             
           if (error) {
             console.error('Error creating initial assistant status:', error);
             return;
           }
           onStatusChange(false);
+          setAssistantName('Assistant');
         }
       }
     };
 
     fetchInitialStatus();
+
+    // Subscribe to assistant status changes
+    const channel = supabase
+      .channel('assistant_status_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'assistant_status',
+          filter: `profile_id=eq.${supabase.auth.getSession().then(({ data }) => data.session?.user.id)}`
+        },
+        (payload) => {
+          if (payload.new) {
+            setAssistantName(payload.new.assistant_name || 'Assistant');
+            onStatusChange(payload.new.is_live);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [onStatusChange]);
 
   const handleLiveToggle = (newState: boolean) => {
@@ -100,7 +131,7 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
               ) : (
                 <CirclePause className="w-6 h-6 text-white/50" />
               )}
-              Assistant Status
+              {assistantName} Status
             </div>
             <Switch
               checked={isLive}
@@ -115,7 +146,7 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
               isLive ? 'bg-mint animate-pulse' : 'bg-white/30'
             }`} />
             <span className="text-white/70">
-              {isLive ? 'Assistant is actively handling calls' : 'Assistant is currently offline'}
+              {isLive ? `${assistantName} is actively handling calls` : `${assistantName} is currently offline`}
             </span>
           </div>
         </CardContent>
@@ -125,12 +156,12 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
         <DialogContent className="bg-forest border-mint/10">
           <DialogHeader>
             <DialogTitle className="text-white">
-              {pendingLiveState ? 'Activate AI Assistant?' : 'Deactivate AI Assistant?'}
+              {pendingLiveState ? `Activate ${assistantName}?` : `Deactivate ${assistantName}?`}
             </DialogTitle>
             <DialogDescription className="text-white/70">
               {pendingLiveState
-                ? 'The AI assistant will begin handling incoming calls. Make sure all settings are configured correctly.'
-                : 'The AI assistant will stop handling calls. All incoming calls will need to be handled manually.'}
+                ? `${assistantName} will begin handling incoming calls. Make sure all settings are configured correctly.`
+                : `${assistantName} will stop handling calls. All incoming calls will need to be handled manually.`}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="sm:justify-start">

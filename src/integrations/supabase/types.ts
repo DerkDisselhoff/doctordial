@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       assistant_status: {
         Row: {
+          assistant_name: string | null
           created_at: string
           id: string
           is_live: boolean
@@ -18,6 +19,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          assistant_name?: string | null
           created_at?: string
           id?: string
           is_live?: boolean
@@ -25,6 +27,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          assistant_name?: string | null
           created_at?: string
           id?: string
           is_live?: boolean
