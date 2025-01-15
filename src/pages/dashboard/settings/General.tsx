@@ -4,17 +4,62 @@ import { Globe, Bell, UserPlus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
 const GeneralSettings = () => {
   const { toast } = useToast();
+  const [practiceName, setPracticeName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleInviteTeamMember = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // In a real app, this would send an invitation email
-    toast({
-      title: "Invitation Sent",
-      description: "Your team member will receive an email invitation shortly.",
-    });
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('company_name')
+          .eq('id', session.user.id)
+          .single();
+        
+        if (profile?.company_name) {
+          setPracticeName(profile.company_name);
+        }
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  const handleSaveChanges = async () => {
+    setIsLoading(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('No session found');
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({ 
+          company_name: practiceName,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', session.user.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Changes saved",
+        description: "Your practice information has been updated successfully.",
+      });
+    } catch (error) {
+      console.error('Error saving changes:', error);
+      toast({
+        title: "Error saving changes",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -29,29 +74,26 @@ const GeneralSettings = () => {
           <CardTitle className="text-white">Practice Information</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Practice Name</label>
-              <input
-                type="text"
-                className="w-full p-2 bg-forest border border-mint/20 rounded-md text-white placeholder-white/40"
-                placeholder="Enter practice name"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Contact Email</label>
-              <input
-                type="email"
-                className="w-full p-2 bg-forest border border-mint/20 rounded-md text-white placeholder-white/40"
-                placeholder="contact@practice.com"
-              />
-            </div>
+          <div className="space-y-2">
+            <Label className="text-white">Practice Name</Label>
+            <Input
+              value={practiceName}
+              onChange={(e) => setPracticeName(e.target.value)}
+              className="w-full p-2 bg-forest border border-mint/20 rounded-md text-white placeholder-white/40"
+              placeholder="Enter practice name"
+            />
           </div>
-          <Button className="bg-mint hover:bg-mint/90 text-forest">Save Changes</Button>
+          <Button 
+            onClick={handleSaveChanges} 
+            className="bg-mint hover:bg-mint/90 text-forest"
+            disabled={isLoading}
+          >
+            {isLoading ? "Saving..." : "Save Changes"}
+          </Button>
         </CardContent>
       </Card>
 
-      <Card className="bg-forest-light/50 border-mint/10">
+      <Card>
         <CardHeader>
           <CardTitle className="text-white">Notifications</CardTitle>
         </CardHeader>
@@ -70,50 +112,83 @@ const GeneralSettings = () => {
         </CardContent>
       </Card>
 
-      {/* New Team Members Section */}
-      <Card className="bg-forest-light/50 border-mint/10">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <div>
-            <CardTitle className="text-white">Team Members</CardTitle>
-            <p className="text-sm text-white/60 mt-1">Invite and manage your team members</p>
-          </div>
-          <UserPlus className="h-5 w-5 text-mint" />
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-white">Security</CardTitle>
+          <p className="dashboard-card-content">Manage security settings</p>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleInviteTeamMember} className="space-y-4">
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label className="text-white">Name</Label>
-                <Input
-                  placeholder="John Doe"
-                  className="bg-forest border-mint/20 text-white placeholder:text-white/40"
-                  required
+          <div className="space-y-4">
+            <Button variant="outline" className="w-full justify-start text-white/70 hover:text-white hover:bg-mint/10">
+              Change Password
+            </Button>
+            <Button variant="outline" className="w-full justify-start text-white/70 hover:text-white hover:bg-mint/10">
+              Two-Factor Authentication
+            </Button>
+            <Button variant="outline" className="w-full justify-start text-white/70 hover:text-white hover:bg-mint/10">
+              Login History
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-white">Preferences</CardTitle>
+          <p className="dashboard-card-content">Customize your experience</p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="form-label">Language</label>
+              <select className="form-select">
+                <option>English</option>
+                <option>Dutch</option>
+              </select>
+            </div>
+            <div className="space-y-2">
+              <label className="form-label">Time Zone</label>
+              <select className="form-select">
+                <option>UTC+01:00 Amsterdam</option>
+                <option>UTC+00:00 London</option>
+              </select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-white">Call Settings</CardTitle>
+          <p className="dashboard-card-content">Configure call handling preferences</p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label className="form-label">Business Hours</label>
+              <div className="grid gap-4 md:grid-cols-2">
+                <input
+                  type="time"
+                  className="form-input"
+                  defaultValue="09:00"
                 />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-white">Email</Label>
-                <Input
-                  type="email"
-                  placeholder="john@example.com"
-                  className="bg-forest border-mint/20 text-white placeholder:text-white/40"
-                  required
+                <input
+                  type="time"
+                  className="form-input"
+                  defaultValue="17:00"
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-white">Role</Label>
-              <select className="w-full p-2 bg-forest border border-mint/20 rounded-md text-white">
-                <option value="doctor">Doctor</option>
-                <option value="nurse">Nurse</option>
-                <option value="receptionist">Receptionist</option>
-                <option value="admin">Administrator</option>
+              <label className="form-label">Voice Settings</label>
+              <select className="form-select">
+                <option>Natural voice</option>
+                <option>Professional voice</option>
+                <option>Friendly voice</option>
               </select>
             </div>
-            <Button type="submit" className="bg-mint hover:bg-mint/90 text-forest">
-              <UserPlus className="h-4 w-4 mr-2" />
-              Send Invitation
-            </Button>
-          </form>
+            <Button className="bg-mint hover:bg-mint/90 text-forest">Update Call Settings</Button>
+          </div>
         </CardContent>
       </Card>
     </div>
