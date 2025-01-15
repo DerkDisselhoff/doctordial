@@ -1,252 +1,205 @@
-import { 
-  BarChart3, 
-  Users, 
-  Phone, 
-  Settings, 
-  Home,
-  Building2,
-  DollarSign,
-  FileText,
-  Activity,
-  Bot,
-  LogOut,
-  Shield,
+import { Link, useLocation } from "react-router-dom";
+import {
+  BarChart3,
+  CalendarDays,
+  Clock,
   CreditCard,
-  Grid,
-  Receipt,
-  Calendar
+  FileText,
+  LayoutDashboard,
+  Phone,
+  Settings,
+  Users,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { SidebarProfile } from "./sidebar/SidebarProfile";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Logo } from "../Logo";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useToast } from "@/hooks/use-toast";
+import { Profile } from "@/integrations/supabase/types/tables/profiles";
 
-export function AdminSidebar() {
-  const navigate = useNavigate();
+interface AdminSidebarProps {
+  userProfile: Profile | null;
+  userRole: 'admin' | 'client' | null;
+}
+
+export function AdminSidebar({ userProfile, userRole }: AdminSidebarProps) {
   const location = useLocation();
-  const { toast } = useToast();
-  const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
-  const [userProfile, setUserProfile] = useState<{
-    username?: string | null;
-    avatar_url?: string | null;
-    company_name?: string | null;
-  }>({
-    username: "Dr. Sarah Johnson",
-    avatar_url: "/assets/ai-agent.webp",
-    company_name: "Centrum Medical"
-  });
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role, username, avatar_url, company_name')
-          .eq('id', session.user.id)
-          .single();
-        
-        setUserRole(profile?.role || null);
-        setUserProfile({
-          username: profile?.username || session.user.email?.split('@')[0],
-          avatar_url: profile?.avatar_url,
-          company_name: profile?.company_name,
-        });
-      }
-    };
-    fetchUserProfile();
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-      navigate('/');
-      toast({
-        title: "Logged out successfully",
-        description: "You have been logged out of your account",
-      });
-    } catch (error) {
-      toast({
-        title: "Error logging out",
-        description: "Please try again",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const clientMenuItems = [
-    { title: "Overview", icon: Home, path: "/dashboard" },
-    { title: "Assistant", icon: Bot, path: "/dashboard/assistant" },
-    { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
-    { title: "Appointments", icon: Calendar, path: "/dashboard/appointments" },
-    { title: "Calendar", icon: Calendar, path: "/dashboard/calendar" },
-  ];
-
-  const adminMenuItems = [
-    { title: "Overview", icon: Home, path: "/dashboard" },
-    { title: "Assistant", icon: Bot, path: "/dashboard/assistant" },
-    { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
-    { title: "Appointments", icon: Calendar, path: "/dashboard/appointments" },
-    { title: "Calendar", icon: Calendar, path: "/dashboard/calendar" },
-    { title: "Clients", icon: Users, path: "/dashboard/clients" },
-    { title: "Practices", icon: Building2, path: "/dashboard/practices" },
-    { title: "Reports", icon: BarChart3, path: "/dashboard/reports" },
-    { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
-    { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
-    { title: "Activity", icon: Activity, path: "/dashboard/activity" },
-  ];
-
-  const settingsMenuItems = [
-    { title: "General", icon: Grid, path: "/dashboard/settings/general" },
-    { title: "Billing", icon: CreditCard, path: "/dashboard/settings/billing" },
-    { title: "Invoices", icon: Receipt, path: "/dashboard/settings/invoices" },
-    { title: "Security & Privacy", icon: Shield, path: "/dashboard/settings/security" },
-    { title: "Team", icon: Users, path: "/dashboard/settings/team" },
-    { title: "Integrations", icon: Building2, path: "/dashboard/settings/integrations" },
-  ];
-
-  const MenuItem = ({ icon: Icon, title, path }: { icon: any; title: string; path: string }) => {
-    const isActive = location.pathname === path;
-    
-    return (
-      <Button
-        variant="ghost"
-        className={`w-full justify-start gap-3 px-3 py-2 ${
-          isActive 
-            ? 'bg-mint/10 text-white' 
-            : 'text-white/70 hover:bg-mint/10 hover:text-white'
-        }`}
-        onClick={() => navigate(path)}
-      >
-        <Icon className="h-5 w-5" />
-        <span>{title}</span>
-      </Button>
-    );
-  };
-
-  const SettingsMenuItem = () => {
-    const isSettingsActive = location.pathname.includes('/dashboard/settings');
-    
-    return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className={`w-full justify-start gap-3 px-3 py-2 ${
-              isSettingsActive 
-                ? 'bg-mint/10 text-white' 
-                : 'text-white/70 hover:bg-mint/10 hover:text-white'
-            }`}
-          >
-            <Settings className="h-5 w-5" />
-            <span>Settings</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="w-56 bg-forest-light border-mint/10"
-          align="start"
-          alignOffset={0}
-          sideOffset={2}
-        >
-          {settingsMenuItems.map((item) => (
-            <DropdownMenuItem
-              key={item.title}
-              className="text-white/70 hover:text-white hover:bg-mint/5 cursor-pointer"
-              onClick={() => navigate(item.path)}
-            >
-              <item.icon className="mr-2 h-4 w-4" />
-              <span>{item.title}</span>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    );
+  const isActive = (path: string) => {
+    return location.pathname === path;
   };
 
   return (
-    <Sidebar>
-      <div className="flex h-full w-64 flex-col bg-forest-light/95 backdrop-blur-xl border-r border-mint/10">
-        <div className="p-6 border-b border-mint/10">
-          <Logo className="text-white" />
-          {userProfile?.company_name && (
-            <div className="mt-4 text-white/70">
-              <p className="text-sm font-medium">{userProfile.company_name}</p>
-              <p className="text-xs">Netherlands</p>
-            </div>
-          )}
-        </div>
-
-        <SidebarContent className="flex-1 px-3 py-6">
-          <SidebarGroup>
-            <SidebarGroupContent>
-              <div className="space-y-1">
-                {userRole === 'admin' ? (
-                  <>
-                    {adminMenuItems.map((item) => (
-                      <MenuItem key={item.title} {...item} />
-                    ))}
-                    <SettingsMenuItem />
-                  </>
-                ) : (
-                  <>
-                    {clientMenuItems.map((item) => (
-                      <MenuItem key={item.title} {...item} />
-                    ))}
-                    <SettingsMenuItem />
-                  </>
-                )}
-              </div>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-
-        <div className="border-t border-mint/10 p-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="w-full justify-start gap-3 px-2 hover:bg-mint/5">
-                <Avatar className="h-8 w-8 ring-2 ring-mint/20">
-                  <AvatarImage src={userProfile?.avatar_url || ''} />
-                  <AvatarFallback className="bg-mint/10 text-forest">
-                    {userProfile?.username?.[0]?.toUpperCase() || 'U'}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col items-start text-left">
-                  <span className="text-sm font-medium text-white">
-                    {userProfile?.username || 'User'}
-                  </span>
-                  <span className="text-xs text-white/60">
-                    {userRole === 'admin' ? 'Administrator' : 'Practice Manager'}
-                  </span>
-                </div>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-forest-light border-mint/10">
-              <DropdownMenuItem 
-                className="text-red-400 hover:text-red-300 hover:bg-mint/5 cursor-pointer"
-                onClick={handleLogout}
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+    <Sidebar className="bg-forest border-r border-mint/10">
+      <div className="flex h-14 items-center border-b border-mint/10 px-4">
+        <Link to="/dashboard" className="flex items-center gap-2">
+          <span className="text-lg font-semibold text-white">DoctorDial</span>
+        </Link>
       </div>
+
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Menu</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <Link to="/dashboard">
+                  <SidebarMenuButton
+                    className={cn(
+                      isActive("/dashboard") &&
+                        "bg-mint/10 text-mint hover:bg-mint/20"
+                    )}
+                    asChild
+                  >
+                    <LayoutDashboard className="h-4 w-4" />
+                    <span>Overview</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <Link to="/dashboard/calls">
+                  <SidebarMenuButton
+                    className={cn(
+                      isActive("/dashboard/calls") &&
+                        "bg-mint/10 text-mint hover:bg-mint/20"
+                    )}
+                    asChild
+                  >
+                    <Phone className="h-4 w-4" />
+                    <span>Calls</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <Link to="/dashboard/appointments">
+                  <SidebarMenuButton
+                    className={cn(
+                      isActive("/dashboard/appointments") &&
+                        "bg-mint/10 text-mint hover:bg-mint/20"
+                    )}
+                    asChild
+                  >
+                    <Clock className="h-4 w-4" />
+                    <span>Appointments</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <Link to="/dashboard/calendar">
+                  <SidebarMenuButton
+                    className={cn(
+                      isActive("/dashboard/calendar") &&
+                        "bg-mint/10 text-mint hover:bg-mint/20"
+                    )}
+                    asChild
+                  >
+                    <CalendarDays className="h-4 w-4" />
+                    <span>Calendar</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+
+              {userRole === 'admin' && (
+                <>
+                  <SidebarMenuItem>
+                    <Link to="/dashboard/clients">
+                      <SidebarMenuButton
+                        className={cn(
+                          isActive("/dashboard/clients") &&
+                            "bg-mint/10 text-mint hover:bg-mint/20"
+                        )}
+                        asChild
+                      >
+                        <Users className="h-4 w-4" />
+                        <span>Clients</span>
+                      </SidebarMenuButton>
+                    </Link>
+                  </SidebarMenuItem>
+
+                  <SidebarMenuItem>
+                    <Link to="/dashboard/reports">
+                      <SidebarMenuButton
+                        className={cn(
+                          isActive("/dashboard/reports") &&
+                            "bg-mint/10 text-mint hover:bg-mint/20"
+                        )}
+                        asChild
+                      >
+                        <FileText className="h-4 w-4" />
+                        <span>Reports</span>
+                      </SidebarMenuButton>
+                    </Link>
+                  </SidebarMenuItem>
+
+                  <SidebarMenuItem>
+                    <Link to="/dashboard/billing">
+                      <SidebarMenuButton
+                        className={cn(
+                          isActive("/dashboard/billing") &&
+                            "bg-mint/10 text-mint hover:bg-mint/20"
+                        )}
+                        asChild
+                      >
+                        <CreditCard className="h-4 w-4" />
+                        <span>Billing</span>
+                      </SidebarMenuButton>
+                    </Link>
+                  </SidebarMenuItem>
+                </>
+              )}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Settings</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <Link to="/dashboard/assistant">
+                  <SidebarMenuButton
+                    className={cn(
+                      isActive("/dashboard/assistant") &&
+                        "bg-mint/10 text-mint hover:bg-mint/20"
+                    )}
+                    asChild
+                  >
+                    <BarChart3 className="h-4 w-4" />
+                    <span>AI Assistant</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <Link to="/dashboard/settings">
+                  <SidebarMenuButton
+                    className={cn(
+                      isActive("/dashboard/settings") &&
+                        "bg-mint/10 text-mint hover:bg-mint/20"
+                    )}
+                    asChild
+                  >
+                    <Settings className="h-4 w-4" />
+                    <span>Settings</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarProfile userProfile={userProfile} userRole={userRole} />
     </Sidebar>
   );
 }
