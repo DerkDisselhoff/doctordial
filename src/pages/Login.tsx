@@ -4,10 +4,28 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import { AuthError } from "@supabase/supabase-js";
 
 const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const handleAuthError = (error: AuthError) => {
+    let errorMessage = "An error occurred during authentication.";
+    
+    if (error.message?.includes('Invalid login credentials')) {
+      errorMessage = "Invalid email or password. Please check your credentials and try again.";
+    } else if (error.message?.includes('refresh_token_not_found') || 
+               error.message?.includes('Invalid Refresh Token')) {
+      errorMessage = "Your session has expired. Please sign in again.";
+    }
+
+    toast({
+      title: "Authentication Error",
+      description: errorMessage,
+      variant: "destructive",
+    });
+  };
 
   useEffect(() => {
     // Check for existing session and handle invalid refresh tokens
@@ -15,17 +33,9 @@ const Login = () => {
       const { data: { session }, error } = await supabase.auth.getSession();
       
       if (error) {
-        if (error.message?.includes('refresh_token_not_found') || 
-            error.message?.includes('Invalid Refresh Token')) {
-          // Clear any invalid session data
-          await supabase.auth.signOut();
-          
-          toast({
-            title: "Session Expired",
-            description: "Please sign in again to continue.",
-            variant: "destructive",
-          });
-        }
+        handleAuthError(error);
+        // Clear any invalid session data
+        await supabase.auth.signOut();
       } else if (session) {
         navigate("/dashboard");
       }
@@ -39,6 +49,11 @@ const Login = () => {
         navigate("/dashboard");
       } else if (event === 'SIGNED_OUT') {
         navigate("/login");
+      } else if (event === 'USER_UPDATED' && !session) {
+        const { error } = await supabase.auth.getSession();
+        if (error) {
+          handleAuthError(error);
+        }
       }
     });
 
