@@ -23,10 +23,40 @@ export function OverviewDashboard() {
           .single();
         
         setUserRole(profile?.role || null);
+
+        // Fetch assistant status
+        const { data: statusData } = await supabase
+          .from('assistant_status')
+          .select('is_live')
+          .eq('profile_id', session.user.id)
+          .single();
+
+        setIsAssistantLive(statusData?.is_live || false);
       }
     };
 
     checkUserRole();
+
+    // Subscribe to assistant status changes
+    const channel = supabase
+      .channel('assistant_status_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'assistant_status',
+          filter: `profile_id=eq.${supabase.auth.getSession().then(({ data }) => data.session?.user.id)}`
+        },
+        (payload) => {
+          setIsAssistantLive(payload.new.is_live);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   return (

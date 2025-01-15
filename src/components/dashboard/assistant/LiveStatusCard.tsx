@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { CirclePlay, CirclePause } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
 import {
   Dialog,
   DialogContent,
@@ -23,20 +24,62 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [pendingLiveState, setPendingLiveState] = useState(false);
 
+  useEffect(() => {
+    const fetchInitialStatus = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { data: statusData } = await supabase
+          .from('assistant_status')
+          .select('is_live')
+          .eq('profile_id', session.user.id)
+          .single();
+
+        if (statusData) {
+          onStatusChange(statusData.is_live);
+        } else {
+          // Create initial status record if it doesn't exist
+          await supabase
+            .from('assistant_status')
+            .insert([{ profile_id: session.user.id, is_live: false }]);
+        }
+      }
+    };
+
+    fetchInitialStatus();
+  }, [onStatusChange]);
+
   const handleLiveToggle = (newState: boolean) => {
     setPendingLiveState(newState);
     setShowConfirmDialog(true);
   };
 
-  const confirmLiveToggle = () => {
-    onStatusChange(pendingLiveState);
-    setShowConfirmDialog(false);
-    toast({
-      title: pendingLiveState ? "Assistant is now live" : "Assistant is now offline",
-      description: pendingLiveState 
-        ? "Your AI assistant is now actively handling calls" 
-        : "Your AI assistant has been deactivated",
-    });
+  const confirmLiveToggle = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      const { error } = await supabase
+        .from('assistant_status')
+        .update({ is_live: pendingLiveState })
+        .eq('profile_id', session.user.id);
+
+      if (error) {
+        console.error('Error updating assistant status:', error);
+        toast({
+          title: "Error",
+          description: "Failed to update assistant status. Please try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      onStatusChange(pendingLiveState);
+      setShowConfirmDialog(false);
+      toast({
+        title: pendingLiveState ? "Assistant is now live" : "Assistant is now offline",
+        description: pendingLiveState 
+          ? "Your AI assistant is now actively handling calls" 
+          : "Your AI assistant has been deactivated",
+      });
+    }
   };
 
   return (
