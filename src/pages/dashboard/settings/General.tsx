@@ -10,6 +10,7 @@ import { supabase } from "@/lib/supabaseClient";
 const GeneralSettings = () => {
   const { toast } = useToast();
   const [practiceName, setPracticeName] = useState("");
+  const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -18,12 +19,13 @@ const GeneralSettings = () => {
       if (session) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('company_name')
+          .select('company_name, username')
           .eq('id', session.user.id)
           .single();
         
-        if (profile?.company_name) {
-          setPracticeName(profile.company_name);
+        if (profile) {
+          setPracticeName(profile.company_name || '');
+          setUsername(profile.username || '');
         }
       }
     };
@@ -40,6 +42,7 @@ const GeneralSettings = () => {
         .from('profiles')
         .update({ 
           company_name: practiceName,
+          username: username,
           updated_at: new Date().toISOString()
         })
         .eq('id', session.user.id);
@@ -48,7 +51,7 @@ const GeneralSettings = () => {
 
       toast({
         title: "Changes saved",
-        description: "Your practice information has been updated successfully.",
+        description: "Your information has been updated successfully.",
       });
     } catch (error) {
       console.error('Error saving changes:', error);
@@ -71,9 +74,18 @@ const GeneralSettings = () => {
 
       <Card className="bg-forest-light/50 border-mint/10">
         <CardHeader>
-          <CardTitle className="text-white">Practice Information</CardTitle>
+          <CardTitle className="text-white">Account Information</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label className="text-white">Your Name</Label>
+            <Input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full p-2 bg-forest border border-mint/20 rounded-md text-white placeholder-white/40"
+              placeholder="Enter your name"
+            />
+          </div>
           <div className="space-y-2">
             <Label className="text-white">Practice Name</Label>
             <Input
