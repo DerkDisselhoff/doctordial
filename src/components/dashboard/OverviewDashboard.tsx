@@ -20,7 +20,7 @@ export function OverviewDashboard() {
           .from('profiles')
           .select('role')
           .eq('id', session.user.id)
-          .single();
+          .maybeSingle();
         
         setUserRole(profile?.role || null);
 
@@ -29,7 +29,7 @@ export function OverviewDashboard() {
           .from('assistant_status')
           .select('is_live')
           .eq('profile_id', session.user.id)
-          .single();
+          .maybeSingle();
 
         setIsAssistantLive(statusData?.is_live || false);
       }

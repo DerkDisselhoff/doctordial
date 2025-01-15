@@ -32,15 +32,21 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
           .from('assistant_status')
           .select('is_live')
           .eq('profile_id', session.user.id)
-          .single();
+          .maybeSingle();
 
         if (statusData) {
           onStatusChange(statusData.is_live);
         } else {
           // Create initial status record if it doesn't exist
-          await supabase
+          const { error } = await supabase
             .from('assistant_status')
             .insert([{ profile_id: session.user.id, is_live: false }]);
+            
+          if (error) {
+            console.error('Error creating initial assistant status:', error);
+            return;
+          }
+          onStatusChange(false);
         }
       }
     };
