@@ -19,6 +19,11 @@ interface LiveStatusCardProps {
   onStatusChange: (status: boolean) => void;
 }
 
+interface AssistantStatus {
+  is_live: boolean;
+  assistant_name: string;
+}
+
 export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) => {
   const { toast } = useToast();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -72,9 +77,10 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
           filter: `profile_id=eq.${supabase.auth.getSession().then(({ data }) => data.session?.user.id)}`
         },
         (payload) => {
-          if (payload.new) {
-            setAssistantName(payload.new.assistant_name || 'Assistant');
-            onStatusChange(payload.new.is_live);
+          const newStatus = payload.new as AssistantStatus;
+          if (newStatus) {
+            setAssistantName(newStatus.assistant_name || 'Assistant');
+            onStatusChange(newStatus.is_live);
           }
         }
       )

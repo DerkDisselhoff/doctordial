@@ -7,6 +7,11 @@ import { CirclePlay, CirclePause } from "lucide-react";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
+interface AssistantStatus {
+  is_live: boolean;
+  assistant_name: string;
+}
+
 export function OverviewDashboard() {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
@@ -32,8 +37,10 @@ export function OverviewDashboard() {
           .eq('profile_id', session.user.id)
           .maybeSingle();
 
-        setIsAssistantLive(statusData?.is_live || false);
-        setAssistantName(statusData?.assistant_name || 'Assistant');
+        if (statusData) {
+          setIsAssistantLive(statusData.is_live);
+          setAssistantName(statusData.assistant_name || 'Assistant');
+        }
       }
     };
 
@@ -51,9 +58,10 @@ export function OverviewDashboard() {
           filter: `profile_id=eq.${supabase.auth.getSession().then(({ data }) => data.session?.user.id)}`
         },
         (payload) => {
-          if (payload.new) {
-            setIsAssistantLive(payload.new.is_live);
-            setAssistantName(payload.new.assistant_name || 'Assistant');
+          const newStatus = payload.new as AssistantStatus;
+          if (newStatus) {
+            setIsAssistantLive(newStatus.is_live);
+            setAssistantName(newStatus.assistant_name || 'Assistant');
           }
         }
       )
