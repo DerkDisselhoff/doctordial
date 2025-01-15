@@ -1,120 +1,139 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { supabase } from "@/lib/supabaseClient";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { createSignatureRequest } from "@/services/helloSignService";
+import { Send, Loader } from "lucide-react";
+import { PackageSelect } from "../selects/PackageSelect";
+import { ContractLengthSelect } from "../selects/ContractLengthSelect";
+import { PaymentFrequencySelect } from "../selects/PaymentFrequencySelect";
 
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-  practiceName: z.string().min(2),
-});
+interface FormData {
+  clientName: string;
+  clientEmail: string;
+  packageName: string;
+  contractLength: string;
+  paymentFrequency: string;
+}
 
 export const ClientInviteForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "medi.mere@doctordial.io",
-      password: "Demo2025!",
-      practiceName: "Medi-Mere",
-    },
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    clientName: "",
+    clientEmail: "",
+    packageName: "",
+    contractLength: "",
+    paymentFrequency: "",
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleInviteClient = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
     try {
-      // 1. Create the user account
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: values.email,
-        password: values.password,
-        options: {
-          data: {
-            role: 'client',
-          },
-        },
+      console.log("Starting signature request process...");
+      const request = {
+        title: "DoctorDial Service Agreement",
+        subject: "Welcome to DoctorDial - Your Service Agreement",
+        message: `Dear ${formData.clientName},\n\nWe're excited to have you on board! Please review and sign your DoctorDial service agreement.`,
+        signerEmail: formData.clientEmail,
+        signerName: formData.clientName,
+        packageName: formData.packageName,
+        contractLength: formData.contractLength,
+        paymentFrequency: formData.paymentFrequency,
+      };
+
+      const response = await createSignatureRequest(request);
+      console.log("Signature request response:", response);
+
+      toast({
+        title: "Client Invited Successfully",
+        description: `An invitation has been sent to ${formData.clientEmail}`,
       });
 
-      if (authError) throw authError;
-
-      if (authData.user) {
-        // 2. Update the profile with practice name
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .update({ 
-            company_name: values.practiceName,
-            role: 'client'
-          })
-          .eq('id', authData.user.id);
-
-        if (profileError) throw profileError;
-
-        toast.success("Client account created successfully!");
-        form.reset();
-      }
-    } catch (error: any) {
-      console.error('Error creating client:', error);
-      toast.error(error.message || "Failed to create client account");
+      setFormData({
+        clientName: "",
+        clientEmail: "",
+        packageName: "",
+        contractLength: "",
+        paymentFrequency: "",
+      });
+    } catch (error) {
+      console.error("Error in handleInviteClient:", error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to send client invitation. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input {...field} type="email" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+    <form onSubmit={handleInviteClient} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <Label htmlFor="clientName" className="text-forest font-medium">Client Name</Label>
+          <Input
+            id="clientName"
+            value={formData.clientName}
+            onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
+            placeholder="Dr. Jane Smith"
+            className="bg-white border-gray-200 text-forest placeholder:text-gray-400"
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="clientEmail" className="text-forest font-medium">Client Email</Label>
+          <Input
+            id="clientEmail"
+            type="email"
+            value={formData.clientEmail}
+            onChange={(e) => setFormData({ ...formData, clientEmail: e.target.value })}
+            placeholder="jane.smith@practice.com"
+            className="bg-white border-gray-200 text-forest placeholder:text-gray-400"
+            required
+          />
+        </div>
+
+        <PackageSelect
+          value={formData.packageName}
+          onChange={(value) => setFormData({ ...formData, packageName: value })}
         />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input {...field} type="password" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+        <ContractLengthSelect
+          value={formData.contractLength}
+          onChange={(value) => setFormData({ ...formData, contractLength: value })}
         />
 
-        <FormField
-          control={form.control}
-          name="practiceName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Practice Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+        <PaymentFrequencySelect
+          value={formData.paymentFrequency}
+          onChange={(value) => setFormData({ ...formData, paymentFrequency: value })}
         />
+      </div>
 
-        <Button type="submit" className="w-full">
-          Create Client Account
-        </Button>
-      </form>
-    </Form>
+      <Button
+        type="submit"
+        className="w-full md:w-auto bg-mint hover:bg-mint/90 text-forest font-medium
+                   transition-all duration-200 transform hover:scale-[1.02]"
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <>
+            <Loader className="w-4 h-4 mr-2 animate-spin" />
+            Sending Invitation...
+          </>
+        ) : (
+          <>
+            <Send className="w-4 h-4 mr-2" />
+            Send Contract & Invitation
+          </>
+        )}
+      </Button>
+    </form>
   );
 };
