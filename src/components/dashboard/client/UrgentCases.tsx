@@ -1,133 +1,129 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { supabase } from "@/lib/supabaseClient";
+import { getUrgencyColor } from "@/utils/urgencyUtils";
 
-const mockUrgentCases = [
-  {
-    id: 1,
-    patientName: "J. van der Berg",
-    symptoms: "Severe chest pain",
-    urgencyLevel: "U1",
-    appointmentStatus: "Scheduled",
-    appointmentDate: "Mar 20, 14:30",
-    actions: ["Refer to cardiology"],
-    resolution: "Emergency care provided, cardiology referral"
-  },
-  {
-    id: 2,
-    patientName: "M. van der B.",
-    symptoms: "High fever, difficulty breathing",
-    urgencyLevel: "U2",
-    appointmentStatus: "Pending",
-    actions: ["Schedule urgent consultation"],
-    resolution: "Prescribed medication, home care instructions"
-  },
-  {
-    id: 3,
-    patientName: "S. Johnson",
-    symptoms: "Severe allergic reaction",
-    urgencyLevel: "U1",
-    appointmentStatus: "Scheduled",
-    appointmentDate: "Mar 22, 11:00",
-    actions: ["Allergy specialist referral"],
-    resolution: "Emergency care provided, allergy referral"
-  },
-  {
-    id: 4,
-    patientName: "L. Anderson",
-    symptoms: "Acute abdominal pain",
-    urgencyLevel: "U3",
-    appointmentStatus: "Pending",
-    actions: ["Schedule ultrasound"],
-    resolution: "Diagnostic tests scheduled"
-  },
-  {
-    id: 5,
-    patientName: "M. Brown",
-    symptoms: "Severe migraine, unresponsive to medication",
-    urgencyLevel: "U2",
-    appointmentStatus: "Scheduled",
-    appointmentDate: "Mar 21, 09:15",
-    actions: ["Neurologist consultation"],
-    resolution: "Emergency care provided, neurology referral"
-  },
-];
-
-const getUrgencyColor = (level: string) => {
-  switch (level) {
-    case 'U1': return 'bg-red-100 text-red-700 border-red-200';
-    case 'U2': return 'bg-orange-100 text-orange-700 border-orange-200';
-    case 'U3': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
-    case 'U4': return 'bg-blue-100 text-blue-700 border-blue-200';
-    case 'U5': return 'bg-green-100 text-green-700 border-green-200';
-    default: return 'bg-gray-100 text-gray-700 border-gray-200';
-  }
-};
+interface UrgentCase {
+  id: string;
+  Name: string | null;
+  Symptoms: any;
+  Urgencylevel: string | null;
+  Status: string | null;
+  appointment_date: string | null;
+  Action: string | null;
+  conversation_summary: string | null;
+}
 
 export function UrgentCases() {
+  const [urgentCases, setUrgentCases] = useState<UrgentCase[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUrgentCases = async () => {
+      try {
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError) throw sessionError;
+        if (!session) throw new Error('No session found');
+
+        const { data: assistantData, error: assistantError } = await supabase
+          .from('assistant_status')
+          .select('assistant_id')
+          .eq('profile_id', session.user.id)
+          .maybeSingle();
+
+        if (assistantError) throw assistantError;
+        if (!assistantData?.assistant_id) throw new Error('No assistant ID found');
+
+        const { data: callData, error: callError } = await supabase
+          .from('call_logs')
+          .select('*')
+          .eq('assistant_id', assistantData.assistant_id)
+          .in('Urgencylevel', ['U1', 'U2'])
+          .order('start_time', { ascending: false });
+
+        if (callError) throw callError;
+        setUrgentCases(callData || []);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching urgent cases:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchUrgentCases();
+  }, []);
+
+  const getStatusColor = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case 'completed':
+        return 'bg-sky-500/20 border-sky-500/30 text-sky-500';
+      case 'scheduled':
+        return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
+      case 'missed':
+        return 'bg-indigo-500/20 border-indigo-500/30 text-indigo-500';
+      case 'rescheduled':
+        return 'bg-cyan-500/20 border-cyan-500/30 text-cyan-500';
+      default:
+        return 'bg-slate-500/20 border-slate-500/30 text-slate-500';
+    }
+  };
+
+  if (loading) {
+    return (
+      <Card className="bg-forest-light/50 border-mint/10">
+        <CardContent className="flex justify-center p-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-mint"></div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="bg-forest-light/50 border-mint/10">
       <CardHeader>
-        <CardTitle className="text-white">Recent Patient Interactions</CardTitle>
+        <CardTitle className="text-white">Urgent Cases</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow className="border-b border-mint/10">
-                <TableHead className="text-white/70">Patient</TableHead>
-                <TableHead className="text-white/70">Symptoms</TableHead>
-                <TableHead className="text-white/70">Urgency</TableHead>
-                <TableHead className="text-white/70">Status</TableHead>
-                <TableHead className="text-white/70">Actions</TableHead>
-                <TableHead className="text-white/70">Resolution</TableHead>
+                <TableHead className="text-left p-4 text-white/70">Patient</TableHead>
+                <TableHead className="text-left p-4 text-white/70">Symptoms</TableHead>
+                <TableHead className="text-left p-4 text-white/70">Urgency</TableHead>
+                <TableHead className="text-left p-4 text-white/70">Status</TableHead>
+                <TableHead className="text-left p-4 text-white/70">Actions</TableHead>
+                <TableHead className="text-left p-4 text-white/70">Resolution</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mockUrgentCases.map((case_) => (
+              {urgentCases.map((case_) => (
                 <TableRow key={case_.id} className="border-b border-mint/5">
-                  <TableCell className="text-white">{case_.patientName}</TableCell>
-                  <TableCell className="text-white/70">
-                    <div className="max-w-[200px] truncate" title={case_.symptoms}>
-                      {case_.symptoms}
+                  <TableCell className="p-4 text-white">{case_.Name || 'Unknown'}</TableCell>
+                  <TableCell className="p-4 text-white/70">
+                    <div className="max-w-[200px] truncate" title={case_.Symptoms}>
+                      {case_.Symptoms}
                     </div>
                   </TableCell>
-                  <TableCell>
-                    <span className={`px-2 py-1 rounded-full text-xs ${getUrgencyColor(case_.urgencyLevel)}`}>
-                      {case_.urgencyLevel}
+                  <TableCell className="p-4">
+                    <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor(case_.Urgencylevel || '')}`}>
+                      {case_.Urgencylevel}
                     </span>
                   </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        case_.appointmentStatus === 'Scheduled' 
-                          ? 'bg-mint/10 text-mint' 
-                          : 'bg-yellow-500/10 text-yellow-500'
-                      }`}>
-                        {case_.appointmentStatus}
-                      </span>
-                      {case_.appointmentDate && (
-                        <span className="text-white/50 text-xs">
-                          {case_.appointmentDate}
-                        </span>
-                      )}
+                  <TableCell className="p-4">
+                    <span className={`px-2 py-1 rounded-full text-xs border ${getStatusColor(case_.Status || '')}`}>
+                      {case_.Status}
+                    </span>
+                  </TableCell>
+                  <TableCell className="p-4 text-white/70">
+                    <div className="max-w-[200px] truncate" title={case_.Action}>
+                      {case_.Action}
                     </div>
                   </TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
-                      {case_.actions.map((action, i) => (
-                        <span 
-                          key={i}
-                          className="px-2 py-1 text-xs bg-mint/10 text-mint rounded-full"
-                          title={action}
-                        >
-                          {action.length > 20 ? `${action.substring(0, 17)}...` : action}
-                        </span>
-                      ))}
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-white/70">
-                    <div className="max-w-[200px] truncate" title={case_.resolution}>
-                      {case_.resolution}
+                  <TableCell className="p-4 text-white/70">
+                    <div className="max-w-[200px] truncate" title={case_.conversation_summary}>
+                      {case_.conversation_summary}
                     </div>
                   </TableCell>
                 </TableRow>
