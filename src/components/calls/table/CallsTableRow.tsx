@@ -28,17 +28,17 @@ export function CallsTableRow({ call }: CallsTableRowProps) {
   const getUrgencyColor = (urgency: string) => {
     switch (urgency) {
       case 'U1':
-        return 'bg-red-100 text-red-700 border border-red-200';
+        return 'bg-red-500/20 border-red-500/30 text-red-500';
       case 'U2':
-        return 'bg-orange-100 text-orange-700 border border-orange-200';
+        return 'bg-orange-500/20 border-orange-500/30 text-orange-500';
       case 'U3':
-        return 'bg-yellow-100 text-yellow-700 border border-yellow-200';
+        return 'bg-yellow-500/20 border-yellow-500/30 text-yellow-500';
       case 'U4':
-        return 'bg-blue-100 text-blue-700 border border-blue-200';
+        return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
       case 'U5':
-        return 'bg-green-100 text-green-700 border border-green-200';
+        return 'bg-green-500/20 border-green-500/30 text-green-500';
       default:
-        return 'bg-gray-100 text-gray-700 border border-gray-200';
+        return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
     }
   };
 
@@ -60,7 +60,7 @@ export function CallsTableRow({ call }: CallsTableRowProps) {
         </div>
       </TableCell>
       <TableCell className="p-4 whitespace-nowrap">
-        <span className={`px-2 py-1 rounded-full text-xs ${getUrgencyColor(call.sentiment_analysis?.urgency || '')}`}>
+        <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor(call.sentiment_analysis?.urgency || '')}`}>
           {call.sentiment_analysis?.urgency || 'N/A'}
         </span>
       </TableCell>
