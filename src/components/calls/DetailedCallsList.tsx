@@ -26,12 +26,15 @@ export function DetailedCallsList() {
   useEffect(() => {
     const fetchCalls = async () => {
       try {
-        // First get the user's assistant_id
+        // First get the user's session
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
+          console.log("No session found");
           throw new Error('No session found');
         }
+        console.log("User ID:", session.user.id);
 
+        // Get the assistant_id from assistant_status
         const { data: assistantData, error: assistantError } = await supabase
           .from('assistant_status')
           .select('assistant_id')
@@ -39,10 +42,14 @@ export function DetailedCallsList() {
           .maybeSingle();
 
         if (assistantError) {
+          console.error("Error fetching assistant status:", assistantError);
           throw assistantError;
         }
 
+        console.log("Assistant data:", assistantData);
+
         if (!assistantData?.assistant_id) {
+          console.log("No assistant ID found for user");
           throw new Error('No assistant ID found');
         }
 
@@ -54,8 +61,11 @@ export function DetailedCallsList() {
           .order('start_time', { ascending: false });
 
         if (callError) {
+          console.error("Error fetching calls:", callError);
           throw callError;
         }
+
+        console.log("Call data:", callData);
 
         // Transform call_logs data to match VapiCall interface
         const transformedCalls: VapiCall[] = callData.map(call => ({
@@ -96,6 +106,8 @@ export function DetailedCallsList() {
           block_outputs: {},
           call_variables: {}
         }));
+
+        console.log("Transformed calls:", transformedCalls);
 
         setCalls(transformedCalls);
         setFilteredCalls(transformedCalls);
