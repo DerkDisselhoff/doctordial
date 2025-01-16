@@ -1,4 +1,4 @@
-import { CallLog } from "@/types/calls";
+import { CallLog } from "@/types/metrics";
 
 export const calculateMetrics = (callData: CallLog[] | null) => {
   if (!callData) return null;

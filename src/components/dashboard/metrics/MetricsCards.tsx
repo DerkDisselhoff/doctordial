@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { PhoneCall, Clock, Calendar, ThumbsUp, AlertCircle, DollarSign } from "lucide-react";
+import { PhoneCall, Clock, Calendar, ThumbsUp, AlertCircle, DollarSign, Users } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { TimeFilter } from "@/types/metrics";
 import { StatCard } from "./StatCard";
