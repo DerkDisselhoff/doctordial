@@ -14,3 +14,11 @@ export interface CallLog {
   Sentiment: string;
   Urgencylevel: string;
 }
+
+export interface MetricsCardProps {
+  icon: React.ComponentType;
+  label: string;
+  value: string | number;
+  subtext: string;
+  navigateTo: string;
+}

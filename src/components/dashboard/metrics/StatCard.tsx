@@ -1,14 +1,6 @@
 import { Card } from "@/components/ui/card";
-import { LucideIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-interface StatCardProps {
-  icon: LucideIcon;
-  label: string;
-  value: string;
-  subtext: string;
-  navigateTo: string;
-}
+import { MetricsCardProps } from "@/types/metrics";
 
 export const StatCard = ({ 
   icon: Icon, 
@@ -16,7 +8,7 @@ export const StatCard = ({
   value, 
   subtext,
   navigateTo 
-}: StatCardProps) => {
+}: MetricsCardProps) => {
   const navigate = useNavigate();
 
   return (

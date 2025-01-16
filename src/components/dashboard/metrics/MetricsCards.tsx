@@ -26,11 +26,6 @@ export function MetricsCards({ timeFilter = 'today' }: { timeFilter?: TimeFilter
     checkUserRole();
   }, []);
 
-  if (error) {
-    console.error('Error fetching metrics:', error);
-    return null;
-  }
-
   if (userRole === 'client') {
     const defaultMetrics = {
       totalCalls: '0',
