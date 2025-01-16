@@ -12,7 +12,6 @@ interface MetricsCardsProps {
 }
 
 const fetchCallMetrics = async (timeFilter: TimeFilter) => {
-  // Get the user's assistant_id first
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) throw new Error('No session');
 
@@ -38,7 +37,6 @@ const fetchCallMetrics = async (timeFilter: TimeFilter) => {
     };
   }
 
-  // Calculate date range based on timeFilter
   const now = new Date();
   let startDate = new Date();
   
@@ -70,18 +68,18 @@ const fetchCallMetrics = async (timeFilter: TimeFilter) => {
   }
 
   // Calculate metrics
-  const totalCalls = callData.length;
-  const avgDuration = callData.length > 0
+  const totalCalls = callData?.length || 0;
+  const avgDuration = callData && callData.length > 0
     ? callData.reduce((acc, call) => acc + (parseInt(call.duration_seconds) || 0), 0) / callData.length
     : 0;
 
   // Count scheduled appointments
-  const appointmentsMade = callData.filter(call => 
+  const appointmentsMade = callData?.filter(call => 
     call.Status?.toLowerCase() === 'scheduled'
-  ).length;
+  )?.length || 0;
 
   // Calculate positive sentiment percentage
-  const sentimentCalls = callData.filter(call => call.Sentiment);
+  const sentimentCalls = callData?.filter(call => call.Sentiment) || [];
   const positiveSentiment = sentimentCalls.length > 0
     ? (sentimentCalls.filter(call => 
         call.Sentiment?.toLowerCase().includes('positive')
@@ -89,10 +87,10 @@ const fetchCallMetrics = async (timeFilter: TimeFilter) => {
     : 0;
 
   // Count urgent cases (U2 or higher)
-  const urgentCases = callData.filter(call => {
+  const urgentCases = callData?.filter(call => {
     const urgencyLevel = call.Urgencylevel?.toUpperCase();
     return urgencyLevel === 'U1' || urgencyLevel === 'U2';
-  }).length;
+  })?.length || 0;
 
   return {
     totalCalls,
@@ -107,7 +105,7 @@ export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
   const navigate = useNavigate();
 
-  const { data: metrics, isLoading } = useQuery({
+  const { data: metrics, isLoading, error } = useQuery({
     queryKey: ['callMetrics', timeFilter],
     queryFn: () => fetchCallMetrics(timeFilter),
   });
@@ -128,17 +126,6 @@ export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
 
     checkUserRole();
   }, []);
-
-  const getComparisonText = (filter: TimeFilter) => {
-    switch (filter) {
-      case 'today':
-        return 'from yesterday';
-      case 'week':
-        return 'from last week';
-      case 'month':
-        return 'from last month';
-    }
-  };
 
   const StatCard = ({ 
     icon: Icon, 
@@ -176,41 +163,54 @@ export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
     </Card>
   );
 
+  if (error) {
+    console.error('Error fetching metrics:', error);
+    return null;
+  }
+
   if (userRole === 'client') {
+    const defaultMetrics = {
+      totalCalls: '0',
+      avgDuration: '0s',
+      appointmentsMade: '0',
+      positiveSentiment: '0',
+      urgentCases: '0'
+    };
+
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard 
           icon={PhoneCall}
           label="Total Calls"
-          value={isLoading ? '...' : metrics?.totalCalls.toString() || '0'}
+          value={isLoading ? '...' : (metrics?.totalCalls?.toString() || defaultMetrics.totalCalls)}
           subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={Clock}
           label="Avg. Call Duration"
-          value={isLoading ? '...' : `${metrics?.avgDuration || 0}s`}
+          value={isLoading ? '...' : `${metrics?.avgDuration || defaultMetrics.avgDuration}s`}
           subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={Calendar}
           label="Appointments Made"
-          value={isLoading ? '...' : metrics?.appointmentsMade.toString() || '0'}
+          value={isLoading ? '...' : (metrics?.appointmentsMade?.toString() || defaultMetrics.appointmentsMade)}
           subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/appointments"
         />
         <StatCard 
           icon={ThumbsUp}
           label="Positive Sentiment"
-          value={isLoading ? '...' : `${metrics?.positiveSentiment || 0}%`}
+          value={isLoading ? '...' : `${metrics?.positiveSentiment || defaultMetrics.positiveSentiment}%`}
           subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={AlertCircle}
           label="Urgent Cases"
-          value={isLoading ? '...' : metrics?.urgentCases.toString() || '0'}
+          value={isLoading ? '...' : (metrics?.urgentCases?.toString() || defaultMetrics.urgentCases)}
           subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
