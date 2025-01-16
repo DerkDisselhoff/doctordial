@@ -9,69 +9,7 @@ import { CallsTableHeader } from "./table/CallsTableHeader";
 import { CallsTableRow } from "./table/CallsTableRow";
 import { CallsPagination } from "./table/CallsPagination";
 import { Search, Filter } from "lucide-react";
-
-const generateMockCalls = (count: number): VapiCall[] => {
-  const sentiments = ['positive', 'negative', 'neutral'];
-  const urgencyLevels = ['U1', 'U2', 'U3', 'U4', 'U5'];
-  const subjects = [
-    'Prescription renewal request',
-    'Scheduling routine check-up',
-    'Discussing test results',
-    'Emergency consultation',
-    'Follow-up appointment',
-    'Medication side effects',
-    'General health inquiry',
-    'Specialist referral request'
-  ];
-  const patientNames = [
-    'John Smith', 'Emma Wilson', 'Michael Brown', 'Sarah Davis',
-    'James Johnson', 'Lisa Anderson', 'Robert Taylor', 'Maria Garcia',
-    'David Miller', 'Jennifer White'
-  ];
-  const statuses = ['completed', 'scheduled', 'missed', 'rescheduled'];
-  const departments = ['General Practice', 'Emergency', 'Pediatrics', 'Internal Medicine'];
-  const languages = ['en', 'nl', 'fr', 'de'];
-  const assistantNames = ['Dr. AI', 'HealthBot', 'MedAssist', 'CareAI'];
-
-  return Array.from({ length: count }, (_, i) => ({
-    id: `mock-${i + 1}`,
-    call_id: `CALL-${String(i + 1).padStart(4, '0')}`,
-    caller_number: patientNames[Math.floor(Math.random() * patientNames.length)],
-    recipient_number: '+31612345678',
-    duration: Math.floor(Math.random() * 600) + 60,
-    status: statuses[Math.floor(Math.random() * statuses.length)],
-    transcription: subjects[Math.floor(Math.random() * subjects.length)],
-    sentiment_analysis: {
-      sentiment: sentiments[Math.floor(Math.random() * sentiments.length)],
-      urgency: urgencyLevels[Math.floor(Math.random() * urgencyLevels.length)]
-    },
-    created_at: new Date(Date.now() - Math.floor(Math.random() * 7776000000)).toISOString(),
-    summary: subjects[Math.floor(Math.random() * subjects.length)].substring(0, 100),
-    urgency_score: Math.floor(Math.random() * 5) + 1,
-    assistant_name: assistantNames[Math.floor(Math.random() * assistantNames.length)],
-    assistant_id: `assistant-${i + 1}`,
-    caller_name: patientNames[Math.floor(Math.random() * patientNames.length)],
-    language: languages[Math.floor(Math.random() * languages.length)],
-    recording_url: `https://example.com/recording-${i + 1}.mp3`,
-    tags: ['urgent', 'follow-up', 'prescription'],
-    follow_up_required: Math.random() > 0.5,
-    follow_up_notes: Math.random() > 0.5 ? 'Need to check back in 2 days' : null,
-    call_type: 'inbound',
-    department: departments[Math.floor(Math.random() * departments.length)],
-    priority_level: urgencyLevels[Math.floor(Math.random() * urgencyLevels.length)],
-    resolution_status: Math.random() > 0.5 ? 'resolved' : 'pending',
-    callback_number: '+31612345678',
-    workflow_id: `workflow-${i + 1}`,
-    workflow_name: 'Standard Patient Intake',
-    block_id: `block-${i + 1}`,
-    block_name: 'Initial Assessment',
-    output_schema: {},
-    messages: [],
-    workflow_variables: {},
-    block_outputs: {},
-    call_variables: {}
-  }));
-};
+import { supabase } from "@/lib/supabaseClient";
 
 export function DetailedCallsList() {
   const [calls, setCalls] = useState<VapiCall[]>([]);
@@ -86,12 +24,96 @@ export function DetailedCallsList() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    const mockCalls = generateMockCalls(100);
-    setCalls(mockCalls);
-    setFilteredCalls(mockCalls);
-    setTotalPages(Math.ceil(mockCalls.length / itemsPerPage));
-    setLoading(false);
-  }, []);
+    const fetchCalls = async () => {
+      try {
+        // First get the user's assistant_id
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          throw new Error('No session found');
+        }
+
+        const { data: assistantData, error: assistantError } = await supabase
+          .from('assistant_status')
+          .select('assistant_id')
+          .eq('profile_id', session.user.id)
+          .maybeSingle();
+
+        if (assistantError) {
+          throw assistantError;
+        }
+
+        if (!assistantData?.assistant_id) {
+          throw new Error('No assistant ID found');
+        }
+
+        // Fetch calls for this assistant
+        const { data: callData, error: callError } = await supabase
+          .from('call_logs')
+          .select('*')
+          .eq('assistant_id', assistantData.assistant_id)
+          .order('start_time', { ascending: false });
+
+        if (callError) {
+          throw callError;
+        }
+
+        // Transform call_logs data to match VapiCall interface
+        const transformedCalls: VapiCall[] = callData.map(call => ({
+          id: call.id,
+          call_id: call.call_id || 'default',
+          caller_number: call.Name || 'Unknown',
+          recipient_number: call.phone_number || 'default',
+          duration: parseInt(call.duration_seconds || '0'),
+          status: call.Status || 'default',
+          transcription: call.transcript || 'No transcription available',
+          sentiment_analysis: {
+            sentiment: call.Sentiment || 'neutral',
+            urgency: call.Urgencylevel || 'low'
+          },
+          created_at: call.start_time || new Date().toISOString(),
+          summary: call.conversation_summary || 'No summary available',
+          urgency_score: 3,
+          assistant_name: 'Medi-Mere',
+          assistant_id: call.assistant_id || 'default',
+          caller_name: call.Name || 'Unknown',
+          language: 'en',
+          recording_url: 'default',
+          tags: [],
+          follow_up_required: false,
+          follow_up_notes: call.follow_up_notes || null,
+          call_type: 'inbound',
+          department: 'General Practice',
+          priority_level: call.Urgencylevel || 'low',
+          resolution_status: 'pending',
+          callback_number: call.phone_number || 'default',
+          workflow_id: 'default',
+          workflow_name: 'default',
+          block_id: 'default',
+          block_name: 'default',
+          output_schema: {},
+          messages: [],
+          workflow_variables: {},
+          block_outputs: {},
+          call_variables: {}
+        }));
+
+        setCalls(transformedCalls);
+        setFilteredCalls(transformedCalls);
+        setTotalPages(Math.ceil(transformedCalls.length / itemsPerPage));
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching calls:', error);
+        toast({
+          title: "Error fetching calls",
+          description: "There was a problem loading the call history.",
+          variant: "destructive",
+        });
+        setLoading(false);
+      }
+    };
+
+    fetchCalls();
+  }, [toast]);
 
   useEffect(() => {
     let filtered = [...calls];
