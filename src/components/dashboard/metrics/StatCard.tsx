@@ -29,7 +29,7 @@ export const StatCard = ({
           {subtext && <p className="text-xs text-white/50 mt-1">{subtext}</p>}
         </div>
         <div className="p-2 bg-mint/10 rounded-lg">
-          <Icon className="w-5 h-5 text-mint" />
+          <Icon className="w-5 h-5 text-mint" aria-hidden="true" />
         </div>
       </div>
     </Card>
