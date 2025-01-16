@@ -82,7 +82,7 @@ export function DetailedCallsList() {
           recipient_number: call.phone_number || 'default',
           duration: parseInt(call.duration_seconds || '0'),
           status: call.Status || 'default',
-          transcription: call.transcript || 'No transcription available',
+          transcription: call["Question Summary"] || 'No question summary available', // Updated this line
           sentiment_analysis: {
             sentiment: call.Sentiment || 'neutral',
             urgency: call.Urgencylevel || 'low'
