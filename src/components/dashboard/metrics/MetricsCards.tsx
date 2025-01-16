@@ -29,10 +29,14 @@ const fetchCallMetrics = async (timeFilter: TimeFilter) => {
 
   if (!assistantData?.assistant_id) {
     console.log('No assistant_id found for user');
-    return { totalCalls: 0, avgDuration: 0 };
+    return { 
+      totalCalls: 0, 
+      avgDuration: 0,
+      appointmentsMade: 0,
+      positiveSentiment: 0,
+      urgentCases: 0 
+    };
   }
-
-  console.log('Found assistant_id:', assistantData.assistant_id);
 
   // Calculate date range based on timeFilter
   const now = new Date();
@@ -50,17 +54,12 @@ const fetchCallMetrics = async (timeFilter: TimeFilter) => {
       break;
   }
 
-  // Format dates for Postgres timestamp comparison
-  const startDateStr = startDate.toISOString().split('T')[0]; // Get just the date part
-  const endDateStr = now.toISOString().split('T')[0] + 'T23:59:59.999Z'; // End of current day
+  const startDateStr = startDate.toISOString();
+  const endDateStr = now.toISOString();
 
-  console.log('Fetching calls from:', startDateStr, 'to:', endDateStr);
-  console.log('Assistant ID:', assistantData.assistant_id);
-
-  // Fetch call metrics with debug logging
   const { data: callData, error: callError } = await supabase
     .from('call_logs')
-    .select('duration_seconds, start_time')
+    .select('duration_seconds, start_time, Status, Sentiment, Urgencylevel')
     .eq('assistant_id', assistantData.assistant_id)
     .gte('start_time', startDateStr)
     .lte('start_time', endDateStr);
@@ -70,16 +69,37 @@ const fetchCallMetrics = async (timeFilter: TimeFilter) => {
     throw callError;
   }
 
-  console.log('Retrieved calls:', callData);
-
+  // Calculate metrics
   const totalCalls = callData.length;
   const avgDuration = callData.length > 0
     ? callData.reduce((acc, call) => acc + (parseInt(call.duration_seconds) || 0), 0) / callData.length
     : 0;
 
+  // Count scheduled appointments
+  const appointmentsMade = callData.filter(call => 
+    call.Status?.toLowerCase() === 'scheduled'
+  ).length;
+
+  // Calculate positive sentiment percentage
+  const sentimentCalls = callData.filter(call => call.Sentiment);
+  const positiveSentiment = sentimentCalls.length > 0
+    ? (sentimentCalls.filter(call => 
+        call.Sentiment?.toLowerCase().includes('positive')
+      ).length / sentimentCalls.length) * 100
+    : 0;
+
+  // Count urgent cases (U2 or higher)
+  const urgentCases = callData.filter(call => {
+    const urgencyLevel = call.Urgencylevel?.toUpperCase();
+    return urgencyLevel === 'U1' || urgencyLevel === 'U2';
+  }).length;
+
   return {
     totalCalls,
     avgDuration: Math.round(avgDuration),
+    appointmentsMade,
+    positiveSentiment: Math.round(positiveSentiment),
+    urgentCases
   };
 };
 
@@ -176,21 +196,21 @@ export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
         <StatCard 
           icon={Calendar}
           label="Appointments Made"
-          value="N/A"
+          value={isLoading ? '...' : metrics?.appointmentsMade.toString() || '0'}
           subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/appointments"
         />
         <StatCard 
           icon={ThumbsUp}
           label="Positive Sentiment"
-          value="N/A"
+          value={isLoading ? '...' : `${metrics?.positiveSentiment || 0}%`}
           subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={AlertCircle}
           label="Urgent Cases"
-          value="N/A"
+          value={isLoading ? '...' : metrics?.urgentCases.toString() || '0'}
           subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
