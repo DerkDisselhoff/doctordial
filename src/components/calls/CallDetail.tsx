@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 
 interface CallLog {
   id: string;
+  call_id: string;
   start_time: string;
   Sentiment: string;
   Urgencylevel: string;
@@ -21,17 +22,18 @@ const fetchCallDetails = async (callId: string) => {
   const { data, error } = await supabase
     .from('call_logs')
     .select('*')
-    .eq('id', callId)
-    .single();
+    .eq('call_id', callId)
+    .maybeSingle();
 
   if (error) throw error;
+  if (!data) throw new Error('Call not found');
   return data as CallLog;
 };
 
 export function CallDetail() {
   const { callId } = useParams();
   
-  const { data: call, isLoading } = useQuery({
+  const { data: call, isLoading, error } = useQuery({
     queryKey: ['callDetail', callId],
     queryFn: () => fetchCallDetails(callId || ''),
     enabled: !!callId,
@@ -45,7 +47,7 @@ export function CallDetail() {
     );
   }
 
-  if (!call) {
+  if (error || !call) {
     return (
       <Card>
         <CardContent className="p-4">
@@ -179,4 +181,4 @@ export function CallDetail() {
       </Card>
     </div>
   );
-}
+};

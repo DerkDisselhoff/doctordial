@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       assistant_status: {
         Row: {
+          assistant_id: string | null
           assistant_name: string | null
           created_at: string
           id: string
@@ -19,6 +20,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          assistant_id?: string | null
           assistant_name?: string | null
           created_at?: string
           id?: string
@@ -27,6 +29,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          assistant_id?: string | null
           assistant_name?: string | null
           created_at?: string
           id?: string
@@ -70,7 +73,7 @@ export type Database = {
           Sentiment: string | null
           start_time: string | null
           Status: string | null
-          Symptoms: string | null
+          Symptoms: Json | null
           transcript: string | null
           type: string | null
           Urgencylevel: string | null
@@ -100,7 +103,7 @@ export type Database = {
           Sentiment?: string | null
           start_time?: string | null
           Status?: string | null
-          Symptoms?: string | null
+          Symptoms?: Json | null
           transcript?: string | null
           type?: string | null
           Urgencylevel?: string | null
@@ -130,7 +133,7 @@ export type Database = {
           Sentiment?: string | null
           start_time?: string | null
           Status?: string | null
-          Symptoms?: string | null
+          Symptoms?: Json | null
           transcript?: string | null
           type?: string | null
           Urgencylevel?: string | null
