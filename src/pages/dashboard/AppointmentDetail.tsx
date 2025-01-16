@@ -18,11 +18,22 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
+interface Appointment {
+  id: string;
+  Name: string | null;
+  patient_phone: string | null;
+  patient_email: string | null;
+  patient_id: string | null;
+  appointment_date: string;
+  follow_up_notes: string | null;
+  Urgencylevel: string | null;
+  Symptoms: string[] | null;
+}
+
 const AppointmentDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Validate UUID format
   const isValidUUID = (uuid: string) => {
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     return uuidRegex.test(uuid);
@@ -44,7 +55,7 @@ const AppointmentDetail = () => {
       if (error) throw error;
       if (!data) throw new Error('Appointment not found');
       
-      return data;
+      return data as Appointment;
     },
     meta: {
       onError: (error: Error) => {
@@ -184,7 +195,7 @@ const AppointmentDetail = () => {
               </div>
             </div>
 
-            {appointment.Symptoms && appointment.Symptoms.length > 0 && (
+            {appointment.Symptoms && Array.isArray(appointment.Symptoms) && appointment.Symptoms.length > 0 && (
               <div className="flex items-start space-x-3 md:col-span-2">
                 <AlertCircle className="h-5 w-5 text-mint flex-shrink-0" />
                 <div>
@@ -205,19 +216,6 @@ const AppointmentDetail = () => {
             )}
           </CardContent>
         </Card>
-
-        {appointment.conversation_summary && (
-          <Card className="bg-forest-light/50 border-mint/10">
-            <CardHeader>
-              <CardTitle className="text-white">Conversation Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-white/70 whitespace-pre-wrap">
-                {appointment.conversation_summary}
-              </p>
-            </CardContent>
-          </Card>
-        )}
       </div>
     </div>
   );
