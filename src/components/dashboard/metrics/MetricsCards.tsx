@@ -20,7 +20,7 @@ const fetchCallMetrics = async (timeFilter: TimeFilter) => {
     .from('assistant_status')
     .select('assistant_id')
     .eq('profile_id', session.user.id)
-    .single();
+    .maybeSingle();
 
   if (assistantError) {
     console.error('Error fetching assistant status:', assistantError);
@@ -50,15 +50,20 @@ const fetchCallMetrics = async (timeFilter: TimeFilter) => {
       break;
   }
 
-  // Debug log for date range
-  console.log('Fetching calls from:', startDate.toISOString(), 'to:', now.toISOString());
+  // Format dates for Postgres timestamp comparison
+  const startDateStr = startDate.toISOString().split('T')[0]; // Get just the date part
+  const endDateStr = now.toISOString().split('T')[0] + 'T23:59:59.999Z'; // End of current day
+
+  console.log('Fetching calls from:', startDateStr, 'to:', endDateStr);
+  console.log('Assistant ID:', assistantData.assistant_id);
 
   // Fetch call metrics with debug logging
   const { data: callData, error: callError } = await supabase
     .from('call_logs')
     .select('duration_seconds, start_time')
     .eq('assistant_id', assistantData.assistant_id)
-    .gte('start_time', startDate.toISOString());
+    .gte('start_time', startDateStr)
+    .lte('start_time', endDateStr);
 
   if (callError) {
     console.error('Error fetching call metrics:', callError);
