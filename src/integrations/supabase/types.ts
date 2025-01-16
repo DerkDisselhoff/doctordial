@@ -70,7 +70,7 @@ export type Database = {
           Sentiment: string | null
           start_time: string | null
           Status: string | null
-          Symptoms: string[] | null
+          Symptoms: string | null
           transcript: string | null
           type: string | null
           Urgencylevel: string | null
@@ -100,7 +100,7 @@ export type Database = {
           Sentiment?: string | null
           start_time?: string | null
           Status?: string | null
-          Symptoms?: string[] | null
+          Symptoms?: string | null
           transcript?: string | null
           type?: string | null
           Urgencylevel?: string | null
@@ -130,7 +130,7 @@ export type Database = {
           Sentiment?: string | null
           start_time?: string | null
           Status?: string | null
-          Symptoms?: string[] | null
+          Symptoms?: string | null
           transcript?: string | null
           type?: string | null
           Urgencylevel?: string | null
