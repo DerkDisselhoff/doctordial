@@ -27,7 +27,11 @@ export function DetailedCallsList() {
     const fetchCalls = async () => {
       try {
         // First get the user's session
-        const { data: { session } } = await supabase.auth.getSession();
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError) {
+          console.error("Session error:", sessionError);
+          throw sessionError;
+        }
         if (!session) {
           console.log("No session found");
           throw new Error('No session found');
@@ -53,6 +57,8 @@ export function DetailedCallsList() {
           throw new Error('No assistant ID found');
         }
 
+        console.log("Found assistant ID:", assistantData.assistant_id);
+
         // Fetch calls for this assistant
         const { data: callData, error: callError } = await supabase
           .from('call_logs')
@@ -65,6 +71,7 @@ export function DetailedCallsList() {
           throw callError;
         }
 
+        console.log("Number of calls found:", callData?.length || 0);
         console.log("Call data:", callData);
 
         // Transform call_logs data to match VapiCall interface
