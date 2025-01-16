@@ -16,20 +16,28 @@ const fetchCallMetrics = async (timeFilter: TimeFilter) => {
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) throw new Error('No session');
 
-  const { data: assistantData } = await supabase
+  const { data: assistantData, error: assistantError } = await supabase
     .from('assistant_status')
     .select('assistant_id')
     .eq('profile_id', session.user.id)
     .single();
+
+  if (assistantError) {
+    console.error('Error fetching assistant status:', assistantError);
+    throw assistantError;
+  }
 
   if (!assistantData?.assistant_id) {
     console.log('No assistant_id found for user');
     return { totalCalls: 0, avgDuration: 0 };
   }
 
+  console.log('Found assistant_id:', assistantData.assistant_id);
+
   // Calculate date range based on timeFilter
   const now = new Date();
   let startDate = new Date();
+  
   switch (timeFilter) {
     case 'today':
       startDate.setHours(0, 0, 0, 0);
@@ -42,17 +50,22 @@ const fetchCallMetrics = async (timeFilter: TimeFilter) => {
       break;
   }
 
-  // Fetch call metrics
-  const { data: callData, error } = await supabase
+  // Debug log for date range
+  console.log('Fetching calls from:', startDate.toISOString(), 'to:', now.toISOString());
+
+  // Fetch call metrics with debug logging
+  const { data: callData, error: callError } = await supabase
     .from('call_logs')
-    .select('duration_seconds')
+    .select('duration_seconds, start_time')
     .eq('assistant_id', assistantData.assistant_id)
     .gte('start_time', startDate.toISOString());
 
-  if (error) {
-    console.error('Error fetching call metrics:', error);
-    throw error;
+  if (callError) {
+    console.error('Error fetching call metrics:', callError);
+    throw callError;
   }
+
+  console.log('Retrieved calls:', callData);
 
   const totalCalls = callData.length;
   const avgDuration = callData.length > 0
@@ -64,6 +77,42 @@ const fetchCallMetrics = async (timeFilter: TimeFilter) => {
     avgDuration: Math.round(avgDuration),
   };
 };
+
+  const StatCard = ({ 
+    icon: Icon, 
+    label, 
+    value, 
+    subtext,
+    navigateTo 
+  }: { 
+    icon: any, 
+    label: string, 
+    value: string, 
+    subtext?: string,
+    navigateTo: string
+  }) => (
+    <Card 
+      className="bg-forest-light/50 border-mint/10 p-4 cursor-pointer transition-all duration-300
+                hover:border-mint/30 hover:shadow-[0_0_15px_rgba(100,255,218,0.1)]
+                relative overflow-hidden group"
+      onClick={() => navigate(navigateTo)}
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-mint/0 via-mint/5 to-mint/0 
+                    translate-x-[-100%] group-hover:translate-x-[100%] 
+                    transition-transform duration-1000 pointer-events-none" 
+      />
+      <div className="flex items-start justify-between relative">
+        <div>
+          <p className="text-white/70 text-sm">{label}</p>
+          <h4 className="text-2xl font-bold text-white mt-1">{value}</h4>
+          {subtext && <p className="text-xs text-white/50 mt-1">{subtext}</p>}
+        </div>
+        <div className="p-2 bg-mint/10 rounded-lg">
+          <Icon className="w-5 h-5 text-mint" />
+        </div>
+      </div>
+    </Card>
+  );
 
 export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
@@ -101,42 +150,6 @@ export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
         return 'from last month';
     }
   };
-
-  const StatCard = ({ 
-    icon: Icon, 
-    label, 
-    value, 
-    subtext,
-    navigateTo 
-  }: { 
-    icon: any, 
-    label: string, 
-    value: string, 
-    subtext?: string,
-    navigateTo: string
-  }) => (
-    <Card 
-      className="bg-forest-light/50 border-mint/10 p-4 cursor-pointer transition-all duration-300
-                hover:border-mint/30 hover:shadow-[0_0_15px_rgba(100,255,218,0.1)]
-                relative overflow-hidden group"
-      onClick={() => navigate(navigateTo)}
-    >
-      <div className="absolute inset-0 bg-gradient-to-r from-mint/0 via-mint/5 to-mint/0 
-                    translate-x-[-100%] group-hover:translate-x-[100%] 
-                    transition-transform duration-1000 pointer-events-none" 
-      />
-      <div className="flex items-start justify-between relative">
-        <div>
-          <p className="text-white/70 text-sm">{label}</p>
-          <h4 className="text-2xl font-bold text-white mt-1">{value}</h4>
-          {subtext && <p className="text-xs text-white/50 mt-1">{subtext}</p>}
-        </div>
-        <div className="p-2 bg-mint/10 rounded-lg">
-          <Icon className="w-5 h-5 text-mint" />
-        </div>
-      </div>
-    </Card>
-  );
 
   if (userRole === 'client') {
     return (
