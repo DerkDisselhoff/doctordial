@@ -42,6 +42,21 @@ export function CallsTableRow({ call }: CallsTableRowProps) {
     }
   };
 
+  const getStatusColor = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case 'completed':
+        return 'bg-sky-500/20 border-sky-500/30 text-sky-500';
+      case 'scheduled':
+        return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
+      case 'missed':
+        return 'bg-indigo-500/20 border-indigo-500/30 text-indigo-500';
+      case 'rescheduled':
+        return 'bg-cyan-500/20 border-cyan-500/30 text-cyan-500';
+      default:
+        return 'bg-slate-500/20 border-slate-500/30 text-slate-500';
+    }
+  };
+
   return (
     <TableRow 
       key={call.id}
@@ -76,15 +91,7 @@ export function CallsTableRow({ call }: CallsTableRowProps) {
         </span>
       </TableCell>
       <TableCell className="p-4 whitespace-nowrap">
-        <span className={`px-2 py-1 rounded-full text-xs ${
-          call.status === 'completed'
-            ? 'bg-green-100 text-green-700 border border-green-200'
-            : call.status === 'scheduled'
-            ? 'bg-blue-100 text-blue-700 border border-blue-200'
-            : call.status === 'missed'
-            ? 'bg-red-100 text-red-700 border border-red-200'
-            : 'bg-yellow-100 text-yellow-700 border border-yellow-200'
-        }`}>
+        <span className={`px-2 py-1 rounded-full text-xs border ${getStatusColor(call.status || '')}`}>
           {call.status}
         </span>
       </TableCell>
