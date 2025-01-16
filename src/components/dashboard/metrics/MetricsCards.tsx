@@ -3,6 +3,7 @@ import { Users, PhoneCall, Clock, Calendar, ThumbsUp, AlertCircle, DollarSign } 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
@@ -10,9 +11,68 @@ interface MetricsCardsProps {
   timeFilter?: TimeFilter;
 }
 
+const fetchCallMetrics = async (timeFilter: TimeFilter) => {
+  // Get the user's assistant_id first
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) throw new Error('No session');
+
+  const { data: assistantData } = await supabase
+    .from('assistant_status')
+    .select('assistant_id')
+    .eq('profile_id', session.user.id)
+    .single();
+
+  if (!assistantData?.assistant_id) {
+    console.log('No assistant_id found for user');
+    return { totalCalls: 0, avgDuration: 0 };
+  }
+
+  // Calculate date range based on timeFilter
+  const now = new Date();
+  let startDate = new Date();
+  switch (timeFilter) {
+    case 'today':
+      startDate.setHours(0, 0, 0, 0);
+      break;
+    case 'week':
+      startDate.setDate(now.getDate() - 7);
+      break;
+    case 'month':
+      startDate.setMonth(now.getMonth() - 1);
+      break;
+  }
+
+  // Fetch call metrics
+  const { data: callData, error } = await supabase
+    .from('call_logs')
+    .select('duration_seconds')
+    .eq('assistant_id', assistantData.assistant_id)
+    .gte('start_time', startDate.toISOString());
+
+  if (error) {
+    console.error('Error fetching call metrics:', error);
+    throw error;
+  }
+
+  const totalCalls = callData.length;
+  const avgDuration = callData.length > 0
+    ? callData.reduce((acc, call) => acc + (parseInt(call.duration_seconds) || 0), 0) / callData.length
+    : 0;
+
+  return {
+    totalCalls,
+    avgDuration: Math.round(avgDuration),
+  };
+};
+
 export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
   const navigate = useNavigate();
+
+  const { data: metrics, isLoading } = useQuery({
+    queryKey: ['callMetrics', timeFilter],
+    queryFn: () => fetchCallMetrics(timeFilter),
+  });
 
   useEffect(() => {
     const checkUserRole = async () => {
@@ -39,36 +99,6 @@ export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
         return 'from last week';
       case 'month':
         return 'from last month';
-    }
-  };
-
-  // Helper function to get mock data based on the time filter
-  const getMetricsData = (filter: TimeFilter) => {
-    switch (filter) {
-      case 'today':
-        return {
-          calls: '180',
-          duration: '3m 15s',
-          appointments: '25',
-          sentiment: '82%',
-          urgent: '3'
-        };
-      case 'week':
-        return {
-          calls: '1,280',
-          duration: '3m 45s',
-          appointments: '285',
-          sentiment: '85%',
-          urgent: '12'
-        };
-      case 'month':
-        return {
-          calls: '4,500',
-          duration: '3m 30s',
-          appointments: '850',
-          sentiment: '87%',
-          urgent: '45'
-        };
     }
   };
 
@@ -109,44 +139,41 @@ export function MetricsCards({ timeFilter = 'today' }: MetricsCardsProps) {
   );
 
   if (userRole === 'client') {
-    const metricsData = getMetricsData(timeFilter);
-    const comparisonText = getComparisonText(timeFilter);
-
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard 
           icon={PhoneCall}
           label="Total Calls"
-          value={metricsData.calls}
-          subtext={`+30 ${comparisonText}`}
+          value={isLoading ? '...' : metrics?.totalCalls.toString() || '0'}
+          subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={Clock}
           label="Avg. Call Duration"
-          value={metricsData.duration}
-          subtext={`-15s ${comparisonText}`}
+          value={isLoading ? '...' : `${metrics?.avgDuration || 0}s`}
+          subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={Calendar}
           label="Appointments Made"
-          value={metricsData.appointments}
-          subtext={`+15 ${comparisonText}`}
+          value="N/A"
+          subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/appointments"
         />
         <StatCard 
           icon={ThumbsUp}
           label="Positive Sentiment"
-          value={metricsData.sentiment}
-          subtext={`+2% ${comparisonText}`}
+          value="N/A"
+          subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={AlertCircle}
           label="Urgent Cases"
-          value={metricsData.urgent}
-          subtext={`-1 ${comparisonText}`}
+          value="N/A"
+          subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
       </div>
