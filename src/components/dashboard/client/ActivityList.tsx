@@ -2,47 +2,88 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Calendar, MessageCircle, User, Clock, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
+import { useQuery } from "@tanstack/react-query";
+import { getUrgencyColor } from "@/utils/urgencyUtils";
 
-// Reuse the mock data generator from DetailedCallsList
-const generateMockCalls = (count: number) => {
-  const sentiments = ['positive', 'negative', 'neutral'];
-  const urgencyLevels = ['high', 'medium', 'low'];
-  const subjects = [
-    'Prescription renewal request',
-    'Scheduling routine check-up',
-    'Discussing test results',
-    'Emergency consultation',
-    'Follow-up appointment',
-    'Medication side effects',
-    'General health inquiry',
-    'Specialist referral request'
-  ];
-  const patientNames = [
-    'John Smith', 'Emma Wilson', 'Michael Brown', 'Sarah Davis',
-    'James Johnson', 'Lisa Anderson', 'Robert Taylor', 'Maria Garcia'
-  ];
-  const statuses = ['completed', 'scheduled', 'missed', 'rescheduled'];
+interface CallLog {
+  id: string;
+  call_id: string;
+  Name: string;
+  Symptoms: any;
+  Urgencylevel: string;
+  Status: string;
+  appointment_date: string;
+  Action: string;
+  conversation_summary: string;
+  start_time: string;
+  duration_seconds: string;
+}
 
-  return Array.from({ length: count }, (_, i) => ({
-    id: `mock-${i + 1}`,
-    call_id: `CALL-${String(i + 1).padStart(4, '0')}`,
-    caller_number: patientNames[Math.floor(Math.random() * patientNames.length)],
-    recipient_number: '+31612345678',
-    duration: Math.floor(Math.random() * 600) + 60,
-    status: statuses[Math.floor(Math.random() * statuses.length)],
-    transcription: subjects[Math.floor(Math.random() * subjects.length)],
-    sentiment_analysis: {
-      sentiment: sentiments[Math.floor(Math.random() * sentiments.length)],
-      urgency: urgencyLevels[Math.floor(Math.random() * urgencyLevels.length)]
-    },
-    created_at: new Date(Date.now() - Math.floor(Math.random() * 7776000000)).toISOString()
-  }));
+const fetchRecentCalls = async () => {
+  const { data: assistantStatus } = await supabase
+    .from('assistant_status')
+    .select('assistant_id')
+    .eq('profile_id', (await supabase.auth.getSession()).data.session?.user.id)
+    .single();
+
+  if (!assistantStatus?.assistant_id) {
+    throw new Error('No assistant ID found');
+  }
+
+  const { data, error } = await supabase
+    .from('call_logs')
+    .select('*')
+    .eq('assistant_id', assistantStatus.assistant_id)
+    .order('start_time', { ascending: false })
+    .limit(4);
+
+  if (error) throw error;
+  return data as CallLog[];
 };
 
 export function ActivityList() {
   const navigate = useNavigate();
-  const recentCalls = generateMockCalls(3);
+  const { data: calls, isLoading, error } = useQuery({
+    queryKey: ['recentCalls'],
+    queryFn: fetchRecentCalls,
+  });
+
+  if (isLoading) {
+    return (
+      <Card className="bg-forest-light/50 border-mint/10">
+        <CardContent className="flex justify-center p-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-mint"></div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Card className="bg-forest-light/50 border-mint/10">
+        <CardContent className="p-4">
+          <p className="text-center text-white/70">Error loading recent activity</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case 'completed':
+        return 'bg-sky-500/20 border-sky-500/30 text-sky-500';
+      case 'scheduled':
+        return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
+      case 'missed':
+        return 'bg-indigo-500/20 border-indigo-500/30 text-indigo-500';
+      case 'rescheduled':
+        return 'bg-cyan-500/20 border-cyan-500/30 text-cyan-500';
+      default:
+        return 'bg-slate-500/20 border-slate-500/30 text-slate-500';
+    }
+  };
 
   return (
     <Card className="bg-forest-light/50 border-mint/10">
@@ -54,70 +95,46 @@ export function ActivityList() {
         <Table>
           <TableHeader>
             <TableRow className="border-b border-mint/10">
-              <TableHead className="text-white/70"><Calendar className="h-4 w-4" /></TableHead>
-              <TableHead className="text-white/70"><User className="h-4 w-4" /></TableHead>
-              <TableHead className="text-white/70"><MessageCircle className="h-4 w-4" /></TableHead>
-              <TableHead className="text-white/70">Urgency</TableHead>
-              <TableHead className="text-white/70">Sentiment</TableHead>
-              <TableHead className="text-white/70">Outcome</TableHead>
-              <TableHead className="text-white/70">Appointment</TableHead>
-              <TableHead className="text-white/70"><Clock className="h-4 w-4" /></TableHead>
+              <TableHead className="text-left p-4 text-white/70">Patient</TableHead>
+              <TableHead className="text-left p-4 text-white/70">Symptoms</TableHead>
+              <TableHead className="text-left p-4 text-white/70">Urgency</TableHead>
+              <TableHead className="text-left p-4 text-white/70">Status</TableHead>
+              <TableHead className="text-left p-4 text-white/70">Actions</TableHead>
+              <TableHead className="text-left p-4 text-white/70">Resolution</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {recentCalls.map((call) => (
+            {calls?.map((call) => (
               <TableRow 
-                key={call.id}
+                key={call.id} 
                 className="hover:bg-mint/5 cursor-pointer border-b border-mint/5"
                 onClick={() => navigate(`/dashboard/calls/${call.call_id}`)}
               >
-                <TableCell className="text-white/70">
-                  {new Date(call.created_at).toLocaleString()}
+                <TableCell className="p-4 text-white">{call.Name || 'Unknown'}</TableCell>
+                <TableCell className="p-4 text-white/70">
+                  <div className="max-w-[200px] truncate" title={call.Symptoms}>
+                    {call.Symptoms}
+                  </div>
                 </TableCell>
-                <TableCell className="text-white">
-                  {call.caller_number}
-                </TableCell>
-                <TableCell className="text-white/70 max-w-xs truncate">
-                  {call.transcription}
-                </TableCell>
-                <TableCell>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    call.sentiment_analysis?.urgency === 'high' 
-                      ? 'bg-red-500/10 text-red-500'
-                      : call.sentiment_analysis?.urgency === 'medium'
-                      ? 'bg-yellow-500/10 text-yellow-500'
-                      : 'bg-green-500/10 text-green-500'
-                    }`}>
-                    {call.sentiment_analysis?.urgency || 'N/A'}
+                <TableCell className="p-4">
+                  <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor(call.Urgencylevel)}`}>
+                    {call.Urgencylevel}
                   </span>
                 </TableCell>
-                <TableCell>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    call.sentiment_analysis?.sentiment === 'positive'
-                      ? 'bg-green-500/10 text-green-500'
-                      : call.sentiment_analysis?.sentiment === 'negative'
-                      ? 'bg-red-500/10 text-red-500'
-                      : 'bg-gray-500/10 text-gray-500'
-                    }`}>
-                    {call.sentiment_analysis?.sentiment || 'N/A'}
+                <TableCell className="p-4">
+                  <span className={`px-2 py-1 rounded-full text-xs border ${getStatusColor(call.Status)}`}>
+                    {call.Status}
                   </span>
                 </TableCell>
-                <TableCell className="text-white/70">
-                  {call.status}
+                <TableCell className="p-4 text-white/70">
+                  <div className="max-w-[200px] truncate" title={call.Action}>
+                    {call.Action}
+                  </div>
                 </TableCell>
-                <TableCell>
-                  {call.status === 'completed' || call.status === 'scheduled' ? (
-                    <span className="px-2 py-1 rounded-full text-xs bg-mint/10 text-mint">
-                      Yes
-                    </span>
-                  ) : (
-                    <span className="px-2 py-1 rounded-full text-xs bg-gray-500/10 text-gray-500">
-                      No
-                    </span>
-                  )}
-                </TableCell>
-                <TableCell className="text-white/70">
-                  {call.duration ? `${call.duration}s` : 'N/A'}
+                <TableCell className="p-4 text-white/70">
+                  <div className="max-w-[200px] truncate" title={call.conversation_summary}>
+                    {call.conversation_summary}
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
