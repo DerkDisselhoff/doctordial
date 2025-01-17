@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Clock, MessageCircle, User, ThumbsUp, AlertCircle, Calendar, ArrowRight, Tag, Building2, FileCheck } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
+import { getUrgencyColor } from "@/utils/urgencyUtils";
 
 interface CallLog {
   id: string;
@@ -28,6 +29,36 @@ const fetchCallDetails = async (callId: string) => {
   if (error) throw error;
   if (!data) throw new Error('Call not found');
   return data as CallLog;
+};
+
+// Helper function to get sentiment color classes
+const getSentimentColor = (sentiment: string) => {
+  switch (sentiment?.toLowerCase()) {
+    case 'positive':
+      return 'bg-green-500/20 border-green-500/30 text-green-500';
+    case 'negative':
+      return 'bg-red-500/20 border-red-500/30 text-red-500';
+    case 'neutral':
+      return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
+    default:
+      return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
+  }
+};
+
+// Helper function to get status color classes
+const getStatusColor = (status: string) => {
+  switch (status?.toLowerCase()) {
+    case 'completed':
+      return 'bg-green-500/20 border-green-500/30 text-green-500';
+    case 'in progress':
+      return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
+    case 'scheduled':
+      return 'bg-purple-500/20 border-purple-500/30 text-purple-500';
+    case 'missed':
+      return 'bg-red-500/20 border-red-500/30 text-red-500';
+    default:
+      return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
+  }
 };
 
 export function CallDetail() {
@@ -106,13 +137,7 @@ export function CallDetail() {
                 <ThumbsUp className="h-5 w-5 text-mint" />
                 <div>
                   <p className="text-sm text-white/60">Sentiment</p>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium
-                    ${call.Sentiment === 'positive'
-                      ? 'bg-green-100 text-green-700 border border-green-200'
-                      : call.Sentiment === 'negative'
-                      ? 'bg-red-100 text-red-700 border border-red-200'
-                      : 'bg-gray-100 text-gray-700 border border-gray-200'
-                    }`}>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getSentimentColor(call.Sentiment)}`}>
                     {call.Sentiment || 'N/A'}
                   </span>
                 </div>
@@ -122,13 +147,7 @@ export function CallDetail() {
                 <AlertCircle className="h-5 w-5 text-mint" />
                 <div>
                   <p className="text-sm text-white/60">Urgency</p>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium
-                    ${call.Urgencylevel === 'high'
-                      ? 'bg-red-100 text-red-700 border border-red-200'
-                      : call.Urgencylevel === 'medium'
-                      ? 'bg-orange-100 text-orange-700 border border-orange-200'
-                      : 'bg-green-100 text-green-700 border border-green-200'
-                    }`}>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getUrgencyColor(call.Urgencylevel)}`}>
                     {call.Urgencylevel || 'N/A'}
                   </span>
                 </div>
@@ -140,15 +159,7 @@ export function CallDetail() {
                 <MessageCircle className="h-5 w-5 text-mint" />
                 <div>
                   <p className="text-sm text-white/60">Status</p>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium
-                    ${call.Status === 'completed'
-                      ? 'bg-green-100 text-green-700 border border-green-200'
-                      : call.Status === 'scheduled'
-                      ? 'bg-blue-100 text-blue-700 border border-blue-200'
-                      : call.Status === 'missed'
-                      ? 'bg-red-100 text-red-700 border border-red-200'
-                      : 'bg-yellow-100 text-yellow-700 border border-yellow-200'
-                    }`}>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(call.Status)}`}>
                     {call.Status || 'N/A'}
                   </span>
                 </div>
