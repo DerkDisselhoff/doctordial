@@ -3,10 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Save } from "lucide-react";
 import { LiveStatusCard } from "@/components/dashboard/assistant/LiveStatusCard";
-import { AvailabilitySettingsCard } from "@/components/dashboard/assistant/AvailabilitySettingsCard";
-import { IdentitySettingsCard } from "@/components/dashboard/assistant/IdentitySettingsCard";
-import { GreetingSettingsCard } from "@/components/dashboard/assistant/GreetingSettingsCard";
-import { VoiceSettingsCard } from "@/components/dashboard/assistant/VoiceSettingsCard";
+import { AssistantSettingsCard } from "@/components/dashboard/assistant/AssistantSettingsCard";
 
 const Assistant = () => {
   const { toast } = useToast();
@@ -34,15 +31,8 @@ const Assistant = () => {
         onStatusChange={setIsLive}
       />
       
-      <AvailabilitySettingsCard onSettingChange={handleSettingChange} />
-      
-      <IdentitySettingsCard onSettingChange={handleSettingChange} />
-      
-      <GreetingSettingsCard onSettingChange={handleSettingChange} />
-      
-      <VoiceSettingsCard onSettingChange={handleSettingChange} />
+      <AssistantSettingsCard onSettingChange={handleSettingChange} />
 
-      {/* Floating Save Button */}
       {hasChanges && (
         <div className="fixed bottom-8 right-8 flex gap-2 z-50">
           <Button
