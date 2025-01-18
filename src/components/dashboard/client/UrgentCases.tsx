@@ -99,7 +99,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <CardTitle className="text-white">
-              {isIrrelevant ? "Irrelevant Cases" : "Relevant Cases"}
+              {isIrrelevant ? "Other cases (not forwarded)" : "Relevant Cases"}
             </CardTitle>
             <div className="flex items-center gap-2">
               {isIrrelevant ? (
