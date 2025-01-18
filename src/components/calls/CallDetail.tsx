@@ -17,6 +17,8 @@ interface CallLog {
   conversation_summary: string;
   Status: string;
   follow_up_notes: string | null;
+  transcript: string | null;
+  Action: string | null;
 }
 
 const fetchCallDetails = async (callId: string) => {
@@ -29,6 +31,31 @@ const fetchCallDetails = async (callId: string) => {
   if (error) throw error;
   if (!data) throw new Error('Call not found');
   return data as CallLog;
+};
+
+// Helper function to format transcript messages
+const formatTranscript = (transcript: string | null) => {
+  if (!transcript) return [];
+  return transcript.split(/(?=AI:|User:)/).filter(Boolean).map(message => {
+    const [role, ...content] = message.split(':');
+    return {
+      role: role.trim(),
+      content: content.join(':').trim()
+    };
+  });
+};
+
+// Helper function to parse SOEP notes
+const parseSOEPNotes = (notes: string | null) => {
+  if (!notes) return {};
+  const sections: Record<string, string> = {};
+  notes.split(/(?=S:|O:|E:|P:)/).forEach(section => {
+    const [type, ...content] = section.split(':');
+    if (type) {
+      sections[type.trim()] = content.join(':').trim();
+    }
+  });
+  return sections;
 };
 
 // Helper function to get sentiment color classes
@@ -87,6 +114,9 @@ export function CallDetail() {
       </Card>
     );
   }
+
+  const transcriptMessages = formatTranscript(call.transcript);
+  const soepNotes = parseSOEPNotes(call.follow_up_notes);
 
   return (
     <div className="space-y-4">
@@ -183,10 +213,66 @@ export function CallDetail() {
                 <ArrowRight className="h-5 w-5 text-mint mt-0.5" />
                 <div>
                   <p className="text-white font-medium mb-1">Required Action</p>
-                  <p className="text-white/70">{call.follow_up_notes || 'No follow-up required'}</p>
+                  <p className="text-white/70">{call.Action || 'No action required'}</p>
                 </div>
               </div>
             </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-forest-light/50 border-mint/10">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-white">Call Transcript</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {transcriptMessages.length > 0 ? (
+              transcriptMessages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`flex gap-4 ${
+                    message.role === 'AI' ? 'flex-row' : 'flex-row-reverse'
+                  }`}
+                >
+                  <div className={`flex-shrink-0 w-16 text-sm font-medium ${
+                    message.role === 'AI' ? 'text-mint' : 'text-divine'
+                  }`}>
+                    {message.role}
+                  </div>
+                  <div className={`flex-grow p-3 rounded-lg ${
+                    message.role === 'AI' 
+                      ? 'bg-forest border border-mint/10' 
+                      : 'bg-forest-light border border-divine/10'
+                  }`}>
+                    <p className="text-white/80">{message.content}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-white/60">No transcript available</p>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-forest-light/50 border-mint/10">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-white">SOEP</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {Object.entries(soepNotes).map(([section, content]) => (
+              <div key={section} className="p-4 bg-forest rounded-lg border border-mint/10">
+                <h4 className="text-mint font-medium mb-2">
+                  {section === 'S' ? 'Subjective' :
+                   section === 'O' ? 'Objective' :
+                   section === 'E' ? 'Evaluation' :
+                   section === 'P' ? 'Plan' : section}
+                </h4>
+                <p className="text-white/70">{content || 'No information available'}</p>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
