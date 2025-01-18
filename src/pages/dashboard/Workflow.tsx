@@ -404,11 +404,11 @@ export function Workflow() {
             </div>
 
             {/* Subject List */}
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {subjects.map((subject) => (
                 <div
                   key={subject.id}
-                  className="flex items-center justify-between p-2 rounded-lg bg-forest-dark/30 hover:bg-forest-dark/40 transition-colors"
+                  className="flex items-center justify-between p-3 rounded-lg bg-forest-dark/30 hover:bg-forest-dark/40 transition-colors"
                 >
                   {editingSubject === subject.id ? (
                     <div className="flex-1 flex items-center gap-2">
