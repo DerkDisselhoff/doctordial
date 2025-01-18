@@ -36,8 +36,7 @@ const fetchRecentCalls = async () => {
     .from('call_logs')
     .select('*')
     .eq('assistant_id', assistantStatus.assistant_id)
-    .in('Urgencylevel', ['U1', 'U5'])
-    .or('Urgencylevel.is.null,Urgencylevel.eq.other')
+    .or('Urgencylevel.in.(U1,U5),Urgencylevel.is.null')
     .order('start_time', { ascending: false })
     .limit(5);
 
@@ -49,10 +48,7 @@ export function ActivityList() {
   const navigate = useNavigate();
   const { data: calls, isLoading, error } = useQuery({
     queryKey: ['recentCalls'],
-    queryFn: fetchRecentCalls,
-  });
-
-  if (isLoading) {
+    queryFn: fetchRecentisLoading) {
     return (
       <Card className="bg-forest-light/50 border-mint/10">
         <CardContent className="flex justify-center p-8">
