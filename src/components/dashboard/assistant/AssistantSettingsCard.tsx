@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Settings } from "lucide-react";
-import { AvailabilitySettingsCard } from "./AvailabilitySettingsCard";
 import { IdentitySettingsCard } from "./IdentitySettingsCard";
+import { AvailabilitySettingsCard } from "./AvailabilitySettingsCard";
 import { GreetingSettingsCard } from "./GreetingSettingsCard";
 import { VoiceSettingsCard } from "./VoiceSettingsCard";
 
@@ -19,10 +19,27 @@ export const AssistantSettingsCard = ({ onSettingChange }: AssistantSettingsCard
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
-        <IdentitySettingsCard onSettingChange={onSettingChange} />
-        <AvailabilitySettingsCard onSettingChange={onSettingChange} />
-        <GreetingSettingsCard onSettingChange={onSettingChange} />
-        <VoiceSettingsCard onSettingChange={onSettingChange} />
+        <div className="space-y-8">
+          <div className="space-y-2">
+            <h3 className="text-white font-medium">Identity Settings</h3>
+            <IdentitySettingsCard onSettingChange={onSettingChange} />
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="text-white font-medium">Availability Settings</h3>
+            <AvailabilitySettingsCard onSettingChange={onSettingChange} />
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="text-white font-medium">Greeting Settings</h3>
+            <GreetingSettingsCard onSettingChange={onSettingChange} />
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="text-white font-medium">Voice Settings</h3>
+            <VoiceSettingsCard onSettingChange={onSettingChange} />
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
