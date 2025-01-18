@@ -249,13 +249,13 @@ export function Workflow() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div>
         <h2 className="text-3xl font-bold text-white">Workflow Configuration</h2>
         <p className="text-white/60">Configure how incoming calls are handled</p>
       </div>
 
-      <div className="grid gap-6">
+      <div className="grid gap-4">
         {/* Care Demand Suitable Section */}
         <Card className="bg-forest-light/50 border-mint/10">
           <CardHeader className="flex flex-row items-center justify-between">
@@ -272,16 +272,16 @@ export function Workflow() {
               Save Changes
             </Button>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-2">
             {urgencySettings.map((setting) => (
-              <div key={setting.urgency_level} className="grid gap-2 p-3 rounded-lg bg-forest-dark/30">
-                <div className="flex items-center gap-4">
+              <div key={setting.urgency_level} className="grid gap-2 p-2 rounded-lg bg-forest-dark/30">
+                <div className="flex items-center gap-3">
                   <div className="flex items-center gap-2 min-w-[80px]">
                     <span className={`inline-flex px-2 py-1 rounded-md text-sm font-medium border ${getUrgencyColor(setting.urgency_level)}`}>
                       {setting.urgency_level}
                     </span>
                   </div>
-                  <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
                     <Select
                       value={setting.forward_step}
                       onValueChange={(value: ForwardStep) => 
@@ -292,9 +292,24 @@ export function Workflow() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-forest border-mint/20">
-                        <SelectItem value="call_112">Advice to call 112 directly</SelectItem>
-                        <SelectItem value="forward_to_assistant">Forward to Doctor's Assistant</SelectItem>
-                        <SelectItem value="provide_selfcare">Provide selfcare advice</SelectItem>
+                        <SelectItem 
+                          value="call_112" 
+                          className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
+                        >
+                          Advice to call 112 directly
+                        </SelectItem>
+                        <SelectItem 
+                          value="forward_to_assistant" 
+                          className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
+                        >
+                          Forward to Doctor's Assistant
+                        </SelectItem>
+                        <SelectItem 
+                          value="provide_selfcare" 
+                          className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
+                        >
+                          Provide selfcare advice
+                        </SelectItem>
                       </SelectContent>
                     </Select>
 
@@ -320,8 +335,18 @@ export function Workflow() {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-forest border-mint/20">
-                          <SelectItem value="simple">Simple short advice</SelectItem>
-                          <SelectItem value="extensive">Extensive advice</SelectItem>
+                          <SelectItem 
+                            value="simple"
+                            className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
+                          >
+                            Simple short advice
+                          </SelectItem>
+                          <SelectItem 
+                            value="extensive"
+                            className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
+                          >
+                            Extensive advice
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     )}
@@ -340,10 +365,10 @@ export function Workflow() {
               Care Demand Unsuitable
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-4">
             {/* Add New Subject Form */}
-            <div className="grid gap-4 p-4 rounded-lg bg-forest-dark/30">
-              <div className="grid gap-4 md:grid-cols-[1fr,1fr,auto]">
+            <div className="grid gap-3 p-3 rounded-lg bg-forest-dark/30">
+              <div className="grid gap-3 md:grid-cols-[1fr,1fr,auto]">
                 <div className="space-y-2">
                   <Label className="text-white">Subject</Label>
                   <Input
@@ -374,13 +399,13 @@ export function Workflow() {
             </div>
 
             {/* Subject List */}
-            <div className="space-y-4">
+            <div className="space-y-2">
               {subjects.map((subject) => (
                 <div
                   key={subject.id}
-                  className="flex items-center justify-between p-4 rounded-lg bg-forest-dark/30"
+                  className="flex items-center justify-between p-3 rounded-lg bg-forest-dark/30"
                 >
-                  <div className="grid gap-2 flex-1">
+                  <div className="grid gap-1 flex-1">
                     <div className="flex items-center justify-between">
                       <span className="text-white font-medium">{subject.subject}</span>
                       <Button
