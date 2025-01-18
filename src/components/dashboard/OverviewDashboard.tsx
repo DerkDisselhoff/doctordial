@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { CirclePlay, CirclePause } from "lucide-react";
 import { UrgentCases } from "./client/UrgentCases";
-import { UrgentCases2 } from "./client/UrgentCases2";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
@@ -137,10 +136,7 @@ export function OverviewDashboard() {
       <MetricsCards timeFilter={timeFilter} />
       <DashboardCharts />
       {userRole === 'client' && (
-        <>
-          <UrgentCases />
-          <UrgentCases2 />
-        </>
+        <UrgentCases />
       )}
     </div>
   );
