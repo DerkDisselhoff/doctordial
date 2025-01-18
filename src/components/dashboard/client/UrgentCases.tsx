@@ -178,7 +178,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                   </div>
                 </TableCell>
                 <TableCell className="p-4 text-white/70">
-                  {call.duration_seconds ? `${call.duration_seconds}s` : 'N/A'}
+                  {call.duration_seconds ? `${Math.round(parseFloat(call.duration_seconds))}s` : 'N/A'}
                 </TableCell>
                 <TableCell className="p-4">
                   <span className={`px-2 py-1 rounded-full text-xs border ${getEmotionColor(call.Emotion)}`}>
