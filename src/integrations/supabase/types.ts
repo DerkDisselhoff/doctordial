@@ -62,6 +62,7 @@ export type Database = {
           end_time: string | null
           ended_reason: string | null
           follow_up_notes: string | null
+          Forwarded: boolean | null
           id: string
           intent: string | null
           metadata: Json | null
@@ -93,6 +94,7 @@ export type Database = {
           end_time?: string | null
           ended_reason?: string | null
           follow_up_notes?: string | null
+          Forwarded?: boolean | null
           id?: string
           intent?: string | null
           metadata?: Json | null
@@ -124,6 +126,7 @@ export type Database = {
           end_time?: string | null
           ended_reason?: string | null
           follow_up_notes?: string | null
+          Forwarded?: boolean | null
           id?: string
           intent?: string | null
           metadata?: Json | null

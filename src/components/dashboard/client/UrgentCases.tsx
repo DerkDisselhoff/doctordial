@@ -13,12 +13,13 @@ interface CallLog {
   Name: string;
   Symptoms: any;
   Urgencylevel: string;
-  Status: string;
+  Forwarded: boolean;
   appointment_date: string;
   Action: string;
   conversation_summary: string;
   start_time: string;
   duration_seconds: string;
+  Emotion: string;
 }
 
 const fetchUrgentCalls = async (isIrrelevant: boolean = false) => {
@@ -77,16 +78,16 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
     );
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status?.toLowerCase()) {
-      case 'completed':
-        return 'bg-sky-500/20 border-sky-500/30 text-sky-500';
-      case 'scheduled':
+  const getEmotionColor = (emotion: string) => {
+    switch (emotion?.toLowerCase()) {
+      case 'happy':
+        return 'bg-green-500/20 border-green-500/30 text-green-500';
+      case 'sad':
         return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
-      case 'missed':
-        return 'bg-indigo-500/20 border-indigo-500/30 text-indigo-500';
-      case 'rescheduled':
-        return 'bg-cyan-500/20 border-cyan-500/30 text-cyan-500';
+      case 'angry':
+        return 'bg-red-500/20 border-red-500/30 text-red-500';
+      case 'neutral':
+        return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
       default:
         return 'bg-slate-500/20 border-slate-500/30 text-slate-500';
     }
@@ -138,9 +139,10 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
               <TableHead className="text-left p-4 text-white/70">Patient</TableHead>
               <TableHead className="text-left p-4 text-white/70">Symptoms</TableHead>
               <TableHead className="text-left p-4 text-white/70">Urgency</TableHead>
-              <TableHead className="text-left p-4 text-white/70">Status</TableHead>
-              <TableHead className="text-left p-4 text-white/70">Resolution</TableHead>
+              <TableHead className="text-left p-4 text-white/70">Forwarded</TableHead>
+              <TableHead className="text-left p-4 text-white/70">Summary</TableHead>
               <TableHead className="text-left p-4 text-white/70">Duration</TableHead>
+              <TableHead className="text-left p-4 text-white/70">Emotion</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -162,8 +164,12 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                   </span>
                 </TableCell>
                 <TableCell className="p-4">
-                  <span className={`px-2 py-1 rounded-full text-xs border ${getStatusColor(call.Status)}`}>
-                    {call.Status}
+                  <span className={`px-2 py-1 rounded-full text-xs ${
+                    call.Forwarded
+                      ? 'bg-mint/10 text-mint'
+                      : 'bg-gray-500/10 text-gray-400'
+                  }`}>
+                    {call.Forwarded ? 'Yes' : 'No'}
                   </span>
                 </TableCell>
                 <TableCell className="p-4 text-white/70">
@@ -173,6 +179,11 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                 </TableCell>
                 <TableCell className="p-4 text-white/70">
                   {call.duration_seconds ? `${call.duration_seconds}s` : 'N/A'}
+                </TableCell>
+                <TableCell className="p-4">
+                  <span className={`px-2 py-1 rounded-full text-xs border ${getEmotionColor(call.Emotion)}`}>
+                    {call.Emotion || 'N/A'}
+                  </span>
                 </TableCell>
               </TableRow>
             ))}
