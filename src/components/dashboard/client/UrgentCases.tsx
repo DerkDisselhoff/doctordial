@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { supabase } from "@/lib/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
 import { getUrgencyColor } from "@/utils/urgencyUtils";
+import { Filter } from "lucide-react";
 
 interface CallLog {
   id: string;
@@ -34,7 +35,7 @@ const fetchUrgentCalls = async () => {
     .from('call_logs')
     .select('*')
     .eq('assistant_id', assistantStatus.assistant_id)
-    .in('Urgencylevel', ['U1', 'U2'])
+    .in('Urgencylevel', ['U2', 'U3', 'U4'])
     .order('start_time', { ascending: false });
 
   if (error) throw error;
@@ -62,7 +63,7 @@ export function UrgentCases() {
     return (
       <Card className="bg-forest-light/50 border-mint/10">
         <CardContent className="p-4">
-          <p className="text-center text-white/70">Error loading urgent cases</p>
+          <p className="text-center text-white/70">Error loading relevant cases</p>
         </CardContent>
       </Card>
     );
@@ -86,7 +87,13 @@ export function UrgentCases() {
   return (
     <Card className="bg-forest-light/50 border-mint/10">
       <CardHeader>
-        <CardTitle className="text-white">Urgent Cases</CardTitle>
+        <div className="flex items-center gap-3">
+          <CardTitle className="text-white">Relevant Cases</CardTitle>
+          <div className="flex items-center gap-2 px-2 py-1 rounded-md bg-mint/10 border border-mint/20">
+            <Filter className="h-4 w-4 text-mint" />
+            <span className="text-xs text-mint">U2, U3, U4</span>
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
         <Table>
