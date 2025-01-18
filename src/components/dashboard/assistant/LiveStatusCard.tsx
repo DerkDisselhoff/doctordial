@@ -125,34 +125,42 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
 
   return (
     <>
-      <Card className="bg-gradient-to-br from-forest-light/50 to-forest relative overflow-hidden">
+      <Card className="bg-gradient-to-br from-forest-light/50 to-forest relative overflow-hidden border-mint/10">
         <div className={`absolute inset-0 bg-gradient-to-r from-mint/10 via-mint/5 to-transparent transition-opacity duration-500 ${isLive ? 'opacity-100' : 'opacity-0'}`} />
         {isLive && (
-          <div className="absolute inset-0 animate-pulse">
+          <div className="absolute inset-0">
             <div 
               className="absolute inset-0 bg-gradient-to-r from-mint/5 via-transparent to-mint/5" 
               style={{ animation: 'shine 3s linear infinite' }} 
             />
           </div>
         )}
-        <CardHeader className="pb-2">
-          <div className="flex items-center justify-between space-x-8 px-2">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-3">
+        <CardHeader className="p-6">
+          <div className="flex items-center justify-between gap-8">
+            <div className="flex items-center gap-6">
+              <div className="relative flex items-center gap-4">
+                <div className={`absolute -left-2 -top-2 w-10 h-10 rounded-full transition-opacity duration-500 ${
+                  isLive ? 'opacity-100' : 'opacity-0'
+                }`}>
+                  <div className="absolute inset-0 rounded-full bg-mint/20 animate-ping" />
+                  <div className="absolute inset-0 rounded-full bg-mint/30" />
+                </div>
                 {isLive ? (
-                  <CirclePlay className="w-6 h-6 text-mint animate-pulse flex-shrink-0" />
+                  <CirclePlay className="w-6 h-6 text-mint animate-pulse relative z-10" />
                 ) : (
-                  <CirclePause className="w-6 h-6 text-white/50 flex-shrink-0" />
+                  <CirclePause className="w-6 h-6 text-white/50 relative z-10" />
                 )}
-                <CardTitle className="text-white whitespace-nowrap">{assistantName} Status</CardTitle>
+                <CardTitle className="text-xl font-medium text-white">
+                  {assistantName} Status
+                </CardTitle>
               </div>
-              <div className={`flex items-center space-x-2 ${
+              <div className={`flex items-center gap-3 ${
                 isLive ? 'text-mint' : 'text-white/50'
               }`}>
-                <div className={`h-2 w-2 rounded-full transition-colors duration-500 flex-shrink-0 ${
-                  isLive ? 'bg-mint animate-pulse' : 'bg-white/30'
+                <div className={`h-2.5 w-2.5 rounded-full transition-all duration-500 ${
+                  isLive ? 'bg-mint animate-pulse shadow-lg shadow-mint/20' : 'bg-white/30'
                 }`} />
-                <span className="text-sm font-medium whitespace-nowrap">
+                <span className="text-sm font-medium tracking-wide">
                   {isLive ? `${assistantName} is actively handling calls` : `${assistantName} is currently offline`}
                 </span>
               </div>
@@ -160,7 +168,7 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
             <Switch
               checked={isLive}
               onCheckedChange={handleLiveToggle}
-              className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30 scale-125 flex-shrink-0"
+              className="relative h-6 w-11 bg-mint/20 data-[state=checked]:bg-mint/90 data-[state=checked]:border-mint hover:bg-mint/30 transition-colors duration-300"
             />
           </div>
         </CardHeader>
@@ -201,14 +209,12 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
         </DialogContent>
       </Dialog>
 
-      <style>
-        {`
-          @keyframes shine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-          }
-        `}
-      </style>
+      <style jsx global>{`
+        @keyframes shine {
+          0% { transform: translateX(-200%); }
+          100% { transform: translateX(200%); }
+        }
+      `}</style>
     </>
   );
 };
