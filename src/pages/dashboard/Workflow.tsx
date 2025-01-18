@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { GitBranch, Plus, Trash2 } from "lucide-react";
+import { GitBranch, Plus, Trash2, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabaseClient";
 
@@ -215,6 +215,39 @@ export function Workflow() {
     }
   };
 
+  const handleSaveUrgencySettings = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("No user found");
+
+      const { error } = await supabase
+        .from('workflow_urgency_settings')
+        .upsert(
+          urgencySettings.map(setting => ({
+            profile_id: user.id,
+            urgency_level: setting.urgency_level,
+            forward_step: setting.forward_step,
+            assistant_phone: setting.assistant_phone,
+            advice_type: setting.advice_type
+          }))
+        );
+
+      if (error) throw error;
+
+      toast({
+        title: "Settings saved",
+        description: "Your urgency settings have been updated successfully.",
+      });
+    } catch (error) {
+      console.error('Error saving urgency settings:', error);
+      toast({
+        title: "Error saving settings",
+        description: "Failed to save urgency settings",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div>
@@ -225,15 +258,23 @@ export function Workflow() {
       <div className="grid gap-6">
         {/* Care Demand Suitable Section */}
         <Card className="bg-forest-light/50 border-mint/10">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div className="flex items-center gap-2">
               <GitBranch className="w-5 h-5 text-mint" />
-              Care Demand Suitable
-            </CardTitle>
+              <CardTitle className="text-white">Care Demand Suitable</CardTitle>
+            </div>
+            <Button 
+              variant="outline" 
+              onClick={handleSaveUrgencySettings}
+              className="bg-forest border-mint/20 hover:bg-forest-light/50 text-mint"
+            >
+              <Save className="w-4 h-4 mr-2" />
+              Save Changes
+            </Button>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-3">
             {urgencySettings.map((setting) => (
-              <div key={setting.urgency_level} className="grid gap-4 p-4 rounded-lg bg-forest-dark/30">
+              <div key={setting.urgency_level} className="grid gap-2 p-3 rounded-lg bg-forest-dark/30">
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2 min-w-[80px]">
                     <span className={`inline-flex px-2 py-1 rounded-md text-sm font-medium border ${getUrgencyColor(setting.urgency_level)}`}>
