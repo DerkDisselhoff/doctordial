@@ -8,13 +8,16 @@ import { GitBranch, Plus, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabaseClient";
 
+type ForwardStep = "call_112" | "forward_to_assistant" | "provide_selfcare";
+type AdviceType = "simple" | "extensive";
+
 interface UrgencySettings {
   id?: string;
   profile_id?: string;
   urgency_level: string;
-  forward_step: "call_112" | "forward_to_assistant" | "provide_selfcare";
+  forward_step: ForwardStep;
   assistant_phone?: string;
-  advice_type?: "simple" | "extensive";
+  advice_type?: AdviceType;
 }
 
 interface Subject {
@@ -24,7 +27,7 @@ interface Subject {
   forward_to: string;
 }
 
-const Workflow = () => {
+export function Workflow() {
   const { toast } = useToast();
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [newSubject, setNewSubject] = useState({ subject: "", forward_to: "" });
@@ -44,8 +47,9 @@ const Workflow = () => {
       const defaultSettings: UrgencySettings[] = ['U1', 'U2', 'U3', 'U4', 'U5'].map(level => ({
         urgency_level: level,
         forward_step: level === 'U1' ? 'call_112' : 
-                    level === 'U5' ? 'provide_selfcare' : 
-                    'forward_to_assistant'
+                     level === 'U5' ? 'provide_selfcare' : 
+                     'forward_to_assistant',
+        profile_id: user.id
       }));
 
       // Fetch urgency settings
@@ -60,10 +64,7 @@ const Workflow = () => {
         // Insert default settings
         const { error: insertError } = await supabase
           .from('workflow_urgency_settings')
-          .insert(defaultSettings.map(setting => ({
-            ...setting,
-            profile_id: user.id
-          })));
+          .insert(defaultSettings);
 
         if (insertError) throw insertError;
         setUrgencySettings(defaultSettings);
