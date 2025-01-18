@@ -14,7 +14,8 @@ import {
   CreditCard,
   Grid,
   Receipt,
-  Calendar
+  Calendar,
+  GitBranch
 } from "lucide-react";
 import {
   Sidebar,
@@ -92,6 +93,7 @@ export function AdminSidebar() {
   const clientMenuItems = [
     { title: "Overview", icon: Home, path: "/dashboard" },
     { title: "Assistant", icon: Bot, path: "/dashboard/assistant" },
+    { title: "Workflow", icon: GitBranch, path: "/dashboard/workflow" },
     { title: "Call Analytics", icon: Phone, path: "/dashboard/calls" },
   ];
 

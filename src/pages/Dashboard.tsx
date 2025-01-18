@@ -5,6 +5,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
+import Workflow from "./dashboard/Workflow";
 import Clients from "./dashboard/Clients";
 import Practices from "./dashboard/Practices";
 import Calls from "./dashboard/Calls";
@@ -73,6 +74,7 @@ const Dashboard = () => {
       <DashboardLayout>
         <Routes>
           <Route path="/" element={<OverviewDashboard />} />
+          <Route path="/workflow" element={<Workflow />} />
           <Route path="/calendar" element={<Calendar />} />
           {userRole === 'admin' ? (
             <>
