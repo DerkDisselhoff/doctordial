@@ -173,6 +173,7 @@ export function CallDetail() {
                 setEditedCall(call);
               }}
               variant="outline"
+              className="text-white hover:text-forest"
             >
               Cancel
             </Button>
@@ -271,7 +272,7 @@ export function CallDetail() {
             <Textarea
               value={editedCall.follow_up_notes || ''}
               onChange={(e) => handleInputChange('follow_up_notes', e.target.value)}
-              className="min-h-[200px] mb-4"
+              className="min-h-[200px] mb-4 bg-forest-light/50 text-white placeholder-white/40 border-mint/20"
               placeholder="Enter SOEP notes (Format: S: ... O: ... E: ... P: ...)"
             />
           ) : (
@@ -301,7 +302,7 @@ export function CallDetail() {
             <Textarea
               value={editedCall.conversation_summary || ''}
               onChange={(e) => handleInputChange('conversation_summary', e.target.value)}
-              className="mb-4"
+              className="mb-4 bg-forest-light/50 text-white placeholder-white/40 border-mint/20"
               placeholder="Enter call summary"
             />
           ) : (
@@ -319,6 +320,7 @@ export function CallDetail() {
                     <Textarea
                       value={editedCall.Action || ''}
                       onChange={(e) => handleInputChange('Action', e.target.value)}
+                      className="bg-forest-light/50 text-white placeholder-white/40 border-mint/20"
                       placeholder="Enter forwarding details"
                     />
                   ) : (
@@ -340,7 +342,7 @@ export function CallDetail() {
             <Textarea
               value={editedCall.transcript || ''}
               onChange={(e) => handleInputChange('transcript', e.target.value)}
-              className="min-h-[300px]"
+              className="min-h-[300px] bg-forest-light/50 text-white placeholder-white/40 border-mint/20"
               placeholder="Enter transcript (Format: AI: ... User: ...)"
             />
           ) : (
