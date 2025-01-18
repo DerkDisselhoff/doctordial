@@ -58,6 +58,7 @@ export type Database = {
           cost: number | null
           created_at: string | null
           duration_seconds: string | null
+          Emotion: string | null
           end_time: string | null
           ended_reason: string | null
           follow_up_notes: string | null
@@ -88,6 +89,7 @@ export type Database = {
           cost?: number | null
           created_at?: string | null
           duration_seconds?: string | null
+          Emotion?: string | null
           end_time?: string | null
           ended_reason?: string | null
           follow_up_notes?: string | null
@@ -118,6 +120,7 @@ export type Database = {
           cost?: number | null
           created_at?: string | null
           duration_seconds?: string | null
+          Emotion?: string | null
           end_time?: string | null
           ended_reason?: string | null
           follow_up_notes?: string | null

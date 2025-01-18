@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { supabase } from "@/lib/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
 import { getUrgencyColor } from "@/utils/urgencyUtils";
-import { Filter } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface CallLog {
   id: string;
@@ -36,7 +36,8 @@ const fetchUrgentCalls = async () => {
     .select('*')
     .eq('assistant_id', assistantStatus.assistant_id)
     .in('Urgencylevel', ['U2', 'U3', 'U4'])
-    .order('start_time', { ascending: false });
+    .order('start_time', { ascending: false })
+    .limit(5);
 
   if (error) throw error;
   return data as CallLog[];
@@ -87,12 +88,27 @@ export function UrgentCases() {
   return (
     <Card className="bg-forest-light/50 border-mint/10">
       <CardHeader>
-        <div className="flex items-center gap-3">
-          <CardTitle className="text-white">Relevant Cases</CardTitle>
-          <div className="flex items-center gap-2 px-2 py-1 rounded-md bg-mint/10 border border-mint/20">
-            <Filter className="h-4 w-4 text-mint" />
-            <span className="text-xs text-mint">U2, U3, U4</span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <CardTitle className="text-white">Relevant Cases</CardTitle>
+            <div className="flex items-center gap-2">
+              {['U2', 'U3', 'U4'].map((level) => (
+                <span
+                  key={level}
+                  className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor(level)}`}
+                >
+                  {level}
+                </span>
+              ))}
+            </div>
           </div>
+          <Button
+            variant="outline"
+            className="text-mint border-mint/20 hover:bg-mint/10"
+            onClick={() => navigate('/dashboard/calls')}
+          >
+            View All
+          </Button>
         </div>
       </CardHeader>
       <CardContent>
@@ -103,8 +119,8 @@ export function UrgentCases() {
               <TableHead className="text-left p-4 text-white/70">Symptoms</TableHead>
               <TableHead className="text-left p-4 text-white/70">Urgency</TableHead>
               <TableHead className="text-left p-4 text-white/70">Status</TableHead>
-              <TableHead className="text-left p-4 text-white/70">Actions</TableHead>
               <TableHead className="text-left p-4 text-white/70">Resolution</TableHead>
+              <TableHead className="text-left p-4 text-white/70">Duration</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -131,14 +147,12 @@ export function UrgentCases() {
                   </span>
                 </TableCell>
                 <TableCell className="p-4 text-white/70">
-                  <div className="max-w-[200px] truncate" title={call.Action}>
-                    {call.Action}
-                  </div>
-                </TableCell>
-                <TableCell className="p-4 text-white/70">
                   <div className="max-w-[200px] truncate" title={call.conversation_summary}>
                     {call.conversation_summary}
                   </div>
+                </TableCell>
+                <TableCell className="p-4 text-white/70">
+                  {call.duration_seconds ? `${call.duration_seconds}s` : 'N/A'}
                 </TableCell>
               </TableRow>
             ))}
