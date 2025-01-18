@@ -2,6 +2,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { ClientDistributionChart } from "./ClientDistributionChart";
 import { CallVolumeChart } from "./CallVolumeChart";
 import { UrgentCases } from "../client/UrgentCases";
+import { useQuery } from "@tanstack/react-query";
 
 export function DashboardCharts() {
   const checkUserRole = async () => {
