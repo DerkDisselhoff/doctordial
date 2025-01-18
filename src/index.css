@@ -59,24 +59,6 @@
 }
 
 @layer components {
-  /* Enhanced Dropdown Styles */
-  .select-content {
-    @apply bg-forest-light/95 border border-mint/10 shadow-lg backdrop-blur-sm;
-  }
-
-  .select-item {
-    @apply text-white/90 hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer
-           data-[highlighted]:bg-mint/10 data-[highlighted]:text-white;
-  }
-
-  .select-trigger {
-    @apply bg-forest border-mint/20 text-white hover:bg-forest-light/50 transition-colors;
-  }
-
-  .select-scroll-button {
-    @apply bg-forest-light/95 text-white/70 hover:text-white transition-colors;
-  }
-
   /* Dashboard Design System */
   .dashboard-container {
     @apply p-6 bg-forest-light/50 rounded-xl border border-mint/10;
