@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Clock, MessageCircle, User, ThumbsUp, AlertCircle, Calendar, ArrowRight, Tag, Building2, FileCheck } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
@@ -99,7 +99,24 @@ export function CallDetail() {
   
   const { data: call, isLoading, error, refetch } = useQuery({
     queryKey: ['callDetail', callId],
-    queryFn: () => fetchCallDetails(callId || ''),
+    queryFn: async () => {
+      try {
+        const { data, error } = await supabase
+          .from('call_logs')
+          .select('*')
+          .eq('call_id', callId)
+          .maybeSingle();
+
+        if (error) throw error;
+        if (!data) throw new Error('Call not found');
+        
+        console.log("Retrieved call data:", data); // Add logging
+        return data as CallLog;
+      } catch (err) {
+        console.error("Error fetching call details:", err); // Add error logging
+        throw err;
+      }
+    },
     enabled: !!callId,
   });
 
@@ -111,12 +128,16 @@ export function CallDetail() {
 
   const handleSave = async () => {
     try {
+      console.log("Saving call data:", editedCall); // Add logging
       const { error } = await supabase
         .from('call_logs')
         .update(editedCall)
         .eq('call_id', callId);
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error saving call:", error); // Add error logging
+        throw error;
+      }
 
       toast({
         title: "Changes saved successfully",
@@ -126,6 +147,7 @@ export function CallDetail() {
       setIsEditing(false);
       refetch();
     } catch (error) {
+      console.error("Save error:", error); // Add error logging
       toast({
         title: "Error saving changes",
         description: "Please try again.",
