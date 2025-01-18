@@ -406,6 +406,82 @@ export type Database = {
         }
         Relationships: []
       }
+      workflow_unsuitable_subjects: {
+        Row: {
+          created_at: string
+          forward_to: string
+          id: string
+          profile_id: string
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          forward_to: string
+          id?: string
+          profile_id: string
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          forward_to?: string
+          id?: string
+          profile_id?: string
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_unsuitable_subjects_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workflow_urgency_settings: {
+        Row: {
+          advice_type: Database["public"]["Enums"]["advice_type"] | null
+          assistant_phone: string | null
+          created_at: string
+          forward_step: Database["public"]["Enums"]["forward_step"]
+          id: string
+          profile_id: string
+          updated_at: string
+          urgency_level: string
+        }
+        Insert: {
+          advice_type?: Database["public"]["Enums"]["advice_type"] | null
+          assistant_phone?: string | null
+          created_at?: string
+          forward_step: Database["public"]["Enums"]["forward_step"]
+          id?: string
+          profile_id: string
+          updated_at?: string
+          urgency_level: string
+        }
+        Update: {
+          advice_type?: Database["public"]["Enums"]["advice_type"] | null
+          assistant_phone?: string | null
+          created_at?: string
+          forward_step?: Database["public"]["Enums"]["forward_step"]
+          id?: string
+          profile_id?: string
+          updated_at?: string
+          urgency_level?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_urgency_settings_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -414,6 +490,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      advice_type: "simple" | "extensive"
+      forward_step: "call_112" | "forward_to_assistant" | "provide_selfcare"
       subscription_package: "starter" | "growth" | "professional" | "enterprise"
       user_role: "admin" | "client"
     }
