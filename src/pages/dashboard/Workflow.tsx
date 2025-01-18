@@ -15,9 +15,9 @@ type ForwardingType = 'external' | 'selfcare' | 'both';
 
 interface UrgencySettings {
   id?: string;
-  profile_id: string; // Required by database
+  profile_id: string;
   urgency_level: string;
-  forward_step: ForwardStep; // Required by database
+  forward_step: ForwardStep;
   assistant_phone?: string;
   advice_type?: AdviceType;
   created_at?: string;
@@ -26,7 +26,7 @@ interface UrgencySettings {
 
 interface Subject {
   id?: string;
-  profile_id: string; // Required by database
+  profile_id: string;
   subject: string;
   forward_to: string;
   forward_type?: ForwardingType;
@@ -116,6 +116,31 @@ export function Workflow() {
       toast({
         title: "Error adding subject",
         description: "Failed to add the new subject",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleRemoveSubject = async (subjectId: string) => {
+    try {
+      const { error } = await supabase
+        .from('workflow_unsuitable_subjects')
+        .delete()
+        .eq('id', subjectId);
+
+      if (error) throw error;
+
+      setSubjects(subjects.filter(subject => subject.id !== subjectId));
+      
+      toast({
+        title: "Subject removed",
+        description: "The subject has been removed from the workflow",
+      });
+    } catch (error) {
+      console.error('Error removing subject:', error);
+      toast({
+        title: "Error removing subject",
+        description: "Failed to remove the subject",
         variant: "destructive",
       });
     }
