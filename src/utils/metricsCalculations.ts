@@ -10,30 +10,27 @@ export const calculateMetrics = (callData: CallLog[] | null) => {
         acc + (parseInt(call.duration_seconds || '0') || 0), 0) / callData.length)
     : 0;
 
-  // Count calls that have been forwarded (Action field contains 'forward' or similar)
-  const callsForwarded = callData.filter(call => 
-    call.Action?.toLowerCase().includes('forward')
+  const appointmentsMade = callData.filter(call => 
+    call.Status?.toLowerCase() === 'scheduled'
   ).length;
 
-  // Calculate success rate based on intent field being true
-  const intentCalls = callData.filter(call => call.intent !== null);
-  const callSuccess = intentCalls.length > 0
-    ? Math.round((intentCalls.filter(call => 
-        call.intent === 'true'
-      ).length / intentCalls.length) * 100)
+  const sentimentCalls = callData.filter(call => call.Sentiment);
+  const positiveSentiment = sentimentCalls.length > 0
+    ? Math.round((sentimentCalls.filter(call => 
+        call.Sentiment?.toLowerCase().includes('positive')
+      ).length / sentimentCalls.length) * 100)
     : 0;
 
-  // Count relevant cases (U2-U4)
-  const relevantCases = callData.filter(call => {
+  const urgentCases = callData.filter(call => {
     const urgencyLevel = call.Urgencylevel?.toUpperCase();
-    return urgencyLevel === 'U2' || urgencyLevel === 'U3' || urgencyLevel === 'U4';
+    return urgencyLevel === 'U1' || urgencyLevel === 'U2';
   }).length;
 
   return {
     totalCalls,
     avgDuration,
-    callsForwarded,
-    callSuccess,
-    relevantCases
+    appointmentsMade,
+    positiveSentiment,
+    urgentCases
   };
 };
