@@ -44,7 +44,6 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
           onStatusChange(statusData.is_live);
           setAssistantName(statusData.assistant_name || 'Assistant');
         } else {
-          // Create initial status record if it doesn't exist
           const { error } = await supabase
             .from('assistant_status')
             .insert([{ 
@@ -65,7 +64,6 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
 
     fetchInitialStatus();
 
-    // Subscribe to assistant status changes
     const channel = supabase
       .channel('assistant_status_changes')
       .on(
@@ -127,35 +125,43 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
 
   return (
     <>
-      <Card className="bg-forest-light/50 border-mint/10 relative overflow-hidden">
-        <div className={`absolute inset-0 bg-gradient-to-r from-mint/5 to-transparent transition-opacity duration-500 ${isLive ? 'opacity-100' : 'opacity-0'}`} />
-        <CardHeader>
-          <CardTitle className="text-white flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              {isLive ? (
-                <CirclePlay className="w-6 h-6 text-mint animate-pulse" />
-              ) : (
-                <CirclePause className="w-6 h-6 text-white/50" />
-              )}
-              {assistantName} Status
+      <Card className="bg-gradient-to-br from-forest-light/50 to-forest relative overflow-hidden">
+        <div className={`absolute inset-0 bg-gradient-to-r from-mint/10 via-mint/5 to-transparent transition-opacity duration-500 ${isLive ? 'opacity-100' : 'opacity-0'}`} />
+        {isLive && (
+          <div className="absolute inset-0 animate-pulse">
+            <div className="absolute inset-0 bg-gradient-to-r from-mint/5 via-transparent to-mint/5" 
+                 style={{ animation: 'shine 3s linear infinite' }} />
+          </div>
+        )}
+        <CardHeader className="pb-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                {isLive ? (
+                  <CirclePlay className="w-6 h-6 text-mint animate-pulse" />
+                ) : (
+                  <CirclePause className="w-6 h-6 text-white/50" />
+                )}
+                <CardTitle className="text-white">{assistantName} Status</CardTitle>
+              </div>
+              <div className={`flex items-center gap-2 ${
+                isLive ? 'text-mint' : 'text-white/50'
+              }`}>
+                <div className={`h-2 w-2 rounded-full transition-colors duration-500 ${
+                  isLive ? 'bg-mint animate-pulse' : 'bg-white/30'
+                }`} />
+                <span className="text-sm font-medium">
+                  {isLive ? `${assistantName} is actively handling calls` : `${assistantName} is currently offline`}
+                </span>
+              </div>
             </div>
             <Switch
               checked={isLive}
               onCheckedChange={handleLiveToggle}
               className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30 scale-125"
             />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center gap-4">
-            <div className={`h-3 w-3 rounded-full transition-colors duration-500 ${
-              isLive ? 'bg-mint animate-pulse' : 'bg-white/30'
-            }`} />
-            <span className="text-white/70">
-              {isLive ? `${assistantName} is actively handling calls` : `${assistantName} is currently offline`}
-            </span>
           </div>
-        </CardContent>
+        </CardHeader>
       </Card>
 
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
@@ -192,6 +198,13 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <style jsx global>{`
+        @keyframes shine {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
     </>
   );
 };
