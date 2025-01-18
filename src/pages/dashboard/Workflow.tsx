@@ -6,6 +6,14 @@ import { Label } from "@/components/ui/label";
 import { GitBranch, Plus, Trash2, Save, Edit2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabaseClient";
+import { getUrgencyColor } from "@/utils/urgencyUtils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type ForwardStep = "call_112" | "forward_to_assistant" | "provide_selfcare";
 type AdviceType = "simple" | "extensive";
