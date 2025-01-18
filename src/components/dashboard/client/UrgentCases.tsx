@@ -111,7 +111,7 @@ export function UrgentCases() {
           </Button>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         <Table>
           <TableHeader>
             <TableRow className="border-b border-mint/10">
