@@ -5,9 +5,9 @@ export type TimeFilter = 'today' | 'week' | 'month';
 export interface CallMetrics {
   totalCalls: number;
   avgDuration: number;
-  appointmentsMade: number;
-  positiveSentiment: number;
-  urgentCases: number;
+  callsForwarded: number;
+  callSuccess: number;
+  relevantCases: number;
 }
 
 export interface CallLog {
@@ -17,6 +17,8 @@ export interface CallLog {
   Status: string;
   Sentiment: string;
   Urgencylevel: string;
+  Action: string;
+  intent: string | boolean;
 }
 
 export interface MetricsCardProps {

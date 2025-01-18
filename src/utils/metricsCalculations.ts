@@ -10,27 +10,27 @@ export const calculateMetrics = (callData: CallLog[] | null) => {
         acc + (parseInt(call.duration_seconds || '0') || 0), 0) / callData.length)
     : 0;
 
-  const appointmentsMade = callData.filter(call => 
-    call.Status?.toLowerCase() === 'scheduled'
+  const callsForwarded = callData.filter(call => 
+    call.Action?.toLowerCase().includes('forward to doctor')
   ).length;
 
-  const sentimentCalls = callData.filter(call => call.Sentiment);
-  const positiveSentiment = sentimentCalls.length > 0
-    ? Math.round((sentimentCalls.filter(call => 
-        call.Sentiment?.toLowerCase().includes('positive')
-      ).length / sentimentCalls.length) * 100)
+  const callsWithIntent = callData.filter(call => call.intent !== undefined && call.intent !== null);
+  const callSuccess = callsWithIntent.length > 0
+    ? Math.round((callsWithIntent.filter(call => 
+        call.intent === true || call.intent === 'true'
+      ).length / callsWithIntent.length) * 100)
     : 0;
 
-  const urgentCases = callData.filter(call => {
+  const relevantCases = callData.filter(call => {
     const urgencyLevel = call.Urgencylevel?.toUpperCase();
-    return urgencyLevel === 'U1' || urgencyLevel === 'U2';
+    return urgencyLevel === 'U2' || urgencyLevel === 'U3' || urgencyLevel === 'U4';
   }).length;
 
   return {
     totalCalls,
     avgDuration,
-    appointmentsMade,
-    positiveSentiment,
-    urgentCases
+    callsForwarded,
+    callSuccess,
+    relevantCases
   };
 };
