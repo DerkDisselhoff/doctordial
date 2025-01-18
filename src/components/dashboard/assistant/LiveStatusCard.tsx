@@ -139,9 +139,9 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
           <div className="flex items-center justify-between gap-8">
             <div className="flex items-center gap-6">
               <div className="relative flex items-center gap-4">
-                <div className={`absolute -left-2 -top-2 w-10 h-10 rounded-full transition-opacity duration-500 ${
+                <div className={`absolute w-10 h-10 rounded-full transition-opacity duration-500 ${
                   isLive ? 'opacity-100' : 'opacity-0'
-                }`}>
+                }`} style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
                   <div className="absolute inset-0 rounded-full bg-mint/20 animate-ping" />
                   <div className="absolute inset-0 rounded-full bg-mint/30" />
                 </div>
