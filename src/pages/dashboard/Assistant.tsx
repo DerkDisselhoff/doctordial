@@ -3,12 +3,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Save } from "lucide-react";
 import { LiveStatusCard } from "@/components/dashboard/assistant/LiveStatusCard";
-import { FlowSettingsCard } from "@/components/dashboard/assistant/FlowSettingsCard";
 import { AvailabilitySettingsCard } from "@/components/dashboard/assistant/AvailabilitySettingsCard";
 import { IdentitySettingsCard } from "@/components/dashboard/assistant/IdentitySettingsCard";
 import { GreetingSettingsCard } from "@/components/dashboard/assistant/GreetingSettingsCard";
-import { AppointmentSettingsCard } from "@/components/dashboard/assistant/AppointmentSettingsCard";
-import { CallForwardingCard } from "@/components/dashboard/assistant/CallForwardingCard";
 import { VoiceSettingsCard } from "@/components/dashboard/assistant/VoiceSettingsCard";
 
 const Assistant = () => {
@@ -37,17 +34,11 @@ const Assistant = () => {
         onStatusChange={setIsLive}
       />
       
-      <FlowSettingsCard onSettingChange={handleSettingChange} />
-      
       <AvailabilitySettingsCard onSettingChange={handleSettingChange} />
       
       <IdentitySettingsCard onSettingChange={handleSettingChange} />
       
       <GreetingSettingsCard onSettingChange={handleSettingChange} />
-      
-      <AppointmentSettingsCard onSettingChange={handleSettingChange} />
-      
-      <CallForwardingCard onSettingChange={handleSettingChange} />
       
       <VoiceSettingsCard onSettingChange={handleSettingChange} />
 
