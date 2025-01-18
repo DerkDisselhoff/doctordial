@@ -134,9 +134,14 @@ export function OverviewDashboard() {
       </div>
       
       <MetricsCards timeFilter={timeFilter} />
-      <DashboardCharts />
-      {userRole === 'client' && (
-        <UrgentCases />
+      
+      {userRole === 'client' ? (
+        <>
+          <UrgentCases isIrrelevant={false} />
+          <UrgentCases isIrrelevant={true} />
+        </>
+      ) : (
+        <DashboardCharts />
       )}
     </div>
   );
