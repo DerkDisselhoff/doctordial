@@ -32,6 +32,17 @@ interface Subject {
   updated_at?: string;
 }
 
+const getUrgencyColor = (level: string) => {
+  switch (level) {
+    case 'U1': return 'bg-red-500/20 border-red-500/30 text-red-500';
+    case 'U2': return 'bg-orange-500/20 border-orange-500/30 text-orange-500';
+    case 'U3': return 'bg-yellow-500/20 border-yellow-500/30 text-yellow-500';
+    case 'U4': return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
+    case 'U5': return 'bg-green-500/20 border-green-500/30 text-green-500';
+    default: return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
+  }
+};
+
 export function Workflow() {
   const { toast } = useToast();
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -204,10 +215,6 @@ export function Workflow() {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="space-y-8">
       <div>
@@ -228,55 +235,57 @@ export function Workflow() {
             {urgencySettings.map((setting) => (
               <div key={setting.urgency_level} className="grid gap-4 p-4 rounded-lg bg-forest-dark/30">
                 <div className="flex items-center gap-4">
-                  <span className="text-white font-semibold min-w-[40px]">{setting.urgency_level}</span>
-                  <Select
-                    value={setting.forward_step}
-                    onValueChange={(value: 'call_112' | 'forward_to_assistant' | 'provide_selfcare') => 
-                      handleUrgencySettingChange(setting.urgency_level, { forward_step: value })
-                    }
-                  >
-                    <SelectTrigger className="bg-forest border-mint/20">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="call_112">Advice to call 112 directly</SelectItem>
-                      <SelectItem value="forward_to_assistant">Forward to Doctor's Assistant</SelectItem>
-                      <SelectItem value="provide_selfcare">Provide selfcare advice</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {setting.forward_step === 'forward_to_assistant' && (
-                  <div className="ml-[56px]">
-                    <Input
-                      placeholder="Assistant's phone number"
-                      value={setting.assistant_phone || ''}
-                      onChange={(e) => handleUrgencySettingChange(setting.urgency_level, { 
-                        assistant_phone: e.target.value 
-                      })}
-                      className="bg-forest border-mint/20"
-                    />
+                  <div className="flex items-center gap-2 min-w-[80px]">
+                    <span className={`inline-flex px-2 py-1 rounded-md text-sm font-medium border ${getUrgencyColor(setting.urgency_level)}`}>
+                      {setting.urgency_level}
+                    </span>
                   </div>
-                )}
-
-                {setting.forward_step === 'provide_selfcare' && (
-                  <div className="ml-[56px]">
+                  <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Select
-                      value={setting.advice_type || 'simple'}
-                      onValueChange={(value: 'simple' | 'extensive') => 
-                        handleUrgencySettingChange(setting.urgency_level, { advice_type: value })
+                      value={setting.forward_step}
+                      onValueChange={(value: ForwardStep) => 
+                        handleUrgencySettingChange(setting.urgency_level, { forward_step: value })
                       }
                     >
-                      <SelectTrigger className="bg-forest border-mint/20">
+                      <SelectTrigger className="bg-forest border-mint/20 hover:bg-forest-light/50">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="simple">Simple short advice</SelectItem>
-                        <SelectItem value="extensive">Extensive advice</SelectItem>
+                      <SelectContent className="bg-forest border-mint/20">
+                        <SelectItem value="call_112">Advice to call 112 directly</SelectItem>
+                        <SelectItem value="forward_to_assistant">Forward to Doctor's Assistant</SelectItem>
+                        <SelectItem value="provide_selfcare">Provide selfcare advice</SelectItem>
                       </SelectContent>
                     </Select>
+
+                    {setting.forward_step === 'forward_to_assistant' && (
+                      <Input
+                        placeholder="Assistant's phone number"
+                        value={setting.assistant_phone || ''}
+                        onChange={(e) => handleUrgencySettingChange(setting.urgency_level, { 
+                          assistant_phone: e.target.value 
+                        })}
+                        className="bg-forest border-mint/20"
+                      />
+                    )}
+
+                    {setting.forward_step === 'provide_selfcare' && (
+                      <Select
+                        value={setting.advice_type || 'simple'}
+                        onValueChange={(value: AdviceType) => 
+                          handleUrgencySettingChange(setting.urgency_level, { advice_type: value })
+                        }
+                      >
+                        <SelectTrigger className="bg-forest border-mint/20 hover:bg-forest-light/50">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-forest border-mint/20">
+                          <SelectItem value="simple">Simple short advice</SelectItem>
+                          <SelectItem value="extensive">Extensive advice</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             ))}
           </CardContent>
@@ -352,6 +361,6 @@ export function Workflow() {
       </div>
     </div>
   );
-};
+}
 
 export default Workflow;
