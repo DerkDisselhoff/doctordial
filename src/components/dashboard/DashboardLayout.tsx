@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import { AuthError } from "@supabase/supabase-js";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
@@ -27,21 +28,30 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     },
   });
 
+  // Handle authentication errors
   useEffect(() => {
     const handleAuthError = async () => {
-      if (error?.message?.includes('refresh_token_not_found') || 
-          error?.message?.includes('Invalid Refresh Token')) {
-        // Clear any invalid session data
-        await supabase.auth.signOut();
+      if (error instanceof AuthError) {
+        console.error('Auth error:', error);
         
-        // Redirect to login
-        navigate('/login');
-        
-        toast({
-          title: "Session Expired",
-          description: "Please sign in again to continue.",
-          variant: "destructive",
-        });
+        // Check for specific refresh token errors
+        if (error.message?.includes('refresh_token_not_found') || 
+            error.message?.includes('Invalid Refresh Token')) {
+          // Clear any invalid session data
+          await supabase.auth.signOut();
+          
+          // Clear any local storage data
+          localStorage.clear();
+          
+          // Redirect to login with error message
+          navigate('/login');
+          
+          toast({
+            title: "Session Expired",
+            description: "Your session has expired. Please sign in again to continue.",
+            variant: "destructive",
+          });
+        }
       }
     };
 
@@ -50,12 +60,28 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   // Add auth state change listener
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_OUT') {
+        // Clear any remaining local storage data
+        localStorage.clear();
         navigate('/login');
+      }
+      
+      if (event === 'TOKEN_REFRESHED') {
+        console.log('Token refreshed successfully');
+      }
+      
+      // Handle other auth state changes
+      if (event === 'USER_UPDATED' && !session) {
+        const { error } = await supabase.auth.getSession();
+        if (error) {
+          console.error('Session error:', error);
+          navigate('/login');
+        }
       }
     });
 
+    // Cleanup subscription on unmount
     return () => {
       subscription.unsubscribe();
     };
