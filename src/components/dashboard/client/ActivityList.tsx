@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { Flag, AlertOctagon, AlertCircle } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
 import { getUrgencyColor } from "@/utils/urgencyUtils";
@@ -36,8 +36,10 @@ const fetchRecentCalls = async () => {
     .from('call_logs')
     .select('*')
     .eq('assistant_id', assistantStatus.assistant_id)
+    .in('Urgencylevel', ['U1', 'U5'])
+    .or('Urgencylevel.is.null,Urgencylevel.eq.other')
     .order('start_time', { ascending: false })
-    .limit(4);
+    .limit(5);
 
   if (error) throw error;
   return data as CallLog[];
@@ -64,7 +66,7 @@ export function ActivityList() {
     return (
       <Card className="bg-forest-light/50 border-mint/10">
         <CardContent className="p-4">
-          <p className="text-center text-white/70">Error loading recent activity</p>
+          <p className="text-center text-white/70">Error loading irrelevant cases</p>
         </CardContent>
       </Card>
     );
@@ -88,8 +90,30 @@ export function ActivityList() {
   return (
     <Card className="bg-forest-light/50 border-mint/10">
       <CardHeader className="border-b border-mint/10">
-        <CardTitle className="text-white">Recent Activity</CardTitle>
-        <p className="text-white/60">Latest patient interactions and appointments</p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <CardTitle className="text-white">Irrelevant Cases</CardTitle>
+            <div className="flex items-center gap-2">
+              <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor('U1')}`}>
+                U1
+              </span>
+              <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor('U5')}`}>
+                U5
+              </span>
+              <span className="px-2 py-1 rounded-full text-xs border bg-gray-500/20 border-gray-500/30 text-gray-400 flex items-center gap-1">
+                <Flag className="h-3 w-3" />
+                Other
+              </span>
+            </div>
+          </div>
+          <Button
+            variant="outline"
+            className="text-mint border-mint/20 hover:bg-mint/10"
+            onClick={() => navigate('/dashboard/calls')}
+          >
+            View All
+          </Button>
+        </div>
       </CardHeader>
       <CardContent className="p-0">
         <Table>
@@ -99,8 +123,8 @@ export function ActivityList() {
               <TableHead className="text-left p-4 text-white/70">Symptoms</TableHead>
               <TableHead className="text-left p-4 text-white/70">Urgency</TableHead>
               <TableHead className="text-left p-4 text-white/70">Status</TableHead>
-              <TableHead className="text-left p-4 text-white/70">Actions</TableHead>
               <TableHead className="text-left p-4 text-white/70">Resolution</TableHead>
+              <TableHead className="text-left p-4 text-white/70">Duration</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -118,7 +142,7 @@ export function ActivityList() {
                 </TableCell>
                 <TableCell className="p-4">
                   <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor(call.Urgencylevel)}`}>
-                    {call.Urgencylevel}
+                    {call.Urgencylevel || 'Other'}
                   </span>
                 </TableCell>
                 <TableCell className="p-4">
@@ -127,30 +151,17 @@ export function ActivityList() {
                   </span>
                 </TableCell>
                 <TableCell className="p-4 text-white/70">
-                  <div className="max-w-[200px] truncate" title={call.Action}>
-                    {call.Action}
-                  </div>
-                </TableCell>
-                <TableCell className="p-4 text-white/70">
                   <div className="max-w-[200px] truncate" title={call.conversation_summary}>
                     {call.conversation_summary}
                   </div>
+                </TableCell>
+                <TableCell className="p-4 text-white/70">
+                  {call.duration_seconds ? `${call.duration_seconds}s` : 'N/A'}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-        
-        <div className="flex justify-end p-4 border-t border-mint/10">
-          <Button
-            variant="outline"
-            onClick={() => navigate('/dashboard/calls')}
-            className="text-white hover:bg-mint/10 border-mint/20"
-          >
-            View All Calls
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
       </CardContent>
     </Card>
   );
