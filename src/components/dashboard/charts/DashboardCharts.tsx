@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { ClientDistributionChart } from "./ClientDistributionChart";
 import { CallVolumeChart } from "./CallVolumeChart";
-import { ActivityList } from "../client/ActivityList";
 import { UrgentCases } from "../client/UrgentCases";
 
 export function DashboardCharts() {
@@ -29,7 +28,6 @@ export function DashboardCharts() {
     return (
       <div className="grid grid-cols-1 gap-8">
         <UrgentCases />
-        <ActivityList />
       </div>
     );
   }
