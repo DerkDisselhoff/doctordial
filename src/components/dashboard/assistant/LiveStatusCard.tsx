@@ -136,23 +136,23 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
           </div>
         )}
         <CardHeader className="pb-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between space-x-8 px-2">
+            <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-3">
                 {isLive ? (
-                  <CirclePlay className="w-6 h-6 text-mint animate-pulse" />
+                  <CirclePlay className="w-6 h-6 text-mint animate-pulse flex-shrink-0" />
                 ) : (
-                  <CirclePause className="w-6 h-6 text-white/50" />
+                  <CirclePause className="w-6 h-6 text-white/50 flex-shrink-0" />
                 )}
-                <CardTitle className="text-white">{assistantName} Status</CardTitle>
+                <CardTitle className="text-white whitespace-nowrap">{assistantName} Status</CardTitle>
               </div>
-              <div className={`flex items-center gap-2 ${
+              <div className={`flex items-center space-x-2 ${
                 isLive ? 'text-mint' : 'text-white/50'
               }`}>
-                <div className={`h-2 w-2 rounded-full transition-colors duration-500 ${
+                <div className={`h-2 w-2 rounded-full transition-colors duration-500 flex-shrink-0 ${
                   isLive ? 'bg-mint animate-pulse' : 'bg-white/30'
                 }`} />
-                <span className="text-sm font-medium">
+                <span className="text-sm font-medium whitespace-nowrap">
                   {isLive ? `${assistantName} is actively handling calls` : `${assistantName} is currently offline`}
                 </span>
               </div>
@@ -160,7 +160,7 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
             <Switch
               checked={isLive}
               onCheckedChange={handleLiveToggle}
-              className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30 scale-125"
+              className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30 scale-125 flex-shrink-0"
             />
           </div>
         </CardHeader>
