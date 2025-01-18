@@ -30,9 +30,9 @@ export function MetricsCards({ timeFilter = 'today' }: { timeFilter?: TimeFilter
     const defaultMetrics = {
       totalCalls: '0',
       avgDuration: '0',
-      appointmentsMade: '0',
-      positiveSentiment: '0',
-      urgentCases: '0'
+      callsForwarded: '0',
+      callSuccess: '0',
+      relevantCases: '0'
     };
 
     return (
@@ -53,22 +53,22 @@ export function MetricsCards({ timeFilter = 'today' }: { timeFilter?: TimeFilter
         />
         <StatCard 
           icon={Calendar}
-          label="Appointments Made"
-          value={isLoading ? '...' : (metrics?.appointmentsMade?.toString() || defaultMetrics.appointmentsMade)}
+          label="Calls Forwarded"
+          value={isLoading ? '...' : (metrics?.callsForwarded?.toString() || defaultMetrics.callsForwarded)}
           subtext={`From ${timeFilter}`}
-          navigateTo="/dashboard/appointments"
+          navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={ThumbsUp}
-          label="Positive Sentiment"
-          value={isLoading ? '...' : `${metrics?.positiveSentiment || defaultMetrics.positiveSentiment}%`}
+          label="Call Success"
+          value={isLoading ? '...' : `${metrics?.callSuccess || defaultMetrics.callSuccess}%`}
           subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={AlertCircle}
-          label="Urgent Cases"
-          value={isLoading ? '...' : (metrics?.urgentCases?.toString() || defaultMetrics.urgentCases)}
+          label="Relevant Cases (U2-U4)"
+          value={isLoading ? '...' : (metrics?.relevantCases?.toString() || defaultMetrics.relevantCases)}
           subtext={`From ${timeFilter}`}
           navigateTo="/dashboard/calls"
         />
