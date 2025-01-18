@@ -1,42 +1,41 @@
-import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { ClientDistributionChart } from "./ClientDistributionChart";
 import { CallVolumeChart } from "./CallVolumeChart";
 import { UrgentCases } from "../client/UrgentCases";
 
 export function DashboardCharts() {
-  const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
+  const checkUserRole = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', session.user.id)
+        .single();
+      
+      return profile?.role;
+    }
+    return null;
+  };
 
-  useEffect(() => {
-    const checkUserRole = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', session.user.id)
-          .single();
-        
-        setUserRole(profile?.role || null);
-      }
-    };
+  const { data: userRole } = useQuery({
+    queryKey: ['userRole'],
+    queryFn: checkUserRole
+  });
 
-    checkUserRole();
-  }, []);
-
-  if (userRole === 'client') {
+  if (userRole === 'admin') {
     return (
-      <div className="grid grid-cols-1 gap-8">
-        <UrgentCases />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <ClientDistributionChart />
+        <CallVolumeChart />
       </div>
     );
   }
 
-  // Return original admin view with improved styling
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <ClientDistributionChart />
-      <CallVolumeChart />
+    <div className="grid grid-cols-1 gap-8">
+      <UrgentCases />
+      <UrgentCases isIrrelevant={true} />
     </div>
   );
 }

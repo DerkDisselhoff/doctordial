@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
 import { getUrgencyColor } from "@/utils/urgencyUtils";
 import { Button } from "@/components/ui/button";
+import { Filter, List } from "lucide-react";
 
 interface CallLog {
   id: string;
@@ -20,7 +21,7 @@ interface CallLog {
   duration_seconds: string;
 }
 
-const fetchUrgentCalls = async () => {
+const fetchUrgentCalls = async (isIrrelevant: boolean = false) => {
   const { data: assistantStatus } = await supabase
     .from('assistant_status')
     .select('assistant_id')
@@ -31,11 +32,13 @@ const fetchUrgentCalls = async () => {
     throw new Error('No assistant ID found');
   }
 
+  const urgencyLevels = isIrrelevant ? ['U1', 'U5'] : ['U2', 'U3', 'U4'];
+
   const { data, error } = await supabase
     .from('call_logs')
     .select('*')
     .eq('assistant_id', assistantStatus.assistant_id)
-    .in('Urgencylevel', ['U2', 'U3', 'U4'])
+    .in('Urgencylevel', urgencyLevels)
     .order('start_time', { ascending: false })
     .limit(5);
 
@@ -43,11 +46,15 @@ const fetchUrgentCalls = async () => {
   return data as CallLog[];
 };
 
-export function UrgentCases() {
+interface UrgentCasesProps {
+  isIrrelevant?: boolean;
+}
+
+export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
   const navigate = useNavigate();
   const { data: calls, isLoading, error } = useQuery({
-    queryKey: ['urgentCalls'],
-    queryFn: fetchUrgentCalls,
+    queryKey: ['urgentCalls', isIrrelevant],
+    queryFn: () => fetchUrgentCalls(isIrrelevant),
   });
 
   if (isLoading) {
@@ -64,7 +71,7 @@ export function UrgentCases() {
     return (
       <Card className="bg-forest-light/50 border-mint/10">
         <CardContent className="p-4">
-          <p className="text-center text-white/70">Error loading relevant cases</p>
+          <p className="text-center text-white/70">Error loading cases</p>
         </CardContent>
       </Card>
     );
@@ -90,16 +97,29 @@ export function UrgentCases() {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <CardTitle className="text-white">Relevant Cases</CardTitle>
+            <CardTitle className="text-white">
+              {isIrrelevant ? "Irrelevant Cases" : "Relevant Cases"}
+            </CardTitle>
             <div className="flex items-center gap-2">
-              {['U2', 'U3', 'U4'].map((level) => (
-                <span
-                  key={level}
-                  className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor(level)}`}
-                >
-                  {level}
-                </span>
-              ))}
+              {isIrrelevant ? (
+                <>
+                  <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor('U1')}`}>U1</span>
+                  <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor('U5')}`}>U5</span>
+                  <span className="px-2 py-1 rounded-full text-xs border bg-gray-500/20 border-gray-500/30 text-gray-500">
+                    <Filter className="w-3 h-3 inline-block mr-1" />
+                    Other
+                  </span>
+                </>
+              ) : (
+                ['U2', 'U3', 'U4'].map((level) => (
+                  <span
+                    key={level}
+                    className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor(level)}`}
+                  >
+                    {level}
+                  </span>
+                ))
+              )}
             </div>
           </div>
           <Button
