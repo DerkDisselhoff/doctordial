@@ -404,7 +404,7 @@ export function Workflow() {
             </div>
 
             {/* Subject List */}
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
               {subjects.map((subject) => (
                 <div
                   key={subject.id}
