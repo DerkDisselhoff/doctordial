@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { GitBranch, Plus, Trash2, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabaseClient";
+import { getUrgencyColor } from "@/utils/urgencyUtils";
 
 type ForwardStep = "call_112" | "forward_to_assistant" | "provide_selfcare";
 type AdviceType = "simple" | "extensive";
@@ -31,17 +32,6 @@ interface Subject {
   created_at?: string;
   updated_at?: string;
 }
-
-const getUrgencyColor = (level: string) => {
-  switch (level) {
-    case 'U1': return 'bg-red-500/20 border-red-500/30 text-red-500';
-    case 'U2': return 'bg-orange-500/20 border-orange-500/30 text-orange-500';
-    case 'U3': return 'bg-yellow-500/20 border-yellow-500/30 text-yellow-500';
-    case 'U4': return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
-    case 'U5': return 'bg-green-500/20 border-green-500/30 text-green-500';
-    default: return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
-  }
-};
 
 export function Workflow() {
   const { toast } = useToast();
