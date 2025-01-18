@@ -35,7 +35,6 @@ export function DashboardCharts() {
 
   return (
     <div className="grid grid-cols-1 gap-8">
-      <UrgentCases />
       <UrgentCases isIrrelevant={true} />
     </div>
   );
