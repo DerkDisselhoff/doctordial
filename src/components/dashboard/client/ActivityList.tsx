@@ -126,7 +126,7 @@ export function ActivityList() {
               <TableHead className="text-left p-4 text-white/70">Duration</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody className="p-4">
             {calls?.map((call) => (
               <TableRow 
                 key={call.id} 
