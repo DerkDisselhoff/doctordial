@@ -129,8 +129,10 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
         <div className={`absolute inset-0 bg-gradient-to-r from-mint/10 via-mint/5 to-transparent transition-opacity duration-500 ${isLive ? 'opacity-100' : 'opacity-0'}`} />
         {isLive && (
           <div className="absolute inset-0 animate-pulse">
-            <div className="absolute inset-0 bg-gradient-to-r from-mint/5 via-transparent to-mint/5" 
-                 style={{ animation: 'shine 3s linear infinite' }} />
+            <div 
+              className="absolute inset-0 bg-gradient-to-r from-mint/5 via-transparent to-mint/5" 
+              style={{ animation: 'shine 3s linear infinite' }} 
+            />
           </div>
         )}
         <CardHeader className="pb-2">
@@ -199,12 +201,14 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
         </DialogContent>
       </Dialog>
 
-      <style jsx global>{`
-        @keyframes shine {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-      `}</style>
+      <style>
+        {`
+          @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+          }
+        `}
+      </style>
     </>
   );
 };
