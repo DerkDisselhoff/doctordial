@@ -202,9 +202,11 @@ export function DetailedCallsList() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Urgencies</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
+                  <SelectItem value="U1">U1</SelectItem>
+                  <SelectItem value="U2">U2</SelectItem>
+                  <SelectItem value="U3">U3</SelectItem>
+                  <SelectItem value="U4">U4</SelectItem>
+                  <SelectItem value="U5">U5</SelectItem>
                 </SelectContent>
               </Select>
               <Select value={sentimentFilter} onValueChange={setSentimentFilter}>
