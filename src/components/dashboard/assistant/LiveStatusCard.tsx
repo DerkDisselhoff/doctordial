@@ -138,19 +138,21 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
         <CardHeader className="p-6">
           <div className="flex items-center justify-between gap-8">
             <div className="flex items-center gap-6">
-              <div className="relative flex items-center gap-4">
-                <div className={`absolute w-10 h-10 rounded-full transition-opacity duration-500 ${
-                  isLive ? 'opacity-100' : 'opacity-0'
-                }`} style={{ left: '12px', top: '50%', transform: 'translateY(-50%)' }}>
-                  <div className="absolute inset-0 rounded-full bg-mint/20 animate-ping" />
-                  <div className="absolute inset-0 rounded-full bg-mint/30" />
+              <div className="relative flex items-center">
+                <div className="relative w-10 h-10 flex items-center justify-center">
+                  {isLive && (
+                    <div className="absolute inset-0">
+                      <div className="absolute inset-0 rounded-full bg-mint/20 animate-ping" />
+                      <div className="absolute inset-0 rounded-full bg-mint/30" />
+                    </div>
+                  )}
+                  {isLive ? (
+                    <CirclePlay className="w-6 h-6 text-mint animate-pulse relative z-10" />
+                  ) : (
+                    <CirclePause className="w-6 h-6 text-white/50 relative z-10" />
+                  )}
                 </div>
-                {isLive ? (
-                  <CirclePlay className="w-6 h-6 text-mint animate-pulse relative z-10" />
-                ) : (
-                  <CirclePause className="w-6 h-6 text-white/50 relative z-10" />
-                )}
-                <CardTitle className="text-xl font-medium text-white">
+                <CardTitle className="text-xl font-medium text-white ml-4">
                   {assistantName} Status
                 </CardTitle>
               </div>
