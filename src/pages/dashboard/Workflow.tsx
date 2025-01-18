@@ -3,21 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { GitBranch, Plus, Trash2, Save } from "lucide-react";
+import { GitBranch, Plus, Trash2, Save, Edit2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabaseClient";
-import { getUrgencyColor } from "@/utils/urgencyUtils";
 
 type ForwardStep = "call_112" | "forward_to_assistant" | "provide_selfcare";
 type AdviceType = "simple" | "extensive";
 
-// Interface matching the database schema
 interface UrgencySettings {
   id?: string;
-  profile_id: string; // Required by database
+  profile_id: string;
   urgency_level: string;
-  forward_step: ForwardStep; // Required by database
+  forward_step: ForwardStep;
   assistant_phone?: string;
   advice_type?: AdviceType;
   created_at?: string;
@@ -26,7 +23,7 @@ interface UrgencySettings {
 
 interface Subject {
   id?: string;
-  profile_id: string; // Required by database
+  profile_id: string;
   subject: string;
   forward_to: string;
   created_at?: string;
@@ -39,6 +36,11 @@ export function Workflow() {
   const [newSubject, setNewSubject] = useState({ subject: "", forward_to: "" });
   const [urgencySettings, setUrgencySettings] = useState<UrgencySettings[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editingSubject, setEditingSubject] = useState<string | null>(null);
+  const [editedValues, setEditedValues] = useState<{ subject: string; forward_to: string }>({
+    subject: "",
+    forward_to: ""
+  });
 
   useEffect(() => {
     fetchWorkflowSettings();
@@ -181,6 +183,52 @@ export function Workflow() {
     }
   };
 
+  const handleEditSubject = (subject: Subject) => {
+    setEditingSubject(subject.id || null);
+    setEditedValues({
+      subject: subject.subject,
+      forward_to: subject.forward_to
+    });
+  };
+
+  const handleSaveEdit = async (id: string) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("No user found");
+
+      const { error } = await supabase
+        .from('workflow_unsuitable_subjects')
+        .update({
+          subject: editedValues.subject,
+          forward_to: editedValues.forward_to,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', id)
+        .eq('profile_id', user.id);
+
+      if (error) throw error;
+
+      setSubjects(subjects.map(s => 
+        s.id === id 
+          ? { ...s, subject: editedValues.subject, forward_to: editedValues.forward_to }
+          : s
+      ));
+      setEditingSubject(null);
+      
+      toast({
+        title: "Subject updated",
+        description: "The subject has been updated successfully",
+      });
+    } catch (error) {
+      console.error('Error updating subject:', error);
+      toast({
+        title: "Error updating subject",
+        description: "Failed to update the subject",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleRemoveSubject = async (id: string) => {
     try {
       const { error } = await supabase
@@ -205,39 +253,6 @@ export function Workflow() {
     }
   };
 
-  const handleSaveUrgencySettings = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("No user found");
-
-      const { error } = await supabase
-        .from('workflow_urgency_settings')
-        .upsert(
-          urgencySettings.map(setting => ({
-            profile_id: user.id,
-            urgency_level: setting.urgency_level,
-            forward_step: setting.forward_step,
-            assistant_phone: setting.assistant_phone,
-            advice_type: setting.advice_type
-          }))
-        );
-
-      if (error) throw error;
-
-      toast({
-        title: "Settings saved",
-        description: "Your urgency settings have been updated successfully.",
-      });
-    } catch (error) {
-      console.error('Error saving urgency settings:', error);
-      toast({
-        title: "Error saving settings",
-        description: "Failed to save urgency settings",
-        variant: "destructive",
-      });
-    }
-  };
-
   return (
     <div className="space-y-6">
       <div>
@@ -246,21 +261,13 @@ export function Workflow() {
       </div>
 
       <div className="grid gap-4">
-        {/* Care Demand Suitable Section */}
+        {/* Urgency Level Forwarding Section */}
         <Card className="bg-forest-light/50 border-mint/10">
           <CardHeader className="flex flex-row items-center justify-between">
             <div className="flex items-center gap-2">
               <GitBranch className="w-5 h-5 text-mint" />
               <CardTitle className="text-white">Urgency Level Forwarding</CardTitle>
             </div>
-            <Button 
-              variant="outline" 
-              onClick={handleSaveUrgencySettings}
-              className="bg-forest border-mint/20 hover:bg-forest-light/50 text-mint"
-            >
-              <Save className="w-4 h-4 mr-2" />
-              Save Changes
-            </Button>
           </CardHeader>
           <CardContent className="space-y-2">
             {urgencySettings.map((setting) => (
@@ -347,7 +354,7 @@ export function Workflow() {
           </CardContent>
         </Card>
 
-        {/* Care Demand Unsuitable Section */}
+        {/* Subject Forwarding Externally Rules Section */}
         <Card className="bg-forest-light/50 border-mint/10">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
@@ -355,9 +362,9 @@ export function Workflow() {
               Subject Forwarding Externally Rules
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent>
             {/* Add New Subject Form */}
-            <div className="grid gap-3 p-3 rounded-lg bg-forest-dark/30">
+            <div className="grid gap-3 p-3 rounded-lg bg-forest-dark/30 mb-4">
               <div className="grid gap-3 md:grid-cols-[1fr,1fr,auto]">
                 <div className="space-y-2">
                   <Label className="text-white">Subject</Label>
@@ -389,26 +396,61 @@ export function Workflow() {
             </div>
 
             {/* Subject List */}
-            <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-2">
               {subjects.map((subject) => (
                 <div
                   key={subject.id}
-                  className="flex items-center justify-between p-3 rounded-lg bg-forest-dark/30"
+                  className="flex items-center justify-between p-2 rounded-lg bg-forest-dark/30 hover:bg-forest-dark/40 transition-colors"
                 >
-                  <div className="grid gap-1 flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-white font-medium">{subject.subject}</span>
+                  {editingSubject === subject.id ? (
+                    <div className="flex-1 flex items-center gap-2">
+                      <Input
+                        value={editedValues.subject}
+                        onChange={(e) => setEditedValues({ ...editedValues, subject: e.target.value })}
+                        className="bg-forest border-mint/20 flex-1"
+                      />
+                      <span className="text-mint">→</span>
+                      <Input
+                        value={editedValues.forward_to}
+                        onChange={(e) => setEditedValues({ ...editedValues, forward_to: e.target.value })}
+                        className="bg-forest border-mint/20 flex-1"
+                      />
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => subject.id && handleRemoveSubject(subject.id)}
-                        className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                        onClick={() => subject.id && handleSaveEdit(subject.id)}
+                        className="text-mint hover:text-mint/80 hover:bg-mint/10"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Save className="w-4 h-4" />
                       </Button>
                     </div>
-                    <span className="text-white/60 text-sm">→ {subject.forward_to}</span>
-                  </div>
+                  ) : (
+                    <div className="flex-1 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-white font-medium">{subject.subject}</span>
+                        <span className="text-mint">→</span>
+                        <span className="text-white/60">{subject.forward_to}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleEditSubject(subject)}
+                          className="text-mint hover:text-mint/80 hover:bg-mint/10"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => subject.id && handleRemoveSubject(subject.id)}
+                          className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
