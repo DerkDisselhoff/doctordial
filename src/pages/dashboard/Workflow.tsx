@@ -4,15 +4,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { GitBranch, Plus, Trash2, Save } from "lucide-react";
+import { GitBranch, Plus, Trash2, Save, Pencil } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabaseClient";
 import { getUrgencyColor } from "@/utils/urgencyUtils";
 
 type ForwardStep = "call_112" | "forward_to_assistant" | "provide_selfcare";
 type AdviceType = "simple" | "extensive";
+type ForwardingType = 'external' | 'selfcare' | 'both';
 
-// Interface matching the database schema
 interface UrgencySettings {
   id?: string;
   profile_id: string; // Required by database
@@ -29,6 +29,7 @@ interface Subject {
   profile_id: string; // Required by database
   subject: string;
   forward_to: string;
+  forward_type?: ForwardingType;
   created_at?: string;
   updated_at?: string;
 }
@@ -36,8 +37,13 @@ interface Subject {
 export function Workflow() {
   const { toast } = useToast();
   const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [newSubject, setNewSubject] = useState({ subject: "", forward_to: "" });
-  const [urgencySettings, setUrgencySettings] = useState<UrgencySettings[]>([]);
+  const [newSubject, setNewSubject] = useState({ 
+    subject: "", 
+    forward_to: "",
+    forward_type: 'external' as ForwardingType 
+  });
+  const [isEditing, setIsEditing] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,36 +55,6 @@ export function Workflow() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("No user found");
 
-      // Initialize default settings if none exist
-      const defaultSettings: UrgencySettings[] = ['U1', 'U2', 'U3', 'U4', 'U5'].map(level => ({
-        urgency_level: level,
-        forward_step: level === 'U1' ? 'call_112' : 
-                     level === 'U5' ? 'provide_selfcare' : 
-                     'forward_to_assistant',
-        profile_id: user.id
-      }));
-
-      // Fetch urgency settings
-      const { data: urgencyData, error: urgencyError } = await supabase
-        .from('workflow_urgency_settings')
-        .select('*')
-        .eq('profile_id', user.id);
-
-      if (urgencyError) throw urgencyError;
-
-      if (!urgencyData || urgencyData.length === 0) {
-        // Insert default settings
-        const { error: insertError } = await supabase
-          .from('workflow_urgency_settings')
-          .insert(defaultSettings);
-
-        if (insertError) throw insertError;
-        setUrgencySettings(defaultSettings);
-      } else {
-        setUrgencySettings(urgencyData);
-      }
-
-      // Fetch unsuitable subjects
       const { data: subjectsData, error: subjectsError } = await supabase
         .from('workflow_unsuitable_subjects')
         .select('*')
@@ -101,48 +77,11 @@ export function Workflow() {
     }
   };
 
-  const handleUrgencySettingChange = async (level: string, setting: Partial<UrgencySettings>) => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("No user found");
-
-      const updatedSettings = urgencySettings.map(s => 
-        s.urgency_level === level ? { ...s, ...setting } : s
-      );
-      setUrgencySettings(updatedSettings);
-
-      const currentSetting = updatedSettings.find(s => s.urgency_level === level);
-      if (!currentSetting) return;
-
-      const { error } = await supabase
-        .from('workflow_urgency_settings')
-        .upsert({
-          ...currentSetting,
-          profile_id: user.id,
-          forward_step: currentSetting.forward_step // Ensure this is always set
-        });
-
-      if (error) throw error;
-
-      toast({
-        title: "Settings updated",
-        description: `Settings for ${level} have been updated`,
-      });
-    } catch (error) {
-      console.error('Error updating urgency settings:', error);
-      toast({
-        title: "Error updating settings",
-        description: "Failed to update urgency settings",
-        variant: "destructive",
-      });
-    }
-  };
-
   const handleAddSubject = async () => {
-    if (!newSubject.subject || !newSubject.forward_to) {
+    if (!newSubject.subject || (!newSubject.forward_to && newSubject.forward_type === 'external')) {
       toast({
         title: "Missing information",
-        description: "Please fill in both the subject and forward to fields",
+        description: "Please fill in all required fields",
         variant: "destructive",
       });
       return;
@@ -157,7 +96,8 @@ export function Workflow() {
         .insert({
           profile_id: user.id,
           subject: newSubject.subject,
-          forward_to: newSubject.forward_to
+          forward_to: newSubject.forward_type === 'selfcare' ? 'Self-care advice' : newSubject.forward_to,
+          forward_type: newSubject.forward_type
         })
         .select()
         .single();
@@ -165,7 +105,7 @@ export function Workflow() {
       if (error) throw error;
 
       setSubjects([...subjects, data]);
-      setNewSubject({ subject: "", forward_to: "" });
+      setNewSubject({ subject: "", forward_to: "", forward_type: 'external' });
       
       toast({
         title: "Subject added",
@@ -181,62 +121,9 @@ export function Workflow() {
     }
   };
 
-  const handleRemoveSubject = async (id: string) => {
-    try {
-      const { error } = await supabase
-        .from('workflow_unsuitable_subjects')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-
-      setSubjects(subjects.filter(s => s.id !== id));
-      toast({
-        title: "Subject removed",
-        description: "The subject has been removed from the workflow",
-      });
-    } catch (error) {
-      console.error('Error removing subject:', error);
-      toast({
-        title: "Error removing subject",
-        description: "Failed to remove the subject",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleSaveUrgencySettings = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("No user found");
-
-      const { error } = await supabase
-        .from('workflow_urgency_settings')
-        .upsert(
-          urgencySettings.map(setting => ({
-            profile_id: user.id,
-            urgency_level: setting.urgency_level,
-            forward_step: setting.forward_step,
-            assistant_phone: setting.assistant_phone,
-            advice_type: setting.advice_type
-          }))
-        );
-
-      if (error) throw error;
-
-      toast({
-        title: "Settings saved",
-        description: "Your urgency settings have been updated successfully.",
-      });
-    } catch (error) {
-      console.error('Error saving urgency settings:', error);
-      toast({
-        title: "Error saving settings",
-        description: "Failed to save urgency settings",
-        variant: "destructive",
-      });
-    }
-  };
+  const filteredSubjects = subjects.filter(subject =>
+    subject.subject.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="space-y-6">
@@ -245,131 +132,69 @@ export function Workflow() {
         <p className="text-white/60">Configure how incoming calls are handled</p>
       </div>
 
-      <div className="grid gap-4">
-        {/* Care Demand Suitable Section */}
-        <Card className="bg-forest-light/50 border-mint/10">
-          <CardHeader className="flex flex-row items-center justify-between">
+      <Card className="bg-forest-light/50 border-mint/10">
+        <CardHeader className="border-b border-mint/10">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <GitBranch className="w-5 h-5 text-mint" />
-              <CardTitle className="text-white">Urgency Level Forwarding</CardTitle>
+              <CardTitle className="text-white">Subject Forwarding Externally Rules</CardTitle>
             </div>
-            <Button 
-              variant="outline" 
-              onClick={handleSaveUrgencySettings}
-              className="bg-forest border-mint/20 hover:bg-forest-light/50 text-mint"
-            >
-              <Save className="w-4 h-4 mr-2" />
-              Save Changes
-            </Button>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            {urgencySettings.map((setting) => (
-              <div key={setting.urgency_level} className="grid gap-2 p-2 rounded-lg bg-forest-dark/30">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2 min-w-[80px]">
-                    <span className={`inline-flex px-2 py-1 rounded-md text-sm font-medium border ${getUrgencyColor(setting.urgency_level)}`}>
-                      {setting.urgency_level}
-                    </span>
-                  </div>
-                  <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <Select
-                      value={setting.forward_step}
-                      onValueChange={(value: ForwardStep) => 
-                        handleUrgencySettingChange(setting.urgency_level, { forward_step: value })
-                      }
-                    >
-                      <SelectTrigger className="bg-forest border-mint/20 hover:bg-forest-light/50">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-forest border-mint/20">
-                        <SelectItem 
-                          value="call_112" 
-                          className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
-                        >
-                          Advice to call 112 directly
-                        </SelectItem>
-                        <SelectItem 
-                          value="forward_to_assistant" 
-                          className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
-                        >
-                          Forward to Doctor's Assistant
-                        </SelectItem>
-                        <SelectItem 
-                          value="provide_selfcare" 
-                          className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
-                        >
-                          Provide selfcare advice
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+            <div className="flex items-center gap-2">
+              <Input
+                placeholder="Search subjects..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-64 bg-forest border-mint/20"
+              />
+              <Button
+                variant="outline"
+                onClick={() => setNewSubject({ subject: "", forward_to: "", forward_type: 'external' })}
+                className="bg-forest border-mint/20 hover:bg-forest-light/50 text-mint"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add New Subject
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
 
-                    {setting.forward_step === 'forward_to_assistant' && (
-                      <Input
-                        placeholder="Assistant's phone number"
-                        value={setting.assistant_phone || ''}
-                        onChange={(e) => handleUrgencySettingChange(setting.urgency_level, { 
-                          assistant_phone: e.target.value 
-                        })}
-                        className="bg-forest border-mint/20"
-                      />
-                    )}
-
-                    {setting.forward_step === 'provide_selfcare' && (
-                      <Select
-                        value={setting.advice_type || 'simple'}
-                        onValueChange={(value: AdviceType) => 
-                          handleUrgencySettingChange(setting.urgency_level, { advice_type: value })
-                        }
-                      >
-                        <SelectTrigger className="bg-forest border-mint/20 hover:bg-forest-light/50">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-forest border-mint/20">
-                          <SelectItem 
-                            value="simple"
-                            className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
-                          >
-                            Simple short advice
-                          </SelectItem>
-                          <SelectItem 
-                            value="extensive"
-                            className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
-                          >
-                            Extensive advice
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    )}
-                  </div>
-                </div>
+        <CardContent className="space-y-4 pt-6">
+          <div className="grid gap-4 p-4 rounded-lg bg-forest-dark/30 mb-6">
+            <div className="grid gap-4 md:grid-cols-[2fr,2fr,1fr,auto]">
+              <div>
+                <Label className="text-white mb-2">Subject</Label>
+                <Input
+                  placeholder="Enter subject"
+                  value={newSubject.subject}
+                  onChange={(e) => setNewSubject({ ...newSubject, subject: e.target.value })}
+                  className="bg-forest border-mint/20"
+                />
               </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        {/* Care Demand Unsuitable Section */}
-        <Card className="bg-forest-light/50 border-mint/10">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <GitBranch className="w-5 h-5 text-mint" />
-              Subject Forwarding Externally Rules
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {/* Add New Subject Form */}
-            <div className="grid gap-3 p-3 rounded-lg bg-forest-dark/30">
-              <div className="grid gap-3 md:grid-cols-[1fr,1fr,auto]">
-                <div className="space-y-2">
-                  <Label className="text-white">Subject</Label>
-                  <Input
-                    placeholder="Enter subject"
-                    value={newSubject.subject}
-                    onChange={(e) => setNewSubject({ ...newSubject, subject: e.target.value })}
-                    className="bg-forest border-mint/20"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-white">Forward To</Label>
+              <div>
+                <Label className="text-white mb-2">Forward Type</Label>
+                <Select
+                  value={newSubject.forward_type}
+                  onValueChange={(value: ForwardingType) => {
+                    setNewSubject({ 
+                      ...newSubject, 
+                      forward_type: value,
+                      forward_to: value === 'selfcare' ? 'Self-care advice' : newSubject.forward_to 
+                    });
+                  }}
+                >
+                  <SelectTrigger className="bg-forest border-mint/20 hover:bg-forest-light/50">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-forest border-mint/20">
+                    <SelectItem value="external">External Clinic</SelectItem>
+                    <SelectItem value="selfcare">Self-care Advice</SelectItem>
+                    <SelectItem value="both">Both</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              {newSubject.forward_type !== 'selfcare' && (
+                <div>
+                  <Label className="text-white mb-2">Forward To</Label>
                   <Input
                     placeholder="Enter destination"
                     value={newSubject.forward_to}
@@ -377,44 +202,69 @@ export function Workflow() {
                     className="bg-forest border-mint/20"
                   />
                 </div>
-                <Button
-                  onClick={handleAddSubject}
-                  className="self-end"
-                  variant="outline"
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Subject
-                </Button>
-              </div>
+              )}
+              <Button
+                onClick={handleAddSubject}
+                className="self-end bg-mint text-forest hover:bg-mint/90"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Subject
+              </Button>
             </div>
+          </div>
 
-            {/* Subject List */}
-            <div className="space-y-2">
-              {subjects.map((subject) => (
-                <div
-                  key={subject.id}
-                  className="flex items-center justify-between p-3 rounded-lg bg-forest-dark/30"
-                >
-                  <div className="grid gap-1 flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-white font-medium">{subject.subject}</span>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => subject.id && handleRemoveSubject(subject.id)}
-                        className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                    <span className="text-white/60 text-sm">→ {subject.forward_to}</span>
+          <div className="space-y-2 max-h-[600px] overflow-y-auto pr-2">
+            {filteredSubjects.map((subject) => (
+              <div
+                key={subject.id}
+                className="flex items-center justify-between p-3 rounded-lg bg-forest-dark/30 hover:bg-forest-dark/40 transition-colors group"
+              >
+                <div className="flex items-center gap-6 flex-1">
+                  <span className="text-white font-medium flex-1">{subject.subject}</span>
+                  <div className="flex items-center gap-2 min-w-[200px]">
+                    {subject.forward_type === 'selfcare' ? (
+                      <span className="text-mint px-2 py-1 rounded-full bg-mint/10 text-sm">
+                        Self-care Advice
+                      </span>
+                    ) : (
+                      <span className="text-white/60 text-sm">→ {subject.forward_to}</span>
+                    )}
                   </div>
+                  {subject.forward_type === 'both' && (
+                    <span className="text-mint px-2 py-1 rounded-full bg-mint/10 text-sm ml-2">
+                      + Self-care
+                    </span>
+                  )}
                 </div>
-              ))}
+                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsEditing(subject.id)}
+                    className="text-mint hover:text-mint/80 hover:bg-mint/10"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => subject.id && handleRemoveSubject(subject.id)}
+                    className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {filteredSubjects.length === 0 && (
+            <div className="text-center py-8 text-white/60">
+              No subjects found. Add your first subject using the form above.
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }
