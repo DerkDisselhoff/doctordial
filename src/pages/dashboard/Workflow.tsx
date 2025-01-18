@@ -11,20 +11,25 @@ import { supabase } from "@/lib/supabaseClient";
 type ForwardStep = "call_112" | "forward_to_assistant" | "provide_selfcare";
 type AdviceType = "simple" | "extensive";
 
+// Interface matching the database schema
 interface UrgencySettings {
   id?: string;
-  profile_id?: string;
+  profile_id: string; // Required by database
   urgency_level: string;
-  forward_step: ForwardStep;
+  forward_step: ForwardStep; // Required by database
   assistant_phone?: string;
   advice_type?: AdviceType;
+  created_at?: string;
+  updated_at?: string;
 }
 
 interface Subject {
   id?: string;
-  profile_id?: string;
+  profile_id: string; // Required by database
   subject: string;
   forward_to: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export function Workflow() {
@@ -105,12 +110,15 @@ export function Workflow() {
       );
       setUrgencySettings(updatedSettings);
 
+      const currentSetting = updatedSettings.find(s => s.urgency_level === level);
+      if (!currentSetting) return;
+
       const { error } = await supabase
         .from('workflow_urgency_settings')
         .upsert({
+          ...currentSetting,
           profile_id: user.id,
-          urgency_level: level,
-          ...setting
+          forward_step: currentSetting.forward_step // Ensure this is always set
         });
 
       if (error) throw error;
