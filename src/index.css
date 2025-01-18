@@ -329,4 +329,58 @@
     @apply absolute -left-1 -top-1 w-2 h-2 rounded-full bg-mint;
     animation: pulse-mint 2s infinite;
   }
+
+  /* Dropdown Design System */
+  .dropdown-trigger {
+    @apply w-full px-3 py-2 bg-forest-light/50 border border-mint/20 rounded-lg 
+           text-white placeholder-white/40 focus:border-mint focus:ring-1 focus:ring-mint
+           hover:bg-mint/5 transition-colors;
+  }
+
+  .dropdown-content {
+    @apply bg-forest-light/95 border border-mint/10 rounded-lg shadow-lg 
+           backdrop-blur-sm overflow-hidden z-50;
+  }
+
+  .dropdown-item {
+    @apply relative flex w-full cursor-default select-none items-center rounded-sm 
+           py-1.5 pl-8 pr-2 text-sm outline-none text-white
+           data-[disabled]:pointer-events-none data-[disabled]:opacity-50
+           hover:bg-mint/10 focus:bg-mint/10 transition-colors;
+  }
+
+  .dropdown-item-indicator {
+    @apply absolute left-2 flex h-3.5 w-3.5 items-center justify-center text-mint;
+  }
+
+  /* Status Badge Design System */
+  .status-badge {
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+  }
+
+  .status-badge-success {
+    @apply bg-mint/10 text-mint;
+  }
+
+  .status-badge-pending {
+    @apply bg-yellow-500/10 text-yellow-500;
+  }
+
+  .status-badge-error {
+    @apply bg-red-500/10 text-red-500;
+  }
+
+  /* Animation keyframes */
+  @keyframes fade-up {
+    "0%": { opacity: "0", transform: "translateY(20px)" },
+    "100%": { opacity: "1", transform: "translateY(0)" },
+  }
+  @keyframes fade-down {
+    "0%": { opacity: "0", transform: "translateY(-20px)" },
+    "100%": { opacity: "1", transform: "translateY(0)" },
+  }
+  @keyframes fade-in {
+    "0%": { opacity: "0" },
+    "100%": { opacity: "1" },
+  }
 }
