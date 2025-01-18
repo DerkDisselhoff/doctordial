@@ -209,12 +209,14 @@ export const LiveStatusCard = ({ isLive, onStatusChange }: LiveStatusCardProps) 
         </DialogContent>
       </Dialog>
 
-      <style jsx global>{`
-        @keyframes shine {
-          0% { transform: translateX(-200%); }
-          100% { transform: translateX(200%); }
-        }
-      `}</style>
+      <style>
+        {`
+          @keyframes shine {
+            0% { transform: translateX(-200%); }
+            100% { transform: translateX(200%); }
+          }
+        `}
+      </style>
     </>
   );
 };
