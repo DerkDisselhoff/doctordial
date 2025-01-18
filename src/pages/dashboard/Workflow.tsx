@@ -251,7 +251,7 @@ export function Workflow() {
           <CardHeader className="flex flex-row items-center justify-between">
             <div className="flex items-center gap-2">
               <GitBranch className="w-5 h-5 text-mint" />
-              <CardTitle className="text-white">Care Demand Suitable</CardTitle>
+              <CardTitle className="text-white">Urgency Level Forwarding</CardTitle>
             </div>
             <Button 
               variant="outline" 
@@ -352,7 +352,7 @@ export function Workflow() {
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
               <GitBranch className="w-5 h-5 text-mint" />
-              Care Demand Unsuitable
+              Subject Forwarding Externally Rules
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
