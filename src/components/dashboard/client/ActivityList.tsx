@@ -48,7 +48,10 @@ export function ActivityList() {
   const navigate = useNavigate();
   const { data: calls, isLoading, error } = useQuery({
     queryKey: ['recentCalls'],
-    queryFn: fetchRecentisLoading) {
+    queryFn: fetchRecentCalls
+  });
+
+  if (isLoading) {
     return (
       <Card className="bg-forest-light/50 border-mint/10">
         <CardContent className="flex justify-center p-8">
