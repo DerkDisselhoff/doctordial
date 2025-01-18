@@ -5,6 +5,9 @@ import { Phone, Clock, MessageCircle, User, ThumbsUp, AlertCircle, Calendar, Arr
 import { supabase } from "@/lib/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
 import { getUrgencyColor } from "@/utils/urgencyUtils";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 
 interface CallLog {
   id: string;
@@ -90,12 +93,53 @@ const getStatusColor = (status: string) => {
 
 export function CallDetail() {
   const { callId } = useParams();
+  const { toast } = useToast();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedCall, setEditedCall] = useState<Partial<CallLog>>({});
   
-  const { data: call, isLoading, error } = useQuery({
+  const { data: call, isLoading, error, refetch } = useQuery({
     queryKey: ['callDetail', callId],
     queryFn: () => fetchCallDetails(callId || ''),
     enabled: !!callId,
   });
+
+  useEffect(() => {
+    if (call) {
+      setEditedCall(call);
+    }
+  }, [call]);
+
+  const handleSave = async () => {
+    try {
+      const { error } = await supabase
+        .from('call_logs')
+        .update(editedCall)
+        .eq('call_id', callId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Changes saved successfully",
+        description: "The call details have been updated.",
+      });
+      
+      setIsEditing(false);
+      refetch();
+    } catch (error) {
+      toast({
+        title: "Error saving changes",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleInputChange = (field: keyof CallLog, value: string) => {
+    setEditedCall(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
 
   if (isLoading) {
     return (
@@ -115,11 +159,30 @@ export function CallDetail() {
     );
   }
 
-  const transcriptMessages = formatTranscript(call.transcript);
-  const soepNotes = parseSOEPNotes(call.follow_up_notes);
+  const transcriptMessages = formatTranscript(isEditing ? editedCall.transcript : call.transcript);
+  const soepNotes = parseSOEPNotes(isEditing ? editedCall.follow_up_notes : call.follow_up_notes);
 
   return (
     <div className="space-y-4">
+      <div className="flex justify-end mb-4">
+        {isEditing ? (
+          <div className="space-x-2">
+            <Button
+              onClick={() => {
+                setIsEditing(false);
+                setEditedCall(call);
+              }}
+              variant="outline"
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleSave}>Save Changes</Button>
+          </div>
+        ) : (
+          <Button onClick={() => setIsEditing(true)}>Edit</Button>
+        )}
+      </div>
+
       <Card className="bg-forest-light/50 border-mint/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-white">Call Overview</CardTitle>
@@ -201,10 +264,49 @@ export function CallDetail() {
 
       <Card className="bg-forest-light/50 border-mint/10">
         <CardHeader className="pb-2">
+          <CardTitle className="text-white">SOEP</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {isEditing ? (
+            <Textarea
+              value={editedCall.follow_up_notes || ''}
+              onChange={(e) => handleInputChange('follow_up_notes', e.target.value)}
+              className="min-h-[200px] mb-4"
+              placeholder="Enter SOEP notes (Format: S: ... O: ... E: ... P: ...)"
+            />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {Object.entries(soepNotes).map(([section, content]) => (
+                <div key={section} className="p-4 bg-forest rounded-lg border border-mint/10">
+                  <h4 className="text-mint font-medium mb-2">
+                    {section === 'S' ? 'Subjective' :
+                     section === 'O' ? 'Objective' :
+                     section === 'E' ? 'Evaluation' :
+                     section === 'P' ? 'Plan' : section}
+                  </h4>
+                  <p className="text-white/70">{content || 'No information available'}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card className="bg-forest-light/50 border-mint/10">
+        <CardHeader className="pb-2">
           <CardTitle className="text-white">Call Summary</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/70 mb-4">{call.conversation_summary || 'No summary available'}</p>
+          {isEditing ? (
+            <Textarea
+              value={editedCall.conversation_summary || ''}
+              onChange={(e) => handleInputChange('conversation_summary', e.target.value)}
+              className="mb-4"
+              placeholder="Enter call summary"
+            />
+          ) : (
+            <p className="text-white/70 mb-4">{call.conversation_summary || 'No summary available'}</p>
+          )}
           
           <div className="space-y-3">
             <h3 className="text-lg font-semibold text-white">Follow-up Details</h3>
@@ -212,8 +314,16 @@ export function CallDetail() {
               <div className="flex items-start space-x-3">
                 <ArrowRight className="h-5 w-5 text-mint mt-0.5" />
                 <div>
-                  <p className="text-white font-medium mb-1">Required Action</p>
-                  <p className="text-white/70">{call.Action || 'No action required'}</p>
+                  <p className="text-white font-medium mb-1">Forwarded</p>
+                  {isEditing ? (
+                    <Textarea
+                      value={editedCall.Action || ''}
+                      onChange={(e) => handleInputChange('Action', e.target.value)}
+                      placeholder="Enter forwarding details"
+                    />
+                  ) : (
+                    <p className="text-white/70">{call.Action || 'No action required'}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -226,56 +336,44 @@ export function CallDetail() {
           <CardTitle className="text-white">Call Transcript</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {transcriptMessages.length > 0 ? (
-              transcriptMessages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex gap-4 ${
-                    message.role === 'AI' ? 'flex-row' : 'flex-row-reverse'
-                  }`}
-                >
-                  <div className={`flex-shrink-0 w-16 text-sm font-medium ${
-                    message.role === 'AI' ? 'text-mint' : 'text-divine'
-                  }`}>
-                    {message.role}
+          {isEditing ? (
+            <Textarea
+              value={editedCall.transcript || ''}
+              onChange={(e) => handleInputChange('transcript', e.target.value)}
+              className="min-h-[300px]"
+              placeholder="Enter transcript (Format: AI: ... User: ...)"
+            />
+          ) : (
+            <div className="space-y-4">
+              {transcriptMessages.length > 0 ? (
+                transcriptMessages.map((message, index) => (
+                  <div
+                    key={index}
+                    className={`flex gap-4 ${
+                      message.role === 'AI' ? 'flex-row' : 'flex-row-reverse'
+                    }`}
+                  >
+                    <div className={`flex-shrink-0 w-16 text-sm font-medium ${
+                      message.role === 'AI' ? 'text-mint' : 'text-divine'
+                    }`}>
+                      {message.role}
+                    </div>
+                    <div className={`flex-grow p-3 rounded-lg ${
+                      message.role === 'AI' 
+                        ? 'bg-forest border border-mint/10' 
+                        : 'bg-forest-light border border-divine/10'
+                    }`}>
+                      <p className="text-white/80">{message.content}</p>
+                    </div>
                   </div>
-                  <div className={`flex-grow p-3 rounded-lg ${
-                    message.role === 'AI' 
-                      ? 'bg-forest border border-mint/10' 
-                      : 'bg-forest-light border border-divine/10'
-                  }`}>
-                    <p className="text-white/80">{message.content}</p>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-white/60">No transcript available</p>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="bg-forest-light/50 border-mint/10">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-white">SOEP</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(soepNotes).map(([section, content]) => (
-              <div key={section} className="p-4 bg-forest rounded-lg border border-mint/10">
-                <h4 className="text-mint font-medium mb-2">
-                  {section === 'S' ? 'Subjective' :
-                   section === 'O' ? 'Objective' :
-                   section === 'E' ? 'Evaluation' :
-                   section === 'P' ? 'Plan' : section}
-                </h4>
-                <p className="text-white/70">{content || 'No information available'}</p>
-              </div>
-            ))}
-          </div>
+                ))
+              ) : (
+                <p className="text-white/60">No transcript available</p>
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
   );
-};
+}
