@@ -8,24 +8,26 @@ import { GitBranch, Plus, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabaseClient";
 
-interface Subject {
-  id?: string;
-  name: string;
-  forwardTo: string;
-}
-
 interface UrgencySettings {
   id?: string;
-  urgencyLevel: string;
-  forwardStep: 'call_112' | 'forward_to_assistant' | 'provide_selfcare';
-  assistantPhone?: string;
-  adviceType?: 'simple' | 'extensive';
+  profile_id?: string;
+  urgency_level: string;
+  forward_step: "call_112" | "forward_to_assistant" | "provide_selfcare";
+  assistant_phone?: string;
+  advice_type?: "simple" | "extensive";
+}
+
+interface Subject {
+  id?: string;
+  profile_id?: string;
+  subject: string;
+  forward_to: string;
 }
 
 const Workflow = () => {
   const { toast } = useToast();
   const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [newSubject, setNewSubject] = useState({ name: "", forwardTo: "" });
+  const [newSubject, setNewSubject] = useState({ subject: "", forward_to: "" });
   const [urgencySettings, setUrgencySettings] = useState<UrgencySettings[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -35,21 +37,35 @@ const Workflow = () => {
 
   const fetchWorkflowSettings = async () => {
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("No user found");
+
+      // Initialize default settings if none exist
+      const defaultSettings: UrgencySettings[] = ['U1', 'U2', 'U3', 'U4', 'U5'].map(level => ({
+        urgency_level: level,
+        forward_step: level === 'U1' ? 'call_112' : 
+                    level === 'U5' ? 'provide_selfcare' : 
+                    'forward_to_assistant'
+      }));
+
       // Fetch urgency settings
       const { data: urgencyData, error: urgencyError } = await supabase
         .from('workflow_urgency_settings')
-        .select('*');
+        .select('*')
+        .eq('profile_id', user.id);
 
       if (urgencyError) throw urgencyError;
 
-      // Initialize default settings if none exist
       if (!urgencyData || urgencyData.length === 0) {
-        const defaultSettings = ['U1', 'U2', 'U3', 'U4', 'U5'].map(level => ({
-          urgencyLevel: level,
-          forwardStep: level === 'U1' ? 'call_112' : 
-                      level === 'U5' ? 'provide_selfcare' : 
-                      'forward_to_assistant'
-        }));
+        // Insert default settings
+        const { error: insertError } = await supabase
+          .from('workflow_urgency_settings')
+          .insert(defaultSettings.map(setting => ({
+            ...setting,
+            profile_id: user.id
+          })));
+
+        if (insertError) throw insertError;
         setUrgencySettings(defaultSettings);
       } else {
         setUrgencySettings(urgencyData);
@@ -58,16 +74,13 @@ const Workflow = () => {
       // Fetch unsuitable subjects
       const { data: subjectsData, error: subjectsError } = await supabase
         .from('workflow_unsuitable_subjects')
-        .select('*');
+        .select('*')
+        .eq('profile_id', user.id);
 
       if (subjectsError) throw subjectsError;
 
       if (subjectsData) {
-        setSubjects(subjectsData.map(s => ({
-          id: s.id,
-          name: s.subject,
-          forwardTo: s.forward_to
-        })));
+        setSubjects(subjectsData);
       }
     } catch (error) {
       console.error('Error fetching workflow settings:', error);
@@ -83,14 +96,18 @@ const Workflow = () => {
 
   const handleUrgencySettingChange = async (level: string, setting: Partial<UrgencySettings>) => {
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("No user found");
+
       const updatedSettings = urgencySettings.map(s => 
-        s.urgencyLevel === level ? { ...s, ...setting } : s
+        s.urgency_level === level ? { ...s, ...setting } : s
       );
       setUrgencySettings(updatedSettings);
 
       const { error } = await supabase
         .from('workflow_urgency_settings')
         .upsert({
+          profile_id: user.id,
           urgency_level: level,
           ...setting
         });
@@ -112,7 +129,7 @@ const Workflow = () => {
   };
 
   const handleAddSubject = async () => {
-    if (!newSubject.name || !newSubject.forwardTo) {
+    if (!newSubject.subject || !newSubject.forward_to) {
       toast({
         title: "Missing information",
         description: "Please fill in both the subject and forward to fields",
@@ -122,23 +139,23 @@ const Workflow = () => {
     }
 
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("No user found");
+
       const { data, error } = await supabase
         .from('workflow_unsuitable_subjects')
         .insert({
-          subject: newSubject.name,
-          forward_to: newSubject.forwardTo
+          profile_id: user.id,
+          subject: newSubject.subject,
+          forward_to: newSubject.forward_to
         })
         .select()
         .single();
 
       if (error) throw error;
 
-      setSubjects([...subjects, {
-        id: data.id,
-        name: data.subject,
-        forwardTo: data.forward_to
-      }]);
-      setNewSubject({ name: "", forwardTo: "" });
+      setSubjects([...subjects, data]);
+      setNewSubject({ subject: "", forward_to: "" });
       
       toast({
         title: "Subject added",
@@ -200,13 +217,13 @@ const Workflow = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             {urgencySettings.map((setting) => (
-              <div key={setting.urgencyLevel} className="grid gap-4 p-4 rounded-lg bg-forest-dark/30">
+              <div key={setting.urgency_level} className="grid gap-4 p-4 rounded-lg bg-forest-dark/30">
                 <div className="flex items-center gap-4">
-                  <span className="text-white font-semibold min-w-[40px]">{setting.urgencyLevel}</span>
+                  <span className="text-white font-semibold min-w-[40px]">{setting.urgency_level}</span>
                   <Select
-                    value={setting.forwardStep}
+                    value={setting.forward_step}
                     onValueChange={(value: 'call_112' | 'forward_to_assistant' | 'provide_selfcare') => 
-                      handleUrgencySettingChange(setting.urgencyLevel, { forwardStep: value })
+                      handleUrgencySettingChange(setting.urgency_level, { forward_step: value })
                     }
                   >
                     <SelectTrigger className="bg-forest border-mint/20">
@@ -220,25 +237,25 @@ const Workflow = () => {
                   </Select>
                 </div>
 
-                {setting.forwardStep === 'forward_to_assistant' && (
+                {setting.forward_step === 'forward_to_assistant' && (
                   <div className="ml-[56px]">
                     <Input
                       placeholder="Assistant's phone number"
-                      value={setting.assistantPhone || ''}
-                      onChange={(e) => handleUrgencySettingChange(setting.urgencyLevel, { 
-                        assistantPhone: e.target.value 
+                      value={setting.assistant_phone || ''}
+                      onChange={(e) => handleUrgencySettingChange(setting.urgency_level, { 
+                        assistant_phone: e.target.value 
                       })}
                       className="bg-forest border-mint/20"
                     />
                   </div>
                 )}
 
-                {setting.forwardStep === 'provide_selfcare' && (
+                {setting.forward_step === 'provide_selfcare' && (
                   <div className="ml-[56px]">
                     <Select
-                      value={setting.adviceType || 'simple'}
+                      value={setting.advice_type || 'simple'}
                       onValueChange={(value: 'simple' | 'extensive') => 
-                        handleUrgencySettingChange(setting.urgencyLevel, { adviceType: value })
+                        handleUrgencySettingChange(setting.urgency_level, { advice_type: value })
                       }
                     >
                       <SelectTrigger className="bg-forest border-mint/20">
@@ -272,8 +289,8 @@ const Workflow = () => {
                   <Label className="text-white">Subject</Label>
                   <Input
                     placeholder="Enter subject"
-                    value={newSubject.name}
-                    onChange={(e) => setNewSubject({ ...newSubject, name: e.target.value })}
+                    value={newSubject.subject}
+                    onChange={(e) => setNewSubject({ ...newSubject, subject: e.target.value })}
                     className="bg-forest border-mint/20"
                   />
                 </div>
@@ -281,8 +298,8 @@ const Workflow = () => {
                   <Label className="text-white">Forward To</Label>
                   <Input
                     placeholder="Enter destination"
-                    value={newSubject.forwardTo}
-                    onChange={(e) => setNewSubject({ ...newSubject, forwardTo: e.target.value })}
+                    value={newSubject.forward_to}
+                    onChange={(e) => setNewSubject({ ...newSubject, forward_to: e.target.value })}
                     className="bg-forest border-mint/20"
                   />
                 </div>
@@ -306,7 +323,7 @@ const Workflow = () => {
                 >
                   <div className="grid gap-2 flex-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-white font-medium">{subject.name}</span>
+                      <span className="text-white font-medium">{subject.subject}</span>
                       <Button
                         variant="ghost"
                         size="sm"
@@ -316,7 +333,7 @@ const Workflow = () => {
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
-                    <span className="text-white/60 text-sm">→ {subject.forwardTo}</span>
+                    <span className="text-white/60 text-sm">→ {subject.forward_to}</span>
                   </div>
                 </div>
               ))}
