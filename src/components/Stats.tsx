@@ -20,7 +20,7 @@ const Stats = () => {
             <div className="p-3 bg-mint/10 rounded-full">
               <Clock className="w-6 h-6 text-mint" />
             </div>
-            <h3 className="text-4xl font-bold text-white">20s</h3>
+            <h3 className="text-4xl font-bold text-white">2s</h3>
             <p className="text-white/80">{t("stats.handling")}</p>
           </div>
 
