@@ -246,3 +246,4 @@ export function AdminSidebar() {
       </div>
     </Sidebar>
   );
+}
