@@ -8,7 +8,6 @@ import {
   DollarSign,
   FileText,
   Activity,
-  Bot,
   LogOut,
   Shield,
   CreditCard,
@@ -92,14 +91,12 @@ export function AdminSidebar() {
 
   const clientMenuItems = [
     { title: "Overview", icon: Home, path: "/dashboard" },
-    { title: "Assistant", icon: Bot, path: "/dashboard/assistant" },
     { title: "Workflow", icon: GitBranch, path: "/dashboard/workflow" },
     { title: "Worker Output", icon: Phone, path: "/dashboard/calls" },
   ];
 
   const adminMenuItems = [
     { title: "Overview", icon: Home, path: "/dashboard" },
-    { title: "Assistant", icon: Bot, path: "/dashboard/assistant" },
     { title: "Worker Output", icon: Phone, path: "/dashboard/calls" },
     { title: "Appointments", icon: Calendar, path: "/dashboard/appointments" },
     { title: "Calendar", icon: Calendar, path: "/dashboard/calendar" },
@@ -249,4 +246,3 @@ export function AdminSidebar() {
       </div>
     </Sidebar>
   );
-}
