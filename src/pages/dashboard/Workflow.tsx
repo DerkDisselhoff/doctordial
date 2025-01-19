@@ -7,6 +7,8 @@ import { GitBranch, Plus, Trash2, Save, Edit2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabaseClient";
 import { getUrgencyColor } from "@/utils/urgencyUtils";
+import { LiveStatusCard } from "@/components/dashboard/assistant/LiveStatusCard";
+import { AssistantSettingsCard } from "@/components/dashboard/assistant/AssistantSettingsCard";
 import {
   Select,
   SelectContent,
@@ -49,6 +51,7 @@ export function Workflow() {
     subject: "",
     forward_to: ""
   });
+  const [isLive, setIsLive] = useState(false);
 
   useEffect(() => {
     fetchWorkflowSettings();
@@ -269,6 +272,12 @@ export function Workflow() {
       </div>
 
       <div className="grid gap-4">
+        {/* Assistant Status Card */}
+        <LiveStatusCard 
+          isLive={isLive}
+          onStatusChange={setIsLive}
+        />
+
         {/* Urgency Level Forwarding Section */}
         <Card className="bg-forest-light/50 border-mint/10">
           <CardHeader className="flex flex-row items-center justify-between">
@@ -371,7 +380,6 @@ export function Workflow() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {/* Add New Subject Form */}
             <div className="grid gap-3 p-3 rounded-lg bg-forest-dark/30 mb-4">
               <div className="grid gap-3 md:grid-cols-[1fr,1fr,auto]">
                 <div className="space-y-2">
@@ -464,6 +472,9 @@ export function Workflow() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Assistant Settings Card */}
+        <AssistantSettingsCard onSettingChange={() => {}} />
       </div>
     </div>
   );
