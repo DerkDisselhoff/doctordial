@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Phone, Clock, MessageCircle, User, ThumbsUp, AlertCircle, Calendar, ArrowRight, Tag, Building2, FileCheck } from "lucide-react";
+import { Phone, Clock, MessageCircle, User, ThumbsUp, AlertCircle, Calendar, ArrowRight, Flag } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
 import { getUrgencyColor } from "@/utils/urgencyUtils";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface CallLog {
   id: string;
@@ -22,6 +29,7 @@ interface CallLog {
   follow_up_notes: string | null;
   transcript: string | null;
   Action: string | null;
+  flagging: any | null; // Added flagging field
 }
 
 const fetchCallDetails = async (callId: string) => {
@@ -110,10 +118,10 @@ export function CallDetail() {
         if (error) throw error;
         if (!data) throw new Error('Call not found');
         
-        console.log("Retrieved call data:", data); // Add logging
+        console.log("Retrieved call data:", data);
         return data as CallLog;
       } catch (err) {
-        console.error("Error fetching call details:", err); // Add error logging
+        console.error("Error fetching call details:", err);
         throw err;
       }
     },
@@ -128,14 +136,14 @@ export function CallDetail() {
 
   const handleSave = async () => {
     try {
-      console.log("Saving call data:", editedCall); // Add logging
+      console.log("Saving call data:", editedCall);
       const { error } = await supabase
         .from('call_logs')
         .update(editedCall)
         .eq('call_id', callId);
 
       if (error) {
-        console.error("Error saving call:", error); // Add error logging
+        console.error("Error saving call:", error);
         throw error;
       }
 
@@ -147,7 +155,7 @@ export function CallDetail() {
       setIsEditing(false);
       refetch();
     } catch (error) {
-      console.error("Save error:", error); // Add error logging
+      console.error("Save error:", error);
       toast({
         title: "Error saving changes",
         description: "Please try again.",
@@ -161,6 +169,37 @@ export function CallDetail() {
       ...prev,
       [field]: value
     }));
+  };
+
+  const handleFlag = async (reason: string) => {
+    try {
+      const flaggingData = {
+        reason,
+        timestamp: new Date().toISOString(),
+        user_id: (await supabase.auth.getUser()).data.user?.id,
+      };
+
+      const { error } = await supabase
+        .from('call_logs')
+        .update({ flagging: flaggingData })
+        .eq('call_id', callId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Call flagged successfully",
+        description: "The issue has been recorded.",
+      });
+
+      refetch();
+    } catch (error) {
+      console.error("Error flagging call:", error);
+      toast({
+        title: "Error flagging call",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (isLoading) {
@@ -181,12 +220,71 @@ export function CallDetail() {
     );
   }
 
-  const transcriptMessages = formatTranscript(isEditing ? editedCall.transcript : call.transcript);
-  const soepNotes = parseSOEPNotes(isEditing ? editedCall.follow_up_notes : call.follow_up_notes);
-
   return (
     <div className="space-y-4">
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-between mb-4">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className={`flex items-center gap-2 ${call.flagging ? 'bg-red-500/20 text-red-500 hover:bg-red-500/30' : ''}`}
+                  >
+                    <Flag className="h-4 w-4" />
+                    Flag This Call
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-72 bg-forest-light border-mint/10">
+                  <div className="px-2 py-1.5 text-sm font-medium text-white/70">
+                    Reason for Flagging
+                  </div>
+                  <DropdownMenuItem
+                    className="text-white hover:bg-mint/10"
+                    onClick={() => handleFlag("Wrong Urgency")}
+                  >
+                    Wrong Urgency: The urgency level (U1–U5) was incorrect
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="text-white hover:bg-mint/10"
+                    onClick={() => handleFlag("Bad Advice")}
+                  >
+                    Bad Advice: The advice given was not helpful or clear
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="text-white hover:bg-mint/10"
+                    onClick={() => handleFlag("Missed Information")}
+                  >
+                    Missed Information: The system didn't consider all details
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="text-white hover:bg-mint/10"
+                    onClick={() => handleFlag("Tone or Empathy Issue")}
+                  >
+                    Tone or Empathy Issue: Response wasn't appropriate
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="text-white hover:bg-mint/10"
+                    onClick={() => handleFlag("Wrong Referral")}
+                  >
+                    Wrong Referral: Wrong action or referral recommended
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="text-white hover:bg-mint/10"
+                    onClick={() => handleFlag("Other")}
+                  >
+                    Other: Something else was wrong
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Click to flag if the system's outcome was not correct or helpful</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        
         {isEditing ? (
           <div className="space-x-2">
             <Button

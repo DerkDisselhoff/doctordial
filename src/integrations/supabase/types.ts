@@ -61,6 +61,7 @@ export type Database = {
           Emotion: string | null
           end_time: string | null
           ended_reason: string | null
+          flagging: Json | null
           follow_up_notes: string | null
           Forwarded: boolean | null
           id: string
@@ -93,6 +94,7 @@ export type Database = {
           Emotion?: string | null
           end_time?: string | null
           ended_reason?: string | null
+          flagging?: Json | null
           follow_up_notes?: string | null
           Forwarded?: boolean | null
           id?: string
@@ -125,6 +127,7 @@ export type Database = {
           Emotion?: string | null
           end_time?: string | null
           ended_reason?: string | null
+          flagging?: Json | null
           follow_up_notes?: string | null
           Forwarded?: boolean | null
           id?: string
