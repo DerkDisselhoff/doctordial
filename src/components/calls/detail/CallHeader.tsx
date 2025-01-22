@@ -62,7 +62,7 @@ export function CallHeader({
 
   return (
     <div className="flex justify-between mb-4">
-      <div className="flex-1" /> {/* Spacer */}
+      <div className="flex-1" />
       <div className="flex gap-2">
         <TooltipProvider>
           <Tooltip>
@@ -77,45 +77,39 @@ export function CallHeader({
                     Flag This Call
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-72 bg-forest-light border-mint/10">
+                <DropdownMenuContent className="w-[400px] bg-forest-light border-mint/10">
                   <div className="px-2 py-1.5 text-sm font-medium text-white/70">
                     Reason for Flagging
                   </div>
                   <DropdownMenuItem
                     className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Wrong Urgency")}
+                    onClick={() => handleFlag("The urgency level (U1–U5) was incorrect")}
                   >
-                    Wrong Urgency: The urgency level (U1–U5) was incorrect
+                    The urgency level (U1–U5) was incorrect
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Bad Advice")}
+                    onClick={() => handleFlag("The advice given was not helpful or clear")}
                   >
-                    Bad Advice: The advice given was not helpful or clear
+                    The advice given was not helpful or clear
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Missed Information")}
+                    onClick={() => handleFlag("The system didn't consider all information")}
                   >
-                    Missed Information: The system didn't consider all details
+                    The system didn't consider all information
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Tone or Empathy Issue")}
+                    onClick={() => handleFlag("Response wasn't approriate, it missed empathy")}
                   >
-                    Tone or Empathy Issue: Response wasn't appropriate
+                    Response wasn't approriate, it missed empathy
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Wrong Referral")}
+                    onClick={() => handleFlag("Wrong action or referral")}
                   >
-                    Wrong Referral: Wrong action or referral recommended
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Other")}
-                  >
-                    Other: Something else was wrong
+                    Wrong action or referral
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
