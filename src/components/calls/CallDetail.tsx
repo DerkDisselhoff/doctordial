@@ -104,6 +104,8 @@ export function CallDetail() {
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [editedCall, setEditedCall] = useState<Partial<CallLog>>({});
+  const [soepNotes, setSoepNotes] = useState<Record<string, string>>({});
+  const [transcriptMessages, setTranscriptMessages] = useState<Array<{role: string, content: string}>>([]);
   
   const { data: call, isLoading, error, refetch } = useQuery({
     queryKey: ['callDetail', callId],
@@ -131,6 +133,8 @@ export function CallDetail() {
   useEffect(() => {
     if (call) {
       setEditedCall(call);
+      setSoepNotes(parseSOEPNotes(call.follow_up_notes));
+      setTranscriptMessages(formatTranscript(call.transcript));
     }
   }, [call]);
 
