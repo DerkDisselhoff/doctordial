@@ -1,22 +1,15 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Phone, Clock, MessageCircle, User, ThumbsUp, AlertCircle, Calendar, ArrowRight, Flag } from "lucide-react";
+import { useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
-import { getUrgencyColor } from "@/utils/urgencyUtils";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { CallHeader } from "./detail/CallHeader";
+import { CallOverview } from "./detail/CallOverview";
+import { CallSOEP } from "./detail/CallSOEP";
+import { CallSummary } from "./detail/CallSummary";
+import { CallTranscript } from "./detail/CallTranscript";
 
-interface CallLog {
+export interface CallLog {
   id: string;
   call_id: string;
   start_time: string;
@@ -29,20 +22,8 @@ interface CallLog {
   follow_up_notes: string | null;
   transcript: string | null;
   Action: string | null;
-  flagging: any | null; // Added flagging field
+  flagging: any | null;
 }
-
-const fetchCallDetails = async (callId: string) => {
-  const { data, error } = await supabase
-    .from('call_logs')
-    .select('*')
-    .eq('call_id', callId)
-    .maybeSingle();
-
-  if (error) throw error;
-  if (!data) throw new Error('Call not found');
-  return data as CallLog;
-};
 
 // Helper function to format transcript messages
 const formatTranscript = (transcript: string | null) => {
@@ -67,36 +48,6 @@ const parseSOEPNotes = (notes: string | null) => {
     }
   });
   return sections;
-};
-
-// Helper function to get sentiment color classes
-const getSentimentColor = (sentiment: string) => {
-  switch (sentiment?.toLowerCase()) {
-    case 'positive':
-      return 'bg-green-500/20 border-green-500/30 text-green-500';
-    case 'negative':
-      return 'bg-red-500/20 border-red-500/30 text-red-500';
-    case 'neutral':
-      return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
-    default:
-      return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
-  }
-};
-
-// Helper function to get status color classes
-const getStatusColor = (status: string) => {
-  switch (status?.toLowerCase()) {
-    case 'completed':
-      return 'bg-green-500/20 border-green-500/30 text-green-500';
-    case 'in progress':
-      return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
-    case 'scheduled':
-      return 'bg-purple-500/20 border-purple-500/30 text-purple-500';
-    case 'missed':
-      return 'bg-red-500/20 border-red-500/30 text-red-500';
-    default:
-      return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
-  }
 };
 
 export function CallDetail() {
@@ -175,37 +126,6 @@ export function CallDetail() {
     }));
   };
 
-  const handleFlag = async (reason: string) => {
-    try {
-      const flaggingData = {
-        reason,
-        timestamp: new Date().toISOString(),
-        user_id: (await supabase.auth.getUser()).data.user?.id,
-      };
-
-      const { error } = await supabase
-        .from('call_logs')
-        .update({ flagging: flaggingData })
-        .eq('call_id', callId);
-
-      if (error) throw error;
-
-      toast({
-        title: "Call flagged successfully",
-        description: "The issue has been recorded.",
-      });
-
-      refetch();
-    } catch (error) {
-      console.error("Error flagging call:", error);
-      toast({
-        title: "Error flagging call",
-        description: "Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
   if (isLoading) {
     return (
       <div className="flex justify-center p-4">
@@ -216,290 +136,45 @@ export function CallDetail() {
 
   if (error || !call) {
     return (
-      <Card>
-        <CardContent className="p-4">
-          <p className="text-center text-white/70">Call not found</p>
-        </CardContent>
-      </Card>
+      <div className="p-4 text-center text-white/70">
+        Call not found
+      </div>
     );
   }
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between mb-4">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    className={`flex items-center gap-2 ${call.flagging ? 'bg-red-500/20 text-red-500 hover:bg-red-500/30' : ''}`}
-                  >
-                    <Flag className="h-4 w-4" />
-                    Flag This Call
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-72 bg-forest-light border-mint/10">
-                  <div className="px-2 py-1.5 text-sm font-medium text-white/70">
-                    Reason for Flagging
-                  </div>
-                  <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Wrong Urgency")}
-                  >
-                    Wrong Urgency: The urgency level (U1–U5) was incorrect
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Bad Advice")}
-                  >
-                    Bad Advice: The advice given was not helpful or clear
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Missed Information")}
-                  >
-                    Missed Information: The system didn't consider all details
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Tone or Empathy Issue")}
-                  >
-                    Tone or Empathy Issue: Response wasn't appropriate
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Wrong Referral")}
-                  >
-                    Wrong Referral: Wrong action or referral recommended
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
-                    onClick={() => handleFlag("Other")}
-                  >
-                    Other: Something else was wrong
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Click to flag if the system's outcome was not correct or helpful</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        
-        {isEditing ? (
-          <div className="space-x-2">
-            <Button
-              onClick={() => {
-                setIsEditing(false);
-                setEditedCall(call);
-              }}
-              variant="outline"
-              className="text-white hover:text-forest"
-            >
-              Cancel
-            </Button>
-            <Button onClick={handleSave}>Save Changes</Button>
-          </div>
-        ) : (
-          <Button onClick={() => setIsEditing(true)}>Edit</Button>
-        )}
-      </div>
-
-      <Card className="bg-forest-light/50 border-mint/10">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-white">Call Overview</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-mint" />
-                <div>
-                  <p className="text-sm text-white/60">Call ID</p>
-                  <p className="text-white font-medium">{call.id}</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <User className="h-5 w-5 text-mint" />
-                <div>
-                  <p className="text-sm text-white/60">Patient</p>
-                  <p className="text-white font-medium">{call.Name || 'Unknown'}</p>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <Clock className="h-5 w-5 text-mint" />
-                <div>
-                  <p className="text-sm text-white/60">Duration</p>
-                  <p className="text-white font-medium">{call.duration_seconds || 0} seconds</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <Calendar className="h-5 w-5 text-mint" />
-                <div>
-                  <p className="text-sm text-white/60">Date & Time</p>
-                  <p className="text-white font-medium">
-                    {new Date(call.start_time).toLocaleString()}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <ThumbsUp className="h-5 w-5 text-mint" />
-                <div>
-                  <p className="text-sm text-white/60">Sentiment</p>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getSentimentColor(call.Sentiment)}`}>
-                    {call.Sentiment || 'N/A'}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <AlertCircle className="h-5 w-5 text-mint" />
-                <div>
-                  <p className="text-sm text-white/60">Urgency</p>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getUrgencyColor(call.Urgencylevel)}`}>
-                    {call.Urgencylevel || 'N/A'}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <MessageCircle className="h-5 w-5 text-mint" />
-                <div>
-                  <p className="text-sm text-white/60">Status</p>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(call.Status)}`}>
-                    {call.Status || 'N/A'}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="bg-forest-light/50 border-mint/10">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-white">SOEP</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {isEditing ? (
-            <Textarea
-              value={editedCall.follow_up_notes || ''}
-              onChange={(e) => handleInputChange('follow_up_notes', e.target.value)}
-              className="min-h-[200px] mb-4 bg-forest-light/50 text-white placeholder-white/40 border-mint/20"
-              placeholder="Enter SOEP notes (Format: S: ... O: ... E: ... P: ...)"
-            />
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {Object.entries(soepNotes).map(([section, content]) => (
-                <div key={section} className="p-4 bg-forest rounded-lg border border-mint/10">
-                  <h4 className="text-mint font-medium mb-2">
-                    {section === 'S' ? 'Subjective' :
-                     section === 'O' ? 'Objective' :
-                     section === 'E' ? 'Evaluation' :
-                     section === 'P' ? 'Plan' : section}
-                  </h4>
-                  <p className="text-white/70">{content || 'No information available'}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      <Card className="bg-forest-light/50 border-mint/10">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-white">Call Summary</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {isEditing ? (
-            <Textarea
-              value={editedCall.conversation_summary || ''}
-              onChange={(e) => handleInputChange('conversation_summary', e.target.value)}
-              className="mb-4 bg-forest-light/50 text-white placeholder-white/40 border-mint/20"
-              placeholder="Enter call summary"
-            />
-          ) : (
-            <p className="text-white/70 mb-4">{call.conversation_summary || 'No summary available'}</p>
-          )}
-          
-          <div className="space-y-3">
-            <h3 className="text-lg font-semibold text-white">Follow-up Details</h3>
-            <div className="p-3 bg-forest rounded-lg border border-mint/10">
-              <div className="flex items-start space-x-3">
-                <ArrowRight className="h-5 w-5 text-mint mt-0.5" />
-                <div>
-                  <p className="text-white font-medium mb-1">Forwarded</p>
-                  {isEditing ? (
-                    <Textarea
-                      value={editedCall.Action || ''}
-                      onChange={(e) => handleInputChange('Action', e.target.value)}
-                      className="bg-forest-light/50 text-white placeholder-white/40 border-mint/20"
-                      placeholder="Enter forwarding details"
-                    />
-                  ) : (
-                    <p className="text-white/70">{call.Action || 'No action required'}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="bg-forest-light/50 border-mint/10">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-white">Call Transcript</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {isEditing ? (
-            <Textarea
-              value={editedCall.transcript || ''}
-              onChange={(e) => handleInputChange('transcript', e.target.value)}
-              className="min-h-[300px] bg-forest-light/50 text-white placeholder-white/40 border-mint/20"
-              placeholder="Enter transcript (Format: AI: ... User: ...)"
-            />
-          ) : (
-            <div className="space-y-4">
-              {transcriptMessages.length > 0 ? (
-                transcriptMessages.map((message, index) => (
-                  <div
-                    key={index}
-                    className={`flex gap-4 ${
-                      message.role === 'AI' ? 'flex-row' : 'flex-row-reverse'
-                    }`}
-                  >
-                    <div className={`flex-shrink-0 w-16 text-sm font-medium ${
-                      message.role === 'AI' ? 'text-mint' : 'text-divine'
-                    }`}>
-                      {message.role}
-                    </div>
-                    <div className={`flex-grow p-3 rounded-lg ${
-                      message.role === 'AI' 
-                        ? 'bg-forest border border-mint/10' 
-                        : 'bg-forest-light border border-divine/10'
-                    }`}>
-                      <p className="text-white/80">{message.content}</p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-white/60">No transcript available</p>
-              )}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      <CallHeader 
+        callId={callId!}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        handleSave={handleSave}
+        isFlagged={!!call.flagging}
+        refetch={refetch}
+      />
+      
+      <CallOverview call={call} />
+      
+      <CallSOEP 
+        isEditing={isEditing}
+        soepNotes={soepNotes}
+        editedCall={editedCall}
+        handleInputChange={handleInputChange}
+      />
+      
+      <CallSummary 
+        isEditing={isEditing}
+        editedCall={editedCall}
+        handleInputChange={handleInputChange}
+        call={call}
+      />
+      
+      <CallTranscript 
+        isEditing={isEditing}
+        editedCall={editedCall}
+        handleInputChange={handleInputChange}
+        transcriptMessages={transcriptMessages}
+      />
     </div>
   );
 }
