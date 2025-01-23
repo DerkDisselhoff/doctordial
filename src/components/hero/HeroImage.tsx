@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import AIDemoButton from "./AIDemoButton";
 import StatsBadge from "./StatsBadge";
 import { generateAIAgentImage } from "@/services/runwareService";
@@ -7,6 +8,7 @@ import { generateAIAgentImage } from "@/services/runwareService";
 const HeroImage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [aiAgentImage, setAiAgentImage] = useState<string | null>(null);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
 
@@ -26,11 +28,30 @@ const HeroImage = () => {
       }
     };
 
+    const loadAudioFile = async () => {
+      try {
+        const { data, error } = await supabase.storage
+          .from('audiofiles public')
+          .createSignedUrl('demo-conversation.mp3', 3600); // URL valid for 1 hour
+
+        if (error) throw error;
+        setAudioUrl(data.signedUrl);
+      } catch (error) {
+        console.error('Error loading audio file:', error);
+        toast({
+          title: "Error loading audio",
+          description: "Failed to load the demo audio file.",
+          variant: "destructive",
+        });
+      }
+    };
+
     loadAIAgentImage();
+    loadAudioFile();
   }, [toast]);
 
   const handlePlayDemo = () => {
-    if (!audioRef.current) {
+    if (!audioRef.current || !audioUrl) {
       toast({
         title: "Audio not available",
         description: "The demo audio file could not be loaded.",
@@ -89,13 +110,15 @@ const HeroImage = () => {
         <StatsBadge value="24/7" label="Patient Support" />
       </div>
       
-      <audio
-        ref={audioRef}
-        onEnded={() => setIsPlaying(false)}
-        className="hidden"
-      >
-        <source src="/lovable-uploads/demo-conversation.mp3" type="audio/mpeg" />
-      </audio>
+      {audioUrl && (
+        <audio
+          ref={audioRef}
+          onEnded={() => setIsPlaying(false)}
+          className="hidden"
+        >
+          <source src={audioUrl} type="audio/mpeg" />
+        </audio>
+      )}
     </div>
   );
 };
