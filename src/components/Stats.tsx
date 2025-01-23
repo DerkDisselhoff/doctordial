@@ -12,8 +12,8 @@ const Stats = () => {
             <div className="p-3 bg-mint/10 rounded-full">
               <UserCheck className="w-6 h-6 text-mint" />
             </div>
-            <h3 className="text-4xl font-bold text-white">95%</h3>
-            <p className="text-white/80">{t("stats.accuracy")}</p>
+            <h3 className="text-4xl font-bold text-white">60</h3>
+            <p className="text-white/80">Simultaneous Calls per Assistant</p>
           </div>
 
           <div className="flex flex-col items-center text-center space-y-4 animate-fade-up p-6 rounded-lg hover:bg-mint/5 transition-colors" style={{ animationDelay: "150ms" }}>
