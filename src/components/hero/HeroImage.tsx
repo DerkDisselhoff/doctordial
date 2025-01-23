@@ -32,7 +32,7 @@ const HeroImage = () => {
       try {
         const { data, error } = await supabase.storage
           .from('audiofiles public')
-          .createSignedUrl('demo-conversation.mp3', 3600); // URL valid for 1 hour
+          .createSignedUrl('8d94a647-4cb5-4554-b6d4-6ee3195a11a6-1737135918275-99f78ac8-9798-450b-ac49-dccf1eb9eb56-stereo.mp3', 3600); // URL valid for 1 hour
 
         if (error) throw error;
         setAudioUrl(data.signedUrl);
