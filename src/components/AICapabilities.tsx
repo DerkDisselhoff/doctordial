@@ -359,7 +359,7 @@ const AICapabilities = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              AI-Powered Capabilities
+              Digital Workers, Ready to Deploy
             </motion.h2>
             <motion.p 
               className="text-gray max-w-2xl mx-auto"
@@ -367,7 +367,7 @@ const AICapabilities = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Discover how our digital workers combine advanced AI with healthcare expertise
+              Discover how our plug-and-play digital workers seamlessly integrate with your practice
             </motion.p>
           </div>
 
