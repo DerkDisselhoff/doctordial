@@ -139,10 +139,10 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
               <TableHead className="text-left p-4 text-gray w-[15%]">Patient</TableHead>
               <TableHead className="text-left p-4 text-gray w-[20%]">Symptoms</TableHead>
               <TableHead className="text-left p-4 text-gray w-[10%]">Urgency</TableHead>
-              <TableHead className="text-left p-4 text-gray w-[15%]">Forwarded</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[12%]">Forwarded</TableHead>
               <TableHead className="text-left p-4 text-gray w-[20%]">Summary</TableHead>
-              <TableHead className="text-left p-4 text-gray w-[10%]">Duration</TableHead>
-              <TableHead className="text-left p-4 text-gray w-[10%]">Emotion</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[8%]">Duration</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[15%]">Emotion</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -163,7 +163,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                     {call.Urgencylevel}
                   </span>
                 </TableCell>
-                <TableCell className="p-4 w-[15%]">
+                <TableCell className="p-4 w-[12%]">
                   <span className={`px-2 py-1 rounded-full text-xs ${
                     call.Forwarded
                       ? 'bg-green-light text-green'
@@ -177,10 +177,10 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                     {call.conversation_summary}
                   </div>
                 </TableCell>
-                <TableCell className="p-4 text-gray w-[10%]">
+                <TableCell className="p-4 text-gray w-[8%]">
                   {call.duration_seconds ? `${Math.round(parseFloat(call.duration_seconds))}s` : 'N/A'}
                 </TableCell>
-                <TableCell className="p-4 w-[10%]">
+                <TableCell className="p-4 w-[15%]">
                   <span className={`px-2 py-1 rounded-full text-xs border ${getEmotionColor(call.Emotion)}`}>
                     {call.Emotion || 'N/A'}
                   </span>
