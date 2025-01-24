@@ -125,8 +125,8 @@ export function AdminSidebar() {
         variant="ghost"
         className={`w-full justify-start gap-3 px-3 py-2 ${
           isActive 
-            ? 'bg-mint/10 text-white' 
-            : 'text-white/70 hover:bg-mint/10 hover:text-white'
+            ? 'bg-blue-light text-gray-dark' 
+            : 'text-gray hover:bg-blue-light hover:text-gray-dark'
         }`}
         onClick={() => navigate(path)}
       >
@@ -146,8 +146,8 @@ export function AdminSidebar() {
             variant="ghost"
             className={`w-full justify-start gap-3 px-3 py-2 ${
               isSettingsActive 
-                ? 'bg-mint/10 text-white' 
-                : 'text-white/70 hover:bg-mint/10 hover:text-white'
+                ? 'bg-blue-light text-gray-dark' 
+                : 'text-gray hover:bg-blue-light hover:text-gray-dark'
             }`}
           >
             <Settings className="h-5 w-5" />
@@ -155,7 +155,7 @@ export function AdminSidebar() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-56 bg-forest-light border-mint/10"
+          className="w-56 bg-white border-gray-muted"
           align="start"
           alignOffset={0}
           sideOffset={2}
@@ -163,7 +163,7 @@ export function AdminSidebar() {
           {settingsMenuItems.map((item) => (
             <DropdownMenuItem
               key={item.title}
-              className="text-white/70 hover:text-white hover:bg-mint/5 cursor-pointer"
+              className="text-gray hover:text-gray-dark hover:bg-blue-light cursor-pointer"
               onClick={() => navigate(item.path)}
             >
               <item.icon className="mr-2 h-4 w-4" />
@@ -177,13 +177,13 @@ export function AdminSidebar() {
 
   return (
     <Sidebar>
-      <div className="flex h-full w-64 flex-col bg-forest-light/95 backdrop-blur-xl border-r border-mint/10">
-        <div className="p-6 border-b border-mint/10">
-          <Logo className="text-white" />
+      <div className="flex h-full w-64 flex-col bg-white border-r border-gray-muted">
+        <div className="p-6 border-b border-gray-muted">
+          <Logo className="text-gray-dark" />
           {userProfile?.company_name && (
-            <div className="mt-4 text-white/70">
-              <p className="text-sm font-medium">{userProfile.company_name}</p>
-              <p className="text-xs">Netherlands</p>
+            <div className="mt-4">
+              <p className="text-sm font-medium text-gray-dark">{userProfile.company_name}</p>
+              <p className="text-xs text-gray">Netherlands</p>
             </div>
           )}
         </div>
@@ -212,29 +212,29 @@ export function AdminSidebar() {
           </SidebarGroup>
         </SidebarContent>
 
-        <div className="border-t border-mint/10 p-4">
+        <div className="border-t border-gray-muted p-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="w-full justify-start gap-3 px-2 hover:bg-mint/5">
-                <Avatar className="h-8 w-8 ring-2 ring-mint/20">
+              <Button variant="ghost" className="w-full justify-start gap-3 px-2 hover:bg-blue-light">
+                <Avatar className="h-8 w-8 ring-2 ring-blue-muted">
                   <AvatarImage src={userProfile?.avatar_url || ''} />
-                  <AvatarFallback className="bg-mint/10 text-forest">
+                  <AvatarFallback className="bg-blue-light text-gray-dark">
                     {userProfile?.username?.[0]?.toUpperCase() || 'U'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col items-start text-left">
-                  <span className="text-sm font-medium text-white">
+                  <span className="text-sm font-medium text-gray-dark">
                     {userProfile?.username || 'User'}
                   </span>
-                  <span className="text-xs text-white/60">
+                  <span className="text-xs text-gray">
                     {userRole === 'admin' ? 'Administrator' : 'Practice Manager'}
                   </span>
                 </div>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-forest-light border-mint/10">
+            <DropdownMenuContent align="end" className="w-56 bg-white border-gray-muted">
               <DropdownMenuItem 
-                className="text-red-400 hover:text-red-300 hover:bg-mint/5 cursor-pointer"
+                className="text-red-400 hover:text-red-300 hover:bg-blue-light cursor-pointer"
                 onClick={handleLogout}
               >
                 <LogOut className="mr-2 h-4 w-4" />
