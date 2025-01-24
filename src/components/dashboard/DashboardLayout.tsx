@@ -88,7 +88,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-gray-muted">
+    <div className="min-h-screen" style={{ backgroundColor: '#fcfcfc' }}>
       <SidebarProvider>
         <div className="flex min-h-screen w-full">
           <div className="fixed top-0 left-0 h-full z-40">
