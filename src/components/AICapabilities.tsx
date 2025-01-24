@@ -13,6 +13,7 @@ const capabilities = [
     icon: Brain,
     title: "Medical Intelligence",
     description: "Trained on NHG triage standards and medical datasets for accurate patient assessment",
+    bgImage: "/lovable-uploads/a53de0d0-4b12-4213-ab96-e580a04350ba.png",
     animation: {
       variants: {
         hidden: { pathLength: 0, opacity: 0 },
@@ -107,10 +108,10 @@ const capabilities = [
 
 const AICapabilities = () => {
   return (
-    <section className="w-full bg-gradient-to-b from-mint-light/40 to-blue-light/50">
+    <section className="w-full bg-gradient-to-b from-mint-light/40 to-blue-light/50 overflow-hidden">
       <div className="container mx-auto py-16 md:py-24 px-4">
         <div className="relative">
-          {/* Floating background elements */}
+          {/* Enhanced floating background elements */}
           <motion.div
             className="absolute inset-0 -z-10"
             initial={{ opacity: 0 }}
@@ -119,6 +120,27 @@ const AICapabilities = () => {
           >
             <div className="absolute top-10 left-10 w-32 h-32 bg-mint/20 rounded-full blur-3xl" />
             <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue/20 rounded-full blur-3xl" />
+            {/* Connection lines */}
+            <svg className="absolute inset-0 w-full h-full" style={{ zIndex: -1 }}>
+              <motion.path
+                d="M100,100 C150,150 250,150 300,100"
+                stroke="rgba(16, 185, 129, 0.1)"
+                strokeWidth="2"
+                fill="none"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <motion.path
+                d="M300,200 C250,250 150,250 100,200"
+                stroke="rgba(37, 99, 235, 0.1)"
+                strokeWidth="2"
+                fill="none"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+              />
+            </svg>
           </motion.div>
 
           <div className="text-center mb-12">
@@ -159,23 +181,38 @@ const AICapabilities = () => {
                   return (
                     <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                       <div className="group h-full">
-                        <div className="relative h-full p-6 bg-white rounded-xl border border-gray-muted shadow-sm transition-all duration-300 hover:shadow-md hover:border-mint/20">
-                          <div className="mb-4">
+                        <div className="relative h-full p-6 bg-white rounded-xl border border-gray-muted shadow-sm transition-all duration-300 hover:shadow-xl hover:border-mint/20">
+                          {/* Connection dots */}
+                          <div className="absolute -left-2 top-1/2 w-4 h-4 bg-mint/10 rounded-full" />
+                          <div className="absolute -right-2 top-1/2 w-4 h-4 bg-blue/10 rounded-full" />
+                          
+                          {/* Icon with enhanced container */}
+                          <div className="mb-4 relative">
+                            <div className="absolute inset-0 bg-gradient-to-br from-mint-light to-blue-light opacity-20 rounded-lg transform -rotate-6" />
                             <motion.div 
-                              className="inline-flex p-3 rounded-lg bg-gradient-to-br from-mint-light/30 to-blue-light/30 text-mint"
+                              className="relative inline-flex p-4 rounded-lg bg-gradient-to-br from-mint-light/50 to-blue-light/50 text-mint"
                               initial="hidden"
                               animate="visible"
                               variants={capability.animation.variants}
                             >
-                              <Icon className="w-6 h-6" />
+                              <Icon className="w-8 h-8" />
                             </motion.div>
                           </div>
-                          <h3 className="text-xl font-semibold mb-3 text-gray-dark group-hover:text-mint transition-colors">
-                            {capability.title}
-                          </h3>
-                          <p className="text-gray">
-                            {capability.description}
-                          </p>
+
+                          {/* Enhanced content */}
+                          <div className="relative z-10">
+                            <h3 className="text-xl font-semibold mb-3 text-gray-dark group-hover:text-mint transition-colors">
+                              {capability.title}
+                            </h3>
+                            <p className="text-gray">
+                              {capability.description}
+                            </p>
+                          </div>
+
+                          {/* Decorative background pattern */}
+                          <div className="absolute inset-0 opacity-5 pointer-events-none">
+                            <div className="absolute right-0 bottom-0 w-20 h-20 bg-gradient-to-br from-mint/10 to-blue/10 rounded-tl-3xl" />
+                          </div>
                         </div>
                       </div>
                     </CarouselItem>
