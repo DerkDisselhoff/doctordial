@@ -1,96 +1,24 @@
-import { useState, useEffect } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/lib/supabaseClient";
+import { WorkflowHeader } from "@/components/dashboard/workflow/WorkflowHeader";
+import { WorkflowContainer } from "@/components/dashboard/workflow/WorkflowContainer";
 import { LiveStatusCard } from "@/components/dashboard/assistant/LiveStatusCard";
 import { AssistantSettingsCard } from "@/components/dashboard/assistant/AssistantSettingsCard";
 import { UrgencyLevelForwarding } from "@/components/dashboard/workflow/UrgencyLevelForwarding";
 import { SubjectForwarding } from "@/components/dashboard/workflow/SubjectForwarding";
-
-type ForwardStep = "call_112" | "forward_to_assistant" | "provide_selfcare";
-type AdviceType = "simple" | "extensive";
-
-interface UrgencySettings {
-  id?: string;
-  profile_id: string;
-  urgency_level: string;
-  forward_step: ForwardStep;
-  assistant_phone?: string;
-  advice_type?: AdviceType;
-}
-
-interface Subject {
-  id?: string;
-  profile_id: string;
-  subject: string;
-  forward_to: string;
-}
+import { useWorkflowSettings } from "@/components/dashboard/workflow/hooks/useWorkflowSettings";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/lib/supabaseClient";
 
 export function Workflow() {
   const { toast } = useToast();
-  const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [urgencySettings, setUrgencySettings] = useState<UrgencySettings[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [isLive, setIsLive] = useState(false);
-
-  useEffect(() => {
-    fetchWorkflowSettings();
-  }, []);
-
-  const fetchWorkflowSettings = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("No user found");
-
-      // Initialize default settings if none exist
-      const defaultSettings: UrgencySettings[] = ['U1', 'U2', 'U3', 'U4', 'U5'].map(level => ({
-        urgency_level: level,
-        forward_step: level === 'U1' ? 'call_112' : 
-                     level === 'U5' ? 'provide_selfcare' : 
-                     'forward_to_assistant',
-        profile_id: user.id
-      }));
-
-      // Fetch urgency settings
-      const { data: urgencyData, error: urgencyError } = await supabase
-        .from('workflow_urgency_settings')
-        .select('*')
-        .eq('profile_id', user.id);
-
-      if (urgencyError) throw urgencyError;
-
-      if (!urgencyData || urgencyData.length === 0) {
-        const { error: insertError } = await supabase
-          .from('workflow_urgency_settings')
-          .insert(defaultSettings);
-
-        if (insertError) throw insertError;
-        setUrgencySettings(defaultSettings);
-      } else {
-        setUrgencySettings(urgencyData);
-      }
-
-      // Fetch unsuitable subjects
-      const { data: subjectsData, error: subjectsError } = await supabase
-        .from('workflow_unsuitable_subjects')
-        .select('*')
-        .eq('profile_id', user.id);
-
-      if (subjectsError) throw subjectsError;
-
-      if (subjectsData) {
-        setSubjects(subjectsData);
-      }
-    } catch (error) {
-      console.error('Error fetching workflow settings:', error);
-      toast({
-        title: "Error fetching settings",
-        description: "Failed to load workflow settings",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    subjects,
+    setSubjects,
+    urgencySettings,
+    setUrgencySettings,
+    loading,
+    isLive,
+    setIsLive
+  } = useWorkflowSettings();
 
   const handleUrgencySettingChange = async (level: string, setting: Partial<UrgencySettings>) => {
     try {
@@ -232,33 +160,26 @@ export function Workflow() {
   }
 
   return (
-    <div className="section-spacing">
-      <div>
-        <h2 className="text-3xl font-bold text-white">Workflow Configuration</h2>
-        <p className="text-body-sm text-white/60">Configure how incoming calls are handled</p>
-      </div>
-
+    <WorkflowContainer>
+      <WorkflowHeader />
       <div className="content-spacing">
         <LiveStatusCard 
           isLive={isLive}
           onStatusChange={setIsLive}
         />
-
         <UrgencyLevelForwarding 
           settings={urgencySettings}
           onSettingChange={handleUrgencySettingChange}
         />
-
         <SubjectForwarding
           subjects={subjects}
           onAddSubject={handleAddSubject}
           onUpdateSubject={handleUpdateSubject}
           onRemoveSubject={handleRemoveSubject}
         />
-
         <AssistantSettingsCard onSettingChange={() => {}} />
       </div>
-    </div>
+    </WorkflowContainer>
   );
 }
 
