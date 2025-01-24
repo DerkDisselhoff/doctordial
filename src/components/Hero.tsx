@@ -31,8 +31,39 @@ const Hero = () => {
         <HeroContent />
       </div>
 
-      {/* Decorative grid pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      {/* Graph database style background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <svg className="absolute inset-0 w-full h-full opacity-[0.03]">
+          <defs>
+            <pattern id="graph-pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+              <circle cx="25" cy="25" r="2" fill="currentColor" className="text-gray-600" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#graph-pattern)" />
+          {/* Connection lines */}
+          <g className="text-gray-300">
+            <line x1="10%" y1="20%" x2="30%" y2="40%" stroke="currentColor" strokeWidth="0.5" />
+            <line x1="30%" y1="40%" x2="50%" y2="30%" stroke="currentColor" strokeWidth="0.5" />
+            <line x1="50%" y1="30%" x2="70%" y2="50%" stroke="currentColor" strokeWidth="0.5" />
+            <line x1="70%" y1="50%" x2="90%" y2="40%" stroke="currentColor" strokeWidth="0.5" />
+            <line x1="20%" y1="60%" x2="40%" y2="80%" stroke="currentColor" strokeWidth="0.5" />
+            <line x1="40%" y1="80%" x2="60%" y2="70%" stroke="currentColor" strokeWidth="0.5" />
+            <line x1="60%" y1="70%" x2="80%" y2="90%" stroke="currentColor" strokeWidth="0.5" />
+          </g>
+          {/* Nodes */}
+          <g className="text-mint">
+            <circle cx="10%" cy="20%" r="4" fill="currentColor" opacity="0.3" />
+            <circle cx="30%" cy="40%" r="4" fill="currentColor" opacity="0.3" />
+            <circle cx="50%" cy="30%" r="4" fill="currentColor" opacity="0.3" />
+            <circle cx="70%" cy="50%" r="4" fill="currentColor" opacity="0.3" />
+            <circle cx="90%" cy="40%" r="4" fill="currentColor" opacity="0.3" />
+            <circle cx="20%" cy="60%" r="4" fill="currentColor" opacity="0.3" />
+            <circle cx="40%" cy="80%" r="4" fill="currentColor" opacity="0.3" />
+            <circle cx="60%" cy="70%" r="4" fill="currentColor" opacity="0.3" />
+            <circle cx="80%" cy="90%" r="4" fill="currentColor" opacity="0.3" />
+          </g>
+        </svg>
+      </div>
     </section>
   );
 };

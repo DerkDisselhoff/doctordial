@@ -14,9 +14,9 @@ const HeroContent = () => {
       
       <div className="space-y-6">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-gray-dark">
-          Transform Your <br className="hidden sm:block" />
-          <span className="text-mint">Medical Practice</span> <br className="hidden sm:block" />
-          Communication
+          Digital workers, <br className="hidden sm:block" />
+          <span className="text-mint">human</span> <br className="hidden sm:block" />
+          experience
         </h1>
         
         <p className="text-base md:text-lg text-gray max-w-xl leading-relaxed mx-auto">
