@@ -87,7 +87,7 @@ const getUrgencyColor = (level: string) => {
 const MenuItem = ({ icon: Icon, label, isActive = false }: { icon: any, label: string, isActive?: boolean }) => (
   <div className={cn(
     "flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer transition-colors",
-    isActive ? "bg-mint/10 text-mint" : "text-white/70 hover:bg-mint/5 hover:text-white"
+    isActive ? "bg-blue-light text-blue-dark" : "text-gray hover:bg-blue-light/5 hover:text-gray-dark"
   )}>
     <Icon className="w-5 h-5" />
     <span>{label}</span>
@@ -95,15 +95,15 @@ const MenuItem = ({ icon: Icon, label, isActive = false }: { icon: any, label: s
 );
 
 const StatCard = ({ icon: Icon, label, value, subtext }: { icon: any, label: string, value: string, subtext?: string }) => (
-  <Card className="bg-forest-light/50 border-mint/10 p-4">
+  <Card className="bg-white border-gray-muted p-4">
     <div className="flex items-start justify-between">
       <div>
-        <p className="text-white/70 text-sm">{label}</p>
-        <h4 className="text-2xl font-bold text-white mt-1">{value}</h4>
-        {subtext && <p className="text-xs text-white/50 mt-1">{subtext}</p>}
+        <p className="text-gray text-sm">{label}</p>
+        <h4 className="text-2xl font-bold text-gray-dark mt-1">{value}</h4>
+        {subtext && <p className="text-xs text-gray-light mt-1">{subtext}</p>}
       </div>
-      <div className="p-2 bg-mint/10 rounded-lg">
-        <Icon className="w-5 h-5 text-mint" />
+      <div className="p-2 bg-blue-light rounded-lg">
+        <Icon className="w-5 h-5 text-blue-dark" />
       </div>
     </div>
   </Card>
@@ -111,20 +111,20 @@ const StatCard = ({ icon: Icon, label, value, subtext }: { icon: any, label: str
 
 export function EnhancedUrgencyDashboard() {
   return (
-    <div className="p-6 bg-forest-light rounded-xl border border-mint/10">
+    <div className="p-6 bg-white rounded-xl border border-gray-muted">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
-          <Logo className="text-white" />
-          <div className="border-l border-mint/10 pl-4">
-            <h3 className="text-white font-medium">Centrum Medisch Centrum</h3>
-            <p className="text-white/60 text-sm">Amsterdam, Netherlands</p>
+          <Logo className="text-gray-dark" />
+          <div className="border-l border-gray-muted pl-4">
+            <h3 className="text-gray-dark font-medium">Centrum Medisch Centrum</h3>
+            <p className="text-gray text-sm">Amsterdam, Netherlands</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
           <div className="text-right">
-            <p className="text-white">Dr. Anna van der Meer</p>
-            <p className="text-white/60 text-sm">Practice Manager</p>
+            <p className="text-gray-dark">Dr. Anna van der Meer</p>
+            <p className="text-gray">Practice Manager</p>
           </div>
           <Avatar className="w-10 h-10">
             <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anna" />
@@ -175,27 +175,27 @@ export function EnhancedUrgencyDashboard() {
           </div>
 
           {/* Table */}
-          <Card className="bg-forest-light/50 border-mint/10">
-            <div className="p-4 border-b border-mint/10">
-              <h3 className="text-lg font-semibold text-white">Recent Patient Interactions</h3>
+          <Card className="bg-white border-gray-muted">
+            <div className="p-4 border-b border-gray-muted">
+              <h3 className="text-lg font-semibold text-gray-dark">Recent Patient Interactions</h3>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-mint/10">
-                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Patient</th>
-                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Symptoms</th>
-                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Urgency</th>
-                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Status</th>
-                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Actions</th>
-                    <th className="text-left p-4 text-white/70 whitespace-nowrap">Resolution</th>
+                  <tr className="border-b border-gray-muted">
+                    <th className="text-left p-4 text-gray whitespace-nowrap">Patient</th>
+                    <th className="text-left p-4 text-gray whitespace-nowrap">Symptoms</th>
+                    <th className="text-left p-4 text-gray whitespace-nowrap">Urgency</th>
+                    <th className="text-left p-4 text-gray whitespace-nowrap">Status</th>
+                    <th className="text-left p-4 text-gray whitespace-nowrap">Actions</th>
+                    <th className="text-left p-4 text-gray whitespace-nowrap">Resolution</th>
                   </tr>
                 </thead>
                 <tbody>
                   {mockUrgentCases.map((case_) => (
-                    <tr key={case_.id} className="border-b border-mint/5">
-                      <td className="p-4 text-white whitespace-nowrap">{case_.patientName}</td>
-                      <td className="p-4 text-white/70">
+                    <tr key={case_.id} className="border-b border-gray-muted">
+                      <td className="p-4 text-gray-dark whitespace-nowrap">{case_.patientName}</td>
+                      <td className="p-4 text-gray">
                         <div className="max-w-[200px] truncate" title={case_.symptoms}>
                           {case_.symptoms}
                         </div>
@@ -209,13 +209,13 @@ export function EnhancedUrgencyDashboard() {
                         <div className="flex items-center gap-2">
                           <span className={`px-2 py-1 rounded-full text-xs ${
                             case_.appointmentStatus === 'Scheduled' 
-                              ? 'bg-mint/10 text-mint' 
-                              : 'bg-yellow-500/10 text-yellow-500'
+                              ? 'bg-blue-light text-blue-dark' 
+                              : 'bg-yellow-100 text-yellow-700'
                           }`}>
                             {case_.appointmentStatus}
                           </span>
                           {case_.appointmentDate && (
-                            <span className="text-white/50 text-xs">
+                            <span className="text-gray-light text-xs">
                               {case_.appointmentDate}
                             </span>
                           )}
@@ -226,7 +226,7 @@ export function EnhancedUrgencyDashboard() {
                           {case_.actions.map((action, i) => (
                             <span 
                               key={i}
-                              className="px-2 py-1 text-xs bg-mint/10 text-mint rounded-full"
+                              className="px-2 py-1 text-xs bg-blue-light text-blue-dark rounded-full"
                               title={action}
                             >
                               {action.length > 20 ? `${action.substring(0, 17)}...` : action}
@@ -234,7 +234,7 @@ export function EnhancedUrgencyDashboard() {
                           ))}
                         </div>
                       </td>
-                      <td className="p-4 text-white/70">
+                      <td className="p-4 text-gray">
                         <div className="max-w-[200px] truncate" title={case_.resolution}>
                           {case_.resolution}
                         </div>
