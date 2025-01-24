@@ -164,18 +164,61 @@ const capabilities = [
     illustration: (
       <div className="mb-6 relative h-48">
         <motion.div 
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Placeholder for Human Experience Animation */}
-          <div className="w-24 h-24 bg-blue/10 rounded-full flex items-center justify-center">
+          {/* Central Icon */}
+          <div className="w-24 h-24 bg-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <img
               src="/lovable-uploads/4ad749ed-c18c-4674-bab0-68b98e32bca5.png"
               alt="Human Experience"
               className="w-16 h-16 object-contain"
             />
+          </div>
+
+          {/* Floating Badges */}
+          <div className="absolute inset-0 -top-6">
+            {/* Empathy Badge */}
+            <motion.div
+              className="absolute left-1/4 top-1/4 px-3 py-1 bg-mint-light/60 text-mint text-sm font-medium rounded-full"
+              initial={{ y: 0 }}
+              animate={{ y: [-10, 0, -10] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              Empathy
+            </motion.div>
+
+            {/* Understanding Badge */}
+            <motion.div
+              className="absolute right-1/4 top-1/3 px-3 py-1 bg-blue-light/60 text-blue-dark text-sm font-medium rounded-full"
+              initial={{ y: 0 }}
+              animate={{ y: [-8, 2, -8] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            >
+              Understanding
+            </motion.div>
+
+            {/* Emotion Badge */}
+            <motion.div
+              className="absolute left-1/3 bottom-1/4 px-3 py-1 bg-mint-light/60 text-mint text-sm font-medium rounded-full"
+              initial={{ y: 0 }}
+              animate={{ y: [-5, 5, -5] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+            >
+              Emotion
+            </motion.div>
+
+            {/* Connection Badge */}
+            <motion.div
+              className="absolute right-1/3 bottom-1/3 px-3 py-1 bg-blue-light/60 text-blue-dark text-sm font-medium rounded-full"
+              initial={{ y: 0 }}
+              animate={{ y: [-12, -2, -12] }}
+              transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+            >
+              Connection
+            </motion.div>
           </div>
         </motion.div>
       </div>
