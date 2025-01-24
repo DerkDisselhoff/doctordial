@@ -29,16 +29,11 @@ const AIDoctorAssistant = () => {
             <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-mint/10 h-full">
               <img
-                src="/lovable-uploads/4ad749ed-c18c-4674-bab0-68b98e32bca5.png"
+                src="/lovable-uploads/10ce665a-6bfe-4c46-9ac7-719b3fb123eb.png"
                 alt="Professional AI Medical Assistant"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent" />
-              
-              {/* AI Badge */}
-              <div className="absolute top-6 left-6 bg-mint-light/30 backdrop-blur-md rounded-full px-4 py-2 border border-mint/20">
-                <span className="text-mint text-sm font-medium">AI-Powered Healthcare</span>
-              </div>
               
               {/* Stats Badge */}
               <div className="absolute bottom-6 left-6 bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
