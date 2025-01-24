@@ -18,17 +18,14 @@ const Navbar = () => {
           <div className="flex items-center space-x-8">
             <Logo className="text-gray-dark" />
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/features" className="text-gray hover:text-gray-dark transition-colors">
-                {t("nav.features")}
-              </Link>
-              <Link to="/pricing" className="text-gray hover:text-gray-dark transition-colors">
-                {t("nav.pricing")}
+              <Link to="/dr-sarah" className="text-gray hover:text-gray-dark transition-colors">
+                Dr. Sarah
               </Link>
               <Link to="/about" className="text-gray hover:text-gray-dark transition-colors">
                 {t("nav.about")}
               </Link>
-              <Link to="/dr-sarah" className="text-gray hover:text-gray-dark transition-colors">
-                Dr. Sarah
+              <Link to="/pricing" className="text-gray hover:text-gray-dark transition-colors">
+                {t("nav.pricing")}
               </Link>
             </div>
           </div>
@@ -59,18 +56,11 @@ const Navbar = () => {
           <div className="md:hidden absolute top-full left-0 right-0 bg-white border-t border-gray-muted p-4 space-y-4 animate-fade-down">
             <div className="flex flex-col space-y-4">
               <Link 
-                to="/features" 
+                to="/dr-sarah" 
                 className="text-gray hover:text-gray-dark transition-colors text-lg font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {t("nav.features")}
-              </Link>
-              <Link 
-                to="/pricing" 
-                className="text-gray hover:text-gray-dark transition-colors text-lg font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t("nav.pricing")}
+                Dr. Sarah
               </Link>
               <Link 
                 to="/about" 
@@ -80,11 +70,11 @@ const Navbar = () => {
                 {t("nav.about")}
               </Link>
               <Link 
-                to="/dr-sarah" 
+                to="/pricing" 
                 className="text-gray hover:text-gray-dark transition-colors text-lg font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Dr. Sarah
+                {t("nav.pricing")}
               </Link>
             </div>
             <div className="flex flex-col space-y-4 pt-4 border-t border-gray-muted">
