@@ -97,7 +97,7 @@ const MenuItem = ({ icon: Icon, label, isActive = false }: { icon: any, label: s
 const StatCard = ({ icon: Icon, label, value, subtext }: { icon: any, label: string, value: string, subtext?: string }) => (
   <Card className="bg-white border-gray-muted p-4">
     <div className="flex items-start justify-between">
-      <div>
+      <div className="text-left">
         <p className="text-gray text-sm">{label}</p>
         <h4 className="text-2xl font-bold text-gray-dark mt-1">{value}</h4>
         {subtext && <p className="text-xs text-gray-light mt-1">{subtext}</p>}
@@ -116,7 +116,7 @@ export function EnhancedUrgencyDashboard() {
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
           <Logo className="text-gray-dark" />
-          <div className="border-l border-gray-muted pl-4">
+          <div className="border-l border-gray-muted pl-4 text-left">
             <h3 className="text-gray-dark font-medium">Centrum Medisch Centrum</h3>
             <p className="text-gray text-sm">Amsterdam, Netherlands</p>
           </div>
