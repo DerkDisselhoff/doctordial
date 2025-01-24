@@ -34,30 +34,30 @@ export default {
           dark: "#1F2937",     // Headings
           muted: "#F3F4F6",    // Subtle backgrounds, dividers
         },
-        // Healthcare Green System - Updated with lighter shades
+        // Healthcare Green System
         mint: {
-          DEFAULT: "#4ADE80",  // Lighter mint green
-          light: "#ECFDF5",    // Very light mint for backgrounds
-          dark: "#10B981",     // Slightly darker mint for emphasis
-          muted: "#4ADE8040",  // Transparent mint for subtle accents
+          DEFAULT: "#10B981",  // Primary green for success and CTAs
+          light: "#D1FAE5",    // Light backgrounds
+          dark: "#059669",     // Hover states
+          muted: "#10B98140",  // Transparent accents
         },
         sage: {
-          DEFAULT: "#A7F3D0",  // Soft sage green
-          light: "#F0FDF4",    // Very light sage for backgrounds
-          dark: "#34D399",     // Darker sage for emphasis
-          muted: "#A7F3D040",  // Transparent sage for subtle accents
+          DEFAULT: "#84CC16",  // Secondary green for indicators
+          light: "#ECFCCB",    // Light accents
+          dark: "#65A30D",     // Emphasis
+          muted: "#84CC1640",  // Subtle backgrounds
         },
         emerald: {
-          DEFAULT: "#34D399",  // Fresh emerald
-          light: "#D1FAE5",    // Light emerald for backgrounds
-          dark: "#10B981",     // Darker emerald for emphasis
-          muted: "#34D39940",  // Transparent emerald for subtle accents
+          DEFAULT: "#059669",  // Deep professional green
+          light: "#A7F3D0",    // Light accents
+          dark: "#047857",     // Strong emphasis
+          muted: "#05966940",  // Subtle backgrounds
         },
         forest: {
-          DEFAULT: "#10B981",  // Professional forest green
-          light: "#A7F3D0",    // Light forest for backgrounds
-          dark: "#059669",     // Darker forest for emphasis
-          muted: "#10B98140",  // Transparent forest for subtle accents
+          DEFAULT: "#065F46",  // Rich dark green
+          light: "#D1FAE5",    // Light accents
+          dark: "#064E3B",     // Deep emphasis
+          muted: "#065F4640",  // Subtle backgrounds
         },
         // Semantic Text Colors
         text: {
