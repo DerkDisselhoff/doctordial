@@ -20,58 +20,51 @@ export default {
     extend: {
       colors: {
         // Primary Brand Colors
-        forest: {
-          DEFAULT: "#0A1F2F",
-          light: "#132B41",
+        blue: {
+          DEFAULT: "#33C3F0",
+          light: "#D3E4FD",
+          dark: "#0FA0CE",
         },
-        mint: {
-          DEFAULT: "#64FFDA",
-          light: "#A7FFE4",
-        },
-        divine: {
-          DEFAULT: "#FFD700",
-          light: "#FFE55C",
+        green: {
+          DEFAULT: "#22C55E",
+          light: "#F2FCE2",
         },
 
         // Neutral Colors
-        neutral: {
-          100: "#F1F1F1", // Light Gray
-          200: "#F3F3F3", // Light Gray
-          300: "#EEEEEE", // Off White
-          400: "#CCCCCC", // Light Gray
-          500: "#999999", // Medium Gray
-          600: "#8E9196", // Neutral Gray
-          700: "#8A898C", // Medium Gray
-          800: "#AAADB0", // Cool Gray
+        gray: {
+          100: "#F1F1F1", // Lightest
+          200: "#F3F3F3",
+          300: "#EEEEEE",
+          400: "#CCCCCC",
+          500: "#999999", // Medium
+          600: "#8E9196",
+          700: "#8A898C",
+          800: "#AAADB0", // Dark
         },
 
         // Status Colors
         success: {
-          light: "#F2FCE2", // Soft Green
+          light: "#F2FCE2",
           DEFAULT: "#22C55E",
         },
         warning: {
-          light: "#FEF7CD", // Soft Yellow
+          light: "#FEF7CD",
           DEFAULT: "#F59E0B",
         },
         error: {
-          light: "#FFDEE2", // Soft Pink
+          light: "#FFDEE2",
           DEFAULT: "#EA384C",
         },
         info: {
-          light: "#D3E4FD", // Soft Blue
+          light: "#D3E4FD",
           DEFAULT: "#0EA5E9",
         },
 
         // UI Colors
         surface: {
-          light: "#F6F6F7",
-          DEFAULT: "#FFFFFF",
+          light: "#FFFFFF",
+          DEFAULT: "#F6F6F7",
           dark: "#221F26",
-        },
-        accent: {
-          blue: "#33C3F0",
-          orange: "#F97316",
         },
       },
       fontFamily: {
