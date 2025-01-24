@@ -325,17 +325,98 @@ const capabilities = [
     illustration: (
       <div className="mb-6 relative h-48">
         <motion.div 
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Placeholder for Continuous Learning Animation */}
-          <div className="w-24 h-24 bg-blue/10 rounded-full flex items-center justify-center">
+          {/* Central Doctor Assistant Image with Learning Ring */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16">
             <img
-              src="/lovable-uploads/910ef275-a96d-49d2-81b8-6e27f7fd70cd.png"
-              alt="Continuous Learning"
-              className="w-16 h-16 object-contain"
+              src="/lovable-uploads/10ce665a-6bfe-4c46-9ac7-719b3fb123eb.png"
+              alt="Dr. Sarah - AI Medical Assistant"
+              className="w-full h-full object-cover rounded-full border-2 border-mint/20"
+            />
+            {/* Rotating Learning Ring */}
+            <motion.div
+              className="absolute -inset-4 border-2 border-dashed border-mint rounded-full"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
+
+          {/* Learning Points */}
+          <div className="absolute inset-0">
+            {/* Feedback Point 1 */}
+            <motion.div
+              className="absolute left-[20%] top-[20%] flex items-center"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: [0.8, 1, 0.8], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              <div className="bg-mint/10 p-2 rounded-full">
+                <div className="w-8 h-8 bg-mint/20 rounded-full flex items-center justify-center text-mint text-xs">
+                  +1
+                </div>
+              </div>
+              <motion.div
+                className="h-0.5 w-12 bg-gradient-to-r from-mint to-transparent ml-2"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 1 }}
+              />
+            </motion.div>
+
+            {/* Feedback Point 2 */}
+            <motion.div
+              className="absolute right-[20%] top-[30%] flex items-center flex-row-reverse"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: [0.8, 1, 0.8], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+            >
+              <div className="bg-blue/10 p-2 rounded-full">
+                <div className="w-8 h-8 bg-blue/20 rounded-full flex items-center justify-center text-blue-dark text-xs">
+                  +1
+                </div>
+              </div>
+              <motion.div
+                className="h-0.5 w-12 bg-gradient-to-l from-blue to-transparent mr-2"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 1, delay: 1 }}
+              />
+            </motion.div>
+
+            {/* Feedback Point 3 */}
+            <motion.div
+              className="absolute left-[25%] bottom-[25%] flex items-center"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: [0.8, 1, 0.8], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 3, repeat: Infinity, delay: 2 }}
+            >
+              <div className="bg-mint/10 p-2 rounded-full">
+                <div className="w-8 h-8 bg-mint/20 rounded-full flex items-center justify-center text-mint text-xs">
+                  +1
+                </div>
+              </div>
+              <motion.div
+                className="h-0.5 w-12 bg-gradient-to-r from-mint to-transparent ml-2"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 1, delay: 2 }}
+              />
+            </motion.div>
+
+            {/* Learning Pulse Effect */}
+            <motion.div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 border-2 border-mint/20 rounded-full"
+              animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.2, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <motion.div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 border-2 border-blue/20 rounded-full"
+              animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.2, 0.5] }}
+              transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
             />
           </div>
         </motion.div>
