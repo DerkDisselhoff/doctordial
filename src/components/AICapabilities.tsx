@@ -27,8 +27,8 @@ const capabilities = [
           {/* Digital Worker Image */}
           <div className="relative w-16 h-16">
             <img
-              src="/assets/ai-agent.webp"
-              alt="Digital Worker"
+              src="/lovable-uploads/10ce665a-6bfe-4c46-9ac7-719b3fb123eb.png"
+              alt="Dr. Sarah - AI Medical Assistant"
               className="w-full h-full object-cover rounded-full border-2 border-mint/20"
             />
             {/* Settings Ring Animation */}
