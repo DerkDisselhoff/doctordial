@@ -1,19 +1,14 @@
-import { Brain, Stethoscope } from "lucide-react";
+import { Stethoscope } from "lucide-react";
 
 const AIDoctorAssistant = () => {
   return (
     <section className="py-16 bg-gradient-to-b from-white to-blue/5">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 max-w-5xl">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className="space-y-6 animate-fade-up">
-            <div className="flex items-center gap-2 bg-mint-light/30 w-fit px-4 py-2 rounded-full border border-mint/20">
-              <Brain className="w-4 h-4 text-mint" />
-              <span className="text-mint text-sm font-medium">AI-Powered Healthcare</span>
-            </div>
-            
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-dark">
-              AI Doctors Assistant
+              Meet Your Digital Doctor's Assistant
             </h2>
             
             <p className="text-gray text-lg leading-relaxed max-w-xl">
@@ -39,6 +34,11 @@ const AIDoctorAssistant = () => {
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent" />
+              
+              {/* AI Badge */}
+              <div className="absolute top-6 left-6 bg-mint-light/30 backdrop-blur-md rounded-full px-4 py-2 border border-mint/20">
+                <span className="text-mint text-sm font-medium">AI-Powered Healthcare</span>
+              </div>
               
               {/* Stats Badge */}
               <div className="absolute bottom-6 left-6 bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
