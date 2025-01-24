@@ -1,15 +1,4 @@
 @layer base {
-  :root {
-    /* ... keep existing code (color variables) */
-  }
-
-  html {
-    scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-
   body {
     @apply bg-surface text-text-primary antialiased;
   }
