@@ -1,0 +1,72 @@
+@layer components {
+  /* Dashboard Design System */
+  .dashboard-container {
+    @apply p-6 bg-white rounded-xl border border-gray-200;
+  }
+
+  .dashboard-header {
+    @apply flex items-center justify-between mb-8;
+  }
+
+  .dashboard-title {
+    @apply text-3xl font-bold text-gray-900;
+  }
+
+  .dashboard-subtitle {
+    @apply text-gray-600;
+  }
+
+  .dashboard-card {
+    @apply bg-white border border-gray-200 rounded-xl shadow-sm;
+  }
+
+  .dashboard-card-header {
+    @apply text-gray-700 font-medium;
+  }
+
+  .dashboard-card-title {
+    @apply text-xl font-semibold text-gray-900 tracking-tight;
+  }
+
+  .dashboard-card-content {
+    @apply text-gray-600;
+  }
+
+  /* Table Design System */
+  .dashboard-table {
+    @apply w-full;
+  }
+
+  .dashboard-table-header {
+    @apply border-b border-gray-200;
+  }
+
+  .dashboard-table-header th {
+    @apply px-4 py-3 text-sm font-semibold text-gray-700 tracking-tight;
+  }
+
+  .dashboard-table-row {
+    @apply border-b border-gray-100 hover:bg-gray-50 transition-colors;
+  }
+
+  .dashboard-table-cell {
+    @apply px-4 py-3 text-sm text-gray-600;
+  }
+
+  /* Status Badge Design System */
+  .status-badge {
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+  }
+
+  .status-badge-success {
+    @apply bg-green-light text-green;
+  }
+
+  .status-badge-pending {
+    @apply bg-warning-light text-warning;
+  }
+
+  .status-badge-error {
+    @apply bg-error-light text-error;
+  }
+}
