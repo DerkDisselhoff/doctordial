@@ -94,7 +94,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
   };
 
   return (
-    <Card className="bg-white border border-gray-muted shadow-sm">
+    <Card className="bg-white border border-gray-muted shadow-sm w-full">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -132,7 +132,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="p-0">
+      <CardContent className="p-0 overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow className="border-b border-gray-muted">
@@ -154,7 +154,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
               >
                 <TableCell className="p-4 text-gray-dark w-[15%]">{call.Name || 'Unknown'}</TableCell>
                 <TableCell className="p-4 text-gray w-[20%]">
-                  <div className="truncate" title={call.Symptoms}>
+                  <div className="truncate max-w-[250px]" title={call.Symptoms}>
                     {call.Symptoms}
                   </div>
                 </TableCell>
@@ -173,7 +173,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                   </span>
                 </TableCell>
                 <TableCell className="p-4 text-gray w-[20%]">
-                  <div className="truncate" title={call.conversation_summary}>
+                  <div className="truncate max-w-[250px]" title={call.conversation_summary}>
                     {call.conversation_summary}
                   </div>
                 </TableCell>
