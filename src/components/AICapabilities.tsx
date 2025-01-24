@@ -37,13 +37,13 @@ const capabilities = [
     illustration: (
       <div className="mb-6 relative h-48">
         <motion.div 
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-12"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-16"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
           {/* Digital Worker Image with Settings Ring */}
-          <div className="relative w-24 h-24">
+          <div className="relative w-24 h-24 ml-8">
             <img
               src="/lovable-uploads/10ce665a-6bfe-4c46-9ac7-719b3fb123eb.png"
               alt="Dr. Sarah - AI Medical Assistant"
@@ -67,7 +67,7 @@ const capabilities = [
           {/* Customization Settings Container */}
           <div className="flex items-center gap-4">
             {/* Settings Bars Container with Fixed Width */}
-            <div className="flex flex-col gap-3 min-w-[140px]">
+            <div className="flex flex-col gap-3 min-w-[70px]">
               <motion.div 
                 className="h-2 bg-mint/20 rounded-full overflow-hidden"
                 initial={{ width: 0 }}
