@@ -232,13 +232,13 @@ export function Workflow() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="section-spacing">
       <div>
         <h2 className="text-3xl font-bold text-white">Workflow Configuration</h2>
-        <p className="text-white/60">Configure how incoming calls are handled</p>
+        <p className="text-body-sm text-white/60">Configure how incoming calls are handled</p>
       </div>
 
-      <div className="grid gap-4">
+      <div className="content-spacing">
         <LiveStatusCard 
           isLive={isLive}
           onStatusChange={setIsLive}

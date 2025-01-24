@@ -45,17 +45,17 @@ export function SubjectForwarding({
   };
 
   return (
-    <Card className="bg-forest-light/50 border-mint/10">
-      <CardHeader>
-        <CardTitle className="text-white flex items-center gap-2">
+    <Card className="dashboard-card">
+      <CardHeader className="dashboard-card-header">
+        <div className="flex items-center gap-2">
           <GitBranch className="w-5 h-5 text-mint" />
-          Subject Forwarding Externally Rules
-        </CardTitle>
+          <CardTitle className="dashboard-card-title">Subject Forwarding Rules</CardTitle>
+        </div>
       </CardHeader>
-      <CardContent>
-        <div className="grid gap-3 p-3 rounded-lg bg-forest-dark/30 mb-4">
+      <CardContent className="dashboard-card-content section-spacing">
+        <div className="content-spacing p-3 rounded-lg bg-forest-dark/30">
           <div className="grid gap-3 md:grid-cols-[1fr,1fr,auto]">
-            <div className="space-y-2">
+            <div className="item-spacing">
               <Label className="text-white">Subject</Label>
               <Input
                 placeholder="Enter subject"
@@ -64,7 +64,7 @@ export function SubjectForwarding({
                 className="bg-forest border-mint/20"
               />
             </div>
-            <div className="space-y-2">
+            <div className="item-spacing">
               <Label className="text-white">Forward To</Label>
               <Input
                 placeholder="Enter destination"
@@ -87,11 +87,11 @@ export function SubjectForwarding({
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="item-spacing">
           {subjects.map((subject) => (
             <div
               key={subject.id}
-              className="flex items-center justify-between p-3 rounded-lg bg-forest-dark/30 hover:bg-forest-dark/40 transition-colors"
+              className="flex items-center justify-between p-3 rounded-lg bg-forest-dark/30 interactive-hover"
             >
               {editingSubject === subject.id ? (
                 <div className="flex-1 flex items-center gap-2">
@@ -118,9 +118,9 @@ export function SubjectForwarding({
               ) : (
                 <div className="flex-1 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-white font-medium">{subject.subject}</span>
+                    <span className="text-body text-white">{subject.subject}</span>
                     <span className="text-mint">→</span>
-                    <span className="text-white/60">{subject.forward_to}</span>
+                    <span className="text-body-sm text-white/60">{subject.forward_to}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Button

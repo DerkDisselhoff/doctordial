@@ -27,19 +27,19 @@ interface Props {
 
 export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
   return (
-    <Card className="bg-forest-light/50 border-mint/10">
-      <CardHeader className="flex flex-row items-center justify-between">
+    <Card className="dashboard-card">
+      <CardHeader className="dashboard-card-header">
         <div className="flex items-center gap-2">
           <GitBranch className="w-5 h-5 text-mint" />
-          <CardTitle className="text-white">Urgency Level Forwarding</CardTitle>
+          <CardTitle className="dashboard-card-title">Urgency Level Forwarding</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="space-y-2">
+      <CardContent className="dashboard-card-content section-spacing">
         {settings.map((setting) => (
-          <div key={setting.urgency_level} className="grid gap-2 p-2 rounded-lg bg-forest-dark/30">
+          <div key={setting.urgency_level} className="content-spacing p-2 rounded-lg bg-forest-dark/30">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 min-w-[80px]">
-                <span className={`inline-flex px-2 py-1 rounded-md text-sm font-medium border ${getUrgencyColor(setting.urgency_level)}`}>
+                <span className={`status-badge ${getUrgencyColor(setting.urgency_level)}`}>
                   {setting.urgency_level}
                 </span>
               </div>
@@ -56,19 +56,19 @@ export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
                   <SelectContent className="bg-forest border-mint/20">
                     <SelectItem 
                       value="call_112" 
-                      className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
+                      className="interactive-hover interactive-active"
                     >
                       Advice to call 112 directly
                     </SelectItem>
                     <SelectItem 
                       value="forward_to_assistant" 
-                      className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
+                      className="interactive-hover interactive-active"
                     >
                       Forward to Doctor's Assistant
                     </SelectItem>
                     <SelectItem 
                       value="provide_selfcare" 
-                      className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
+                      className="interactive-hover interactive-active"
                     >
                       Provide selfcare advice
                     </SelectItem>
@@ -99,13 +99,13 @@ export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
                     <SelectContent className="bg-forest border-mint/20">
                       <SelectItem 
                         value="simple"
-                        className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
+                        className="interactive-hover interactive-active"
                       >
                         Simple short advice
                       </SelectItem>
                       <SelectItem 
                         value="extensive"
-                        className="hover:bg-mint/10 active:bg-mint/20 transition-colors cursor-pointer"
+                        className="interactive-hover interactive-active"
                       >
                         Extensive advice
                       </SelectItem>
