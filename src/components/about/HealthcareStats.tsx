@@ -4,27 +4,27 @@ import { LineChart, Users, Clock } from 'lucide-react';
 const HealthcareStats = () => {
   return (
     <div className="py-12">
-      <div className="flex items-center gap-3 text-mint mb-8">
+      <div className="flex items-center gap-3 text-blue-dark mb-8">
         <LineChart className="w-6 h-6" />
-        <h3 className="text-xl font-semibold text-mint">Healthcare Market Insights</h3>
+        <h3 className="text-xl font-semibold text-gray-dark">Healthcare Market Insights</h3>
       </div>
 
       <div className="space-y-6">
         {[
           {
-            icon: <Clock className="w-8 h-8 text-mint" />,
+            icon: <Clock className="w-8 h-8 text-blue-dark" />,
             stat: "45%",
             label: "Of GP time spent on administrative tasks",
             source: "Dutch Healthcare Authority (NZa)"
           },
           {
-            icon: <Users className="w-8 h-8 text-mint" />,
+            icon: <Users className="w-8 h-8 text-blue-dark" />,
             stat: "25%",
             label: "Increase in elderly population by 2040",
             source: "CBS Population Forecast"
           },
           {
-            icon: <LineChart className="w-8 h-8 text-mint" />,
+            icon: <LineChart className="w-8 h-8 text-blue-dark" />,
             stat: "28%",
             label: "Increase in healthcare demand by 2030",
             source: "RIVM Healthcare Forecast"
@@ -32,15 +32,15 @@ const HealthcareStats = () => {
         ].map((stat, index) => (
           <div 
             key={index}
-            className="p-6 bg-forest-light/10 rounded-xl border border-mint/10 hover:border-mint/20 transition-all animate-fade-up"
+            className="p-6 bg-white rounded-xl border border-gray-muted/10 shadow-sm hover:shadow-md transition-all animate-fade-up"
             style={{ animationDelay: `${index * 100}ms` }}
           >
             {stat.icon}
             <div className="mt-4 mb-2">
-              <span className="text-3xl font-bold text-mint">{stat.stat}</span>
+              <span className="text-3xl font-bold text-gray-dark">{stat.stat}</span>
             </div>
-            <p className="text-white/80 mb-2">{stat.label}</p>
-            <p className="text-sm text-mint/60">{stat.source}</p>
+            <p className="text-gray mb-2">{stat.label}</p>
+            <p className="text-sm text-gray-light">{stat.source}</p>
           </div>
         ))}
       </div>

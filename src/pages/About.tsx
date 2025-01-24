@@ -10,7 +10,7 @@ import HealthcareStats from "@/components/about/HealthcareStats";
 
 const About = () => {
   return (
-    <main className="min-h-screen bg-forest text-text-primary">
+    <main className="min-h-screen bg-white text-text-primary">
       <Navbar />
       
       <AboutHero />
