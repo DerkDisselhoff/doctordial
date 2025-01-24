@@ -5,15 +5,15 @@
 
   /* Section Layout */
   .section {
-    @apply py-16 md:py-24 bg-surface;
+    @apply py-16 md:py-24;
   }
 
   .section-sm {
-    @apply py-8 md:py-12 bg-surface;
+    @apply py-8 md:py-12;
   }
 
   .section-lg {
-    @apply py-24 md:py-32 bg-surface;
+    @apply py-24 md:py-32;
   }
 
   .container {

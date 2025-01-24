@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { colors, spacing, borderRadius } from "./src/styles/design-tokens";
 
 export default {
   darkMode: ["class"],
@@ -18,28 +19,9 @@ export default {
       },
     },
     extend: {
-      colors: {
-        // Primary Colors
-        primary: {
-          DEFAULT: "#0077CC", // Primary Blue
-          dark: "#005FA8",    // Darker Blue for hover
-          light: "#E5F4FF",   // Light Blue for hover backgrounds
-        },
-        healthcare: {
-          DEFAULT: "#28A745", // Healthcare Green
-          dark: "#1E7D34",    // Darker Green for hover
-          light: "#3BC85E",   // Light Green for hover/tints
-        },
-        text: {
-          primary: "#333333", // Dark Gray for primary text
-          secondary: "#666666", // Medium Gray for secondary text
-        },
-        surface: {
-          DEFAULT: "#FFFFFF", // White background
-          divider: "#EEEEEE", // Light Gray for dividers
-          input: "#CCCCCC",   // Light Gray for input borders
-        },
-      },
+      colors,
+      spacing,
+      borderRadius,
       animation: {
         "fade-up": "fadeUp 0.5s ease-out forwards",
         "fade-down": "fadeDown 0.5s ease-out forwards",
