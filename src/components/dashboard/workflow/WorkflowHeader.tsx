@@ -11,8 +11,8 @@ export function WorkflowHeader({
 }: WorkflowHeaderProps) {
   return (
     <div>
-      <h2 className="text-3xl font-bold text-white">{title}</h2>
-      <p className="text-body-sm text-white/60">{description}</p>
+      <h2 className="text-3xl font-bold text-gray-dark">{title}</h2>
+      <p className="text-body-sm text-gray">{description}</p>
     </div>
   );
 }

@@ -60,22 +60,22 @@ export const AssistantSettingsCard = ({ onSettingChange }: AssistantSettingsCard
   };
 
   return (
-    <Card className="bg-forest-light/50 border-mint/10">
+    <Card className="bg-white border-gray-muted shadow-sm">
       <CardHeader>
-        <CardTitle className="text-white flex items-center gap-2">
-          <Settings className="w-5 h-5 text-mint" />
+        <CardTitle className="text-gray-dark flex items-center gap-2">
+          <Settings className="w-5 h-5 text-blue-dark" />
           Assistant Settings
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
         {/* Identity Settings Section */}
         <section className="space-y-4">
-          <h3 className="text-lg font-medium text-white border-b border-mint/10 pb-2">Identity Settings</h3>
+          <h3 className="text-lg font-medium text-gray-dark border-b border-gray-muted pb-2">Identity Settings</h3>
           <div className="space-y-2">
-            <Label className="text-white font-medium">Assistant Name</Label>
+            <Label className="text-gray-dark font-medium">Assistant Name</Label>
             <Input 
               placeholder="Sarah" 
-              className="bg-forest border-mint/20"
+              className="bg-white border-gray-muted"
               value={assistantName}
               onChange={handleNameChange}
             />
@@ -84,14 +84,14 @@ export const AssistantSettingsCard = ({ onSettingChange }: AssistantSettingsCard
 
         {/* Availability Settings Section */}
         <section className="space-y-4">
-          <h3 className="text-lg font-medium text-white border-b border-mint/10 pb-2">Availability Settings</h3>
+          <h3 className="text-lg font-medium text-gray-dark border-b border-gray-muted pb-2">Availability Settings</h3>
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <Label className="text-white font-medium">Active Outside Work Hours</Label>
-              <p className="text-white/70">Enable AI assistant during non-business hours</p>
+              <Label className="text-gray-dark font-medium">Active Outside Work Hours</Label>
+              <p className="text-gray">Enable AI assistant during non-business hours</p>
             </div>
             <Switch 
-              className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+              className="bg-gray-muted data-[state=checked]:bg-blue-dark data-[state=checked]:border-blue-dark hover:bg-gray-muted/80" 
               onCheckedChange={onSettingChange} 
             />
           </div>
@@ -99,20 +99,20 @@ export const AssistantSettingsCard = ({ onSettingChange }: AssistantSettingsCard
 
         {/* Greeting Settings Section */}
         <section className="space-y-4">
-          <h3 className="text-lg font-medium text-white border-b border-mint/10 pb-2">Greeting Settings</h3>
+          <h3 className="text-lg font-medium text-gray-dark border-b border-gray-muted pb-2">Greeting Settings</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <Label className="text-white font-medium">Use Greeting Variations</Label>
+              <Label className="text-gray-dark font-medium">Use Greeting Variations</Label>
               <Switch 
-                className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+                className="bg-gray-muted data-[state=checked]:bg-blue-dark data-[state=checked]:border-blue-dark hover:bg-gray-muted/80" 
                 onCheckedChange={onSettingChange} 
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-white font-medium">Default Greeting</Label>
+              <Label className="text-gray-dark font-medium">Default Greeting</Label>
               <Input 
                 placeholder="Welcome to [Practice Name], this is Sarah, how may I help you?"
-                className="bg-forest border-mint/20"
+                className="bg-white border-gray-muted"
                 onChange={onSettingChange}
               />
             </div>
