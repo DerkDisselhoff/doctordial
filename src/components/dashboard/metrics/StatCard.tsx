@@ -13,7 +13,7 @@ export const StatCard = ({
 
   return (
     <Card 
-      className="bg-blue-light/50 border-blue-muted p-4 cursor-pointer transition-all duration-300
+      className="dashboard-card border-gray-muted p-4 cursor-pointer transition-all duration-300
                 hover:border-blue-dark/30 hover:shadow-[0_0_15px_rgba(37,99,235,0.1)]
                 relative overflow-hidden group"
       onClick={() => navigate(navigateTo)}
