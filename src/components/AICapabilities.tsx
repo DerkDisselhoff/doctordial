@@ -191,9 +191,9 @@ const capabilities = [
               Understanding
             </motion.div>
 
-            {/* Empathy Badge - Bottom Left Area */}
+            {/* Empathy Badge - Top Left Area */}
             <motion.div
-              className="absolute left-[35%] bottom-[35%] px-4 py-2 bg-mint-light/60 text-mint text-base font-medium rounded-full"
+              className="absolute left-[15%] top-[15%] px-4 py-2 bg-mint-light/60 text-mint text-base font-medium rounded-full"
               initial={{ y: 0 }}
               animate={{ y: [-5, 5, -5] }}
               transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
