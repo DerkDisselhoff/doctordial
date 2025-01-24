@@ -46,57 +46,67 @@ const capabilities = [
 
 const AICapabilities = () => {
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-blue/5">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-dark mb-4">
+    <section className="py-24 bg-gradient-to-b from-white to-blue/5 relative overflow-hidden">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-1/2 -right-1/2 w-[1000px] h-[1000px] bg-mint/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-1/2 -left-1/2 w-[800px] h-[800px] bg-blue/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 relative">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-dark mb-6 leading-tight">
             Powered by Advanced AI Technology
           </h2>
-          <p className="text-gray text-lg max-w-2xl mx-auto">
-            Experience the future of medical assistance with our sophisticated AI capabilities
+          <p className="text-gray text-xl max-w-3xl mx-auto leading-relaxed">
+            Experience the future of medical assistance with our sophisticated AI capabilities,
+            designed specifically for healthcare professionals
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {capabilities.map((capability, index) => {
             const Icon = capability.icon;
             return (
               <Card
                 key={index}
                 className={cn(
-                  "relative overflow-hidden group hover:shadow-lg transition-all duration-300",
-                  "border border-gray-muted/20 backdrop-blur-sm"
+                  "relative overflow-hidden group hover:shadow-xl transition-all duration-500",
+                  "border border-gray-muted/20 backdrop-blur-sm",
+                  "transform hover:-translate-y-1"
                 )}
               >
-                <div className="p-6 space-y-4">
+                <div className="p-8 space-y-6">
+                  {/* Icon container with gradient background */}
                   <div className={cn(
-                    "w-12 h-12 rounded-lg flex items-center justify-center",
-                    capability.bgColor
+                    "w-16 h-16 rounded-2xl flex items-center justify-center",
+                    capability.bgColor,
+                    "transform transition-transform duration-500 group-hover:scale-110"
                   )}>
-                    <Icon className={cn("w-6 h-6", capability.color)} />
+                    <Icon className={cn("w-8 h-8", capability.color)} />
                   </div>
 
-                  <h3 className="text-xl font-semibold text-gray-dark">
+                  <h3 className="text-2xl font-semibold text-gray-dark">
                     {capability.title}
                   </h3>
 
-                  <p className="text-gray leading-relaxed">
+                  <p className="text-gray text-lg leading-relaxed">
                     {capability.description}
                   </p>
 
                   {capability.image && (
-                    <div className="mt-4 rounded-lg overflow-hidden border border-gray-muted/20">
+                    <div className="mt-6 rounded-xl overflow-hidden border border-gray-muted/20 shadow-lg">
                       <img
                         src={capability.image}
                         alt={capability.title}
-                        className="w-full h-32 object-cover transform group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500"
                       />
                     </div>
                   )}
                 </div>
 
-                {/* Decorative gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent to-gray-muted/5 pointer-events-none" />
+                {/* Enhanced decorative gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gray-muted/5 to-gray-muted/10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </Card>
             );
           })}
