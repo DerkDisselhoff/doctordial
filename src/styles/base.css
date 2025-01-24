@@ -21,30 +21,30 @@
     --divine-dark: #CCB000;
     --divine-muted: #FFD70040;
 
-    /* Semantic Text Colors - Light Theme */
-    --text-primary: var(--forest);
-    --text-secondary: var(--forest-light);
-    --text-muted: var(--forest-muted);
-    --text-inverse: white;
+    /* Semantic Text Colors - Dark Theme (default) */
+    --text-primary: white;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --text-inverse: var(--forest);
     --text-accent: var(--mint);
     --text-success: #10B981;
     --text-warning: #F59E0B;
     --text-error: #EF4444;
     --text-link: var(--mint);
     --text-link-hover: var(--mint-light);
-    --text-disabled: #9CA3AF;
-    --text-placeholder: #6B7280;
+    --text-disabled: rgba(255, 255, 255, 0.4);
+    --text-placeholder: rgba(255, 255, 255, 0.5);
 
     /* System colors */
-    --background: white;
+    --background: var(--forest);
     --foreground: var(--text-primary);
-    --card: white;
+    --card: var(--forest-light);
     --card-foreground: var(--text-primary);
-    --popover: white;
+    --popover: var(--forest-dark);
     --popover-foreground: var(--text-primary);
-    --primary: var(--forest);
-    --primary-foreground: white;
-    --secondary: var(--mint);
+    --primary: var(--mint);
+    --primary-foreground: var(--forest);
+    --secondary: var(--divine);
     --secondary-foreground: var(--forest);
     --muted: var(--forest-muted);
     --muted-foreground: var(--text-muted);
@@ -56,25 +56,6 @@
     --input: var(--forest-light);
     --ring: var(--mint);
     --radius: 0.5rem;
-  }
-
-  .dark {
-    --text-primary: white;
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-muted: rgba(255, 255, 255, 0.5);
-    --text-inverse: var(--forest);
-    --text-accent: var(--mint);
-    --text-link: var(--mint);
-    --text-link-hover: var(--mint-light);
-    --text-disabled: rgba(255, 255, 255, 0.4);
-    --text-placeholder: rgba(255, 255, 255, 0.5);
-
-    --background: var(--forest);
-    --foreground: var(--text-primary);
-    --card: var(--forest-light);
-    --card-foreground: var(--text-primary);
-    --popover: var(--forest-dark);
-    --popover-foreground: var(--text-primary);
   }
 
   /* Typography Scale */
