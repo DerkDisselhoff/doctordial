@@ -23,7 +23,7 @@ const capabilities = [
             duration: 2,
             ease: "easeInOut",
             repeat: Infinity,
-            repeatType: "reverse"
+            repeatType: "loop" as const
           }
         }
       }
@@ -59,7 +59,7 @@ const capabilities = [
           transition: {
             duration: 0.5,
             repeat: Infinity,
-            repeatType: "reverse"
+            repeatType: "reverse" as const
           }
         }
       }
@@ -78,7 +78,7 @@ const capabilities = [
           transition: {
             duration: 1,
             repeat: Infinity,
-            repeatType: "reverse",
+            repeatType: "mirror" as const,
             repeatDelay: 1
           }
         }
@@ -97,7 +97,7 @@ const capabilities = [
           transition: {
             duration: 0.5,
             repeat: Infinity,
-            repeatType: "reverse"
+            repeatType: "reverse" as const
           }
         }
       }
