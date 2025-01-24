@@ -136,13 +136,13 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
         <Table>
           <TableHeader>
             <TableRow className="border-b border-gray-muted">
-              <TableHead className="text-left p-4 text-gray">Patient</TableHead>
-              <TableHead className="text-left p-4 text-gray">Symptoms</TableHead>
-              <TableHead className="text-left p-4 text-gray">Urgency</TableHead>
-              <TableHead className="text-left p-4 text-gray">Forwarded</TableHead>
-              <TableHead className="text-left p-4 text-gray">Summary</TableHead>
-              <TableHead className="text-left p-4 text-gray">Duration</TableHead>
-              <TableHead className="text-left p-4 text-gray">Emotion</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[15%]">Patient</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[20%]">Symptoms</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[10%]">Urgency</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[15%]">Forwarded</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[20%]">Summary</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[10%]">Duration</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[10%]">Emotion</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -152,18 +152,18 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                 className="border-b border-gray-muted hover:bg-gray-muted/10 cursor-pointer transition-colors"
                 onClick={() => navigate(`/dashboard/calls/${call.call_id}`)}
               >
-                <TableCell className="p-4 text-gray-dark">{call.Name || 'Unknown'}</TableCell>
-                <TableCell className="p-4 text-gray">
-                  <div className="max-w-[200px] truncate" title={call.Symptoms}>
+                <TableCell className="p-4 text-gray-dark w-[15%]">{call.Name || 'Unknown'}</TableCell>
+                <TableCell className="p-4 text-gray w-[20%]">
+                  <div className="truncate" title={call.Symptoms}>
                     {call.Symptoms}
                   </div>
                 </TableCell>
-                <TableCell className="p-4">
+                <TableCell className="p-4 w-[10%]">
                   <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor(call.Urgencylevel)}`}>
                     {call.Urgencylevel}
                   </span>
                 </TableCell>
-                <TableCell className="p-4">
+                <TableCell className="p-4 w-[15%]">
                   <span className={`px-2 py-1 rounded-full text-xs ${
                     call.Forwarded
                       ? 'bg-green-light text-green'
@@ -172,15 +172,15 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                     {call.Forwarded ? 'Yes' : 'No'}
                   </span>
                 </TableCell>
-                <TableCell className="p-4 text-gray">
-                  <div className="max-w-[200px] truncate" title={call.conversation_summary}>
+                <TableCell className="p-4 text-gray w-[20%]">
+                  <div className="truncate" title={call.conversation_summary}>
                     {call.conversation_summary}
                   </div>
                 </TableCell>
-                <TableCell className="p-4 text-gray">
+                <TableCell className="p-4 text-gray w-[10%]">
                   {call.duration_seconds ? `${Math.round(parseFloat(call.duration_seconds))}s` : 'N/A'}
                 </TableCell>
-                <TableCell className="p-4">
+                <TableCell className="p-4 w-[10%]">
                   <span className={`px-2 py-1 rounded-full text-xs border ${getEmotionColor(call.Emotion)}`}>
                     {call.Emotion || 'N/A'}
                   </span>
