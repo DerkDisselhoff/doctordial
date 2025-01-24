@@ -18,7 +18,7 @@ const About = () => {
       <section className="py-12 px-4">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto">
-            <div className="space-y-12 mb-12">
+            <div className="space-y-8 mb-12">
               <ChallengeSection />
               <SolutionSection />
               <VisionSection />
