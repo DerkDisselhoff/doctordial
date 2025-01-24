@@ -41,7 +41,7 @@ export function Logo({ className = "", linkClassName = "" }: LogoProps) {
           <h1 className={`text-xl font-semibold tracking-tight ${className}`}>
             {practiceName || "Loading..."}
           </h1>
-          <span className="text-xs text-white/50">Powered by DoctorDial</span>
+          <span className="text-xs text-gray">Powered by DoctorDial</span>
         </div>
       </Link>
     );
