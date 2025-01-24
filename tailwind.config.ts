@@ -20,58 +20,50 @@ export default {
     extend: {
       colors: {
         // Primary Brand Colors
-        forest: {
-          DEFAULT: "#0A1F2F",
-          light: "#132B41",
+        primary: {
+          DEFAULT: "#0EA5E9", // Professional blue
+          light: "#D3E4FD",   // Soft blue
+          dark: "#0284C7",    // Darker blue for hover states
         },
-        mint: {
-          DEFAULT: "#64FFDA",
-          light: "#A7FFE4",
+        background: {
+          DEFAULT: "#FFFFFF", // Pure white
+          alt: "#F8FAFC",     // Slightly off-white for alternating sections
+          subtle: "#F1F5F9",  // Very light gray for subtle backgrounds
         },
-        divine: {
-          DEFAULT: "#FFD700",
-          light: "#FFE55C",
-        },
-
-        // Neutral Colors
-        neutral: {
-          100: "#F1F1F1", // Light Gray
-          200: "#F3F3F3", // Light Gray
-          300: "#EEEEEE", // Off White
-          400: "#CCCCCC", // Light Gray
-          500: "#999999", // Medium Gray
-          600: "#8E9196", // Neutral Gray
-          700: "#8A898C", // Medium Gray
-          800: "#AAADB0", // Cool Gray
-        },
-
-        // Status Colors
-        success: {
-          light: "#F2FCE2", // Soft Green
-          DEFAULT: "#22C55E",
-        },
-        warning: {
-          light: "#FEF7CD", // Soft Yellow
-          DEFAULT: "#F59E0B",
-        },
-        error: {
-          light: "#FFDEE2", // Soft Pink
-          DEFAULT: "#EA384C",
-        },
-        info: {
-          light: "#D3E4FD", // Soft Blue
-          DEFAULT: "#0EA5E9",
-        },
-
-        // UI Colors
-        surface: {
-          light: "#F6F6F7",
-          DEFAULT: "#FFFFFF",
-          dark: "#221F26",
+        gray: {
+          50: "#F8FAFC",
+          100: "#F1F5F9",
+          200: "#E2E8F0",
+          300: "#CBD5E1",
+          400: "#94A3B8",
+          500: "#64748B",
+          600: "#475569",
+          700: "#334155",
+          800: "#1E293B",
+          900: "#0F172A",
         },
         accent: {
-          blue: "#33C3F0",
-          orange: "#F97316",
+          green: {
+            DEFAULT: "#22C55E",
+            light: "#F0FDF4",
+          },
+        },
+        // Status Colors
+        success: {
+          DEFAULT: "#22C55E",
+          light: "#F0FDF4",
+        },
+        warning: {
+          DEFAULT: "#F59E0B",
+          light: "#FEF3C7",
+        },
+        error: {
+          DEFAULT: "#EF4444",
+          light: "#FEE2E2",
+        },
+        info: {
+          DEFAULT: "#0EA5E9",
+          light: "#D3E4FD",
         },
       },
       fontFamily: {
@@ -120,12 +112,12 @@ export default {
         'full': '9999px',
       },
       boxShadow: {
-        'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
-        'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
-        'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
-        'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
-        'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
+        'sm': '0 1px 2px 0 rgba(14, 165, 233, 0.05)',
+        DEFAULT: '0 1px 3px 0 rgba(14, 165, 233, 0.1), 0 1px 2px -1px rgba(14, 165, 233, 0.1)',
+        'md': '0 4px 6px -1px rgba(14, 165, 233, 0.1), 0 2px 4px -2px rgba(14, 165, 233, 0.1)',
+        'lg': '0 10px 15px -3px rgba(14, 165, 233, 0.1), 0 4px 6px -4px rgba(14, 165, 233, 0.1)',
+        'xl': '0 20px 25px -5px rgba(14, 165, 233, 0.1), 0 8px 10px -6px rgba(14, 165, 233, 0.1)',
+        'inner': 'inset 0 2px 4px 0 rgba(14, 165, 233, 0.05)',
         'none': 'none',
       },
       animation: {
@@ -148,7 +140,7 @@ export default {
         },
       },
       backgroundImage: {
-        'gradient-radial-mint': 'radial-gradient(circle at 50% 0%, rgba(100, 255, 218, 0.05), transparent 70%), radial-gradient(circle at 0% 50%, rgba(100, 255, 218, 0.025), transparent 50%), radial-gradient(circle at 100% 50%, rgba(100, 255, 218, 0.025), transparent 50%)',
+        'gradient-soft': 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.05), transparent 70%), radial-gradient(circle at 0% 50%, rgba(14, 165, 233, 0.025), transparent 50%), radial-gradient(circle at 100% 50%, rgba(14, 165, 233, 0.025), transparent 50%)',
       },
     },
   },
