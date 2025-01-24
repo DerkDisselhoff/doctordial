@@ -70,7 +70,7 @@ export function BookDemoForm() {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button className="bg-mint hover:bg-mint/90 text-forest font-medium">
+        <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium">
           {t("nav.bookDemo")}
         </Button>
       </DialogTrigger>

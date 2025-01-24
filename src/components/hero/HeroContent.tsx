@@ -11,15 +11,15 @@ const HeroContent = () => {
         <Phone className="w-3 h-3 md:w-4 md:h-4 text-mint" />
         <span className="text-mint text-xs md:text-sm font-medium">{t("hero.aiPowered")}</span>
       </div>
-      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-        {t("hero.title")}
+      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight text-gray-dark">
+        Transform Your Practice's Communication
       </h1>
-      <p className="text-sm md:text-lg text-white/80 max-w-md leading-relaxed">
+      <p className="text-sm md:text-lg text-gray max-w-md leading-relaxed">
         Let our AI-driven Triage handle your practice's calls while maintaining the personal touch your patients expect.
       </p>
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <BookDemoForm />
-        <div className="text-xs md:text-sm text-mint/80 mt-2 sm:mt-0 animate-fade-in">
+        <div className="text-xs md:text-sm text-gray mt-2 sm:mt-0 animate-fade-in">
           {t("hero.trainedOn")}
         </div>
       </div>
