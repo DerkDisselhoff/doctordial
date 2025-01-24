@@ -1,6 +1,5 @@
 import HeroContent from "./hero/HeroContent";
-import HeroImage from "./hero/HeroImage";
-import { Brain, Heart, Shield } from "lucide-react";
+import { Brain, Heart, Shield, Sparkles } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -23,11 +22,17 @@ const Hero = () => {
       <div className="absolute bottom-1/3 right-24 text-mint/20 animate-float">
         <Shield className="w-5 h-5" />
       </div>
-      
-      <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-center relative">
-        <HeroContent />
-        <HeroImage />
+      <div className="absolute bottom-1/4 left-32 text-blue-dark/20 animate-float-delayed">
+        <Sparkles className="w-4 h-4" />
       </div>
+      
+      {/* Centered content */}
+      <div className="container mx-auto max-w-4xl relative">
+        <HeroContent />
+      </div>
+
+      {/* Decorative grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
     </section>
   );
 };
