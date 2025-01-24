@@ -6,22 +6,22 @@ const VapiCallsList = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-surface">
       <div className="container mx-auto px-4">
-        <Card>
+        <Card className="bg-surface-secondary border-surface-input">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-forest">
+            <CardTitle className="text-2xl font-bold text-text-primary">
               {t("calls.recentCalls")}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>{t("calls.date")}</TableHead>
-                  <TableHead>{t("calls.caller")}</TableHead>
-                  <TableHead>{t("calls.duration")}</TableHead>
-                  <TableHead>{t("calls.status")}</TableHead>
+                <TableRow className="hover:bg-surface border-surface-input">
+                  <TableHead className="text-text-primary">{t("calls.date")}</TableHead>
+                  <TableHead className="text-text-primary">{t("calls.caller")}</TableHead>
+                  <TableHead className="text-text-primary">{t("calls.duration")}</TableHead>
+                  <TableHead className="text-text-primary">{t("calls.status")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

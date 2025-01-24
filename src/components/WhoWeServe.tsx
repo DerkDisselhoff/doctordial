@@ -3,8 +3,8 @@ import { Stethoscope, Users } from "lucide-react";
 
 const WhoWeServe = () => {
   return (
-    <section className="py-20 px-4 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-mint/5 to-transparent opacity-50" />
+    <section className="py-20 px-4 relative overflow-hidden bg-surface">
+      <div className="absolute inset-0 bg-gradient-to-b from-primary-light/5 to-transparent opacity-50" />
       <div className="container mx-auto relative">
         <div className="grid md:grid-cols-2 gap-12">
           {[
@@ -33,27 +33,27 @@ const WhoWeServe = () => {
           ].map((service, index) => (
             <div
               key={index}
-              className="group bg-forest-light p-8 rounded-xl border border-mint/10 hover:border-mint/30 transition-all duration-300 hover:shadow-lg hover:shadow-mint/5 animate-fade-up"
+              className="group bg-surface-secondary p-8 rounded-xl border border-surface-input hover:border-primary/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 animate-fade-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="w-16 h-16 bg-mint/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-mint/20 transition-colors">
+              <div className="w-16 h-16 bg-primary-light/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-primary-light/20 transition-colors">
                 {React.createElement(service.icon, {
-                  className: "w-8 h-8 text-mint group-hover:scale-110 transition-transform"
+                  className: "w-8 h-8 text-primary group-hover:scale-110 transition-transform"
                 })}
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-mint transition-colors">
+              <h3 className="text-2xl font-bold mb-4 text-text-primary group-hover:text-primary transition-colors">
                 {service.title}
               </h3>
-              <p className="text-white/80 mb-6 leading-relaxed">
+              <p className="text-text-secondary mb-6 leading-relaxed">
                 {service.description}
               </p>
               <ul className="space-y-3">
                 {service.features.map((feature, featureIndex) => (
                   <li
                     key={featureIndex}
-                    className="flex items-center text-white/70 group-hover:text-white/90 transition-colors"
+                    className="flex items-center text-text-secondary group-hover:text-text-primary transition-colors"
                   >
-                    <div className="w-1.5 h-1.5 bg-mint rounded-full mr-3" />
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full mr-3" />
                     {feature}
                   </li>
                 ))}

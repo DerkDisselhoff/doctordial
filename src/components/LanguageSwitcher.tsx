@@ -18,10 +18,10 @@ const LanguageSwitcher = () => {
           {language === 'en' ? 'English' : 'Nederlands'}
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[180px]">
+      <DropdownMenuContent align="end" className="w-[180px] bg-surface border-surface-input">
         <DropdownMenuItem 
           onClick={() => setLanguage('en')}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 text-text-primary hover:text-text-primary hover:bg-primary-light/10"
         >
           <span className="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-[10px] text-surface font-medium">
             EN
@@ -30,7 +30,7 @@ const LanguageSwitcher = () => {
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={() => setLanguage('nl')}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 text-text-primary hover:text-text-primary hover:bg-primary-light/10"
         >
           <span className="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-[10px] text-surface font-medium">
             NL
