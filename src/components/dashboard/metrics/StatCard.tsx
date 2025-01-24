@@ -1,10 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { LucideIcon } from "lucide-react";
 
 interface StatCardProps {
   title: string;
   value: string | number;
-  icon: React.ReactNode;
+  icon: LucideIcon;
   trend?: {
     value: number;
     isPositive: boolean;
@@ -12,7 +13,7 @@ interface StatCardProps {
   className?: string;
 }
 
-export function StatCard({ title, value, icon, trend, className }: StatCardProps) {
+export function StatCard({ title, value, icon: Icon, trend, className }: StatCardProps) {
   return (
     <Card className={cn("bg-surface border-surface-input", className)}>
       <CardContent className="p-6">
@@ -30,7 +31,7 @@ export function StatCard({ title, value, icon, trend, className }: StatCardProps
             )}
           </div>
           <div className="p-3 bg-surface-secondary rounded-full">
-            {icon}
+            <Icon className="w-5 h-5 text-text-primary" />
           </div>
         </div>
       </CardContent>
