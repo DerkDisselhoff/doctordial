@@ -1,7 +1,7 @@
 @layer components {
   /* Status Indicators */
   .status-badge {
-    @apply px-2 py-1 rounded-full text-xs font-medium;
+    @apply px-2 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1;
   }
 
   .status-badge-success {
@@ -18,7 +18,7 @@
 
   /* Loading States */
   .card-skeleton {
-    @apply animate-pulse bg-forest-light/30;
+    @apply animate-pulse bg-forest-light/30 rounded-xl;
   }
 
   .card-skeleton-text {
@@ -40,6 +40,28 @@
   }
 
   .card-hover-glow {
-    @apply hover:shadow-[0_0_15px_rgba(100,255,218,0.1)];
+    @apply transition-shadow duration-300 hover:shadow-[0_0_15px_rgba(100,255,218,0.1)];
+  }
+
+  /* Interactive States */
+  .interactive-hover {
+    @apply hover:bg-mint/5 transition-colors duration-200;
+  }
+
+  .interactive-active {
+    @apply active:bg-mint/10 transition-colors duration-75;
+  }
+
+  /* Spacing Utilities */
+  .section-spacing {
+    @apply space-y-6;
+  }
+
+  .content-spacing {
+    @apply space-y-4;
+  }
+
+  .item-spacing {
+    @apply space-y-2;
   }
 }

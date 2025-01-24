@@ -5,11 +5,11 @@
   }
 
   .card-header {
-    @apply flex items-center justify-between mb-4;
+    @apply flex items-center justify-between mb-4 pb-4 border-b border-mint/10;
   }
 
   .card-title {
-    @apply text-xl font-semibold text-white tracking-tight;
+    @apply text-xl font-semibold text-white tracking-tight flex items-center gap-2;
   }
 
   .card-description {
@@ -39,19 +39,19 @@
 
   /* Dashboard Card Variants */
   .dashboard-card {
-    @apply card bg-forest-light/50;
+    @apply bg-forest-light/50 border-mint/10 rounded-xl shadow-sm;
   }
 
   .dashboard-card-header {
-    @apply card-header border-b border-mint/10 pb-4;
+    @apply flex flex-col space-y-1.5 p-6;
   }
 
   .dashboard-card-title {
-    @apply card-title;
+    @apply text-xl font-semibold text-white tracking-tight flex items-center gap-2;
   }
 
   .dashboard-card-content {
-    @apply p-4 text-white/70;
+    @apply p-6 pt-0 text-white/70;
   }
 
   /* Feature Card Variants */
@@ -74,5 +74,23 @@
 
   .stats-card-label {
     @apply text-sm text-white/60;
+  }
+
+  /* Form Card Variants */
+  .form-card {
+    @apply card space-y-6;
+  }
+
+  .form-card-section {
+    @apply space-y-4;
+  }
+
+  /* Settings Card Variants */
+  .settings-card {
+    @apply card space-y-4;
+  }
+
+  .settings-card-section {
+    @apply space-y-2;
   }
 }
