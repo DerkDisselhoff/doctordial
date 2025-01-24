@@ -36,12 +36,12 @@ export function Logo({ className = "", linkClassName = "" }: LogoProps) {
   if (isDashboard) {
     return (
       <Link to="/" className={`flex items-center space-x-3 transition-all hover:opacity-80 ${linkClassName}`}>
-        <Stethoscope className="w-6 h-6 text-primary" />
+        <Stethoscope className="w-6 h-6 text-mint" />
         <div className="flex flex-col">
-          <h1 className={`text-xl font-semibold tracking-tight text-text-primary ${className}`}>
+          <h1 className={`text-xl font-semibold tracking-tight ${className}`}>
             {practiceName || "Loading..."}
           </h1>
-          <span className="text-xs text-text-secondary">Powered by DoctorDial</span>
+          <span className="text-xs text-white/50">Powered by DoctorDial</span>
         </div>
       </Link>
     );
@@ -49,8 +49,8 @@ export function Logo({ className = "", linkClassName = "" }: LogoProps) {
 
   return (
     <Link to="/" className={`flex items-center space-x-3 transition-all hover:opacity-80 ${linkClassName}`}>
-      <Stethoscope className="w-6 h-6 text-primary" />
-      <h1 className={`text-xl font-semibold tracking-tight text-text-primary ${className}`}>
+      <Stethoscope className="w-6 h-6 text-mint" />
+      <h1 className={`text-xl font-semibold tracking-tight ${className}`}>
         DoctorDial
       </h1>
     </Link>

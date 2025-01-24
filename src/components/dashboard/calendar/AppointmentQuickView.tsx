@@ -33,37 +33,37 @@ export function AppointmentQuickView({ date, selectedDoctor }: AppointmentQuickV
 
   const getUrgencyColor = (score: string) => {
     switch (score) {
-      case "U1": return "text-status-error border-status-error/20";
-      case "U2": return "text-status-warning border-status-warning/20";
-      case "U3": return "text-status-warning border-status-warning/20";
-      case "U4": return "text-status-info border-status-info/20";
-      case "U5": return "text-status-success border-status-success/20";
-      default: return "text-text-muted border-border";
+      case "U1": return "text-red-500 border-red-500/20";
+      case "U2": return "text-orange-500 border-orange-500/20";
+      case "U3": return "text-yellow-500 border-yellow-500/20";
+      case "U4": return "text-blue-500 border-blue-500/20";
+      case "U5": return "text-green-500 border-green-500/20";
+      default: return "text-gray-500 border-gray-500/20";
     }
   };
 
   return (
-    <Card className="bg-surface border-border">
+    <Card className="bg-forest-light/50 border-mint/10">
       <CardHeader>
-        <CardTitle className="text-text-primary">
+        <CardTitle className="text-white">
           Appointments for {format(date, "MMMM d, yyyy")}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           {appointments.length === 0 ? (
-            <p className="text-text-secondary text-sm">No appointments scheduled</p>
+            <p className="text-white/60 text-sm">No appointments scheduled</p>
           ) : (
             appointments.map((appointment) => (
               <div
                 key={appointment.id}
-                className="p-3 rounded bg-surface-secondary cursor-pointer hover:bg-surface-tertiary"
+                className="p-3 rounded bg-mint/10 cursor-pointer hover:bg-mint/20"
                 onClick={() => navigate(`/dashboard/appointments/${appointment.id}`)}
               >
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <p className="text-sm font-medium text-text-primary">{appointment.time}</p>
-                    <p className="text-sm text-text-secondary">{appointment.patient}</p>
+                    <p className="text-sm font-medium text-white">{appointment.time}</p>
+                    <p className="text-sm text-white/60">{appointment.patient}</p>
                   </div>
                   <Badge 
                     variant="outline" 
@@ -72,7 +72,7 @@ export function AppointmentQuickView({ date, selectedDoctor }: AppointmentQuickV
                     {appointment.urgentiescore}
                   </Badge>
                 </div>
-                <p className="text-xs text-text-secondary">{appointment.type}</p>
+                <p className="text-xs text-white/60">{appointment.type}</p>
               </div>
             ))
           )}

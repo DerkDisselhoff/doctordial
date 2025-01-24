@@ -3,27 +3,23 @@ import { UrgencyLevels } from "./features/feature-previews/UrgencyLevels";
 
 const Features = () => {
   return (
-    <section className="section bg-surface-secondary">
-      <div className="container">
-        <div className="content-spacing-lg text-center">
-          <div className="space-y-4">
-            <h2 className="heading-section text-text-primary">
-              Transform Patient Calls into Practice Efficiency
-            </h2>
-            <p className="text-lead max-w-2xl mx-auto text-text-secondary">
-              Our advanced AI-powered triage system accurately assesses patient needs in real-time, 
-              ensuring urgent cases receive immediate attention while efficiently managing routine inquiries. 
-              This smart urgency detection helps practices prioritize patient care effectively.
-            </p>
-          </div>
-          
-          <div className="max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-surface rounded-xl border border-surface-input shadow-sm">
+    <section className="py-8 md:py-20 px-4 bg-forest-light">
+      <div className="container mx-auto">
+        <div className="text-center mb-6 md:mb-12">
+          <h2 className="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4 animate-fade-up">
+            Transform Patient Calls into Practice Efficiency
+          </h2>
+          <p className="text-sm md:text-lg text-white/80 max-w-2xl mx-auto mb-6 md:mb-12 animate-fade-up delay-100">
+            Our advanced AI-powered triage system accurately assesses patient needs in real-time, 
+            ensuring urgent cases receive immediate attention while efficiently managing routine inquiries. 
+            This smart urgency detection helps practices prioritize patient care effectively.
+          </p>
+          <div className="max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-forest rounded-xl border border-mint/10 mb-6 md:mb-12 animate-fade-up delay-200 overflow-x-auto touch-pan-x">
             <UrgencyLevels />
           </div>
-          
           <Link 
             to="/features" 
-            className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-surface bg-primary hover:bg-primary-dark rounded-lg transition-colors"
+            className="inline-flex items-center justify-center px-4 md:px-8 py-2.5 md:py-3 text-sm md:text-base font-medium text-forest bg-mint hover:bg-mint/90 rounded-lg transition-colors animate-fade-up delay-300 touch-manipulation"
           >
             See all features
           </Link>

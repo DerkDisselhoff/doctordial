@@ -1,47 +1,41 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DailyCallsChart } from "./DailyCallsChart";
-import { CallVolumeChart } from "./CallVolumeChart";
+import { supabase } from "@/lib/supabaseClient";
 import { ClientDistributionChart } from "./ClientDistributionChart";
-import { UrgencyLevelChart } from "./UrgencyLevelChart";
+import { CallVolumeChart } from "./CallVolumeChart";
+import { UrgentCases } from "../client/UrgentCases";
+import { useQuery } from "@tanstack/react-query";
 
 export function DashboardCharts() {
+  const checkUserRole = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', session.user.id)
+        .single();
+      
+      return profile?.role;
+    }
+    return null;
+  };
+
+  const { data: userRole } = useQuery({
+    queryKey: ['userRole'],
+    queryFn: checkUserRole
+  });
+
+  if (userRole === 'admin') {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <ClientDistributionChart />
+        <CallVolumeChart />
+      </div>
+    );
+  }
+
   return (
-    <div className="grid gap-6 md:grid-cols-2">
-      <Card className="bg-surface border-surface-input">
-        <CardHeader>
-          <CardTitle className="text-text-primary">Daily Calls</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <DailyCallsChart />
-        </CardContent>
-      </Card>
-
-      <Card className="bg-surface border-surface-input">
-        <CardHeader>
-          <CardTitle className="text-text-primary">Call Volume by Hour</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CallVolumeChart />
-        </CardContent>
-      </Card>
-
-      <Card className="bg-surface border-surface-input">
-        <CardHeader>
-          <CardTitle className="text-text-primary">Client Distribution</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ClientDistributionChart />
-        </CardContent>
-      </Card>
-
-      <Card className="bg-surface border-surface-input">
-        <CardHeader>
-          <CardTitle className="text-text-primary">Urgency Levels</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <UrgencyLevelChart />
-        </CardContent>
-      </Card>
+    <div className="grid grid-cols-1 gap-8">
+      <UrgentCases isIrrelevant={true} />
     </div>
   );
 }

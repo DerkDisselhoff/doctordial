@@ -1,11 +1,404 @@
+@import url('https://rsms.me/inter/inter.css');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import './styles/base.css';
-@import './styles/typography.css';
-@import './styles/components.css';
-@import './styles/forms.css';
-@import './styles/charts.css';
-@import './styles/calendar.css';
-@import './styles/animations.css';
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 152 55% 12%;
+    --primary-foreground: 152 55% 98%;
+    --secondary: 152 75% 52%;
+    --secondary-foreground: 152 75% 98%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 152 75% 52%;
+    --accent-foreground: 152 75% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 152 75% 52%;
+    --radius: 0.5rem;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-forest text-white antialiased tracking-tight;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(100, 255, 218, 0.05), transparent 70%),
+      radial-gradient(circle at 0% 50%, rgba(100, 255, 218, 0.025), transparent 50%),
+      radial-gradient(circle at 100% 50%, rgba(100, 255, 218, 0.025), transparent 50%);
+    background-size: 100% 100%, 50% 100%, 50% 100%;
+    background-position: center top, left center, right center;
+    background-repeat: no-repeat;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium tracking-tight text-white;
+  }
+
+  h1 { @apply text-3xl md:text-4xl; }
+  h2 { @apply text-2xl md:text-3xl; }
+  h3 { @apply text-xl md:text-2xl; }
+  h4 { @apply text-lg md:text-xl; }
+
+  ::selection {
+    @apply bg-mint text-forest;
+  }
+}
+
+@layer components {
+  /* Dashboard Design System */
+  .dashboard-container {
+    @apply p-6 bg-forest-light/50 rounded-xl border border-mint/10;
+  }
+
+  .dashboard-header {
+    @apply flex items-center justify-between mb-8;
+  }
+
+  .dashboard-title {
+    @apply text-3xl font-bold text-white;
+  }
+
+  .dashboard-subtitle {
+    @apply text-white/60;
+  }
+
+  .dashboard-card {
+    @apply bg-forest-light/50 border border-mint/10 rounded-xl;
+  }
+
+  .dashboard-card-header {
+    @apply text-white/70 font-medium;
+  }
+
+  .dashboard-card-title {
+    @apply text-xl font-semibold text-white tracking-tight;
+  }
+
+  .dashboard-card-content {
+    @apply text-white/60;
+  }
+
+  /* Table Design System */
+  .dashboard-table {
+    @apply w-full;
+  }
+
+  .dashboard-table-header {
+    @apply border-b border-mint/10;
+  }
+
+  .dashboard-table-header th {
+    @apply px-4 py-3 text-sm font-semibold text-white/70 tracking-tight;
+  }
+
+  .dashboard-table-row {
+    @apply border-b border-mint/5 hover:bg-mint/5 transition-colors;
+  }
+
+  .dashboard-table-cell {
+    @apply px-4 py-3 text-sm text-white/70;
+  }
+
+  /* Status Badge Design System */
+  .status-badge {
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+  }
+
+  .status-badge-success {
+    @apply bg-mint/10 text-mint;
+  }
+
+  .status-badge-pending {
+    @apply bg-yellow-500/10 text-yellow-500;
+  }
+
+  .status-badge-error {
+    @apply bg-red-500/10 text-red-500;
+  }
+
+  /* Section Headers */
+  .section-header {
+    @apply mb-6;
+  }
+
+  .section-title {
+    @apply text-2xl font-semibold text-white tracking-tight mb-1;
+  }
+
+  .section-description {
+    @apply text-sm text-white/60;
+  }
+
+  /* Form Elements */
+  .form-label {
+    @apply block text-sm font-medium text-white mb-1;
+  }
+
+  .form-input {
+    @apply w-full px-3 py-2 bg-forest-light/50 border border-mint/20 rounded-lg 
+           text-white placeholder-white/40 focus:border-mint focus:ring-1 focus:ring-mint;
+  }
+
+  .form-select {
+    @apply w-full px-3 py-2 bg-forest-light/50 border border-mint/20 rounded-lg 
+           text-white focus:border-mint focus:ring-1 focus:ring-mint;
+  }
+
+  /* Dashboard Sidebar */
+  .dashboard-sidebar {
+    @apply w-64 h-full bg-forest-light/95 backdrop-blur-xl border-r border-mint/10;
+  }
+
+  .dashboard-sidebar-header {
+    @apply p-6 border-b border-mint/10;
+  }
+
+  .dashboard-sidebar-content {
+    @apply flex-1 px-3 py-6;
+  }
+
+  .dashboard-sidebar-footer {
+    @apply border-t border-mint/10 p-4;
+  }
+
+  /* Dashboard Layout */
+  .dashboard-main {
+    @apply flex-1 p-8;
+  }
+
+  .dashboard-grid {
+    @apply grid gap-6;
+  }
+
+  /* Chart Styles */
+  .recharts-cartesian-grid-horizontal line,
+  .recharts-cartesian-grid-vertical line {
+    @apply stroke-mint/10;
+  }
+
+  .recharts-text {
+    @apply fill-white/70 text-sm;
+  }
+
+  .recharts-tooltip-wrapper {
+    @apply !bg-forest-light/95 border border-mint/10 rounded-lg shadow-lg;
+  }
+
+  .recharts-default-tooltip {
+    @apply !bg-transparent !border-none;
+  }
+
+  .recharts-tooltip-label {
+    @apply text-white/90 !important;
+  }
+
+  .recharts-tooltip-item {
+    @apply text-mint !important;
+  }
+
+  .recharts-active-dot {
+    @apply fill-mint stroke-forest;
+  }
+
+  /* Dark Theme Components */
+  .dark-card {
+    @apply bg-forest-light/50 border-mint/10 text-white;
+  }
+
+  .dark-card-header {
+    @apply border-b border-mint/10;
+  }
+
+  .dark-text-primary {
+    @apply text-white;
+  }
+
+  .dark-text-secondary {
+    @apply text-white/70;
+  }
+
+  .dark-hover {
+    @apply hover:bg-mint/5;
+  }
+
+  /* Chart Styles */
+  .dark-chart-grid {
+    @apply stroke-mint/10;
+  }
+
+  .dark-chart-text {
+    @apply fill-white text-sm;
+  }
+
+  .dark-chart-tooltip {
+    @apply !bg-forest-light/95 border border-mint/10 rounded-lg shadow-lg;
+  }
+
+  /* Calendar Specific Styles */
+  .calendar-grid {
+    @apply grid gap-px bg-mint/5 rounded-lg overflow-hidden;
+  }
+
+  .calendar-time-column {
+    @apply bg-forest-light/80 backdrop-blur-sm;
+  }
+
+  .calendar-header {
+    @apply sticky top-0 z-20 bg-forest-light/95 backdrop-blur-sm border-b border-mint/10;
+  }
+
+  .calendar-cell {
+    @apply h-20 border-b border-mint/10 relative group hover:bg-mint/5 transition-colors;
+  }
+
+  .calendar-appointment {
+    @apply absolute left-0 right-0 mx-1 p-2 rounded-md border transition-all duration-200 
+           hover:translate-y-0.5 hover:shadow-lg cursor-pointer backdrop-blur-sm;
+  }
+
+  /* Animation for the gradient background */
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient {
+    animation: gradient 15s ease infinite;
+    background-size: 200% 200%;
+  }
+
+  /* Enhanced Calendar Specific Styles */
+  .calendar-card {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+
+  .calendar-card-header {
+    @apply sticky top-0 z-20 bg-forest-light/95 backdrop-blur-sm border-b border-mint/10 
+           shadow-lg transition-colors duration-300;
+  }
+
+  .calendar-time-column {
+    @apply bg-forest-light/80 backdrop-blur-sm border-r border-mint/10 
+           transition-colors duration-300;
+  }
+
+  .calendar-grid-cell {
+    @apply h-20 border-b border-mint/10 relative group 
+           hover:bg-mint/5 transition-all duration-300;
+  }
+
+  .calendar-appointment-card {
+    @apply absolute left-0 right-0 mx-1 p-2 rounded-md border 
+           transition-all duration-300 hover:translate-y-0.5 hover:shadow-lg 
+           cursor-pointer backdrop-blur-sm;
+  }
+
+  /* Current time indicator animation */
+  @keyframes pulse-mint {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.5; }
+  }
+
+  .current-time-indicator {
+    @apply absolute left-0 right-0 h-0.5 bg-mint/50 z-10;
+  }
+
+  .current-time-dot {
+    @apply absolute -left-1 -top-1 w-2 h-2 rounded-full bg-mint;
+    animation: pulse-mint 2s infinite;
+  }
+
+  /* Dropdown Design System */
+  .dropdown-trigger {
+    @apply w-full px-3 py-2 bg-forest-light/50 border border-mint/20 rounded-lg 
+           text-white placeholder-white/40 focus:border-mint focus:ring-1 focus:ring-mint
+           hover:bg-mint/5 transition-colors;
+  }
+
+  .dropdown-content {
+    @apply bg-forest-light/95 border border-mint/10 rounded-lg shadow-lg 
+           backdrop-blur-sm overflow-hidden z-50;
+  }
+
+  .dropdown-item {
+    @apply relative flex w-full cursor-default select-none items-center rounded-sm 
+           py-1.5 pl-8 pr-2 text-sm outline-none text-white
+           data-[disabled]:pointer-events-none data-[disabled]:opacity-50
+           hover:bg-mint/10 focus:bg-mint/10 transition-colors;
+  }
+
+  .dropdown-item-indicator {
+    @apply absolute left-2 flex h-3.5 w-3.5 items-center justify-center text-mint;
+  }
+
+  /* Status Badge Design System */
+  .status-badge {
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+  }
+
+  .status-badge-success {
+    @apply bg-mint/10 text-mint;
+  }
+
+  .status-badge-pending {
+    @apply bg-yellow-500/10 text-yellow-500;
+  }
+
+  .status-badge-error {
+    @apply bg-red-500/10 text-red-500;
+  }
+
+  /* Animation keyframes */
+  @keyframes fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fade-down {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

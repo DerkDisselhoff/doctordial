@@ -125,8 +125,8 @@ export function AdminSidebar() {
         variant="ghost"
         className={`w-full justify-start gap-3 px-3 py-2 ${
           isActive 
-            ? 'bg-primary/10 text-text-primary' 
-            : 'text-text-secondary hover:bg-primary/5 hover:text-text-primary'
+            ? 'bg-mint/10 text-white' 
+            : 'text-white/70 hover:bg-mint/10 hover:text-white'
         }`}
         onClick={() => navigate(path)}
       >
@@ -146,8 +146,8 @@ export function AdminSidebar() {
             variant="ghost"
             className={`w-full justify-start gap-3 px-3 py-2 ${
               isSettingsActive 
-                ? 'bg-primary/10 text-text-primary' 
-                : 'text-text-secondary hover:bg-primary/5 hover:text-text-primary'
+                ? 'bg-mint/10 text-white' 
+                : 'text-white/70 hover:bg-mint/10 hover:text-white'
             }`}
           >
             <Settings className="h-5 w-5" />
@@ -155,7 +155,7 @@ export function AdminSidebar() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-56 bg-surface border-surface-input"
+          className="w-56 bg-forest-light border-mint/10"
           align="start"
           alignOffset={0}
           sideOffset={2}
@@ -163,7 +163,7 @@ export function AdminSidebar() {
           {settingsMenuItems.map((item) => (
             <DropdownMenuItem
               key={item.title}
-              className="text-text-secondary hover:text-text-primary hover:bg-primary/5 cursor-pointer"
+              className="text-white/70 hover:text-white hover:bg-mint/5 cursor-pointer"
               onClick={() => navigate(item.path)}
             >
               <item.icon className="mr-2 h-4 w-4" />
@@ -177,11 +177,11 @@ export function AdminSidebar() {
 
   return (
     <Sidebar>
-      <div className="flex h-full w-64 flex-col bg-surface border-r border-surface-input">
-        <div className="p-6 border-b border-surface-input">
-          <Logo className="text-text-primary" />
+      <div className="flex h-full w-64 flex-col bg-forest-light/95 backdrop-blur-xl border-r border-mint/10">
+        <div className="p-6 border-b border-mint/10">
+          <Logo className="text-white" />
           {userProfile?.company_name && (
-            <div className="mt-4 text-text-secondary">
+            <div className="mt-4 text-white/70">
               <p className="text-sm font-medium">{userProfile.company_name}</p>
               <p className="text-xs">Netherlands</p>
             </div>
@@ -212,29 +212,29 @@ export function AdminSidebar() {
           </SidebarGroup>
         </SidebarContent>
 
-        <div className="border-t border-surface-input p-4">
+        <div className="border-t border-mint/10 p-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="w-full justify-start gap-3 px-2 hover:bg-primary/5">
-                <Avatar className="h-8 w-8 ring-2 ring-primary/20">
+              <Button variant="ghost" className="w-full justify-start gap-3 px-2 hover:bg-mint/5">
+                <Avatar className="h-8 w-8 ring-2 ring-mint/20">
                   <AvatarImage src={userProfile?.avatar_url || ''} />
-                  <AvatarFallback className="bg-primary/10 text-text-primary">
+                  <AvatarFallback className="bg-mint/10 text-forest">
                     {userProfile?.username?.[0]?.toUpperCase() || 'U'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col items-start text-left">
-                  <span className="text-sm font-medium text-text-primary">
+                  <span className="text-sm font-medium text-white">
                     {userProfile?.username || 'User'}
                   </span>
-                  <span className="text-xs text-text-secondary">
+                  <span className="text-xs text-white/60">
                     {userRole === 'admin' ? 'Administrator' : 'Practice Manager'}
                   </span>
                 </div>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-surface border-surface-input">
+            <DropdownMenuContent align="end" className="w-56 bg-forest-light border-mint/10">
               <DropdownMenuItem 
-                className="text-red-500 hover:text-red-600 hover:bg-red-50 cursor-pointer"
+                className="text-red-400 hover:text-red-300 hover:bg-mint/5 cursor-pointer"
                 onClick={handleLogout}
               >
                 <LogOut className="mr-2 h-4 w-4" />

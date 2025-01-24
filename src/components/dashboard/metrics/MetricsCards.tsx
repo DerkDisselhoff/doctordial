@@ -38,34 +38,39 @@ export function MetricsCards({ timeFilter = 'today' }: { timeFilter?: TimeFilter
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard 
-          title="Total Calls"
-          value={isLoading ? '...' : (metrics?.totalCalls?.toString() || defaultMetrics.totalCalls)}
           icon={PhoneCall}
-          trend={{ value: 12, isPositive: true }}
+          label="Total Calls"
+          value={isLoading ? '...' : (metrics?.totalCalls?.toString() || defaultMetrics.totalCalls)}
+          subtext={`From ${timeFilter}`}
+          navigateTo="/dashboard/calls"
         />
         <StatCard 
-          title="Avg. Call Duration"
-          value={isLoading ? '...' : `${metrics?.avgDuration || defaultMetrics.avgDuration}s`}
           icon={Clock}
-          trend={{ value: 8, isPositive: false }}
+          label="Avg. Call Duration"
+          value={isLoading ? '...' : `${metrics?.avgDuration || defaultMetrics.avgDuration}s`}
+          subtext={`From ${timeFilter}`}
+          navigateTo="/dashboard/calls"
         />
         <StatCard 
-          title="Calls Forwarded"
-          value={isLoading ? '...' : (metrics?.callsForwarded?.toString() || defaultMetrics.callsForwarded)}
           icon={Calendar}
-          trend={{ value: 5, isPositive: true }}
+          label="Calls Forwarded"
+          value={isLoading ? '...' : (metrics?.callsForwarded?.toString() || defaultMetrics.callsForwarded)}
+          subtext={`From ${timeFilter}`}
+          navigateTo="/dashboard/calls"
         />
         <StatCard 
-          title="Call Success"
-          value={isLoading ? '...' : `${metrics?.callSuccess || defaultMetrics.callSuccess}%`}
           icon={ThumbsUp}
-          trend={{ value: 10, isPositive: true }}
+          label="Call Success"
+          value={isLoading ? '...' : `${metrics?.callSuccess || defaultMetrics.callSuccess}%`}
+          subtext={`From ${timeFilter}`}
+          navigateTo="/dashboard/calls"
         />
         <StatCard 
-          title="Relevant Cases (U2-U4)"
-          value={isLoading ? '...' : (metrics?.relevantCases?.toString() || defaultMetrics.relevantCases)}
           icon={AlertCircle}
-          trend={{ value: 15, isPositive: true }}
+          label="Relevant Cases (U2-U4)"
+          value={isLoading ? '...' : (metrics?.relevantCases?.toString() || defaultMetrics.relevantCases)}
+          subtext={`From ${timeFilter}`}
+          navigateTo="/dashboard/calls"
         />
       </div>
     );
@@ -74,28 +79,32 @@ export function MetricsCards({ timeFilter = 'today' }: { timeFilter?: TimeFilter
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <StatCard 
-        title="Total Clients"
-        value="2,350"
         icon={Users}
-        trend={{ value: 8, isPositive: true }}
+        label="Total Clients"
+        value="2,350"
+        subtext="+180 from last month"
+        navigateTo="/dashboard/clients"
       />
       <StatCard 
-        title="Total Calls"
-        value="15,280"
         icon={PhoneCall}
-        trend={{ value: 12, isPositive: true }}
+        label="Total Calls"
+        value="15,280"
+        subtext="+2,100 from last month"
+        navigateTo="/dashboard/calls"
       />
       <StatCard 
-        title="Avg. Call Duration"
-        value="3m 45s"
         icon={Clock}
-        trend={{ value: 5, isPositive: false }}
+        label="Avg. Call Duration"
+        value="3m 45s"
+        subtext="-30s from last month"
+        navigateTo="/dashboard/calls"
       />
       <StatCard 
-        title="Monthly Revenue"
-        value="$23,500"
         icon={DollarSign}
-        trend={{ value: 15, isPositive: true }}
+        label="Monthly Revenue"
+        value="$23,500"
+        subtext="+$4,500 from last month"
+        navigateTo="/dashboard/billing"
       />
     </div>
   );
