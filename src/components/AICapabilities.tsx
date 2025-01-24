@@ -10,65 +10,50 @@ import { motion } from "framer-motion";
 
 const capabilities = [
   {
-    icon: Brain,
     title: "Medical Intelligence",
     description: "Trained on NHG triage standards and medical datasets for accurate patient assessment",
     bgImage: "/lovable-uploads/a53de0d0-4b12-4213-ab96-e580a04350ba.png",
-    animation: {
-      variants: {
-        hidden: { pathLength: 0, opacity: 0 },
-        visible: { 
-          pathLength: 1, 
-          opacity: 1,
-          transition: {
-            duration: 2,
-            ease: "easeInOut",
-            repeat: Infinity,
-            repeatType: "loop" as const
-          }
-        }
-      }
-    },
     illustration: (
       <div className="mt-6 relative h-24">
         <motion.div 
           className="absolute inset-0 flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
         >
-          {/* Neural Network Visualization */}
-          <svg className="w-full h-full" viewBox="0 0 200 100">
-            <motion.circle cx="40" cy="50" r="5" fill="#10B981" 
-              initial={{ scale: 0 }}
-              animate={{ scale: [0, 1.2, 1] }}
-              transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
-            />
-            <motion.circle cx="100" cy="30" r="5" fill="#2563EB" 
-              initial={{ scale: 0 }}
-              animate={{ scale: [0, 1.2, 1] }}
-              transition={{ duration: 1, delay: 0.2, repeat: Infinity, repeatDelay: 2 }}
-            />
-            <motion.circle cx="100" cy="70" r="5" fill="#2563EB"
-              initial={{ scale: 0 }}
-              animate={{ scale: [0, 1.2, 1] }}
-              transition={{ duration: 1, delay: 0.4, repeat: Infinity, repeatDelay: 2 }}
-            />
-            <motion.circle cx="160" cy="50" r="5" fill="#10B981"
-              initial={{ scale: 0 }}
-              animate={{ scale: [0, 1.2, 1] }}
-              transition={{ duration: 1, delay: 0.6, repeat: Infinity, repeatDelay: 2 }}
-            />
-            <motion.path
-              d="M45 50 L95 30 M45 50 L95 70 M105 30 L155 50 M105 70 L155 50"
-              stroke="#E8F1FE"
-              strokeWidth="2"
-              fill="none"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1.5 }}
-            />
-          </svg>
+          <motion.div
+            className="w-32 h-32 relative"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 200 80"
+              className="w-full h-full text-mint"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <motion.path 
+                d="M37.5 20h15v40h-15zm30 0h15v40h-15zm30 0h15v40h-15zM20 20h10v40H20zm100 0h-10v40h10zm20 0h10v40h-10z"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+              />
+              <motion.text 
+                x="100" 
+                y="70" 
+                textAnchor="middle" 
+                fontFamily="Arial" 
+                fontSize="14"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 0.5 }}
+              >
+                NHG
+              </motion.text>
+            </motion.svg>
+          </motion.div>
         </motion.div>
       </div>
     )
@@ -386,7 +371,6 @@ const AICapabilities = () => {
             >
               <CarouselContent className="-ml-2 md:-ml-4">
                 {capabilities.map((capability, index) => {
-                  const Icon = capability.icon;
                   return (
                     <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                       <div className="group h-full">
@@ -402,9 +386,9 @@ const AICapabilities = () => {
                               className="relative inline-flex p-4 rounded-lg bg-gradient-to-br from-mint-light/50 to-blue-light/50 text-mint"
                               initial="hidden"
                               animate="visible"
-                              variants={capability.animation.variants}
+                              variants={capability.animation?.variants}
                             >
-                              <Icon className="w-8 h-8" />
+                              {capability.illustration}
                             </motion.div>
                           </div>
 
