@@ -6,10 +6,10 @@ const Features = () => {
   return (
     <div className="bg-gradient-to-b from-white to-mint-light/5">
       <AICapabilities />
-      <section className="py-16 md:py-24 px-4 bg-gradient-to-b from-forest/40 to-forest/60">
+      <section className="py-16 md:py-24 px-4 bg-gradient-to-b from-forest/80 to-forest/90">
         <div className="container mx-auto">
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="font-sans text-3xl md:text-4xl lg:text-5xl font-bold mb-6 animate-fade-up text-gray-dark">
+            <h2 className="font-sans text-3xl md:text-4xl lg:text-5xl font-bold mb-6 animate-fade-up text-white">
               Transform Patient Calls into Practice Efficiency
             </h2>
             <div className="max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-white rounded-xl border border-gray-muted shadow-sm hover:shadow-md transition-shadow mb-8 md:mb-12 animate-fade-up delay-200 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left">
