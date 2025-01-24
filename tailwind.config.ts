@@ -20,23 +20,25 @@ export default {
     extend: {
       // Color System
       colors: {
-        forest: {
-          DEFAULT: "#0A1F2F",
-          light: "#132B41",
-          dark: "#061520",
-          muted: "#0A1F2F80",
+        // Primary Colors
+        white: "#FFFFFF",
+        blue: {
+          DEFAULT: "#D3E4FD",
+          light: "#E8F1FE",
+          dark: "#A1C6FA",
+          muted: "#D3E4FD40",
         },
-        mint: {
-          DEFAULT: "#64FFDA",
-          light: "#A7FFE4",
-          dark: "#4BD3B3",
-          muted: "#64FFDA40",
+        gray: {
+          DEFAULT: "#555555",
+          light: "#8A898C",
+          dark: "#333333",
+          muted: "#C8C8C9",
         },
-        divine: {
-          DEFAULT: "#FFD700",
-          light: "#FFE55C",
-          dark: "#CCB000",
-          muted: "#FFD70040",
+        green: {
+          DEFAULT: "#4CAF50",
+          light: "#F2FCE2",
+          dark: "#388E3C",
+          muted: "#4CAF5040",
         },
         // Semantic Text Colors
         text: {
@@ -66,69 +68,30 @@ export default {
         ],
       },
       fontSize: {
-        xs: ['0.75rem', { lineHeight: '1rem' }],
-        sm: ['0.875rem', { lineHeight: '1.25rem' }],
-        base: ['1rem', { lineHeight: '1.5rem' }],
-        lg: ['1.125rem', { lineHeight: '1.75rem' }],
-        xl: ['1.25rem', { lineHeight: '1.75rem' }],
-        '2xl': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.02em' }],
-        '3xl': ['1.875rem', { lineHeight: '2.25rem', letterSpacing: '-0.02em' }],
-        '4xl': ['2.25rem', { lineHeight: '2.5rem', letterSpacing: '-0.02em' }],
-        '5xl': ['3rem', { lineHeight: '3rem', letterSpacing: '-0.02em' }],
-        '6xl': ['3.75rem', { lineHeight: '3.75rem', letterSpacing: '-0.02em' }],
+        xs: ['0.75rem', { lineHeight: '1.2', letterSpacing: '0.02em' }],
+        sm: ['0.875rem', { lineHeight: '1.5', letterSpacing: '0.02em' }],
+        base: ['1rem', { lineHeight: '1.75', letterSpacing: '0.02em' }],
+        lg: ['1.125rem', { lineHeight: '1.75', letterSpacing: '0.01em' }],
+        xl: ['1.25rem', { lineHeight: '1.75', letterSpacing: '0' }],
+        '2xl': ['1.5rem', { lineHeight: '1.5', letterSpacing: '-0.02em', fontWeight: '600' }],
+        '3xl': ['1.875rem', { lineHeight: '1.4', letterSpacing: '-0.02em', fontWeight: '600' }],
+        '4xl': ['2.25rem', { lineHeight: '1.3', letterSpacing: '-0.02em', fontWeight: '700' }],
+        '5xl': ['3rem', { lineHeight: '1.2', letterSpacing: '-0.02em', fontWeight: '700' }],
+        '6xl': ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }],
       },
       // Spacing System
       spacing: {
-        '4xs': '0.125rem',  // 2px
-        '3xs': '0.25rem',   // 4px
-        '2xs': '0.375rem',  // 6px
-        'xs': '0.5rem',     // 8px
-        'sm': '0.75rem',    // 12px
-        'md': '1rem',       // 16px
-        'lg': '1.5rem',     // 24px
-        'xl': '2rem',       // 32px
-        '2xl': '2.5rem',    // 40px
-        '3xl': '3rem',      // 48px
-        '4xl': '4rem',      // 64px
-      },
-      // Border Radius System
-      borderRadius: {
-        none: '0',
-        sm: '0.25rem',      // 4px
-        DEFAULT: '0.375rem', // 6px
-        md: '0.5rem',       // 8px
-        lg: '0.75rem',      // 12px
-        xl: '1rem',         // 16px
-        '2xl': '1.5rem',    // 24px
-        full: '9999px',
-      },
-      // Shadow System
-      boxShadow: {
-        sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
-        DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
-        md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-        lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
-        xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
-      },
-      // Animation System
-      animation: {
-        "fade-up": "fadeUp 0.5s ease-out forwards",
-        "fade-down": "fadeDown 0.5s ease-out forwards",
-        "fade-in": "fadeIn 0.5s ease-out forwards",
-      },
-      keyframes: {
-        fadeUp: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        fadeDown: {
-          "0%": { opacity: "0", transform: "translateY(-20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
+        '4xs': '0.125rem',
+        '3xs': '0.25rem',
+        '2xs': '0.375rem',
+        'xs': '0.5rem',
+        'sm': '0.75rem',
+        'md': '1rem',
+        'lg': '1.5rem',
+        'xl': '2rem',
+        '2xl': '2.5rem',
+        '3xl': '3rem',
+        '4xl': '4rem',
       },
     },
   },

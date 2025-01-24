@@ -1,23 +1,23 @@
 @layer components {
   /* Text Utilities */
   .text-default {
-    @apply text-text-primary;
+    @apply text-gray-dark;
   }
 
   .text-subtle {
-    @apply text-text-secondary;
+    @apply text-gray;
   }
 
   .text-dim {
-    @apply text-text-muted;
+    @apply text-gray-light;
   }
 
   .text-highlight {
-    @apply text-text-accent;
+    @apply text-blue-dark;
   }
 
   .text-success {
-    @apply text-text-success;
+    @apply text-green;
   }
 
   .text-warning {
@@ -29,11 +29,11 @@
   }
 
   .text-link {
-    @apply text-text-link hover:text-text-link-hover transition-colors;
+    @apply text-blue-dark hover:text-blue transition-colors;
   }
 
   .text-disabled {
-    @apply text-text-disabled cursor-not-allowed;
+    @apply text-gray-muted cursor-not-allowed;
   }
 
   /* Status Indicators */
@@ -42,7 +42,7 @@
   }
 
   .status-badge-success {
-    @apply bg-text-success/10 text-text-success;
+    @apply bg-green-light text-green;
   }
 
   .status-badge-warning {
@@ -55,11 +55,11 @@
 
   /* Loading States */
   .card-skeleton {
-    @apply animate-pulse bg-forest-light/30 rounded-xl;
+    @apply animate-pulse bg-gray-muted/30 rounded-xl;
   }
 
   .card-skeleton-text {
-    @apply h-4 bg-forest-light/50 rounded;
+    @apply h-4 bg-gray-muted/50 rounded;
   }
 
   /* Responsive Utilities */
@@ -77,16 +77,16 @@
   }
 
   .card-hover-glow {
-    @apply transition-shadow duration-300 hover:shadow-[0_0_15px_rgba(100,255,218,0.1)];
+    @apply transition-shadow duration-300 hover:shadow-[0_0_15px_rgba(211,228,253,0.2)];
   }
 
   /* Interactive States */
   .interactive-hover {
-    @apply hover:bg-mint/5 transition-colors duration-200;
+    @apply hover:bg-blue/5 transition-colors duration-200;
   }
 
   .interactive-active {
-    @apply active:bg-mint/10 transition-colors duration-75;
+    @apply active:bg-blue/10 transition-colors duration-75;
   }
 
   /* Spacing Utilities */

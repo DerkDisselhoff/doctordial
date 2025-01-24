@@ -1,19 +1,19 @@
 @layer components {
   /* Base Card Design System */
   .card {
-    @apply bg-forest-light/50 border border-mint/10 rounded-xl p-6 transition-all duration-300;
+    @apply bg-white border border-gray-muted rounded-xl p-6 transition-all duration-300;
   }
 
   .card-header {
-    @apply flex items-center justify-between mb-4 pb-4 border-b border-mint/10;
+    @apply flex items-center justify-between mb-4 pb-4 border-b border-gray-muted;
   }
 
   .card-title {
-    @apply text-xl font-semibold text-white tracking-tight flex items-center gap-2;
+    @apply text-xl font-semibold text-gray-dark tracking-tight flex items-center gap-2;
   }
 
   .card-description {
-    @apply text-sm text-white/60;
+    @apply text-sm text-gray;
   }
 
   .card-content {
@@ -21,12 +21,12 @@
   }
 
   .card-footer {
-    @apply mt-6 pt-4 border-t border-mint/10 flex justify-end space-x-2;
+    @apply mt-6 pt-4 border-t border-gray-muted flex justify-end space-x-2;
   }
 
   /* Interactive Card Variants */
   .card-interactive {
-    @apply hover:bg-mint/5 cursor-pointer;
+    @apply hover:bg-blue/5 cursor-pointer;
   }
 
   .card-elevated {
@@ -34,12 +34,12 @@
   }
 
   .card-gradient {
-    @apply bg-gradient-to-br from-forest-light/50 to-forest relative overflow-hidden;
+    @apply bg-gradient-to-br from-white to-blue/5 relative overflow-hidden;
   }
 
   /* Dashboard Card Variants */
   .dashboard-card {
-    @apply bg-forest-light/50 border-mint/10 rounded-xl shadow-sm;
+    @apply bg-white border-gray-muted rounded-xl shadow-sm;
   }
 
   .dashboard-card-header {
@@ -47,11 +47,11 @@
   }
 
   .dashboard-card-title {
-    @apply text-xl font-semibold text-white tracking-tight flex items-center gap-2;
+    @apply text-xl font-semibold text-gray-dark tracking-tight flex items-center gap-2;
   }
 
   .dashboard-card-content {
-    @apply p-6 pt-0 text-white/70;
+    @apply p-6 pt-0 text-gray;
   }
 
   /* Feature Card Variants */
@@ -60,7 +60,7 @@
   }
 
   .feature-card-icon {
-    @apply p-2 rounded-lg bg-mint/10 text-mint mb-4;
+    @apply p-2 rounded-lg bg-blue/10 text-blue-dark mb-4;
   }
 
   /* Stats Card Design */
@@ -69,11 +69,11 @@
   }
 
   .stats-card-value {
-    @apply text-2xl font-bold text-white;
+    @apply text-2xl font-bold text-gray-dark;
   }
 
   .stats-card-label {
-    @apply text-sm text-white/60;
+    @apply text-sm text-gray;
   }
 
   /* Form Card Variants */
