@@ -12,9 +12,9 @@ const LanguageSwitcher = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-mint/10 transition-colors">
-        <Globe className="w-4 h-4 text-mint" />
-        <span className="text-sm font-medium text-white/90">
+      <DropdownMenuTrigger className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-primary-light/10 transition-colors">
+        <Globe className="w-4 h-4 text-primary" />
+        <span className="text-sm font-medium text-text-primary">
           {language === 'en' ? 'English' : 'Nederlands'}
         </span>
       </DropdownMenuTrigger>
@@ -23,7 +23,7 @@ const LanguageSwitcher = () => {
           onClick={() => setLanguage('en')}
           className="flex items-center gap-2"
         >
-          <span className="w-5 h-5 rounded-full bg-[#f93b3b] flex items-center justify-center text-[10px] text-white font-medium">
+          <span className="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-[10px] text-surface font-medium">
             EN
           </span>
           English
@@ -32,7 +32,7 @@ const LanguageSwitcher = () => {
           onClick={() => setLanguage('nl')}
           className="flex items-center gap-2"
         >
-          <span className="w-5 h-5 rounded-full bg-[#ff5c00] flex items-center justify-center text-[10px] text-white font-medium">
+          <span className="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-[10px] text-surface font-medium">
             NL
           </span>
           Nederlands
