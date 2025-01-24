@@ -17,9 +17,9 @@ const capabilities = [
     title: "Full Customization",
     description: "Customize forwarding rules, activation timing, voice, tone, and medical question handling to match your practice needs",
     illustration: (
-      <div className="mb-6 relative h-56">
+      <div className="mb-6 relative h-48">
         <motion.div 
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-8"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -46,8 +46,8 @@ const capabilities = [
             </div>
           </div>
 
-          {/* Customization Settings with wider container */}
-          <div className="flex flex-col gap-3 min-w-[160px]">
+          {/* Customization Settings */}
+          <div className="flex flex-col gap-3">
             <motion.div 
               className="h-2 w-32 bg-mint/20 rounded-full overflow-hidden"
               initial={{ width: 0 }}
@@ -102,8 +102,8 @@ const capabilities = [
             </motion.div>
           </div>
 
-          {/* Settings Labels with fixed width */}
-          <div className="flex flex-col gap-3 text-xs text-gray-light whitespace-nowrap">
+          {/* Settings Labels */}
+          <div className="flex flex-col gap-3 text-xs text-gray-light">
             <motion.span 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
