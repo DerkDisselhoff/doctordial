@@ -14,7 +14,7 @@ const Features = () => {
             ensuring urgent cases receive immediate attention while efficiently managing routine inquiries. 
             This smart urgency detection helps practices prioritize patient care effectively.
           </p>
-          <div className="max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-white rounded-xl border border-gray-muted shadow-sm hover:shadow-md transition-shadow mb-8 md:mb-12 animate-fade-up delay-200 overflow-x-auto touch-pan-x">
+          <div className="max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-white rounded-xl border border-gray-muted shadow-sm hover:shadow-md transition-shadow p-6 mb-8 md:mb-12 animate-fade-up delay-200">
             <UrgencyLevels />
           </div>
           <Link 
