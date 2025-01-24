@@ -177,13 +177,11 @@
   }
 
   .form-input {
-    @apply w-full px-3 py-2 bg-white border border-gray-300 rounded-lg 
-           text-gray-900 placeholder-gray-400 focus:border-primary focus:ring-1 focus:ring-primary;
+    @apply w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:border-primary focus:ring-1 focus:ring-primary;
   }
 
   .form-select {
-    @apply w-full px-3 py-2 bg-white border border-gray-300 rounded-lg 
-           text-gray-900 focus:border-primary focus:ring-1 focus:ring-primary;
+    @apply w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:border-primary focus:ring-1 focus:ring-primary;
   }
 
   /* Dashboard Sidebar */
@@ -260,8 +258,7 @@
   }
 
   .calendar-appointment {
-    @apply absolute left-0 right-0 mx-1 p-2 rounded-md border transition-all duration-200 
-           hover:translate-y-0.5 hover:shadow-lg cursor-pointer;
+    @apply absolute left-0 right-0 mx-1 p-2 rounded-md border transition-all duration-200 hover:translate-y-0.5 hover:shadow-lg cursor-pointer;
   }
 
   /* Animation keyframes */
