@@ -44,22 +44,22 @@ const FeatureSection = ({
     >
       {/* Content Side */}
       <div className="flex-1 space-y-4 md:space-y-6">
-        <div className="w-12 h-12 md:w-16 md:h-16 bg-mint/10 rounded-full flex items-center justify-center mb-4 md:mb-6">
-          <Icon className="w-6 h-6 md:w-8 md:h-8 text-mint" />
+        <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-light rounded-full flex items-center justify-center mb-4 md:mb-6">
+          <Icon className="w-6 h-6 md:w-8 md:h-8 text-blue-dark" />
         </div>
-        <h3 className="text-2xl md:text-3xl font-bold text-white">
+        <h3 className="text-2xl md:text-3xl font-bold text-gray-dark">
           {title}
         </h3>
-        <p className="text-base md:text-lg text-white/70">
+        <p className="text-base md:text-lg text-gray">
           {description}
         </p>
         <ul className="space-y-3 md:space-y-4">
           {points.map((point, pointIndex) => (
             <li
               key={pointIndex}
-              className="flex items-center text-sm md:text-base text-white/70"
+              className="flex items-center text-sm md:text-base text-gray"
             >
-              <div className="w-1.5 h-1.5 bg-mint rounded-full mr-3 flex-shrink-0" />
+              <div className="w-1.5 h-1.5 bg-blue-dark rounded-full mr-3 flex-shrink-0" />
               {point}
             </li>
           ))}
@@ -68,7 +68,7 @@ const FeatureSection = ({
 
       {/* Preview Component Side */}
       <div className="flex-1 w-full">
-        <Card className="bg-forest-light/95 backdrop-blur-xl border-mint/10 overflow-hidden">
+        <Card className="bg-white border-gray-muted overflow-hidden">
           <PreviewComponent />
         </Card>
       </div>
