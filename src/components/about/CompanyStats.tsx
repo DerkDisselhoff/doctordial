@@ -33,8 +33,8 @@ const CompanyStats = () => {
         >
           <div className="flex flex-col items-center text-center space-y-2">
             {stat.icon}
-            <span className="text-2xl font-bold text-white">{stat.value}</span>
-            <span className="text-sm text-white/60">{stat.label}</span>
+            <span className="text-2xl font-bold text-text-primary">{stat.value}</span>
+            <span className="text-sm text-text-secondary">{stat.label}</span>
           </div>
         </div>
       ))}

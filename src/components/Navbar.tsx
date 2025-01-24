@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="container mx-auto">
         <div className="flex items-center justify-between h-16 md:h-20">
           <div className="flex items-center space-x-8">
-            <Logo className="text-gray-900" />
+            <Logo className="text-text-primary" />
             <div className="hidden md:flex items-center space-x-8">
               <Link 
                 to="/features" 
@@ -76,21 +76,21 @@ const Navbar = () => {
             <div className="flex flex-col space-y-4">
               <Link 
                 to="/features" 
-                className="text-gray-700 hover:text-gray-900 transition-colors text-lg font-medium"
+                className="text-text-secondary hover:text-text-primary transition-colors text-lg font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t("nav.features")}
               </Link>
               <Link 
                 to="/pricing" 
-                className="text-gray-700 hover:text-gray-900 transition-colors text-lg font-medium"
+                className="text-text-secondary hover:text-text-primary transition-colors text-lg font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t("nav.pricing")}
               </Link>
               <Link 
                 to="/about" 
-                className="text-gray-700 hover:text-gray-900 transition-colors text-lg font-medium"
+                className="text-text-secondary hover:text-text-primary transition-colors text-lg font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t("nav.about")}

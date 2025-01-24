@@ -8,12 +8,12 @@ const SolutionSection = () => {
         <Brain className="w-6 h-6" />
         <h3 className="text-xl font-semibold text-mint">The Solution</h3>
       </div>
-      <p className="text-white/80 leading-relaxed">
+      <p className="text-text-primary leading-relaxed">
         Technology has advanced to a point where it can confidently automate routine tasks without 
         sacrificing a human touch. By delegating mundane administrative work to AI, healthcare 
         providers free themselves to focus on high-impact patient care.
       </p>
-      <p className="text-white/80 leading-relaxed">
+      <p className="text-text-primary leading-relaxed">
         Picture an intelligent triage system that quickly evaluates initial symptoms, schedules 
         appointments, and ensures that those needing urgent attention see a doctor first—while 
         routine checkups and follow-ups happen just as effectively.
