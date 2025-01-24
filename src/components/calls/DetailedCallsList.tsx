@@ -171,33 +171,33 @@ export function DetailedCallsList() {
 
   if (loading) {
     return (
-      <Card className="bg-forest-light/50 border-mint/10">
+      <Card className="bg-white border-gray-muted">
         <CardContent className="flex justify-center p-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-mint"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-dark"></div>
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card className="bg-forest-light/50 border-mint/10">
-      <CardHeader className="border-b border-mint/10">
-        <CardTitle className="text-white">Call History</CardTitle>
+    <Card className="bg-white border-gray-muted">
+      <CardHeader className="border-b border-gray-muted">
+        <CardTitle className="text-gray-dark">Call History</CardTitle>
         <div className="mt-4 space-y-4">
           <div className="flex items-center gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray" />
               <Input
                 placeholder="Search calls..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-forest border-mint/20 text-white placeholder:text-white/40"
+                className="pl-10 bg-white border-gray-muted text-gray-dark placeholder:text-gray"
               />
             </div>
             <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-white/40" />
+              <Filter className="h-4 w-4 text-gray" />
               <Select value={urgencyFilter} onValueChange={setUrgencyFilter}>
-                <SelectTrigger className="w-[140px] bg-forest border-mint/20">
+                <SelectTrigger className="w-[140px] bg-white border-gray-muted">
                   <SelectValue placeholder="Urgency" />
                 </SelectTrigger>
                 <SelectContent>
@@ -210,7 +210,7 @@ export function DetailedCallsList() {
                 </SelectContent>
               </Select>
               <Select value={sentimentFilter} onValueChange={setSentimentFilter}>
-                <SelectTrigger className="w-[140px] bg-forest border-mint/20">
+                <SelectTrigger className="w-[140px] bg-white border-gray-muted">
                   <SelectValue placeholder="Sentiment" />
                 </SelectTrigger>
                 <SelectContent>
