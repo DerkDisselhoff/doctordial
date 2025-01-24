@@ -82,7 +82,7 @@ export function OverviewDashboard() {
             <p className="text-text-secondary">Monitor your key metrics and performance</p>
           </div>
           {userRole === 'client' && (
-            <div className="flex items-center gap-2 bg-surface-secondary/30 px-4 py-2 rounded-lg border border-primary/10">
+            <div className="flex items-center gap-2 bg-surface-secondary/30 px-4 py-2 rounded-lg border border-surface-input">
               <div className="flex items-center gap-2">
                 {isAssistantLive ? (
                   <>
@@ -91,8 +91,8 @@ export function OverviewDashboard() {
                   </>
                 ) : (
                   <>
-                    <CirclePause className="w-4 h-4 text-text-muted" />
-                    <span className="text-sm text-text-muted">{assistantName} Offline</span>
+                    <CirclePause className="w-4 h-4 text-text-secondary" />
+                    <span className="text-sm text-text-secondary">{assistantName} Offline</span>
                   </>
                 )}
               </div>
