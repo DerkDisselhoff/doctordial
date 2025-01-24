@@ -27,23 +27,23 @@ const mockCalls = [
 export function ActivityListPreview() {
   return (
     <div className="p-4">
-      <h3 className="text-sm font-medium text-white mb-3">Recent Activity</h3>
+      <h3 className="text-sm font-medium text-gray-dark mb-3">Recent Activity</h3>
       <div className="rounded-lg overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow className="hover:bg-forest border-mint/10">
-              <TableHead className="text-white/70 text-xs whitespace-nowrap py-2">Time</TableHead>
-              <TableHead className="text-white/70 text-xs whitespace-nowrap py-2">Patient</TableHead>
-              <TableHead className="text-white/70 text-xs whitespace-nowrap py-2">Summary</TableHead>
-              <TableHead className="text-white/70 text-xs whitespace-nowrap py-2">Priority</TableHead>
+            <TableRow className="hover:bg-blue-light border-gray-muted/10">
+              <TableHead className="text-gray text-xs whitespace-nowrap py-2">Time</TableHead>
+              <TableHead className="text-gray text-xs whitespace-nowrap py-2">Patient</TableHead>
+              <TableHead className="text-gray text-xs whitespace-nowrap py-2">Summary</TableHead>
+              <TableHead className="text-gray text-xs whitespace-nowrap py-2">Priority</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {mockCalls.map((call) => (
-              <TableRow key={call.id} className="hover:bg-forest border-mint/10">
-                <TableCell className="text-white/70 text-xs whitespace-nowrap py-2">{call.timestamp}</TableCell>
-                <TableCell className="text-white/70 text-xs whitespace-nowrap py-2">{call.caller}</TableCell>
-                <TableCell className="text-white/70 text-xs">
+              <TableRow key={call.id} className="hover:bg-blue-light border-gray-muted/10">
+                <TableCell className="text-gray text-xs whitespace-nowrap py-2">{call.timestamp}</TableCell>
+                <TableCell className="text-gray text-xs whitespace-nowrap py-2">{call.caller}</TableCell>
+                <TableCell className="text-gray text-xs">
                   <div className="max-w-[120px] truncate" title={call.summary}>
                     {call.summary}
                   </div>

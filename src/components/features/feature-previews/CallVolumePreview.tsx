@@ -12,7 +12,7 @@ const data = [
 export function CallVolumePreview() {
   return (
     <div className="p-6">
-      <h3 className="text-lg font-semibold text-white mb-4">Call Volume Trend</h3>
+      <h3 className="text-lg font-semibold text-gray-dark mb-4">Call Volume Trend</h3>
       <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
@@ -24,33 +24,33 @@ export function CallVolumePreview() {
               bottom: 0,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#1F3B4D" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E8F1FE" />
             <XAxis 
               dataKey="name" 
-              stroke="#FFFFFF" 
+              stroke="#4B5563" 
               fontSize={12}
               tickLine={false}
             />
             <YAxis 
-              stroke="#FFFFFF" 
+              stroke="#4B5563" 
               fontSize={12}
               tickLine={false}
               axisLine={false}
             />
             <Tooltip 
               contentStyle={{
-                backgroundColor: '#0A1F2F',
-                border: '1px solid #64FFDA',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #E8F1FE',
                 borderRadius: '8px',
-                color: '#FFFFFF',
+                color: '#1F2937',
               }}
-              cursor={{ fill: 'rgba(100, 255, 218, 0.1)' }}
+              cursor={{ fill: 'rgba(37, 99, 235, 0.1)' }}
             />
             <Area 
               type="monotone" 
               dataKey="calls" 
-              stroke="#64FFDA" 
-              fill="#64FFDA" 
+              stroke="#2563EB" 
+              fill="#E8F1FE" 
               fillOpacity={0.2}
             />
           </AreaChart>
