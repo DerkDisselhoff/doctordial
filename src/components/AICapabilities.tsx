@@ -158,7 +158,6 @@ const capabilities = [
       </div>
     ),
   },
-
   {
     title: "Human Experience",
     description: "Trained on billions of emotional and empathic interactions for natural, human-like conversations",
@@ -172,9 +171,9 @@ const capabilities = [
         >
           {/* Floating Badges */}
           <div className="absolute inset-0">
-            {/* Emotion Badge - Top Left */}
+            {/* Emotion Badge - Bottom Left */}
             <motion.div
-              className="absolute left-[5%] top-[8%] px-4 py-2 bg-mint-light/60 text-mint text-base font-medium rounded-full"
+              className="absolute left-[5%] bottom-[15%] px-4 py-2 bg-mint-light/60 text-mint text-base font-medium rounded-full"
               initial={{ y: 0 }}
               animate={{ y: [-10, 0, -10] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -216,7 +215,6 @@ const capabilities = [
       </div>
     ),
   },
-
   {
     title: "Seamless Integration",
     description: "Easily integrates with your existing call software for smooth implementation",
