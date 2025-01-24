@@ -16,6 +16,52 @@ const capabilities = [
   {
     title: "Full Customization",
     description: "Customize forwarding rules, activation timing, voice, tone, and medical question handling to match your practice needs",
+    illustration: (
+      <div className="mb-4 relative h-32">
+        <motion.div 
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Digital Worker Image */}
+          <div className="relative w-16 h-16">
+            <img
+              src="/assets/ai-agent.webp"
+              alt="Digital Worker"
+              className="w-full h-full object-cover rounded-full border-2 border-mint/20"
+            />
+            {/* Settings Ring Animation */}
+            <motion.div
+              className="absolute inset-0 border-2 border-dashed border-mint rounded-full"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
+          {/* Customization Settings */}
+          <div className="flex flex-col gap-2">
+            <motion.div 
+              className="h-2 w-20 bg-mint/20 rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: 80 }}
+              transition={{ duration: 1, delay: 0.2 }}
+            />
+            <motion.div 
+              className="h-2 w-16 bg-blue/20 rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: 64 }}
+              transition={{ duration: 1, delay: 0.4 }}
+            />
+            <motion.div 
+              className="h-2 w-24 bg-mint/20 rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: 96 }}
+              transition={{ duration: 1, delay: 0.6 }}
+            />
+          </div>
+        </motion.div>
+      </div>
+    ),
   },
   {
     title: "Human Experience",
@@ -112,6 +158,7 @@ const AICapabilities = () => {
                           
                           {/* Enhanced content */}
                           <div className="relative z-10">
+                            {capability.illustration}
                             <h3 className="text-xl font-semibold mb-3 text-gray-dark group-hover:text-mint transition-colors">
                               {capability.title}
                             </h3>
