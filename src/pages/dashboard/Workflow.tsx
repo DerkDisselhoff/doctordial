@@ -7,6 +7,7 @@ import { SubjectForwarding } from "@/components/dashboard/workflow/SubjectForwar
 import { useWorkflowSettings } from "@/components/dashboard/workflow/hooks/useWorkflowSettings";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabaseClient";
+import type { UrgencySettings, Subject } from "@/components/dashboard/workflow/hooks/useWorkflowSettings";
 
 export function Workflow() {
   const { toast } = useToast();
