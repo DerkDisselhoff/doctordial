@@ -9,7 +9,11 @@ interface Appointment {
   patient: string;
   title: string;
   urgencyScore: string;
-  [key: string]: any;
+  duration: number;
+  doctor: string;
+  patientPhone?: string;
+  patientEmail?: string;
+  notes?: string;
 }
 
 interface DayColumnProps {
