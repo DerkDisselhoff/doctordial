@@ -60,7 +60,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
 
   if (isLoading) {
     return (
-      <Card className="bg-blue-light border-blue-muted">
+      <Card className="bg-white border-gray-muted">
         <CardContent className="flex justify-center p-8">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-dark"></div>
         </CardContent>
@@ -70,7 +70,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
 
   if (error) {
     return (
-      <Card className="bg-blue-light border-blue-muted">
+      <Card className="bg-white border-gray-muted">
         <CardContent className="p-4">
           <p className="text-center text-gray">Error loading cases</p>
         </CardContent>
@@ -94,7 +94,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
   };
 
   return (
-    <Card className="bg-blue-light border-blue-muted">
+    <Card className="bg-white border-gray-muted">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -125,7 +125,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
           </div>
           <Button
             variant="outline"
-            className="text-blue-dark border-blue-muted hover:bg-blue-light"
+            className="text-blue-dark border-gray-muted hover:bg-gray-muted"
             onClick={() => navigate('/dashboard/calls')}
           >
             View All
@@ -135,7 +135,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
       <CardContent className="p-0">
         <Table>
           <TableHeader>
-            <TableRow className="border-b border-blue-muted">
+            <TableRow className="border-b border-gray-muted">
               <TableHead className="text-left p-4 text-gray">Patient</TableHead>
               <TableHead className="text-left p-4 text-gray">Symptoms</TableHead>
               <TableHead className="text-left p-4 text-gray">Urgency</TableHead>
@@ -149,7 +149,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
             {calls?.map((call) => (
               <TableRow 
                 key={call.id} 
-                className="border-b border-blue-muted hover:bg-blue-light/50 cursor-pointer transition-colors"
+                className="border-b border-gray-muted hover:bg-gray-muted/10 cursor-pointer transition-colors"
                 onClick={() => navigate(`/dashboard/calls/${call.call_id}`)}
               >
                 <TableCell className="p-4 text-gray-dark">{call.Name || 'Unknown'}</TableCell>
