@@ -19,41 +19,41 @@ const data = [
 
 export function DailyCallsChart() {
   return (
-    <Card className="bg-forest-light/50 border-mint/10">
-      <CardHeader className="border-b border-mint/10">
-        <CardTitle className="text-white">Today's Call Volume</CardTitle>
+    <Card className="bg-surface border-surface-input">
+      <CardHeader className="border-b border-surface-input">
+        <CardTitle className="text-text-primary">Today's Call Volume</CardTitle>
       </CardHeader>
       <CardContent className="pt-6">
         <div className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(100, 255, 218, 0.1)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(0, 0, 0, 0.1)" />
               <XAxis 
                 dataKey="time" 
-                stroke="#FFFFFF"
+                stroke="#4A5568"
                 fontSize={12}
                 tickLine={false}
               />
               <YAxis 
-                stroke="#FFFFFF"
+                stroke="#4A5568"
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0A1F2F',
-                  border: '1px solid #64FFDA',
+                  backgroundColor: '#FFFFFF',
+                  border: '1px solid #E2E8F0',
                   borderRadius: '8px',
-                  color: '#FFFFFF',
+                  color: '#2D3748',
                 }}
-                cursor={{ fill: 'rgba(100, 255, 218, 0.1)' }}
+                cursor={{ fill: 'rgba(74, 144, 226, 0.1)' }}
               />
               <Area 
                 type="monotone" 
                 dataKey="calls" 
-                stroke="#64FFDA"
-                fill="#64FFDA"
+                stroke="#4A90E2"
+                fill="#4A90E2"
                 fillOpacity={0.2}
               />
             </AreaChart>

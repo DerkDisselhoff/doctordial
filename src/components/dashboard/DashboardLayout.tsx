@@ -94,7 +94,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           <div className="fixed top-0 left-0 h-full z-40">
             <AdminSidebar />
           </div>
-          <div className="flex-1 ml-64 p-8">
+          <div className="flex-1 ml-64 p-8 bg-surface text-text-primary">
             {children}
           </div>
         </div>
