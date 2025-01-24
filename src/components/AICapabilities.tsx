@@ -173,7 +173,7 @@ const capabilities = [
           <div className="absolute inset-0">
             {/* Empathy Badge */}
             <motion.div
-              className="absolute left-1/4 -top-4 px-4 py-2 bg-mint-light/60 text-mint text-base font-medium rounded-full"
+              className="absolute left-[15%] top-[10%] px-4 py-2 bg-mint-light/60 text-mint text-base font-medium rounded-full"
               initial={{ y: 0 }}
               animate={{ y: [-10, 0, -10] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -183,7 +183,7 @@ const capabilities = [
 
             {/* Understanding Badge */}
             <motion.div
-              className="absolute right-1/4 top-1/4 px-4 py-2 bg-blue-light/60 text-blue-dark text-base font-medium rounded-full"
+              className="absolute right-[20%] top-[30%] px-4 py-2 bg-blue-light/60 text-blue-dark text-base font-medium rounded-full"
               initial={{ y: 0 }}
               animate={{ y: [-8, 2, -8] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
@@ -193,7 +193,7 @@ const capabilities = [
 
             {/* Emotion Badge */}
             <motion.div
-              className="absolute left-1/4 bottom-1/3 px-4 py-2 bg-mint-light/60 text-mint text-base font-medium rounded-full"
+              className="absolute left-[30%] bottom-[20%] px-4 py-2 bg-mint-light/60 text-mint text-base font-medium rounded-full"
               initial={{ y: 0 }}
               animate={{ y: [-5, 5, -5] }}
               transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
@@ -203,7 +203,7 @@ const capabilities = [
 
             {/* Connection Badge */}
             <motion.div
-              className="absolute right-1/4 bottom-0 px-4 py-2 bg-blue-light/60 text-blue-dark text-base font-medium rounded-full"
+              className="absolute right-[25%] bottom-[40%] px-4 py-2 bg-blue-light/60 text-blue-dark text-base font-medium rounded-full"
               initial={{ y: 0 }}
               animate={{ y: [-12, -2, -12] }}
               transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
