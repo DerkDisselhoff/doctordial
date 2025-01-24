@@ -1,3 +1,4 @@
+<lov-code>
 import type { Config } from "tailwindcss";
 
 export default {
@@ -19,7 +20,6 @@ export default {
     },
     extend: {
       colors: {
-        // Primary Brand Colors
         primary: {
           DEFAULT: "#0EA5E9", // Professional blue
           light: "#D3E4FD",   // Soft blue
@@ -48,7 +48,6 @@ export default {
             light: "#F0FDF4",
           },
         },
-        // Status Colors
         success: {
           DEFAULT: "#22C55E",
           light: "#F0FDF4",
@@ -68,25 +67,25 @@ export default {
       },
       fontFamily: {
         sans: [
+          "Inter var",
           "-apple-system",
           "BlinkMacSystemFont",
           "SF Pro Display",
-          "Inter var",
           "system-ui",
           "sans-serif",
         ],
       },
       fontSize: {
-        xs: ['0.75rem', { lineHeight: '1rem' }],
-        sm: ['0.875rem', { lineHeight: '1.25rem' }],
-        base: ['1rem', { lineHeight: '1.5rem' }],
-        lg: ['1.125rem', { lineHeight: '1.75rem' }],
-        xl: ['1.25rem', { lineHeight: '1.75rem' }],
-        '2xl': ['1.5rem', { lineHeight: '2rem' }],
-        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
-        '4xl': ['2.25rem', { lineHeight: '2.5rem', letterSpacing: '-0.02em' }],
-        '5xl': ['3rem', { lineHeight: '3rem', letterSpacing: '-0.02em' }],
-        '6xl': ['3.75rem', { lineHeight: '3.75rem', letterSpacing: '-0.02em' }],
+        xs: ['0.75rem', { lineHeight: '1.125rem', letterSpacing: '0.025em' }],
+        sm: ['0.875rem', { lineHeight: '1.375rem', letterSpacing: '0.0125em' }],
+        base: ['1rem', { lineHeight: '1.625rem', letterSpacing: '0' }],
+        lg: ['1.125rem', { lineHeight: '1.75rem', letterSpacing: '-0.0125em' }],
+        xl: ['1.25rem', { lineHeight: '1.875rem', letterSpacing: '-0.015em' }],
+        '2xl': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.02em' }],
+        '3xl': ['1.875rem', { lineHeight: '2.375rem', letterSpacing: '-0.025em' }],
+        '4xl': ['2.25rem', { lineHeight: '2.75rem', letterSpacing: '-0.03em' }],
+        '5xl': ['3rem', { lineHeight: '3.5rem', letterSpacing: '-0.035em' }],
+        '6xl': ['3.75rem', { lineHeight: '4.25rem', letterSpacing: '-0.04em' }],
       },
       spacing: {
         '4xs': '0.125rem',  // 2px
@@ -146,3 +145,4 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+</lov_code>
