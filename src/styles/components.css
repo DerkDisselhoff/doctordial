@@ -17,8 +17,8 @@
   }
 
   .btn-healthcare {
-    @apply btn bg-healthcare text-surface hover:bg-healthcare-dark
-           focus:ring-healthcare/50 shadow-sm hover:shadow-md
+    @apply btn bg-mint text-forest hover:bg-mint-light
+           focus:ring-mint/50 shadow-sm hover:shadow-md
            transform hover:-translate-y-0.5;
   }
 
@@ -32,9 +32,9 @@
   }
 
   .link-healthcare {
-    @apply text-healthcare hover:text-healthcare-dark transition-colors duration-200
+    @apply text-mint hover:text-mint-dark transition-colors duration-200
            relative after:absolute after:bottom-0 after:left-0 after:w-full
-           after:h-0.5 after:bg-healthcare after:origin-bottom-right
+           after:h-0.5 after:bg-mint after:origin-bottom-right
            after:scale-x-0 hover:after:scale-x-100 after:transition-transform
            after:duration-300 hover:after:origin-bottom-left;
   }
@@ -49,7 +49,7 @@
   .form-input-healthcare {
     @apply w-full px-3 py-2 bg-surface border border-surface-input rounded-lg 
            text-text-primary placeholder-text-secondary
-           focus:border-healthcare focus:ring-1 focus:ring-healthcare;
+           focus:border-mint focus:ring-1 focus:ring-mint;
   }
 
   /* Interactive Elements */
@@ -62,6 +62,6 @@
   }
 
   .interactive-icon-healthcare {
-    @apply text-healthcare hover:text-healthcare-light;
+    @apply text-mint hover:text-mint-light;
   }
 }
