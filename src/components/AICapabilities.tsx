@@ -37,13 +37,13 @@ const capabilities = [
     illustration: (
       <div className="mb-6 relative h-48">
         <motion.div 
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-8"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
           {/* Digital Worker Image with Settings Ring */}
-          <div className="relative w-32 h-32">
+          <div className="relative w-24 h-24">
             <img
               src="/lovable-uploads/10ce665a-6bfe-4c46-9ac7-719b3fb123eb.png"
               alt="Dr. Sarah - AI Medical Assistant"
@@ -64,92 +64,95 @@ const capabilities = [
             </div>
           </div>
 
-          {/* Customization Settings with Fixed Width Container */}
-          <div className="flex flex-col gap-3 min-w-[180px]">
-            <motion.div 
-              className="h-2 w-32 bg-mint/20 rounded-full overflow-hidden"
-              initial={{ width: 0 }}
-              animate={{ width: 128 }}
-              transition={{ duration: 1, delay: 0.2 }}
-            >
+          {/* Customization Settings Container */}
+          <div className="flex items-center gap-4">
+            {/* Settings Bars Container with Fixed Width */}
+            <div className="flex flex-col gap-3 min-w-[140px]">
               <motion.div 
-                className="h-full bg-mint/40 rounded-full"
-                initial={{ width: "0%" }}
-                animate={{ width: "75%" }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              />
-            </motion.div>
-            <motion.div 
-              className="h-2 w-24 bg-blue/20 rounded-full overflow-hidden"
-              initial={{ width: 0 }}
-              animate={{ width: 96 }}
-              transition={{ duration: 1, delay: 0.4 }}
-            >
+                className="h-2 bg-mint/20 rounded-full overflow-hidden"
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, delay: 0.2 }}
+              >
+                <motion.div 
+                  className="h-full bg-mint/40 rounded-full"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "75%" }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                />
+              </motion.div>
               <motion.div 
-                className="h-full bg-blue/40 rounded-full"
-                initial={{ width: "0%" }}
-                animate={{ width: "60%" }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-              />
-            </motion.div>
-            <motion.div 
-              className="h-2 w-28 bg-mint/20 rounded-full overflow-hidden"
-              initial={{ width: 0 }}
-              animate={{ width: 112 }}
-              transition={{ duration: 1, delay: 0.6 }}
-            >
+                className="h-2 bg-blue/20 rounded-full overflow-hidden"
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, delay: 0.4 }}
+              >
+                <motion.div 
+                  className="h-full bg-blue/40 rounded-full"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "60%" }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                />
+              </motion.div>
               <motion.div 
-                className="h-full bg-mint/40 rounded-full"
-                initial={{ width: "0%" }}
-                animate={{ width: "90%" }}
-                transition={{ duration: 0.8, delay: 0.8 }}
-              />
-            </motion.div>
-            <motion.div 
-              className="h-2 w-20 bg-blue/20 rounded-full overflow-hidden"
-              initial={{ width: 0 }}
-              animate={{ width: 80 }}
-              transition={{ duration: 1, delay: 0.8 }}
-            >
+                className="h-2 bg-mint/20 rounded-full overflow-hidden"
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, delay: 0.6 }}
+              >
+                <motion.div 
+                  className="h-full bg-mint/40 rounded-full"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "90%" }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                />
+              </motion.div>
               <motion.div 
-                className="h-full bg-blue/40 rounded-full"
-                initial={{ width: "0%" }}
-                animate={{ width: "45%" }}
-                transition={{ duration: 0.8, delay: 1 }}
-              />
-            </motion.div>
-          </div>
+                className="h-2 bg-blue/20 rounded-full overflow-hidden"
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, delay: 0.8 }}
+              >
+                <motion.div 
+                  className="h-full bg-blue/40 rounded-full"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "45%" }}
+                  transition={{ duration: 0.8, delay: 1 }}
+                />
+              </motion.div>
+            </div>
 
-          {/* Settings Labels with Fixed Width */}
-          <div className="flex flex-col gap-3 text-xs text-gray-light whitespace-nowrap">
-            <motion.span 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              Voice Tone
-            </motion.span>
-            <motion.span 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              Response Time
-            </motion.span>
-            <motion.span 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-            >
-              Medical Terms
-            </motion.span>
-            <motion.span 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-            >
-              Empathy Level
-            </motion.span>
+            {/* Settings Labels */}
+            <div className="flex flex-col gap-3 text-xs text-gray-light whitespace-nowrap">
+              <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
+                Voice Tone
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+              >
+                Response Time
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+              >
+                Medical Terms
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+              >
+                Empathy Level
+              </motion.span>
+            </div>
           </div>
         </motion.div>
       </div>
