@@ -12,10 +12,7 @@ const AIDoctorAssistant = () => {
             </h2>
             
             <p className="text-gray text-lg leading-relaxed max-w-xl">
-              Meet your dedicated digital medical assistant, available 24/7 to handle patient calls, 
-              triage cases, and manage appointments with the precision of a trained professional. 
-              Our AI assistant seamlessly integrates into your practice, providing consistent, 
-              reliable support while maintaining the personal touch your patients expect.
+              Your dedicated digital medical assistant, available 24/7 to handle patient calls and triage cases with the precision of a trained professional.
             </p>
 
             <div className="flex items-center gap-3 text-gray">
