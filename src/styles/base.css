@@ -5,6 +5,23 @@
 
 @layer base {
   :root {
+    /* Core colors */
+    --forest: #0A1F2F;
+    --forest-light: #132B41;
+    --forest-dark: #061520;
+    --forest-muted: #0A1F2F80;
+    
+    --mint: #64FFDA;
+    --mint-light: #A7FFE4;
+    --mint-dark: #4BD3B3;
+    --mint-muted: #64FFDA40;
+    
+    --divine: #FFD700;
+    --divine-light: #FFE55C;
+    --divine-dark: #CCB000;
+    --divine-muted: #FFD70040;
+
+    /* System colors */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
