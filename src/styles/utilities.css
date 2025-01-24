@@ -1,0 +1,45 @@
+@layer components {
+  /* Status Indicators */
+  .status-badge {
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+  }
+
+  .status-badge-success {
+    @apply bg-mint/10 text-mint;
+  }
+
+  .status-badge-warning {
+    @apply bg-yellow-500/10 text-yellow-500;
+  }
+
+  .status-badge-error {
+    @apply bg-red-500/10 text-red-500;
+  }
+
+  /* Loading States */
+  .card-skeleton {
+    @apply animate-pulse bg-forest-light/30;
+  }
+
+  .card-skeleton-text {
+    @apply h-4 bg-forest-light/50 rounded;
+  }
+
+  /* Responsive Utilities */
+  .card-grid {
+    @apply grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .card-grid-2 {
+    @apply grid gap-6 grid-cols-1 md:grid-cols-2;
+  }
+
+  /* Animation Utilities */
+  .card-hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  .card-hover-glow {
+    @apply hover:shadow-[0_0_15px_rgba(100,255,218,0.1)];
+  }
+}

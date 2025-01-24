@@ -1,0 +1,44 @@
+@layer components {
+  /* Chart Card Design */
+  .chart-card {
+    @apply card overflow-hidden;
+  }
+
+  .chart-card-header {
+    @apply card-header border-b border-mint/10 pb-4;
+  }
+
+  .chart-container {
+    @apply pt-4 h-[300px];
+  }
+
+  /* Chart Styles */
+  .recharts-cartesian-grid-horizontal line,
+  .recharts-cartesian-grid-vertical line {
+    @apply stroke-mint/10;
+  }
+
+  .recharts-text {
+    @apply fill-white/70 text-sm;
+  }
+
+  .recharts-tooltip-wrapper {
+    @apply !bg-forest-light/95 border border-mint/10 rounded-lg shadow-lg;
+  }
+
+  .recharts-default-tooltip {
+    @apply !bg-transparent !border-none;
+  }
+
+  .recharts-tooltip-label {
+    @apply text-white/90 !important;
+  }
+
+  .recharts-tooltip-item {
+    @apply text-mint !important;
+  }
+
+  .recharts-active-dot {
+    @apply fill-mint stroke-forest;
+  }
+}

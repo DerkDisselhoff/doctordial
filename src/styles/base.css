@@ -1,0 +1,59 @@
+@import url('https://rsms.me/inter/inter.css');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 152 55% 12%;
+    --primary-foreground: 152 55% 98%;
+    --secondary: 152 75% 52%;
+    --secondary-foreground: 152 75% 98%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 152 75% 52%;
+    --accent-foreground: 152 75% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 152 75% 52%;
+    --radius: 0.5rem;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-forest text-white antialiased tracking-tight;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(100, 255, 218, 0.05), transparent 70%),
+      radial-gradient(circle at 0% 50%, rgba(100, 255, 218, 0.025), transparent 50%),
+      radial-gradient(circle at 100% 50%, rgba(100, 255, 218, 0.025), transparent 50%);
+    background-size: 100% 100%, 50% 100%, 50% 100%;
+    background-position: center top, left center, right center;
+    background-repeat: no-repeat;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium tracking-tight text-white;
+  }
+
+  h1 { @apply text-3xl md:text-4xl; }
+  h2 { @apply text-2xl md:text-3xl; }
+  h3 { @apply text-xl md:text-2xl; }
+  h4 { @apply text-lg md:text-xl; }
+
+  ::selection {
+    @apply bg-mint text-forest;
+  }
+}

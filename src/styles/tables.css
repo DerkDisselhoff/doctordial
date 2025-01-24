@@ -1,0 +1,22 @@
+@layer components {
+  /* Table Design System */
+  .table-container {
+    @apply w-full overflow-x-auto;
+  }
+
+  .table-header {
+    @apply bg-forest-light/80 backdrop-blur-sm sticky top-0 z-10;
+  }
+
+  .table-header-cell {
+    @apply px-4 py-3 text-sm font-medium text-white/70 text-left;
+  }
+
+  .table-row {
+    @apply border-b border-mint/5 hover:bg-mint/5 transition-colors;
+  }
+
+  .table-cell {
+    @apply px-4 py-3 text-sm text-white/70;
+  }
+}

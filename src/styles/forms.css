@@ -1,0 +1,18 @@
+@layer components {
+  /* Form Card Design */
+  .form-card {
+    @apply card max-w-md mx-auto;
+  }
+
+  .form-card-header {
+    @apply text-center mb-6;
+  }
+
+  .form-card-title {
+    @apply text-2xl font-bold text-white mb-2;
+  }
+
+  .form-card-description {
+    @apply text-white/60;
+  }
+}
