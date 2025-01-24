@@ -6,7 +6,7 @@ const Features = () => {
   return (
     <div className="bg-gradient-to-b from-white to-mint-light/5">
       <AICapabilities />
-      <section className="py-16 md:py-24 px-4 bg-gradient-to-b from-forest/5 to-forest/10">
+      <section className="py-16 md:py-24 px-4 bg-gradient-to-b from-forest/40 to-forest/60">
         <div className="container mx-auto">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="font-sans text-3xl md:text-4xl lg:text-5xl font-bold mb-6 animate-fade-up text-gray-dark">
