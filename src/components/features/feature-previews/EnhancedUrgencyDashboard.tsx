@@ -11,22 +11,12 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Reduced dataset to fit without scrolling
+// Expanded dataset with more rows
 const mockUrgentCases = [
-  {
-    id: 1,
-    patientName: "J. van der Berg",
-    symptoms: "Severe chest pain",
-    urgencyLevel: "U1",
-    appointmentStatus: "Scheduled",
-    appointmentDate: "14:30",
-    actions: ["Refer to cardiology"],
-    resolution: "Emergency care provided"
-  },
   {
     id: 2,
     patientName: "M. van der B.",
-    symptoms: "High fever",
+    symptoms: "High fever, severe headache",
     urgencyLevel: "U2",
     appointmentStatus: "Pending",
     actions: ["Urgent consultation"],
@@ -35,7 +25,7 @@ const mockUrgentCases = [
   {
     id: 3,
     patientName: "K. de V.",
-    symptoms: "Mild reaction",
+    symptoms: "Mild allergic reaction",
     urgencyLevel: "U4",
     appointmentStatus: "Scheduled",
     appointmentDate: "11:00",
@@ -51,12 +41,50 @@ const mockUrgentCases = [
     appointmentDate: "09:15",
     actions: ["Schedule tests"],
     resolution: "Tests scheduled"
+  },
+  {
+    id: 5,
+    patientName: "P. Jansen",
+    symptoms: "Persistent cough",
+    urgencyLevel: "U3",
+    appointmentStatus: "Scheduled",
+    appointmentDate: "14:45",
+    actions: ["Consultation"],
+    resolution: "Referred to specialist"
+  },
+  {
+    id: 6,
+    patientName: "R. de Boer",
+    symptoms: "Lower back pain",
+    urgencyLevel: "U4",
+    appointmentStatus: "Pending",
+    actions: ["Physical exam"],
+    resolution: "Awaiting appointment"
+  },
+  {
+    id: 7,
+    patientName: "T. Bakker",
+    symptoms: "Ear infection",
+    urgencyLevel: "U3",
+    appointmentStatus: "Scheduled",
+    appointmentDate: "10:30",
+    actions: ["Prescribe antibiotics"],
+    resolution: "Treatment started"
+  },
+  {
+    id: 8,
+    patientName: "W. Visser",
+    symptoms: "Skin rash",
+    urgencyLevel: "U4",
+    appointmentStatus: "Scheduled",
+    appointmentDate: "15:15",
+    actions: ["Dermatology consult"],
+    resolution: "Treatment plan created"
   }
 ];
 
 const getUrgencyColor = (level: string) => {
   switch (level) {
-    case 'U1': return 'bg-red-100 text-red-700 border-red-200';
     case 'U2': return 'bg-orange-100 text-orange-700 border-orange-200';
     case 'U3': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
     case 'U4': return 'bg-blue-100 text-blue-700 border-blue-200';
@@ -97,10 +125,6 @@ export function EnhancedUrgencyDashboard() {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <Logo className="text-gray-dark w-8 h-8" />
-          <div className="border-l border-gray-muted pl-3 text-left">
-            <h3 className="text-gray-dark font-medium text-sm">Centrum Medisch Centrum</h3>
-            <p className="text-gray text-xs">Amsterdam, Netherlands</p>
-          </div>
         </div>
         <div className="flex items-center gap-3">
           <div className="text-right">

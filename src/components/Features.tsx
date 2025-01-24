@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUrgencyDashboard";
 import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
@@ -63,20 +62,6 @@ const Features = () => {
               <div className="relative max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-white/95 backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl hover:shadow-2xl transition-all duration-300 mb-8 md:mb-12 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left">
                 <EnhancedUrgencyDashboard />
               </div>
-            </motion.div>
-
-            {/* Enhanced CTA button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              <Link 
-                to="/features" 
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium rounded-lg bg-gradient-to-r from-mint to-mint-dark text-white hover:from-mint-dark hover:to-mint transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                Explore All Features
-              </Link>
             </motion.div>
           </div>
         </div>
