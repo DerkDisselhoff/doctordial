@@ -17,10 +17,26 @@
     --gray-dark: #1F2937;
     --gray-muted: #F3F4F6;
     
-    --green: #10B981;
-    --green-light: #D1FAE5;
-    --green-dark: #059669;
-    --green-muted: #10B98140;
+    /* Healthcare Green System */
+    --mint: #10B981;
+    --mint-light: #D1FAE5;
+    --mint-dark: #059669;
+    --mint-muted: #10B98140;
+
+    --sage: #84CC16;
+    --sage-light: #ECFCCB;
+    --sage-dark: #65A30D;
+    --sage-muted: #84CC1640;
+
+    --emerald: #059669;
+    --emerald-light: #A7F3D0;
+    --emerald-dark: #047857;
+    --emerald-muted: #05966940;
+
+    --forest: #065F46;
+    --forest-light: #D1FAE5;
+    --forest-dark: #064E3B;
+    --forest-muted: #065F4640;
 
     /* Semantic Text Colors */
     --text-primary: var(--gray-dark);
@@ -28,7 +44,7 @@
     --text-muted: var(--gray-light);
     --text-inverse: var(--white);
     --text-accent: var(--blue-dark);
-    --text-success: var(--green);
+    --text-success: var(--mint);
     --text-warning: #F59E0B;
     --text-error: #EF4444;
     --text-link: var(--blue-dark);
@@ -45,7 +61,7 @@
     --popover-foreground: var(--gray-dark);
     --primary: var(--blue);
     --primary-foreground: var(--gray-dark);
-    --secondary: var(--green);
+    --secondary: var(--mint);
     --secondary-foreground: var(--white);
     --muted: var(--gray-muted);
     --muted-foreground: var(--gray-light);
@@ -81,6 +97,6 @@
   .text-body-xs { @apply text-xs leading-normal text-gray; }
 
   ::selection {
-    @apply bg-blue text-gray-dark;
+    @apply bg-mint-light text-gray-dark;
   }
 }

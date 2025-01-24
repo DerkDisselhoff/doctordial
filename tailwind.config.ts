@@ -34,26 +34,45 @@ export default {
           dark: "#1F2937",     // Headings
           muted: "#F3F4F6",    // Subtle backgrounds, dividers
         },
-        green: {
-          DEFAULT: "#10B981",  // Success, CTA
-          light: "#D1FAE5",    // Success background
-          dark: "#059669",     // Hover state for CTAs
-          muted: "#10B98140",  // Transparent green for subtle emphasis
+        // Healthcare Green System
+        mint: {
+          DEFAULT: "#10B981",  // Primary green for success and CTAs
+          light: "#D1FAE5",    // Light backgrounds
+          dark: "#059669",     // Hover states
+          muted: "#10B98140",  // Transparent accents
+        },
+        sage: {
+          DEFAULT: "#84CC16",  // Secondary green for indicators
+          light: "#ECFCCB",    // Light accents
+          dark: "#65A30D",     // Emphasis
+          muted: "#84CC1640",  // Subtle backgrounds
+        },
+        emerald: {
+          DEFAULT: "#059669",  // Deep professional green
+          light: "#A7F3D0",    // Light accents
+          dark: "#047857",     // Strong emphasis
+          muted: "#05966940",  // Subtle backgrounds
+        },
+        forest: {
+          DEFAULT: "#065F46",  // Rich dark green
+          light: "#D1FAE5",    // Light accents
+          dark: "#064E3B",     // Deep emphasis
+          muted: "#065F4640",  // Subtle backgrounds
         },
         // Semantic Text Colors
         text: {
-          primary: "var(--text-primary)",      // Main content text
-          secondary: "var(--text-secondary)",   // Less important text
-          muted: "var(--text-muted)",          // Subtle text
-          inverse: "var(--text-inverse)",       // Text on dark backgrounds
-          accent: "var(--text-accent)",         // Highlighted text
-          success: "var(--text-success)",       // Success messages
-          warning: "var(--text-warning)",       // Warning messages
-          error: "var(--text-error)",          // Error messages
-          link: "var(--text-link)",            // Links
-          'link-hover': "var(--text-link-hover)", // Link hover state
-          disabled: "var(--text-disabled)",     // Disabled text
-          placeholder: "var(--text-placeholder)", // Placeholder text
+          primary: "var(--text-primary)",
+          secondary: "var(--text-secondary)",
+          muted: "var(--text-muted)",
+          inverse: "var(--text-inverse)",
+          accent: "var(--text-accent)",
+          success: "var(--text-success)",
+          warning: "var(--text-warning)",
+          error: "var(--text-error)",
+          link: "var(--text-link)",
+          'link-hover': "var(--text-link-hover)",
+          disabled: "var(--text-disabled)",
+          placeholder: "var(--text-placeholder)",
         },
       },
       // Typography System
