@@ -11,7 +11,25 @@ const capabilities = [
   {
     title: "Medical Intelligence",
     description: "Trained on NHG triage standards and medical datasets for accurate patient assessment",
-    bgImage: "/lovable-uploads/a53de0d0-4b12-4213-ab96-e580a04350ba.png",
+    illustration: (
+      <div className="mb-6 relative h-48">
+        <motion.div 
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Placeholder for Medical Intelligence Animation */}
+          <div className="w-24 h-24 bg-mint/10 rounded-full flex items-center justify-center">
+            <img
+              src="/lovable-uploads/a53de0d0-4b12-4213-ab96-e580a04350ba.png"
+              alt="Medical Intelligence"
+              className="w-16 h-16 object-contain"
+            />
+          </div>
+        </motion.div>
+      </div>
+    ),
   },
   {
     title: "Full Customization",
@@ -19,13 +37,13 @@ const capabilities = [
     illustration: (
       <div className="mb-6 relative h-48">
         <motion.div 
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-6"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
           {/* Digital Worker Image with Settings Ring */}
-          <div className="relative w-24 h-24">
+          <div className="relative w-32 h-32">
             <img
               src="/lovable-uploads/10ce665a-6bfe-4c46-9ac7-719b3fb123eb.png"
               alt="Dr. Sarah - AI Medical Assistant"
@@ -46,8 +64,8 @@ const capabilities = [
             </div>
           </div>
 
-          {/* Customization Settings */}
-          <div className="flex flex-col gap-3">
+          {/* Customization Settings with Fixed Width Container */}
+          <div className="flex flex-col gap-3 min-w-[180px]">
             <motion.div 
               className="h-2 w-32 bg-mint/20 rounded-full overflow-hidden"
               initial={{ width: 0 }}
@@ -102,8 +120,8 @@ const capabilities = [
             </motion.div>
           </div>
 
-          {/* Settings Labels */}
-          <div className="flex flex-col gap-3 text-xs text-gray-light">
+          {/* Settings Labels with Fixed Width */}
+          <div className="flex flex-col gap-3 text-xs text-gray-light whitespace-nowrap">
             <motion.span 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -140,14 +158,71 @@ const capabilities = [
   {
     title: "Human Experience",
     description: "Trained on billions of emotional and empathic interactions for natural, human-like conversations",
+    illustration: (
+      <div className="mb-6 relative h-48">
+        <motion.div 
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Placeholder for Human Experience Animation */}
+          <div className="w-24 h-24 bg-blue/10 rounded-full flex items-center justify-center">
+            <img
+              src="/lovable-uploads/4ad749ed-c18c-4674-bab0-68b98e32bca5.png"
+              alt="Human Experience"
+              className="w-16 h-16 object-contain"
+            />
+          </div>
+        </motion.div>
+      </div>
+    ),
   },
   {
     title: "Seamless Integration",
     description: "Easily integrates with your existing call software for smooth implementation",
+    illustration: (
+      <div className="mb-6 relative h-48">
+        <motion.div 
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Placeholder for Seamless Integration Animation */}
+          <div className="w-24 h-24 bg-mint/10 rounded-full flex items-center justify-center">
+            <img
+              src="/lovable-uploads/62d4662e-ae36-4ab0-89a6-4d95c0a5f245.png"
+              alt="Seamless Integration"
+              className="w-16 h-16 object-contain"
+            />
+          </div>
+        </motion.div>
+      </div>
+    ),
   },
   {
     title: "Continuous Learning",
     description: "Improves through direct feedback on triage outcomes from medical professionals",
+    illustration: (
+      <div className="mb-6 relative h-48">
+        <motion.div 
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Placeholder for Continuous Learning Animation */}
+          <div className="w-24 h-24 bg-blue/10 rounded-full flex items-center justify-center">
+            <img
+              src="/lovable-uploads/910ef275-a96d-49d2-81b8-6e27f7fd70cd.png"
+              alt="Continuous Learning"
+              className="w-16 h-16 object-contain"
+            />
+          </div>
+        </motion.div>
+      </div>
+    ),
   },
 ];
 
