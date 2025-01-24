@@ -1,4 +1,6 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card } from "@/components/ui/card";
+import { getUrgencyColor } from "@/components/calls/utils";
 
 const urgencyLevels = [
   {
@@ -38,7 +40,7 @@ export function UrgencyLevels() {
     <div className="w-full overflow-x-auto">
       <Table>
         <TableHeader>
-          <TableRow className="hover:bg-blue-light border-gray-muted">
+          <TableRow className="border-b border-gray-muted hover:bg-gray-muted/5">
             <TableHead className="text-gray-dark font-semibold">Level</TableHead>
             <TableHead className="text-gray-dark font-semibold">Description</TableHead>
             <TableHead className="text-gray-dark font-semibold">Response Time</TableHead>
@@ -47,8 +49,15 @@ export function UrgencyLevels() {
         </TableHeader>
         <TableBody>
           {urgencyLevels.map((level) => (
-            <TableRow key={level.level} className="hover:bg-blue-light border-gray-muted">
-              <TableCell className="font-medium text-gray-dark">{level.level}</TableCell>
+            <TableRow 
+              key={level.level} 
+              className="border-b border-gray-muted hover:bg-gray-muted/5 transition-colors"
+            >
+              <TableCell className="font-medium">
+                <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor(level.level)}`}>
+                  {level.level}
+                </span>
+              </TableCell>
               <TableCell className="text-gray">{level.description}</TableCell>
               <TableCell className="text-gray">{level.response}</TableCell>
               <TableCell className="text-gray">{level.example}</TableCell>
