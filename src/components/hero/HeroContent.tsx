@@ -13,10 +13,9 @@ const HeroContent = () => {
       </div>
       
       <div className="space-y-6">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-gray-dark">
-          Digital workers, <br className="hidden sm:block" />
-          <span className="text-mint">human</span> <br className="hidden sm:block" />
-          experience
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-gray-dark max-w-4xl mx-auto">
+          Digital workers <br className="hidden sm:block" />
+          <span className="text-mint">human experience</span>
         </h1>
         
         <p className="text-base md:text-lg text-gray max-w-xl leading-relaxed mx-auto">
