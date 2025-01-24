@@ -24,7 +24,9 @@ const HeroContent = () => {
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-        <BookDemoForm />
+        <div className="z-10">
+          <BookDemoForm />
+        </div>
         <div className="flex items-center gap-2 text-xs md:text-sm text-gray">
           <div className="w-2 h-2 rounded-full bg-mint animate-pulse"></div>
           {t("hero.trainedOn")}
