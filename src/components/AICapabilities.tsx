@@ -158,7 +158,8 @@ const capabilities = [
       </div>
     ),
   },
-  {
+
+{
     title: "Human Experience",
     description: "Trained on billions of emotional and empathic interactions for natural, human-like conversations",
     illustration: (
@@ -203,7 +204,7 @@ const capabilities = [
 
             {/* Connection Badge - Bottom Right Area */}
             <motion.div
-              className="absolute right-[8%] bottom-[15%] px-4 py-2 bg-blue-light/60 text-blue-dark text-base font-medium rounded-full"
+              className="absolute right-[8%] bottom-[25%] px-4 py-2 bg-blue-light/60 text-blue-dark text-base font-medium rounded-full"
               initial={{ y: 0 }}
               animate={{ y: [-12, -2, -12] }}
               transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
@@ -215,6 +216,7 @@ const capabilities = [
       </div>
     ),
   },
+
   {
     title: "Seamless Integration",
     description: "Easily integrates with your existing call software for smooth implementation",
@@ -374,3 +376,4 @@ const AICapabilities = () => {
 };
 
 export default AICapabilities;
+
