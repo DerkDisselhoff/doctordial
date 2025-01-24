@@ -171,7 +171,7 @@ export function DetailedCallsList() {
 
   if (loading) {
     return (
-      <Card className="bg-white border-gray-muted">
+      <Card className="dashboard-card">
         <CardContent className="flex justify-center p-8">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-dark"></div>
         </CardContent>
@@ -180,7 +180,7 @@ export function DetailedCallsList() {
   }
 
   return (
-    <Card className="bg-white border-gray-muted">
+    <Card className="dashboard-card">
       <CardHeader className="border-b border-gray-muted">
         <CardTitle className="text-gray-dark">Call History</CardTitle>
         <div className="mt-4 space-y-4">
