@@ -21,42 +21,65 @@
     --divine-dark: #CCB000;
     --divine-muted: #FFD70040;
 
-    /* Semantic Text Colors */
-    --text-primary: var(--mint);
-    --text-secondary: var(--forest);
-    --text-muted: var(--mint-muted);
+    /* Semantic Text Colors - Light Theme */
+    --text-primary: var(--forest);
+    --text-secondary: var(--forest-light);
+    --text-muted: var(--forest-muted);
     --text-inverse: white;
-    --text-accent: var(--divine);
+    --text-accent: var(--mint);
     --text-success: #10B981;
     --text-warning: #F59E0B;
     --text-error: #EF4444;
+    --text-link: var(--mint);
+    --text-link-hover: var(--mint-light);
+    --text-disabled: #9CA3AF;
+    --text-placeholder: #6B7280;
 
     /* System colors */
-    --background: var(--forest);
+    --background: white;
     --foreground: var(--text-primary);
-    --card: var(--forest-light);
-    --card-foreground: var(--text-inverse);
-    --popover: var(--forest-dark);
-    --popover-foreground: var(--text-inverse);
+    --card: white;
+    --card-foreground: var(--text-primary);
+    --popover: white;
+    --popover-foreground: var(--text-primary);
     --primary: var(--forest);
-    --primary-foreground: var(--text-primary);
+    --primary-foreground: white;
     --secondary: var(--mint);
-    --secondary-foreground: var(--text-secondary);
+    --secondary-foreground: var(--forest);
     --muted: var(--forest-muted);
     --muted-foreground: var(--text-muted);
     --accent: var(--divine);
-    --accent-foreground: var(--text-secondary);
+    --accent-foreground: var(--forest);
     --destructive: var(--text-error);
-    --destructive-foreground: var(--text-inverse);
+    --destructive-foreground: white;
     --border: var(--mint-muted);
     --input: var(--forest-light);
     --ring: var(--mint);
     --radius: 0.5rem;
   }
 
+  .dark {
+    --text-primary: white;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --text-inverse: var(--forest);
+    --text-accent: var(--mint);
+    --text-link: var(--mint);
+    --text-link-hover: var(--mint-light);
+    --text-disabled: rgba(255, 255, 255, 0.4);
+    --text-placeholder: rgba(255, 255, 255, 0.5);
+
+    --background: var(--forest);
+    --foreground: var(--text-primary);
+    --card: var(--forest-light);
+    --card-foreground: var(--text-primary);
+    --popover: var(--forest-dark);
+    --popover-foreground: var(--text-primary);
+  }
+
   /* Typography Scale */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-medium tracking-tight text-text-inverse;
+    @apply font-medium tracking-tight text-text-primary;
   }
 
   h1 { @apply text-4xl md:text-5xl leading-tight; }

@@ -28,13 +28,11 @@ const Login = () => {
   };
 
   useEffect(() => {
-    // Check for existing session and handle invalid refresh tokens
     const checkSession = async () => {
       const { data: { session }, error } = await supabase.auth.getSession();
       
       if (error) {
         handleAuthError(error);
-        // Clear any invalid session data
         await supabase.auth.signOut();
       } else if (session) {
         navigate("/dashboard");
@@ -43,7 +41,6 @@ const Login = () => {
 
     checkSession();
 
-    // Set up auth state change listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         navigate("/dashboard");
@@ -57,18 +54,17 @@ const Login = () => {
       }
     });
 
-    // Cleanup subscription on unmount
     return () => {
       subscription.unsubscribe();
     };
   }, [navigate, toast]);
 
   return (
-    <div className="min-h-screen bg-forest flex items-center justify-center px-4">
-      <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+      <div className="w-full max-w-md space-y-8 bg-card p-8 rounded-xl shadow-sm border border-border">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-forest tracking-tight">Welcome Back</h2>
-          <p className="mt-2 text-gray-600">Sign in to access your dashboard</p>
+          <h2 className="text-3xl font-bold text-text-primary tracking-tight">Welcome Back</h2>
+          <p className="mt-2 text-text-secondary">Sign in to access your dashboard</p>
         </div>
         <Auth
           supabaseClient={supabase}
@@ -77,15 +73,15 @@ const Login = () => {
             variables: {
               default: {
                 colors: {
-                  brand: '#64FFDA',
-                  brandAccent: '#A7FFE4',
-                  brandButtonText: '#0A1F2F',
-                  inputBackground: 'white',
-                  inputText: '#0A1F2F',
-                  inputPlaceholder: '#94A3B8',
-                  inputBorder: '#E2E8F0',
-                  inputBorderHover: '#64FFDA',
-                  inputBorderFocus: '#64FFDA',
+                  brand: 'var(--mint)',
+                  brandAccent: 'var(--mint-light)',
+                  brandButtonText: 'var(--forest)',
+                  inputBackground: 'var(--background)',
+                  inputText: 'var(--text-primary)',
+                  inputPlaceholder: 'var(--text-placeholder)',
+                  inputBorder: 'var(--border)',
+                  inputBorderHover: 'var(--mint)',
+                  inputBorderFocus: 'var(--mint)',
                 },
                 borderWidths: {
                   buttonBorderWidth: '1px',
@@ -106,22 +102,22 @@ const Login = () => {
                 transition: 'all 150ms ease',
               },
               anchor: {
-                color: '#64FFDA',
+                color: 'var(--text-link)',
                 fontWeight: '500',
                 transition: 'color 150ms ease',
               },
               input: {
-                backgroundColor: 'white',
-                border: '1px solid #E2E8F0',
+                backgroundColor: 'var(--background)',
+                border: '1px solid var(--border)',
                 borderRadius: '0.5rem',
                 padding: '0.625rem 1rem',
               },
               message: {
-                color: '#0A1F2F',
+                color: 'var(--text-primary)',
                 fontSize: '0.875rem',
               },
               label: {
-                color: '#0A1F2F',
+                color: 'var(--text-primary)',
                 fontSize: '0.875rem',
                 fontWeight: '500',
                 marginBottom: '0.25rem',

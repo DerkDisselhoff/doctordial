@@ -48,6 +48,10 @@ export default {
           success: "var(--text-success)",
           warning: "var(--text-warning)",
           error: "var(--text-error)",
+          link: "var(--text-link)",
+          'link-hover': "var(--text-link-hover)",
+          disabled: "var(--text-disabled)",
+          placeholder: "var(--text-placeholder)",
         },
       },
       // Typography System

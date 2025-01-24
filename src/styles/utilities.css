@@ -28,6 +28,14 @@
     @apply text-text-error;
   }
 
+  .text-link {
+    @apply text-text-link hover:text-text-link-hover transition-colors;
+  }
+
+  .text-disabled {
+    @apply text-text-disabled cursor-not-allowed;
+  }
+
   /* Status Indicators */
   .status-badge {
     @apply px-2 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1;
