@@ -60,7 +60,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
 
   if (isLoading) {
     return (
-      <Card className="bg-white border-gray-muted">
+      <Card className="bg-white border border-gray-muted shadow-sm">
         <CardContent className="flex justify-center p-8">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-dark"></div>
         </CardContent>
@@ -70,7 +70,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
 
   if (error) {
     return (
-      <Card className="bg-white border-gray-muted">
+      <Card className="bg-white border border-gray-muted shadow-sm">
         <CardContent className="p-4">
           <p className="text-center text-gray">Error loading cases</p>
         </CardContent>
@@ -94,7 +94,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
   };
 
   return (
-    <Card className="bg-white border-gray-muted">
+    <Card className="bg-white border border-gray-muted shadow-sm">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
