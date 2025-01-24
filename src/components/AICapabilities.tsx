@@ -6,83 +6,16 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { motion } from "framer-motion";
+import MedicalIntelligenceCard from "./capabilities/MedicalIntelligenceCard";
+import ContinuousLearningCard from "./capabilities/ContinuousLearningCard";
+import SeamlessIntegrationCard from "./capabilities/SeamlessIntegrationCard";
+import CapabilityCard from "./capabilities/CapabilityCard";
 
 const capabilities = [
   {
     title: "Medical Intelligence",
     description: "Trained on NHG triage standards and medical datasets for accurate patient assessment",
-    illustration: (
-      <div className="mb-6 relative h-48">
-        <motion.div 
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* Central Doctor Assistant Image with Hexagonal Training Pattern */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16">
-            <img
-              src="/lovable-uploads/10ce665a-6bfe-4c46-9ac7-719b3fb123eb.png"
-              alt="Dr. Sarah - AI Medical Assistant"
-              className="w-full h-full object-cover rounded-full border-2 border-mint/20"
-            />
-            {/* Hexagonal Pattern */}
-            <motion.div
-              className="absolute -inset-6 border border-mint/30"
-              style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-              animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            />
-          </div>
-
-          {/* Training Data Points */}
-          <div className="absolute inset-0">
-            {/* NHG Data Points with Staggered Fade */}
-            <motion.div
-              className="absolute left-[20%] top-[20%] flex items-center"
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
-            >
-              <div className="bg-mint/5 p-2 rounded-lg">
-                <div className="w-8 h-8 bg-mint/10 rounded-lg flex items-center justify-center text-mint text-xs font-medium">
-                  U1
-                </div>
-              </div>
-              <div className="h-0.5 w-12 bg-gradient-to-r from-mint/20 to-transparent ml-2" />
-            </motion.div>
-
-            <motion.div
-              className="absolute right-[20%] top-[30%] flex items-center flex-row-reverse"
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.4 }}
-            >
-              <div className="bg-blue/5 p-2 rounded-lg">
-                <div className="w-8 h-8 bg-blue/10 rounded-lg flex items-center justify-center text-blue-dark text-xs font-medium">
-                  U2
-                </div>
-              </div>
-              <div className="h-0.5 w-12 bg-gradient-to-l from-blue/20 to-transparent mr-2" />
-            </motion.div>
-
-            <motion.div
-              className="absolute left-[25%] bottom-[25%] flex items-center"
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.6 }}
-            >
-              <div className="bg-mint/5 p-2 rounded-lg">
-                <div className="w-8 h-8 bg-mint/10 rounded-lg flex items-center justify-center text-mint text-xs font-medium">
-                  U3
-                </div>
-              </div>
-              <div className="h-0.5 w-12 bg-gradient-to-r from-mint/20 to-transparent ml-2" />
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
-    ),
+    illustration: <MedicalIntelligenceCard />,
   },
   {
     title: "Full Customization",
@@ -271,194 +204,12 @@ const capabilities = [
   {
     title: "Seamless Integration",
     description: "Easily integrates with your existing call software for smooth implementation",
-    illustration: (
-      <div className="mb-6 relative h-48">
-        <motion.div 
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* Central Doctor Assistant Image */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16">
-            <img
-              src="/lovable-uploads/10ce665a-6bfe-4c46-9ac7-719b3fb123eb.png"
-              alt="Dr. Sarah - AI Medical Assistant"
-              className="w-full h-full object-cover rounded-full border-2 border-mint/20"
-            />
-            {/* Integration Hub Pattern */}
-            <motion.div
-              className="absolute -inset-8 border border-mint/20 rounded-full"
-              style={{
-                background: "radial-gradient(circle at center, transparent 50%, rgba(16, 185, 129, 0.05) 80%)",
-              }}
-              animate={{ 
-                rotate: 360,
-                scale: [1, 1.05, 1]
-              }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            />
-          </div>
-
-          {/* Integration Points with System Names */}
-          <div className="absolute inset-0">
-            {/* EHR System Integration */}
-            <motion.div
-              className="absolute left-[15%] top-[25%]"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <div className="bg-mint/5 p-2 rounded-lg">
-                <div className="w-24 bg-mint/10 rounded-lg flex items-center justify-center py-2 px-3">
-                  <span className="text-mint text-xs font-medium">EHR System</span>
-                </div>
-              </div>
-              <motion.div
-                className="absolute h-0.5 w-20 bg-gradient-to-r from-mint/20 to-transparent"
-                style={{ transform: "rotate(45deg)", transformOrigin: "left center" }}
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              />
-            </motion.div>
-
-            {/* Phone System */}
-            <motion.div
-              className="absolute right-[15%] top-[35%]"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
-              <div className="bg-blue/5 p-2 rounded-lg">
-                <div className="w-24 bg-blue/10 rounded-lg flex items-center justify-center py-2 px-3">
-                  <span className="text-blue-dark text-xs font-medium">Phone System</span>
-                </div>
-              </div>
-              <motion.div
-                className="absolute h-0.5 w-20 bg-gradient-to-l from-blue/20 to-transparent"
-                style={{ transform: "rotate(-45deg)", transformOrigin: "right center" }}
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.5, delay: 0.7 }}
-              />
-            </motion.div>
-
-            {/* Calendar Integration */}
-            <motion.div
-              className="absolute left-[20%] bottom-[30%]"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.9 }}
-            >
-              <div className="bg-mint/5 p-2 rounded-lg">
-                <div className="w-24 bg-mint/10 rounded-lg flex items-center justify-center py-2 px-3">
-                  <span className="text-mint text-xs font-medium">Calendar</span>
-                </div>
-              </div>
-              <motion.div
-                className="absolute h-0.5 w-20 bg-gradient-to-r from-mint/20 to-transparent"
-                style={{ transform: "rotate(-45deg)", transformOrigin: "left center" }}
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.5, delay: 1 }}
-              />
-            </motion.div>
-
-            {/* Data Flow Indicators */}
-            <motion.div
-              className="absolute inset-0"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0.3, 0.6, 0.3] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 border border-mint/10 rounded-full" />
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 border border-blue/10 rounded-full" />
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
-    ),
+    illustration: <SeamlessIntegrationCard />,
   },
   {
     title: "Continuous Learning",
     description: "Improves through direct feedback on triage outcomes from medical professionals",
-    illustration: (
-      <div className="mb-6 relative h-48">
-        <motion.div 
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* Central Doctor Assistant Image with Neural Network Pattern */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16">
-            <img
-              src="/lovable-uploads/10ce665a-6bfe-4c46-9ac7-719b3fb123eb.png"
-              alt="Dr. Sarah - AI Medical Assistant"
-              className="w-full h-full object-cover rounded-full border-2 border-mint/20"
-            />
-            {/* Neural Network Pattern */}
-            <motion.div
-              className="absolute -inset-8 border border-mint/20"
-              style={{
-                background: "radial-gradient(circle at center, transparent 50%, rgba(16, 185, 129, 0.05) 80%)",
-              }}
-              animate={{ 
-                boxShadow: [
-                  "0 0 0 0 rgba(16, 185, 129, 0.2)",
-                  "0 0 0 10px rgba(16, 185, 129, 0)",
-                  "0 0 0 0 rgba(16, 185, 129, 0.2)"
-                ]
-              }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </div>
-
-          {/* Learning Feedback Points */}
-          <div className="absolute inset-0">
-            <motion.div
-              className="absolute left-[20%] top-[30%]"
-              initial={{ scale: 0 }}
-              animate={{ scale: [0, 1, 0] }}
-              transition={{ duration: 2, delay: 0.2, repeat: Infinity, repeatDelay: 1 }}
-            >
-              <div className="bg-mint/10 p-1.5 rounded-full">
-                <div className="w-6 h-6 bg-mint/20 rounded-full flex items-center justify-center text-mint text-xs font-medium">
-                  +1
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="absolute right-[25%] top-[40%]"
-              initial={{ scale: 0 }}
-              animate={{ scale: [0, 1, 0] }}
-              transition={{ duration: 2, delay: 1.2, repeat: Infinity, repeatDelay: 1 }}
-            >
-              <div className="bg-blue/10 p-1.5 rounded-full">
-                <div className="w-6 h-6 bg-blue/20 rounded-full flex items-center justify-center text-blue-dark text-xs font-medium">
-                  +1
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="absolute left-[30%] bottom-[35%]"
-              initial={{ scale: 0 }}
-              animate={{ scale: [0, 1, 0] }}
-              transition={{ duration: 2, delay: 2.2, repeat: Infinity, repeatDelay: 1 }}
-            >
-              <div className="bg-mint/10 p-1.5 rounded-full">
-                <div className="w-6 h-6 bg-mint/20 rounded-full flex items-center justify-center text-mint text-xs font-medium">
-                  +1
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
-    ),
+    illustration: <ContinuousLearningCard />,
   },
 ];
 
@@ -532,35 +283,11 @@ const AICapabilities = () => {
               className="w-full"
             >
               <CarouselContent className="-ml-2 md:-ml-4">
-                {capabilities.map((capability, index) => {
-                  return (
-                    <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                      <div className="group h-full">
-                        <div className="relative h-full p-6 bg-white rounded-xl border border-gray-muted shadow-sm transition-all duration-300 hover:shadow-xl hover:border-mint/20">
-                          {/* Connection dots */}
-                          <div className="absolute -left-2 top-1/2 w-4 h-4 bg-mint/10 rounded-full" />
-                          <div className="absolute -right-2 top-1/2 w-4 h-4 bg-blue/10 rounded-full" />
-                          
-                          {/* Enhanced content */}
-                          <div className="relative z-10">
-                            {capability.illustration}
-                            <h3 className="text-xl font-semibold mb-3 text-gray-dark group-hover:text-mint transition-colors">
-                              {capability.title}
-                            </h3>
-                            <p className="text-gray">
-                              {capability.description}
-                            </p>
-                          </div>
-
-                          {/* Decorative background pattern */}
-                          <div className="absolute inset-0 opacity-5 pointer-events-none">
-                            <div className="absolute right-0 bottom-0 w-20 h-20 bg-gradient-to-br from-mint/10 to-blue/10 rounded-tl-3xl" />
-                          </div>
-                        </div>
-                      </div>
-                    </CarouselItem>
-                  );
-                })}
+                {capabilities.map((capability, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                    <CapabilityCard {...capability} />
+                  </CarouselItem>
+                ))}
               </CarouselContent>
               <CarouselPrevious className="hidden md:flex" />
               <CarouselNext className="hidden md:flex" />
