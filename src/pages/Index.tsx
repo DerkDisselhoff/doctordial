@@ -5,7 +5,6 @@ import Certifications from "@/components/Certifications";
 import Footer from "@/components/Footer";
 import WhoWeServe from "@/components/WhoWeServe";
 import AIDoctorAssistant from "@/components/AIDoctorAssistant";
-import AICapabilities from "@/components/AICapabilities";
 
 const Index = () => {
   return (
@@ -13,7 +12,6 @@ const Index = () => {
       <Navbar />
       <Hero />
       <AIDoctorAssistant />
-      <AICapabilities />
       <Features />
       <WhoWeServe />
       <Certifications />
