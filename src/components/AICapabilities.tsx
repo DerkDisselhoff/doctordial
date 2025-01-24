@@ -28,7 +28,50 @@ const capabilities = [
           }
         }
       }
-    }
+    },
+    illustration: (
+      <div className="mt-6 relative h-24">
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          {/* Neural Network Visualization */}
+          <svg className="w-full h-full" viewBox="0 0 200 100">
+            <motion.circle cx="40" cy="50" r="5" fill="#10B981" 
+              initial={{ scale: 0 }}
+              animate={{ scale: [0, 1.2, 1] }}
+              transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
+            />
+            <motion.circle cx="100" cy="30" r="5" fill="#2563EB" 
+              initial={{ scale: 0 }}
+              animate={{ scale: [0, 1.2, 1] }}
+              transition={{ duration: 1, delay: 0.2, repeat: Infinity, repeatDelay: 2 }}
+            />
+            <motion.circle cx="100" cy="70" r="5" fill="#2563EB"
+              initial={{ scale: 0 }}
+              animate={{ scale: [0, 1.2, 1] }}
+              transition={{ duration: 1, delay: 0.4, repeat: Infinity, repeatDelay: 2 }}
+            />
+            <motion.circle cx="160" cy="50" r="5" fill="#10B981"
+              initial={{ scale: 0 }}
+              animate={{ scale: [0, 1.2, 1] }}
+              transition={{ duration: 1, delay: 0.6, repeat: Infinity, repeatDelay: 2 }}
+            />
+            <motion.path
+              d="M45 50 L95 30 M45 50 L95 70 M105 30 L155 50 M105 70 L155 50"
+              stroke="#E8F1FE"
+              strokeWidth="2"
+              fill="none"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1.5 }}
+            />
+          </svg>
+        </motion.div>
+      </div>
+    )
   },
   {
     icon: Settings,
@@ -46,7 +89,51 @@ const capabilities = [
           }
         }
       }
-    }
+    },
+    illustration: (
+      <div className="mt-6 relative h-24">
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          {/* Workflow Diagram */}
+          <div className="flex items-center justify-between w-full px-4">
+            <motion.div 
+              className="w-12 h-12 rounded-lg bg-mint/20 flex items-center justify-center"
+              whileHover={{ scale: 1.1 }}
+            >
+              <span className="text-xs text-mint">Rules</span>
+            </motion.div>
+            <motion.div 
+              className="h-1 w-8 bg-blue/20"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            />
+            <motion.div 
+              className="w-12 h-12 rounded-lg bg-blue/20 flex items-center justify-center"
+              whileHover={{ scale: 1.1 }}
+            >
+              <span className="text-xs text-blue-dark">Voice</span>
+            </motion.div>
+            <motion.div 
+              className="h-1 w-8 bg-blue/20"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            />
+            <motion.div 
+              className="w-12 h-12 rounded-lg bg-mint/20 flex items-center justify-center"
+              whileHover={{ scale: 1.1 }}
+            >
+              <span className="text-xs text-mint">Time</span>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    )
   },
   {
     icon: Heart,
@@ -64,7 +151,45 @@ const capabilities = [
           }
         }
       }
-    }
+    },
+    illustration: (
+      <div className="mt-6 relative h-24">
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          {/* Conversation Flow */}
+          <div className="relative w-full">
+            <motion.div 
+              className="absolute left-4 top-0 px-3 py-1 rounded-full bg-mint/20 text-xs text-mint"
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              Hello!
+            </motion.div>
+            <motion.div 
+              className="absolute right-4 top-8 px-3 py-1 rounded-full bg-blue/20 text-xs text-blue-dark"
+              initial={{ x: 20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              How can I help?
+            </motion.div>
+            <motion.div 
+              className="absolute left-4 bottom-0 px-3 py-1 rounded-full bg-mint/20 text-xs text-mint"
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              Thank you!
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    )
   },
   {
     icon: Link,
@@ -84,7 +209,44 @@ const capabilities = [
           }
         }
       }
-    }
+    },
+    illustration: (
+      <div className="mt-6 relative h-24">
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          {/* Integration Diagram */}
+          <div className="relative w-full flex items-center justify-center">
+            <motion.div 
+              className="absolute w-16 h-16 rounded-full border-2 border-mint/30"
+              animate={{
+                scale: [1, 1.1, 1],
+                borderColor: ["rgba(16, 185, 129, 0.3)", "rgba(37, 99, 235, 0.3)", "rgba(16, 185, 129, 0.3)"]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+            <motion.div 
+              className="absolute w-24 h-24 rounded-full border-2 border-blue/30"
+              animate={{
+                scale: [1.1, 1, 1.1],
+                borderColor: ["rgba(37, 99, 235, 0.3)", "rgba(16, 185, 129, 0.3)", "rgba(37, 99, 235, 0.3)"]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+            <motion.div 
+              className="w-8 h-8 bg-gradient-to-br from-mint to-blue-dark rounded-lg"
+              animate={{
+                rotate: [0, 180, 360]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+          </div>
+        </motion.div>
+      </div>
+    )
   },
   {
     icon: GraduationCap,
@@ -102,7 +264,54 @@ const capabilities = [
           }
         }
       }
-    }
+    },
+    illustration: (
+      <div className="mt-6 relative h-24">
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          {/* Learning Progress Visualization */}
+          <div className="relative w-full px-4">
+            <motion.div 
+              className="h-2 w-full bg-gray-muted rounded-full overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              <motion.div 
+                className="h-full bg-gradient-to-r from-mint to-blue-dark"
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </motion.div>
+            <div className="mt-4 flex justify-between">
+              <motion.div 
+                className="flex items-center"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <div className="w-2 h-2 rounded-full bg-mint mr-2" />
+                <span className="text-xs text-mint">Input</span>
+              </motion.div>
+              <motion.div 
+                className="flex items-center"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 }}
+              >
+                <div className="w-2 h-2 rounded-full bg-blue-dark mr-2" />
+                <span className="text-xs text-blue-dark">Growth</span>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    )
   },
 ];
 
