@@ -11,38 +11,38 @@ interface CallSummaryProps {
 
 export function CallSummary({ isEditing, editedCall, handleInputChange, call }: CallSummaryProps) {
   return (
-    <Card className="bg-forest-light/50 border-mint/10">
+    <Card className="bg-white border border-gray-muted shadow-sm">
       <CardHeader className="pb-2">
-        <CardTitle className="text-white">Call Summary</CardTitle>
+        <CardTitle className="text-gray-dark">Call Summary</CardTitle>
       </CardHeader>
       <CardContent>
         {isEditing ? (
           <Textarea
             value={editedCall.conversation_summary || ''}
             onChange={(e) => handleInputChange('conversation_summary', e.target.value)}
-            className="mb-4 bg-forest-light/50 text-white placeholder-white/40 border-mint/20"
+            className="mb-4 bg-white text-gray-dark placeholder-gray border-gray-muted"
             placeholder="Enter call summary"
           />
         ) : (
-          <p className="text-white/70 mb-4">{call.conversation_summary || 'No summary available'}</p>
+          <p className="text-gray mb-4">{call.conversation_summary || 'No summary available'}</p>
         )}
         
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold text-white">Follow-up Details</h3>
-          <div className="p-3 bg-forest rounded-lg border border-mint/10">
+          <h3 className="text-lg font-semibold text-gray-dark">Follow-up Details</h3>
+          <div className="p-3 bg-gray-muted/10 rounded-lg border border-gray-muted">
             <div className="flex items-start space-x-3">
-              <ArrowRight className="h-5 w-5 text-mint mt-0.5" />
+              <ArrowRight className="h-5 w-5 text-blue-dark mt-0.5" />
               <div>
-                <p className="text-white font-medium mb-1">Forwarded</p>
+                <p className="text-gray-dark font-medium mb-1">Forwarded</p>
                 {isEditing ? (
                   <Textarea
                     value={editedCall.Action || ''}
                     onChange={(e) => handleInputChange('Action', e.target.value)}
-                    className="bg-forest-light/50 text-white placeholder-white/40 border-mint/20"
+                    className="bg-white text-gray-dark placeholder-gray border-gray-muted"
                     placeholder="Enter forwarding details"
                   />
                 ) : (
-                  <p className="text-white/70">{call.Action || 'No action required'}</p>
+                  <p className="text-gray">{call.Action || 'No action required'}</p>
                 )}
               </div>
             </div>

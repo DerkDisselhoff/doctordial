@@ -15,16 +15,16 @@ export function CallTranscript({
   transcriptMessages 
 }: CallTranscriptProps) {
   return (
-    <Card className="bg-forest-light/50 border-mint/10">
+    <Card className="bg-white border border-gray-muted shadow-sm">
       <CardHeader className="pb-2">
-        <CardTitle className="text-white">Call Transcript</CardTitle>
+        <CardTitle className="text-gray-dark">Call Transcript</CardTitle>
       </CardHeader>
       <CardContent>
         {isEditing ? (
           <Textarea
             value={editedCall.transcript || ''}
             onChange={(e) => handleInputChange('transcript', e.target.value)}
-            className="min-h-[300px] bg-forest-light/50 text-white placeholder-white/40 border-mint/20"
+            className="min-h-[300px] bg-white text-gray-dark placeholder-gray border-gray-muted"
             placeholder="Enter transcript (Format: AI: ... User: ...)"
           />
         ) : (
@@ -38,21 +38,21 @@ export function CallTranscript({
                   }`}
                 >
                   <div className={`flex-shrink-0 w-16 text-sm font-medium ${
-                    message.role === 'AI' ? 'text-mint' : 'text-divine'
+                    message.role === 'AI' ? 'text-blue-dark' : 'text-gray-dark'
                   }`}>
                     {message.role}
                   </div>
                   <div className={`flex-grow p-3 rounded-lg ${
                     message.role === 'AI' 
-                      ? 'bg-forest border border-mint/10' 
-                      : 'bg-forest-light border border-divine/10'
+                      ? 'bg-gray-muted/10 border border-gray-muted' 
+                      : 'bg-blue/10 border border-blue/20'
                   }`}>
-                    <p className="text-white/80">{message.content}</p>
+                    <p className="text-gray">{message.content}</p>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-white/60">No transcript available</p>
+              <p className="text-gray">No transcript available</p>
             )}
           </div>
         )}
