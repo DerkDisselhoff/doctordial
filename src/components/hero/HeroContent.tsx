@@ -6,20 +6,28 @@ const HeroContent = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-fade-up px-4 md:px-0">
+    <div className="space-y-8 animate-fade-up px-4 md:px-0">
       <div className="flex items-center gap-2 bg-mint-light/30 w-fit px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-mint/20 hover:border-mint/40 transition-colors">
         <Phone className="w-3 h-3 md:w-4 md:h-4 text-mint" />
         <span className="text-mint text-xs md:text-sm font-medium">{t("hero.aiPowered")}</span>
       </div>
-      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight text-gray-dark">
-        Transform Your Practice's Communication
-      </h1>
-      <p className="text-sm md:text-lg text-gray max-w-md leading-relaxed">
-        Let our AI-driven Triage handle your practice's calls while maintaining the personal touch your patients expect.
-      </p>
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      
+      <div className="space-y-6">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-gray-dark">
+          Transform Your <br className="hidden sm:block" />
+          <span className="text-mint">Medical Practice</span> <br className="hidden sm:block" />
+          Communication
+        </h1>
+        
+        <p className="text-base md:text-lg text-gray max-w-xl leading-relaxed">
+          Our AI-powered virtual receptionist handles your practice's calls 24/7, ensuring every patient receives immediate attention while maintaining the personal touch they expect.
+        </p>
+      </div>
+
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
         <BookDemoForm />
-        <div className="text-xs md:text-sm text-gray mt-2 sm:mt-0 animate-fade-in">
+        <div className="flex items-center gap-2 text-xs md:text-sm text-gray">
+          <div className="w-2 h-2 rounded-full bg-mint animate-pulse"></div>
           {t("hero.trainedOn")}
         </div>
       </div>
