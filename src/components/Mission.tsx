@@ -9,7 +9,6 @@ const Mission = () => {
     <section className="py-16 md:py-20 px-4 relative bg-gradient-to-b from-mint-light/5 to-white">
       {/* Enhanced background decorative elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(139,255,238,0.05)_0%,rgba(139,255,238,0)_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(139,238,255,0.05)_0%,rgba(139,238,255,0)_50%)]" />
       
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto space-y-8 md:space-y-12">
