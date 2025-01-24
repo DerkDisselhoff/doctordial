@@ -107,8 +107,8 @@ const capabilities = [
 
 const AICapabilities = () => {
   return (
-    <section className="py-16 md:py-24 px-4 bg-gradient-to-b from-mint-light/5 to-blue-light/10">
-      <div className="container mx-auto">
+    <section className="bg-gradient-to-b from-mint-light/20 to-blue-light/30">
+      <div className="container mx-auto py-16 md:py-24 px-4">
         <div className="relative">
           {/* Floating background elements */}
           <motion.div
