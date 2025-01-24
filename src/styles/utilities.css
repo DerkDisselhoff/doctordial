@@ -101,4 +101,25 @@
   .item-spacing {
     @apply space-y-2;
   }
+
+  /* Dashboard specific utilities */
+  .dashboard-card {
+    @apply bg-white border border-gray-muted rounded-lg shadow-sm p-6;
+  }
+
+  .dashboard-card-header {
+    @apply text-xl font-semibold text-gray-dark mb-4;
+  }
+
+  .dashboard-card-content {
+    @apply text-gray;
+  }
+
+  .dashboard-section-title {
+    @apply text-2xl font-bold text-gray-dark mb-2;
+  }
+
+  .dashboard-section-description {
+    @apply text-gray mb-6;
+  }
 }

@@ -7,20 +7,20 @@
   :root {
     /* Core colors */
     --white: #FFFFFF;
-    --blue: #D3E4FD;
-    --blue-light: #E8F1FE;
-    --blue-dark: #A1C6FA;
-    --blue-muted: #D3E4FD40;
+    --blue: #E8F1FE;
+    --blue-light: #F5F9FF;
+    --blue-dark: #2563EB;
+    --blue-muted: #E8F1FE40;
     
-    --gray: #555555;
-    --gray-light: #8A898C;
-    --gray-dark: #333333;
-    --gray-muted: #C8C8C9;
+    --gray: #4B5563;
+    --gray-light: #9CA3AF;
+    --gray-dark: #1F2937;
+    --gray-muted: #F3F4F6;
     
-    --green: #4CAF50;
-    --green-light: #F2FCE2;
-    --green-dark: #388E3C;
-    --green-muted: #4CAF5040;
+    --green: #10B981;
+    --green-light: #D1FAE5;
+    --green-dark: #059669;
+    --green-muted: #10B98140;
 
     /* Semantic Text Colors */
     --text-primary: var(--gray-dark);
