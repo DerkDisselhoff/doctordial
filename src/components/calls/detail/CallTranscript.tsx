@@ -42,12 +42,12 @@ export function CallTranscript({
                   }`}>
                     {message.role}
                   </div>
-                  <div className={`flex-grow p-3 rounded-lg ${
+                  <div className={`flex-grow p-4 rounded-lg ${
                     message.role === 'AI' 
                       ? 'bg-gray-muted/10 border border-gray-muted' 
                       : 'bg-blue/10 border border-blue/20'
                   }`}>
-                    <p className="text-gray">{message.content}</p>
+                    <p className="text-gray text-sm leading-relaxed tracking-normal">{message.content}</p>
                   </div>
                 </div>
               ))
