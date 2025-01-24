@@ -27,16 +27,16 @@ interface Props {
 
 export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
   return (
-    <Card className="dashboard-card">
-      <CardHeader className="dashboard-card-header">
+    <Card className="bg-white border border-gray-muted shadow-sm">
+      <CardHeader>
         <div className="flex items-center gap-2">
-          <GitBranch className="w-5 h-5 text-mint" />
-          <CardTitle className="dashboard-card-title">Urgency Level Forwarding</CardTitle>
+          <GitBranch className="w-5 h-5 text-blue-dark" />
+          <CardTitle className="text-gray-dark">Urgency Level Forwarding</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="dashboard-card-content section-spacing">
+      <CardContent className="space-y-6">
         {settings.map((setting) => (
-          <div key={setting.urgency_level} className="content-spacing p-2 rounded-lg bg-forest-dark/30">
+          <div key={setting.urgency_level} className="p-2 rounded-lg bg-gray-muted/5 border border-gray-muted/10">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 min-w-[80px]">
                 <span className={`status-badge ${getUrgencyColor(setting.urgency_level)}`}>
@@ -50,26 +50,17 @@ export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
                     onSettingChange(setting.urgency_level, { forward_step: value })
                   }
                 >
-                  <SelectTrigger className="bg-forest border-mint/20 hover:bg-forest-light/50">
+                  <SelectTrigger className="bg-white border-gray-muted hover:bg-gray-muted/5">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-forest border-mint/20">
-                    <SelectItem 
-                      value="call_112" 
-                      className="interactive-hover interactive-active"
-                    >
+                  <SelectContent className="bg-white border-gray-muted">
+                    <SelectItem value="call_112" className="text-gray hover:bg-gray-muted/10">
                       Advice to call 112 directly
                     </SelectItem>
-                    <SelectItem 
-                      value="forward_to_assistant" 
-                      className="interactive-hover interactive-active"
-                    >
+                    <SelectItem value="forward_to_assistant" className="text-gray hover:bg-gray-muted/10">
                       Forward to Doctor's Assistant
                     </SelectItem>
-                    <SelectItem 
-                      value="provide_selfcare" 
-                      className="interactive-hover interactive-active"
-                    >
+                    <SelectItem value="provide_selfcare" className="text-gray hover:bg-gray-muted/10">
                       Provide selfcare advice
                     </SelectItem>
                   </SelectContent>
@@ -82,7 +73,7 @@ export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
                     onChange={(e) => onSettingChange(setting.urgency_level, { 
                       assistant_phone: e.target.value 
                     })}
-                    className="bg-forest border-mint/20"
+                    className="bg-white border-gray-muted"
                   />
                 )}
 
@@ -93,20 +84,14 @@ export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
                       onSettingChange(setting.urgency_level, { advice_type: value })
                     }
                   >
-                    <SelectTrigger className="bg-forest border-mint/20 hover:bg-forest-light/50">
+                    <SelectTrigger className="bg-white border-gray-muted hover:bg-gray-muted/5">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-forest border-mint/20">
-                      <SelectItem 
-                        value="simple"
-                        className="interactive-hover interactive-active"
-                      >
+                    <SelectContent className="bg-white border-gray-muted">
+                      <SelectItem value="simple" className="text-gray hover:bg-gray-muted/10">
                         Simple short advice
                       </SelectItem>
-                      <SelectItem 
-                        value="extensive"
-                        className="interactive-hover interactive-active"
-                      >
+                      <SelectItem value="extensive" className="text-gray hover:bg-gray-muted/10">
                         Extensive advice
                       </SelectItem>
                     </SelectContent>

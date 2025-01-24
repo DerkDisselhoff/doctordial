@@ -45,32 +45,32 @@ export function SubjectForwarding({
   };
 
   return (
-    <Card className="dashboard-card">
-      <CardHeader className="dashboard-card-header">
+    <Card className="bg-white border border-gray-muted shadow-sm">
+      <CardHeader>
         <div className="flex items-center gap-2">
-          <GitBranch className="w-5 h-5 text-mint" />
-          <CardTitle className="dashboard-card-title">Subject Forwarding Rules</CardTitle>
+          <GitBranch className="w-5 h-5 text-blue-dark" />
+          <CardTitle className="text-gray-dark">Subject Forwarding Rules</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="dashboard-card-content section-spacing">
-        <div className="content-spacing p-3 rounded-lg bg-forest-dark/30">
+      <CardContent className="space-y-6">
+        <div className="p-3 rounded-lg bg-gray-muted/5 border border-gray-muted/10">
           <div className="grid gap-3 md:grid-cols-[1fr,1fr,auto]">
-            <div className="item-spacing">
-              <Label className="text-white">Subject</Label>
+            <div className="space-y-2">
+              <Label className="text-gray-dark">Subject</Label>
               <Input
                 placeholder="Enter subject"
                 value={newSubject.subject}
                 onChange={(e) => setNewSubject({ ...newSubject, subject: e.target.value })}
-                className="bg-forest border-mint/20"
+                className="bg-white border-gray-muted"
               />
             </div>
-            <div className="item-spacing">
-              <Label className="text-white">Forward To</Label>
+            <div className="space-y-2">
+              <Label className="text-gray-dark">Forward To</Label>
               <Input
                 placeholder="Enter destination"
                 value={newSubject.forward_to}
                 onChange={(e) => setNewSubject({ ...newSubject, forward_to: e.target.value })}
-                className="bg-forest border-mint/20"
+                className="bg-white border-gray-muted"
               />
             </div>
             <Button
@@ -87,30 +87,30 @@ export function SubjectForwarding({
           </div>
         </div>
 
-        <div className="item-spacing">
+        <div className="space-y-2">
           {subjects.map((subject) => (
             <div
               key={subject.id}
-              className="flex items-center justify-between p-3 rounded-lg bg-forest-dark/30 interactive-hover"
+              className="flex items-center justify-between p-3 rounded-lg bg-gray-muted/5 border border-gray-muted/10 hover:bg-gray-muted/10 transition-colors"
             >
               {editingSubject === subject.id ? (
                 <div className="flex-1 flex items-center gap-2">
                   <Input
                     value={editedValues.subject}
                     onChange={(e) => setEditedValues({ ...editedValues, subject: e.target.value })}
-                    className="bg-forest border-mint/20 flex-1"
+                    className="bg-white border-gray-muted flex-1"
                   />
-                  <span className="text-mint">→</span>
+                  <span className="text-blue-dark">→</span>
                   <Input
                     value={editedValues.forward_to}
                     onChange={(e) => setEditedValues({ ...editedValues, forward_to: e.target.value })}
-                    className="bg-forest border-mint/20 flex-1"
+                    className="bg-white border-gray-muted flex-1"
                   />
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => subject.id && handleSaveEdit(subject.id)}
-                    className="text-mint hover:text-mint/80 hover:bg-mint/10"
+                    className="text-blue-dark hover:text-blue-dark/80 hover:bg-blue-dark/10"
                   >
                     <Save className="w-4 h-4" />
                   </Button>
@@ -118,16 +118,16 @@ export function SubjectForwarding({
               ) : (
                 <div className="flex-1 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-body text-white">{subject.subject}</span>
-                    <span className="text-mint">→</span>
-                    <span className="text-body-sm text-white/60">{subject.forward_to}</span>
+                    <span className="text-gray-dark">{subject.subject}</span>
+                    <span className="text-blue-dark">→</span>
+                    <span className="text-gray">{subject.forward_to}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => handleEditSubject(subject)}
-                      className="text-mint hover:text-mint/80 hover:bg-mint/10"
+                      className="text-blue-dark hover:text-blue-dark/80 hover:bg-blue-dark/10"
                     >
                       <Edit2 className="w-4 h-4" />
                     </Button>
