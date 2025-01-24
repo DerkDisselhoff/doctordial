@@ -7,8 +7,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { AuthError } from "@supabase/supabase-js";
-import { ThemeProvider } from "next-themes";
-import { ThemeToggle } from "../ui/theme-toggle";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
@@ -90,22 +88,17 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   }, [navigate]);
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-      <div className="min-h-screen bg-white dark:bg-forest transition-colors duration-300">
-        <SidebarProvider>
-          <div className="flex min-h-screen w-full">
-            <div className="fixed top-0 left-0 h-full z-40">
-              <AdminSidebar />
-            </div>
-            <div className="flex-1 ml-64 p-8">
-              <div className="flex justify-end mb-4">
-                <ThemeToggle />
-              </div>
-              {children}
-            </div>
+    <div className="min-h-screen bg-forest">
+      <SidebarProvider>
+        <div className="flex min-h-screen w-full">
+          <div className="fixed top-0 left-0 h-full z-40">
+            <AdminSidebar />
           </div>
-        </SidebarProvider>
-      </div>
-    </ThemeProvider>
+          <div className="flex-1 ml-64 p-8">
+            {children}
+          </div>
+        </div>
+      </SidebarProvider>
+    </div>
   );
 }

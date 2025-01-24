@@ -38,14 +38,7 @@ export default {
           dark: "#CCB000",
           muted: "#FFD70040",
         },
-        // Light theme colors
-        light: {
-          background: "#FFFFFF",
-          foreground: "#0A1F2F",
-          muted: "#F1F1F1",
-          border: "#E5E7EB",
-        },
-        // Semantic colors with theme support
+        // Semantic colors
         primary: {
           DEFAULT: "var(--forest)",
           light: "var(--forest-light)",

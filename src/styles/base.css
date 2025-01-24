@@ -5,10 +5,6 @@
 
 @layer base {
   :root {
-    /* Light theme */
-    --background: #FFFFFF;
-    --foreground: #0A1F2F;
-    
     /* Core colors */
     --forest: #0A1F2F;
     --forest-light: #132B41;
@@ -24,11 +20,28 @@
     --divine-light: #FFE55C;
     --divine-dark: #CCB000;
     --divine-muted: #FFD70040;
-  }
 
-  .dark {
+    /* System colors */
     --background: var(--forest);
-    --foreground: #FFFFFF;
+    --foreground: var(--mint);
+    --card: var(--forest-light);
+    --card-foreground: white;
+    --popover: var(--forest-dark);
+    --popover-foreground: white;
+    --primary: var(--forest);
+    --primary-foreground: var(--mint);
+    --secondary: var(--mint);
+    --secondary-foreground: var(--forest);
+    --muted: var(--forest-muted);
+    --muted-foreground: var(--mint-muted);
+    --accent: var(--divine);
+    --accent-foreground: var(--forest);
+    --destructive: #FF4444;
+    --destructive-foreground: white;
+    --border: var(--mint-muted);
+    --input: var(--forest-light);
+    --ring: var(--mint);
+    --radius: 0.5rem;
   }
 
   html {
@@ -38,7 +51,7 @@
   }
 
   body {
-    @apply bg-white dark:bg-forest text-forest dark:text-white antialiased tracking-tight transition-colors duration-300;
+    @apply bg-forest text-white antialiased tracking-tight;
     background-image: 
       radial-gradient(circle at 50% 0%, rgba(100, 255, 218, 0.05), transparent 70%),
       radial-gradient(circle at 0% 50%, rgba(100, 255, 218, 0.025), transparent 50%),
