@@ -107,7 +107,7 @@ const capabilities = [
 
 const AICapabilities = () => {
   return (
-    <section className="w-full bg-gradient-to-b from-mint-light/20 to-blue-light/30">
+    <section className="w-full bg-gradient-to-b from-mint-light/40 to-blue-light/50">
       <div className="container mx-auto py-16 md:py-24 px-4">
         <div className="relative">
           {/* Floating background elements */}
@@ -117,8 +117,8 @@ const AICapabilities = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="absolute top-10 left-10 w-32 h-32 bg-mint/5 rounded-full blur-3xl" />
-            <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue/5 rounded-full blur-3xl" />
+            <div className="absolute top-10 left-10 w-32 h-32 bg-mint/20 rounded-full blur-3xl" />
+            <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue/20 rounded-full blur-3xl" />
           </motion.div>
 
           <div className="text-center mb-12">
