@@ -1,4 +1,5 @@
 import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUrgencyDashboard";
+import { SymptomTriageVisualization } from "./features/feature-previews/SymptomTriageVisualization";
 import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
 
@@ -69,6 +70,9 @@ const Features = () => {
         {/* Decorative elements */}
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-mint-light/20 to-transparent" />
       </section>
+
+      {/* New Symptom-Triage Visualization Section */}
+      <SymptomTriageVisualization />
     </div>
   );
 };
