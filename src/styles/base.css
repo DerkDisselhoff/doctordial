@@ -1,5 +1,3 @@
-@import url('https://rsms.me/inter/inter.css');
-
 @layer base {
   :root {
     /* ... keep existing code (color variables) */
@@ -13,20 +11,20 @@
   }
 
   body {
-    @apply bg-white text-gray-800 antialiased;
+    @apply bg-surface text-text-primary antialiased;
   }
 
   /* Section Layout */
   .section {
-    @apply py-16 md:py-24;
+    @apply py-16 md:py-24 bg-surface;
   }
 
   .section-sm {
-    @apply py-8 md:py-12;
+    @apply py-8 md:py-12 bg-surface;
   }
 
   .section-lg {
-    @apply py-24 md:py-32;
+    @apply py-24 md:py-32 bg-surface;
   }
 
   .container {

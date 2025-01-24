@@ -19,52 +19,25 @@ export default {
     },
     extend: {
       colors: {
-        // Primary Brand Colors
-        blue: {
-          DEFAULT: "#33C3F0",
-          light: "#D3E4FD",
-          dark: "#0FA0CE",
+        // Primary Colors
+        primary: {
+          DEFAULT: "#0077CC", // Primary Blue
+          dark: "#005FA8",    // Darker Blue for hover
+          light: "#E5F4FF",   // Light Blue for hover backgrounds
         },
-        green: {
-          DEFAULT: "#22C55E",
-          light: "#F2FCE2",
+        healthcare: {
+          DEFAULT: "#28A745", // Healthcare Green
+          dark: "#1E7D34",    // Darker Green for hover
+          light: "#3BC85E",   // Light Green for hover/tints
         },
-
-        // Neutral Colors
-        gray: {
-          100: "#F1F1F1",
-          200: "#F3F3F3",
-          300: "#EEEEEE",
-          400: "#CCCCCC",
-          500: "#999999",
-          600: "#8E9196",
-          700: "#8A898C",
-          800: "#AAADB0",
+        text: {
+          primary: "#333333", // Dark Gray for primary text
+          secondary: "#666666", // Medium Gray for secondary text
         },
-
-        // Status Colors
-        success: {
-          light: "#F2FCE2",
-          DEFAULT: "#22C55E",
-        },
-        warning: {
-          light: "#FEF7CD",
-          DEFAULT: "#F59E0B",
-        },
-        error: {
-          light: "#FFDEE2",
-          DEFAULT: "#EA384C",
-        },
-        info: {
-          light: "#D3E4FD",
-          DEFAULT: "#0EA5E9",
-        },
-
-        // UI Colors
         surface: {
-          light: "#FFFFFF",
-          DEFAULT: "#F6F6F7",
-          dark: "#221F26",
+          DEFAULT: "#FFFFFF", // White background
+          divider: "#EEEEEE", // Light Gray for dividers
+          input: "#CCCCCC",   // Light Gray for input borders
         },
       },
       animation: {

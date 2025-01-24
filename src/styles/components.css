@@ -1,38 +1,4 @@
 @layer components {
-  /* Dashboard Design System */
-  .dashboard-container {
-    @apply p-6 bg-white rounded-xl border border-gray-200;
-  }
-
-  .dashboard-header {
-    @apply flex items-center justify-between mb-8;
-  }
-
-  .dashboard-title {
-    @apply text-3xl font-bold text-gray-900;
-  }
-
-  .dashboard-subtitle {
-    @apply text-gray-600;
-  }
-
-  .dashboard-card {
-    @apply bg-white border border-gray-200 rounded-xl shadow-sm 
-           transition-all duration-300 hover:shadow-md;
-  }
-
-  .dashboard-card-header {
-    @apply text-gray-700 font-medium;
-  }
-
-  .dashboard-card-title {
-    @apply text-xl font-semibold text-gray-900 tracking-tight;
-  }
-
-  .dashboard-card-content {
-    @apply text-gray-600;
-  }
-
   /* Button Design System */
   .btn {
     @apply px-4 py-2 rounded-lg font-medium transition-all duration-200
@@ -40,58 +6,84 @@
   }
 
   .btn-primary {
-    @apply btn bg-blue text-white hover:bg-blue-dark
-           focus:ring-blue/50 shadow-sm hover:shadow-md
+    @apply btn bg-primary text-surface hover:bg-primary-dark
+           focus:ring-primary/50 shadow-sm hover:shadow-md
            transform hover:-translate-y-0.5;
   }
 
   .btn-secondary {
-    @apply btn bg-gray-100 text-gray-700 hover:bg-gray-200
-           focus:ring-gray-400/50;
+    @apply btn bg-surface text-primary border-2 border-primary 
+           hover:bg-primary-light focus:ring-primary/50;
   }
 
-  .btn-outline {
-    @apply btn border-2 border-blue text-blue hover:bg-blue/5
-           focus:ring-blue/50;
+  .btn-healthcare {
+    @apply btn bg-healthcare text-surface hover:bg-healthcare-dark
+           focus:ring-healthcare/50 shadow-sm hover:shadow-md
+           transform hover:-translate-y-0.5;
   }
 
   /* Link Design System */
   .link {
-    @apply text-blue hover:text-blue-dark transition-colors duration-200
+    @apply text-primary hover:text-primary-dark transition-colors duration-200
            relative after:absolute after:bottom-0 after:left-0 after:w-full
-           after:h-0.5 after:bg-blue after:origin-bottom-right
+           after:h-0.5 after:bg-primary after:origin-bottom-right
            after:scale-x-0 hover:after:scale-x-100 after:transition-transform
            after:duration-300 hover:after:origin-bottom-left;
   }
 
-  /* Interactive Elements */
-  .interactive-card {
-    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  .link-healthcare {
+    @apply text-healthcare hover:text-healthcare-dark transition-colors duration-200
+           relative after:absolute after:bottom-0 after:left-0 after:w-full
+           after:h-0.5 after:bg-healthcare after:origin-bottom-right
+           after:scale-x-0 hover:after:scale-x-100 after:transition-transform
+           after:duration-300 hover:after:origin-bottom-left;
   }
 
+  /* Form Elements */
+  .form-input {
+    @apply w-full px-3 py-2 bg-surface border border-surface-input rounded-lg 
+           text-text-primary placeholder-text-secondary
+           focus:border-primary focus:ring-1 focus:ring-primary;
+  }
+
+  .form-input-healthcare {
+    @apply w-full px-3 py-2 bg-surface border border-surface-input rounded-lg 
+           text-text-primary placeholder-text-secondary
+           focus:border-healthcare focus:ring-1 focus:ring-healthcare;
+  }
+
+  /* Interactive Elements */
   .interactive-icon {
-    @apply transition-transform duration-200 hover:scale-110;
+    @apply transition-colors duration-200;
+  }
+
+  .interactive-icon-primary {
+    @apply text-primary hover:text-primary-dark;
+  }
+
+  .interactive-icon-healthcare {
+    @apply text-healthcare hover:text-healthcare-light;
   }
 
   /* Table Design System */
   .dashboard-table {
-    @apply w-full;
+    @apply w-full bg-surface;
   }
 
   .dashboard-table-header {
-    @apply border-b border-gray-200;
+    @apply border-b border-surface-divider;
   }
 
   .dashboard-table-header th {
-    @apply px-4 py-3 text-sm font-semibold text-gray-700 tracking-tight;
+    @apply px-4 py-3 text-sm font-semibold text-text-secondary tracking-tight;
   }
 
   .dashboard-table-row {
-    @apply border-b border-gray-100 hover:bg-gray-50 transition-colors;
+    @apply border-b border-surface-divider hover:bg-primary-light/5 transition-colors;
   }
 
   .dashboard-table-cell {
-    @apply px-4 py-3 text-sm text-gray-600;
+    @apply px-4 py-3 text-sm text-text-primary;
   }
 
   /* Status Badge Design System */
@@ -100,14 +92,32 @@
   }
 
   .status-badge-success {
-    @apply bg-green-light text-green;
+    @apply bg-healthcare-light/20 text-healthcare;
   }
 
   .status-badge-pending {
-    @apply bg-warning-light text-warning;
+    @apply bg-primary-light text-primary;
   }
 
   .status-badge-error {
-    @apply bg-error-light text-error;
+    @apply bg-red-100 text-red-700;
+  }
+
+  /* Card Design System */
+  .dashboard-card {
+    @apply bg-surface border border-surface-divider rounded-xl shadow-sm 
+           transition-all duration-300 hover:shadow-md;
+  }
+
+  .dashboard-card-header {
+    @apply text-text-secondary font-medium;
+  }
+
+  .dashboard-card-title {
+    @apply text-xl font-semibold text-text-primary tracking-tight;
+  }
+
+  .dashboard-card-content {
+    @apply text-text-secondary;
   }
 }
