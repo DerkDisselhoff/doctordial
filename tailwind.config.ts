@@ -112,6 +112,21 @@ export default {
         '3xl': '3rem',
         '4xl': '4rem',
       },
+      // Animation System
+      keyframes: {
+        "float-slow": {
+          "0%, 100%": { transform: "translate(0, 0)" },
+          "50%": { transform: "translate(-20px, 20px)" },
+        },
+        "float-delayed": {
+          "0%, 100%": { transform: "translate(0, 0)" },
+          "50%": { transform: "translate(20px, -20px)" },
+        },
+      },
+      animation: {
+        "float-slow": "float-slow 20s ease-in-out infinite",
+        "float-delayed": "float-delayed 25s ease-in-out infinite",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
