@@ -36,6 +36,134 @@
     @apply text-gray-muted cursor-not-allowed;
   }
 
+  /* Card System */
+  .card {
+    @apply bg-white border border-gray-muted rounded-xl p-6 transition-all duration-300;
+  }
+
+  .card-header {
+    @apply flex items-center justify-between mb-4 pb-4 border-b border-gray-muted;
+  }
+
+  .card-title {
+    @apply text-xl font-semibold text-gray-dark tracking-tight flex items-center gap-2;
+  }
+
+  .card-description {
+    @apply text-sm text-gray;
+  }
+
+  .card-content {
+    @apply space-y-4;
+  }
+
+  .card-footer {
+    @apply mt-6 pt-4 border-t border-gray-muted flex justify-end space-x-2;
+  }
+
+  /* Interactive Card Variants */
+  .card-interactive {
+    @apply hover:bg-blue/5 cursor-pointer;
+  }
+
+  .card-elevated {
+    @apply shadow-lg hover:shadow-xl;
+  }
+
+  .card-gradient {
+    @apply bg-gradient-to-br from-white to-blue/5 relative overflow-hidden;
+  }
+
+  /* Dashboard Card Variants */
+  .dashboard-card {
+    @apply bg-white border-gray-muted rounded-xl shadow-sm;
+  }
+
+  .dashboard-card-header {
+    @apply flex flex-col space-y-1.5 p-6;
+  }
+
+  .dashboard-card-title {
+    @apply text-xl font-semibold text-gray-dark tracking-tight flex items-center gap-2;
+  }
+
+  .dashboard-card-content {
+    @apply p-6 pt-0 text-gray;
+  }
+
+  /* Feature Card Variants */
+  .feature-card {
+    @apply card card-interactive;
+  }
+
+  .feature-card-icon {
+    @apply p-2 rounded-lg bg-blue/10 text-blue-dark mb-4;
+  }
+
+  /* Stats Card Design */
+  .stats-card {
+    @apply card p-4;
+  }
+
+  .stats-card-value {
+    @apply text-2xl font-bold text-gray-dark;
+  }
+
+  .stats-card-label {
+    @apply text-sm text-gray;
+  }
+
+  /* Form Card Variants */
+  .form-card {
+    @apply card space-y-6;
+  }
+
+  .form-card-section {
+    @apply space-y-4;
+  }
+
+  /* Settings Card Variants */
+  .settings-card {
+    @apply card space-y-4;
+  }
+
+  .settings-card-section {
+    @apply space-y-2;
+  }
+
+  /* Typography Utilities */
+  .heading-1 {
+    @apply text-4xl font-bold text-gray-dark tracking-tight;
+  }
+
+  .heading-2 {
+    @apply text-3xl font-bold text-gray-dark tracking-tight;
+  }
+
+  .heading-3 {
+    @apply text-2xl font-semibold text-gray-dark tracking-tight;
+  }
+
+  .heading-4 {
+    @apply text-xl font-semibold text-gray-dark tracking-tight;
+  }
+
+  .body-large {
+    @apply text-lg text-gray leading-relaxed;
+  }
+
+  .body-default {
+    @apply text-base text-gray leading-relaxed;
+  }
+
+  .body-small {
+    @apply text-sm text-gray leading-relaxed;
+  }
+
+  .caption {
+    @apply text-xs text-gray-light;
+  }
+
   /* Status Indicators */
   .status-badge {
     @apply px-2 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1;
@@ -103,23 +231,45 @@
   }
 
   /* Dashboard specific utilities */
-  .dashboard-card {
-    @apply bg-white border border-gray-muted rounded-lg shadow-sm p-6;
+  .dashboard-section {
+    @apply p-6 space-y-6;
   }
 
-  .dashboard-card-header {
-    @apply text-xl font-semibold text-gray-dark mb-4;
+  .dashboard-header {
+    @apply mb-8;
   }
 
-  .dashboard-card-content {
-    @apply text-gray;
+  .dashboard-title {
+    @apply text-2xl font-bold text-gray-dark;
   }
 
-  .dashboard-section-title {
-    @apply text-2xl font-bold text-gray-dark mb-2;
+  .dashboard-description {
+    @apply text-gray mt-2;
   }
 
-  .dashboard-section-description {
-    @apply text-gray mb-6;
+  /* Form Controls */
+  .form-label {
+    @apply text-sm font-medium text-gray-dark;
+  }
+
+  .form-input {
+    @apply w-full p-2 border border-gray-muted rounded-md text-gray-dark placeholder-gray-light focus:border-blue-dark focus:ring-1 focus:ring-blue-dark;
+  }
+
+  .form-select {
+    @apply w-full p-2 border border-gray-muted rounded-md text-gray-dark bg-white;
+  }
+
+  /* Button Variants */
+  .btn-primary {
+    @apply bg-blue-dark text-white hover:bg-blue-dark/90 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply border border-gray-muted text-gray-dark hover:bg-gray-muted/10 transition-colors;
+  }
+
+  .btn-success {
+    @apply bg-green text-white hover:bg-green-dark transition-colors;
   }
 }
