@@ -9,7 +9,7 @@ import WhoWeServe from "@/components/WhoWeServe";
 
 const Index = () => {
   return (
-    <main className="min-h-screen bg-forest text-text-primary">
+    <main className="min-h-screen bg-white">
       <Navbar />
       <Hero />
       <Stats />
