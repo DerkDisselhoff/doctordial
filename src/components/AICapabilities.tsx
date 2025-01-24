@@ -13,26 +13,95 @@ const capabilities = [
     icon: Brain,
     title: "Medical Intelligence",
     description: "Trained on NHG triage standards and medical datasets for accurate patient assessment",
+    animation: {
+      variants: {
+        hidden: { pathLength: 0, opacity: 0 },
+        visible: { 
+          pathLength: 1, 
+          opacity: 1,
+          transition: {
+            duration: 2,
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatType: "reverse"
+          }
+        }
+      }
+    }
   },
   {
     icon: Settings,
     title: "Full Customization",
     description: "Customize forwarding rules, activation timing, voice, tone, and medical question handling to match your practice needs",
+    animation: {
+      variants: {
+        hidden: { rotate: 0 },
+        visible: { 
+          rotate: 360,
+          transition: {
+            duration: 4,
+            ease: "linear",
+            repeat: Infinity
+          }
+        }
+      }
+    }
   },
   {
     icon: Heart,
     title: "Human Experience",
     description: "Trained on billions of emotional and empathic interactions for natural, human-like conversations",
+    animation: {
+      variants: {
+        hidden: { scale: 1 },
+        visible: { 
+          scale: 1.2,
+          transition: {
+            duration: 0.5,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }
+        }
+      }
+    }
   },
   {
     icon: Link,
     title: "Seamless Integration",
     description: "Easily integrates with your existing call software for smooth implementation",
+    animation: {
+      variants: {
+        hidden: { x: -20, opacity: 0 },
+        visible: {
+          x: 0,
+          opacity: 1,
+          transition: {
+            duration: 1,
+            repeat: Infinity,
+            repeatType: "reverse",
+            repeatDelay: 1
+          }
+        }
+      }
+    }
   },
   {
     icon: GraduationCap,
     title: "Continuous Learning",
     description: "Improves through direct feedback on triage outcomes from medical professionals",
+    animation: {
+      variants: {
+        hidden: { y: 0 },
+        visible: {
+          y: -10,
+          transition: {
+            duration: 0.5,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }
+        }
+      }
+    }
   },
 ];
 
@@ -92,9 +161,14 @@ const AICapabilities = () => {
                       <div className="group h-full">
                         <div className="relative h-full p-6 bg-white rounded-xl border border-gray-muted shadow-sm transition-all duration-300 hover:shadow-md hover:border-mint/20">
                           <div className="mb-4">
-                            <div className="inline-flex p-3 rounded-lg bg-gradient-to-br from-mint-light/30 to-blue-light/30 text-mint">
+                            <motion.div 
+                              className="inline-flex p-3 rounded-lg bg-gradient-to-br from-mint-light/30 to-blue-light/30 text-mint"
+                              initial="hidden"
+                              animate="visible"
+                              variants={capability.animation.variants}
+                            >
                               <Icon className="w-6 h-6" />
-                            </div>
+                            </motion.div>
                           </div>
                           <h3 className="text-xl font-semibold mb-3 text-gray-dark group-hover:text-mint transition-colors">
                             {capability.title}
