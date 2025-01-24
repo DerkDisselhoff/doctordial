@@ -78,21 +78,21 @@ export function OverviewDashboard() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-6">
           <div>
-            <h2 className="text-3xl font-bold text-white">Dashboard Overview</h2>
-            <p className="text-white/60">Monitor your key metrics and performance</p>
+            <h2 className="text-3xl font-bold text-text-primary">Dashboard Overview</h2>
+            <p className="text-text-secondary">Monitor your key metrics and performance</p>
           </div>
           {userRole === 'client' && (
-            <div className="flex items-center gap-2 bg-forest-light/30 px-4 py-2 rounded-lg border border-mint/10">
+            <div className="flex items-center gap-2 bg-surface-secondary/30 px-4 py-2 rounded-lg border border-primary/10">
               <div className="flex items-center gap-2">
                 {isAssistantLive ? (
                   <>
-                    <CirclePlay className="w-4 h-4 text-mint animate-pulse" />
-                    <span className="text-sm text-mint">{assistantName} Active</span>
+                    <CirclePlay className="w-4 h-4 text-primary animate-pulse" />
+                    <span className="text-sm text-primary">{assistantName} Active</span>
                   </>
                 ) : (
                   <>
-                    <CirclePause className="w-4 h-4 text-white/50" />
-                    <span className="text-sm text-white/50">{assistantName} Offline</span>
+                    <CirclePause className="w-4 h-4 text-text-muted" />
+                    <span className="text-sm text-text-muted">{assistantName} Offline</span>
                   </>
                 )}
               </div>
@@ -101,13 +101,13 @@ export function OverviewDashboard() {
         </div>
         
         {userRole === 'client' && (
-          <div className="flex items-center space-x-2 bg-forest-light/30 p-2 rounded-lg">
+          <div className="flex items-center space-x-2 bg-surface-secondary/30 p-2 rounded-lg">
             <Toggle
               variant="outline"
               size="sm"
               pressed={timeFilter === 'today'}
               onPressedChange={() => setTimeFilter('today')}
-              className="data-[state=on]:bg-mint/20 data-[state=on]:text-mint"
+              className="data-[state=on]:bg-primary/20 data-[state=on]:text-primary"
             >
               Today
             </Toggle>
@@ -116,7 +116,7 @@ export function OverviewDashboard() {
               size="sm"
               pressed={timeFilter === 'week'}
               onPressedChange={() => setTimeFilter('week')}
-              className="data-[state=on]:bg-mint/20 data-[state=on]:text-mint"
+              className="data-[state=on]:bg-primary/20 data-[state=on]:text-primary"
             >
               Last Week
             </Toggle>
@@ -125,7 +125,7 @@ export function OverviewDashboard() {
               size="sm"
               pressed={timeFilter === 'month'}
               onPressedChange={() => setTimeFilter('month')}
-              className="data-[state=on]:bg-mint/20 data-[state=on]:text-mint"
+              className="data-[state=on]:bg-primary/20 data-[state=on]:text-primary"
             >
               Last Month
             </Toggle>
