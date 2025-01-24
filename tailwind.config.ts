@@ -38,21 +38,16 @@ export default {
           dark: "#CCB000",
           muted: "#FFD70040",
         },
-        // Semantic colors
-        primary: {
-          DEFAULT: "var(--forest)",
-          light: "var(--forest-light)",
-          dark: "var(--forest-dark)",
-        },
-        accent: {
-          DEFAULT: "var(--mint)",
-          light: "var(--mint-light)",
-          dark: "var(--mint-dark)",
-        },
-        highlight: {
-          DEFAULT: "var(--divine)",
-          light: "var(--divine-light)",
-          dark: "var(--divine-dark)",
+        // Semantic Text Colors
+        text: {
+          primary: "var(--text-primary)",
+          secondary: "var(--text-secondary)",
+          muted: "var(--text-muted)",
+          inverse: "var(--text-inverse)",
+          accent: "var(--text-accent)",
+          success: "var(--text-success)",
+          warning: "var(--text-warning)",
+          error: "var(--text-error)",
         },
       },
       // Typography System

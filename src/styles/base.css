@@ -21,49 +21,42 @@
     --divine-dark: #CCB000;
     --divine-muted: #FFD70040;
 
+    /* Semantic Text Colors */
+    --text-primary: var(--mint);
+    --text-secondary: var(--forest);
+    --text-muted: var(--mint-muted);
+    --text-inverse: white;
+    --text-accent: var(--divine);
+    --text-success: #10B981;
+    --text-warning: #F59E0B;
+    --text-error: #EF4444;
+
     /* System colors */
     --background: var(--forest);
-    --foreground: var(--mint);
+    --foreground: var(--text-primary);
     --card: var(--forest-light);
-    --card-foreground: white;
+    --card-foreground: var(--text-inverse);
     --popover: var(--forest-dark);
-    --popover-foreground: white;
+    --popover-foreground: var(--text-inverse);
     --primary: var(--forest);
-    --primary-foreground: var(--mint);
+    --primary-foreground: var(--text-primary);
     --secondary: var(--mint);
-    --secondary-foreground: var(--forest);
+    --secondary-foreground: var(--text-secondary);
     --muted: var(--forest-muted);
-    --muted-foreground: var(--mint-muted);
+    --muted-foreground: var(--text-muted);
     --accent: var(--divine);
-    --accent-foreground: var(--forest);
-    --destructive: #FF4444;
-    --destructive-foreground: white;
+    --accent-foreground: var(--text-secondary);
+    --destructive: var(--text-error);
+    --destructive-foreground: var(--text-inverse);
     --border: var(--mint-muted);
     --input: var(--forest-light);
     --ring: var(--mint);
     --radius: 0.5rem;
   }
 
-  html {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-
-  body {
-    @apply bg-forest text-white antialiased tracking-tight;
-    background-image: 
-      radial-gradient(circle at 50% 0%, rgba(100, 255, 218, 0.05), transparent 70%),
-      radial-gradient(circle at 0% 50%, rgba(100, 255, 218, 0.025), transparent 50%),
-      radial-gradient(circle at 100% 50%, rgba(100, 255, 218, 0.025), transparent 50%);
-    background-size: 100% 100%, 50% 100%, 50% 100%;
-    background-position: center top, left center, right center;
-    background-repeat: no-repeat;
-  }
-
   /* Typography Scale */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-medium tracking-tight text-white;
+    @apply font-medium tracking-tight text-text-inverse;
   }
 
   h1 { @apply text-4xl md:text-5xl leading-tight; }
@@ -73,14 +66,14 @@
   h5 { @apply text-lg md:text-xl leading-snug; }
   h6 { @apply text-base md:text-lg leading-normal; }
 
-  p { @apply text-base leading-relaxed; }
+  p { @apply text-text-primary text-base leading-relaxed; }
 
-  small { @apply text-sm leading-normal; }
+  small { @apply text-text-muted text-sm leading-normal; }
 
-  .text-body-lg { @apply text-lg leading-relaxed; }
-  .text-body { @apply text-base leading-relaxed; }
-  .text-body-sm { @apply text-sm leading-normal; }
-  .text-body-xs { @apply text-xs leading-normal; }
+  .text-body-lg { @apply text-lg leading-relaxed text-text-primary; }
+  .text-body { @apply text-base leading-relaxed text-text-primary; }
+  .text-body-sm { @apply text-sm leading-normal text-text-primary; }
+  .text-body-xs { @apply text-xs leading-normal text-text-primary; }
 
   ::selection {
     @apply bg-mint text-forest;

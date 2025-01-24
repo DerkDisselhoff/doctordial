@@ -1,19 +1,48 @@
 @layer components {
+  /* Text Utilities */
+  .text-default {
+    @apply text-text-primary;
+  }
+
+  .text-subtle {
+    @apply text-text-secondary;
+  }
+
+  .text-dim {
+    @apply text-text-muted;
+  }
+
+  .text-highlight {
+    @apply text-text-accent;
+  }
+
+  .text-success {
+    @apply text-text-success;
+  }
+
+  .text-warning {
+    @apply text-text-warning;
+  }
+
+  .text-error {
+    @apply text-text-error;
+  }
+
   /* Status Indicators */
   .status-badge {
     @apply px-2 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1;
   }
 
   .status-badge-success {
-    @apply bg-mint/10 text-mint;
+    @apply bg-text-success/10 text-text-success;
   }
 
   .status-badge-warning {
-    @apply bg-yellow-500/10 text-yellow-500;
+    @apply bg-text-warning/10 text-text-warning;
   }
 
   .status-badge-error {
-    @apply bg-red-500/10 text-red-500;
+    @apply bg-text-error/10 text-text-error;
   }
 
   /* Loading States */
