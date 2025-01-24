@@ -13,7 +13,7 @@ export function CallSummary({ isEditing, editedCall, handleInputChange, call }: 
   return (
     <Card className="bg-white border border-gray-muted shadow-sm">
       <CardHeader className="pb-2">
-        <CardTitle className="text-gray-dark">Call Summary</CardTitle>
+        <CardTitle className="text-xl font-semibold text-gray-dark">Call Summary</CardTitle>
       </CardHeader>
       <CardContent>
         {isEditing ? (
@@ -24,7 +24,7 @@ export function CallSummary({ isEditing, editedCall, handleInputChange, call }: 
             placeholder="Enter call summary"
           />
         ) : (
-          <p className="text-gray mb-4">{call.conversation_summary || 'No summary available'}</p>
+          <p className="text-base text-gray leading-relaxed mb-4">{call.conversation_summary || 'No summary available'}</p>
         )}
         
         <div className="space-y-3">
@@ -33,7 +33,7 @@ export function CallSummary({ isEditing, editedCall, handleInputChange, call }: 
             <div className="flex items-start space-x-3">
               <ArrowRight className="h-5 w-5 text-blue-dark mt-0.5" />
               <div>
-                <p className="text-gray-dark font-medium mb-1">Forwarded</p>
+                <p className="text-base font-medium text-gray-dark mb-1">Forwarded</p>
                 {isEditing ? (
                   <Textarea
                     value={editedCall.Action || ''}
@@ -42,7 +42,7 @@ export function CallSummary({ isEditing, editedCall, handleInputChange, call }: 
                     placeholder="Enter forwarding details"
                   />
                 ) : (
-                  <p className="text-gray">{call.Action || 'No action required'}</p>
+                  <p className="text-base text-gray leading-relaxed">{call.Action || 'No action required'}</p>
                 )}
               </div>
             </div>

@@ -12,7 +12,7 @@ export function CallSOEP({ isEditing, soepNotes, editedCall, handleInputChange }
   return (
     <Card className="bg-white border border-gray-muted shadow-sm">
       <CardHeader className="pb-2">
-        <CardTitle className="text-gray-dark">SOEP</CardTitle>
+        <CardTitle className="text-xl font-semibold text-gray-dark">SOEP</CardTitle>
       </CardHeader>
       <CardContent>
         {isEditing ? (
@@ -26,13 +26,13 @@ export function CallSOEP({ isEditing, soepNotes, editedCall, handleInputChange }
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {Object.entries(soepNotes).map(([section, content]) => (
               <div key={section} className="p-4 bg-gray-muted/10 rounded-lg border border-gray-muted">
-                <h4 className="text-sm font-medium text-blue-dark mb-2">
+                <h4 className="text-base font-medium text-blue-dark mb-2">
                   {section === 'S' ? 'Subjective' :
                    section === 'O' ? 'Objective' :
                    section === 'E' ? 'Evaluation' :
                    section === 'P' ? 'Plan' : section}
                 </h4>
-                <p className="text-gray text-sm leading-relaxed">{content || 'No information available'}</p>
+                <p className="text-base text-gray leading-relaxed">{content || 'No information available'}</p>
               </div>
             ))}
           </div>

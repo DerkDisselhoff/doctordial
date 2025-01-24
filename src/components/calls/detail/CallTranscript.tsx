@@ -17,7 +17,7 @@ export function CallTranscript({
   return (
     <Card className="bg-white border border-gray-muted shadow-sm">
       <CardHeader className="pb-2">
-        <CardTitle className="text-gray-dark">Call Transcript</CardTitle>
+        <CardTitle className="text-xl font-semibold text-gray-dark">Call Transcript</CardTitle>
       </CardHeader>
       <CardContent>
         {isEditing ? (
@@ -37,7 +37,7 @@ export function CallTranscript({
                     message.role === 'AI' ? 'flex-row' : 'flex-row-reverse'
                   }`}
                 >
-                  <div className={`flex-shrink-0 w-16 text-sm font-medium ${
+                  <div className={`flex-shrink-0 w-16 text-base font-medium ${
                     message.role === 'AI' ? 'text-blue-dark' : 'text-gray-dark'
                   }`}>
                     {message.role}
@@ -47,12 +47,12 @@ export function CallTranscript({
                       ? 'bg-gray-muted/10 border border-gray-muted' 
                       : 'bg-blue/10 border border-blue/20'
                   }`}>
-                    <p className="text-gray text-sm leading-relaxed tracking-normal">{message.content}</p>
+                    <p className="text-base text-gray leading-relaxed">{message.content}</p>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-gray">No transcript available</p>
+              <p className="text-base text-gray">No transcript available</p>
             )}
           </div>
         )}
