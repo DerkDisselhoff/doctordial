@@ -1,4 +1,7 @@
 import { Stethoscope } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const AIDoctorAssistant = () => {
   return (
@@ -19,6 +22,14 @@ const AIDoctorAssistant = () => {
               <Stethoscope className="w-5 h-5 text-mint" />
               <span>Trained on extensive medical protocols</span>
             </div>
+
+            <div>
+              <Link to="/dr-sarah">
+                <Button variant="outline" className="mt-4">
+                  Learn more about Dr. Sarah
+                </Button>
+              </Link>
+            </div>
           </div>
 
           {/* Image */}
@@ -38,6 +49,13 @@ const AIDoctorAssistant = () => {
                   <div className="text-2xl font-bold">24/7</div>
                   <div className="text-sm opacity-80">Patient Support</div>
                 </div>
+              </div>
+
+              {/* Hire Badge */}
+              <div className="absolute top-6 right-6">
+                <Badge variant="secondary" className="bg-white/90 text-gray-dark font-medium px-3 py-1">
+                  Hire Dr. Sarah
+                </Badge>
               </div>
             </div>
           </div>
