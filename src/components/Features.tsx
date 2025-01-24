@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUrgencyDashboard";
+import AICapabilities from "./AICapabilities";
 
 const Features = () => {
   return (
     <section className="py-16 md:py-24 px-4 bg-gradient-to-b from-white to-mint-light/5">
       <div className="container mx-auto">
+        <AICapabilities />
         <div className="text-center mb-12 md:mb-16">
           <h2 className="font-sans text-3xl md:text-4xl lg:text-5xl font-bold mb-6 animate-fade-up text-gray-dark">
             Transform Patient Calls into Practice Efficiency
