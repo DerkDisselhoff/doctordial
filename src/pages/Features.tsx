@@ -8,7 +8,7 @@ import { EnhancedUrgencyDashboard } from "@/components/features/feature-previews
 
 const Features = () => {
   return (
-    <div className="min-h-screen bg-forest">
+    <div className="min-h-screen" style={{ backgroundColor: "#fcfcfc" }}>
       <Navbar />
       <FeaturesHero />
 

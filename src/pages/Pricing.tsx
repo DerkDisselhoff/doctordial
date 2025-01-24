@@ -3,7 +3,7 @@ import { Quote } from "lucide-react";
 
 const Pricing = () => {
   return (
-    <div className="min-h-screen bg-forest pt-24">
+    <div className="min-h-screen pt-24" style={{ backgroundColor: "#fcfcfc" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col lg:flex-row lg:items-start lg:gap-16">
         {/* Left side content */}
         <div className="lg:w-[45%] mb-8 lg:mb-0 lg:sticky lg:top-8">          
