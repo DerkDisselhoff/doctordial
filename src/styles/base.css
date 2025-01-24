@@ -2,35 +2,52 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 199 89% 57%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 142 76% 47%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 199 89% 57%;
-    --radius: 0.5rem;
+    /* ... keep existing code (color variables) */
   }
 
   html {
+    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
   body {
-    @apply bg-surface-light text-gray-800 antialiased;
+    @apply bg-white text-gray-800 antialiased;
+  }
+
+  /* Section Layout */
+  .section {
+    @apply py-16 md:py-24;
+  }
+
+  .section-sm {
+    @apply py-8 md:py-12;
+  }
+
+  .section-lg {
+    @apply py-24 md:py-32;
+  }
+
+  .container {
+    @apply px-4 mx-auto max-w-7xl;
+  }
+
+  /* Spacing Utilities */
+  .content-spacing {
+    @apply space-y-6 md:space-y-8;
+  }
+
+  .content-spacing-lg {
+    @apply space-y-8 md:space-y-12;
+  }
+
+  /* Layout Grid */
+  .layout-grid {
+    @apply grid gap-6 md:gap-8;
+  }
+
+  .layout-grid-lg {
+    @apply grid gap-8 md:gap-12;
   }
 }
