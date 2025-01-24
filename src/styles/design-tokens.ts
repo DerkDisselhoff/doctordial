@@ -2,40 +2,56 @@
 export const colors = {
   // Primary Colors
   primary: {
-    DEFAULT: '#0077CC', // Primary Blue
-    dark: '#005FA8',    // Darker Blue for hover
-    light: '#E5F4FF',   // Light Blue for backgrounds
-  },
-  // Healthcare Colors
-  mint: {
-    DEFAULT: '#64FFDA',
-    light: '#A7FFE4',
-    dark: '#48D5B5',
-  },
-  forest: {
-    DEFAULT: '#1E293B',
-    light: '#334155',
-    dark: '#0F172A',
-  },
-  // Surface Colors
-  surface: {
-    DEFAULT: '#FFFFFF',   // White background
-    secondary: '#F8F9FA', // Light Gray background
-    tertiary: '#F1F3F5',  // Darker Gray background
-    input: '#E2E8F0',     // Input borders
+    DEFAULT: '#4A90E2', // Professional blue
+    dark: '#357ABD',    // Darker blue for hover
+    light: '#EBF3FC',   // Light blue for backgrounds
   },
   // Text Colors
   text: {
-    primary: '#1E293B',   // Dark text
-    secondary: '#64748B', // Medium text
-    muted: '#94A3B8',     // Muted text
+    primary: '#2D3748',   // Dark gray for main text
+    secondary: '#4A5568', // Medium gray for secondary text
+    muted: '#718096',     // Light gray for muted text
+  },
+  // Surface Colors
+  surface: {
+    DEFAULT: '#FFFFFF',   // Pure white
+    secondary: '#F7FAFC', // Very light gray
+    tertiary: '#EDF2F7',  // Light gray background
+    input: '#E2E8F0',     // Input borders
+  },
+  // Accent Colors
+  accent: {
+    mint: {
+      DEFAULT: '#4FD1C5', // Mint green
+      light: '#E6FFFA',   // Light mint
+      dark: '#38B2AC',    // Dark mint
+    }
   },
   // Status Colors
   status: {
-    success: '#10B981',
-    error: '#EF4444',
-    warning: '#F59E0B',
-    info: '#3B82F6',
+    success: '#48BB78',
+    error: '#F56565',
+    warning: '#ED8936',
+    info: '#4299E1',
+  },
+  // Healthcare-specific Colors
+  healthcare: {
+    mint: {
+      DEFAULT: '#4FD1C5',
+      light: '#E6FFFA',
+      dark: '#38B2AC',
+    },
+    forest: {
+      DEFAULT: '#2C5282',
+      light: '#2B6CB0',
+      dark: '#2A4365',
+    },
+  },
+  // Divider and Border Colors
+  border: {
+    DEFAULT: '#E2E8F0',
+    light: '#EDF2F7',
+    dark: '#CBD5E0',
   },
 } as const;
 
@@ -164,15 +180,15 @@ export const components = {
       hoverBg: colors.primary.light,
     },
     healthcare: {
-      bg: colors.mint.DEFAULT,
-      text: colors.forest.DEFAULT,
-      hoverBg: colors.mint.light,
-      focusRing: colors.mint.dark,
+      bg: colors.healthcare.mint.DEFAULT,
+      text: colors.healthcare.forest.DEFAULT,
+      hoverBg: colors.healthcare.mint.light,
+      focusRing: colors.healthcare.mint.dark,
     }
   },
   input: {
     bg: colors.surface.DEFAULT,
-    border: colors.surface.input,
+    border: colors.border.DEFAULT,
     text: colors.text.primary,
     placeholder: colors.text.muted,
     focusBorder: colors.primary.DEFAULT,
@@ -180,7 +196,25 @@ export const components = {
   },
   card: {
     bg: colors.surface.DEFAULT,
-    border: colors.surface.input,
-    shadow: shadows.DEFAULT,
+    border: colors.border.DEFAULT,
+    shadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px',
+  },
+  nav: {
+    bg: colors.surface.DEFAULT,
+    border: colors.border.DEFAULT,
+    text: colors.text.primary,
+    hover: colors.primary.light,
+  },
+  dashboard: {
+    sidebar: {
+      bg: colors.surface.secondary,
+      text: colors.text.primary,
+      hover: colors.primary.light,
+      active: colors.primary.DEFAULT,
+    },
+    content: {
+      bg: colors.surface.DEFAULT,
+      text: colors.text.primary,
+    },
   },
 } as const;
