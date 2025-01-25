@@ -18,12 +18,12 @@ const capabilities = [
     illustration: <MedicalIntelligenceCard />,
   },
   {
-    title: "Full Customization",
+    title: "Worker Customization",
     description: "Customize forwarding rules, activation timing, voice, tone, and medical question handling to match your practice needs",
     illustration: (
       <div className="mb-6 relative h-48">
         <motion.div 
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-16"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
