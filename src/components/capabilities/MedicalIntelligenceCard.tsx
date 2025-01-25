@@ -23,7 +23,7 @@ const MedicalIntelligenceCard = () => {
         <div className="absolute inset-0">
           {/* U1 Badge - Top */}
           <motion.div
-            className="absolute left-1/2 top-[15%] -translate-x-1/2 flex items-center"
+            className="absolute left-1/2 top-[5%] -translate-x-1/2 flex items-center"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -37,7 +37,7 @@ const MedicalIntelligenceCard = () => {
 
           {/* U2 Badge - Top Right */}
           <motion.div
-            className="absolute right-[25%] top-[30%] flex items-center"
+            className="absolute right-[20%] top-[20%] flex items-center"
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
@@ -51,7 +51,7 @@ const MedicalIntelligenceCard = () => {
 
           {/* U3 Badge - Bottom Right */}
           <motion.div
-            className="absolute right-[30%] bottom-[25%] flex items-center"
+            className="absolute right-[15%] bottom-[35%] flex items-center"
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
@@ -65,7 +65,7 @@ const MedicalIntelligenceCard = () => {
 
           {/* U4 Badge - Bottom Left */}
           <motion.div
-            className="absolute left-[30%] bottom-[25%] flex items-center"
+            className="absolute left-[15%] bottom-[35%] flex items-center"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}
@@ -79,7 +79,7 @@ const MedicalIntelligenceCard = () => {
 
           {/* U5 Badge - Top Left */}
           <motion.div
-            className="absolute left-[25%] top-[30%] flex items-center"
+            className="absolute left-[20%] top-[20%] flex items-center"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 1 }}
@@ -93,10 +93,9 @@ const MedicalIntelligenceCard = () => {
 
           {/* Medical Icons */}
           <motion.div 
-            className="absolute left-[15%] top-[50%] -translate-y-1/2 text-mint"
+            className="absolute left-[10%] top-[50%] -translate-y-1/2 text-mint"
             animate={{ 
-              y: [-5, 5, -5],
-              rotate: [0, 10, 0]
+              y: [-5, 5, -5]
             }}
             transition={{ 
               duration: 4,
@@ -108,10 +107,9 @@ const MedicalIntelligenceCard = () => {
           </motion.div>
 
           <motion.div 
-            className="absolute right-[15%] top-[50%] -translate-y-1/2 text-mint"
+            className="absolute right-[10%] top-[50%] -translate-y-1/2 text-mint"
             animate={{ 
-              y: [5, -5, 5],
-              rotate: [0, -10, 0]
+              y: [5, -5, 5]
             }}
             transition={{ 
               duration: 4,
@@ -124,10 +122,9 @@ const MedicalIntelligenceCard = () => {
           </motion.div>
 
           <motion.div 
-            className="absolute left-1/2 bottom-[15%] -translate-x-1/2 text-mint"
+            className="absolute left-1/2 bottom-[10%] -translate-x-1/2 text-mint"
             animate={{ 
-              y: [-3, 3, -3],
-              rotate: [0, 5, 0]
+              y: [-3, 3, -3]
             }}
             transition={{ 
               duration: 3,
