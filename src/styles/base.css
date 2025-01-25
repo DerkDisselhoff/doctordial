@@ -95,6 +95,24 @@
   .text-body-sm { @apply font-sans text-sm leading-normal text-gray; }
   .text-body-xs { @apply font-sans text-xs leading-normal text-gray; }
 
+  /* Table Typography */
+  .table-header-cell {
+    @apply font-display text-sm font-medium;
+  }
+  
+  .table-cell {
+    @apply font-sans text-sm;
+  }
+
+  /* Menu Typography */
+  .menu-item {
+    @apply font-sans text-sm;
+  }
+
+  .menu-header {
+    @apply font-display text-sm font-medium;
+  }
+
   @keyframes float {
     0% {
       transform: translateY(0px);

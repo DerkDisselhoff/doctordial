@@ -9,7 +9,7 @@
   }
 
   .table-header-cell {
-    @apply px-4 py-3 text-sm font-medium text-white/70 text-left;
+    @apply px-4 py-3 font-display text-sm font-medium text-white/70 text-left;
   }
 
   .table-row {
@@ -17,6 +17,6 @@
   }
 
   .table-cell {
-    @apply px-4 py-3 text-sm text-white/70;
+    @apply px-4 py-3 font-sans text-sm text-white/70;
   }
 }
