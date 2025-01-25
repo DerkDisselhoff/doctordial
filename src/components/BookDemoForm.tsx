@@ -15,7 +15,11 @@ import { DemoSuccessStep } from "./DemoSuccessStep";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-export function BookDemoForm() {
+interface BookDemoFormProps {
+  children?: React.ReactNode;
+}
+
+export function BookDemoForm({ children }: BookDemoFormProps) {
   const [open, setOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -70,9 +74,11 @@ export function BookDemoForm() {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium">
-          {t("nav.bookDemo")}
-        </Button>
+        {children || (
+          <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium">
+            {t("nav.bookDemo")}
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] bg-white p-8">
         {!isSubmitted ? (
