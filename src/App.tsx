@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Index from "@/pages/Index";
 import About from "@/pages/About";
@@ -11,20 +10,6 @@ import Billing from "@/pages/Billing";
 import "./App.css";
 
 function App() {
-  useEffect(() => {
-    // Check if the browser supports variable fonts
-    document.documentElement.classList.toggle('has-inter-var', CSS.supports('font-variation-settings', '"wght" 400'));
-    
-    // Log font loading status
-    if (document.fonts) {
-      document.fonts.ready.then(() => {
-        console.log('Inter font has loaded');
-      }).catch((error) => {
-        console.error('Error loading Inter font:', error);
-      });
-    }
-  }, []);
-
   return (
     <Routes>
       <Route path="/" element={<Index />} />
