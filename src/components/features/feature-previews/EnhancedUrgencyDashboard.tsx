@@ -95,7 +95,7 @@ const getUrgencyColor = (level: string) => {
 
 const MenuItem = ({ icon: Icon, label, isActive = false }: { icon: any, label: string, isActive?: boolean }) => (
   <div className={cn(
-    "flex items-center gap-2 px-3 py-1.5 rounded-lg cursor-pointer transition-colors text-sm",
+    "flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition-colors text-sm",
     isActive ? "bg-blue-light text-blue-dark" : "text-gray hover:bg-blue-light/5 hover:text-gray-dark"
   )}>
     <Icon className="w-4 h-4" />
@@ -104,15 +104,15 @@ const MenuItem = ({ icon: Icon, label, isActive = false }: { icon: any, label: s
 );
 
 const StatCard = ({ icon: Icon, label, value, subtext }: { icon: any, label: string, value: string, subtext?: string }) => (
-  <Card className="bg-white border-gray-muted p-3">
+  <Card className="bg-white border-gray-muted p-4">
     <div className="flex items-start justify-between">
       <div className="text-left">
-        <p className="text-gray text-xs">{label}</p>
-        <h4 className="text-lg font-bold text-gray-dark mt-0.5">{value}</h4>
-        {subtext && <p className="text-xs text-gray-light mt-0.5">{subtext}</p>}
+        <p className="text-gray text-sm">{label}</p>
+        <h4 className="text-xl font-bold text-gray-dark mt-1">{value}</h4>
+        {subtext && <p className="text-sm text-gray-light mt-1">{subtext}</p>}
       </div>
-      <div className="p-1.5 bg-blue-light rounded-lg">
-        <Icon className="w-4 h-4 text-blue-dark" />
+      <div className="p-2 bg-blue-light rounded-lg">
+        <Icon className="w-5 h-5 text-blue-dark" />
       </div>
     </div>
   </Card>
@@ -120,28 +120,28 @@ const StatCard = ({ icon: Icon, label, value, subtext }: { icon: any, label: str
 
 export function EnhancedUrgencyDashboard() {
   return (
-    <div className="p-4 bg-white rounded-xl border border-gray-muted">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <Logo className="text-gray-dark w-8 h-8" />
+    <div className="p-6 bg-white rounded-xl border border-gray-muted">
+      {/* Header with increased padding */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-4">
+          <Logo className="text-gray-dark w-10 h-10" />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <div className="text-right">
-            <p className="text-gray-dark text-sm">Dr. Anna van der Meer</p>
-            <p className="text-gray text-xs">Practice Manager</p>
+            <p className="text-gray-dark text-sm font-medium">Dr. Anna van der Meer</p>
+            <p className="text-gray text-sm">Practice Manager</p>
           </div>
-          <Avatar className="w-8 h-8">
+          <Avatar className="w-10 h-10">
             <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anna" />
             <AvatarFallback>AM</AvatarFallback>
           </Avatar>
         </div>
       </div>
 
-      {/* Layout */}
-      <div className="grid grid-cols-12 gap-4">
-        {/* Sidebar */}
-        <div className="col-span-2 space-y-1">
+      {/* Layout with increased spacing */}
+      <div className="grid grid-cols-12 gap-6">
+        {/* Sidebar with larger padding */}
+        <div className="col-span-2 space-y-2">
           <MenuItem icon={LayoutDashboard} label="Dashboard" isActive />
           <MenuItem icon={Users} label="Patients" />
           <MenuItem icon={PhoneCall} label="Calls" />
@@ -149,10 +149,10 @@ export function EnhancedUrgencyDashboard() {
           <MenuItem icon={ChartBar} label="Analytics" />
         </div>
 
-        {/* Main Content */}
-        <div className="col-span-10 space-y-4">
-          {/* Stats Row */}
-          <div className="grid grid-cols-4 gap-3">
+        {/* Main Content with improved spacing */}
+        <div className="col-span-10 space-y-6">
+          {/* Stats Row with larger cards */}
+          <div className="grid grid-cols-4 gap-4">
             <StatCard 
               icon={PhoneCall}
               label="Total Calls Today"
@@ -179,74 +179,76 @@ export function EnhancedUrgencyDashboard() {
             />
           </div>
 
-          {/* Table */}
+          {/* Table with improved spacing */}
           <Card className="bg-white border-gray-muted">
-            <div className="p-3 border-b border-gray-muted">
-              <h3 className="text-sm font-semibold text-gray-dark">Recent Patient Interactions</h3>
+            <div className="p-4 border-b border-gray-muted">
+              <h3 className="text-base font-semibold text-gray-dark">Recent Patient Interactions</h3>
             </div>
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-gray-muted text-xs">
-                  <th className="text-left p-2 text-gray font-medium">Patient</th>
-                  <th className="text-left p-2 text-gray font-medium">Symptoms</th>
-                  <th className="text-left p-2 text-gray font-medium">Urgency</th>
-                  <th className="text-left p-2 text-gray font-medium">Status</th>
-                  <th className="text-left p-2 text-gray font-medium">Actions</th>
-                  <th className="text-left p-2 text-gray font-medium">Resolution</th>
-                </tr>
-              </thead>
-              <tbody className="text-xs">
-                {mockUrgentCases.map((case_) => (
-                  <tr key={case_.id} className="border-b border-gray-muted">
-                    <td className="p-2 text-gray-dark">{case_.patientName}</td>
-                    <td className="p-2 text-gray">
-                      <div className="max-w-[120px] truncate" title={case_.symptoms}>
-                        {case_.symptoms}
-                      </div>
-                    </td>
-                    <td className="p-2">
-                      <span className={`px-2 py-0.5 rounded-full text-xs ${getUrgencyColor(case_.urgencyLevel)}`}>
-                        {case_.urgencyLevel}
-                      </span>
-                    </td>
-                    <td className="p-2">
-                      <div className="flex items-center gap-1.5">
-                        <span className={`px-2 py-0.5 rounded-full text-xs ${
-                          case_.appointmentStatus === 'Scheduled' 
-                            ? 'bg-blue-light text-blue-dark' 
-                            : 'bg-yellow-100 text-yellow-700'
-                        }`}>
-                          {case_.appointmentStatus}
-                        </span>
-                        {case_.appointmentDate && (
-                          <span className="text-gray-light text-xs">
-                            {case_.appointmentDate}
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="p-2">
-                      <div className="flex gap-1.5">
-                        {case_.actions.map((action, i) => (
-                          <span 
-                            key={i}
-                            className="px-2 py-0.5 text-xs bg-blue-light text-blue-dark rounded-full"
-                            title={action}
-                          >
-                            {action}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                    <td className="p-2 text-gray">
-                      <div className="max-w-[150px] truncate" title={case_.resolution}>
-                        {case_.resolution}
-                      </div>
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-muted">
+                    <th className="text-left p-4 text-sm font-medium text-gray">Patient</th>
+                    <th className="text-left p-4 text-sm font-medium text-gray">Symptoms</th>
+                    <th className="text-left p-4 text-sm font-medium text-gray">Urgency</th>
+                    <th className="text-left p-4 text-sm font-medium text-gray">Status</th>
+                    <th className="text-left p-4 text-sm font-medium text-gray">Actions</th>
+                    <th className="text-left p-4 text-sm font-medium text-gray">Resolution</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="text-sm">
+                  {mockUrgentCases.map((case_) => (
+                    <tr key={case_.id} className="border-b border-gray-muted hover:bg-gray-50">
+                      <td className="p-4 text-gray-dark">{case_.patientName}</td>
+                      <td className="p-4 text-gray">
+                        <div className="max-w-[180px] truncate" title={case_.symptoms}>
+                          {case_.symptoms}
+                        </div>
+                      </td>
+                      <td className="p-4">
+                        <span className={`px-3 py-1 rounded-full text-sm ${getUrgencyColor(case_.urgencyLevel)}`}>
+                          {case_.urgencyLevel}
+                        </span>
+                      </td>
+                      <td className="p-4">
+                        <div className="flex items-center gap-2">
+                          <span className={`px-3 py-1 rounded-full text-sm ${
+                            case_.appointmentStatus === 'Scheduled' 
+                              ? 'bg-blue-light text-blue-dark' 
+                              : 'bg-yellow-100 text-yellow-700'
+                          }`}>
+                            {case_.appointmentStatus}
+                          </span>
+                          {case_.appointmentDate && (
+                            <span className="text-gray-light text-sm">
+                              {case_.appointmentDate}
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="p-4">
+                        <div className="flex gap-2">
+                          {case_.actions.map((action, i) => (
+                            <span 
+                              key={i}
+                              className="px-3 py-1 text-sm bg-blue-light text-blue-dark rounded-full"
+                              title={action}
+                            >
+                              {action}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="p-4 text-gray">
+                        <div className="max-w-[200px] truncate" title={case_.resolution}>
+                          {case_.resolution}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </Card>
         </div>
       </div>
