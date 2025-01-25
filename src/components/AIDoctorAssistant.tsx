@@ -1,7 +1,7 @@
 import { Stethoscope } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { BookDemoForm } from "@/components/BookDemoForm";
+import { Button } from "@/components/ui/button";
 
 const AIDoctorAssistant = () => {
   return (
@@ -51,9 +51,11 @@ const AIDoctorAssistant = () => {
                 </div>
               </div>
 
-              {/* Hire Button */}
+              {/* Hire Badge */}
               <div className="absolute top-6 right-6">
-                <BookDemoForm />
+                <Badge variant="secondary" className="bg-white/90 text-gray-dark font-medium px-3 py-1">
+                  Hire Sarah
+                </Badge>
               </div>
             </div>
           </div>
