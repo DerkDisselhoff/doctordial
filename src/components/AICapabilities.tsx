@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -6,7 +7,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import MedicalIntelligenceCard from "./capabilities/MedicalIntelligenceCard";
 import ContinuousLearningCard from "./capabilities/ContinuousLearningCard";
 import SeamlessIntegrationCard from "./capabilities/SeamlessIntegrationCard";
