@@ -13,7 +13,7 @@ const DrSarah = () => {
             {/* Hero Section */}
             <div className="text-center space-y-4">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-dark">
-                Meet Dr. Sarah
+                Meet Sarah
               </h1>
               <p className="text-gray text-lg md:text-xl max-w-2xl mx-auto">
                 Your AI-powered medical assistant, combining advanced technology with compassionate care
