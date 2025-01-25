@@ -53,18 +53,52 @@ const SeamlessIntegrationCard = () => {
             />
           </motion.div>
 
-          {/* Phone System */}
+          {/* Phone System with Enhanced Animation */}
           <motion.div
             className="absolute right-[15%] top-[35%]"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >
-            <div className="bg-blue/5 p-2 rounded-lg">
-              <div className="w-24 bg-blue/10 rounded-lg flex items-center justify-center py-2 px-3">
-                <span className="text-blue-dark text-xs font-medium">Phone System</span>
+            <div className="bg-blue/5 p-2 rounded-lg relative group">
+              {/* Phone System Container with Hover Effect */}
+              <div className="w-24 bg-blue/10 rounded-lg flex items-center justify-center py-2 px-3 relative overflow-hidden transition-all duration-300 group-hover:bg-blue/20">
+                <span className="text-blue-dark text-xs font-medium relative z-10">Phone System</span>
+                {/* Animated Background Pattern */}
+                <motion.div
+                  className="absolute inset-0 opacity-20"
+                  style={{
+                    backgroundImage: "linear-gradient(45deg, transparent 45%, rgba(37, 99, 235, 0.2) 50%, transparent 55%)",
+                    backgroundSize: "300% 300%"
+                  }}
+                  animate={{
+                    backgroundPosition: ["0% 0%", "100% 100%"]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
               </div>
+              {/* Pulsing Connection Dots */}
+              <motion.div
+                className="absolute -inset-1 border border-blue/20 rounded-lg"
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.5, 1, 0.5]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-1.5 h-1.5 bg-blue-dark rounded-full" />
+                <div className="absolute top-1/2 -translate-y-1/2 -left-1 w-1.5 h-1.5 bg-blue-dark rounded-full" />
+              </motion.div>
             </div>
+            {/* Enhanced Connection Line */}
             <motion.div
               className="absolute h-0.5 w-20 bg-gradient-to-l from-blue/20 to-transparent"
               style={{ transform: "rotate(-45deg)", transformOrigin: "right center" }}
