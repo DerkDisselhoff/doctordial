@@ -74,27 +74,6 @@ const SeamlessIntegrationCard = () => {
             />
           </motion.div>
 
-          {/* Calendar Integration */}
-          <motion.div
-            className="absolute left-[20%] bottom-[30%]"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-          >
-            <div className="bg-mint/5 p-2 rounded-lg">
-              <div className="w-24 bg-mint/10 rounded-lg flex items-center justify-center py-2 px-3">
-                <span className="text-mint text-xs font-medium">Calendar</span>
-              </div>
-            </div>
-            <motion.div
-              className="absolute h-0.5 w-20 bg-gradient-to-r from-mint/20 to-transparent"
-              style={{ transform: "rotate(-45deg)", transformOrigin: "left center" }}
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.5, delay: 1 }}
-            />
-          </motion.div>
-
           {/* Data Flow Indicators */}
           <motion.div
             className="absolute inset-0"
