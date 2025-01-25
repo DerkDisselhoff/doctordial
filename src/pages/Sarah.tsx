@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Bot, Stethoscope, Clock, Brain } from "lucide-react";
 
-const DrSarah = () => {
+const Sarah = () => {
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
@@ -74,4 +74,4 @@ const DrSarah = () => {
   );
 };
 
-export default DrSarah;
+export default Sarah;

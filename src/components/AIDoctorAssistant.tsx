@@ -24,7 +24,7 @@ const AIDoctorAssistant = () => {
             </div>
 
             <div>
-              <Link to="/dr-sarah">
+              <Link to="/sarah">
                 <Button variant="outline" className="mt-4">
                   Learn more about Sarah
                 </Button>
@@ -54,7 +54,7 @@ const AIDoctorAssistant = () => {
               {/* Hire Badge */}
               <div className="absolute top-6 right-6">
                 <Badge variant="secondary" className="bg-white/90 text-gray-dark font-medium px-3 py-1">
-                  Hire Dr. Sarah
+                  Hire Sarah
                 </Badge>
               </div>
             </div>
