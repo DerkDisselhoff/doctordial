@@ -103,17 +103,11 @@ const Login = () => {
                   transition: 'all 150ms ease',
                   backgroundColor: 'var(--mint)',
                   color: 'white',
-                  '&:hover': {
-                    backgroundColor: 'var(--mint-dark)',
-                  },
                 },
                 anchor: {
                   color: 'var(--mint)',
                   fontWeight: '500',
                   transition: 'color 150ms ease',
-                  '&:hover': {
-                    color: 'var(--mint-dark)',
-                  },
                 },
                 input: {
                   backgroundColor: 'white',
