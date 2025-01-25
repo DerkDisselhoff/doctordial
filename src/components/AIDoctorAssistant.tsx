@@ -25,7 +25,7 @@ const AIDoctorAssistant = () => {
 
             <div>
               <Link to="/sarah">
-                <Button variant="outline" className="mt-4">
+                <Button className="mt-4 bg-mint text-white hover:bg-mint-dark">
                   Learn more about Sarah
                 </Button>
               </Link>
