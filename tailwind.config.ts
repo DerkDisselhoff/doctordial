@@ -109,6 +109,10 @@ export default {
         "fade-in": "fade-in 0.3s ease-out",
         "scale-in": "scale-in 0.2s ease-out",
       },
+      fontFamily: {
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
