@@ -18,8 +18,8 @@ const Navbar = () => {
           <div className="flex items-center space-x-8">
             <Logo className="text-gray-dark" />
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/dr-sarah" className="text-gray hover:text-gray-dark transition-colors">
-                Dr. Sarah
+              <Link to="/sarah" className="text-gray hover:text-gray-dark transition-colors">
+                Sarah
               </Link>
               <Link to="/about" className="text-gray hover:text-gray-dark transition-colors">
                 {t("nav.about")}
@@ -53,11 +53,11 @@ const Navbar = () => {
           <div className="md:hidden absolute top-full left-0 right-0 bg-white border-t border-gray-muted p-4 space-y-4 animate-fade-down">
             <div className="flex flex-col space-y-4">
               <Link 
-                to="/dr-sarah" 
+                to="/sarah" 
                 className="text-gray hover:text-gray-dark transition-colors text-lg font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Dr. Sarah
+                Sarah
               </Link>
               <Link 
                 to="/about" 
