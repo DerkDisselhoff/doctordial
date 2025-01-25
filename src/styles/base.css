@@ -76,7 +76,7 @@
 
   /* Typography Scale */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-medium tracking-tight text-gray-dark;
+    @apply font-display font-medium tracking-tight text-gray-dark;
   }
 
   h1 { @apply text-4xl md:text-5xl leading-tight font-bold; }
@@ -97,7 +97,7 @@
 
   /* Table Typography */
   .table-header-cell {
-    @apply font-sans text-sm font-medium;
+    @apply font-display text-sm font-medium;
   }
   
   .table-cell {
@@ -110,7 +110,7 @@
   }
 
   .menu-header {
-    @apply font-sans text-sm font-medium;
+    @apply font-display text-sm font-medium;
   }
 
   @keyframes float {
