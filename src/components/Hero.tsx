@@ -37,7 +37,7 @@ const Hero = () => {
           <defs>
             <pattern id="healthcare-grid" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse" className="md:w-[100px] md:h-[100px]">
               {/* Medical cross pattern - smaller on mobile */}
-              <path d="M35,30 h8 v-8 h8 v8 h8 v8 h-8 v8 h-8 v-8 h-8 z" className="md:d-[M45,40 h10 v-10 h10 v10 h10 v10 h-10 v10 h-10 v-10 h-10 z]" fill="currentColor" className="text-mint/30" />
+              <path d="M35,30 h8 v-8 h8 v8 h8 v8 h-8 v8 h-8 v-8 h-8 z" className="text-mint/30 md:d-[M45,40 h10 v-10 h10 v10 h10 v10 h-10 v10 h-10 v-10 h-10 z]" fill="currentColor" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#healthcare-grid)" />
