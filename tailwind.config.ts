@@ -75,11 +75,13 @@ export default {
           placeholder: "var(--text-placeholder)",
         },
       },
+      // Typography System
       fontFamily: {
         sans: [
           "-apple-system",
           "BlinkMacSystemFont",
           "SF Pro Display",
+          "Inter var",
           "system-ui",
           "sans-serif",
         ],

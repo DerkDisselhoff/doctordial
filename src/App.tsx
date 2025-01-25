@@ -1,27 +1,35 @@
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Toaster } from "@/components/ui/toaster";
 import Index from "@/pages/Index";
 import About from "@/pages/About";
 import Features from "@/pages/Features";
 import Pricing from "@/pages/Pricing";
-import DrSarah from "@/pages/DrSarah";
-import Dashboard from "@/pages/Dashboard";
 import Login from "@/pages/Login";
-import Billing from "@/pages/Billing";
-import "./App.css";
+import Dashboard from "@/pages/Dashboard";
+import DrSarah from "@/pages/DrSarah";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
-function App() {
+const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Index />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/features" element={<Features />} />
-      <Route path="/pricing" element={<Pricing />} />
-      <Route path="/dr-sarah" element={<DrSarah />} />
-      <Route path="/dashboard/*" element={<Dashboard />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/billing" element={<Billing />} />
-    </Routes>
+    <LanguageProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/dr-sarah" element={<DrSarah />} />
+        </Routes>
+        <Toaster />
+      </Router>
+      <Analytics />
+      <SpeedInsights />
+    </LanguageProvider>
   );
-}
+};
 
 export default App;
