@@ -78,10 +78,9 @@ export default {
       // Typography System
       fontFamily: {
         sans: [
+          "SF Pro Display",
           "-apple-system",
           "BlinkMacSystemFont",
-          "SF Pro Display",
-          "Inter var",
           "system-ui",
           "sans-serif",
         ],
