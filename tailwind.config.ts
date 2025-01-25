@@ -78,7 +78,7 @@ export default {
       // Typography System
       fontFamily: {
         sans: [
-          "Inter",
+          "DM Sans",
           "-apple-system",
           "BlinkMacSystemFont",
           "system-ui",
@@ -86,7 +86,6 @@ export default {
         ],
         display: [
           "Plus Jakarta Sans",
-          "Inter",
           "system-ui",
           "sans-serif",
         ],
