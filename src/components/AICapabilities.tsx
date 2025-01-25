@@ -215,7 +215,7 @@ const capabilities = [
 
 const AICapabilities = () => {
   return (
-    <section className="w-full bg-gradient-to-b from-mint-light/40 to-blue-light/50 overflow-hidden">
+    <section className="w-full bg-gradient-to-b from-gray-100/80 to-blue-light/50 overflow-hidden">
       <div className="container mx-auto py-16 md:py-24 px-4">
         <div className="relative">
           {/* Background with enhanced gradient and overlay */}
