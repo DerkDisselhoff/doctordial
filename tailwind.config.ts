@@ -78,15 +78,15 @@ export default {
       // Typography System
       fontFamily: {
         sans: [
-          "Axiforma",
+          "Inter",
           "-apple-system",
           "BlinkMacSystemFont",
           "system-ui",
           "sans-serif",
         ],
         display: [
-          "Codec Pro",
-          "Axiforma",
+          "Plus Jakarta Sans",
+          "Inter",
           "system-ui",
           "sans-serif",
         ],
