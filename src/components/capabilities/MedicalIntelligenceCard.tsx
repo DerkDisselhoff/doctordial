@@ -11,7 +11,7 @@ const MedicalIntelligenceCard = () => {
         transition={{ duration: 0.8 }}
       >
         {/* Central Doctor Assistant Image - Moved higher */}
-        <div className="absolute left-1/2 top-[25%] -translate-x-1/2 -translate-y-1/2 w-16 h-16">
+        <div className="absolute left-1/2 top-[15%] -translate-x-1/2 -translate-y-1/2 w-16 h-16">
           <img
             src="/lovable-uploads/10ce665a-6bfe-4c46-9ac7-719b3fb123eb.png"
             alt="Dr. Sarah - AI Medical Assistant"
@@ -19,8 +19,8 @@ const MedicalIntelligenceCard = () => {
           />
         </div>
 
-        {/* Urgency Level Badges in Horizontal Layout */}
-        <div className="absolute left-1/2 top-[60%] -translate-x-1/2 flex items-center gap-4">
+        {/* Urgency Level Badges in Horizontal Layout - Moved lower */}
+        <div className="absolute left-1/2 top-[75%] -translate-x-1/2 flex items-center gap-4">
           {/* U1 Badge */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -89,7 +89,7 @@ const MedicalIntelligenceCard = () => {
 
         {/* Medical Icons */}
         <motion.div 
-          className="absolute left-[2%] top-[50%] -translate-y-1/2 text-mint"
+          className="absolute left-[5%] top-[50%] -translate-y-1/2 text-mint"
           animate={{ 
             y: [-5, 5, -5]
           }}
@@ -103,7 +103,7 @@ const MedicalIntelligenceCard = () => {
         </motion.div>
 
         <motion.div 
-          className="absolute right-[2%] top-[50%] -translate-y-1/2 text-mint"
+          className="absolute right-[5%] top-[50%] -translate-y-1/2 text-mint"
           animate={{ 
             y: [5, -5, 5]
           }}
