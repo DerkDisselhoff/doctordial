@@ -10,7 +10,6 @@ const Certifications = () => {
             <Shield className="w-4 h-4 text-blue-dark" />
             <span className="text-blue-dark text-sm font-medium">Trained on medical data</span>
           </div>
-          <h3 className="text-3xl font-bold mb-8 text-gray-dark">Trained on data from Dutch Healthcare Institutions</h3>
           
           <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
             <div className="p-6 rounded-xl bg-white border border-gray-muted space-y-4 hover:border-blue-dark/20 transition-colors">
