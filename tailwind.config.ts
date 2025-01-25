@@ -110,8 +110,8 @@ export default {
         "scale-in": "scale-in 0.2s ease-out",
       },
       fontFamily: {
-        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
       },
     },
   },
