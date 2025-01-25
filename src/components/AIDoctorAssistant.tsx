@@ -54,7 +54,10 @@ const AIDoctorAssistant = () => {
               {/* Hire Button */}
               <div className="absolute top-6 right-6">
                 <BookDemoForm>
-                  <Button variant="secondary" className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium">
+                  <Button 
+                    variant="secondary" 
+                    className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium rounded-full px-6"
+                  >
                     Hire Sarah
                   </Button>
                 </BookDemoForm>
