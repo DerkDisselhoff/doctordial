@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -11,7 +10,6 @@ import MedicalIntelligenceCard from "./capabilities/MedicalIntelligenceCard";
 import ContinuousLearningCard from "./capabilities/ContinuousLearningCard";
 import SeamlessIntegrationCard from "./capabilities/SeamlessIntegrationCard";
 import CapabilityCard from "./capabilities/CapabilityCard";
-import type { CarouselApi } from "@/components/ui/carousel";
 
 const capabilities = [
   {
@@ -216,28 +214,6 @@ const capabilities = [
 ];
 
 const AICapabilities = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [api, setApi] = useState<CarouselApi>();
-
-  // Handle carousel changes
-  const handleSelect = () => {
-    if (!api) return;
-    setActiveIndex(api.selectedScrollSnap());
-  };
-
-  // Set up carousel event listeners
-  React.useEffect(() => {
-    if (!api) return;
-    
-    api.on("select", handleSelect);
-    // Set initial index
-    setActiveIndex(api.selectedScrollSnap());
-
-    return () => {
-      api.off("select", handleSelect);
-    };
-  }, [api]);
-
   return (
     <section className="w-full bg-gradient-to-b from-gray-100/80 to-blue-light/50 overflow-hidden">
       <div className="container mx-auto py-16 md:py-24 px-4">
@@ -304,13 +280,12 @@ const AICapabilities = () => {
                 align: "start",
                 loop: true,
               }}
-              setApi={setApi}
               className="w-full"
             >
               <CarouselContent className="-ml-2 md:-ml-4">
                 {capabilities.map((capability, index) => (
                   <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                    <CapabilityCard {...capability} isActive={index === activeIndex} />
+                    <CapabilityCard {...capability} />
                   </CarouselItem>
                 ))}
               </CarouselContent>
