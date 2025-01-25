@@ -103,7 +103,7 @@ const Login = () => {
                   transition: 'all 150ms ease',
                   backgroundColor: 'var(--mint)',
                   color: 'white',
-                  hover: {
+                  '&:hover': {
                     backgroundColor: 'var(--mint-dark)',
                   },
                 },
@@ -111,7 +111,7 @@ const Login = () => {
                   color: 'var(--mint)',
                   fontWeight: '500',
                   transition: 'color 150ms ease',
-                  hover: {
+                  '&:hover': {
                     color: 'var(--mint-dark)',
                   },
                 },
