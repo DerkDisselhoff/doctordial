@@ -8,6 +8,7 @@ import SarahSymptomTags from "@/components/features/SarahSymptomTags";
 import { CallDetailPreview } from "@/components/features/feature-previews/CallDetailPreview";
 import SarahUseCases from "@/components/features/SarahUseCases";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { motion } from "framer-motion";
 
 const Sarah = () => {
   const { t } = useLanguage();
@@ -16,26 +17,46 @@ const Sarah = () => {
     <main className="min-h-screen bg-white">
       <Navbar />
       
-      {/* Hero Section */}
+      {/* Hero Section with Sarah's Image */}
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center space-y-6 mb-12">
-            <div className="flex items-center justify-center gap-2">
-              <Badge variant="outline" className="bg-mint/10 text-mint border-mint/20 px-4 py-1.5">
-                <Bot className="w-4 h-4 mr-1" />
-                AI-Powered Assistant
-              </Badge>
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+            <div className="space-y-6">
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="bg-mint/10 text-mint border-mint/20 px-4 py-1.5">
+                  <Bot className="w-4 h-4 mr-1" />
+                  AI-Powered Assistant
+                </Badge>
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-dark">
+                Meet Sarah
+              </h1>
+              <p className="text-gray text-lg md:text-xl max-w-2xl">
+                Your AI-powered medical assistant, combining advanced technology with compassionate care
+              </p>
+              <div className="pt-4">
+                <BookDemoForm />
+              </div>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-dark">
-              Meet Sarah
-            </h1>
-            <p className="text-gray text-lg md:text-xl max-w-2xl mx-auto">
-              Your AI-powered medical assistant, combining advanced technology with compassionate care
-            </p>
-            <div className="pt-4">
-              <BookDemoForm />
-            </div>
+            
+            {/* Sarah's Image */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="relative"
+            >
+              <div className="absolute -inset-1 bg-gradient-to-r from-mint-light/20 to-blue-light/20 rounded-2xl blur-lg opacity-75 animate-gradient" />
+              <img
+                src="/lovable-uploads/4ad749ed-c18c-4674-bab0-68b98e32bca5.png"
+                alt="Sarah AI Medical Assistant"
+                className="relative rounded-2xl shadow-xl w-full object-cover aspect-square lg:aspect-[4/3]"
+              />
+            </motion.div>
           </div>
+
+          {/* Use Cases Section - Moved up */}
+          <SarahUseCases />
 
           {/* Symptom Recognition Section */}
           <div className="bg-white rounded-xl p-8 mb-16 border border-gray-muted/20">
@@ -46,9 +67,6 @@ const Sarah = () => {
             </div>
             <SarahSymptomTags />
           </div>
-
-          {/* Use Cases Section */}
-          <SarahUseCases />
 
           {/* Call Detail Preview Section */}
           <div className="mb-16">
