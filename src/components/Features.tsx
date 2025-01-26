@@ -1,6 +1,7 @@
 import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUrgencyDashboard";
 import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
+import SymptomTags from "./features/SymptomTags";
 
 const Features = () => {
   return (
@@ -49,6 +50,9 @@ const Features = () => {
             >
               Experience the future of healthcare communication with our AI-powered system
             </motion.p>
+
+            {/* Add the SymptomTags component here */}
+            <SymptomTags />
 
             {/* Dashboard preview with enhanced container */}
             <motion.div
