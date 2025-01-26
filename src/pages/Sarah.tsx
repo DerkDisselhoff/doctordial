@@ -48,7 +48,7 @@ const Sarah = () => {
             >
               <div className="absolute -inset-1 bg-gradient-to-r from-mint-light/20 to-blue-light/20 rounded-2xl blur-lg opacity-75 animate-gradient" />
               <img
-                src="/lovable-uploads/4ad749ed-c18c-4674-bab0-68b98e32bca5.png"
+                src="/lovable-uploads/910ef275-a96d-49d2-81b8-6e27f7fd70cd.png"
                 alt="Sarah AI Medical Assistant"
                 className="relative rounded-2xl shadow-xl w-full object-cover aspect-square lg:aspect-[4/3]"
               />
