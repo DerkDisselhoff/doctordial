@@ -13,7 +13,7 @@
   }
 
   .card-title svg {
-    @apply text-mint; /* Icons in card titles are now mint colored */
+    @apply text-mint; /* All card title icons are mint colored */
   }
 
   .card-description {
@@ -46,8 +46,15 @@
     @apply bg-white border-gray-muted rounded-xl shadow-sm;
   }
 
-  .dashboard-card button:not([class*="mint"]) {
+  /* Only main action buttons should be blue */
+  .dashboard-card .cta-button {
     @apply bg-blue-dark hover:bg-blue-dark/90 text-white transition-colors;
+  }
+
+  /* Form elements should use mint/forest colors */
+  .dashboard-card select,
+  .dashboard-card input:not([type="radio"]):not([type="checkbox"]) {
+    @apply bg-white border-gray-muted focus:border-mint focus:ring-mint/20 text-gray-dark;
   }
 
   .dashboard-card-header {
@@ -59,7 +66,7 @@
   }
 
   .dashboard-card-title svg {
-    @apply text-mint; /* Icons in dashboard card titles are now mint colored */
+    @apply text-mint; /* All dashboard icons are mint colored */
   }
 
   .dashboard-card-content {
@@ -72,7 +79,7 @@
   }
 
   .feature-card-icon {
-    @apply p-2 rounded-lg bg-mint/10 text-mint mb-4; /* Feature card icons are mint colored */
+    @apply p-2 rounded-lg bg-mint/10 text-mint mb-4;
   }
 
   /* Stats Card Design */
@@ -123,29 +130,45 @@
     @apply bg-mint-light text-mint-dark;
   }
 
-  /* Card Input Styling */
+  /* Form Elements Styling */
   .card input:not([type="radio"]):not([type="checkbox"]),
   .card select,
   .card textarea {
     @apply border-gray-muted focus:border-mint focus:ring-mint/20;
   }
 
-  /* Card Button Styling */
+  /* Button Hierarchy */
   .card-primary-button {
-    @apply bg-blue-dark hover:bg-blue-dark/90 text-white transition-colors;
+    @apply bg-blue-dark hover:bg-blue-dark/90 text-white transition-colors; /* Main CTAs */
   }
 
   .card-secondary-button {
-    @apply border border-gray-muted hover:bg-gray-50 text-gray-dark transition-colors;
+    @apply border border-gray-muted hover:bg-gray-50 text-gray-dark transition-colors; /* Secondary actions */
   }
 
-  /* Card Icon Styling */
+  /* Icon Colors */
   .card-icon {
     @apply text-mint;
   }
 
   .card-icon-muted {
     @apply text-mint/60;
+  }
+
+  /* Dropdown Styling */
+  .card [data-radix-select-trigger],
+  .card [data-radix-dropdown-menu-trigger] {
+    @apply border-gray-muted hover:border-mint focus:border-mint focus:ring-mint/20;
+  }
+
+  /* Settings Page Specific */
+  .settings-card select,
+  .settings-card input:not([type="radio"]):not([type="checkbox"]) {
+    @apply bg-white border-gray-muted focus:border-mint focus:ring-mint/20;
+  }
+
+  .settings-card button:not(.cta-button) {
+    @apply bg-white hover:bg-gray-50 text-gray-dark border border-gray-muted;
   }
 
   /* Animation Utilities */

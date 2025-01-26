@@ -28,8 +28,8 @@ export const StatCard = ({
           <h4 className="text-2xl font-bold text-gray-dark mt-1">{value}</h4>
           {subtext && <p className="text-xs text-gray-light mt-1">{subtext}</p>}
         </div>
-        <div className="p-2 bg-blue-light rounded-lg">
-          <Icon className="w-5 h-5 text-blue-dark" aria-hidden="true" />
+        <div className="p-2 bg-mint/10 rounded-lg">
+          <Icon className="w-5 h-5 text-mint" aria-hidden="true" />
         </div>
       </div>
     </Card>
