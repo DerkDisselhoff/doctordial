@@ -1,11 +1,11 @@
 @layer components {
   /* Base Card Design System */
   .card {
-    @apply bg-white border border-gray-muted rounded-xl p-6 transition-all duration-300;
+    @apply bg-white border border-gray-muted/30 rounded-xl p-6 transition-all duration-300;
   }
 
   .card-header {
-    @apply flex items-center justify-between mb-4 pb-4 border-b border-gray-muted;
+    @apply flex items-center justify-between mb-4 pb-4 border-b border-gray-muted/30;
   }
 
   .card-title {
@@ -25,7 +25,7 @@
   }
 
   .card-footer {
-    @apply mt-6 pt-4 border-t border-gray-muted flex justify-end space-x-2;
+    @apply mt-6 pt-4 border-t border-gray-muted/30 flex justify-end space-x-2;
   }
 
   /* Interactive Card Variants */
@@ -34,7 +34,7 @@
   }
 
   .card-elevated {
-    @apply shadow-lg hover:shadow-xl;
+    @apply shadow-sm hover:shadow-md;
   }
 
   .card-gradient {
@@ -43,7 +43,7 @@
 
   /* Dashboard Card Variants */
   .dashboard-card {
-    @apply bg-white border-gray-muted rounded-xl shadow-sm;
+    @apply bg-white border border-gray-muted/30 rounded-xl shadow-sm;
   }
 
   /* Only main action buttons should be blue */
