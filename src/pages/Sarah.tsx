@@ -10,9 +10,6 @@ import SarahUseCases from "@/components/features/SarahUseCases";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import StatsBadge from "@/components/hero/StatsBadge";
-import TrainSarahCard from "@/components/capabilities/TrainSarahCard";
-import WorkflowRulesCard from "@/components/capabilities/WorkflowRulesCard";
-import TakeCallsCard from "@/components/capabilities/TakeCallsCard";
 
 const Sarah = () => {
   const { t } = useLanguage();
@@ -116,14 +113,64 @@ const Sarah = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <motion.div variants={cardVariants}>
-              <TrainSarahCard />
+            {/* Card 1 */}
+            <motion.div 
+              variants={cardVariants}
+              className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg"
+            >
+              <div className="flex items-start gap-6">
+                <div className="p-3 rounded-lg bg-mint/10">
+                  <BookOpen className="w-8 h-8 text-mint" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-semibold text-gray-dark mb-4">
+                    Train Sarah on the care that you provide
+                  </h3>
+                  <p className="text-lg text-gray leading-relaxed">
+                    Customize Sarah's knowledge base to align perfectly with your practice's specific medical services and protocols. Our AI system learns from your input to provide accurate, practice-specific responses and recommendations. This ensures that all patient interactions reflect your unique approach to healthcare delivery.
+                  </p>
+                </div>
+              </div>
             </motion.div>
-            <motion.div variants={cardVariants}>
-              <WorkflowRulesCard />
+
+            {/* Card 2 */}
+            <motion.div 
+              variants={cardVariants}
+              className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg"
+            >
+              <div className="flex items-start gap-6">
+                <div className="p-3 rounded-lg bg-mint/10">
+                  <Settings2 className="w-8 h-8 text-mint" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-semibold text-gray-dark mb-4">
+                    Build your workflow and forwarding rules
+                  </h3>
+                  <p className="text-lg text-gray leading-relaxed">
+                    Set up custom workflows and rules to ensure proper handling of different types of patient inquiries and urgency levels. Define specific protocols for various medical situations, establish escalation pathways, and customize response patterns based on your practice's requirements and standards of care.
+                  </p>
+                </div>
+              </div>
             </motion.div>
-            <motion.div variants={cardVariants}>
-              <TakeCallsCard />
+
+            {/* Card 3 */}
+            <motion.div 
+              variants={cardVariants}
+              className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg"
+            >
+              <div className="flex items-start gap-6">
+                <div className="p-3 rounded-lg bg-mint/10">
+                  <PhoneCall className="w-8 h-8 text-mint" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-semibold text-gray-dark mb-4">
+                    Let Sarah take your calls
+                  </h3>
+                  <p className="text-lg text-gray leading-relaxed">
+                    Activate Sarah to handle patient calls 24/7, providing professional and consistent care communication while following your established protocols. Sarah manages routine inquiries, schedules appointments, and intelligently escalates urgent matters, ensuring your patients receive immediate attention while optimizing your practice's efficiency.
+                  </p>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
