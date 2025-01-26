@@ -3,6 +3,7 @@ import { UrgencyLevelForwarding } from "./UrgencyLevelForwarding";
 import { SubjectForwarding } from "./SubjectForwarding";
 import { useWorkflowSettings } from "./hooks/useWorkflowSettings";
 import { Subject } from "@/integrations/supabase/types/tables";
+import { supabase } from "@/lib/supabaseClient";
 
 export function WorkflowContainer() {
   const {
@@ -20,21 +21,20 @@ export function WorkflowContainer() {
     setUrgencySettings(updatedSettings);
   };
 
-  const handleAddSubject = async (newSubject: Omit<Subject, 'id' | 'profile_id' | 'created_at' | 'updated_at'>) => {
+  const handleAddSubject = async (newSubject: Omit<Subject, 'id' | 'profile_id'>) => {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
-      setSubjects([...subjects, {
+      const subjectToAdd: Subject = {
         id: Date.now().toString(),
         profile_id: session.user.id,
         subject: newSubject.subject,
-        forward_to: newSubject.forward_to,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      }]);
+        forward_to: newSubject.forward_to
+      };
+      setSubjects([...subjects, subjectToAdd]);
     }
   };
 
-  const handleUpdateSubject = (id: string, updatedSubject: Omit<Subject, 'id' | 'profile_id' | 'created_at' | 'updated_at'>) => {
+  const handleUpdateSubject = (id: string, updatedSubject: Omit<Subject, 'id' | 'profile_id'>) => {
     setSubjects(subjects.map(s => 
       s.id === id ? { ...s, ...updatedSubject } : s
     ));

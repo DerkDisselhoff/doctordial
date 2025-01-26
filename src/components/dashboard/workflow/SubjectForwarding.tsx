@@ -8,8 +8,8 @@ import { Subject } from "@/integrations/supabase/types/tables";
 
 interface Props {
   subjects: Subject[];
-  onAddSubject: (subject: Omit<Subject, 'id' | 'profile_id' | 'created_at' | 'updated_at'>) => void;
-  onUpdateSubject: (id: string, subject: Omit<Subject, 'id' | 'profile_id' | 'created_at' | 'updated_at'>) => void;
+  onAddSubject: (subject: Omit<Subject, 'id' | 'profile_id'>) => void;
+  onUpdateSubject: (id: string, subject: Omit<Subject, 'id' | 'profile_id'>) => void;
   onRemoveSubject: (id: string) => void;
 }
 
