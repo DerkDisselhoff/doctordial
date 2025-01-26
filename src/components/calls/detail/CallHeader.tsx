@@ -71,42 +71,44 @@ export function CallHeader({
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="outline" 
-                    className={`flex items-center gap-2 ${isFlagged ? 'bg-red-500/20 text-red-500 hover:bg-red-500/30' : ''}`}
+                    className={`flex items-center gap-2 border-gray-muted hover:bg-gray-muted/10 ${
+                      isFlagged ? 'bg-red-500/10 text-red-500 hover:bg-red-500/20 border-red-500/30' : 'text-gray'
+                    }`}
                   >
-                    <Flag className="h-4 w-4" />
+                    <Flag className={`h-4 w-4 ${isFlagged ? 'text-red-500' : 'text-mint'}`} />
                     Flag This Call
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-[400px] bg-forest-light border-mint/10">
-                  <div className="px-2 py-1.5 text-sm font-medium text-white/70">
+                <DropdownMenuContent className="w-[400px] bg-white border-gray-muted shadow-lg">
+                  <div className="px-2 py-1.5 text-sm font-medium text-gray-dark border-b border-gray-muted">
                     Reason for Flagging
                   </div>
                   <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
+                    className="text-gray hover:bg-gray-muted/10 focus:bg-gray-muted/10"
                     onClick={() => handleFlag("The urgency level (U1–U5) was incorrect")}
                   >
                     The urgency level (U1–U5) was incorrect
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
+                    className="text-gray hover:bg-gray-muted/10 focus:bg-gray-muted/10"
                     onClick={() => handleFlag("The advice given was not helpful or clear")}
                   >
                     The advice given was not helpful or clear
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
+                    className="text-gray hover:bg-gray-muted/10 focus:bg-gray-muted/10"
                     onClick={() => handleFlag("The system didn't consider all information")}
                   >
                     The system didn't consider all information
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
+                    className="text-gray hover:bg-gray-muted/10 focus:bg-gray-muted/10"
                     onClick={() => handleFlag("Response wasn't approriate, it missed empathy")}
                   >
                     Response wasn't approriate, it missed empathy
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="text-white hover:bg-mint/10"
+                    className="text-gray hover:bg-gray-muted/10 focus:bg-gray-muted/10"
                     onClick={() => handleFlag("Wrong action or referral")}
                   >
                     Wrong action or referral
@@ -125,14 +127,24 @@ export function CallHeader({
             <Button
               onClick={() => setIsEditing(false)}
               variant="outline"
-              className="text-white hover:text-forest"
+              className="text-gray hover:bg-gray-muted/10 border-gray-muted"
             >
               Cancel
             </Button>
-            <Button onClick={handleSave}>Save Changes</Button>
+            <Button 
+              onClick={handleSave}
+              className="bg-blue-dark hover:bg-blue-dark/90 text-white"
+            >
+              Save Changes
+            </Button>
           </div>
         ) : (
-          <Button onClick={() => setIsEditing(true)}>Edit</Button>
+          <Button 
+            onClick={() => setIsEditing(true)}
+            className="bg-blue-dark hover:bg-blue-dark/90 text-white"
+          >
+            Edit
+          </Button>
         )}
       </div>
     </div>
