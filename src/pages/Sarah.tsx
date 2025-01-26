@@ -5,7 +5,6 @@ import { Bot } from "lucide-react";
 import { BookDemoForm } from "@/components/BookDemoForm";
 import { Button } from "@/components/ui/button";
 import SarahSymptomTags from "@/components/features/SarahSymptomTags";
-import { CallDetailPreview } from "@/components/features/feature-previews/CallDetailPreview";
 import SarahUseCases from "@/components/features/SarahUseCases";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
@@ -204,18 +203,6 @@ const Sarah = () => {
               </h3>
             </div>
             <SarahSymptomTags />
-          </div>
-        </div>
-      </section>
-
-      {/* Call Detail Analysis Section */}
-      <section className="bg-white py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-gray-dark mb-8 text-center">
-            Detailed Call Analysis
-          </h2>
-          <div className="bg-white rounded-xl border border-gray-muted shadow-lg overflow-hidden">
-            <CallDetailPreview />
           </div>
         </div>
       </section>
