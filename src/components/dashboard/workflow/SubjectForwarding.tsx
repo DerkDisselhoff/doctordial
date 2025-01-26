@@ -4,17 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { GitBranch, Plus, Trash2, Save, Edit2 } from "lucide-react";
-
-interface Subject {
-  id?: string;
-  subject: string;
-  forward_to: string;
-}
+import { Subject } from "@/integrations/supabase/types/tables";
 
 interface Props {
   subjects: Subject[];
-  onAddSubject: (subject: Omit<Subject, 'id'>) => void;
-  onUpdateSubject: (id: string, subject: Omit<Subject, 'id'>) => void;
+  onAddSubject: (subject: Omit<Subject, 'id' | 'profile_id' | 'created_at' | 'updated_at'>) => void;
+  onUpdateSubject: (id: string, subject: Omit<Subject, 'id' | 'profile_id' | 'created_at' | 'updated_at'>) => void;
   onRemoveSubject: (id: string) => void;
 }
 
