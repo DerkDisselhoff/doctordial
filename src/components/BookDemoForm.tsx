@@ -160,7 +160,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
               </div>
               <Button 
                 type="submit" 
-                className="w-full bg-forest hover:bg-forest-light text-white h-12 text-lg"
+                className="w-full bg-blue-dark hover:bg-blue-dark/90 text-white h-12 text-lg"
                 disabled={isLoading}
               >
                 {isLoading ? t("demo.submitting") : t("demo.submit")}
@@ -173,4 +173,4 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
       </DialogContent>
     </Dialog>
   );
-};
+}

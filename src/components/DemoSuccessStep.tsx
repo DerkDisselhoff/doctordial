@@ -10,7 +10,7 @@ export const DemoSuccessStep = () => {
         <Check className="h-8 w-8 text-mint" />
       </div>
       <h2 className="text-2xl font-semibold text-mint mb-4">{t("demo.success.title")}</h2>
-      <p className="text-gray-400 mb-6">
+      <p className="text-gray-600 mb-6">
         {t("demo.success.message")}
       </p>
     </div>
