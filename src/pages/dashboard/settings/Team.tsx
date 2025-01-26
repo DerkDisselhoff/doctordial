@@ -18,20 +18,20 @@ export default function Team() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold text-white mb-2">Team Management</h2>
-        <p className="text-white/70">Manage your team members and their access levels</p>
+        <h2 className="text-2xl font-semibold text-gray-dark mb-2">Team Management</h2>
+        <p className="text-gray">Manage your team members and their access levels</p>
       </div>
 
-      <Card className="bg-forest-light border-mint/10">
+      <Card className="bg-white border-gray-muted shadow-sm">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-white">Team Members</CardTitle>
-              <CardDescription className="text-white/70">
+              <CardTitle className="text-gray-dark">Team Members</CardTitle>
+              <CardDescription className="text-gray">
                 Invite and manage team members
               </CardDescription>
             </div>
-            <Button onClick={handleInvite} className="bg-mint hover:bg-mint/90 text-forest">
+            <Button onClick={handleInvite} className="bg-blue-dark hover:bg-blue-dark/90 text-white">
               <UserPlus className="w-4 h-4 mr-2" />
               Invite Member
             </Button>
@@ -57,12 +57,12 @@ export default function Team() {
               ].map((member) => (
                 <div
                   key={member.email}
-                  className="flex items-center justify-between p-4 rounded-lg bg-forest border border-mint/10"
+                  className="flex items-center justify-between p-4 rounded-lg bg-white border border-gray-muted"
                 >
                   <div className="flex items-center space-x-4">
                     <div className="space-y-1">
-                      <p className="font-medium text-white">{member.name}</p>
-                      <p className="text-sm text-white/70">{member.email}</p>
+                      <p className="font-medium text-gray-dark">{member.name}</p>
+                      <p className="text-sm text-gray">{member.email}</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -70,19 +70,19 @@ export default function Team() {
                       variant="outline"
                       className={
                         member.status === "Active"
-                          ? "bg-green-500/10 text-green-500 border-green-500/20"
-                          : "bg-yellow-500/10 text-yellow-500 border-yellow-500/20"
+                          ? "bg-mint-light text-mint border-mint/20"
+                          : "bg-yellow-100 text-yellow-700 border-yellow-200"
                       }
                     >
                       {member.status}
                     </Badge>
-                    <Badge variant="outline" className="bg-mint/10 text-mint border-mint/20">
+                    <Badge variant="outline" className="bg-mint-light text-mint border-mint/20">
                       {member.role}
                     </Badge>
-                    <Button variant="ghost" size="icon" className="text-white/70 hover:text-white">
-                      <Edit2 className="w-4 h-4" />
+                    <Button variant="ghost" size="icon" className="text-gray hover:text-gray-dark hover:bg-gray-muted">
+                      <Edit2 className="w-4 h-4 text-mint" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="text-white/70 hover:text-red-500">
+                    <Button variant="ghost" size="icon" className="text-gray hover:text-red-500 hover:bg-red-50">
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
@@ -92,7 +92,7 @@ export default function Team() {
 
             {/* Pending invitations */}
             <div className="mt-8">
-              <h3 className="text-lg font-medium text-white mb-4">Pending Invitations</h3>
+              <h3 className="text-lg font-medium text-gray-dark mb-4">Pending Invitations</h3>
               <div className="space-y-4">
                 {[
                   {
@@ -103,20 +103,20 @@ export default function Team() {
                 ].map((invite) => (
                   <div
                     key={invite.email}
-                    className="flex items-center justify-between p-4 rounded-lg bg-forest border border-mint/10"
+                    className="flex items-center justify-between p-4 rounded-lg bg-white border border-gray-muted"
                   >
                     <div className="flex items-center space-x-4">
                       <Mail className="w-5 h-5 text-mint" />
                       <div>
-                        <p className="text-white">{invite.email}</p>
-                        <p className="text-sm text-white/70">Sent {invite.sent}</p>
+                        <p className="text-gray-dark">{invite.email}</p>
+                        <p className="text-sm text-gray">Sent {invite.sent}</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
-                      <Badge variant="outline" className="bg-mint/10 text-mint border-mint/20">
+                      <Badge variant="outline" className="bg-mint-light text-mint border-mint/20">
                         {invite.role}
                       </Badge>
-                      <Button variant="ghost" size="icon" className="text-white/70 hover:text-red-500">
+                      <Button variant="ghost" size="icon" className="text-gray hover:text-red-500 hover:bg-red-50">
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
