@@ -37,7 +37,7 @@ const Sarah = () => {
               </p>
               <div className="pt-4">
                 <BookDemoForm>
-                  <Button className="bg-mint hover:bg-mint-dark text-white">
+                  <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white">
                     Hire Sarah
                   </Button>
                 </BookDemoForm>
