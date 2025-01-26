@@ -5,6 +5,9 @@ import { Bot, Stethoscope, Clock, Brain, Phone, MessageSquare, Shield, ChevronRi
 import { BookDemoForm } from "@/components/BookDemoForm";
 import { Button } from "@/components/ui/button";
 import SymptomTags from "@/components/features/SymptomTags";
+import { ActivityListPreview } from "@/components/features/feature-previews/ActivityListPreview";
+import { DailyCallsPreview } from "@/components/features/feature-previews/DailyCallsPreview";
+import { CallDetailPreview } from "@/components/features/feature-previews/CallDetailPreview";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Sarah = () => {
@@ -35,8 +38,20 @@ const Sarah = () => {
             </div>
           </div>
 
-          {/* Symptom Recognition */}
-          <div className="mb-16">
+          {/* Dashboard Preview Section */}
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            <div className="bg-forest p-6 rounded-xl shadow-lg">
+              <h3 className="text-xl font-semibold text-white mb-6">Real-time Call Management</h3>
+              <DailyCallsPreview />
+            </div>
+            <div className="bg-white p-6 rounded-xl border border-gray-muted shadow-lg">
+              <h3 className="text-xl font-semibold text-gray-dark mb-6">Recent Activity</h3>
+              <ActivityListPreview />
+            </div>
+          </div>
+
+          {/* Symptom Recognition Section - Updated Background */}
+          <div className="bg-forest-light/5 rounded-xl p-8 mb-16">
             <div className="text-center mb-8">
               <h3 className="text-xl font-semibold text-gray-dark mb-2">
                 Trained on Thousands of Medical Conditions
@@ -89,6 +104,16 @@ const Sarah = () => {
                 Constantly improving through each interaction while maintaining consistent quality 
                 of care.
               </p>
+            </div>
+          </div>
+
+          {/* Call Detail Preview Section */}
+          <div className="mb-16">
+            <h2 className="text-2xl font-bold text-gray-dark mb-8 text-center">
+              Detailed Call Analysis
+            </h2>
+            <div className="bg-white rounded-xl border border-gray-muted shadow-lg overflow-hidden">
+              <CallDetailPreview />
             </div>
           </div>
 
