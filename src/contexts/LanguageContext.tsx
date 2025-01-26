@@ -20,7 +20,7 @@ const translations = {
       sarah: "Sarah"
     },
     capabilities: {
-      title: "Transform Your Practice's Communication",
+      title: "Digital workers, ready to deploy",
       subtitle: "Discover how our plug-and-play digital workers seamlessly integrate with your practice",
       medicalIntelligence: {
         title: "Medical Intelligence",
@@ -96,7 +96,7 @@ const translations = {
       sarah: "Sarah"
     },
     capabilities: {
-      title: "Transformeer de Communicatie van uw Praktijk",
+      title: "Digitale medewerkers, klaar voor gebruik",
       subtitle: "Ontdek hoe onze plug-and-play digitale medewerkers naadloos integreren met uw praktijk",
       medicalIntelligence: {
         title: "Medische Intelligentie",
@@ -201,4 +201,3 @@ export const useLanguage = () => {
   }
   return context;
 };
-
