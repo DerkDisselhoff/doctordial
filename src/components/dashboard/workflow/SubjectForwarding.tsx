@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { GitBranch, Plus, Trash2, Save, Edit2 } from "lucide-react";
-import { Subject } from "@/integrations/supabase/types/tables";
+import { Subject } from "@/integrations/supabase/types/tables/workflow-subjects";
 
 interface Props {
   subjects: Subject[];

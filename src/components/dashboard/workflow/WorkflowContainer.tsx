@@ -2,7 +2,7 @@ import { useState } from "react";
 import { UrgencyLevelForwarding } from "./UrgencyLevelForwarding";
 import { SubjectForwarding } from "./SubjectForwarding";
 import { useWorkflowSettings } from "./hooks/useWorkflowSettings";
-import { Subject } from "@/integrations/supabase/types/tables";
+import { Subject } from "@/integrations/supabase/types/tables/workflow-subjects";
 import { supabase } from "@/lib/supabaseClient";
 
 export function WorkflowContainer() {
