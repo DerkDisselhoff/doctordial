@@ -1,20 +1,7 @@
 import { 
-  BarChart3, 
-  Users, 
-  Phone, 
-  Settings, 
-  Home,
-  Building2,
-  DollarSign,
-  FileText,
-  Activity,
-  LogOut,
-  Shield,
-  CreditCard,
-  Grid,
-  Receipt,
-  Calendar,
-  GitBranch
+  BarChart3, Users, Phone, Settings, Home, Building2, 
+  DollarSign, FileText, Activity, LogOut, Shield, 
+  CreditCard, Grid, Receipt, Calendar, GitBranch 
 } from "lucide-react";
 import {
   Sidebar,
@@ -89,6 +76,27 @@ export function AdminSidebar() {
     }
   };
 
+  const MenuItem = ({ icon: Icon, title, path }: { icon: any; title: string; path: string }) => {
+    const isActive = location.pathname === path;
+    
+    return (
+      <Button
+        variant="ghost"
+        className={`w-full justify-start gap-3 px-3 py-2.5 group transition-all duration-200 ${
+          isActive 
+            ? 'bg-mint/10 text-gray-dark font-semibold' 
+            : 'text-gray hover:bg-mint/5 hover:text-gray-dark hover:translate-x-1'
+        }`}
+        onClick={() => navigate(path)}
+      >
+        <Icon className={`h-5 w-5 flex-shrink-0 transition-colors ${
+          isActive ? 'text-mint' : 'text-gray/70 group-hover:text-mint'
+        }`} />
+        <span>{title}</span>
+      </Button>
+    );
+  };
+
   const clientMenuItems = [
     { title: "Overview", icon: Home, path: "/dashboard" },
     { title: "Workflow", icon: GitBranch, path: "/dashboard/workflow" },
@@ -117,25 +125,6 @@ export function AdminSidebar() {
     { title: "Integrations", icon: Building2, path: "/dashboard/settings/integrations" },
   ];
 
-  const MenuItem = ({ icon: Icon, title, path }: { icon: any; title: string; path: string }) => {
-    const isActive = location.pathname === path;
-    
-    return (
-      <Button
-        variant="ghost"
-        className={`w-full justify-start gap-3 px-3 py-2 ${
-          isActive 
-            ? 'bg-blue-light text-gray-dark' 
-            : 'text-gray hover:bg-blue-light hover:text-gray-dark'
-        }`}
-        onClick={() => navigate(path)}
-      >
-        <Icon className="h-5 w-5" />
-        <span>{title}</span>
-      </Button>
-    );
-  };
-
   const SettingsMenuItem = () => {
     const isSettingsActive = location.pathname.includes('/dashboard/settings');
     
@@ -144,18 +133,20 @@ export function AdminSidebar() {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className={`w-full justify-start gap-3 px-3 py-2 ${
+            className={`w-full justify-start gap-3 px-3 py-2.5 group transition-all duration-200 ${
               isSettingsActive 
-                ? 'bg-blue-light text-gray-dark' 
-                : 'text-gray hover:bg-blue-light hover:text-gray-dark'
+                ? 'bg-mint/10 text-gray-dark font-semibold' 
+                : 'text-gray hover:bg-mint/5 hover:text-gray-dark hover:translate-x-1'
             }`}
           >
-            <Settings className="h-5 w-5" />
+            <Settings className={`h-5 w-5 flex-shrink-0 transition-colors ${
+              isSettingsActive ? 'text-mint' : 'text-gray/70 group-hover:text-mint'
+            }`} />
             <span>Settings</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-56 bg-white border-gray-muted"
+          className="w-56 bg-white border border-gray-muted/50 shadow-lg rounded-lg"
           align="start"
           alignOffset={0}
           sideOffset={2}
@@ -163,10 +154,10 @@ export function AdminSidebar() {
           {settingsMenuItems.map((item) => (
             <DropdownMenuItem
               key={item.title}
-              className="text-gray hover:text-gray-dark hover:bg-blue-light cursor-pointer"
+              className="flex items-center px-3 py-2 text-sm text-gray hover:text-gray-dark hover:bg-mint/5 cursor-pointer transition-colors"
               onClick={() => navigate(item.path)}
             >
-              <item.icon className="mr-2 h-4 w-4" />
+              <item.icon className="mr-2 h-4 w-4 text-gray/70" />
               <span>{item.title}</span>
             </DropdownMenuItem>
           ))}
@@ -215,10 +206,10 @@ export function AdminSidebar() {
         <div className="border-t border-gray-muted p-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="w-full justify-start gap-3 px-2 hover:bg-blue-light">
-                <Avatar className="h-8 w-8 ring-2 ring-blue-muted">
+              <Button variant="ghost" className="w-full justify-start gap-3 px-2 hover:bg-mint/5 group">
+                <Avatar className="h-8 w-8 ring-2 ring-mint/20 group-hover:ring-mint/40 transition-all">
                   <AvatarImage src={userProfile?.avatar_url || ''} />
-                  <AvatarFallback className="bg-blue-light text-gray-dark">
+                  <AvatarFallback className="bg-mint/10 text-gray-dark">
                     {userProfile?.username?.[0]?.toUpperCase() || 'U'}
                   </AvatarFallback>
                 </Avatar>
@@ -234,7 +225,7 @@ export function AdminSidebar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 bg-white border-gray-muted">
               <DropdownMenuItem 
-                className="text-red-400 hover:text-red-300 hover:bg-blue-light cursor-pointer"
+                className="flex items-center px-3 py-2 text-red-400 hover:text-red-500 hover:bg-red-50 cursor-pointer transition-colors"
                 onClick={handleLogout}
               >
                 <LogOut className="mr-2 h-4 w-4" />
