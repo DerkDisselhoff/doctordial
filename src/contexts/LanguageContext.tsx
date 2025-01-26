@@ -52,7 +52,7 @@ const translations = {
     },
     hero: {
       aiPowered: "AI-Powered Call Management",
-      title: "Transform Your Practice's Communication",
+      title: "Digital Workers, Human Experience",
       subtitle: "Let AI handle your practice's calls while maintaining the personal touch your patients expect.",
       trainedOn: "Trained on millions of medical conversations",
       bookDemo: "Book a Demo",
@@ -128,7 +128,7 @@ const translations = {
     },
     hero: {
       aiPowered: "AI-Gestuurde Gespreksafhandeling",
-      title: "Transformeer de Communicatie van uw Praktijk",
+      title: "AI assistentes, menselijke ervaring",
       subtitle: "Laat AI de telefoongesprekken van uw praktijk afhandelen met behoud van persoonlijk contact",
       trainedOn: "Getraind op miljoenen medische gesprekken",
       bookDemo: "Demo Aanvragen",
