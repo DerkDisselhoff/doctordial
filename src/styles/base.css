@@ -74,43 +74,21 @@
     --radius: 0.5rem;
   }
 
-  /* Typography Scale */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-medium tracking-tight text-gray-dark;
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
-  h1 { @apply text-4xl md:text-5xl leading-tight font-bold; }
-  h2 { @apply text-3xl md:text-4xl leading-tight font-bold; }
-  h3 { @apply text-2xl md:text-3xl leading-tight font-semibold; }
-  h4 { @apply text-xl md:text-2xl leading-snug font-semibold; }
-  h5 { @apply text-lg md:text-xl leading-snug font-medium; }
-  h6 { @apply text-base md:text-lg leading-normal font-medium; }
-
-  p { @apply font-sans text-gray leading-relaxed; }
-
-  small { @apply font-sans text-gray-light text-sm leading-normal; }
-
-  .text-body-lg { @apply font-sans text-lg leading-relaxed text-gray; }
-  .text-body { @apply font-sans text-base leading-relaxed text-gray; }
-  .text-body-sm { @apply font-sans text-sm leading-normal text-gray; }
-  .text-body-xs { @apply font-sans text-xs leading-normal text-gray; }
-
-  /* Table Typography */
-  .table-header-cell {
-    @apply font-display text-sm font-medium;
-  }
-  
-  .table-cell {
-    @apply font-sans text-sm;
-  }
-
-  /* Menu Typography */
-  .menu-item {
-    @apply font-sans text-sm;
-  }
-
-  .menu-header {
-    @apply font-display text-sm font-medium;
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 8s ease infinite;
   }
 
   @keyframes float {
@@ -159,6 +137,45 @@
 
   .animate-float-slow {
     animation: float-slow 4s ease-in-out infinite;
+  }
+
+  /* Typography Scale */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-medium tracking-tight text-gray-dark;
+  }
+
+  h1 { @apply text-4xl md:text-5xl leading-tight font-bold; }
+  h2 { @apply text-3xl md:text-4xl leading-tight font-bold; }
+  h3 { @apply text-2xl md:text-3xl leading-tight font-semibold; }
+  h4 { @apply text-xl md:text-2xl leading-snug font-semibold; }
+  h5 { @apply text-lg md:text-xl leading-snug font-medium; }
+  h6 { @apply text-base md:text-lg leading-normal font-medium; }
+
+  p { @apply font-sans text-gray leading-relaxed; }
+
+  small { @apply font-sans text-gray-light text-sm leading-normal; }
+
+  .text-body-lg { @apply font-sans text-lg leading-relaxed text-gray; }
+  .text-body { @apply font-sans text-base leading-relaxed text-gray; }
+  .text-body-sm { @apply font-sans text-sm leading-normal text-gray; }
+  .text-body-xs { @apply font-sans text-xs leading-normal text-gray; }
+
+  /* Table Typography */
+  .table-header-cell {
+    @apply font-display text-sm font-medium;
+  }
+  
+  .table-cell {
+    @apply font-sans text-sm;
+  }
+
+  /* Menu Typography */
+  .menu-item {
+    @apply font-sans text-sm;
+  }
+
+  .menu-header {
+    @apply font-display text-sm font-medium;
   }
 
   ::selection {
