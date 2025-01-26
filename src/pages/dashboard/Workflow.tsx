@@ -5,11 +5,13 @@ import { AssistantSettingsCard } from "@/components/dashboard/assistant/Assistan
 
 export function Workflow() {
   return (
-    <div className="content-spacing">
+    <div className="p-8 space-y-8">
       <WorkflowHeader />
-      <LiveStatusCard />
-      <WorkflowContainer />
-      <AssistantSettingsCard onSettingChange={() => {}} />
+      <div className="space-y-8">
+        <LiveStatusCard />
+        <WorkflowContainer />
+        <AssistantSettingsCard onSettingChange={() => {}} />
+      </div>
     </div>
   );
 }
