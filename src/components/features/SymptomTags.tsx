@@ -16,7 +16,7 @@ const TagLine = ({ symptoms, direction = "none", speed = 0 }: { symptoms: string
   return (
     <div className="relative flex items-center h-8 overflow-hidden">
       {/* Gradient overlay - left side */}
-      <div className="absolute left-0 w-20 h-full bg-gradient-to-r from-forest to-transparent z-10" />
+      <div className="absolute left-0 w-20 h-full bg-gradient-to-r from-[#266853] to-transparent z-10" />
       
       <motion.div 
         className="flex gap-3 absolute whitespace-nowrap"
@@ -41,7 +41,7 @@ const TagLine = ({ symptoms, direction = "none", speed = 0 }: { symptoms: string
       </motion.div>
 
       {/* Gradient overlay - right side */}
-      <div className="absolute right-0 w-20 h-full bg-gradient-to-l from-forest to-transparent z-10" />
+      <div className="absolute right-0 w-20 h-full bg-gradient-to-l from-[#266853] to-transparent z-10" />
     </div>
   );
 };
