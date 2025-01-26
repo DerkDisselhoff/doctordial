@@ -1,13 +1,11 @@
-import React from 'react';
+import { UrgencyLevelForwarding } from "./UrgencyLevelForwarding";
+import { SubjectForwarding } from "./SubjectForwarding";
 
-interface WorkflowContainerProps {
-  children: React.ReactNode;
-}
-
-export function WorkflowContainer({ children }: WorkflowContainerProps) {
+export function WorkflowContainer() {
   return (
-    <div className="space-y-6">
-      {children}
+    <div className="space-y-8">
+      <UrgencyLevelForwarding />
+      <SubjectForwarding />
     </div>
   );
 }
