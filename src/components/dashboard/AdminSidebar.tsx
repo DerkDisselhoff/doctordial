@@ -31,11 +31,9 @@ export function AdminSidebar() {
   const [userProfile, setUserProfile] = useState<{
     username?: string | null;
     avatar_url?: string | null;
-    company_name?: string | null;
   }>({
     username: "Dr. Sarah Johnson",
     avatar_url: "/assets/ai-agent.webp",
-    company_name: "Centrum Medical"
   });
 
   useEffect(() => {
@@ -171,12 +169,6 @@ export function AdminSidebar() {
       <div className="flex h-full w-64 flex-col bg-white border-r border-gray-muted">
         <div className="p-6 border-b border-gray-muted">
           <Logo className="text-gray-dark" />
-          {userProfile?.company_name && (
-            <div className="mt-4">
-              <p className="text-sm font-medium text-gray-dark">{userProfile.company_name}</p>
-              <p className="text-xs text-gray">Netherlands</p>
-            </div>
-          )}
         </div>
 
         <SidebarContent className="flex-1 px-3 py-6">
