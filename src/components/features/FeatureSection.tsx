@@ -3,7 +3,6 @@ import { LucideIcon } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { UrgencyLevels } from "./feature-previews/UrgencyLevels";
 import { DailyCallsPreview } from "./feature-previews/DailyCallsPreview";
-import { CallDetailPreview } from "./feature-previews/CallDetailPreview";
 import { ClientDistributionPreview } from "./feature-previews/ClientDistributionPreview";
 import { CallVolumePreview } from "./feature-previews/CallVolumePreview";
 import { ActivityListPreview } from "./feature-previews/ActivityListPreview";
@@ -20,7 +19,6 @@ interface FeatureSectionProps {
 const ComponentMap = {
   UrgencyLevels,
   DailyCallsChart: DailyCallsPreview,
-  CallDetail: CallDetailPreview,
   ClientDistribution: ClientDistributionPreview,
   CallVolume: CallVolumePreview,
   ActivityList: ActivityListPreview,
