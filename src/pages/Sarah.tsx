@@ -39,7 +39,7 @@ const Sarah = () => {
               </div>
             </div>
             
-            {/* Sarah's Image */}
+            {/* Sarah's Image with Overlay */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -47,15 +47,18 @@ const Sarah = () => {
               className="relative"
             >
               <div className="absolute -inset-1 bg-gradient-to-r from-mint-light/20 to-blue-light/20 rounded-2xl blur-lg opacity-75 animate-gradient" />
-              <img
-                src="/lovable-uploads/8cc89b28-b673-4f32-92b9-ea395078b319.png"
-                alt="Sarah AI Medical Assistant"
-                className="relative rounded-2xl shadow-xl w-full object-cover aspect-square lg:aspect-[4/3]"
-              />
+              <div className="relative rounded-2xl overflow-hidden">
+                <img
+                  src="/lovable-uploads/8cc89b28-b673-4f32-92b9-ea395078b319.png"
+                  alt="Sarah AI Medical Assistant"
+                  className="w-full object-cover aspect-square lg:aspect-[4/3]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-forest/20 to-transparent" />
+              </div>
             </motion.div>
           </div>
 
-          {/* Use Cases Section - Moved up */}
+          {/* Use Cases Section */}
           <SarahUseCases />
 
           {/* Symptom Recognition Section */}
