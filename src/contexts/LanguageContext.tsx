@@ -19,6 +19,14 @@ const translations = {
       bookDemo: "Book a Demo",
       sarah: "Sarah"
     },
+    footer: {
+      description: "Empowering healthcare providers with AI-powered call management solutions for better patient care.",
+      about: "About Us",
+      blog: "Blog",
+      privacy: "Privacy Policy",
+      terms: "Terms of Service",
+      rights: "All rights reserved."
+    },
     capabilities: {
       title: "Digital Workers, Ready to Deploy",
       subtitle: "Discover how our plug-and-play digital workers seamlessly integrate with your practice",
@@ -110,6 +118,14 @@ const translations = {
       login: "Inloggen",
       bookDemo: "Demo Aanvragen",
       sarah: "Sarah"
+    },
+    footer: {
+      description: "Zorgverleners ondersteunen met AI-gestuurde gespreksbeheersoplossingen voor betere patiëntenzorg.",
+      about: "Over Ons",
+      blog: "Blog",
+      privacy: "Privacybeleid",
+      terms: "Servicevoorwaarden",
+      rights: "Alle rechten voorbehouden."
     },
     capabilities: {
       title: "Digitale Medewerkers, Klaar voor Gebruik",
