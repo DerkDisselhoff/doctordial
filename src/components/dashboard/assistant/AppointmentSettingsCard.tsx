@@ -22,28 +22,28 @@ export const AppointmentSettingsCard = ({ onSettingChange }: AppointmentSettings
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <Switch 
-                className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+                className="data-[state=checked]:bg-mint data-[state=checked]:border-mint/20 bg-forest-light/50 border-mint/20 hover:bg-mint/10" 
                 onCheckedChange={onSettingChange} 
               />
               <Label className="text-white/70">Regular Consultations</Label>
             </div>
             <div className="flex items-center space-x-2">
               <Switch 
-                className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+                className="data-[state=checked]:bg-mint data-[state=checked]:border-mint/20 bg-forest-light/50 border-mint/20 hover:bg-mint/10" 
                 onCheckedChange={onSettingChange} 
               />
               <Label className="text-white/70">Vaccinations</Label>
             </div>
             <div className="flex items-center space-x-2">
               <Switch 
-                className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+                className="data-[state=checked]:bg-mint data-[state=checked]:border-mint/20 bg-forest-light/50 border-mint/20 hover:bg-mint/10" 
                 onCheckedChange={onSettingChange} 
               />
               <Label className="text-white/70">Follow-up Appointments</Label>
             </div>
             <div className="flex items-center space-x-2">
               <Switch 
-                className="bg-mint/20 data-[state=checked]:bg-mint data-[state=checked]:border-mint hover:bg-mint/30" 
+                className="data-[state=checked]:bg-mint data-[state=checked]:border-mint/20 bg-forest-light/50 border-mint/20 hover:bg-mint/10" 
                 onCheckedChange={onSettingChange} 
               />
               <Label className="text-white/70">Blood Tests</Label>
