@@ -2,8 +2,11 @@ import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUr
 import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
 import SymptomTags from "./features/SymptomTags";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Features = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="bg-gradient-to-b from-white to-mint-light/5">
       <AICapabilities />
@@ -35,9 +38,7 @@ const Features = () => {
               className="inline-block"
             >
               <h2 className="font-sans text-3xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white to-mint-light/90 tracking-tight">
-                Transform Patient Calls into
-                <br className="hidden md:block" />
-                <span className="text-white"> Practice Efficiency</span>
+                {t("features.title")}
               </h2>
             </motion.div>
 
@@ -48,10 +49,9 @@ const Features = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-base md:text-xl text-mint-light/80 max-w-3xl mx-auto mb-8 md:mb-12 px-4"
             >
-              Experience the future of healthcare communication with our AI-powered system
+              {t("features.subtitle")}
             </motion.p>
 
-            {/* Add the SymptomTags component here */}
             <SymptomTags />
 
             {/* Dashboard preview with enhanced container */}

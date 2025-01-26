@@ -19,28 +19,28 @@ const AICapabilities = () => {
 
   const capabilities = [
     {
-      title: "Medical Intelligence",
-      description: "Trained on NHG triage standards and medical datasets for accurate patient assessment",
+      title: t("capabilities.medicalIntelligence.title"),
+      description: t("capabilities.medicalIntelligence.description"),
       illustration: <MedicalIntelligenceCard />,
     },
     {
-      title: "Worker Customization",
-      description: "Customize forwarding rules, activation timing, voice, tone, and medical question handling to match your practice needs",
+      title: t("capabilities.workerCustomization.title"),
+      description: t("capabilities.workerCustomization.description"),
       illustration: <WorkerCustomizationCard />,
     },
     {
-      title: "Human Experience",
-      description: "Trained on billions of emotional and empathic interactions for natural, human-like conversations",
+      title: t("capabilities.humanExperience.title"),
+      description: t("capabilities.humanExperience.description"),
       illustration: <HumanExperienceCard />,
     },
     {
-      title: "Seamless Integration",
-      description: "Easily integrates with your existing call software for smooth implementation",
+      title: t("capabilities.seamlessIntegration.title"),
+      description: t("capabilities.seamlessIntegration.description"),
       illustration: <SeamlessIntegrationCard />,
     },
     {
-      title: "Continuous Learning",
-      description: "Improves through direct feedback on triage outcomes from medical professionals",
+      title: t("capabilities.continuousLearning.title"),
+      description: t("capabilities.continuousLearning.description"),
       illustration: <ContinuousLearningCard />,
     },
   ];
