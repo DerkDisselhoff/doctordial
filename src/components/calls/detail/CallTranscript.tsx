@@ -34,20 +34,24 @@ export function CallTranscript({
                 <div
                   key={index}
                   className={`flex gap-4 ${
-                    message.role === 'AI' ? 'flex-row' : 'flex-row-reverse'
+                    message.role === 'AI' ? 'justify-start' : 'justify-end'
                   }`}
                 >
-                  <div className={`flex-shrink-0 w-16 text-base font-medium ${
-                    message.role === 'AI' ? 'text-blue-dark' : 'text-gray-dark'
+                  <div className={`flex items-start gap-4 max-w-[80%] ${
+                    message.role === 'AI' ? 'flex-row' : 'flex-row-reverse'
                   }`}>
-                    {message.role}
-                  </div>
-                  <div className={`flex-grow p-4 rounded-lg ${
-                    message.role === 'AI' 
-                      ? 'bg-gray-muted/10 border border-gray-muted' 
-                      : 'bg-blue/10 border border-blue/20'
-                  }`}>
-                    <p className="text-base text-gray leading-relaxed">{message.content}</p>
+                    <div className={`flex-shrink-0 w-12 text-sm font-medium pt-2 ${
+                      message.role === 'AI' ? 'text-blue-dark text-left' : 'text-gray-dark text-right'
+                    }`}>
+                      {message.role}
+                    </div>
+                    <div className={`flex-grow p-3 rounded-lg ${
+                      message.role === 'AI' 
+                        ? 'bg-gray-muted/10 border border-gray-muted' 
+                        : 'bg-mint-light border border-mint-light'
+                    }`}>
+                      <p className="text-sm text-gray-dark leading-relaxed">{message.content}</p>
+                    </div>
                   </div>
                 </div>
               ))
