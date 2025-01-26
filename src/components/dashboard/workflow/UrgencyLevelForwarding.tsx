@@ -27,40 +27,40 @@ interface Props {
 
 export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
   return (
-    <Card className="bg-white border border-gray-muted shadow-sm">
-      <CardHeader className="pb-3">
+    <Card>
+      <CardHeader>
         <div className="flex items-center gap-2">
           <GitBranch className="w-4 h-4 text-blue-dark" />
           <CardTitle className="text-gray-dark text-lg">Urgency Level Forwarding</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-4">
         {settings.map((setting) => (
-          <div key={setting.urgency_level} className="p-2 rounded-lg bg-gray-muted/5 border border-gray-muted/10">
-            <div className="flex items-center gap-2">
+          <div key={setting.urgency_level} className="p-4 rounded-lg border border-gray-muted/20 bg-gray-muted/5">
+            <div className="flex items-center gap-4">
               <div className="flex items-center min-w-[60px]">
                 <span className={`status-badge ${getUrgencyColor(setting.urgency_level)}`}>
                   {setting.urgency_level}
                 </span>
               </div>
-              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Select
                   value={setting.forward_step}
                   onValueChange={(value: ForwardStep) => 
                     onSettingChange(setting.urgency_level, { forward_step: value })
                   }
                 >
-                  <SelectTrigger className="bg-white border-gray-muted hover:bg-gray-muted/5 h-9">
+                  <SelectTrigger className="bg-white border-gray-muted h-9">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border-gray-muted">
-                    <SelectItem value="call_112" className="text-gray hover:bg-gray-muted/10">
+                  <SelectContent>
+                    <SelectItem value="call_112">
                       Advice to call 112 directly
                     </SelectItem>
-                    <SelectItem value="forward_to_assistant" className="text-gray hover:bg-gray-muted/10">
+                    <SelectItem value="forward_to_assistant">
                       Forward to Doctor's Assistant
                     </SelectItem>
-                    <SelectItem value="provide_selfcare" className="text-gray hover:bg-gray-muted/10">
+                    <SelectItem value="provide_selfcare">
                       Provide selfcare advice
                     </SelectItem>
                   </SelectContent>
@@ -84,14 +84,14 @@ export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
                       onSettingChange(setting.urgency_level, { advice_type: value })
                     }
                   >
-                    <SelectTrigger className="bg-white border-gray-muted hover:bg-gray-muted/5 h-9">
+                    <SelectTrigger className="bg-white border-gray-muted h-9">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-gray-muted">
-                      <SelectItem value="simple" className="text-gray hover:bg-gray-muted/10">
+                    <SelectContent>
+                      <SelectItem value="simple">
                         Simple short advice
                       </SelectItem>
-                      <SelectItem value="extensive" className="text-gray hover:bg-gray-muted/10">
+                      <SelectItem value="extensive">
                         Extensive advice
                       </SelectItem>
                     </SelectContent>

@@ -45,16 +45,16 @@ export function SubjectForwarding({
   };
 
   return (
-    <Card className="bg-white border border-gray-muted shadow-sm">
+    <Card>
       <CardHeader>
         <div className="flex items-center gap-2">
-          <GitBranch className="w-5 h-5 text-blue-dark" />
+          <GitBranch className="w-4 h-4 text-blue-dark" />
           <CardTitle className="text-gray-dark">Subject Forwarding Rules</CardTitle>
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="p-3 rounded-lg bg-gray-muted/5 border border-gray-muted/10">
-          <div className="grid gap-3 md:grid-cols-[1fr,1fr,auto]">
+        <div className="p-4 rounded-lg border border-gray-muted/20 bg-gray-muted/5">
+          <div className="grid gap-4 md:grid-cols-[1fr,1fr,auto]">
             <div className="space-y-2">
               <Label className="text-gray-dark">Subject</Label>
               <Input
@@ -87,14 +87,14 @@ export function SubjectForwarding({
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-4">
           {subjects.map((subject) => (
             <div
               key={subject.id}
-              className="flex items-center justify-between p-3 rounded-lg bg-gray-muted/5 border border-gray-muted/10 hover:bg-gray-muted/10 transition-colors"
+              className="p-4 rounded-lg border border-gray-muted/20 bg-gray-muted/5"
             >
               {editingSubject === subject.id ? (
-                <div className="flex-1 flex items-center gap-2">
+                <div className="flex items-center gap-4">
                   <Input
                     value={editedValues.subject}
                     onChange={(e) => setEditedValues({ ...editedValues, subject: e.target.value })}
@@ -110,24 +110,24 @@ export function SubjectForwarding({
                     variant="ghost"
                     size="sm"
                     onClick={() => subject.id && handleSaveEdit(subject.id)}
-                    className="text-blue-dark hover:text-blue-dark/80 hover:bg-blue-dark/10"
+                    className="text-blue-dark hover:text-blue-dark/80"
                   >
                     <Save className="w-4 h-4" />
                   </Button>
                 </div>
               ) : (
-                <div className="flex-1 flex items-center justify-between">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="text-gray-dark">{subject.subject}</span>
                     <span className="text-blue-dark">→</span>
                     <span className="text-gray">{subject.forward_to}</span>
                   </div>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-2">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => handleEditSubject(subject)}
-                      className="text-blue-dark hover:text-blue-dark/80 hover:bg-blue-dark/10"
+                      className="text-blue-dark hover:text-blue-dark/80"
                     >
                       <Edit2 className="w-4 h-4" />
                     </Button>
@@ -135,7 +135,7 @@ export function SubjectForwarding({
                       variant="ghost"
                       size="sm"
                       onClick={() => subject.id && onRemoveSubject(subject.id)}
-                      className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                      className="text-red-400 hover:text-red-300"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>

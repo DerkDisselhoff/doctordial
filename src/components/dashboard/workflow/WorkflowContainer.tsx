@@ -6,11 +6,8 @@ interface WorkflowContainerProps {
 
 export function WorkflowContainer({ children }: WorkflowContainerProps) {
   return (
-    <div className="section-spacing">
+    <div className="space-y-6">
       {children}
-      <div className="content-spacing">
-        {/* This div wraps the workflow content with proper spacing */}
-      </div>
     </div>
   );
 }
