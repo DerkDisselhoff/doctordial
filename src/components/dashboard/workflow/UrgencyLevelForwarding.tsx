@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { GitBranch } from "lucide-react";
+import { GitBranch, ArrowRight } from "lucide-react";
 import { getUrgencyColor } from "@/utils/urgencyUtils";
 import {
   Select,
@@ -34,33 +34,36 @@ export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
           <CardTitle className="text-gray-dark text-lg">Urgency Level Forwarding</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-2">
         {settings.map((setting) => (
           <div 
             key={setting.urgency_level} 
-            className="p-3 rounded-lg border border-gray-muted/20 bg-gray-muted/5 hover:bg-gray-muted/10 transition-colors"
+            className="p-2.5 rounded-lg border border-gray-muted/20 bg-gray-muted/5 hover:bg-gray-muted/10 transition-colors"
           >
-            <div className="flex items-center gap-3">
-              <div className="flex items-center min-w-[50px]">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center min-w-[45px]">
                 <span 
-                  className={`inline-flex items-center justify-center px-2.5 py-1 text-sm font-medium rounded-md ${
+                  className={`inline-flex items-center justify-center px-2 py-0.5 text-sm font-medium rounded-md ${
                     getUrgencyColor(setting.urgency_level)
                   }`}
                 >
                   {setting.urgency_level}
                 </span>
               </div>
-              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
+              
+              <ArrowRight className="w-4 h-4 text-gray-light flex-shrink-0" />
+              
+              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-2">
                 <Select
                   value={setting.forward_step}
                   onValueChange={(value: ForwardStep) => 
                     onSettingChange(setting.urgency_level, { forward_step: value })
                   }
                 >
-                  <SelectTrigger className="bg-white border-gray-muted/30 h-9 hover:border-blue-dark focus:border-blue-dark focus:ring-1 focus:ring-blue-dark">
+                  <SelectTrigger className="bg-white border-gray-muted hover:border-blue-dark focus:border-blue-dark focus:ring-1 focus:ring-blue-dark h-9">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border-gray-muted">
                     <SelectItem value="call_112">
                       Advice to call 112 directly
                     </SelectItem>
@@ -80,7 +83,7 @@ export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
                     onChange={(e) => onSettingChange(setting.urgency_level, { 
                       assistant_phone: e.target.value 
                     })}
-                    className="bg-white border-gray-muted/30 h-9 hover:border-blue-dark focus:border-blue-dark focus:ring-1 focus:ring-blue-dark"
+                    className="bg-white border-gray-muted hover:border-blue-dark focus:border-blue-dark focus:ring-1 focus:ring-blue-dark h-9"
                   />
                 )}
 
@@ -91,10 +94,10 @@ export function UrgencyLevelForwarding({ settings, onSettingChange }: Props) {
                       onSettingChange(setting.urgency_level, { advice_type: value })
                     }
                   >
-                    <SelectTrigger className="bg-white border-gray-muted/30 h-9 hover:border-blue-dark focus:border-blue-dark focus:ring-1 focus:ring-blue-dark">
+                    <SelectTrigger className="bg-white border-gray-muted hover:border-blue-dark focus:border-blue-dark focus:ring-1 focus:ring-blue-dark h-9">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white border-gray-muted">
                       <SelectItem value="simple">
                         Simple short advice
                       </SelectItem>
