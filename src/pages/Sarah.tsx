@@ -1,13 +1,12 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
-import { Bot, Stethoscope, Clock, Brain, Phone, MessageSquare, Shield, ChevronRight } from "lucide-react";
+import { Bot, ChevronRight } from "lucide-react";
 import { BookDemoForm } from "@/components/BookDemoForm";
 import { Button } from "@/components/ui/button";
 import SarahSymptomTags from "@/components/features/SarahSymptomTags";
-import { ActivityListPreview } from "@/components/features/feature-previews/ActivityListPreview";
-import { DailyCallsPreview } from "@/components/features/feature-previews/DailyCallsPreview";
 import { CallDetailPreview } from "@/components/features/feature-previews/CallDetailPreview";
+import SarahUseCases from "@/components/features/SarahUseCases";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Sarah = () => {
@@ -38,18 +37,6 @@ const Sarah = () => {
             </div>
           </div>
 
-          {/* Dashboard Preview Section */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            <div className="bg-forest p-6 rounded-xl shadow-lg">
-              <h3 className="text-xl font-semibold text-white mb-6">Real-time Call Management</h3>
-              <DailyCallsPreview />
-            </div>
-            <div className="bg-white p-6 rounded-xl border border-gray-muted shadow-lg">
-              <h3 className="text-xl font-semibold text-gray-dark mb-6">Recent Activity</h3>
-              <ActivityListPreview />
-            </div>
-          </div>
-
           {/* Symptom Recognition Section */}
           <div className="bg-white rounded-xl p-8 mb-16 border border-gray-muted/20">
             <div className="text-center mb-8">
@@ -60,52 +47,8 @@ const Sarah = () => {
             <SarahSymptomTags />
           </div>
 
-          {/* Core Features Grid */}
-          <div className="grid md:grid-cols-2 gap-8 py-12">
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <Bot className="w-6 h-6 text-mint" />
-                <h3 className="text-xl font-semibold text-gray-dark">AI-Powered Intelligence</h3>
-              </div>
-              <p className="text-gray">
-                Trained on extensive medical protocols and best practices to provide accurate, 
-                consistent support for your practice.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <Stethoscope className="w-6 h-6 text-mint" />
-                <h3 className="text-xl font-semibold text-gray-dark">Medical Expertise</h3>
-              </div>
-              <p className="text-gray">
-                Capable of understanding and triaging a wide range of medical conditions with 
-                professional accuracy.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <Clock className="w-6 h-6 text-mint" />
-                <h3 className="text-xl font-semibold text-gray-dark">24/7 Availability</h3>
-              </div>
-              <p className="text-gray">
-                Always ready to assist your patients, manage calls, and handle urgent cases at 
-                any time of day.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <Brain className="w-6 h-6 text-mint" />
-                <h3 className="text-xl font-semibold text-gray-dark">Continuous Learning</h3>
-              </div>
-              <p className="text-gray">
-                Constantly improving through each interaction while maintaining consistent quality 
-                of care.
-              </p>
-            </div>
-          </div>
+          {/* Use Cases Section */}
+          <SarahUseCases />
 
           {/* Call Detail Preview Section */}
           <div className="mb-16">
