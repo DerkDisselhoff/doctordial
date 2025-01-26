@@ -15,11 +15,11 @@ const Sarah = () => {
   const { t } = useLanguage();
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-white">
       <Navbar />
       
       {/* Hero Section with Sarah's Image */}
-      <div className="pt-24 pb-16 bg-gradient-to-b from-white to-blue/5">
+      <div className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
             <div className="space-y-6">
@@ -52,25 +52,23 @@ const Sarah = () => {
               className="relative lg:h-[600px]"
             >
               <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
-              <div className="relative rounded-2xl overflow-visible shadow-2xl border border-mint/10 h-full bg-gradient-to-br from-forest-light to-mint-light/50">
+              <div className="relative rounded-2xl overflow-visible shadow-2xl border border-mint/10 h-full bg-forest-light">
                 <img
                   src="/lovable-uploads/8cc89b28-b673-4f32-92b9-ea395078b319.png"
                   alt="Sarah AI Medical Assistant"
-                  className="w-full h-full object-cover rounded-2xl mix-blend-overlay"
+                  className="w-full h-full object-cover rounded-2xl"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-forest/90 via-forest/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent" />
                 <StatsBadge value="24/7" label="Patient Support" />
               </div>
             </motion.div>
           </div>
 
-          {/* Use Cases Section with gradient background */}
-          <div className="bg-gradient-to-b from-blue/5 to-mint/5 py-16 rounded-3xl">
-            <SarahUseCases />
-          </div>
+          {/* Use Cases Section */}
+          <SarahUseCases />
 
-          {/* Symptom Recognition Section with forest light background */}
-          <div className="bg-forest-light/5 rounded-3xl p-8 mb-16 mt-16 border border-mint/10">
+          {/* Symptom Recognition Section */}
+          <div className="bg-white rounded-xl p-8 mb-16 border border-gray-muted/20">
             <div className="text-center mb-8">
               <h3 className="text-xl font-semibold text-gray-dark mb-2">
                 Trained on Thousands of Medical Conditions
@@ -79,8 +77,8 @@ const Sarah = () => {
             <SarahSymptomTags />
           </div>
 
-          {/* Call Detail Preview Section with gradient background */}
-          <div className="mb-16 bg-gradient-to-br from-blue/5 via-white to-mint/5 p-8 rounded-3xl">
+          {/* Call Detail Preview Section */}
+          <div className="mb-16">
             <h2 className="text-2xl font-bold text-gray-dark mb-8 text-center">
               Detailed Call Analysis
             </h2>
@@ -89,9 +87,9 @@ const Sarah = () => {
             </div>
           </div>
 
-          {/* Demo CTA Section with forest light background */}
+          {/* Demo CTA Section */}
           <div className="py-16 text-center">
-            <div className="max-w-3xl mx-auto bg-forest-light/5 rounded-2xl p-8 border border-mint/10 shadow-lg">
+            <div className="max-w-3xl mx-auto bg-forest-light/5 rounded-2xl p-8 border border-mint/10">
               <h2 className="text-2xl font-bold text-gray-dark mb-4">
                 Ready to Transform Your Practice?
               </h2>
