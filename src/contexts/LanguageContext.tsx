@@ -57,6 +57,32 @@ const translations = {
       trainedOn: "Trained on millions of medical conversations",
       bookDemo: "Book a Demo",
       learnMore: "Learn More"
+    },
+    assistant: {
+      title: "Meet Your Digital Doctor's Assistant",
+      subtitle: "Your dedicated digital medical assistant, available 24/7 to handle patient calls and triage cases with the precision of a trained professional.",
+      trainedOn: "Trained on extensive medical protocols",
+      learnMore: "Learn more about Sarah",
+      hire: "Hire Sarah",
+      support: "Patient Support"
+    },
+    sarah: {
+      title: "Meet Sarah",
+      subtitle: "Your AI-powered medical assistant, combining advanced technology with compassionate care",
+      aiPowered: "AI-Powered Intelligence",
+      aiDescription: "Trained on extensive medical protocols and best practices to provide accurate, consistent support for your practice.",
+      expertise: "Medical Expertise",
+      expertiseDescription: "Capable of understanding and triaging a wide range of medical conditions with professional accuracy.",
+      availability: "24/7 Availability",
+      availabilityDescription: "Always ready to assist your patients, manage calls, and handle urgent cases at any time of day.",
+      learning: "Continuous Learning",
+      learningDescription: "Constantly improving through each interaction while maintaining consistent quality of care."
+    },
+    about: {
+      location: "Founded in 2025, Amsterdam",
+      title: "The next era of Healthcare,",
+      subtitle: "driven by AI",
+      description: "Empowering healthcare providers to focus on what matters most: patient care"
     }
   },
   nl: {
@@ -107,6 +133,32 @@ const translations = {
       trainedOn: "Getraind op miljoenen medische gesprekken",
       bookDemo: "Demo Aanvragen",
       learnMore: "Meer Informatie"
+    },
+    assistant: {
+      title: "Ontmoet Uw Digitale Doktersassistent",
+      subtitle: "Uw toegewijde digitale medische assistent, 24/7 beschikbaar om patiëntgesprekken te behandelen en gevallen te triageren met de precisie van een getrainde professional.",
+      trainedOn: "Getraind op uitgebreide medische protocollen",
+      learnMore: "Meer informatie over Sarah",
+      hire: "Huur Sarah in",
+      support: "Patiëntondersteuning"
+    },
+    sarah: {
+      title: "Ontmoet Sarah",
+      subtitle: "Uw AI-aangedreven medische assistent, die geavanceerde technologie combineert met zorgzame ondersteuning",
+      aiPowered: "AI-Aangedreven Intelligentie",
+      aiDescription: "Getraind op uitgebreide medische protocollen en best practices om nauwkeurige, consistente ondersteuning te bieden voor uw praktijk.",
+      expertise: "Medische Expertise",
+      expertiseDescription: "In staat om een breed scala aan medische aandoeningen te begrijpen en te triageren met professionele nauwkeurigheid.",
+      availability: "24/7 Beschikbaarheid",
+      availabilityDescription: "Altijd klaar om uw patiënten te helpen, gesprekken te beheren en urgente gevallen op elk moment van de dag te behandelen.",
+      learning: "Continue Ontwikkeling",
+      learningDescription: "Voortdurend verbeterend door elke interactie met behoud van consistente zorgkwaliteit."
+    },
+    about: {
+      location: "Opgericht in 2025, Amsterdam",
+      title: "Het nieuwe tijdperk van Gezondheidszorg,",
+      subtitle: "gedreven door AI",
+      description: "Zorgverleners in staat stellen zich te concentreren op wat het belangrijkst is: patiëntenzorg"
     }
   }
 };
