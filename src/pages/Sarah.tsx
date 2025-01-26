@@ -18,10 +18,10 @@ const Sarah = () => {
     <main className="min-h-screen bg-white">
       <Navbar />
       
-      {/* Hero Section with Sarah's Image */}
-      <div className="pt-24 pb-16 bg-forest">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+      {/* Header Section */}
+      <section className="bg-forest">
+        <div className="container mx-auto px-4 max-w-6xl pt-24 pb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <div className="flex items-center gap-2">
                 <Badge variant="outline" className="bg-mint/20 text-mint-light border-mint-light/20 px-4 py-1.5">
@@ -44,7 +44,7 @@ const Sarah = () => {
               </div>
             </div>
             
-            {/* Sarah's Image with Overlay */}
+            {/* Sarah's Image */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -63,12 +63,20 @@ const Sarah = () => {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
 
-          {/* Use Cases Section */}
+      {/* Use Cases Section */}
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
           <SarahUseCases />
+        </div>
+      </section>
 
-          {/* Symptom Recognition Section */}
-          <div className="bg-white rounded-xl p-8 mb-16 border border-gray-muted/20">
+      {/* Medical Conditions Section */}
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="bg-white rounded-xl p-8 border border-gray-muted/20">
             <div className="text-center mb-8">
               <h3 className="text-xl font-semibold text-gray-dark mb-2">
                 Trained on Thousands of Medical Conditions
@@ -76,35 +84,40 @@ const Sarah = () => {
             </div>
             <SarahSymptomTags />
           </div>
+        </div>
+      </section>
 
-          {/* Call Detail Preview Section */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-dark mb-8 text-center">
-              Detailed Call Analysis
-            </h2>
-            <div className="bg-white rounded-xl border border-gray-muted shadow-lg overflow-hidden">
-              <CallDetailPreview />
-            </div>
-          </div>
-
-          {/* Demo CTA Section */}
-          <div className="py-16 text-center">
-            <div className="max-w-3xl mx-auto bg-forest-light/5 rounded-2xl p-8 border border-mint/10">
-              <h2 className="text-2xl font-bold text-gray-dark mb-4">
-                Ready to Transform Your Practice?
-              </h2>
-              <p className="text-gray mb-6">
-                Join the growing number of medical practices that trust Sarah to handle their patient communications.
-              </p>
-              <BookDemoForm>
-                <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white">
-                  Book a Demo
-                </Button>
-              </BookDemoForm>
-            </div>
+      {/* Call Detail Analysis Section */}
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-dark mb-8 text-center">
+            Detailed Call Analysis
+          </h2>
+          <div className="bg-white rounded-xl border border-gray-muted shadow-lg overflow-hidden">
+            <CallDetailPreview />
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Demo CTA Section */}
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto bg-forest-light/5 rounded-2xl p-8 border border-mint/10">
+            <h2 className="text-2xl font-bold text-gray-dark mb-4">
+              Ready to Transform Your Practice?
+            </h2>
+            <p className="text-gray mb-6">
+              Join the growing number of medical practices that trust Sarah to handle their patient communications.
+            </p>
+            <BookDemoForm>
+              <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white">
+                Book a Demo
+              </Button>
+            </BookDemoForm>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </main>
   );
