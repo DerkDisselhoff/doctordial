@@ -12,6 +12,10 @@
     @apply text-xl font-semibold text-gray-dark tracking-tight flex items-center gap-2;
   }
 
+  .card-title svg {
+    @apply text-mint; /* Icons in card titles are now mint colored */
+  }
+
   .card-description {
     @apply text-sm text-gray;
   }
@@ -26,7 +30,7 @@
 
   /* Interactive Card Variants */
   .card-interactive {
-    @apply hover:bg-blue/5 cursor-pointer;
+    @apply hover:bg-gray-50 cursor-pointer;
   }
 
   .card-elevated {
@@ -34,12 +38,16 @@
   }
 
   .card-gradient {
-    @apply bg-gradient-to-br from-white to-blue/5 relative overflow-hidden;
+    @apply bg-gradient-to-br from-white to-gray-50 relative overflow-hidden;
   }
 
   /* Dashboard Card Variants */
   .dashboard-card {
     @apply bg-white border-gray-muted rounded-xl shadow-sm;
+  }
+
+  .dashboard-card button:not([class*="mint"]) {
+    @apply bg-blue-dark hover:bg-blue-dark/90 text-white transition-colors;
   }
 
   .dashboard-card-header {
@@ -48,6 +56,10 @@
 
   .dashboard-card-title {
     @apply text-xl font-semibold text-gray-dark tracking-tight flex items-center gap-2;
+  }
+
+  .dashboard-card-title svg {
+    @apply text-mint; /* Icons in dashboard card titles are now mint colored */
   }
 
   .dashboard-card-content {
@@ -60,12 +72,16 @@
   }
 
   .feature-card-icon {
-    @apply p-2 rounded-lg bg-blue/10 text-blue-dark mb-4;
+    @apply p-2 rounded-lg bg-mint/10 text-mint mb-4; /* Feature card icons are mint colored */
   }
 
   /* Stats Card Design */
   .stats-card {
     @apply card p-4;
+  }
+
+  .stats-card-icon {
+    @apply text-mint; /* Stats card icons are mint colored */
   }
 
   .stats-card-value {
@@ -92,5 +108,52 @@
 
   .settings-card-section {
     @apply space-y-2;
+  }
+
+  /* Custom Card Elements */
+  .card-badge {
+    @apply px-2 py-1 text-xs font-medium rounded-full;
+  }
+
+  .card-badge-blue {
+    @apply bg-blue-light text-blue-dark;
+  }
+
+  .card-badge-mint {
+    @apply bg-mint-light text-mint-dark;
+  }
+
+  /* Card Input Styling */
+  .card input:not([type="radio"]):not([type="checkbox"]),
+  .card select,
+  .card textarea {
+    @apply border-gray-muted focus:border-mint focus:ring-mint/20;
+  }
+
+  /* Card Button Styling */
+  .card-primary-button {
+    @apply bg-blue-dark hover:bg-blue-dark/90 text-white transition-colors;
+  }
+
+  .card-secondary-button {
+    @apply border border-gray-muted hover:bg-gray-50 text-gray-dark transition-colors;
+  }
+
+  /* Card Icon Styling */
+  .card-icon {
+    @apply text-mint;
+  }
+
+  .card-icon-muted {
+    @apply text-mint/60;
+  }
+
+  /* Animation Utilities */
+  .card-hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  .card-hover-glow {
+    @apply transition-shadow duration-300 hover:shadow-lg hover:shadow-mint/5;
   }
 }
