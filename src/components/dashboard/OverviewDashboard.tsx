@@ -56,6 +56,45 @@ export function OverviewDashboard() {
         <FloatingIcon icon={Activity} delay={0} x={85} y={20} />
         <FloatingIcon icon={Users} delay={1.5} x={92} y={50} />
         <FloatingIcon icon={Calendar} delay={2.5} x={88} y={80} />
+        
+        {userRole === 'client' && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex items-center justify-end mb-6"
+          >
+            <div className="flex items-center space-x-4 text-sm text-gray">
+              <Toggle
+                variant="outline"
+                size="sm"
+                pressed={timeFilter === 'today'}
+                onPressedChange={() => setTimeFilter('today')}
+                className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
+              >
+                Today
+              </Toggle>
+              <Toggle
+                variant="outline"
+                size="sm"
+                pressed={timeFilter === 'week'}
+                onPressedChange={() => setTimeFilter('week')}
+                className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
+              >
+                Last Week
+              </Toggle>
+              <Toggle
+                variant="outline"
+                size="sm"
+                pressed={timeFilter === 'month'}
+                onPressedChange={() => setTimeFilter('month')}
+                className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
+              >
+                Last Month
+              </Toggle>
+            </div>
+          </motion.div>
+        )}
       </div>
       
       <motion.div
@@ -65,45 +104,6 @@ export function OverviewDashboard() {
       >
         <MetricsCards timeFilter={timeFilter} />
       </motion.div>
-      
-      {userRole === 'client' && (
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex items-center justify-end -mt-4 mb-8"
-        >
-          <div className="flex items-center space-x-2 bg-gradient-to-r from-blue-light/30 to-mint/20 p-2 rounded-lg backdrop-blur-sm">
-            <Toggle
-              variant="outline"
-              size="sm"
-              pressed={timeFilter === 'today'}
-              onPressedChange={() => setTimeFilter('today')}
-              className="data-[state=on]:bg-blue-dark/20 data-[state=on]:text-blue-dark hover:bg-blue-dark/10"
-            >
-              Today
-            </Toggle>
-            <Toggle
-              variant="outline"
-              size="sm"
-              pressed={timeFilter === 'week'}
-              onPressedChange={() => setTimeFilter('week')}
-              className="data-[state=on]:bg-blue-dark/20 data-[state=on]:text-blue-dark hover:bg-blue-dark/10"
-            >
-              Last Week
-            </Toggle>
-            <Toggle
-              variant="outline"
-              size="sm"
-              pressed={timeFilter === 'month'}
-              onPressedChange={() => setTimeFilter('month')}
-              className="data-[state=on]:bg-blue-dark/20 data-[state=on]:text-blue-dark hover:bg-blue-dark/10"
-            >
-              Last Month
-            </Toggle>
-          </div>
-        </motion.div>
-      )}
       
       {userRole === 'client' ? (
         <>
