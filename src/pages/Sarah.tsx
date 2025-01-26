@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
-import { Bot } from "lucide-react";
+import { Bot, BookOpen, Settings2, PhoneCall } from "lucide-react";
 import { BookDemoForm } from "@/components/BookDemoForm";
 import { Button } from "@/components/ui/button";
 import SarahSymptomTags from "@/components/features/SarahSymptomTags";
@@ -70,6 +70,67 @@ const Sarah = () => {
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
           <SarahUseCases />
+        </div>
+      </section>
+
+      {/* How to work with Sarah Section */}
+      <section className="bg-gray-dark py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-white mb-8 text-center">
+            How to work with Sarah
+          </h2>
+          <div className="space-y-6">
+            {/* Card 1 */}
+            <div className="bg-white rounded-xl p-8 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg">
+              <div className="flex items-start gap-4">
+                <div className="p-2 rounded-lg bg-mint/10">
+                  <BookOpen className="w-6 h-6 text-mint" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-dark mb-2">
+                    Train Sarah on the care that you provide
+                  </h3>
+                  <p className="text-gray">
+                    Customize Sarah's knowledge base to align perfectly with your practice's specific medical services and protocols.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-white rounded-xl p-8 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg">
+              <div className="flex items-start gap-4">
+                <div className="p-2 rounded-lg bg-mint/10">
+                  <Settings2 className="w-6 h-6 text-mint" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-dark mb-2">
+                    Build your workflow and forwarding rules
+                  </h3>
+                  <p className="text-gray">
+                    Set up custom workflows and rules to ensure proper handling of different types of patient inquiries and urgency levels.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white rounded-xl p-8 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg">
+              <div className="flex items-start gap-4">
+                <div className="p-2 rounded-lg bg-mint/10">
+                  <PhoneCall className="w-6 h-6 text-mint" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-dark mb-2">
+                    Let Sarah take your calls
+                  </h3>
+                  <p className="text-gray">
+                    Activate Sarah to handle patient calls 24/7, providing professional and consistent care communication while following your established protocols.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
