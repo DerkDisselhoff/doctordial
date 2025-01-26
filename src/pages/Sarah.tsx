@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
-import { Bot, ChevronRight } from "lucide-react";
+import { Bot } from "lucide-react";
 import { BookDemoForm } from "@/components/BookDemoForm";
 import { Button } from "@/components/ui/button";
 import SarahSymptomTags from "@/components/features/SarahSymptomTags";
@@ -35,16 +35,12 @@ const Sarah = () => {
               <p className="text-gray text-lg md:text-xl max-w-2xl">
                 Your AI-powered medical assistant, combining advanced technology with compassionate care
               </p>
-              <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
+              <div className="pt-4">
                 <BookDemoForm>
                   <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white">
                     Hire Sarah
                   </Button>
                 </BookDemoForm>
-                <Button variant="outline" className="group">
-                  Learn More About Pricing
-                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </Button>
               </div>
             </div>
             
@@ -100,17 +96,11 @@ const Sarah = () => {
               <p className="text-gray mb-6">
                 Join the growing number of medical practices that trust Sarah to handle their patient communications.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <BookDemoForm>
-                  <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white">
-                    Book a Demo
-                  </Button>
-                </BookDemoForm>
-                <Button variant="outline" className="group">
-                  Learn More About Pricing
-                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+              <BookDemoForm>
+                <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white">
+                  Book a Demo
                 </Button>
-              </div>
+              </BookDemoForm>
             </div>
           </div>
         </div>

@@ -17,13 +17,6 @@ const Footer = () => {
             </p>
           </div>
           <div>
-            <h4 className="font-medium mb-3 md:mb-4 text-gray-dark text-sm md:text-base">Product</h4>
-            <ul className="space-y-2">
-              <li><Link to="/features" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">{t("nav.features")}</Link></li>
-              <li><Link to="/pricing" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">{t("nav.pricing")}</Link></li>
-            </ul>
-          </div>
-          <div>
             <h4 className="font-medium mb-3 md:mb-4 text-gray-dark text-sm md:text-base">Company</h4>
             <ul className="space-y-2">
               <li><Link to="/about" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">{t("footer.about")}</Link></li>
