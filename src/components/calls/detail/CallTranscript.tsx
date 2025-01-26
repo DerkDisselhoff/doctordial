@@ -47,7 +47,7 @@ export function CallTranscript({
                     </div>
                     <div className={`flex-grow p-3 rounded-lg ${
                       message.role === 'AI' 
-                        ? 'bg-gray-muted/10 border border-gray-muted' 
+                        ? 'bg-blue-light border border-blue/20' 
                         : 'bg-mint-light border border-mint-light'
                     }`}>
                       <p className="text-sm text-gray-dark leading-relaxed">{message.content}</p>
