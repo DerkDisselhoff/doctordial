@@ -19,25 +19,25 @@ const Sarah = () => {
       <Navbar />
       
       {/* Hero Section with Sarah's Image */}
-      <div className="pt-24 pb-16">
+      <div className="pt-24 pb-16 bg-forest">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
             <div className="space-y-6">
               <div className="flex items-center gap-2">
-                <Badge variant="outline" className="bg-mint/10 text-mint border-mint/20 px-4 py-1.5">
+                <Badge variant="outline" className="bg-mint/20 text-mint-light border-mint-light/20 px-4 py-1.5">
                   <Bot className="w-4 h-4 mr-1" />
                   AI-Powered Assistant
                 </Badge>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-dark">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
                 Meet Sarah
               </h1>
-              <p className="text-gray text-lg md:text-xl max-w-2xl">
+              <p className="text-gray-muted text-lg md:text-xl max-w-2xl">
                 Your AI-powered medical assistant, combining advanced technology with compassionate care
               </p>
               <div className="pt-4">
                 <BookDemoForm>
-                  <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white">
+                  <Button className="bg-mint hover:bg-mint-dark text-white">
                     Hire Sarah
                   </Button>
                 </BookDemoForm>
