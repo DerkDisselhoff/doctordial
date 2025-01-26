@@ -16,7 +16,8 @@ const translations = {
       about: "About",
       contact: "Contact",
       login: "Login",
-      bookDemo: "Book a Demo"
+      bookDemo: "Book a Demo",
+      sarah: "Sarah"
     },
     demo: {
       title: "Book a Demo",
@@ -59,22 +60,50 @@ const translations = {
       aiPowered: "AI-Powered Call Management",
       title: "Transform Your Practice's Communication",
       subtitle: "Let AI handle your practice's calls while maintaining the personal touch your patients expect.",
-      trainedOn: "Trained on millions of medical conversations"
+      trainedOn: "Trained on millions of medical conversations",
+      bookDemo: "Book a Demo",
+      learnMore: "Learn More"
     },
     stats: {
       accuracy: "Triage Accuracy",
       handling: "AI Action Handling Time",
       reduction: "Workload Reduction"
+    },
+    dashboard: {
+      overview: "Overview",
+      calls: "Calls",
+      appointments: "Appointments",
+      settings: "Settings",
+      workflow: "Workflow",
+      assistant: "Assistant",
+      billing: "Billing",
+      reports: "Reports",
+      logout: "Log out",
+      profile: "Profile Settings",
+      notifications: "Notifications",
+      security: "Security",
+      team: "Team"
+    },
+    capabilities: {
+      title: "Digital Workers, Ready to Deploy",
+      subtitle: "Discover how our plug-and-play digital workers seamlessly integrate with your practice"
+    },
+    assistant: {
+      title: "Meet Your Digital Doctor's Assistant",
+      description: "Your dedicated digital medical assistant, available 24/7 to handle patient calls and triage cases with the precision of a trained professional.",
+      learnMore: "Learn more about Sarah",
+      hire: "Hire Sarah"
     }
   },
   nl: {
     nav: {
-      features: "Kenmerken",
+      features: "Functies",
       pricing: "Prijzen",
       about: "Over Ons",
       contact: "Contact",
       login: "Inloggen",
-      bookDemo: "Demo Aanvragen"
+      bookDemo: "Demo Aanvragen",
+      sarah: "Sarah"
     },
     demo: {
       title: "Demo Aanvragen",
@@ -117,12 +146,39 @@ const translations = {
       aiPowered: "AI-Gestuurde Gespreksafhandeling",
       title: "Transformeer de Communicatie van uw Praktijk",
       subtitle: "Laat AI de telefoongesprekken van uw praktijk afhandelen met behoud van persoonlijk contact.",
-      trainedOn: "Getraind op miljoenen medische gesprekken"
+      trainedOn: "Getraind op miljoenen medische gesprekken",
+      bookDemo: "Demo Aanvragen",
+      learnMore: "Meer Informatie"
     },
     stats: {
       accuracy: "Triage Nauwkeurigheid",
       handling: "AI Actie Verwerkingstijd",
       reduction: "Werkdrukvermindering"
+    },
+    dashboard: {
+      overview: "Overzicht",
+      calls: "Gesprekken",
+      appointments: "Afspraken",
+      settings: "Instellingen",
+      workflow: "Workflow",
+      assistant: "Assistent",
+      billing: "Facturering",
+      reports: "Rapporten",
+      logout: "Uitloggen",
+      profile: "Profielinstellingen",
+      notifications: "Meldingen",
+      security: "Beveiliging",
+      team: "Team"
+    },
+    capabilities: {
+      title: "Digitale Medewerkers, Klaar voor Gebruik",
+      subtitle: "Ontdek hoe onze plug-and-play digitale medewerkers naadloos integreren met uw praktijk"
+    },
+    assistant: {
+      title: "Maak Kennis met uw Digitale Doktersassistent",
+      description: "Uw toegewijde digitale medische assistent, 24/7 beschikbaar om patiëntgesprekken af te handelen en triage uit te voeren met de precisie van een getrainde professional.",
+      learnMore: "Meer over Sarah",
+      hire: "Huur Sarah in"
     }
   }
 };

@@ -9,17 +9,16 @@ const HeroContent = () => {
     <div className="space-y-8 animate-fade-up text-center">
       <div className="flex items-center justify-center gap-2 bg-mint-light/30 w-fit px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-mint/20 hover:border-mint/40 transition-colors mx-auto">
         <Phone className="w-3 h-3 md:w-4 md:h-4 text-mint" />
-        <span className="text-mint text-xs md:text-sm font-medium">For General Practitioners</span>
+        <span className="text-mint text-xs md:text-sm font-medium">{t("hero.aiPowered")}</span>
       </div>
       
       <div className="space-y-6">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-gray-dark max-w-4xl mx-auto">
-          Digital workers, <br className="hidden sm:block" />
-          <span className="text-mint">human experience</span>
+          {t("hero.title")}
         </h1>
         
         <p className="text-base md:text-lg text-gray max-w-xl leading-relaxed mx-auto">
-          Our AI-powered virtual receptionist handles your practice's calls 24/7, ensuring every patient receives immediate attention while maintaining the personal touch they expect.
+          {t("hero.subtitle")}
         </p>
       </div>
 

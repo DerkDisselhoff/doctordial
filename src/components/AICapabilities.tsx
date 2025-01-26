@@ -6,6 +6,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 import MedicalIntelligenceCard from "./capabilities/MedicalIntelligenceCard";
 import ContinuousLearningCard from "./capabilities/ContinuousLearningCard";
 import SeamlessIntegrationCard from "./capabilities/SeamlessIntegrationCard";
@@ -13,40 +14,41 @@ import WorkerCustomizationCard from "./capabilities/WorkerCustomizationCard";
 import HumanExperienceCard from "./capabilities/HumanExperienceCard";
 import CapabilityCard from "./capabilities/CapabilityCard";
 
-const capabilities = [
-  {
-    title: "Medical Intelligence",
-    description: "Trained on NHG triage standards and medical datasets for accurate patient assessment",
-    illustration: <MedicalIntelligenceCard />,
-  },
-  {
-    title: "Worker Customization",
-    description: "Customize forwarding rules, activation timing, voice, tone, and medical question handling to match your practice needs",
-    illustration: <WorkerCustomizationCard />,
-  },
-  {
-    title: "Human Experience",
-    description: "Trained on billions of emotional and empathic interactions for natural, human-like conversations",
-    illustration: <HumanExperienceCard />,
-  },
-  {
-    title: "Seamless Integration",
-    description: "Easily integrates with your existing call software for smooth implementation",
-    illustration: <SeamlessIntegrationCard />,
-  },
-  {
-    title: "Continuous Learning",
-    description: "Improves through direct feedback on triage outcomes from medical professionals",
-    illustration: <ContinuousLearningCard />,
-  },
-];
-
 const AICapabilities = () => {
+  const { t } = useLanguage();
+
+  const capabilities = [
+    {
+      title: "Medical Intelligence",
+      description: "Trained on NHG triage standards and medical datasets for accurate patient assessment",
+      illustration: <MedicalIntelligenceCard />,
+    },
+    {
+      title: "Worker Customization",
+      description: "Customize forwarding rules, activation timing, voice, tone, and medical question handling to match your practice needs",
+      illustration: <WorkerCustomizationCard />,
+    },
+    {
+      title: "Human Experience",
+      description: "Trained on billions of emotional and empathic interactions for natural, human-like conversations",
+      illustration: <HumanExperienceCard />,
+    },
+    {
+      title: "Seamless Integration",
+      description: "Easily integrates with your existing call software for smooth implementation",
+      illustration: <SeamlessIntegrationCard />,
+    },
+    {
+      title: "Continuous Learning",
+      description: "Improves through direct feedback on triage outcomes from medical professionals",
+      illustration: <ContinuousLearningCard />,
+    },
+  ];
+
   return (
     <section className="w-full bg-gradient-to-b from-gray-100/80 to-blue-light/50 overflow-hidden">
       <div className="container mx-auto py-16 md:py-24 px-4">
         <div className="relative">
-          {/* Background with enhanced gradient and overlay */}
           <motion.div
             className="absolute inset-0 -z-10"
             initial={{ opacity: 0 }}
@@ -55,7 +57,6 @@ const AICapabilities = () => {
           >
             <div className="absolute top-10 left-10 w-32 h-32 bg-mint/20 rounded-full blur-3xl" />
             <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue/20 rounded-full blur-3xl" />
-            {/* Connection lines */}
             <svg className="absolute inset-0 w-full h-full" style={{ zIndex: -1 }}>
               <motion.path
                 d="M100,100 C150,150 250,150 300,100"
@@ -85,7 +86,7 @@ const AICapabilities = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              Digital Workers, Ready to Deploy
+              {t("capabilities.title")}
             </motion.h2>
             <motion.p 
               className="text-gray max-w-2xl mx-auto"
@@ -93,7 +94,7 @@ const AICapabilities = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Discover how our plug-and-play digital workers seamlessly integrate with your practice
+              {t("capabilities.subtitle")}
             </motion.p>
           </div>
 
