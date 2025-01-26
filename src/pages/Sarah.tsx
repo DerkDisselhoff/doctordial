@@ -14,6 +14,33 @@ import StatsBadge from "@/components/hero/StatsBadge";
 const Sarah = () => {
   const { t } = useLanguage();
 
+  // Animation variants for the cards
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { 
+      opacity: 0,
+      y: 20
+    },
+    visible: { 
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
@@ -79,9 +106,18 @@ const Sarah = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 text-center">
             How to work with Sarah
           </h2>
-          <div className="space-y-8">
+          <motion.div 
+            className="space-y-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
             {/* Card 1 */}
-            <div className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg">
+            <motion.div 
+              variants={cardVariants}
+              className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg"
+            >
               <div className="flex items-start gap-6">
                 <div className="p-3 rounded-lg bg-mint/10">
                   <BookOpen className="w-8 h-8 text-mint" />
@@ -95,10 +131,13 @@ const Sarah = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 2 */}
-            <div className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg">
+            <motion.div 
+              variants={cardVariants}
+              className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg"
+            >
               <div className="flex items-start gap-6">
                 <div className="p-3 rounded-lg bg-mint/10">
                   <Settings2 className="w-8 h-8 text-mint" />
@@ -112,10 +151,13 @@ const Sarah = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 3 */}
-            <div className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg">
+            <motion.div 
+              variants={cardVariants}
+              className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg"
+            >
               <div className="flex items-start gap-6">
                 <div className="p-3 rounded-lg bg-mint/10">
                   <PhoneCall className="w-8 h-8 text-mint" />
@@ -129,8 +171,8 @@ const Sarah = () => {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
