@@ -83,6 +83,22 @@ const translations = {
       title: "The next era of Healthcare,",
       subtitle: "driven by AI",
       description: "Empowering healthcare providers to focus on what matters most: patient care"
+    },
+    demo: {
+      title: "Book a Demo",
+      subtitle: "Experience the future of healthcare communication",
+      firstName: "First Name",
+      lastName: "Last Name",
+      email: "Email",
+      phone: "Phone Number",
+      practice: "Practice Name",
+      practitioners: "Number of Practitioners",
+      submit: "Book Demo",
+      submitting: "Booking...",
+      success: {
+        title: "Thank you for your interest!",
+        message: "We'll be in touch shortly to schedule your demo."
+      }
     }
   },
   nl: {
@@ -159,6 +175,22 @@ const translations = {
       title: "Het nieuwe tijdperk van Gezondheidszorg,",
       subtitle: "gedreven door AI",
       description: "Zorgverleners in staat stellen zich te concentreren op wat het belangrijkst is: patiëntenzorg"
+    },
+    demo: {
+      title: "Demo Aanvragen",
+      subtitle: "Ervaar de toekomst van gezondheidszorgcommunicatie",
+      firstName: "Voornaam",
+      lastName: "Achternaam",
+      email: "E-mail",
+      phone: "Telefoonnummer",
+      practice: "Praktijknaam",
+      practitioners: "Aantal Zorgverleners",
+      submit: "Demo Aanvragen",
+      submitting: "Aanvragen...",
+      success: {
+        title: "Bedankt voor uw interesse!",
+        message: "We nemen binnenkort contact met u op om uw demo in te plannen."
+      }
     }
   }
 };
