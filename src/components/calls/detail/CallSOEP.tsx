@@ -26,7 +26,7 @@ export function CallSOEP({ isEditing, soepNotes, editedCall, handleInputChange }
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {Object.entries(soepNotes).map(([section, content]) => (
               <div key={section} className="p-4 bg-gray-muted/10 rounded-lg border border-gray-muted">
-                <h4 className="text-base font-medium text-blue-dark mb-2">
+                <h4 className="text-base font-medium text-forest mb-2">
                   {section === 'S' ? 'Subjective' :
                    section === 'O' ? 'Objective' :
                    section === 'E' ? 'Evaluation' :
