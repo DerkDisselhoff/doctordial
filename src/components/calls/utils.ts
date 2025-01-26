@@ -1,28 +1,28 @@
 export const getSentimentColor = (sentiment: string) => {
   switch (sentiment?.toLowerCase()) {
     case 'positive':
-      return 'bg-green-500/20 border-green-500/30 text-green-500';
+      return 'bg-mint-light border-mint text-mint-dark';
     case 'negative':
       return 'bg-red-500/20 border-red-500/30 text-red-500';
     case 'neutral':
-      return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
+      return 'bg-gray-muted border-gray-light text-gray';
     default:
-      return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
+      return 'bg-gray-muted border-gray-light text-gray';
   }
 };
 
 export const getStatusColor = (status: string) => {
   switch (status?.toLowerCase()) {
     case 'completed':
-      return 'bg-green-500/20 border-green-500/30 text-green-500';
+      return 'bg-mint-light border-mint text-mint-dark';
     case 'in progress':
-      return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
+      return 'bg-sage-light border-sage text-sage-dark';
     case 'scheduled':
-      return 'bg-purple-500/20 border-purple-500/30 text-purple-500';
+      return 'bg-emerald-light border-emerald text-emerald-dark';
     case 'missed':
       return 'bg-red-500/20 border-red-500/30 text-red-500';
     default:
-      return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
+      return 'bg-gray-muted border-gray-light text-gray';
   }
 };
 
@@ -35,10 +35,10 @@ export const getUrgencyColor = (urgency: string) => {
     case 'U3':
       return 'bg-yellow-500/20 border-yellow-500/30 text-yellow-500';
     case 'U4':
-      return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
+      return 'bg-mint-light border-mint text-mint-dark';
     case 'U5':
-      return 'bg-green-500/20 border-green-500/30 text-green-500';
+      return 'bg-sage-light border-sage text-sage-dark';
     default:
-      return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
+      return 'bg-gray-muted border-gray-light text-gray';
   }
 };

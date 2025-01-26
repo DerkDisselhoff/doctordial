@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Flag } from "lucide-react";
+import { Edit2, Save, Flag } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { supabase } from "@/lib/supabaseClient";
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/lib/supabaseClient";
 
 interface CallHeaderProps {
   callId: string;
@@ -31,120 +30,97 @@ export function CallHeader({
 
   const handleFlag = async (reason: string) => {
     try {
-      const flaggingData = {
-        reason,
-        timestamp: new Date().toISOString(),
-        user_id: (await supabase.auth.getUser()).data.user?.id,
-      };
-
       const { error } = await supabase
         .from('call_logs')
-        .update({ flagging: flaggingData })
+        .update({ 
+          flagging: {
+            reason,
+            timestamp: new Date().toISOString()
+          }
+        })
         .eq('call_id', callId);
 
       if (error) throw error;
 
       toast({
-        title: "Call flagged successfully",
-        description: "The issue has been recorded.",
+        title: "Call flagged",
+        description: `The call has been flagged for ${reason}.`,
       });
 
       refetch();
     } catch (error) {
-      console.error("Error flagging call:", error);
+      console.error('Error flagging call:', error);
       toast({
         title: "Error flagging call",
-        description: "Please try again.",
+        description: "There was a problem flagging the call.",
         variant: "destructive",
       });
     }
   };
 
   return (
-    <div className="flex justify-between mb-4">
-      <div className="flex-1" />
+    <div className="flex justify-between items-center">
+      <h2 className="text-2xl font-semibold text-gray-dark">Call Details</h2>
       <div className="flex gap-2">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    className={`flex items-center gap-2 border-gray-muted hover:bg-gray-muted/10 ${
-                      isFlagged ? 'bg-red-500/10 text-red-500 hover:bg-red-500/20 border-red-500/30' : 'text-gray'
-                    }`}
-                  >
-                    <Flag className={`h-4 w-4 ${isFlagged ? 'text-red-500' : 'text-mint'}`} />
-                    Flag This Call
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-[400px] bg-white border-gray-muted shadow-lg">
-                  <div className="px-2 py-1.5 text-sm font-medium text-gray-dark border-b border-gray-muted">
-                    Reason for Flagging
-                  </div>
-                  <DropdownMenuItem
-                    className="text-gray hover:bg-gray-muted/10 focus:bg-gray-muted/10"
-                    onClick={() => handleFlag("The urgency level (U1–U5) was incorrect")}
-                  >
-                    The urgency level (U1–U5) was incorrect
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="text-gray hover:bg-gray-muted/10 focus:bg-gray-muted/10"
-                    onClick={() => handleFlag("The advice given was not helpful or clear")}
-                  >
-                    The advice given was not helpful or clear
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="text-gray hover:bg-gray-muted/10 focus:bg-gray-muted/10"
-                    onClick={() => handleFlag("The system didn't consider all information")}
-                  >
-                    The system didn't consider all information
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="text-gray hover:bg-gray-muted/10 focus:bg-gray-muted/10"
-                    onClick={() => handleFlag("Response wasn't approriate, it missed empathy")}
-                  >
-                    Response wasn't approriate, it missed empathy
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="text-gray hover:bg-gray-muted/10 focus:bg-gray-muted/10"
-                    onClick={() => handleFlag("Wrong action or referral")}
-                  >
-                    Wrong action or referral
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Click to flag if the system's outcome was not correct or helpful</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        
-        {isEditing ? (
-          <div className="space-x-2">
+        {!isEditing ? (
+          <>
+            <Button
+              onClick={() => setIsEditing(true)}
+              variant="outline"
+              className="border-mint hover:bg-mint-light/50 text-mint"
+            >
+              <Edit2 className="h-4 w-4 mr-2" />
+              Edit
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className={`border-mint ${isFlagged ? 'bg-mint-light/50' : ''} hover:bg-mint-light/50 text-mint`}
+                >
+                  <Flag className="h-4 w-4 mr-2" />
+                  {isFlagged ? 'Flagged' : 'Flag This Call'}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-white border-gray-muted">
+                <DropdownMenuItem 
+                  onClick={() => handleFlag('Needs Review')}
+                  className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
+                >
+                  Needs Review
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => handleFlag('Follow Up Required')}
+                  className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
+                >
+                  Follow Up Required
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => handleFlag('Incorrect Information')}
+                  className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
+                >
+                  Incorrect Information
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        ) : (
+          <>
             <Button
               onClick={() => setIsEditing(false)}
               variant="outline"
-              className="text-gray hover:bg-gray-muted/10 border-gray-muted"
+              className="border-mint hover:bg-mint-light/50 text-mint"
             >
               Cancel
             </Button>
-            <Button 
+            <Button
               onClick={handleSave}
               className="bg-blue-dark hover:bg-blue-dark/90 text-white"
             >
+              <Save className="h-4 w-4 mr-2" />
               Save Changes
             </Button>
-          </div>
-        ) : (
-          <Button 
-            onClick={() => setIsEditing(true)}
-            className="bg-blue-dark hover:bg-blue-dark/90 text-white"
-          >
-            Edit
-          </Button>
+          </>
         )}
       </div>
     </div>

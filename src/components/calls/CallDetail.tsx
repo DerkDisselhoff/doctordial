@@ -136,7 +136,7 @@ export function CallDetail() {
 
   if (error || !call) {
     return (
-      <div className="p-4 text-center text-white/70">
+      <div className="p-4 text-center text-gray">
         Call not found
       </div>
     );
