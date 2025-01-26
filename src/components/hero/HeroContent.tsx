@@ -14,7 +14,9 @@ const HeroContent = () => {
       
       <div className="space-y-6">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-gray-dark max-w-4xl mx-auto">
-          {t("hero.title")}
+          Digital Workers,
+          <br />
+          <span className="text-mint">Human Experience</span>
         </h1>
         
         <p className="text-base md:text-lg text-gray max-w-xl leading-relaxed mx-auto">
