@@ -6,8 +6,7 @@ import {
   HeartPulse, 
   Building2, 
   FileText, 
-  SmilePlus,
-  Calendar
+  SmilePlus
 } from "lucide-react";
 
 const UseCaseCard = ({ 
@@ -84,12 +83,6 @@ const SarahUseCases = () => {
       description: "Handle up to 60 simultaneous calls with consistent quality and personalized attention to each patient.",
       icon: Phone,
       color: "bg-sage"
-    },
-    {
-      title: "Appointment Scheduling",
-      description: "Seamlessly book and manage appointments, coordinating between patients and healthcare providers.",
-      icon: Calendar,
-      color: "bg-emerald"
     }
   ];
 
