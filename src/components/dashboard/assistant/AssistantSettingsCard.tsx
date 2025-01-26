@@ -91,7 +91,7 @@ export const AssistantSettingsCard = ({ onSettingChange }: AssistantSettingsCard
               <p className="text-gray">Enable AI assistant during non-business hours</p>
             </div>
             <Switch 
-              className="data-[state=checked]:bg-mint data-[state=checked]:border-mint/20 bg-gray-muted/20 border-gray-muted hover:bg-mint/10" 
+              className="bg-gray-muted/20 hover:bg-mint/10 data-[state=checked]:bg-mint data-[state=checked]:hover:bg-mint/90" 
               onCheckedChange={onSettingChange} 
             />
           </div>
@@ -104,7 +104,7 @@ export const AssistantSettingsCard = ({ onSettingChange }: AssistantSettingsCard
             <div className="flex items-center justify-between">
               <Label className="text-gray-dark font-medium">Use Greeting Variations</Label>
               <Switch 
-                className="data-[state=checked]:bg-mint data-[state=checked]:border-mint/20 bg-gray-muted/20 border-gray-muted hover:bg-mint/10" 
+                className="bg-gray-muted/20 hover:bg-mint/10 data-[state=checked]:bg-mint data-[state=checked]:hover:bg-mint/90" 
                 onCheckedChange={onSettingChange} 
               />
             </div>

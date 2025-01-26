@@ -68,14 +68,14 @@ export const CallForwardingCard = ({ onSettingChange }: CallForwardingCardProps)
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <Switch 
-                  className="data-[state=checked]:bg-mint data-[state=checked]:border-mint/20 bg-forest-light/50 border-mint/20 hover:bg-mint/10" 
+                  className="bg-forest-light/50 hover:bg-mint/10 data-[state=checked]:bg-mint data-[state=checked]:hover:bg-mint/90" 
                   onCheckedChange={onSettingChange}
                 />
                 <Label className="text-white/70">Forward to Assistant first</Label>
               </div>
               <div className="flex items-center space-x-2">
                 <Switch 
-                  className="data-[state=checked]:bg-mint data-[state=checked]:border-mint/20 bg-forest-light/50 border-mint/20 hover:bg-mint/10" 
+                  className="bg-forest-light/50 hover:bg-mint/10 data-[state=checked]:bg-mint data-[state=checked]:hover:bg-mint/90" 
                   onCheckedChange={onSettingChange}
                 />
                 <Label className="text-white/70">Forward to GP for urgent cases</Label>
