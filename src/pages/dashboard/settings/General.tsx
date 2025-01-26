@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Globe, Bell, UserPlus } from "lucide-react";
+import { Globe, Bell, Shield, UserPlus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
@@ -68,36 +68,39 @@ const GeneralSettings = () => {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white">General Settings</h2>
-        <p className="text-white/60">Manage your practice preferences</p>
+        <h2 className="text-2xl font-bold text-gray-dark">General Settings</h2>
+        <p className="text-gray">Manage your account and application preferences</p>
       </div>
 
-      <Card className="bg-forest-light/50 border-mint/10">
+      <Card className="bg-white border-gray-muted shadow-sm">
         <CardHeader>
-          <CardTitle className="text-white">Account Information</CardTitle>
+          <CardTitle className="text-gray-dark flex items-center gap-2">
+            <UserPlus className="w-5 h-5 text-mint" />
+            Account Information
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-white">Your Name</Label>
+            <Label className="text-gray-dark">Your Name</Label>
             <Input
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-2 bg-forest border border-mint/20 rounded-md text-white placeholder-white/40"
+              className="bg-white border-gray-muted focus:border-mint focus:ring-mint/20"
               placeholder="Enter your name"
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-white">Practice Name</Label>
+            <Label className="text-gray-dark">Practice Name</Label>
             <Input
               value={practiceName}
               onChange={(e) => setPracticeName(e.target.value)}
-              className="w-full p-2 bg-forest border border-mint/20 rounded-md text-white placeholder-white/40"
+              className="bg-white border-gray-muted focus:border-mint focus:ring-mint/20"
               placeholder="Enter practice name"
             />
           </div>
           <Button 
             onClick={handleSaveChanges} 
-            className="bg-mint hover:bg-mint/90 text-forest"
+            className="cta-button"
             disabled={isLoading}
           >
             {isLoading ? "Saving..." : "Save Changes"}
@@ -105,18 +108,21 @@ const GeneralSettings = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-white border-gray-muted shadow-sm">
         <CardHeader>
-          <CardTitle className="text-white">Notifications</CardTitle>
+          <CardTitle className="text-gray-dark flex items-center gap-2">
+            <Bell className="w-5 h-5 text-mint" />
+            Notifications
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {["Email notifications", "SMS alerts", "Weekly reports"].map((setting) => (
               <div key={setting} className="flex items-center justify-between">
-                <span className="text-white">{setting}</span>
+                <span className="text-gray-dark">{setting}</span>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input type="checkbox" className="sr-only peer" />
-                  <div className="w-11 h-6 bg-forest peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-mint/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-mint"></div>
+                  <div className="w-11 h-6 bg-gray-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-mint/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-mint"></div>
                 </label>
               </div>
             ))}
@@ -124,43 +130,25 @@ const GeneralSettings = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-white border-gray-muted shadow-sm">
         <CardHeader>
-          <CardTitle className="text-white">Security</CardTitle>
-          <p className="dashboard-card-content">Manage security settings</p>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <Button variant="outline" className="w-full justify-start text-white/70 hover:text-white hover:bg-mint/10">
-              Change Password
-            </Button>
-            <Button variant="outline" className="w-full justify-start text-white/70 hover:text-white hover:bg-mint/10">
-              Two-Factor Authentication
-            </Button>
-            <Button variant="outline" className="w-full justify-start text-white/70 hover:text-white hover:bg-mint/10">
-              Login History
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-white">Preferences</CardTitle>
-          <p className="dashboard-card-content">Customize your experience</p>
+          <CardTitle className="text-gray-dark flex items-center gap-2">
+            <Globe className="w-5 h-5 text-mint" />
+            Language & Region
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="form-label">Language</label>
-              <select className="form-select">
+              <Label className="text-gray-dark">Language</Label>
+              <select className="w-full p-2 bg-white border border-gray-muted rounded-md text-gray-dark focus:border-mint focus:ring-mint/20">
                 <option>English</option>
                 <option>Dutch</option>
               </select>
             </div>
             <div className="space-y-2">
-              <label className="form-label">Time Zone</label>
-              <select className="form-select">
+              <Label className="text-gray-dark">Time Zone</Label>
+              <select className="w-full p-2 bg-white border border-gray-muted rounded-md text-gray-dark focus:border-mint focus:ring-mint/20">
                 <option>UTC+01:00 Amsterdam</option>
                 <option>UTC+00:00 London</option>
               </select>
@@ -169,37 +157,24 @@ const GeneralSettings = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-white border-gray-muted shadow-sm">
         <CardHeader>
-          <CardTitle className="text-white">Call Settings</CardTitle>
-          <p className="dashboard-card-content">Configure call handling preferences</p>
+          <CardTitle className="text-gray-dark flex items-center gap-2">
+            <Shield className="w-5 h-5 text-mint" />
+            Security
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <label className="form-label">Business Hours</label>
-              <div className="grid gap-4 md:grid-cols-2">
-                <input
-                  type="time"
-                  className="form-input"
-                  defaultValue="09:00"
-                />
-                <input
-                  type="time"
-                  className="form-input"
-                  defaultValue="17:00"
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="form-label">Voice Settings</label>
-              <select className="form-select">
-                <option>Natural voice</option>
-                <option>Professional voice</option>
-                <option>Friendly voice</option>
-              </select>
-            </div>
-            <Button className="bg-mint hover:bg-mint/90 text-forest">Update Call Settings</Button>
+          <div className="space-y-4">
+            <Button variant="outline" className="w-full justify-start text-gray hover:text-gray-dark hover:bg-gray-50">
+              Change Password
+            </Button>
+            <Button variant="outline" className="w-full justify-start text-gray hover:text-gray-dark hover:bg-gray-50">
+              Two-Factor Authentication
+            </Button>
+            <Button variant="outline" className="w-full justify-start text-gray hover:text-gray-dark hover:bg-gray-50">
+              Login History
+            </Button>
           </div>
         </CardContent>
       </Card>

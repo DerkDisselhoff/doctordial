@@ -38,16 +38,16 @@ export default function Integrations() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold text-white mb-2">Integrations</h2>
-        <p className="text-white/70">Connect your practice tools and services</p>
+        <h2 className="text-2xl font-bold text-gray-dark">Integrations</h2>
+        <p className="text-gray">Connect your practice tools and services</p>
       </div>
 
       <div className="space-y-6">
         {integrationCategories.map((category) => (
-          <Card key={category.title} className="bg-forest-light border-mint/10">
+          <Card key={category.title} className="bg-white border-gray-muted shadow-sm">
             <CardHeader>
-              <CardTitle className="text-white">{category.title}</CardTitle>
-              <CardDescription className="text-white/70">
+              <CardTitle className="text-gray-dark">{category.title}</CardTitle>
+              <CardDescription className="text-gray">
                 {category.description}
               </CardDescription>
             </CardHeader>
@@ -56,18 +56,18 @@ export default function Integrations() {
                 {category.integrations.map((integration) => (
                   <div
                     key={integration.name}
-                    className="flex items-center justify-between p-4 rounded-lg bg-forest border border-mint/10 hover:border-mint/20 transition-colors"
+                    className="flex items-center justify-between p-4 rounded-lg bg-white border border-gray-muted hover:border-mint/20 transition-colors"
                   >
                     <div className="flex items-center space-x-3">
                       <span className="text-2xl">{integration.icon}</span>
                       <div>
-                        <p className="font-medium text-white">{integration.name}</p>
+                        <p className="font-medium text-gray-dark">{integration.name}</p>
                         <Badge
                           variant="outline"
                           className={
                             integration.status === "connected"
-                              ? "bg-green-500/10 text-green-500 border-green-500/20"
-                              : "bg-mint/10 text-mint border-mint/20"
+                              ? "bg-mint/10 text-mint border-mint/20"
+                              : "bg-gray-muted text-gray border-gray-muted"
                           }
                         >
                           {integration.status === "connected" ? (
@@ -83,8 +83,8 @@ export default function Integrations() {
                       variant={integration.status === "connected" ? "outline" : "default"}
                       className={
                         integration.status === "connected"
-                          ? "border-mint/20 text-mint hover:bg-mint/10"
-                          : "bg-mint hover:bg-mint/90 text-forest"
+                          ? "border-gray-muted hover:bg-gray-50 text-gray-dark"
+                          : "cta-button"
                       }
                     >
                       {integration.status === "connected" ? "Configure" : "Connect"}
@@ -98,4 +98,4 @@ export default function Integrations() {
       </div>
     </div>
   );
-}
+};

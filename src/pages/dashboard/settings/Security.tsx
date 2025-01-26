@@ -1,71 +1,82 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Shield, Key, Smartphone } from "lucide-react";
+import { Shield, Key, Smartphone, History } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const SecuritySettings = () => {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white">Security & Privacy</h2>
-        <p className="text-white/60">Manage your account security settings</p>
+        <h2 className="text-2xl font-bold text-gray-dark">Security & Privacy</h2>
+        <p className="text-gray">Manage your account security settings</p>
       </div>
 
-      <Card className="bg-forest-light/50 border-mint/10">
+      <Card className="bg-white border-gray-muted shadow-sm">
         <CardHeader>
-          <CardTitle className="text-white">Password</CardTitle>
+          <CardTitle className="text-gray-dark flex items-center gap-2">
+            <Key className="w-5 h-5 text-mint" />
+            Password
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Current Password</label>
-            <input
+            <Label className="text-gray-dark">Current Password</Label>
+            <Input
               type="password"
-              className="w-full p-2 bg-forest border border-mint/20 rounded-md text-white placeholder-white/40"
+              className="bg-white border-gray-muted focus:border-mint focus:ring-mint/20"
               placeholder="Enter current password"
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">New Password</label>
-            <input
+            <Label className="text-gray-dark">New Password</Label>
+            <Input
               type="password"
-              className="w-full p-2 bg-forest border border-mint/20 rounded-md text-white placeholder-white/40"
+              className="bg-white border-gray-muted focus:border-mint focus:ring-mint/20"
               placeholder="Enter new password"
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Confirm New Password</label>
-            <input
+            <Label className="text-gray-dark">Confirm New Password</Label>
+            <Input
               type="password"
-              className="w-full p-2 bg-forest border border-mint/20 rounded-md text-white placeholder-white/40"
+              className="bg-white border-gray-muted focus:border-mint focus:ring-mint/20"
               placeholder="Confirm new password"
             />
           </div>
-          <Button className="bg-mint hover:bg-mint/90 text-forest">Update Password</Button>
+          <Button className="cta-button">Update Password</Button>
         </CardContent>
       </Card>
 
-      <Card className="bg-forest-light/50 border-mint/10">
+      <Card className="bg-white border-gray-muted shadow-sm">
         <CardHeader>
-          <CardTitle className="text-white">Two-Factor Authentication</CardTitle>
+          <CardTitle className="text-gray-dark flex items-center gap-2">
+            <Smartphone className="w-5 h-5 text-mint" />
+            Two-Factor Authentication
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between p-4 border border-mint/10 rounded-lg bg-forest">
+          <div className="flex items-center justify-between p-4 border border-gray-muted rounded-lg bg-white">
             <div className="flex items-center space-x-4">
-              <Smartphone className="h-6 w-6 text-mint" />
+              <Shield className="w-5 h-5 text-mint" />
               <div>
-                <p className="font-medium text-white">Two-Factor Authentication</p>
-                <p className="text-sm text-white/60">Add an extra layer of security</p>
+                <p className="font-medium text-gray-dark">Two-Factor Authentication</p>
+                <p className="text-sm text-gray">Add an extra layer of security</p>
               </div>
             </div>
-            <Button variant="outline" className="border-mint text-white hover:bg-mint/10">
+            <Button variant="outline" className="border-gray-muted hover:bg-gray-50 text-gray-dark">
               Enable 2FA
             </Button>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-forest-light/50 border-mint/10">
+      <Card className="bg-white border-gray-muted shadow-sm">
         <CardHeader>
-          <CardTitle className="text-white">Login History</CardTitle>
+          <CardTitle className="text-gray-dark flex items-center gap-2">
+            <History className="w-5 h-5 text-mint" />
+            Login History
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -73,12 +84,12 @@ const SecuritySettings = () => {
               { device: "Windows PC", location: "Amsterdam, NL", time: "2 hours ago" },
               { device: "iPhone 13", location: "Amsterdam, NL", time: "1 day ago" },
             ].map((login, index) => (
-              <div key={index} className="flex justify-between items-center p-4 border border-mint/10 rounded-lg bg-forest">
+              <div key={index} className="flex justify-between items-center p-4 border border-gray-muted rounded-lg bg-white">
                 <div>
-                  <p className="font-medium text-white">{login.device}</p>
-                  <p className="text-sm text-white/60">{login.location}</p>
+                  <p className="font-medium text-gray-dark">{login.device}</p>
+                  <p className="text-sm text-gray">{login.location}</p>
                 </div>
-                <p className="text-sm text-white/60">{login.time}</p>
+                <p className="text-sm text-gray">{login.time}</p>
               </div>
             ))}
           </div>
