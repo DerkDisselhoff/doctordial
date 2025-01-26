@@ -42,7 +42,7 @@ export function AdminSidebar() {
       if (session) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('role, username, avatar_url, company_name')
+          .select('role, username, avatar_url')
           .eq('id', session.user.id)
           .single();
         
@@ -50,7 +50,6 @@ export function AdminSidebar() {
         setUserProfile({
           username: profile?.username || session.user.email?.split('@')[0],
           avatar_url: profile?.avatar_url,
-          company_name: profile?.company_name,
         });
       }
     };
