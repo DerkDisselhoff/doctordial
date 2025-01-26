@@ -20,7 +20,7 @@ const translations = {
       sarah: "Sarah"
     },
     capabilities: {
-      title: "Digital workers, ready to deploy",
+      title: "Digital Workers, Ready to Deploy",
       subtitle: "Discover how our plug-and-play digital workers seamlessly integrate with your practice",
       medicalIntelligence: {
         title: "Medical Intelligence",
@@ -96,7 +96,7 @@ const translations = {
       sarah: "Sarah"
     },
     capabilities: {
-      title: "Digitale medewerkers, klaar voor gebruik",
+      title: "Digitale Medewerkers, Klaar voor Gebruik",
       subtitle: "Ontdek hoe onze plug-and-play digitale medewerkers naadloos integreren met uw praktijk",
       medicalIntelligence: {
         title: "Medische Intelligentie",
