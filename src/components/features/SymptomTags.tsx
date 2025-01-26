@@ -10,15 +10,18 @@ const symptoms = [
 ];
 
 const TagLine = ({ symptoms, direction = "none", speed = 0 }: { symptoms: string[], direction?: "none" | "right", speed?: number }) => {
+  // Duplicate symptoms array to create seamless loop
+  const duplicatedSymptoms = [...symptoms, ...symptoms];
+  
   return (
     <div className="relative flex items-center h-8 overflow-hidden">
       {/* Gradient overlay - left side */}
-      <div className="absolute left-0 w-20 h-full bg-gradient-to-r from-white to-transparent z-10" />
+      <div className="absolute left-0 w-20 h-full bg-gradient-to-r from-forest to-transparent z-10" />
       
       <motion.div 
         className="flex gap-3 absolute whitespace-nowrap"
         animate={direction !== "none" ? {
-          x: ["0%", "100%"],
+          x: ["0%", "-50%"],
         } : {}}
         transition={{
           duration: speed,
@@ -26,18 +29,19 @@ const TagLine = ({ symptoms, direction = "none", speed = 0 }: { symptoms: string
           ease: "linear"
         }}
       >
-        {symptoms.map((symptom, index) => (
+        {duplicatedSymptoms.map((symptom, index) => (
           <span
             key={`${symptom}-${index}`}
-            className="px-3 py-1 text-xs font-medium rounded-full bg-mint-light/30 text-forest border border-mint/10"
+            className="px-3 py-1 text-xs font-medium rounded-full bg-mint/20 text-white border border-mint/20 flex items-center gap-2"
           >
+            <span className="w-1.5 h-1.5 rounded-full bg-mint/50"></span>
             {symptom}
           </span>
         ))}
       </motion.div>
 
       {/* Gradient overlay - right side */}
-      <div className="absolute right-0 w-20 h-full bg-gradient-to-l from-white to-transparent z-10" />
+      <div className="absolute right-0 w-20 h-full bg-gradient-to-l from-forest to-transparent z-10" />
     </div>
   );
 };
