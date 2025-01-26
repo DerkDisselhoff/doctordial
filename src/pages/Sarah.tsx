@@ -9,6 +9,7 @@ import { CallDetailPreview } from "@/components/features/feature-previews/CallDe
 import SarahUseCases from "@/components/features/SarahUseCases";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
+import StatsBadge from "@/components/hero/StatsBadge";
 
 const Sarah = () => {
   const { t } = useLanguage();
@@ -34,8 +35,16 @@ const Sarah = () => {
               <p className="text-gray text-lg md:text-xl max-w-2xl">
                 Your AI-powered medical assistant, combining advanced technology with compassionate care
               </p>
-              <div className="pt-4">
-                <BookDemoForm />
+              <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
+                <BookDemoForm>
+                  <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white">
+                    Hire Sarah
+                  </Button>
+                </BookDemoForm>
+                <Button variant="outline" className="group">
+                  Learn More About Pricing
+                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </div>
             </div>
             
@@ -44,16 +53,17 @@ const Sarah = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="relative"
+              className="relative lg:h-[600px]"
             >
-              <div className="absolute -inset-1 bg-gradient-to-r from-mint-light/20 to-blue-light/20 rounded-2xl blur-lg opacity-75 animate-gradient" />
-              <div className="relative rounded-2xl overflow-hidden">
+              <div className="absolute -inset-0.5 bg-mint/20 rounded-2xl blur-2xl opacity-50" />
+              <div className="relative rounded-2xl overflow-visible shadow-2xl border border-mint/10 h-full bg-forest-light">
                 <img
                   src="/lovable-uploads/8cc89b28-b673-4f32-92b9-ea395078b319.png"
                   alt="Sarah AI Medical Assistant"
-                  className="w-full object-cover aspect-square lg:aspect-[4/3]"
+                  className="w-full h-full object-cover rounded-2xl"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-forest/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent" />
+                <StatsBadge value="24/7" label="Patient Support" />
               </div>
             </motion.div>
           </div>
