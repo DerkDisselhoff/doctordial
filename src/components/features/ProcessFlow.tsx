@@ -135,7 +135,7 @@ const ProcessFlow = () => {
               <tspan x="500" dy="16">Assistant</tspan>
             </text>
             
-            <text x="500" y="280" textAnchor text-xs md:text-sm font-medium">
+            <text x="500" y="280" textAnchor="middle" className="fill-gray-dark text-xs md:text-sm font-medium">
               <tspan x="500" dy="-5">Appointment</tspan>
               <tspan x="500" dy="16">Scheduler</tspan>
             </text>
