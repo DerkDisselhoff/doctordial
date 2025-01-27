@@ -207,18 +207,38 @@ const translations = {
         title: "Bedankt voor uw interesse!",
         message: "We nemen binnenkort contact met u op om uw demo in te plannen."
       }
+    },
+    stats: {
+      handling: "Gemiddelde afhandeltijd",
+      reduction: "Reductie in wachttijd"
+    },
+    calls: {
+      recentCalls: "Recente Gesprekken",
+      date: "Datum",
+      caller: "Beller",
+      duration: "Duur",
+      status: "Status"
+    },
+    dashboard: {
+      overview: "Overzicht",
+      calls: "Gesprekken",
+      settings: "Instellingen",
+      workflow: "Workflow",
+      clients: "Cliënten",
+      reports: "Rapporten",
+      billing: "Facturering"
     }
   }
 };
 
 const LanguageContext = createContext<LanguageContextType>({
   t: () => "",
-  language: "en",
+  language: "nl", // Changed default to Dutch
   setLanguage: () => {}
 });
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>("en");
+  const [language, setLanguage] = useState<Language>("nl"); // Changed default to Dutch
 
   const t = (key: string): string => {
     const keys = key.split('.');
