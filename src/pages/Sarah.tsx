@@ -12,7 +12,6 @@ import StatsBadge from "@/components/hero/StatsBadge";
 import TrainSarahCard from "@/components/capabilities/TrainSarahCard";
 import WorkflowRulesCard from "@/components/capabilities/WorkflowRulesCard";
 import TakeCallsCard from "@/components/capabilities/TakeCallsCard";
-import ProcessFlow from "@/components/features/ProcessFlow";
 
 const Sarah = () => {
   const { t } = useLanguage();
@@ -100,13 +99,6 @@ const Sarah = () => {
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
           <SarahUseCases />
-        </div>
-      </section>
-
-      {/* Process Flow Section */}
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <ProcessFlow />
         </div>
       </section>
 
