@@ -10,15 +10,15 @@ import HealthcareStats from "@/components/about/HealthcareStats";
 
 const About = () => {
   return (
-    <main className="min-h-screen bg-white text-text-primary">
+    <main className="min-h-screen bg-gray-muted/10">
       <Navbar />
       
       <AboutHero />
 
-      <section className="py-12 px-4">
+      <section className="py-20 px-4">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-8 mb-12">
+          <div className="max-w-4xl mx-auto space-y-16">
+            <div className="space-y-8">
               <ChallengeSection />
               <SolutionSection />
               <VisionSection />

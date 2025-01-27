@@ -3,10 +3,10 @@ import { Brain } from 'lucide-react';
 
 const SolutionSection = () => {
   return (
-    <div className="space-y-6 bg-blue-light/20 rounded-2xl p-8 shadow-sm border border-blue-light">
-      <div className="flex items-center gap-3 text-blue-dark mb-4">
+    <div className="space-y-6 bg-white rounded-2xl p-8 shadow-sm border border-gray-muted hover:shadow-md transition-all">
+      <div className="flex items-center gap-3 text-mint mb-4">
         <Brain className="w-6 h-6" />
-        <h3 className="text-xl font-semibold text-gray-dark">The Solution</h3>
+        <h3 className="text-2xl font-semibold text-gray-dark">The Solution</h3>
       </div>
       <p className="text-gray leading-relaxed">
         Technology has advanced to a point where it can confidently automate routine tasks without 

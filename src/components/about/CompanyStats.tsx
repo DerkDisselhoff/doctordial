@@ -28,13 +28,13 @@ const CompanyStats = () => {
       ].map((stat, index) => (
         <div 
           key={index}
-          className="p-6 bg-forest-light rounded-xl border border-mint/10 hover:border-mint/20 transition-all animate-fade-up"
+          className="p-6 bg-white rounded-xl border border-gray-muted hover:border-mint/20 transition-all animate-fade-up shadow-sm hover:shadow-md"
           style={{ animationDelay: `${index * 100}ms` }}
         >
           <div className="flex flex-col items-center text-center space-y-2">
             {stat.icon}
-            <span className="text-2xl font-bold text-white">{stat.value}</span>
-            <span className="text-sm text-white/60">{stat.label}</span>
+            <span className="text-2xl font-bold text-gray-dark">{stat.value}</span>
+            <span className="text-sm text-gray">{stat.label}</span>
           </div>
         </div>
       ))}

@@ -3,10 +3,10 @@ import { Heart } from 'lucide-react';
 
 const ChallengeSection = () => {
   return (
-    <div className="space-y-6 bg-white rounded-2xl p-8 shadow-sm border border-gray-muted/10">
+    <div className="space-y-6 bg-white rounded-2xl p-8 shadow-sm border border-gray-muted hover:shadow-md transition-all">
       <div className="flex items-center gap-3 text-mint mb-4">
         <Heart className="w-6 h-6" />
-        <h3 className="text-xl font-semibold text-gray-dark">The Challenge</h3>
+        <h3 className="text-2xl font-semibold text-gray-dark">The Challenge</h3>
       </div>
       <p className="text-gray leading-relaxed">
         In the Netherlands, our healthcare system stands at a critical juncture. An aging population, 

@@ -3,10 +3,10 @@ import { Stethoscope } from 'lucide-react';
 
 const VisionSection = () => {
   return (
-    <div className="space-y-6 bg-white rounded-2xl p-8 shadow-sm border border-gray-muted/10">
+    <div className="space-y-6 bg-white rounded-2xl p-8 shadow-sm border border-gray-muted hover:shadow-md transition-all">
       <div className="flex items-center gap-3 text-mint mb-4">
         <Stethoscope className="w-6 h-6" />
-        <h3 className="text-xl font-semibold text-gray-dark">Our Vision</h3>
+        <h3 className="text-2xl font-semibold text-gray-dark">Our Vision</h3>
       </div>
       <p className="text-gray leading-relaxed">
         DoctorDial exists to bring this future to life. Our vision is to unburden medical staff 

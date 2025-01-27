@@ -15,19 +15,19 @@ const InteractiveDemo = () => {
       icon: <Bot className="w-8 h-8" />,
       title: "AI Analysis",
       description: "Advanced AI analyzes the conversation in real-time for urgency and intent",
-      color: "text-divine"
+      color: "text-mint"
     },
     {
       icon: <Stethoscope className="w-8 h-8" />,
       title: "Smart Triage",
       description: "Cases are intelligently prioritized based on medical urgency",
-      color: "text-mint-light"
+      color: "text-mint"
     },
     {
       icon: <Calendar className="w-8 h-8" />,
       title: "Automated Scheduling",
       description: "Appointments are automatically scheduled based on urgency and availability",
-      color: "text-divine-light"
+      color: "text-mint"
     }
   ];
 
@@ -35,25 +35,25 @@ const InteractiveDemo = () => {
     <div className="py-16">
       <div className="flex items-center gap-3 text-mint mb-8">
         <Bot className="w-6 h-6" />
-        <h3 className="text-xl font-semibold text-mint">Experience Our AI in Action</h3>
+        <h3 className="text-2xl font-semibold text-gray-dark">Experience Our AI in Action</h3>
       </div>
 
       <div className="grid md:grid-cols-4 gap-6">
         {steps.map((step, index) => (
           <div
             key={index}
-            className={`p-6 rounded-xl border transition-all duration-300 cursor-pointer
+            className={`p-6 rounded-xl border transition-all duration-300 cursor-pointer bg-white
               ${activeStep === index 
-                ? 'bg-forest-light border-mint scale-105' 
-                : 'bg-forest-light/10 border-mint/10 hover:border-mint/20'}`}
+                ? 'border-mint shadow-md scale-105' 
+                : 'border-gray-muted hover:border-mint/20 shadow-sm hover:shadow-md'}`}
             onClick={() => setActiveStep(index)}
           >
             <div className={`${step.color} mb-4 transition-all duration-300
               ${activeStep === index ? 'scale-110' : ''}`}>
               {step.icon}
             </div>
-            <h4 className="text-lg font-semibold text-white mb-2">{step.title}</h4>
-            <p className="text-white/70 text-sm">{step.description}</p>
+            <h4 className="text-lg font-semibold text-gray-dark mb-2">{step.title}</h4>
+            <p className="text-gray text-sm">{step.description}</p>
           </div>
         ))}
       </div>
