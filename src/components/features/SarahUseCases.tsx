@@ -49,38 +49,38 @@ const SarahUseCases = () => {
 
   const useCases = [
     {
-      title: "Forward Urgent Cases",
-      description: "Automatically identify and forward U2-U4 urgency cases to the doctor's assistant, ensuring timely response to medical needs.",
+      title: t("sarah.useCases.forward.title"),
+      description: t("sarah.useCases.forward.description"),
       icon: ArrowRightLeft,
       color: "bg-mint"
     },
     {
-      title: "Self-Care Guidance",
-      description: "Provide personalized self-care advice based on symptoms and medical history, empowering patients with reliable healthcare information.",
+      title: t("sarah.useCases.selfCare.title"),
+      description: t("sarah.useCases.selfCare.description"),
       icon: HeartPulse,
       color: "bg-sage"
     },
     {
-      title: "Smart Care Routing",
-      description: "Efficiently redirect non-relevant care requests to appropriate clinics, optimizing healthcare resource allocation.",
+      title: t("sarah.useCases.routing.title"),
+      description: t("sarah.useCases.routing.description"),
       icon: Building2,
       color: "bg-emerald"
     },
     {
-      title: "Conversation Intelligence",
-      description: "Transcribe and summarize all conversations, creating detailed records while extracting key medical insights.",
+      title: t("sarah.useCases.conversation.title"),
+      description: t("sarah.useCases.conversation.description"),
       icon: FileText,
       color: "bg-forest"
     },
     {
-      title: "Adaptive Communication",
-      description: "Dynamically adjust tone and emotion based on conversation context, ensuring empathetic patient interactions.",
+      title: t("sarah.useCases.communication.title"),
+      description: t("sarah.useCases.communication.description"),
       icon: SmilePlus,
       color: "bg-mint"
     },
     {
-      title: "High-Volume Support",
-      description: "Handle up to 60 simultaneous calls with consistent quality and personalized attention to each patient.",
+      title: t("sarah.useCases.support.title"),
+      description: t("sarah.useCases.support.description"),
       icon: Phone,
       color: "bg-sage"
     }
@@ -96,10 +96,10 @@ const SarahUseCases = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-dark">
-            Use Cases
+            {t("sarah.useCases.title")}
           </h2>
           <p className="text-gray max-w-2xl mx-auto">
-            Discover how Sarah enhances your medical practice with intelligent call management and patient care coordination.
+            {t("sarah.useCases.subtitle")}
           </p>
         </motion.div>
 

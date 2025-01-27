@@ -214,43 +214,30 @@ const translations = {
       location: "Opgericht in 2025, Amsterdam",
       title: "Het nieuwe tijdperk van Gezondheidszorg,",
       subtitle: "gedreven door AI",
-      description: "Zorgverleners in staat stellen zich te concentreren op wat het belangrijkst is: patiëntenzorg"
-    },
-    demo: {
-      title: "Demo Aanvragen",
-      subtitle: "Ervaar de toekomst van gezondheidszorgcommunicatie",
-      firstName: "Voornaam",
-      lastName: "Achternaam",
-      email: "E-mail",
-      phone: "Telefoonnummer",
-      practice: "Praktijknaam",
-      practitioners: "Aantal Zorgverleners",
-      submit: "Demo Aanvragen",
-      submitting: "Aanvragen...",
-      success: {
-        title: "Bedankt voor je interesse!",
-        message: "We nemen binnenkort contact met je op om je demo in te plannen."
+      description: "Zorgverleners in staat stellen zich te concentreren op wat het belangrijkst is: patiëntenzorg",
+      stats: {
+        founded: "Opgericht in Amsterdam",
+        assistants: "AI Assistenten",
+        expertise: "Medische Expertise",
+        languages: "Beschikbare Talen"
+      },
+      challenge: {
+        title: "De Uitdaging",
+        description1: "In Nederland staat ons zorgsysteem op een kritiek punt. Een vergrijzende bevolking, stijgende kosten en een toegenomen vraag naar specialistische zorg zorgen voor een groeiende druk op Ziekenhuizen, Huisartsen en medisch personeel.",
+        description2: "Mensen verliezen vertrouwen in een systeem dat overweldigd lijkt. Wachttijden nemen toe en zorgprofessionals hebben het zwaar, wat vooral uitdagend is in de huisartsenpraktijk. Dit resulteert in slechtere toegankelijkheid voor de patiënt.",
+        description3: "Wanneer patiënten niet op tijd aandacht kunnen krijgen, lijden ze zowel fysiek als mentaal. Chronische aandoeningen verergeren ongecontroleerd, kleine problemen worden groot en het vertrouwen in het systeem erodeert."
+      },
+      solution: {
+        title: "De Oplossing",
+        description1: "Technologie is zover gevorderd dat het routinetaken betrouwbaar kan automatiseren zonder het menselijke aspect te verliezen. Door administratief werk aan AI te delegeren, krijgen zorgverleners meer ruimte om zich te richten op impactvolle patiëntenzorg.",
+        description2: "Stel je een intelligent triagesysteem voor dat snel initiële symptomen evalueert, afspraken plant en ervoor zorgt dat mensen die urgente zorg nodig hebben eerst een arts zien - terwijl routinecontroles en follow-ups net zo effectief worden afgehandeld."
+      },
+      vision: {
+        title: "Onze Visie",
+        description1: "DoctorDial bestaat om deze toekomst werkelijkheid te maken. Onze visie is om medisch personeel te ontlasten met een AI-gedreven platform dat triage, planning en patiënt follow-up stroomlijnt, begeleid door onze eigen ervaren zorgprofessionals.",
+        description2: "Door gebruik te maken van de nieuwste medische inzichten en praktische kennis, zorgen we ervoor dat onze automatiseringsoplossingen veilig en nauwkeurig zijn, en diep afgestemd op de belangen van patiënten en zorgverleners.",
+        description3: "Door de kracht van AI in te zetten, vergroot DoctorDial de capaciteit van artsen, verpleegkundigen en ondersteunend personeel - zonder ooit het welzijn van de patiënt uit het oog te verliezen. Onze toewijding is om de Nederlandse huisartsenzorg sterk en toegankelijk te houden terwijl we een snel veranderende toekomst tegemoet gaan en elke patiënt de aandacht krijgt die ze verdienen, precies wanneer ze die nodig hebben."
       }
-    },
-    stats: {
-      handling: "Gemiddelde afhandeltijd",
-      reduction: "Reductie in wachttijd"
-    },
-    calls: {
-      recentCalls: "Recente Gesprekken",
-      date: "Datum",
-      caller: "Beller",
-      duration: "Duur",
-      status: "Status"
-    },
-    dashboard: {
-      overview: "Overzicht",
-      calls: "Gesprekken",
-      settings: "Instellingen",
-      workflow: "Workflow",
-      clients: "Cliënten",
-      reports: "Rapporten",
-      billing: "Facturering"
     }
   }
 };
