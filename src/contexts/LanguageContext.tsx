@@ -129,14 +129,14 @@ const translations = {
     },
     capabilities: {
       title: "Digitale Medewerkers, Klaar voor Gebruik",
-      subtitle: "Ontdek hoe onze plug-and-play digitale medewerkers naadloos integreren met uw praktijk",
+      subtitle: "Ontdek hoe onze plug-and-play digitale medewerkers naadloos integreren met jouw praktijk",
       medicalIntelligence: {
         title: "Medische Intelligentie",
         description: "Getraind op NHG-triagestandaarden en medische datasets voor nauwkeurige patiëntbeoordeling"
       },
       workerCustomization: {
         title: "Medewerker Aanpassing",
-        description: "Pas doorverwijzingsregels, activeringstijden, stem, toon en medische vraagafhandeling aan naar uw praktijkbehoeften"
+        description: "Pas doorverwijzingsregels, activeringstijden, stem, toon en medische vraagafhandeling aan naar jouw praktijkbehoeften"
       },
       humanExperience: {
         title: "Menselijke Ervaring",
@@ -144,7 +144,7 @@ const translations = {
       },
       seamlessIntegration: {
         title: "Naadloze Integratie",
-        description: "Integreert eenvoudig met uw bestaande belsoftware voor soepele implementatie"
+        description: "Integreert eenvoudig met jouw bestaande belsoftware voor soepele implementatie"
       },
       continuousLearning: {
         title: "Continue Ontwikkeling",
@@ -161,14 +161,14 @@ const translations = {
     hero: {
       aiPowered: "AI-Gestuurde Gespreksafhandeling",
       title: "AI assistentes, menselijke ervaring",
-      subtitle: "Laat AI de telefoongesprekken van uw praktijk afhandelen met behoud van persoonlijk contact",
+      subtitle: "Laat AI de telefoongesprekken van jouw praktijk afhandelen met behoud van persoonlijk contact",
       trainedOn: "Getraind op miljoenen medische gesprekken",
       bookDemo: "Demo Aanvragen",
       learnMore: "Meer Informatie"
     },
     assistant: {
-      title: "Ontmoet Uw Digitale Doktersassistent",
-      subtitle: "Uw toegewijde digitale medische assistent, 24/7 beschikbaar om patiëntgesprekken te behandelen en gevallen te triageren met de precisie van een getrainde professional.",
+      title: "Ontmoet Je Digitale Doktersassistent",
+      subtitle: "Je toegewijde digitale medische assistent, 24/7 beschikbaar om patiëntgesprekken te behandelen en gevallen te triageren met de precisie van een getrainde professional.",
       trainedOn: "Getraind op uitgebreide medische protocollen",
       learnMore: "Meer informatie over Sarah",
       hire: "Huur Sarah in",
@@ -176,13 +176,13 @@ const translations = {
     },
     sarah: {
       title: "Ontmoet Sarah",
-      subtitle: "Uw AI-aangedreven medische assistent, die geavanceerde technologie combineert met zorgzame ondersteuning",
+      subtitle: "Je AI-aangedreven medische assistent, die geavanceerde technologie combineert met zorgzame ondersteuning",
       aiPowered: "AI-Aangedreven Intelligentie",
-      aiDescription: "Getraind op uitgebreide medische protocollen en best practices om nauwkeurige, consistente ondersteuning te bieden voor uw praktijk.",
+      aiDescription: "Getraind op uitgebreide medische protocollen en best practices om nauwkeurige, consistente ondersteuning te bieden voor jouw praktijk.",
       expertise: "Medische Expertise",
       expertiseDescription: "In staat om een breed scala aan medische aandoeningen te begrijpen en te triageren met professionele nauwkeurigheid.",
       availability: "24/7 Beschikbaarheid",
-      availabilityDescription: "Altijd klaar om uw patiënten te helpen, gesprekken te beheren en urgente gevallen op elk moment van de dag te behandelen.",
+      availabilityDescription: "Altijd klaar om je patiënten te helpen, gesprekken te beheren en urgente gevallen op elk moment van de dag te behandelen.",
       learning: "Continue Ontwikkeling",
       learningDescription: "Voortdurend verbeterend door elke interactie met behoud van consistente zorgkwaliteit."
     },
@@ -204,8 +204,8 @@ const translations = {
       submit: "Demo Aanvragen",
       submitting: "Aanvragen...",
       success: {
-        title: "Bedankt voor uw interesse!",
-        message: "We nemen binnenkort contact met u op om uw demo in te plannen."
+        title: "Bedankt voor je interesse!",
+        message: "We nemen binnenkort contact met je op om je demo in te plannen."
       }
     },
     stats: {
@@ -233,12 +233,12 @@ const translations = {
 
 const LanguageContext = createContext<LanguageContextType>({
   t: () => "",
-  language: "nl", // Changed default to Dutch
+  language: "nl",
   setLanguage: () => {}
 });
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>("nl"); // Changed default to Dutch
+  const [language, setLanguage] = useState<Language>("nl");
 
   const t = (key: string): string => {
     const keys = key.split('.');
