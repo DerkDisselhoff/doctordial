@@ -16,7 +16,6 @@ import TakeCallsCard from "@/components/capabilities/TakeCallsCard";
 const Sarah = () => {
   const { t } = useLanguage();
 
-  // Animation variants for the cards
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -47,7 +46,6 @@ const Sarah = () => {
     <main className="min-h-screen bg-white">
       <Navbar />
       
-      {/* Header Section */}
       <section className="bg-forest">
         <div className="container mx-auto px-4 max-w-6xl pt-24 pb-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -55,25 +53,24 @@ const Sarah = () => {
               <div className="flex items-center gap-2">
                 <Badge variant="outline" className="bg-mint/20 text-mint-light border-mint-light/20 px-4 py-1.5">
                   <Bot className="w-4 h-4 mr-1" />
-                  AI-Powered Assistant
+                  {t('sarah.aiPowered')}
                 </Badge>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
-                Meet Sarah
+                {t('sarah.title')}
               </h1>
               <p className="text-gray-muted text-lg md:text-xl max-w-2xl">
-                Your AI-powered medical assistant, combining advanced technology with compassionate care
+                {t('sarah.subtitle')}
               </p>
               <div className="pt-4">
                 <BookDemoForm>
                   <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white">
-                    Hire Sarah
+                    {t('sarah.hire')}
                   </Button>
                 </BookDemoForm>
               </div>
             </div>
             
-            {/* Sarah's Image */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -84,29 +81,27 @@ const Sarah = () => {
               <div className="relative rounded-2xl overflow-visible shadow-2xl border border-mint/10 h-full bg-forest-light">
                 <img
                   src="/lovable-uploads/8cc89b28-b673-4f32-92b9-ea395078b319.png"
-                  alt="Sarah AI Medical Assistant"
+                  alt={t('sarah.imageAlt')}
                   className="w-full h-full object-cover rounded-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent" />
-                <StatsBadge value="24/7" label="Patient Support" />
+                <StatsBadge value="24/7" label={t('assistant.support')} />
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Use Cases Section */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
           <SarahUseCases />
         </div>
       </section>
 
-      {/* How to work with Sarah Section */}
       <section className="bg-gray-dark py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center">
-            How to work with Sarah
+            {t('sarah.howToWork')}
           </h2>
           <motion.div 
             className="space-y-8"
@@ -115,7 +110,6 @@ const Sarah = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            {/* Card 1 */}
             <motion.div 
               variants={cardVariants}
               className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg"
@@ -127,10 +121,10 @@ const Sarah = () => {
                 <div className="flex-1 grid grid-cols-2 gap-6">
                   <div>
                     <h3 className="text-2xl font-semibold text-gray-dark mb-4">
-                      Train Sarah on the care that you provide
+                      {t('sarah.step1Title')}
                     </h3>
                     <p className="text-lg text-gray leading-relaxed">
-                      Customize Sarah's knowledge base to align perfectly with your practice's specific medical services and protocols. Our AI system learns from your input to provide accurate, practice-specific responses and recommendations.
+                      {t('sarah.step1Description')}
                     </p>
                   </div>
                   <div className="bg-gray-50 rounded-xl overflow-hidden">
@@ -140,7 +134,6 @@ const Sarah = () => {
               </div>
             </motion.div>
 
-            {/* Card 2 */}
             <motion.div 
               variants={cardVariants}
               className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg"
@@ -152,10 +145,10 @@ const Sarah = () => {
                 <div className="flex-1 grid grid-cols-2 gap-6">
                   <div>
                     <h3 className="text-2xl font-semibold text-gray-dark mb-4">
-                      Build your workflow and forwarding rules
+                      {t('sarah.step2Title')}
                     </h3>
                     <p className="text-lg text-gray leading-relaxed">
-                      Set up custom workflows and rules to ensure proper handling of different types of patient inquiries and urgency levels. Define specific protocols for various medical situations and establish escalation pathways.
+                      {t('sarah.step2Description')}
                     </p>
                   </div>
                   <div className="bg-gray-50 rounded-xl overflow-hidden">
@@ -165,7 +158,6 @@ const Sarah = () => {
               </div>
             </motion.div>
 
-            {/* Card 3 */}
             <motion.div 
               variants={cardVariants}
               className="bg-white rounded-xl p-10 border border-gray-muted/20 transition-all duration-300 hover:shadow-lg"
@@ -177,10 +169,10 @@ const Sarah = () => {
                 <div className="flex-1 grid grid-cols-2 gap-6">
                   <div>
                     <h3 className="text-2xl font-semibold text-gray-dark mb-4">
-                      Let Sarah take your calls
+                      {t('sarah.step3Title')}
                     </h3>
                     <p className="text-lg text-gray leading-relaxed">
-                      Activate Sarah to handle patient calls 24/7, providing professional and consistent care communication while following your established protocols. Sarah manages routine inquiries and intelligently escalates urgent matters.
+                      {t('sarah.step3Description')}
                     </p>
                   </div>
                   <div className="bg-gray-50 rounded-xl overflow-hidden">
@@ -193,13 +185,12 @@ const Sarah = () => {
         </div>
       </section>
 
-      {/* Medical Conditions Section */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="bg-white rounded-xl p-8 border border-gray-muted/20">
             <div className="text-center mb-8">
               <h3 className="text-xl font-semibold text-gray-dark mb-2">
-                Trained on Thousands of Medical Conditions
+                {t('sarah.conditionsTitle')}
               </h3>
             </div>
             <SarahSymptomTags />
@@ -207,19 +198,18 @@ const Sarah = () => {
         </div>
       </section>
 
-      {/* Demo CTA Section */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto bg-forest-light/5 rounded-2xl p-8 border border-mint/10">
             <h2 className="text-2xl font-bold text-gray-dark mb-4">
-              Ready to Transform Your Practice?
+              {t('sarah.readyTitle')}
             </h2>
             <p className="text-gray mb-6">
-              Join the growing number of medical practices that trust Sarah to handle their patient communications.
+              {t('sarah.readyDescription')}
             </p>
             <BookDemoForm>
               <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white">
-                Book a Demo
+                {t('demo.submit')}
               </Button>
             </BookDemoForm>
           </div>

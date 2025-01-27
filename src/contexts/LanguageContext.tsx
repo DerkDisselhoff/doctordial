@@ -84,7 +84,19 @@ const translations = {
       availability: "24/7 Availability",
       availabilityDescription: "Always ready to assist your patients, manage calls, and handle urgent cases at any time of day.",
       learning: "Continuous Learning",
-      learningDescription: "Constantly improving through each interaction while maintaining consistent quality of care."
+      learningDescription: "Constantly improving through each interaction while maintaining consistent quality of care.",
+      imageAlt: "Sarah AI Medical Assistant",
+      howToWork: "How to work with Sarah",
+      step1Title: "Train Sarah on the care that you provide",
+      step1Description: "Customize Sarah's knowledge base to align perfectly with your practice's specific medical services and protocols. Our AI system learns from your input to provide accurate, practice-specific responses and recommendations.",
+      step2Title: "Build your workflow and forwarding rules",
+      step2Description: "Set up custom workflows and rules to ensure proper handling of different types of patient inquiries and urgency levels. Define specific protocols for various medical situations and establish escalation pathways.",
+      step3Title: "Let Sarah take your calls",
+      step3Description: "Activate Sarah to handle patient calls 24/7, providing professional and consistent care communication while following your established protocols. Sarah manages routine inquiries and intelligently escalates urgent matters.",
+      conditionsTitle: "Trained on Thousands of Medical Conditions",
+      readyTitle: "Ready to Transform Your Practice?",
+      readyDescription: "Join the growing number of medical practices that trust Sarah to handle their patient communications.",
+      hire: "Hire Sarah"
     },
     about: {
       location: "Founded in 2025, Amsterdam",
@@ -175,7 +187,7 @@ const translations = {
       support: "Patiëntondersteuning"
     },
     sarah: {
-      title: "Ontmoet Sarah",
+      title: "Maak kennis met Sarah",
       subtitle: "Je AI-aangedreven medische assistent, die geavanceerde technologie combineert met zorgzame ondersteuning",
       aiPowered: "AI-Aangedreven Intelligentie",
       aiDescription: "Getraind op uitgebreide medische protocollen en best practices om nauwkeurige, consistente ondersteuning te bieden voor jouw praktijk.",
@@ -184,7 +196,19 @@ const translations = {
       availability: "24/7 Beschikbaarheid",
       availabilityDescription: "Altijd klaar om je patiënten te helpen, gesprekken te beheren en urgente gevallen op elk moment van de dag te behandelen.",
       learning: "Continue Ontwikkeling",
-      learningDescription: "Voortdurend verbeterend door elke interactie met behoud van consistente zorgkwaliteit."
+      learningDescription: "Voortdurend verbeterend door elke interactie met behoud van consistente zorgkwaliteit.",
+      imageAlt: "Sarah AI Medische Assistent",
+      howToWork: "Hoe werk je met Sarah",
+      step1Title: "Train Sarah voor jouw zorgverlening",
+      step1Description: "Pas Sarah's kennisbank aan zodat deze perfect aansluit bij de specifieke medische diensten en protocollen van jouw praktijk. Ons AI-systeem leert van jouw input om nauwkeurige, praktijkspecifieke antwoorden en aanbevelingen te geven.",
+      step2Title: "Stel je workflow en doorverwijzingsregels in",
+      step2Description: "Configureer aangepaste workflows en regels voor het correct afhandelen van verschillende soorten patiëntvragen en urgentieniveaus. Definieer specifieke protocollen voor verschillende medische situaties en stel escalatiepaden in.",
+      step3Title: "Laat Sarah je telefoontjes beantwoorden",
+      step3Description: "Activeer Sarah om 24/7 patiëntgesprekken te behandelen, met professionele en consistente zorgcommunicatie volgens jouw vastgestelde protocollen. Sarah beheert routinevragen en schaalt urgente zaken intelligent op.",
+      conditionsTitle: "Getraind op Duizenden Medische Aandoeningen",
+      readyTitle: "Klaar om je Praktijk te Transformeren?",
+      readyDescription: "Sluit je aan bij het groeiende aantal medische praktijken die Sarah vertrouwen voor hun patiëntcommunicatie.",
+      hire: "Huur Sarah in"
     },
     about: {
       location: "Opgericht in 2025, Amsterdam",
