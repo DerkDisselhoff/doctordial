@@ -96,7 +96,35 @@ const translations = {
       conditionsTitle: "Trained on Thousands of Medical Conditions",
       readyTitle: "Ready to Transform Your Practice?",
       readyDescription: "Join the growing number of medical practices that trust Sarah to handle their patient communications.",
-      hire: "Hire Sarah"
+      hire: "Hire Sarah",
+      useCases: {
+        title: "How Sarah Helps Your Practice",
+        subtitle: "Discover the many ways Sarah can assist your medical practice",
+        forward: {
+          title: "Smart Call Forwarding",
+          description: "Intelligently routes calls based on urgency levels and practice protocols"
+        },
+        selfCare: {
+          title: "Self-Care Guidance",
+          description: "Provides evidence-based self-care advice for minor health concerns"
+        },
+        routing: {
+          title: "Efficient Routing",
+          description: "Directs patients to the right care provider based on their needs"
+        },
+        conversation: {
+          title: "Natural Conversations",
+          description: "Engages in human-like dialogue while gathering essential medical information"
+        },
+        communication: {
+          title: "Clear Communication",
+          description: "Ensures accurate information exchange between patients and healthcare providers"
+        },
+        support: {
+          title: "24/7 Support",
+          description: "Available around the clock to handle patient inquiries and urgent cases"
+        }
+      }
     },
     about: {
       location: "Founded in 2025, Amsterdam",
@@ -208,7 +236,35 @@ const translations = {
       conditionsTitle: "Getraind op Duizenden Medische Aandoeningen",
       readyTitle: "Klaar om je Praktijk te Transformeren?",
       readyDescription: "Sluit je aan bij het groeiende aantal medische praktijken die Sarah vertrouwen voor hun patiëntcommunicatie.",
-      hire: "Huur Sarah in"
+      hire: "Huur Sarah in",
+      useCases: {
+        title: "Hoe Sarah jouw Praktijk Helpt",
+        subtitle: "Ontdek de verschillende manieren waarop Sarah jouw medische praktijk kan ondersteunen",
+        forward: {
+          title: "Slim Doorverbinden",
+          description: "Verbindt gesprekken door op basis van urgentieniveaus en praktijkprotocollen"
+        },
+        selfCare: {
+          title: "Zelfzorg Advies",
+          description: "Geeft wetenschappelijk onderbouwd zelfzorgadvies voor lichte gezondheidsklachten"
+        },
+        routing: {
+          title: "Efficiënte Doorverwijzing",
+          description: "Stuurt patiënten door naar de juiste zorgverlener op basis van hun behoeften"
+        },
+        conversation: {
+          title: "Natuurlijke Gesprekken",
+          description: "Voert menselijke gesprekken terwijl ze essentiële medische informatie verzamelt"
+        },
+        communication: {
+          title: "Heldere Communicatie",
+          description: "Zorgt voor nauwkeurige informatie-uitwisseling tussen patiënten en zorgverleners"
+        },
+        support: {
+          title: "24/7 Ondersteuning",
+          description: "Dag en nacht beschikbaar om patiëntvragen en urgente gevallen te behandelen"
+        }
+      }
     },
     about: {
       location: "Opgericht in 2025, Amsterdam",
