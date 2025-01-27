@@ -16,12 +16,18 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-3 md:py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-8">
-            <Logo className="text-gray-dark" />
+            <Logo className="text-gray-dark" linkClassName="py-1" />
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/sarah" className="text-gray hover:text-gray-dark transition-colors">
+              <Link 
+                to="/sarah" 
+                className="py-2 text-gray hover:text-gray-dark transition-colors border-b-2 border-transparent hover:border-mint"
+              >
                 Sarah
               </Link>
-              <Link to="/about" className="text-gray hover:text-gray-dark transition-colors">
+              <Link 
+                to="/about" 
+                className="py-2 text-gray hover:text-gray-dark transition-colors border-b-2 border-transparent hover:border-mint"
+              >
                 {t("nav.about")}
               </Link>
             </div>
