@@ -27,8 +27,7 @@ export function Logo({ className = "", linkClassName = "" }: LogoProps) {
             style={{
               stroke: '#10B981',
               strokeDasharray: 1,
-              strokeDashoffset: 0,
-              animation: 'drawLine 2s ease-out forwards, pulse 2s ease-in-out infinite'
+              strokeDashoffset: 0
             }}
           />
         </svg>
@@ -39,30 +38,3 @@ export function Logo({ className = "", linkClassName = "" }: LogoProps) {
     </Link>
   );
 }
-
-<style>
-  @keyframes drawLine {
-    from {
-      stroke-dashoffset: 1;
-    }
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  @keyframes pulse {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-1px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-
-  .animate-draw {
-    animation: drawLine 2s ease-out forwards, pulse 2s ease-in-out infinite;
-  }
-</style>
