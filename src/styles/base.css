@@ -1,209 +1,52 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  :root {
-    /* Core colors */
-    --white: #FFFFFF;
-    --blue: #E8F1FE;
-    --blue-light: #F5F9FF;
-    --blue-dark: #2563EB;
-    --blue-muted: #E8F1FE40;
-    
-    --gray: #4B5563;
-    --gray-light: #9CA3AF;
-    --gray-dark: #1F2937;
-    --gray-muted: #F3F4F6;
-    
-    /* Healthcare Green System */
-    --mint: #10B981;
-    --mint-light: #D1FAE5;
-    --mint-dark: #059669;
-    --mint-muted: #10B98140;
-
-    --sage: #84CC16;
-    --sage-light: #ECFCCB;
-    --sage-dark: #65A30D;
-    --sage-muted: #84CC1640;
-
-    --emerald: #059669;
-    --emerald-light: #A7F3D0;
-    --emerald-dark: #047857;
-    --emerald-muted: #05966940;
-
-    --forest: #065F46;
-    --forest-light: #D1FAE5;
-    --forest-dark: #064E3B;
-    --forest-muted: #065F4640;
-
-    /* Semantic Text Colors */
-    --text-primary: var(--gray-dark);
-    --text-secondary: var(--gray);
-    --text-muted: var(--gray-light);
-    --text-inverse: var(--white);
-    --text-accent: var(--blue-dark);
-    --text-success: var(--mint);
-    --text-warning: #F59E0B;
-    --text-error: #EF4444;
-    --text-link: var(--blue-dark);
-    --text-link-hover: var(--blue);
-    --text-disabled: var(--gray-muted);
-    --text-placeholder: var(--gray-light);
-
-    /* System colors */
-    --background: var(--white);
-    --foreground: var(--gray-dark);
-    --card: var(--white);
-    --card-foreground: var(--gray-dark);
-    --popover: var(--white);
-    --popover-foreground: var(--gray-dark);
-    --primary: var(--blue);
-    --primary-foreground: var(--gray-dark);
-    --secondary: var(--mint);
-    --secondary-foreground: var(--white);
-    --muted: var(--gray-muted);
-    --muted-foreground: var(--gray-light);
-    --accent: var(--blue);
-    --accent-foreground: var(--gray-dark);
-    --destructive: var(--text-error);
-    --destructive-foreground: var(--white);
-    --border: var(--gray-muted);
-    --input: var(--white);
-    --ring: var(--blue);
-    --radius: 0.5rem;
+@keyframes drawCircle {
+  to {
+    stroke-dashoffset: 0;
   }
+}
 
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+@keyframes drawPath {
+  to {
+    stroke-dashoffset: 0;
   }
+}
 
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 8s ease infinite;
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
   }
-
-  @keyframes float {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
   }
-
-  @keyframes float-delayed {
-    0% {
-      transform: translateY(-10px);
-    }
-    50% {
-      transform: translateY(0px);
-    }
-    100% {
-      transform: translateY(-10px);
-    }
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
+}
 
-  @keyframes float-slow {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-5px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 2px rgba(100, 255, 218, 0.2));
   }
-
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+  50% {
+    filter: drop-shadow(0 0 4px rgba(100, 255, 218, 0.4));
   }
-
-  .animate-float-delayed {
-    animation: float-delayed 3s ease-in-out infinite;
+  100% {
+    filter: drop-shadow(0 0 2px rgba(100, 255, 218, 0.2));
   }
+}
 
-  .animate-float-slow {
-    animation: float-slow 4s ease-in-out infinite;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-
-  /* Typography Scale */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-medium tracking-tight text-gray-dark;
+  to {
+    opacity: 0.5;
   }
+}
 
-  h1 { @apply text-4xl md:text-5xl leading-tight font-bold; }
-  h2 { @apply text-3xl md:text-4xl leading-tight font-bold; }
-  h3 { @apply text-2xl md:text-3xl leading-tight font-semibold; }
-  h4 { @apply text-xl md:text-2xl leading-snug font-semibold; }
-  h5 { @apply text-lg md:text-xl leading-snug font-medium; }
-  h6 { @apply text-base md:text-lg leading-normal font-medium; }
-
-  p { @apply font-sans text-gray leading-relaxed; }
-
-  small { @apply font-sans text-gray-light text-sm leading-normal; }
-
-  .text-body-lg { @apply font-sans text-lg leading-relaxed text-gray; }
-  .text-body { @apply font-sans text-base leading-relaxed text-gray; }
-  .text-body-sm { @apply font-sans text-sm leading-normal text-gray; }
-  .text-body-xs { @apply font-sans text-xs leading-normal text-gray; }
-
-  /* Table Typography */
-  .table-header-cell {
-    @apply font-display text-sm font-medium;
-  }
-  
-  .table-cell {
-    @apply font-sans text-sm;
-  }
-
-  /* Menu Typography */
-  .menu-item {
-    @apply font-sans text-sm;
-  }
-
-  .menu-header {
-    @apply font-display text-sm font-medium;
-  }
-
-  ::selection {
-    @apply bg-mint-light text-gray-dark;
-  }
-
-  @keyframes drawPath {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  @keyframes drawCircle {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  .animate-draw {
-    animation: fadeIn 0.5s ease forwards;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+.animate-draw {
+  will-change: transform;
+  transform-origin: center;
 }
