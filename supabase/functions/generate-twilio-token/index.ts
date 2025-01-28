@@ -15,7 +15,7 @@ serve(async (req) => {
   try {
     const TWILIO_ACCOUNT_SID = Deno.env.get('TWILIO_ACCOUNT_SID')
     const TWILIO_AUTH_TOKEN = Deno.env.get('TWILIO_AUTH_TOKEN')
-    const TWILIO_TWIML_APP_SID = Deno.env.get('TWILIO_TWIML_APP_SID')
+    const TWILIO_TWIML_APP_SID = 'AP92ef3d41a025711810178aa9f282fd22'
 
     if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_TWIML_APP_SID) {
       throw new Error('Missing required Twilio configuration')
