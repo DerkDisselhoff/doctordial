@@ -57,12 +57,15 @@ export function OverviewDashboard() {
 
   const setupTwilioDevice = async () => {
     try {
+      // Request microphone permission first
       await navigator.mediaDevices.getUserMedia({ audio: true });
       
+      // Generate token
       const { data, error } = await supabase.functions.invoke('generate-twilio-token');
       
       if (error) throw error;
       
+      // Initialize Twilio device with token
       const twilioDevice = new Device(data.token, {
         codecPreferences: ['pcmu', 'opus'] as any[]
       });
@@ -92,7 +95,7 @@ export function OverviewDashboard() {
       call.on('accept', () => {
         toast({
           title: "Call connected",
-          description: "Connected with assistant",
+          description: "Connected with Medi-Mere's assistant",
         });
       });
 
@@ -104,15 +107,15 @@ export function OverviewDashboard() {
       });
 
       toast({
-        title: "Call initiated",
-        description: "Calling assistant...",
+        title: "Calling assistant",
+        description: "Connecting to Medi-Mere's assistant...",
       });
 
     } catch (error) {
       console.error('Error making call:', error);
       toast({
-        title: "Call error",
-        description: error instanceof Error ? error.message : "There was an error initiating the call.",
+        title: "Call failed",
+        description: error instanceof Error ? error.message : "Failed to connect the call",
         variant: "destructive"
       });
     }
