@@ -35,8 +35,6 @@ const FloatingIcon = ({ icon: Icon, delay, x, y }: { icon: any, delay: number, x
 export function OverviewDashboard() {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
-  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
-  const [assistantName, setAssistantName] = useState<string>('Assistant');
   const [device, setDevice] = useState<Device | null>(null);
   const { toast } = useToast();
 
@@ -46,22 +44,11 @@ export function OverviewDashboard() {
       if (session) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('role, phone_number')
+          .select('role')
           .eq('id', session.user.id)
           .maybeSingle();
         
         setUserRole(profile?.role || null);
-        setPhoneNumber(profile?.phone_number || null);
-
-        if (profile?.role === 'client') {
-          const { data: assistantStatus } = await supabase
-            .from('assistant_status')
-            .select('assistant_name')
-            .eq('profile_id', session.user.id)
-            .maybeSingle();
-          
-          setAssistantName(assistantStatus?.assistant_name || 'Assistant');
-        }
       }
     };
 
@@ -89,15 +76,6 @@ export function OverviewDashboard() {
   };
 
   const handleCall = async () => {
-    if (!phoneNumber) {
-      toast({
-        title: "No phone number set",
-        description: "Please set your phone number in your profile settings first.",
-        variant: "destructive"
-      });
-      return;
-    }
-
     try {
       let twilioDevice = device;
       if (!twilioDevice) {
@@ -107,14 +85,14 @@ export function OverviewDashboard() {
 
       const call = await twilioDevice.connect({
         params: {
-          To: phoneNumber
+          To: '+3197010250810' // Fixed number for Medi-Mere's assistant
         }
       });
 
       call.on('accept', () => {
         toast({
           title: "Call connected",
-          description: `Connected with ${assistantName}`,
+          description: "Connected with assistant",
         });
       });
 
@@ -127,7 +105,7 @@ export function OverviewDashboard() {
 
       toast({
         title: "Call initiated",
-        description: `Calling ${assistantName}...`,
+        description: "Calling assistant...",
       });
 
     } catch (error) {
@@ -159,7 +137,7 @@ export function OverviewDashboard() {
               className="bg-mint hover:bg-mint-dark text-white flex items-center gap-2 font-medium shadow-sm"
             >
               <PhoneCall className="w-4 h-4" />
-              Call {assistantName}
+              Call Assistant
             </Button>
             
             <div className="flex items-center space-x-4 text-sm text-gray">
