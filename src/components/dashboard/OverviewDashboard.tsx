@@ -82,7 +82,8 @@ export function OverviewDashboard() {
       
       // Initialize Twilio device with the token
       const twilioDevice = new Device(data.token, {
-        codecPreferences: ['opus', 'pcmu'],
+        // Use correct codec types from Twilio Voice SDK
+        codecPreferences: ['pcmu', 'opus'] as any[], // Type assertion as temporary fix
         fakeLocalDTMF: true,
         enableRingingState: true,
       });

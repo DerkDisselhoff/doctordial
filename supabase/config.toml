@@ -12,22 +12,22 @@ port = 54322
 enabled = true
 port = 54323
 
-[[experimental.functions]]
+[[functions]]
 name = "vapi-webhook"
 verify_jwt = false
 
-[[experimental.functions]]
+[[functions]]
 name = "fetch-vapi-calls"
 verify_jwt = false
 
-[[experimental.functions]]
+[[functions]]
 name = "vapi-data-sync"
 verify_jwt = false
 
-[[experimental.functions]]
+[[functions]]
 name = "fetch-assistant-calls"
 verify_jwt = false
 
-[[experimental.functions]]
+[[functions]]
 name = "generate-twilio-token"
 verify_jwt = false
