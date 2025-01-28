@@ -78,8 +78,8 @@ export function OverviewDashboard() {
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Start the call using the createAndStart method
-      const call = await client.createAndStart({
+      // Start the call
+      await client.startCall({
         assistantId: assistantId,
         onCallEnded: () => {
           setIsCallActive(false);
@@ -104,8 +104,6 @@ export function OverviewDashboard() {
         title: "Call connected",
         description: "You are now connected to the assistant.",
       });
-
-      console.log('VAPI call started:', call);
 
     } catch (error) {
       console.error('Error starting VAPI call:', error);
