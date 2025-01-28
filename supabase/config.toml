@@ -13,6 +13,12 @@ enabled = true
 port = 54323
 
 [functions]
+[functions.generate-twilio-token]
+verify_jwt = false
+
+[functions.twilio-webhook]
+verify_jwt = false
+
 [functions.vapi-webhook]
 verify_jwt = false
 
@@ -23,10 +29,4 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.fetch-assistant-calls]
-verify_jwt = false
-
-[functions.generate-twilio-token]
-verify_jwt = false
-
-[functions.twilio-webhook]
 verify_jwt = false
