@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from 'https://esm.sh/@twilio/twilio-client@1.15.0'
+import { Twilio } from "npm:twilio@4.22.0"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -23,21 +23,16 @@ serve(async (req) => {
 
     console.log('Generating Twilio token with Account SID:', TWILIO_ACCOUNT_SID)
 
-    const capability = new createClient.Capability(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-    
-    // Allow outgoing calls to an application
-    capability.addScope(new createClient.OutgoingClientScope(TWILIO_TWIML_APP_SID))
-    
-    // Allow incoming calls
-    capability.addScope(new createClient.IncomingClientScope('browser-client'))
-
-    // Generate token
-    const token = capability.toJwt()
+    const client = new Twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+    const token = await client.tokens.create({
+      ttl: 3600,
+      identity: 'browser-client'
+    })
 
     console.log('Successfully generated Twilio token')
 
     return new Response(
-      JSON.stringify({ token }),
+      JSON.stringify({ token: token.token }),
       { 
         headers: { 
           ...corsHeaders,
