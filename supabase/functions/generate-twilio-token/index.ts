@@ -24,15 +24,23 @@ serve(async (req) => {
     console.log('Generating Twilio token with Account SID:', TWILIO_ACCOUNT_SID)
 
     const client = new Twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-    const token = await client.tokens.create({
+    const capability = new Twilio.jwt.ClientCapability({
+      accountSid: TWILIO_ACCOUNT_SID,
+      authToken: TWILIO_AUTH_TOKEN,
       ttl: 3600,
-      identity: 'browser-client'
-    })
+    });
 
+    capability.addScope(
+      new Twilio.jwt.ClientCapability.OutgoingClientScope({
+        applicationSid: TWILIO_TWIML_APP_SID
+      })
+    );
+
+    const token = capability.toJwt();
     console.log('Successfully generated Twilio token')
 
     return new Response(
-      JSON.stringify({ token: token.token }),
+      JSON.stringify({ token }),
       { 
         headers: { 
           ...corsHeaders,
