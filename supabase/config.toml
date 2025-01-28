@@ -13,16 +13,21 @@ enabled = true
 port = 54323
 
 [[functions]]
-{name = "vapi-webhook", verify_jwt = false}
+name = "vapi-webhook"
+verify_jwt = false
 
 [[functions]]
-{name = "fetch-vapi-calls", verify_jwt = false}
+name = "fetch-vapi-calls"
+verify_jwt = false
 
 [[functions]]
-{name = "vapi-data-sync", verify_jwt = false}
+name = "vapi-data-sync"
+verify_jwt = false
 
 [[functions]]
-{name = "fetch-assistant-calls", verify_jwt = false}
+name = "fetch-assistant-calls"
+verify_jwt = false
 
 [[functions]]
-{name = "generate-twilio-token", verify_jwt = false}
+name = "generate-twilio-token"
+verify_jwt = false
