@@ -98,7 +98,7 @@ export function OverviewDashboard() {
           >
             <Button
               onClick={handleCall}
-              className="bg-mint hover:bg-mint-dark text-forest flex items-center gap-2"
+              className="bg-mint hover:bg-mint-dark text-white flex items-center gap-2 font-medium shadow-sm"
             >
               <PhoneCall className="w-4 h-4" />
               Call {assistantName}
