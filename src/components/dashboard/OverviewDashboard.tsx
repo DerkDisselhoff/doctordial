@@ -75,15 +75,35 @@ export function OverviewDashboard() {
       // Request microphone permission first
       await navigator.mediaDevices.getUserMedia({ audio: true });
       
+      console.log('Microphone permission granted, fetching Twilio token...');
+      
       // Fetch Twilio token from our Edge Function
       const { data, error } = await supabase.functions.invoke('generate-twilio-token');
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching Twilio token:', error);
+        throw error;
+      }
+      
+      console.log('Token received, initializing Twilio device...');
       
       // Initialize Twilio device with the token
       const twilioDevice = new Device(data.token, {
-        // Use correct codec types from Twilio Voice SDK
-        codecPreferences: ['pcmu', 'opus'] as any[] // Type assertion as temporary fix
+        codecPreferences: ['pcmu', 'opus'] as any[]
+      });
+
+      // Add event listeners for debugging
+      twilioDevice.on('registered', () => {
+        console.log('Twilio device registered successfully');
+      });
+
+      twilioDevice.on('error', (error) => {
+        console.error('Twilio device error:', error);
+        toast({
+          title: "Device error",
+          description: error.message,
+          variant: "destructive"
+        });
       });
 
       await twilioDevice.register();
@@ -109,8 +129,11 @@ export function OverviewDashboard() {
     try {
       let twilioDevice = device;
       if (!twilioDevice) {
+        console.log('Initializing Twilio device...');
         twilioDevice = await setupTwilioDevice();
       }
+
+      console.log('Making call to:', phoneNumber);
 
       // Make the call
       const call = await twilioDevice.connect({
@@ -121,7 +144,16 @@ export function OverviewDashboard() {
       });
 
       // Handle call events
+      call.on('accept', () => {
+        console.log('Call accepted');
+        toast({
+          title: "Call connected",
+          description: `Connected with ${assistantName}`,
+        });
+      });
+
       call.on('disconnect', () => {
+        console.log('Call disconnected');
         toast({
           title: "Call ended",
           description: "The call has been disconnected.",
