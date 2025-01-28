@@ -8,48 +8,34 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    console.log('Handling CORS preflight request')
     return new Response(null, { headers: corsHeaders })
   }
 
   try {
-    console.log('Starting token generation process')
-    
     const TWILIO_ACCOUNT_SID = Deno.env.get('TWILIO_ACCOUNT_SID')
     const TWILIO_AUTH_TOKEN = Deno.env.get('TWILIO_AUTH_TOKEN')
     const TWILIO_TWIML_APP_SID = Deno.env.get('TWILIO_TWIML_APP_SID')
 
     if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_TWIML_APP_SID) {
-      console.error('Missing required Twilio configuration')
       throw new Error('Missing required Twilio configuration')
     }
 
-    console.log('Generating Twilio token with Account SID:', TWILIO_ACCOUNT_SID)
-    console.log('Using TwiML App SID:', TWILIO_TWIML_APP_SID)
-
+    // Create a simple capability token for outbound calls only
     const capability = new Twilio.jwt.ClientCapability({
       accountSid: TWILIO_ACCOUNT_SID,
       authToken: TWILIO_AUTH_TOKEN,
       ttl: 3600,
     })
 
-    // Allow the client to make outgoing calls
+    // Only add outgoing calls scope
     capability.addScope(
       new Twilio.jwt.ClientCapability.OutgoingClientScope({
-        applicationSid: TWILIO_TWIML_APP_SID,
-        clientName: 'browser-client' // This identifies the client making the call
+        applicationSid: TWILIO_TWIML_APP_SID
       })
     )
 
-    // Allow the client to receive incoming calls
-    capability.addScope(
-      new Twilio.jwt.ClientCapability.IncomingClientScope('browser-client')
-    )
-
     const token = capability.toJwt()
-    console.log('Successfully generated Twilio token')
 
     return new Response(
       JSON.stringify({ token }),
@@ -63,10 +49,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error generating token:', error)
     return new Response(
-      JSON.stringify({ 
-        error: error.message,
-        details: error.toString()
-      }),
+      JSON.stringify({ error: error.message }),
       { 
         status: 500,
         headers: { 

@@ -12,32 +12,20 @@ serve(async (req) => {
   }
 
   try {
-    console.log('Received webhook request:', req.method)
-    
-    // Parse the request body
     const body = await req.formData()
     const to = body.get('To')
-    const from = body.get('From') || Deno.env.get('TWILIO_PHONE_NUMBER')
     
-    console.log('Processing call request:')
-    console.log('To:', to)
-    console.log('From:', from)
-
     if (!to) {
-      console.error('Missing required "To" parameter')
       throw new Error('Missing required "To" parameter')
     }
 
-    // Generate TwiML response
+    // Generate simple TwiML to make the outbound call
     const twiml = `<?xml version="1.0" encoding="UTF-8"?>
     <Response>
-      <Say>Connecting your call</Say>
-      <Dial callerId="${from}">
+      <Dial callerId="${Deno.env.get('TWILIO_PHONE_NUMBER')}">
         ${to}
       </Dial>
     </Response>`
-
-    console.log('Generated TwiML response')
 
     return new Response(twiml, {
       headers: {

@@ -44,7 +44,6 @@ export function OverviewDashboard() {
     const fetchUserProfile = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        // Fetch user profile for phone number
         const { data: profile } = await supabase
           .from('profiles')
           .select('role, phone_number')
@@ -54,7 +53,6 @@ export function OverviewDashboard() {
         setUserRole(profile?.role || null);
         setPhoneNumber(profile?.phone_number || null);
 
-        // Fetch assistant name if client
         if (profile?.role === 'client') {
           const { data: assistantStatus } = await supabase
             .from('assistant_status')
@@ -72,43 +70,17 @@ export function OverviewDashboard() {
 
   const setupTwilioDevice = async () => {
     try {
-      // Request microphone permission first
       await navigator.mediaDevices.getUserMedia({ audio: true });
       
-      console.log('Microphone permission granted, fetching Twilio token...');
-      
-      // Fetch Twilio token from our Edge Function
       const { data, error } = await supabase.functions.invoke('generate-twilio-token');
       
-      if (error) {
-        console.error('Error fetching Twilio token:', error);
-        throw error;
-      }
+      if (error) throw error;
       
-      console.log('Token received, initializing Twilio device...');
-      
-      // Initialize Twilio device with the token
       const twilioDevice = new Device(data.token, {
         codecPreferences: ['pcmu', 'opus'] as any[]
       });
 
-      // Add event listeners for debugging
-      twilioDevice.on('registered', () => {
-        console.log('Twilio device registered successfully');
-      });
-
-      twilioDevice.on('error', (error) => {
-        console.error('Twilio device error:', error);
-        toast({
-          title: "Device error",
-          description: error.message,
-          variant: "destructive"
-        });
-      });
-
       await twilioDevice.register();
-      setDevice(twilioDevice);
-      
       return twilioDevice;
     } catch (error) {
       console.error('Error setting up Twilio device:', error);
@@ -129,23 +101,17 @@ export function OverviewDashboard() {
     try {
       let twilioDevice = device;
       if (!twilioDevice) {
-        console.log('Initializing Twilio device...');
         twilioDevice = await setupTwilioDevice();
+        setDevice(twilioDevice);
       }
 
-      console.log('Making call to:', phoneNumber);
-
-      // Make the call
       const call = await twilioDevice.connect({
         params: {
-          To: phoneNumber,
-          From: 'browser-client'
+          To: phoneNumber
         }
       });
 
-      // Handle call events
       call.on('accept', () => {
-        console.log('Call accepted');
         toast({
           title: "Call connected",
           description: `Connected with ${assistantName}`,
@@ -153,32 +119,22 @@ export function OverviewDashboard() {
       });
 
       call.on('disconnect', () => {
-        console.log('Call disconnected');
         toast({
           title: "Call ended",
           description: "The call has been disconnected.",
         });
       });
 
-      call.on('error', (error) => {
-        console.error('Call error:', error);
-        toast({
-          title: "Call error",
-          description: "There was an error with the call. Please try again.",
-          variant: "destructive"
-        });
-      });
-
       toast({
         title: "Call initiated",
-        description: `Starting browser call with ${assistantName}...`,
+        description: `Calling ${assistantName}...`,
       });
 
     } catch (error) {
       console.error('Error making call:', error);
       toast({
         title: "Call error",
-        description: error instanceof Error ? error.message : "There was an error initiating the call. Please try again.",
+        description: error instanceof Error ? error.message : "There was an error initiating the call.",
         variant: "destructive"
       });
     }
