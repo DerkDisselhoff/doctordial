@@ -15,15 +15,21 @@ serve(async (req) => {
     // Parse the request body
     const body = await req.formData()
     const to = body.get('To')
+    const from = Deno.env.get('TWILIO_PHONE_NUMBER')
     
     console.log('Received Twilio webhook request for number:', to)
+    console.log('Using caller ID:', from)
+
+    if (!to) {
+      throw new Error('Missing required "To" parameter')
+    }
 
     // Generate TwiML response
     const twiml = `<?xml version="1.0" encoding="UTF-8"?>
     <Response>
       <Say>Connecting your call</Say>
-      <Dial callerId="${Deno.env.get('TWILIO_PHONE_NUMBER')}">
-        ${to || ''}
+      <Dial callerId="${from || ''}">
+        ${to}
       </Dial>
     </Response>`
 
