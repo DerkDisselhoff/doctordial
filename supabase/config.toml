@@ -27,3 +27,7 @@ verify_jwt = false
 [[experimental.functions]]
 name = "fetch-assistant-calls"
 verify_jwt = false
+
+[[experimental.functions]]
+name = "generate-twilio-token"
+verify_jwt = false

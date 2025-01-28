@@ -8,6 +8,7 @@ import { UrgentCases } from "./client/UrgentCases";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { Device } from '@twilio/voice-sdk';
 
 type TimeFilter = 'today' | 'week' | 'month';
 
@@ -36,6 +37,7 @@ export function OverviewDashboard() {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
   const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
   const [assistantName, setAssistantName] = useState<string>('Assistant');
+  const [device, setDevice] = useState<Device | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -68,6 +70,33 @@ export function OverviewDashboard() {
     fetchUserProfile();
   }, []);
 
+  const setupTwilioDevice = async () => {
+    try {
+      // Request microphone permission first
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      
+      // Fetch Twilio token from our Edge Function
+      const { data, error } = await supabase.functions.invoke('generate-twilio-token');
+      
+      if (error) throw error;
+      
+      // Initialize Twilio device with the token
+      const twilioDevice = new Device(data.token, {
+        codecPreferences: ['opus', 'pcmu'],
+        fakeLocalDTMF: true,
+        enableRingingState: true,
+      });
+
+      await twilioDevice.register();
+      setDevice(twilioDevice);
+      
+      return twilioDevice;
+    } catch (error) {
+      console.error('Error setting up Twilio device:', error);
+      throw error;
+    }
+  };
+
   const handleCall = async () => {
     if (!phoneNumber) {
       toast({
@@ -79,23 +108,46 @@ export function OverviewDashboard() {
     }
 
     try {
-      // Request microphone permission
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      
-      // Here you would implement the actual browser-based call functionality
-      // For now, we'll just show a toast to indicate success
+      let twilioDevice = device;
+      if (!twilioDevice) {
+        twilioDevice = await setupTwilioDevice();
+      }
+
+      // Make the call
+      const call = await twilioDevice.connect({
+        params: {
+          To: phoneNumber,
+          From: 'browser-client'
+        }
+      });
+
+      // Handle call events
+      call.on('disconnect', () => {
+        toast({
+          title: "Call ended",
+          description: "The call has been disconnected.",
+        });
+      });
+
+      call.on('error', (error) => {
+        console.error('Call error:', error);
+        toast({
+          title: "Call error",
+          description: "There was an error with the call. Please try again.",
+          variant: "destructive"
+        });
+      });
+
       toast({
         title: "Call initiated",
         description: `Starting browser call with ${assistantName}...`,
       });
 
-      // Clean up the media stream
-      stream.getTracks().forEach(track => track.stop());
-
     } catch (error) {
+      console.error('Error making call:', error);
       toast({
-        title: "Microphone access denied",
-        description: "Please allow microphone access to make calls through the browser.",
+        title: "Call error",
+        description: error instanceof Error ? error.message : "There was an error initiating the call. Please try again.",
         variant: "destructive"
       });
     }
