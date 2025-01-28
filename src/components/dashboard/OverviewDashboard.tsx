@@ -78,8 +78,8 @@ export function OverviewDashboard() {
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Start the call using the create method
-      const call = await client.create({
+      // Start the call using the createAndStart method
+      const call = await client.createAndStart({
         assistantId: assistantId,
         onCallEnded: () => {
           setIsCallActive(false);
