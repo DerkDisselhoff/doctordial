@@ -18,12 +18,13 @@ serve(async (req) => {
     const TWILIO_AUTH_TOKEN = Deno.env.get('TWILIO_AUTH_TOKEN')
     const TWILIO_TWIML_APP_SID = Deno.env.get('TWILIO_TWIML_APP_SID')
 
-    if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN) {
+    if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_TWIML_APP_SID) {
       console.error('Missing required Twilio configuration')
       throw new Error('Missing required Twilio configuration')
     }
 
     console.log('Generating Twilio token with Account SID:', TWILIO_ACCOUNT_SID)
+    console.log('Using TwiML App SID:', TWILIO_TWIML_APP_SID)
 
     const capability = new Twilio.jwt.ClientCapability({
       accountSid: TWILIO_ACCOUNT_SID,
@@ -33,7 +34,7 @@ serve(async (req) => {
 
     capability.addScope(
       new Twilio.jwt.ClientCapability.OutgoingClientScope({
-        applicationSid: TWILIO_TWIML_APP_SID || 'AP92ef3d41a025711810178aa9f282fd22'
+        applicationSid: TWILIO_TWIML_APP_SID
       })
     );
 
