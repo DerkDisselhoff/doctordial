@@ -8,7 +8,7 @@ import { UrgentCases } from "./client/UrgentCases";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Device } from '@twilio/voice-sdk';
+import { VapiWebClient } from "@vapi-ai/web";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
@@ -35,7 +35,7 @@ const FloatingIcon = ({ icon: Icon, delay, x, y }: { icon: any, delay: number, x
 export function OverviewDashboard() {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
-  const [device, setDevice] = useState<Device | null>(null);
+  const [isCallActive, setIsCallActive] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -55,69 +55,68 @@ export function OverviewDashboard() {
     fetchUserProfile();
   }, []);
 
-  const setupTwilioDevice = async () => {
-    try {
-      // Request microphone permission first
-      await navigator.mediaDevices.getUserMedia({ audio: true });
-      
-      // Generate token
-      const { data, error } = await supabase.functions.invoke('generate-twilio-token');
-      
-      if (error) throw error;
-      
-      // Initialize Twilio device with token
-      const twilioDevice = new Device(data.token, {
-        codecPreferences: ['pcmu', 'opus'] as any[]
-      });
-
-      await twilioDevice.register();
-      return twilioDevice;
-    } catch (error) {
-      console.error('Error setting up Twilio device:', error);
-      throw error;
-    }
-  };
-
   const handleCall = async () => {
     try {
-      let twilioDevice = device;
-      if (!twilioDevice) {
-        twilioDevice = await setupTwilioDevice();
-        setDevice(twilioDevice);
+      // Get VAPI API key from Supabase
+      const { data: secretData, error: secretError } = await supabase
+        .from('secrets')
+        .select('value')
+        .eq('name', 'VAPI_API_KEY')
+        .single();
+
+      if (secretError) {
+        console.error('Error fetching VAPI API key:', secretError);
+        throw new Error('Failed to get VAPI credentials');
       }
 
-      const call = await twilioDevice.connect({
-        params: {
-          To: '+3197010250810' // Fixed number for Medi-Mere's assistant
-        }
+      const vapiKey = secretData.value;
+      const assistantId = 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877'; // Medi-Mere assistant ID
+
+      // Initialize VAPI Web Client
+      const client = new VapiWebClient({
+        apiKey: vapiKey,
       });
 
-      call.on('accept', () => {
-        toast({
-          title: "Call connected",
-          description: "Connected with Medi-Mere's assistant",
-        });
+      // Request microphone permission
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      // Start the call
+      const call = await client.startCall({
+        assistantId: assistantId,
+        onCallEnded: () => {
+          setIsCallActive(false);
+          toast({
+            title: "Call ended",
+            description: "The call with the assistant has ended.",
+          });
+        },
+        onError: (error) => {
+          console.error('VAPI call error:', error);
+          toast({
+            title: "Call error",
+            description: "There was an error with the call. Please try again.",
+            variant: "destructive",
+          });
+          setIsCallActive(false);
+        },
       });
 
-      call.on('disconnect', () => {
-        toast({
-          title: "Call ended",
-          description: "The call has been disconnected.",
-        });
-      });
-
+      setIsCallActive(true);
       toast({
-        title: "Calling assistant",
-        description: "Connecting to Medi-Mere's assistant...",
+        title: "Call connected",
+        description: "You are now connected to the assistant.",
       });
+
+      console.log('VAPI call started:', call);
 
     } catch (error) {
-      console.error('Error making call:', error);
+      console.error('Error starting VAPI call:', error);
       toast({
         title: "Call failed",
-        description: error instanceof Error ? error.message : "Failed to connect the call",
-        variant: "destructive"
+        description: error instanceof Error ? error.message : "Failed to start the call",
+        variant: "destructive",
       });
+      setIsCallActive(false);
     }
   };
 
@@ -137,10 +136,15 @@ export function OverviewDashboard() {
           >
             <Button
               onClick={handleCall}
-              className="bg-mint hover:bg-mint-dark text-white flex items-center gap-2 font-medium shadow-sm"
+              disabled={isCallActive}
+              className={`${
+                isCallActive 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-mint hover:bg-mint-dark'
+              } text-white flex items-center gap-2 font-medium shadow-sm`}
             >
               <PhoneCall className="w-4 h-4" />
-              Call Assistant
+              {isCallActive ? 'Call in Progress' : 'Call Assistant'}
             </Button>
             
             <div className="flex items-center space-x-4 text-sm text-gray">
