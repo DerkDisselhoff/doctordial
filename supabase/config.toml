@@ -31,3 +31,7 @@ verify_jwt = false
 [[functions]]
 name = "generate-twilio-token"
 verify_jwt = false
+
+[[functions]]
+name = "twilio-webhook"
+verify_jwt = false
