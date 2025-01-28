@@ -17,10 +17,12 @@ serve(async (req) => {
     const to = body.get('To')
     const from = Deno.env.get('TWILIO_PHONE_NUMBER')
     
-    console.log('Received Twilio webhook request for number:', to)
-    console.log('Using caller ID:', from)
+    console.log('Received Twilio webhook request')
+    console.log('To:', to)
+    console.log('From:', from)
 
     if (!to) {
+      console.error('Missing required "To" parameter')
       throw new Error('Missing required "To" parameter')
     }
 
@@ -32,6 +34,8 @@ serve(async (req) => {
         ${to}
       </Dial>
     </Response>`
+
+    console.log('Generated TwiML response:', twiml)
 
     return new Response(twiml, {
       headers: {
