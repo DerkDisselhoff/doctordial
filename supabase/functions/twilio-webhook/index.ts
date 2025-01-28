@@ -12,12 +12,14 @@ serve(async (req) => {
   }
 
   try {
+    console.log('Received webhook request:', req.method)
+    
     // Parse the request body
     const body = await req.formData()
     const to = body.get('To')
     const from = Deno.env.get('TWILIO_PHONE_NUMBER')
     
-    console.log('Received Twilio webhook request')
+    console.log('Processing call request:')
     console.log('To:', to)
     console.log('From:', from)
 
@@ -35,7 +37,7 @@ serve(async (req) => {
       </Dial>
     </Response>`
 
-    console.log('Generated TwiML response:', twiml)
+    console.log('Generated TwiML response')
 
     return new Response(twiml, {
       headers: {
