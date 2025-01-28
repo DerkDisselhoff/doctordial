@@ -17,7 +17,7 @@ serve(async (req) => {
     // Parse the request body
     const body = await req.formData()
     const to = body.get('To')
-    const from = Deno.env.get('TWILIO_PHONE_NUMBER')
+    const from = body.get('From') || Deno.env.get('TWILIO_PHONE_NUMBER')
     
     console.log('Processing call request:')
     console.log('To:', to)
@@ -32,7 +32,7 @@ serve(async (req) => {
     const twiml = `<?xml version="1.0" encoding="UTF-8"?>
     <Response>
       <Say>Connecting your call</Say>
-      <Dial callerId="${from || ''}">
+      <Dial callerId="${from}">
         ${to}
       </Dial>
     </Response>`

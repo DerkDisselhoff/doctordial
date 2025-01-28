@@ -32,10 +32,17 @@ serve(async (req) => {
       ttl: 3600,
     });
 
+    // Allow the client to make outgoing calls
     capability.addScope(
       new Twilio.jwt.ClientCapability.OutgoingClientScope({
-        applicationSid: TWILIO_TWIML_APP_SID
+        applicationSid: TWILIO_TWIML_APP_SID,
+        clientName: 'browser-client' // This identifies the client making the call
       })
+    );
+
+    // Allow the client to receive incoming calls
+    capability.addScope(
+      new Twilio.jwt.ClientCapability.IncomingClientScope('browser-client')
     );
 
     const token = capability.toJwt();
