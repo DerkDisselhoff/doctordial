@@ -7,11 +7,13 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
   }
 
   try {
+    console.log('Received webhook request')
     const body = await req.formData()
     const to = body.get('To')
     
@@ -19,7 +21,9 @@ serve(async (req) => {
       throw new Error('Missing required "To" parameter')
     }
 
-    // Generate simple TwiML to make the outbound call
+    console.log('Making outbound call to:', to)
+
+    // Generate TwiML for outbound call
     const twiml = `<?xml version="1.0" encoding="UTF-8"?>
     <Response>
       <Dial callerId="${Deno.env.get('TWILIO_PHONE_NUMBER')}">

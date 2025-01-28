@@ -8,11 +8,14 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
   }
 
   try {
+    console.log('Generating Twilio token')
+    
     const TWILIO_ACCOUNT_SID = Deno.env.get('TWILIO_ACCOUNT_SID')
     const TWILIO_AUTH_TOKEN = Deno.env.get('TWILIO_AUTH_TOKEN')
     const TWILIO_TWIML_APP_SID = Deno.env.get('TWILIO_TWIML_APP_SID')
@@ -21,21 +24,22 @@ serve(async (req) => {
       throw new Error('Missing required Twilio configuration')
     }
 
-    // Create a simple capability token for outbound calls only
+    // Create an AccessToken
     const capability = new Twilio.jwt.ClientCapability({
       accountSid: TWILIO_ACCOUNT_SID,
       authToken: TWILIO_AUTH_TOKEN,
       ttl: 3600,
     })
 
-    // Only add outgoing calls scope
+    // Add outgoing calls scope
     capability.addScope(
       new Twilio.jwt.ClientCapability.OutgoingClientScope({
-        applicationSid: TWILIO_TWIML_APP_SID
+        applicationSid: TWILIO_TWIML_APP_SID,
       })
     )
 
     const token = capability.toJwt()
+    console.log('Token generated successfully')
 
     return new Response(
       JSON.stringify({ token }),
