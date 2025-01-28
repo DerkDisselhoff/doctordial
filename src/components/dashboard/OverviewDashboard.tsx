@@ -3,9 +3,11 @@ import { DashboardCharts } from "./charts/DashboardCharts";
 import { Toggle } from "@/components/ui/toggle";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { Activity, Users, Calendar } from "lucide-react";
+import { Activity, Users, Calendar, PhoneCall } from "lucide-react";
 import { UrgentCases } from "./client/UrgentCases";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
@@ -32,23 +34,53 @@ const FloatingIcon = ({ icon: Icon, delay, x, y }: { icon: any, delay: number, x
 export function OverviewDashboard() {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
+  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
+  const [assistantName, setAssistantName] = useState<string>('Assistant');
+  const { toast } = useToast();
 
   useEffect(() => {
-    const checkUserRole = async () => {
+    const fetchUserProfile = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
+        // Fetch user profile for phone number
         const { data: profile } = await supabase
           .from('profiles')
-          .select('role')
+          .select('role, phone_number')
           .eq('id', session.user.id)
           .maybeSingle();
         
         setUserRole(profile?.role || null);
+        setPhoneNumber(profile?.phone_number || null);
+
+        // Fetch assistant name if client
+        if (profile?.role === 'client') {
+          const { data: assistantStatus } = await supabase
+            .from('assistant_status')
+            .select('assistant_name')
+            .eq('profile_id', session.user.id)
+            .maybeSingle();
+          
+          setAssistantName(assistantStatus?.assistant_name || 'Assistant');
+        }
       }
     };
 
-    checkUserRole();
+    fetchUserProfile();
   }, []);
+
+  const handleCall = () => {
+    if (!phoneNumber) {
+      toast({
+        title: "No phone number set",
+        description: "Please set your phone number in your profile settings first.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Here you would implement the actual call functionality
+    window.location.href = `tel:${phoneNumber}`;
+  };
 
   return (
     <div className="space-y-8">
@@ -62,8 +94,16 @@ export function OverviewDashboard() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex items-center justify-end mb-6"
+            className="flex items-center justify-between mb-6"
           >
+            <Button
+              onClick={handleCall}
+              className="bg-mint hover:bg-mint-dark text-forest flex items-center gap-2"
+            >
+              <PhoneCall className="w-4 h-4" />
+              Call {assistantName}
+            </Button>
+            
             <div className="flex items-center space-x-4 text-sm text-gray">
               <Toggle
                 variant="outline"
