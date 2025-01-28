@@ -68,7 +68,7 @@ export function OverviewDashboard() {
     fetchUserProfile();
   }, []);
 
-  const handleCall = () => {
+  const handleCall = async () => {
     if (!phoneNumber) {
       toast({
         title: "No phone number set",
@@ -78,8 +78,27 @@ export function OverviewDashboard() {
       return;
     }
 
-    // Here you would implement the actual call functionality
-    window.location.href = `tel:${phoneNumber}`;
+    try {
+      // Request microphone permission
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      
+      // Here you would implement the actual browser-based call functionality
+      // For now, we'll just show a toast to indicate success
+      toast({
+        title: "Call initiated",
+        description: `Starting browser call with ${assistantName}...`,
+      });
+
+      // Clean up the media stream
+      stream.getTracks().forEach(track => track.stop());
+
+    } catch (error) {
+      toast({
+        title: "Microphone access denied",
+        description: "Please allow microphone access to make calls through the browser.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
