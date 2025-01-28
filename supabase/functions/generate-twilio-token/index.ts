@@ -21,6 +21,8 @@ serve(async (req) => {
       throw new Error('Missing required Twilio configuration')
     }
 
+    console.log('Generating Twilio token with Account SID:', TWILIO_ACCOUNT_SID)
+
     const capability = new createClient.Capability(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
     
     // Allow outgoing calls to an application
@@ -31,6 +33,8 @@ serve(async (req) => {
 
     // Generate token
     const token = capability.toJwt()
+
+    console.log('Successfully generated Twilio token')
 
     return new Response(
       JSON.stringify({ token }),
