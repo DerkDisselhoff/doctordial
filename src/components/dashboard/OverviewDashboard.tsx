@@ -100,23 +100,21 @@ export function OverviewDashboard() {
           voiceId: 'en_us_male',
         },
         name: 'Medi-Mere Assistant',
-        events: {
-          onCallEnded: () => {
-            setIsCallActive(false);
-            toast({
-              title: "Call ended",
-              description: "The call with the assistant has ended.",
-            });
-          },
-          onError: (error) => {
-            console.error('VAPI call error:', error);
-            toast({
-              title: "Call error",
-              description: "There was an error with the call. Please try again.",
-              variant: "destructive",
-            });
-            setIsCallActive(false);
-          },
+        onCallEnded: () => {
+          setIsCallActive(false);
+          toast({
+            title: "Call ended",
+            description: "The call with the assistant has ended.",
+          });
+        },
+        onError: (error) => {
+          console.error('VAPI call error:', error);
+          toast({
+            title: "Call error",
+            description: "There was an error with the call. Please try again.",
+            variant: "destructive",
+          });
+          setIsCallActive(false);
         },
       });
       
