@@ -1,3 +1,4 @@
+
 import { MetricsCards } from "./metrics/MetricsCards";
 import { DashboardCharts } from "./charts/DashboardCharts";
 import { Toggle } from "@/components/ui/toggle";
@@ -57,43 +58,44 @@ export function OverviewDashboard() {
 
   const handleCall = async () => {
     try {
-      const vapi = new Vapi({
-        apiKey: "9a63ea0f-c066-4221-857e-0b7edfcef3f4",
-      });
+      // Initialize Vapi with API key
+      const vapi = new Vapi("9a63ea0f-c066-4221-857e-0b7edfcef3f4");
 
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Start call with Medi-Mere assistant using just the ID
-      const assistantId = 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877';
-      const call = await vapi.start(assistantId);
-
-      setIsCallActive(true);
-      toast({
-        title: "Call connected",
-        description: "You are now connected to the assistant.",
+      // Start call with Medi-Mere assistant
+      await vapi.start({
+        assistantId: 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877',
+        widget: {
+          title: "Medi-Mere Assistant",
+          description: "Your personal medical assistant",
+          primaryColor: "#10b981", // Using mint color
+        },
+        onStarted: () => {
+          setIsCallActive(true);
+          toast({
+            title: "Call connected",
+            description: "You are now connected to the assistant.",
+          });
+        },
+        onEnded: () => {
+          setIsCallActive(false);
+          toast({
+            title: "Call ended",
+            description: "The call with the assistant has ended.",
+          });
+        },
+        onError: (error) => {
+          console.error('VAPI call error:', error);
+          setIsCallActive(false);
+          toast({
+            title: "Call error",
+            description: error?.message || "There was an error with the call. Please try again.",
+            variant: "destructive",
+          });
+        }
       });
-
-      // Add call event listeners
-      call.on('ended', () => {
-        setIsCallActive(false);
-        toast({
-          title: "Call ended",
-          description: "The call with the assistant has ended.",
-        });
-      });
-
-      call.on('error', (error) => {
-        console.error('VAPI call error:', error);
-        toast({
-          title: "Call error",
-          description: "There was an error with the call. Please try again.",
-          variant: "destructive",
-        });
-        setIsCallActive(false);
-      });
-
-      console.log('VAPI call started:', call);
 
     } catch (error) {
       console.error('Error starting VAPI call:', error);
