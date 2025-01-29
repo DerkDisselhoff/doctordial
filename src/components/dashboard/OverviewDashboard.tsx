@@ -78,9 +78,28 @@ export function OverviewDashboard() {
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Create and start the call using the correct method
-      const call = await vapi.call({
-        assistantId: assistantId,
+      // Start the call with the assistant configuration
+      await vapi.start({
+        transcriber: {
+          provider: 'deepgram',
+          model: 'nova',
+          language: 'en-US',
+        },
+        model: {
+          provider: 'openai',
+          model: 'gpt-4',
+          messages: [
+            {
+              role: 'system',
+              content: 'You are a helpful medical assistant.',
+            },
+          ],
+        },
+        voice: {
+          provider: 'playht',
+          voiceId: 'en_us_male',
+        },
+        name: 'Medi-Mere Assistant',
         onCallEnded: () => {
           setIsCallActive(false);
           toast({
