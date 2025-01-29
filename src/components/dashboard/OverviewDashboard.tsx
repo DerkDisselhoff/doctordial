@@ -79,7 +79,10 @@ export function OverviewDashboard() {
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
       // Start the call with the existing assistant
-      const call = await vapi.startAssistantCall(assistantId, {
+      const call = await vapi.startCall({
+        assistant: {
+          assistantId: assistantId
+        },
         transcriber: {
           provider: 'deepgram',
           model: 'nova',
