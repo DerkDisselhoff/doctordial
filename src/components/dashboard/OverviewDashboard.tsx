@@ -60,21 +60,35 @@ export function OverviewDashboard() {
 
   const cleanupCall = useCallback(() => {
     if (activeCallRef.current) {
-      activeCallRef.current.off('ended');
-      activeCallRef.current.off('error');
-      activeCallRef.current = null;
+      try {
+        activeCallRef.current.removeEventListener('ended', () => {});
+        activeCallRef.current.removeEventListener('error', () => {});
+        activeCallRef.current = null;
+      } catch (error) {
+        console.error('Error cleaning up call:', error);
+      }
     }
     setIsCallActive(false);
     setIsCallLoading(false);
   }, []);
 
   const endCall = useCallback(() => {
-    if (activeCallRef.current) {
-      activeCallRef.current.stop();
+    try {
+      if (activeCallRef.current) {
+        activeCallRef.current.stop();
+        cleanupCall();
+        toast({
+          title: "Call ended",
+          description: "You've ended the call with the assistant.",
+        });
+      }
+    } catch (error) {
+      console.error('Error ending call:', error);
       cleanupCall();
       toast({
-        title: "Call ended",
-        description: "You've ended the call with the assistant.",
+        title: "Error ending call",
+        description: "There was an error ending the call. Please try again.",
+        variant: "destructive",
       });
     }
   }, [cleanupCall, toast]);
@@ -92,6 +106,10 @@ export function OverviewDashboard() {
 
     try {
       setIsCallLoading(true);
+      
+      // Add artificial delay of 1 second
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       const vapi = new Vapi("9a63ea0f-c066-4221-857e-0b7edfcef3f4");
       await navigator.mediaDevices.getUserMedia({ audio: true });
       const call = await vapi.start("d1dcfa30-8f3e-4be4-9b20-83d9f54e4877");
@@ -104,7 +122,7 @@ export function OverviewDashboard() {
         description: "You are now connected to the assistant.",
       });
 
-      call.on('ended', () => {
+      call.addEventListener('ended', () => {
         cleanupCall();
         toast({
           title: "Call ended",
@@ -112,7 +130,7 @@ export function OverviewDashboard() {
         });
       });
 
-      call.on('error', (error) => {
+      call.addEventListener('error', (error) => {
         console.error('VAPI call error:', error);
         cleanupCall();
         toast({
