@@ -8,7 +8,7 @@ import { UrgentCases } from "./client/UrgentCases";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import VapiWebClient from "@vapi-ai/web";
+import { Vapi } from "@vapi-ai/web";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
@@ -72,14 +72,16 @@ export function OverviewDashboard() {
       const vapiKey = secretData.value;
       const assistantId = 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877'; // Medi-Mere assistant ID
 
-      // Initialize VAPI Web Client
-      const client = new VapiWebClient(vapiKey);
+      // Initialize VAPI client
+      const vapi = new Vapi({
+        apiKey: vapiKey,
+      });
 
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Create and start the call using the correct method
-      const call = await client.createCall({
+      // Create and start the call
+      const call = await vapi.startBrowserCall({
         assistantId: assistantId,
         onCallEnded: () => {
           setIsCallActive(false);
@@ -98,9 +100,6 @@ export function OverviewDashboard() {
           setIsCallActive(false);
         },
       });
-
-      // Start the call
-      await call.start();
       
       setIsCallActive(true);
       toast({
