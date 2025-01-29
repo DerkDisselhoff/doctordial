@@ -8,7 +8,7 @@ import { UrgentCases } from "./client/UrgentCases";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Vapi } from "@vapi-ai/web";
+import Vapi from "@vapi-ai/web";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
@@ -73,9 +73,7 @@ export function OverviewDashboard() {
       const assistantId = 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877'; // Medi-Mere assistant ID
 
       // Initialize VAPI client
-      const vapi = new Vapi({
-        apiKey: vapiKey,
-      });
+      const vapi = new Vapi(vapiKey);
 
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
