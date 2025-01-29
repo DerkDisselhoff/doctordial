@@ -78,8 +78,8 @@ export function OverviewDashboard() {
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Create and start the call
-      const call = await vapi.startBrowserCall({
+      // Create the call with configuration
+      const call = await vapi.createCall({
         assistantId: assistantId,
         onCallEnded: () => {
           setIsCallActive(false);
@@ -98,6 +98,9 @@ export function OverviewDashboard() {
           setIsCallActive(false);
         },
       });
+
+      // Start the call
+      await call.start();
       
       setIsCallActive(true);
       toast({
