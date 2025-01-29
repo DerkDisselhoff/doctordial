@@ -79,43 +79,48 @@ export function OverviewDashboard() {
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
       // Start the call with the assistant configuration
-      await vapi.start({
+      const call = await vapi.start({
+        assistant: {
+          name: 'Medi-Mere Assistant',
+          model: {
+            provider: 'openai',
+            model: 'gpt-4',
+            messages: [
+              {
+                role: 'system',
+                content: 'You are a helpful medical assistant.',
+              },
+            ],
+          },
+          voice: {
+            provider: 'playht',
+            voiceId: 'en_us_male',
+          },
+        },
         transcriber: {
           provider: 'deepgram',
           model: 'nova',
           language: 'en-US',
         },
-        model: {
-          provider: 'openai',
-          model: 'gpt-4',
-          messages: [
-            {
-              role: 'system',
-              content: 'You are a helpful medical assistant.',
-            },
-          ],
-        },
-        voice: {
-          provider: 'playht',
-          voiceId: 'en_us_male',
-        },
-        name: 'Medi-Mere Assistant',
-        onCallEnded: () => {
-          setIsCallActive(false);
-          toast({
-            title: "Call ended",
-            description: "The call with the assistant has ended.",
-          });
-        },
-        onError: (error) => {
-          console.error('VAPI call error:', error);
-          toast({
-            title: "Call error",
-            description: "There was an error with the call. Please try again.",
-            variant: "destructive",
-          });
-          setIsCallActive(false);
-        },
+      });
+
+      // Add event listeners
+      call.on('end', () => {
+        setIsCallActive(false);
+        toast({
+          title: "Call ended",
+          description: "The call with the assistant has ended.",
+        });
+      });
+
+      call.on('error', (error) => {
+        console.error('VAPI call error:', error);
+        toast({
+          title: "Call error",
+          description: "There was an error with the call. Please try again.",
+          variant: "destructive",
+        });
+        setIsCallActive(false);
       });
       
       setIsCallActive(true);
