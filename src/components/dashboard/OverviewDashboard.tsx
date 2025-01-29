@@ -63,13 +63,8 @@ export function OverviewDashboard() {
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Start call with Medi-Mere assistant
-      const call = await vapi.start({
-        id: 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877',
-        name: "Medi-Mere Assistant",
-        description: "Your personal medical assistant",
-        primaryColor: "#10b981", // Using mint color
-      });
+      // Start call with Medi-Mere assistant - passing only the assistant ID
+      const call = await vapi.start("d1dcfa30-8f3e-4be4-9b20-83d9f54e4877");
 
       setIsCallActive(true);
       toast({
@@ -77,7 +72,7 @@ export function OverviewDashboard() {
         description: "You are now connected to the assistant.",
       });
 
-      call.addEventListener('ended', () => {
+      call.on('ended', () => {
         setIsCallActive(false);
         toast({
           title: "Call ended",
@@ -85,7 +80,7 @@ export function OverviewDashboard() {
         });
       });
 
-      call.addEventListener('error', (error) => {
+      call.on('error', (error) => {
         console.error('VAPI call error:', error);
         setIsCallActive(false);
         toast({
