@@ -78,11 +78,8 @@ export function OverviewDashboard() {
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Create the assistant first
-      const assistant = await vapi.createAssistant(assistantId);
-      
-      // Start the call
-      const call = await assistant.startCall({
+      // Start the call with the existing assistant
+      const call = await vapi.startAssistantCall(assistantId, {
         transcriber: {
           provider: 'deepgram',
           model: 'nova',
@@ -91,7 +88,7 @@ export function OverviewDashboard() {
       });
 
       // Add event listeners
-      call.addEventListener('end', () => {
+      call.on('end', () => {
         setIsCallActive(false);
         toast({
           title: "Call ended",
@@ -99,7 +96,7 @@ export function OverviewDashboard() {
         });
       });
 
-      call.addEventListener('error', (error) => {
+      call.on('error', (error) => {
         console.error('VAPI call error:', error);
         toast({
           title: "Call error",
