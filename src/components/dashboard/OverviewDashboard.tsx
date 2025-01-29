@@ -78,34 +78,20 @@ export function OverviewDashboard() {
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Start the call with the assistant configuration
-      const call = await vapi.start({
-        assistant: {
-          name: 'Medi-Mere Assistant',
-          model: {
-            provider: 'openai',
-            model: 'gpt-4',
-            messages: [
-              {
-                role: 'system',
-                content: 'You are a helpful medical assistant.',
-              },
-            ],
-          },
-          voice: {
-            provider: 'playht',
-            voiceId: 'en_us_male',
-          },
-        },
+      // Create the assistant first
+      const assistant = await vapi.createAssistant(assistantId);
+      
+      // Start the call
+      const call = await assistant.startCall({
         transcriber: {
           provider: 'deepgram',
           model: 'nova',
           language: 'en-US',
-        },
+        }
       });
 
       // Add event listeners
-      call.on('end', () => {
+      call.addEventListener('end', () => {
         setIsCallActive(false);
         toast({
           title: "Call ended",
@@ -113,7 +99,7 @@ export function OverviewDashboard() {
         });
       });
 
-      call.on('error', (error) => {
+      call.addEventListener('error', (error) => {
         console.error('VAPI call error:', error);
         toast({
           title: "Call error",
