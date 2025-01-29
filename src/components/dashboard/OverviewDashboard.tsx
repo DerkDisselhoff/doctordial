@@ -1,7 +1,7 @@
 import { MetricsCards } from "./metrics/MetricsCards";
 import { DashboardCharts } from "./charts/DashboardCharts";
 import { Toggle } from "@/components/ui/toggle";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { Activity, Users, Calendar, PhoneCall } from "lucide-react";
 import { UrgentCases } from "./client/UrgentCases";
@@ -37,6 +37,7 @@ export function OverviewDashboard() {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
   const [isCallActive, setIsCallActive] = useState(false);
   const { toast } = useToast();
+  const activeCallRef = useRef<any>(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -55,16 +56,26 @@ export function OverviewDashboard() {
     fetchUserProfile();
   }, []);
 
-  const handleCall = async () => {
+  const cleanupCall = useCallback(() => {
+    if (activeCallRef.current) {
+      activeCallRef.current.removeEventListener('ended', () => {});
+      activeCallRef.current.removeEventListener('error', () => {});
+      activeCallRef.current = null;
+    }
+    setIsCallActive(false);
+  }, []);
+
+  const handleCall = useCallback(async () => {
+    if (isCallActive || activeCallRef.current) {
+      console.log('Call already in progress');
+      return;
+    }
+
     try {
-      // Initialize Vapi with API key
       const vapi = new Vapi("9a63ea0f-c066-4221-857e-0b7edfcef3f4");
-
-      // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
-
-      // Start call with Medi-Mere assistant - passing only the assistant ID
       const call = await vapi.start("d1dcfa30-8f3e-4be4-9b20-83d9f54e4877");
+      activeCallRef.current = call;
 
       setIsCallActive(true);
       toast({
@@ -72,17 +83,17 @@ export function OverviewDashboard() {
         description: "You are now connected to the assistant.",
       });
 
-      call.on('ended', () => {
-        setIsCallActive(false);
+      call.addEventListener('ended', () => {
+        cleanupCall();
         toast({
           title: "Call ended",
           description: "The call with the assistant has ended.",
         });
       });
 
-      call.on('error', (error) => {
+      call.addEventListener('error', (error) => {
         console.error('VAPI call error:', error);
-        setIsCallActive(false);
+        cleanupCall();
         toast({
           title: "Call error",
           description: error?.message || "There was an error with the call. Please try again.",
@@ -92,14 +103,20 @@ export function OverviewDashboard() {
 
     } catch (error) {
       console.error('Error starting VAPI call:', error);
+      cleanupCall();
       toast({
         title: "Call failed",
         description: error instanceof Error ? error.message : "Failed to start the call",
         variant: "destructive",
       });
-      setIsCallActive(false);
     }
-  };
+  }, [toast, isCallActive, cleanupCall]);
+
+  useEffect(() => {
+    return () => {
+      cleanupCall();
+    };
+  }, [cleanupCall]);
 
   return (
     <div className="space-y-8">
