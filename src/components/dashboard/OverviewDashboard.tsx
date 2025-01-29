@@ -1,4 +1,3 @@
-
 import { MetricsCards } from "./metrics/MetricsCards";
 import { DashboardCharts } from "./charts/DashboardCharts";
 import { Toggle } from "@/components/ui/toggle";
@@ -66,12 +65,10 @@ export function OverviewDashboard() {
 
       // Start call with Medi-Mere assistant
       const call = await vapi.start({
-        assistant: {
-          id: 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877',
-          name: "Medi-Mere Assistant",
-          description: "Your personal medical assistant",
-          primaryColor: "#10b981", // Using mint color
-        },
+        id: 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877',
+        name: "Medi-Mere Assistant",
+        description: "Your personal medical assistant",
+        primaryColor: "#10b981", // Using mint color
       });
 
       setIsCallActive(true);
@@ -80,7 +77,7 @@ export function OverviewDashboard() {
         description: "You are now connected to the assistant.",
       });
 
-      call.on('ended', () => {
+      call.addEventListener('ended', () => {
         setIsCallActive(false);
         toast({
           title: "Call ended",
@@ -88,7 +85,7 @@ export function OverviewDashboard() {
         });
       });
 
-      call.on('error', (error) => {
+      call.addEventListener('error', (error) => {
         console.error('VAPI call error:', error);
         setIsCallActive(false);
         toast({
