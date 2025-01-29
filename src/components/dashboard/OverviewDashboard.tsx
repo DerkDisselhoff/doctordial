@@ -72,14 +72,14 @@ export function OverviewDashboard() {
       const vapiKey = secretData.value;
       const assistantId = 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877'; // Medi-Mere assistant ID
 
-      // Initialize VAPI Web Client with just the API key
+      // Initialize VAPI Web Client
       const client = new VapiWebClient(vapiKey);
 
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Start the call
-      await client.startCall({
+      // Create and start the call using the correct method
+      const call = await client.createCall({
         assistantId: assistantId,
         onCallEnded: () => {
           setIsCallActive(false);
@@ -99,6 +99,9 @@ export function OverviewDashboard() {
         },
       });
 
+      // Start the call
+      await call.start();
+      
       setIsCallActive(true);
       toast({
         title: "Call connected",
