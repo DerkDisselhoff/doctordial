@@ -1,3 +1,4 @@
+
 import { MetricsCards } from "./metrics/MetricsCards";
 import { DashboardCharts } from "./charts/DashboardCharts";
 import { Toggle } from "@/components/ui/toggle";
@@ -8,7 +9,7 @@ import { UrgentCases } from "./client/UrgentCases";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { VapiWebClient } from "@vapi-ai/web";
+import { Vapi } from "@vapi-ai/web";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
@@ -57,33 +58,25 @@ export function OverviewDashboard() {
 
   const handleCall = async () => {
     try {
-      // Get VAPI API key from Supabase
-      const { data: secretData, error: secretError } = await supabase
-        .from('secrets')
-        .select('value')
-        .eq('name', 'VAPI_API_KEY')
-        .single();
-
-      if (secretError) {
-        console.error('Error fetching VAPI API key:', secretError);
-        throw new Error('Failed to get VAPI credentials');
-      }
-
-      const vapiKey = secretData.value;
-      const assistantId = 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877'; // Medi-Mere assistant ID
-
-      // Initialize VAPI Web Client
-      const client = new VapiWebClient({
-        apiKey: vapiKey,
+      const vapi = new Vapi({
+        apiKey: "9a63ea0f-c066-4221-857e-0b7edfcef3f4", // Public API key
       });
 
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Start the call
-      const call = await client.startCall({
+      // Initialize call with Medi-Mere assistant
+      const assistantId = 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877';
+
+      const call = await vapi.startCall({
         assistantId: assistantId,
-        onCallEnded: () => {
+        enableCallSummary: true,
+        uiConfig: {
+          notification: {
+            enable: true,
+          },
+        },
+        onEnded: () => {
           setIsCallActive(false);
           toast({
             title: "Call ended",
