@@ -65,36 +65,37 @@ export function OverviewDashboard() {
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
       // Start call with Medi-Mere assistant
-      await vapi.start({
-        assistantId: 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877',
-        widget: {
-          title: "Medi-Mere Assistant",
+      const call = await vapi.start({
+        assistant: {
+          id: 'd1dcfa30-8f3e-4be4-9b20-83d9f54e4877',
+          name: "Medi-Mere Assistant",
           description: "Your personal medical assistant",
           primaryColor: "#10b981", // Using mint color
         },
-        onStarted: () => {
-          setIsCallActive(true);
-          toast({
-            title: "Call connected",
-            description: "You are now connected to the assistant.",
-          });
-        },
-        onEnded: () => {
-          setIsCallActive(false);
-          toast({
-            title: "Call ended",
-            description: "The call with the assistant has ended.",
-          });
-        },
-        onError: (error) => {
-          console.error('VAPI call error:', error);
-          setIsCallActive(false);
-          toast({
-            title: "Call error",
-            description: error?.message || "There was an error with the call. Please try again.",
-            variant: "destructive",
-          });
-        }
+      });
+
+      setIsCallActive(true);
+      toast({
+        title: "Call connected",
+        description: "You are now connected to the assistant.",
+      });
+
+      call.on('ended', () => {
+        setIsCallActive(false);
+        toast({
+          title: "Call ended",
+          description: "The call with the assistant has ended.",
+        });
+      });
+
+      call.on('error', (error) => {
+        console.error('VAPI call error:', error);
+        setIsCallActive(false);
+        toast({
+          title: "Call error",
+          description: error?.message || "There was an error with the call. Please try again.",
+          variant: "destructive",
+        });
       });
 
     } catch (error) {
