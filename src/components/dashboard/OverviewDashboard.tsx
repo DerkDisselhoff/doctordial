@@ -1,9 +1,10 @@
+
 import { MetricsCards } from "./metrics/MetricsCards";
 import { DashboardCharts } from "./charts/DashboardCharts";
 import { Toggle } from "@/components/ui/toggle";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { Activity, Users, Calendar, PhoneCall } from "lucide-react";
+import { Activity, Users, Calendar, PhoneCall, StopCircle, Loader } from "lucide-react";
 import { UrgentCases } from "./client/UrgentCases";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,7 @@ export function OverviewDashboard() {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
   const [isCallActive, setIsCallActive] = useState(false);
+  const [isCallLoading, setIsCallLoading] = useState(false);
   const { toast } = useToast();
   const activeCallRef = useRef<any>(null);
 
@@ -58,32 +60,51 @@ export function OverviewDashboard() {
 
   const cleanupCall = useCallback(() => {
     if (activeCallRef.current) {
-      activeCallRef.current.removeEventListener('ended', () => {});
-      activeCallRef.current.removeEventListener('error', () => {});
+      activeCallRef.current.off('ended');
+      activeCallRef.current.off('error');
       activeCallRef.current = null;
     }
     setIsCallActive(false);
+    setIsCallLoading(false);
   }, []);
 
+  const endCall = useCallback(() => {
+    if (activeCallRef.current) {
+      activeCallRef.current.stop();
+      cleanupCall();
+      toast({
+        title: "Call ended",
+        description: "You've ended the call with the assistant.",
+      });
+    }
+  }, [cleanupCall, toast]);
+
   const handleCall = useCallback(async () => {
-    if (isCallActive || activeCallRef.current) {
+    if (isCallActive) {
+      endCall();
+      return;
+    }
+
+    if (isCallLoading || activeCallRef.current) {
       console.log('Call already in progress');
       return;
     }
 
     try {
+      setIsCallLoading(true);
       const vapi = new Vapi("9a63ea0f-c066-4221-857e-0b7edfcef3f4");
       await navigator.mediaDevices.getUserMedia({ audio: true });
       const call = await vapi.start("d1dcfa30-8f3e-4be4-9b20-83d9f54e4877");
       activeCallRef.current = call;
 
       setIsCallActive(true);
+      setIsCallLoading(false);
       toast({
         title: "Call connected",
         description: "You are now connected to the assistant.",
       });
 
-      call.addEventListener('ended', () => {
+      call.on('ended', () => {
         cleanupCall();
         toast({
           title: "Call ended",
@@ -91,7 +112,7 @@ export function OverviewDashboard() {
         });
       });
 
-      call.addEventListener('error', (error) => {
+      call.on('error', (error) => {
         console.error('VAPI call error:', error);
         cleanupCall();
         toast({
@@ -110,13 +131,38 @@ export function OverviewDashboard() {
         variant: "destructive",
       });
     }
-  }, [toast, isCallActive, cleanupCall]);
+  }, [toast, isCallActive, isCallLoading, cleanupCall, endCall]);
 
   useEffect(() => {
     return () => {
       cleanupCall();
     };
   }, [cleanupCall]);
+
+  const getButtonContent = () => {
+    if (isCallLoading) {
+      return (
+        <>
+          <Loader className="w-4 h-4 animate-spin" />
+          <span>Connecting...</span>
+        </>
+      );
+    }
+    if (isCallActive) {
+      return (
+        <>
+          <StopCircle className="w-4 h-4" />
+          <span>End Call</span>
+        </>
+      );
+    }
+    return (
+      <>
+        <PhoneCall className="w-4 h-4" />
+        <span>Call Assistant</span>
+      </>
+    );
+  };
 
   return (
     <div className="space-y-8">
@@ -134,15 +180,18 @@ export function OverviewDashboard() {
           >
             <Button
               onClick={handleCall}
-              disabled={isCallActive}
-              className={`${
-                isCallActive 
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-mint hover:bg-mint-dark'
-              } text-white flex items-center gap-2 font-medium shadow-sm`}
+              disabled={isCallLoading}
+              className={`
+                ${isCallActive 
+                  ? 'bg-red-500 hover:bg-red-600' 
+                  : isCallLoading
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-mint hover:bg-mint-dark'
+                } 
+                text-white flex items-center gap-2 font-medium shadow-sm transition-colors duration-200
+              `}
             >
-              <PhoneCall className="w-4 h-4" />
-              {isCallActive ? 'Call in Progress' : 'Call Assistant'}
+              {getButtonContent()}
             </Button>
             
             <div className="flex items-center space-x-4 text-sm text-gray">
