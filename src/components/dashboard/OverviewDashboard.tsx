@@ -1,4 +1,3 @@
-
 import { MetricsCards } from "./metrics/MetricsCards";
 import { DashboardCharts } from "./charts/DashboardCharts";
 import { Toggle } from "@/components/ui/toggle";
@@ -62,8 +61,6 @@ export function OverviewDashboard() {
     if (activeCallRef.current) {
       try {
         console.log('Cleaning up call...');
-        activeCallRef.current.removeEventListener('ended', () => {});
-        activeCallRef.current.removeEventListener('error', () => {});
         activeCallRef.current.stop();
         activeCallRef.current = null;
       } catch (error) {
@@ -128,7 +125,7 @@ export function OverviewDashboard() {
         description: "You are now connected to the assistant.",
       });
 
-      call.addEventListener('ended', () => {
+      call.on('ended', () => {
         console.log('Call ended event received');
         cleanupCall();
         toast({
@@ -137,7 +134,7 @@ export function OverviewDashboard() {
         });
       });
 
-      call.addEventListener('error', (error) => {
+      call.on('error', (error) => {
         console.error('VAPI call error:', error);
         cleanupCall();
         toast({
