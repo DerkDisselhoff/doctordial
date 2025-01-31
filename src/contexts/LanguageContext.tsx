@@ -133,19 +133,19 @@ const translations = {
       description: "Empowering healthcare providers to focus on what matters most: patient care"
     },
     demo: {
-      title: "Book a Demo",
-      subtitle: "Experience the future of healthcare communication",
-      firstName: "First Name",
-      lastName: "Last Name",
-      email: "Email",
-      phone: "Phone Number",
-      practice: "Practice Name", 
-      practitioners: "Number of Practitioners",
-      submit: "Book Demo",
-      submitting: "Booking...",
+      title: "Boek een Demo",
+      subtitle: "Ervaar de toekomst van gezondheidszorgcommunicatie",
+      firstName: "Voornaam",
+      lastName: "Achternaam",
+      email: "E-mailadres",
+      phone: "Telefoonnummer",
+      practice: "Naam Praktijk",
+      practitioners: "Aantal Artsen",
+      submit: "Demo Aanvragen",
+      submitting: "Aanvragen...",
       success: {
-        title: "Thank you for your interest!",
-        message: "We'll be in touch shortly to schedule your demo."
+        title: "Bedankt voor je interesse!",
+        message: "We nemen binnenkort contact met je op om een demo in te plannen."
       }
     }
   },
