@@ -1,9 +1,10 @@
+
 import { Phone } from "lucide-react";
 import { BookDemoForm } from "@/components/BookDemoForm";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroContent = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <div className="space-y-8 animate-fade-up text-center">
@@ -14,11 +15,7 @@ const HeroContent = () => {
       
       <div className="space-y-6">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-gray-dark max-w-4xl mx-auto">
-          {language === 'en' ? 'Digital Workers,' : 'Digital Werkers,'}
-          <br />
-          <span className="text-mint">
-            {language === 'en' ? 'Human Experience' : 'Menselijke Ervaring'}
-          </span>
+          {t("hero.title")}
         </h1>
         
         <p className="text-base md:text-lg text-gray max-w-xl leading-relaxed mx-auto">
