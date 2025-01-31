@@ -1,30 +1,34 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, Download, Printer, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Reports = () => {
+  const { t } = useLanguage();
+  
   const reports = [
     {
-      title: "Monthly Performance Report",
-      description: "Comprehensive analysis of call handling and practice metrics",
+      title: t("reports.monthlyPerformance"),
+      description: t("reports.monthlyDesc"),
       date: "March 2024",
       type: "Performance",
     },
     {
-      title: "Patient Satisfaction Survey",
-      description: "Analysis of patient feedback and satisfaction metrics",
+      title: t("reports.satisfaction"),
+      description: t("reports.satisfactionDesc"),
       date: "Q1 2024",
       type: "Satisfaction",
     },
     {
-      title: "Call Volume Analysis",
-      description: "Detailed breakdown of call patterns and peak hours",
+      title: t("reports.volumeAnalysis"),
+      description: t("reports.volumeDesc"),
       date: "Last 30 days",
       type: "Analytics",
     },
     {
-      title: "Practice Efficiency Report",
-      description: "Metrics on response times and resource utilization",
+      title: t("reports.efficiency"),
+      description: t("reports.efficiencyDesc"),
       date: "February 2024",
       type: "Efficiency",
     },
@@ -33,8 +37,8 @@ const Reports = () => {
   return (
     <div className="p-8 space-y-8">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-forest">Reports</h2>
-        <p className="text-gray-500">Access and generate detailed practice reports</p>
+        <h2 className="text-3xl font-bold text-forest">{t("reports.title")}</h2>
+        <p className="text-gray-500">{t("reports.subtitle")}</p>
       </div>
 
       <div className="grid gap-6">
@@ -58,15 +62,15 @@ const Reports = () => {
                 <div className="flex space-x-2">
                   <Button variant="outline" size="sm">
                     <Printer className="w-4 h-4 mr-2" />
-                    Print
+                    {t("reports.print")}
                   </Button>
                   <Button variant="outline" size="sm">
                     <Share2 className="w-4 h-4 mr-2" />
-                    Share
+                    {t("reports.share")}
                   </Button>
                   <Button size="sm">
                     <Download className="w-4 h-4 mr-2" />
-                    Download
+                    {t("reports.download")}
                   </Button>
                 </div>
               </div>
@@ -77,34 +81,34 @@ const Reports = () => {
 
       <Card className="bg-white">
         <CardHeader>
-          <CardTitle>Custom Report Generator</CardTitle>
+          <CardTitle>{t("reports.customReport")}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-gray-500 mb-4">
-            Select parameters to generate a custom report based on your specific needs
+            {t("reports.customDesc")}
           </p>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-forest">Date Range</label>
+              <label className="text-sm font-medium text-forest">{t("reports.dateRange")}</label>
               <select className="w-full p-2 border rounded-md">
-                <option>Last 7 days</option>
-                <option>Last 30 days</option>
-                <option>Last 3 months</option>
-                <option>Custom range</option>
+                <option>{t("reports.lastWeek")}</option>
+                <option>{t("reports.lastMonth")}</option>
+                <option>{t("reports.last3Months")}</option>
+                <option>{t("reports.customRange")}</option>
               </select>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-forest">Report Type</label>
+              <label className="text-sm font-medium text-forest">{t("reports.reportType")}</label>
               <select className="w-full p-2 border rounded-md">
-                <option>Performance Metrics</option>
-                <option>Call Analytics</option>
-                <option>Patient Satisfaction</option>
-                <option>Resource Utilization</option>
+                <option>{t("reports.performanceMetrics")}</option>
+                <option>{t("reports.callAnalytics")}</option>
+                <option>{t("reports.patientSatisfaction")}</option>
+                <option>{t("reports.resourceUtilization")}</option>
               </select>
             </div>
           </div>
           <Button className="mt-4">
-            Generate Report
+            {t("reports.generate")}
           </Button>
         </CardContent>
       </Card>

@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type Language = 'en' | 'nl';
@@ -145,6 +144,45 @@ const translations = {
       caller: "Caller",
       duration: "Duration",
       status: "Status"
+    },
+    reports: {
+      title: "Reports",
+      subtitle: "Access and generate detailed practice reports",
+      monthlyPerformance: "Monthly Performance Report",
+      monthlyDesc: "Comprehensive analysis of call handling and practice metrics",
+      satisfaction: "Patient Satisfaction Survey",
+      satisfactionDesc: "Analysis of patient feedback and satisfaction metrics",
+      volumeAnalysis: "Call Volume Analysis",
+      volumeDesc: "Detailed breakdown of call patterns and peak hours",
+      efficiency: "Practice Efficiency Report",
+      efficiencyDesc: "Metrics on response times and resource utilization",
+      print: "Print",
+      share: "Share",
+      download: "Download",
+      generate: "Generate Report",
+      customReport: "Custom Report Generator",
+      customDesc: "Select parameters to generate a custom report based on your specific needs",
+      dateRange: "Date Range",
+      lastWeek: "Last 7 days",
+      lastMonth: "Last 30 days",
+      last3Months: "Last 3 months",
+      customRange: "Custom range",
+      reportType: "Report Type",
+      performanceMetrics: "Performance Metrics",
+      callAnalytics: "Call Analytics",
+      patientSatisfaction: "Patient Satisfaction",
+      resourceUtilization: "Resource Utilization"
+    },
+    calendar: {
+      title: "Calendar",
+      subtitle: "Manage appointments and schedules",
+      today: "Today",
+      allDoctors: "All Doctors",
+      newAppointment: "New Appointment",
+      regularCheckup: "Regular Check-up",
+      followUp: "Follow-up",
+      checkupDesc: "Regular check-up appointment",
+      followUpDesc: "Follow-up after previous treatment"
     }
   },
   nl: {
@@ -282,6 +320,45 @@ const translations = {
       caller: "Beller",
       duration: "Duur",
       status: "Status"
+    },
+    reports: {
+      title: "Rapporten",
+      subtitle: "Bekijk en genereer gedetailleerde praktijkrapporten",
+      monthlyPerformance: "Maandelijks Prestatierapport",
+      monthlyDesc: "Uitgebreide analyse van gespreksbeheer en praktijkmetriek",
+      satisfaction: "Patiënttevredenheidsonderzoek",
+      satisfactionDesc: "Analyse van patiëntfeedback en tevredenheidsmetriek",
+      volumeAnalysis: "Gespreksvolume Analyse",
+      volumeDesc: "Gedetailleerd overzicht van gesprekspatronen en piekuren",
+      efficiency: "Praktijk Efficiëntierapport",
+      efficiencyDesc: "Metriek over responstijden en resourcegebruik",
+      print: "Afdrukken",
+      share: "Delen",
+      download: "Downloaden",
+      generate: "Rapport Genereren",
+      customReport: "Aangepaste Rapportgenerator",
+      customDesc: "Selecteer parameters om een rapport te genereren op basis van uw specifieke behoeften",
+      dateRange: "Datumbereik",
+      lastWeek: "Laatste 7 dagen",
+      lastMonth: "Laatste 30 dagen",
+      last3Months: "Laatste 3 maanden",
+      customRange: "Aangepast bereik",
+      reportType: "Rapporttype",
+      performanceMetrics: "Prestatiemetriek",
+      callAnalytics: "Gespreksanalyse",
+      patientSatisfaction: "Patiënttevredenheid",
+      resourceUtilization: "Resourcegebruik"
+    },
+    calendar: {
+      title: "Agenda",
+      subtitle: "Beheer afspraken en planningen",
+      today: "Vandaag",
+      allDoctors: "Alle Artsen",
+      newAppointment: "Nieuwe Afspraak",
+      regularCheckup: "Reguliere Controle",
+      followUp: "Vervolgafspraak",
+      checkupDesc: "Reguliere controle afspraak",
+      followUpDesc: "Vervolgafspraak na eerdere behandeling"
     }
   }
 };
