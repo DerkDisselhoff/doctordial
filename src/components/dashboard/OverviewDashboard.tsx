@@ -1,3 +1,4 @@
+
 import { MetricsCards } from "./metrics/MetricsCards";
 import { DashboardCharts } from "./charts/DashboardCharts";
 import { Toggle } from "@/components/ui/toggle";
@@ -12,6 +13,13 @@ import Vapi from "@vapi-ai/web";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 type TimeFilter = 'today' | 'week' | 'month';
+
+// Add proper typing for Vapi Call
+type VapiCall = {
+  stop: () => void;
+  addEventListener: (event: 'ended' | 'error', handler: (error?: any) => void) => void;
+  removeEventListener: (event: 'ended' | 'error', handler: (error?: any) => void) => void;
+};
 
 const FloatingIcon = ({ icon: Icon, delay, x, y }: { icon: any, delay: number, x: number, y: number }) => (
   <motion.div
@@ -39,7 +47,7 @@ export function OverviewDashboard() {
   const [isCallActive, setIsCallActive] = useState(false);
   const [isCallLoading, setIsCallLoading] = useState(false);
   const { toast } = useToast();
-  const activeCallRef = useRef<any>(null);
+  const activeCallRef = useRef<VapiCall | null>(null);
   const { t } = useLanguage();
 
   useEffect(() => {
@@ -62,8 +70,8 @@ export function OverviewDashboard() {
   const cleanupCall = useCallback(() => {
     if (activeCallRef.current) {
       try {
-        activeCallRef.current.off('ended');
-        activeCallRef.current.off('error');
+        activeCallRef.current.removeEventListener('ended', () => {});
+        activeCallRef.current.removeEventListener('error', () => {});
         activeCallRef.current = null;
       } catch (error) {
         console.error('Error cleaning up call:', error);
@@ -114,24 +122,17 @@ export function OverviewDashboard() {
       const vapi = new Vapi("9a63ea0f-c066-4221-857e-0b7edfcef3f4");
       await navigator.mediaDevices.getUserMedia({ audio: true });
       const call = await vapi.start("d1dcfa30-8f3e-4be4-9b20-83d9f54e4877");
-      activeCallRef.current = call;
+      activeCallRef.current = call as VapiCall;
 
-      setIsCallActive(true);
-      setIsCallLoading(false);
-      toast({
-        title: t('dashboard.toast.callConnected'),
-        description: t('dashboard.toast.callConnectedDesc'),
-      });
-
-      call.on('ended', () => {
+      const handleCallEnded = () => {
         cleanupCall();
         toast({
           title: t('dashboard.toast.callEnded'),
           description: t('dashboard.toast.callEndedDesc'),
         });
-      });
+      };
 
-      call.on('error', (error) => {
+      const handleCallError = (error: any) => {
         console.error('VAPI call error:', error);
         cleanupCall();
         toast({
@@ -139,6 +140,16 @@ export function OverviewDashboard() {
           description: error?.message || t('dashboard.toast.callErrorDesc'),
           variant: "destructive",
         });
+      };
+
+      call.addEventListener('ended', handleCallEnded);
+      call.addEventListener('error', handleCallError);
+
+      setIsCallActive(true);
+      setIsCallLoading(false);
+      toast({
+        title: t('dashboard.toast.callConnected'),
+        description: t('dashboard.toast.callConnectedDesc'),
       });
 
     } catch (error) {
