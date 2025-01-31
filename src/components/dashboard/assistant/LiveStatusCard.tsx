@@ -1,9 +1,11 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { Phone } from "lucide-react";
 
 interface LiveStatusCardProps {
   isLive?: boolean;
@@ -12,12 +14,14 @@ interface LiveStatusCardProps {
 
 export const LiveStatusCard = ({ isLive = false, onStatusChange }: LiveStatusCardProps) => {
   const [status, setStatus] = useState(isLive);
+  const [assistantPhone, setAssistantPhone] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
-    const fetchStatus = async () => {
+    const fetchData = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
+        // Fetch status
         const { data: statusData } = await supabase
           .from('assistant_status')
           .select('is_live')
@@ -27,10 +31,21 @@ export const LiveStatusCard = ({ isLive = false, onStatusChange }: LiveStatusCar
         if (statusData?.is_live !== undefined) {
           setStatus(statusData.is_live);
         }
+
+        // Fetch phone number
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('assistant_phone')
+          .eq('id', session.user.id)
+          .maybeSingle();
+
+        if (profileData?.assistant_phone) {
+          setAssistantPhone(profileData.assistant_phone);
+        }
       }
     };
 
-    fetchStatus();
+    fetchData();
   }, []);
 
   const handleStatusChange = async (newStatus: boolean) => {
@@ -73,6 +88,12 @@ export const LiveStatusCard = ({ isLive = false, onStatusChange }: LiveStatusCar
           )}>
             {status ? 'Live - Ready to take calls' : 'Offline - Not accepting calls'}
           </p>
+          {assistantPhone && (
+            <div className="flex items-center gap-2 mt-2 text-sm text-gray">
+              <Phone className="w-4 h-4" />
+              <span>{assistantPhone}</span>
+            </div>
+          )}
         </div>
 
         {/* Animated background elements when status is on */}
