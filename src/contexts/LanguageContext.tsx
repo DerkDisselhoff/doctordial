@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type Language = 'en' | 'nl';
@@ -60,7 +61,7 @@ const translations = {
     },
     hero: {
       aiPowered: "AI-Powered Call Management",
-      title: "Digital Workers, Human Experience",
+      title: "Digital Assistants, Human Experience",
       subtitle: "Let AI handle your practice's calls while maintaining the personal touch your patients expect.",
       trainedOn: "Trained on millions of medical conversations",
       bookDemo: "Book a Demo",
@@ -200,7 +201,7 @@ const translations = {
     },
     hero: {
       aiPowered: "AI-Gestuurde Gespreksafhandeling",
-      title: "AI assistentes, menselijke ervaring",
+      title: "Digitale Assistentes, Menselijke Ervaring",
       subtitle: "Laat AI de telefoongesprekken van jouw praktijk afhandelen met behoud van persoonlijk contact",
       trainedOn: "Getraind op miljoenen medische gesprekken",
       bookDemo: "Demo Aanvragen",
