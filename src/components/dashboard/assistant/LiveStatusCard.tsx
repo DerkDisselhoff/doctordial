@@ -14,7 +14,7 @@ interface LiveStatusCardProps {
 
 export const LiveStatusCard = ({ isLive = false, onStatusChange }: LiveStatusCardProps) => {
   const [status, setStatus] = useState(isLive);
-  const [assistantPhone, setAssistantPhone] = useState<string | null>(null);
+  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -35,12 +35,12 @@ export const LiveStatusCard = ({ isLive = false, onStatusChange }: LiveStatusCar
         // Fetch phone number
         const { data: profileData } = await supabase
           .from('profiles')
-          .select('assistant_phone')
+          .select('phone_number')
           .eq('id', session.user.id)
           .maybeSingle();
 
-        if (profileData?.assistant_phone) {
-          setAssistantPhone(profileData.assistant_phone);
+        if (profileData?.phone_number) {
+          setPhoneNumber(profileData.phone_number);
         }
       }
     };
@@ -88,10 +88,10 @@ export const LiveStatusCard = ({ isLive = false, onStatusChange }: LiveStatusCar
           )}>
             {status ? 'Live - Ready to take calls' : 'Offline - Not accepting calls'}
           </p>
-          {assistantPhone && (
+          {phoneNumber && (
             <div className="flex items-center gap-2 mt-2 text-sm text-gray">
               <Phone className="w-4 h-4" />
-              <span>{assistantPhone}</span>
+              <span>{phoneNumber}</span>
             </div>
           )}
         </div>
@@ -118,3 +118,4 @@ export const LiveStatusCard = ({ isLive = false, onStatusChange }: LiveStatusCar
     </Card>
   );
 };
+
