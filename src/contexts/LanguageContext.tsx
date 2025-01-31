@@ -139,7 +139,7 @@ const translations = {
       lastName: "Last Name",
       email: "Email",
       phone: "Phone Number",
-      practice: "Practice Name",
+      practice: "Practice Name", 
       practitioners: "Number of Practitioners",
       submit: "Book Demo",
       submitting: "Booking...",
