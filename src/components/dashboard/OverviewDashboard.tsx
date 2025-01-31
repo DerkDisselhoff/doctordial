@@ -16,8 +16,8 @@ type TimeFilter = 'today' | 'week' | 'month';
 
 interface VapiCall {
   stop: () => void;
-  on: (event: 'ended' | 'error', handler: (error?: any) => void) => void;
-  off: (event: 'ended' | 'error', handler?: (error?: any) => void) => void;
+  addEventListener: (event: 'ended' | 'error', handler: (error?: any) => void) => void;
+  removeEventListener: (event: 'ended' | 'error', handler: (error?: any) => void) => void;
 }
 
 const FloatingIcon = ({ icon: Icon, delay, x, y }: { icon: any, delay: number, x: number, y: number }) => (
@@ -69,8 +69,8 @@ export function OverviewDashboard() {
   const cleanupCall = useCallback(() => {
     if (activeCallRef.current) {
       try {
-        activeCallRef.current.off('ended');
-        activeCallRef.current.off('error');
+        activeCallRef.current.removeEventListener('ended', () => {});
+        activeCallRef.current.removeEventListener('error', () => {});
         activeCallRef.current = null;
       } catch (error) {
         console.error('Error cleaning up call:', error);
@@ -141,8 +141,8 @@ export function OverviewDashboard() {
         });
       };
 
-      call.on('ended', handleCallEnded);
-      call.on('error', handleCallError);
+      activeCallRef.current.addEventListener('ended', handleCallEnded);
+      activeCallRef.current.addEventListener('error', handleCallError);
 
       setIsCallActive(true);
       setIsCallLoading(false);
@@ -293,4 +293,3 @@ export function OverviewDashboard() {
     </div>
   );
 }
-

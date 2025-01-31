@@ -22,12 +22,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function AdminSidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
+  const { language, setLanguage, t } = useLanguage();
   const [userProfile, setUserProfile] = useState<{
     username?: string | null;
     avatar_url?: string | null;
@@ -174,6 +176,16 @@ export function AdminSidebar() {
           <SidebarGroup>
             <SidebarGroupContent>
               <div className="space-y-1">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start gap-3 px-3 py-2.5 text-gray hover:bg-mint/5 hover:text-gray-dark"
+                  onClick={() => setLanguage(language === 'nl' ? 'en' : 'nl')}
+                >
+                  <span className="w-5 h-5 rounded-full bg-blue-dark flex items-center justify-center text-[10px] text-white font-medium">
+                    {language.toUpperCase()}
+                  </span>
+                  <span>{language === 'nl' ? 'Nederlands' : 'English'}</span>
+                </Button>
                 {userRole === 'admin' ? (
                   <>
                     {adminMenuItems.map((item) => (
