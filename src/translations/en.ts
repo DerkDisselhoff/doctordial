@@ -50,7 +50,8 @@ export const enTranslations = {
   },
   hero: {
     aiPowered: "AI-Powered Call Management",
-    title: "Digital Assistants, Human Experience",
+    titlePartOne: "Digital Assistants,",
+    titlePartTwo: "Human Experience",
     subtitle: "Let AI handle your practice's calls while maintaining the personal touch your patients expect.",
     trainedOn: "Trained on millions of medical conversations",
     bookDemo: "Book a Demo",

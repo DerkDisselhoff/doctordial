@@ -50,7 +50,8 @@ export const nlTranslations = {
   },
   hero: {
     aiPowered: "AI-Gestuurde Gespreksafhandeling",
-    title: "Digitale Assistentes, Menselijke Ervaring",
+    titlePartOne: "Digitale Assistentes,",
+    titlePartTwo: "Menselijke Ervaring",
     subtitle: "Laat AI de telefoongesprekken van jouw praktijk afhandelen met behoud van persoonlijk contact",
     trainedOn: "Getraind op miljoenen medische gesprekken",
     bookDemo: "Demo Aanvragen",
