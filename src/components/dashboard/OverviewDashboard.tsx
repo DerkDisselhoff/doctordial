@@ -14,12 +14,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
-// Add proper typing for Vapi Call
-type VapiCall = {
+interface VapiCall {
   stop: () => void;
-  addEventListener: (event: 'ended' | 'error', handler: (error?: any) => void) => void;
-  removeEventListener: (event: 'ended' | 'error', handler: (error?: any) => void) => void;
-};
+  on: (event: 'ended' | 'error', handler: (error?: any) => void) => void;
+  off: (event: 'ended' | 'error', handler?: (error?: any) => void) => void;
+}
 
 const FloatingIcon = ({ icon: Icon, delay, x, y }: { icon: any, delay: number, x: number, y: number }) => (
   <motion.div
@@ -70,8 +69,8 @@ export function OverviewDashboard() {
   const cleanupCall = useCallback(() => {
     if (activeCallRef.current) {
       try {
-        activeCallRef.current.removeEventListener('ended', () => {});
-        activeCallRef.current.removeEventListener('error', () => {});
+        activeCallRef.current.off('ended');
+        activeCallRef.current.off('error');
         activeCallRef.current = null;
       } catch (error) {
         console.error('Error cleaning up call:', error);
@@ -122,7 +121,7 @@ export function OverviewDashboard() {
       const vapi = new Vapi("9a63ea0f-c066-4221-857e-0b7edfcef3f4");
       await navigator.mediaDevices.getUserMedia({ audio: true });
       const call = await vapi.start("d1dcfa30-8f3e-4be4-9b20-83d9f54e4877");
-      activeCallRef.current = call as VapiCall;
+      activeCallRef.current = call as unknown as VapiCall;
 
       const handleCallEnded = () => {
         cleanupCall();
@@ -142,8 +141,8 @@ export function OverviewDashboard() {
         });
       };
 
-      call.addEventListener('ended', handleCallEnded);
-      call.addEventListener('error', handleCallError);
+      call.on('ended', handleCallEnded);
+      call.on('error', handleCallError);
 
       setIsCallActive(true);
       setIsCallLoading(false);
@@ -294,3 +293,4 @@ export function OverviewDashboard() {
     </div>
   );
 }
+

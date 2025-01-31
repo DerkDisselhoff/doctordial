@@ -72,7 +72,9 @@ const translations = {
         todaysCalls: "Today's Calls",
         totalAppointments: "Total Appointments",
         urgentCases: "Urgent Cases",
-        callDuration: "Average Call Duration"
+        callDuration: "Average Call Duration",
+        totalClients: "Total Clients",
+        monthlyRevenue: "Monthly Revenue"
       },
       filters: {
         today: "Today",
@@ -91,13 +93,63 @@ const translations = {
         callEndedDesc: "The call with the assistant has ended.",
         callError: "Call error",
         callErrorDesc: "There was an error with the call. Please try again.",
-        callFailed: "Call failed"
+        callFailed: "Call failed",
+        saveSuccess: "Changes saved",
+        saveError: "Error saving changes",
+        deleteSuccess: "Successfully deleted",
+        deleteError: "Error deleting item"
       },
       urgentCases: {
         title: "Urgent Cases",
         noUrgentCases: "No urgent cases at the moment",
         irrelevantTitle: "Non-Urgent Cases",
         noIrrelevantCases: "No non-urgent cases at the moment"
+      },
+      calls: {
+        title: "Call History",
+        searchPlaceholder: "Search calls...",
+        filters: {
+          urgency: "Urgency",
+          allUrgencies: "All Urgencies",
+          sentiment: "Sentiment",
+          allSentiments: "All Sentiments",
+          positive: "Positive",
+          negative: "Negative",
+          neutral: "Neutral"
+        },
+        columns: {
+          caller: "Caller",
+          date: "Date",
+          duration: "Duration",
+          status: "Status",
+          urgency: "Urgency",
+          sentiment: "Sentiment",
+          actions: "Actions"
+        }
+      },
+      appointments: {
+        title: "Appointments",
+        newAppointment: "New Appointment",
+        noAppointments: "No appointments scheduled",
+        details: {
+          patient: "Patient",
+          date: "Date",
+          time: "Time",
+          type: "Type",
+          notes: "Notes",
+          status: "Status"
+        }
+      },
+      settings: {
+        title: "Settings",
+        sections: {
+          general: "General",
+          billing: "Billing",
+          security: "Security",
+          notifications: "Notifications",
+          team: "Team",
+          integrations: "Integrations"
+        }
       }
     }
   },
@@ -164,7 +216,9 @@ const translations = {
         todaysCalls: "Gesprekken Vandaag",
         totalAppointments: "Totaal Afspraken",
         urgentCases: "Urgente Gevallen",
-        callDuration: "Gemiddelde Gespreksduur"
+        callDuration: "Gemiddelde Gespreksduur",
+        totalClients: "Totaal Cliënten",
+        monthlyRevenue: "Maandelijkse Omzet"
       },
       filters: {
         today: "Vandaag",
@@ -183,13 +237,63 @@ const translations = {
         callEndedDesc: "Het gesprek met de assistent is beëindigd.",
         callError: "Fout in gesprek",
         callErrorDesc: "Er is een fout opgetreden. Probeer het opnieuw.",
-        callFailed: "Gesprek mislukt"
+        callFailed: "Gesprek mislukt",
+        saveSuccess: "Wijzigingen opgeslagen",
+        saveError: "Fout bij opslaan",
+        deleteSuccess: "Succesvol verwijderd",
+        deleteError: "Fout bij verwijderen"
       },
       urgentCases: {
         title: "Urgente Gevallen",
         noUrgentCases: "Momenteel geen urgente gevallen",
         irrelevantTitle: "Niet-Urgente Gevallen",
         noIrrelevantCases: "Momenteel geen niet-urgente gevallen"
+      },
+      calls: {
+        title: "Gespreksgeschiedenis",
+        searchPlaceholder: "Zoek gesprekken...",
+        filters: {
+          urgency: "Urgentie",
+          allUrgencies: "Alle Urgenties",
+          sentiment: "Sentiment",
+          allSentiments: "Alle Sentimenten",
+          positive: "Positief",
+          negative: "Negatief",
+          neutral: "Neutraal"
+        },
+        columns: {
+          caller: "Beller",
+          date: "Datum",
+          duration: "Duur",
+          status: "Status",
+          urgency: "Urgentie",
+          sentiment: "Sentiment",
+          actions: "Acties"
+        }
+      },
+      appointments: {
+        title: "Afspraken",
+        newAppointment: "Nieuwe Afspraak",
+        noAppointments: "Geen afspraken gepland",
+        details: {
+          patient: "Patiënt",
+          date: "Datum",
+          time: "Tijd",
+          type: "Type",
+          notes: "Notities",
+          status: "Status"
+        }
+      },
+      settings: {
+        title: "Instellingen",
+        sections: {
+          general: "Algemeen",
+          billing: "Facturatie",
+          security: "Beveiliging",
+          notifications: "Notificaties",
+          team: "Team",
+          integrations: "Integraties"
+        }
       }
     }
   }
