@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type Language = 'en' | 'nl';
@@ -30,6 +31,25 @@ const translations = {
           duration: "Duration",
           emotion: "Emotion"
         }
+      },
+      callButton: {
+        start: "Start Call",
+        end: "End Call",
+        connecting: "Connecting..."
+      },
+      toast: {
+        callEnded: "Call Ended",
+        callEndedDesc: "The call has been ended successfully",
+        callError: "Call Error",
+        callErrorDesc: "There was an error with the call",
+        callConnected: "Call Connected",
+        callConnectedDesc: "You are now connected to the call",
+        callFailed: "Call Failed"
+      },
+      filters: {
+        today: "Today",
+        lastWeek: "Last Week",
+        lastMonth: "Last Month"
       }
     }
   },
@@ -54,6 +74,25 @@ const translations = {
           duration: "Duur",
           emotion: "Emotie"
         }
+      },
+      callButton: {
+        start: "Start Gesprek",
+        end: "Beëindig Gesprek",
+        connecting: "Verbinden..."
+      },
+      toast: {
+        callEnded: "Gesprek Beëindigd",
+        callEndedDesc: "Het gesprek is succesvol beëindigd",
+        callError: "Gespreksfout",
+        callErrorDesc: "Er is een fout opgetreden tijdens het gesprek",
+        callConnected: "Verbinding Gemaakt",
+        callConnectedDesc: "U bent nu verbonden met het gesprek",
+        callFailed: "Gesprek Mislukt"
+      },
+      filters: {
+        today: "Vandaag",
+        lastWeek: "Afgelopen Week",
+        lastMonth: "Afgelopen Maand"
       }
     }
   }
