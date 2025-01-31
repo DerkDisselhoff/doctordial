@@ -10,15 +10,8 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import Vapi from "@vapi-ai/web";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 type TimeFilter = 'today' | 'week' | 'month';
-
-interface VapiCall {
-  stop: () => void;
-  addEventListener: (event: 'ended' | 'error', handler: (error?: any) => void) => void;
-  removeEventListener: (event: 'ended' | 'error', handler: (error?: any) => void) => void;
-}
 
 const FloatingIcon = ({ icon: Icon, delay, x, y }: { icon: any, delay: number, x: number, y: number }) => (
   <motion.div
@@ -46,8 +39,7 @@ export function OverviewDashboard() {
   const [isCallActive, setIsCallActive] = useState(false);
   const [isCallLoading, setIsCallLoading] = useState(false);
   const { toast } = useToast();
-  const activeCallRef = useRef<VapiCall | null>(null);
-  const { t } = useLanguage();
+  const activeCallRef = useRef<any>(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -86,20 +78,20 @@ export function OverviewDashboard() {
         activeCallRef.current.stop();
         cleanupCall();
         toast({
-          title: t('dashboard.toast.callEnded'),
-          description: t('dashboard.toast.callEndedDesc'),
+          title: "Call ended",
+          description: "You've ended the call with the assistant.",
         });
       }
     } catch (error) {
       console.error('Error ending call:', error);
       cleanupCall();
       toast({
-        title: t('dashboard.toast.callError'),
-        description: t('dashboard.toast.callErrorDesc'),
+        title: "Error ending call",
+        description: "There was an error ending the call. Please try again.",
         variant: "destructive",
       });
     }
-  }, [cleanupCall, toast, t]);
+  }, [cleanupCall, toast]);
 
   const handleCall = useCallback(async () => {
     if (isCallActive) {
@@ -121,46 +113,43 @@ export function OverviewDashboard() {
       const vapi = new Vapi("9a63ea0f-c066-4221-857e-0b7edfcef3f4");
       await navigator.mediaDevices.getUserMedia({ audio: true });
       const call = await vapi.start("d1dcfa30-8f3e-4be4-9b20-83d9f54e4877");
-      activeCallRef.current = call as unknown as VapiCall;
-
-      const handleCallEnded = () => {
-        cleanupCall();
-        toast({
-          title: t('dashboard.toast.callEnded'),
-          description: t('dashboard.toast.callEndedDesc'),
-        });
-      };
-
-      const handleCallError = (error: any) => {
-        console.error('VAPI call error:', error);
-        cleanupCall();
-        toast({
-          title: t('dashboard.toast.callError'),
-          description: error?.message || t('dashboard.toast.callErrorDesc'),
-          variant: "destructive",
-        });
-      };
-
-      activeCallRef.current.addEventListener('ended', handleCallEnded);
-      activeCallRef.current.addEventListener('error', handleCallError);
+      activeCallRef.current = call;
 
       setIsCallActive(true);
       setIsCallLoading(false);
       toast({
-        title: t('dashboard.toast.callConnected'),
-        description: t('dashboard.toast.callConnectedDesc'),
+        title: "Call connected",
+        description: "You are now connected to the assistant.",
+      });
+
+      call.addEventListener('ended', () => {
+        cleanupCall();
+        toast({
+          title: "Call ended",
+          description: "The call with the assistant has ended.",
+        });
+      });
+
+      call.addEventListener('error', (error) => {
+        console.error('VAPI call error:', error);
+        cleanupCall();
+        toast({
+          title: "Call error",
+          description: error?.message || "There was an error with the call. Please try again.",
+          variant: "destructive",
+        });
       });
 
     } catch (error) {
       console.error('Error starting VAPI call:', error);
       cleanupCall();
       toast({
-        title: t('dashboard.toast.callFailed'),
-        description: error instanceof Error ? error.message : t('dashboard.toast.callErrorDesc'),
+        title: "Call failed",
+        description: error instanceof Error ? error.message : "Failed to start the call",
         variant: "destructive",
       });
     }
-  }, [toast, isCallActive, isCallLoading, cleanupCall, endCall, t]);
+  }, [toast, isCallActive, isCallLoading, cleanupCall, endCall]);
 
   useEffect(() => {
     return () => {
@@ -173,7 +162,7 @@ export function OverviewDashboard() {
       return (
         <>
           <Loader className="w-4 h-4 animate-spin" />
-          <span>{t('dashboard.callButton.connecting')}</span>
+          <span>Connecting...</span>
         </>
       );
     }
@@ -181,14 +170,14 @@ export function OverviewDashboard() {
       return (
         <>
           <StopCircle className="w-4 h-4" />
-          <span>{t('dashboard.callButton.end')}</span>
+          <span>End Call</span>
         </>
       );
     }
     return (
       <>
         <PhoneCall className="w-4 h-4" />
-        <span>{t('dashboard.callButton.start')}</span>
+        <span>Call Assistant</span>
       </>
     );
   };
@@ -231,7 +220,7 @@ export function OverviewDashboard() {
                 onPressedChange={() => setTimeFilter('today')}
                 className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
               >
-                {t('dashboard.filters.today')}
+                Today
               </Toggle>
               <Toggle
                 variant="outline"
@@ -240,7 +229,7 @@ export function OverviewDashboard() {
                 onPressedChange={() => setTimeFilter('week')}
                 className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
               >
-                {t('dashboard.filters.lastWeek')}
+                Last Week
               </Toggle>
               <Toggle
                 variant="outline"
@@ -249,7 +238,7 @@ export function OverviewDashboard() {
                 onPressedChange={() => setTimeFilter('month')}
                 className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
               >
-                {t('dashboard.filters.lastMonth')}
+                Last Month
               </Toggle>
             </div>
           </motion.div>

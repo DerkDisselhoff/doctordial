@@ -1,4 +1,3 @@
-
 import { 
   BarChart3, Users, Phone, Settings, Home, Building2, 
   DollarSign, FileText, Activity, LogOut, Shield, 
@@ -23,22 +22,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 export function AdminSidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
-  const { language, setLanguage, t } = useLanguage();
   const [userProfile, setUserProfile] = useState<{
     username?: string | null;
     avatar_url?: string | null;
-    preferred_language?: string | null;
   }>({
     username: "Dr. Sarah Johnson",
     avatar_url: "/assets/ai-agent.webp",
-    preferred_language: 'en'
   });
 
   useEffect(() => {
@@ -47,7 +42,7 @@ export function AdminSidebar() {
       if (session) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('role, username, avatar_url, preferred_language')
+          .select('role, username, avatar_url')
           .eq('id', session.user.id)
           .single();
         
@@ -55,60 +50,24 @@ export function AdminSidebar() {
         setUserProfile({
           username: profile?.username || session.user.email?.split('@')[0],
           avatar_url: profile?.avatar_url,
-          preferred_language: profile?.preferred_language
         });
-
-        // Set the language from the profile if it exists
-        if (profile?.preferred_language) {
-          setLanguage(profile.preferred_language as 'en' | 'nl');
-        }
       }
     };
     fetchUserProfile();
-  }, [setLanguage]);
-
-  const handleLanguageChange = async () => {
-    const newLanguage = language === 'nl' ? 'en' : 'nl';
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    if (session) {
-      const { error } = await supabase
-        .from('profiles')
-        .update({ 
-          preferred_language: newLanguage,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', session.user.id);
-
-      if (error) {
-        toast({
-          title: t("dashboard.toast.saveError"),
-          description: t("dashboard.toast.tryAgain"),
-          variant: "destructive",
-        });
-        return;
-      }
-    }
-    
-    setLanguage(newLanguage);
-    toast({
-      title: t("dashboard.toast.saveSuccess"),
-      description: newLanguage === 'nl' ? "Taal gewijzigd naar Nederlands" : "Language changed to English",
-    });
-  };
+  }, []);
 
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
       navigate('/');
       toast({
-        title: t("dashboard.toast.loggedOut"),
-        description: t("dashboard.toast.loggedOutDesc"),
+        title: "Logged out successfully",
+        description: "You have been logged out of your account",
       });
     } catch (error) {
       toast({
-        title: t("dashboard.toast.logoutError"),
-        description: t("dashboard.toast.tryAgain"),
+        title: "Error logging out",
+        description: "Please try again",
         variant: "destructive",
       });
     }
@@ -136,31 +95,31 @@ export function AdminSidebar() {
   };
 
   const clientMenuItems = [
-    { title: t("dashboard.menu.overview"), icon: Home, path: "/dashboard" },
-    { title: t("dashboard.menu.workflow"), icon: GitBranch, path: "/dashboard/workflow" },
-    { title: t("dashboard.menu.workerOutput"), icon: Phone, path: "/dashboard/calls" },
+    { title: "Overview", icon: Home, path: "/dashboard" },
+    { title: "Workflow", icon: GitBranch, path: "/dashboard/workflow" },
+    { title: "Worker Output", icon: Phone, path: "/dashboard/calls" },
   ];
 
   const adminMenuItems = [
-    { title: t("dashboard.menu.overview"), icon: Home, path: "/dashboard" },
-    { title: t("dashboard.menu.workerOutput"), icon: Phone, path: "/dashboard/calls" },
-    { title: t("dashboard.menu.appointments"), icon: Calendar, path: "/dashboard/appointments" },
-    { title: t("dashboard.menu.calendar"), icon: Calendar, path: "/dashboard/calendar" },
-    { title: t("dashboard.menu.clients"), icon: Users, path: "/dashboard/clients" },
-    { title: t("dashboard.menu.practices"), icon: Building2, path: "/dashboard/practices" },
-    { title: t("dashboard.menu.reports"), icon: BarChart3, path: "/dashboard/reports" },
-    { title: t("dashboard.menu.billing"), icon: DollarSign, path: "/dashboard/billing" },
-    { title: t("dashboard.menu.contracts"), icon: FileText, path: "/dashboard/contracts" },
-    { title: t("dashboard.menu.activity"), icon: Activity, path: "/dashboard/activity" },
+    { title: "Overview", icon: Home, path: "/dashboard" },
+    { title: "Worker Output", icon: Phone, path: "/dashboard/calls" },
+    { title: "Appointments", icon: Calendar, path: "/dashboard/appointments" },
+    { title: "Calendar", icon: Calendar, path: "/dashboard/calendar" },
+    { title: "Clients", icon: Users, path: "/dashboard/clients" },
+    { title: "Practices", icon: Building2, path: "/dashboard/practices" },
+    { title: "Reports", icon: BarChart3, path: "/dashboard/reports" },
+    { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
+    { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
+    { title: "Activity", icon: Activity, path: "/dashboard/activity" },
   ];
 
   const settingsMenuItems = [
-    { title: t("dashboard.settings.general"), icon: Grid, path: "/dashboard/settings/general" },
-    { title: t("dashboard.settings.billing"), icon: CreditCard, path: "/dashboard/settings/billing" },
-    { title: t("dashboard.settings.invoices"), icon: Receipt, path: "/dashboard/settings/invoices" },
-    { title: t("dashboard.settings.security"), icon: Shield, path: "/dashboard/settings/security" },
-    { title: t("dashboard.settings.team"), icon: Users, path: "/dashboard/settings/team" },
-    { title: t("dashboard.settings.integrations"), icon: Building2, path: "/dashboard/settings/integrations" },
+    { title: "General", icon: Grid, path: "/dashboard/settings/general" },
+    { title: "Billing", icon: CreditCard, path: "/dashboard/settings/billing" },
+    { title: "Invoices", icon: Receipt, path: "/dashboard/settings/invoices" },
+    { title: "Security & Privacy", icon: Shield, path: "/dashboard/settings/security" },
+    { title: "Team", icon: Users, path: "/dashboard/settings/team" },
+    { title: "Integrations", icon: Building2, path: "/dashboard/settings/integrations" },
   ];
 
   const SettingsMenuItem = () => {
@@ -180,11 +139,11 @@ export function AdminSidebar() {
             <Settings className={`h-5 w-5 flex-shrink-0 transition-colors ${
               isSettingsActive ? 'text-mint' : 'text-gray/70 group-hover:text-mint'
             }`} />
-            <span>{t("dashboard.menu.settings")}</span>
+            <span>Settings</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-56 bg-white border-gray-muted/50 shadow-lg rounded-lg"
+          className="w-56 bg-white border border-gray-muted/50 shadow-lg rounded-lg"
           align="start"
           alignOffset={0}
           sideOffset={2}
@@ -215,16 +174,6 @@ export function AdminSidebar() {
           <SidebarGroup>
             <SidebarGroupContent>
               <div className="space-y-1">
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start gap-3 px-3 py-2.5 text-gray hover:bg-mint/5 hover:text-gray-dark"
-                  onClick={handleLanguageChange}
-                >
-                  <span className="w-5 h-5 rounded-full bg-blue-dark flex items-center justify-center text-[10px] text-white font-medium">
-                    {language.toUpperCase()}
-                  </span>
-                  <span>{language === 'nl' ? 'Nederlands' : 'English'}</span>
-                </Button>
                 {userRole === 'admin' ? (
                   <>
                     {adminMenuItems.map((item) => (
@@ -257,10 +206,10 @@ export function AdminSidebar() {
                 </Avatar>
                 <div className="flex flex-col items-start text-left">
                   <span className="text-sm font-medium text-gray-dark">
-                    {userProfile?.username || t("dashboard.user.defaultName")}
+                    {userProfile?.username || 'User'}
                   </span>
                   <span className="text-xs text-gray">
-                    {userRole === 'admin' ? t("dashboard.user.admin") : t("dashboard.user.practiceManager")}
+                    {userRole === 'admin' ? 'Administrator' : 'Practice Manager'}
                   </span>
                 </div>
               </Button>
@@ -271,7 +220,7 @@ export function AdminSidebar() {
                 onClick={handleLogout}
               >
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>{t("dashboard.menu.logout")}</span>
+                <span>Log out</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

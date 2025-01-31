@@ -7,10 +7,8 @@ import { cn } from "@/lib/utils";
 import { NewAppointmentModal } from "@/components/dashboard/calendar/NewAppointmentModal";
 import { AppointmentTooltip } from "@/components/dashboard/calendar/AppointmentTooltip";
 import { getUrgencyColor } from "@/utils/urgencyUtils";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const CalendarPage = () => {
-  const { t } = useLanguage();
   const [date, setDate] = useState<Date>(new Date());
   const [selectedDoctor, setSelectedDoctor] = useState<string>("all");
 
@@ -49,16 +47,18 @@ const CalendarPage = () => {
   return (
     <div className="p-6 space-y-6">
       <div className="flex flex-col space-y-4">
-        <h1 className="text-2xl font-bold text-white">{t("calendar.title")}</h1>
-        <p className="text-white/60">{t("calendar.subtitle")}</p>
+        <h1 className="text-2xl font-bold text-white">Calendar</h1>
+        <p className="text-white/60">Manage appointments and schedules</p>
       </div>
 
       <div className="dashboard-card relative overflow-hidden group transition-all duration-300">
+        {/* Enhanced gradient overlay with animation */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-r from-mint/5 via-transparent to-mint/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           <div className="absolute inset-0 bg-gradient-to-b from-mint/10 to-transparent opacity-25" />
         </div>
 
+        {/* Calendar Header with frosted glass effect */}
         <div className="relative z-10 flex items-center justify-between mb-6 p-4 rounded-lg bg-forest-light/80 backdrop-blur-sm border border-mint/10 shadow-lg">
           <div className="flex items-center space-x-4">
             <Button
@@ -67,7 +67,7 @@ const CalendarPage = () => {
               onClick={() => setDate(new Date())}
               className="text-white hover:text-mint border-mint/20 hover:bg-mint/10 transition-colors"
             >
-              {t("calendar.today")}
+              Today
             </Button>
             <div className="flex items-center space-x-2">
               <Button
@@ -95,10 +95,10 @@ const CalendarPage = () => {
           <div className="flex items-center space-x-4">
             <Select value={selectedDoctor} onValueChange={setSelectedDoctor}>
               <SelectTrigger className="w-[180px] bg-forest-light/80 border-mint/10 text-white backdrop-blur-sm">
-                <SelectValue placeholder={t("calendar.allDoctors")} />
+                <SelectValue placeholder="Select doctor" />
               </SelectTrigger>
               <SelectContent className="bg-forest-light/95 border-mint/10 backdrop-blur-sm">
-                <SelectItem value="all">{t("calendar.allDoctors")}</SelectItem>
+                <SelectItem value="all">All Doctors</SelectItem>
                 {[
                   { id: "1", name: "Dr. Sarah Johnson" },
                   { id: "2", name: "Dr. Michael Chen" },
@@ -118,7 +118,9 @@ const CalendarPage = () => {
           </div>
         </div>
 
+        {/* Enhanced Calendar Grid */}
         <div className="grid grid-cols-8 gap-px bg-mint/5 rounded-lg overflow-hidden shadow-xl">
+          {/* Time column with frosted glass effect */}
           <div className="bg-forest-light/80 backdrop-blur-sm border-r border-mint/10">
             <div className="h-12" /> {/* Spacer for header alignment */}
             {Array.from({ length: 13 }, (_, i) => i + 7).map((hour) => (
@@ -133,7 +135,9 @@ const CalendarPage = () => {
             ))}
           </div>
 
+          {/* Days columns with enhanced appointment styling */}
           <div className="col-span-7 grid grid-cols-7 gap-px">
+            {/* Days header row */}
             {eachDayOfInterval({ start: startOfWeek(date), end: endOfWeek(date) }).map((day) => (
               <div
                 key={day.toString()}
@@ -148,6 +152,7 @@ const CalendarPage = () => {
               </div>
             ))}
 
+            {/* Time slots and appointments */}
             {eachDayOfInterval({ start: startOfWeek(date), end: endOfWeek(date) }).map((day) => (
               <div key={day.toString()} className="bg-forest-light/50 backdrop-blur-sm">
                 <div className="h-12" /> {/* Spacer for header alignment */}
@@ -156,6 +161,7 @@ const CalendarPage = () => {
                     key={`${day}-${hour}`}
                     className="h-20 border-b border-mint/10 relative group hover:bg-mint/5 transition-colors"
                   >
+                    {/* Enhanced appointment cards */}
                     {appointments
                       .filter(apt => {
                         const [aptHour] = apt.time.split(':').map(Number);
