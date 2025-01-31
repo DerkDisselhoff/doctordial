@@ -1,21 +1,14 @@
+
 import { MetricsCards } from "./metrics/MetricsCards";
 import { DashboardCharts } from "./charts/DashboardCharts";
 import { Toggle } from "@/components/ui/toggle";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { Activity, Users, Calendar, PhoneCall, StopCircle, Loader } from "lucide-react";
+import { Activity, Users, Calendar } from "lucide-react";
 import { UrgentCases } from "./client/UrgentCases";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import Vapi from "@vapi-ai/web";
 
 type TimeFilter = 'today' | 'week' | 'month';
-
-interface Call {
-  stop: () => void;
-  on: (event: string, callback: (error?: any) => void) => void;
-}
 
 const FloatingIcon = ({ icon: Icon, delay, x, y }: { icon: any, delay: number, x: number, y: number }) => (
   <motion.div
@@ -40,10 +33,6 @@ const FloatingIcon = ({ icon: Icon, delay, x, y }: { icon: any, delay: number, x
 export function OverviewDashboard() {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
-  const [isCallActive, setIsCallActive] = useState(false);
-  const [isCallLoading, setIsCallLoading] = useState(false);
-  const { toast } = useToast();
-  const activeCallRef = useRef<Call | null>(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -62,134 +51,6 @@ export function OverviewDashboard() {
     fetchUserProfile();
   }, []);
 
-  const cleanupCall = useCallback(() => {
-    if (activeCallRef.current) {
-      try {
-        console.log('Cleaning up call...');
-        activeCallRef.current.stop();
-        activeCallRef.current = null;
-      } catch (error) {
-        console.error('Error cleaning up call:', error);
-      }
-    }
-    setIsCallActive(false);
-    setIsCallLoading(false);
-  }, []);
-
-  const endCall = useCallback(() => {
-    try {
-      console.log('Ending call...');
-      if (activeCallRef.current) {
-        activeCallRef.current.stop();
-        cleanupCall();
-        toast({
-          title: "Call ended",
-          description: "You've ended the call with the assistant.",
-        });
-      }
-    } catch (error) {
-      console.error('Error ending call:', error);
-      cleanupCall();
-      toast({
-        title: "Error ending call",
-        description: "There was an error ending the call. Please try again.",
-        variant: "destructive",
-      });
-    }
-  }, [cleanupCall, toast]);
-
-  const handleCall = useCallback(async () => {
-    if (isCallActive) {
-      console.log('Ending active call...');
-      endCall();
-      return;
-    }
-
-    if (isCallLoading || activeCallRef.current) {
-      console.log('Call already in progress');
-      return;
-    }
-
-    try {
-      setIsCallLoading(true);
-      console.log('Starting call...');
-      
-      await new Promise(resolve => setTimeout(resolve, 3000)); // Increased to 3 seconds
-      
-      const vapi = new Vapi("9a63ea0f-c066-4221-857e-0b7edfcef3f4");
-      await navigator.mediaDevices.getUserMedia({ audio: true });
-      const call = await vapi.start("d1dcfa30-8f3e-4be4-9b20-83d9f54e4877") as Call;
-      activeCallRef.current = call;
-
-      console.log('Call started successfully');
-      setIsCallActive(true);
-      setIsCallLoading(false);
-      toast({
-        title: "Call connected",
-        description: "You are now connected to the assistant.",
-      });
-
-      call.on('ended', () => {
-        console.log('Call ended event received');
-        cleanupCall();
-        toast({
-          title: "Call ended",
-          description: "The call with the assistant has ended.",
-        });
-      });
-
-      call.on('error', (error) => {
-        console.error('VAPI call error:', error);
-        cleanupCall();
-        toast({
-          title: "Call error",
-          description: error?.message || "There was an error with the call. Please try again.",
-          variant: "destructive",
-        });
-      });
-
-    } catch (error) {
-      console.error('Error starting VAPI call:', error);
-      cleanupCall();
-      toast({
-        title: "Call failed",
-        description: error instanceof Error ? error.message : "Failed to start the call",
-        variant: "destructive",
-      });
-    }
-  }, [toast, isCallActive, isCallLoading, cleanupCall, endCall]);
-
-  useEffect(() => {
-    return () => {
-      cleanupCall();
-    };
-  }, [cleanupCall]);
-
-  const getButtonContent = () => {
-    if (isCallLoading) {
-      return (
-        <>
-          <Loader className="w-4 h-4 animate-spin" />
-          <span>Connecting...</span>
-        </>
-      );
-    }
-    if (isCallActive) {
-      return (
-        <>
-          <StopCircle className="w-4 h-4" />
-          <span>End Call</span>
-        </>
-      );
-    }
-    return (
-      <>
-        <PhoneCall className="w-4 h-4" />
-        <span>Call Assistant</span>
-      </>
-    );
-  };
-
   return (
     <div className="space-y-8">
       <div className="relative">
@@ -202,24 +63,8 @@ export function OverviewDashboard() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex items-center justify-between mb-6"
+            className="flex items-center justify-end mb-6"
           >
-            <Button
-              onClick={handleCall}
-              disabled={isCallLoading}
-              className={`
-                ${isCallActive 
-                  ? 'bg-red-500 hover:bg-red-600' 
-                  : isCallLoading
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-mint hover:bg-mint-dark'
-                } 
-                text-white flex items-center gap-2 font-medium shadow-sm transition-colors duration-200
-              `}
-            >
-              {getButtonContent()}
-            </Button>
-            
             <div className="flex items-center space-x-4 text-sm text-gray">
               <Toggle
                 variant="outline"
