@@ -75,7 +75,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
     return (
       <Card className="bg-white border border-gray-muted shadow-sm">
         <CardContent className="p-4">
-          <p className="text-center text-gray">Error loading cases</p>
+          <p className="text-center text-gray">{t("dashboard.urgentCases.errorLoading")}</p>
         </CardContent>
       </Card>
     );
@@ -98,7 +98,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                   <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor('U5')}`}>U5</span>
                   <span className="px-2 py-1 rounded-full text-xs border bg-gray-500/20 border-gray-500/30 text-gray-500">
                     <Filter className="w-3 h-3 inline-block mr-1" />
-                    Other
+                    {t("dashboard.urgentCases.other")}
                   </span>
                 </>
               ) : (
@@ -118,7 +118,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
             className="text-blue-dark border-gray-muted hover:bg-gray-muted"
             onClick={() => navigate('/dashboard/calls')}
           >
-            View All
+            {t("dashboard.urgentCases.viewAll")}
           </Button>
         </div>
       </CardHeader>
@@ -126,13 +126,13 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
         <Table>
           <TableHeader>
             <TableRow className="border-b border-gray-muted">
-              <TableHead className="text-left p-4 text-gray w-[15%]">Patient</TableHead>
-              <TableHead className="text-left p-4 text-gray w-[20%]">Symptoms</TableHead>
-              <TableHead className="text-left p-4 text-gray w-[10%]">Urgency</TableHead>
-              <TableHead className="text-left p-4 text-gray w-[12%]">Forwarded</TableHead>
-              <TableHead className="text-left p-4 text-gray w-[20%]">Summary</TableHead>
-              <TableHead className="text-left p-4 text-gray w-[8%]">Duration</TableHead>
-              <TableHead className="text-left p-4 text-gray w-[15%]">Emotion</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[15%]">{t("dashboard.urgentCases.columns.patient")}</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[20%]">{t("dashboard.urgentCases.columns.symptoms")}</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[10%]">{t("dashboard.urgentCases.columns.urgency")}</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[12%]">{t("dashboard.urgentCases.columns.forwarded")}</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[20%]">{t("dashboard.urgentCases.columns.summary")}</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[8%]">{t("dashboard.urgentCases.columns.duration")}</TableHead>
+              <TableHead className="text-left p-4 text-gray w-[15%]">{t("dashboard.urgentCases.columns.emotion")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -142,7 +142,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                 className="border-b border-gray-muted hover:bg-gray-muted/10 cursor-pointer transition-colors"
                 onClick={() => navigate(`/dashboard/calls/${call.call_id}`)}
               >
-                <TableCell className="p-4 text-gray-dark w-[15%]">{call.Name || 'Unknown'}</TableCell>
+                <TableCell className="p-4 text-gray-dark w-[15%]">{call.Name || t("dashboard.urgentCases.unknown")}</TableCell>
                 <TableCell className="p-4 text-gray w-[20%]">
                   <div className="truncate max-w-[250px]" title={call.Symptoms}>
                     {call.Symptoms}
@@ -159,7 +159,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                       ? 'bg-green-light text-green'
                       : 'bg-gray-500/10 text-gray-400'
                   }`}>
-                    {call.Forwarded ? 'Yes' : 'No'}
+                    {call.Forwarded ? t("dashboard.urgentCases.yes") : t("dashboard.urgentCases.no")}
                   </span>
                 </TableCell>
                 <TableCell className="p-4 text-gray w-[20%]">
@@ -168,7 +168,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                   </div>
                 </TableCell>
                 <TableCell className="p-4 text-gray w-[8%]">
-                  {call.duration_seconds ? `${Math.round(parseFloat(call.duration_seconds))}s` : 'N/A'}
+                  {call.duration_seconds ? `${Math.round(parseFloat(call.duration_seconds))}s` : t("dashboard.urgentCases.na")}
                 </TableCell>
                 <TableCell className="p-4 w-[15%]">
                   <span className={`px-2 py-1 rounded-full text-xs border ${
@@ -182,7 +182,7 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                       ? 'bg-gray-500/20 border-gray-500/30 text-gray-500'
                       : 'bg-slate-500/20 border-slate-500/30 text-slate-500'
                   }`}>
-                    {call.Emotion || 'N/A'}
+                    {call.Emotion || t("dashboard.urgentCases.na")}
                   </span>
                 </TableCell>
               </TableRow>
