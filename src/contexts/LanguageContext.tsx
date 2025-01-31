@@ -45,8 +45,9 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
           throw error;
         }
 
-        if (data) {
-          setTranslations(data.translations || {});
+        if (data && data.translations) {
+          // Ensure we're setting an object for translations
+          setTranslations(typeof data.translations === 'object' ? data.translations : {});
         }
       } catch (error) {
         console.error('Error fetching translations:', error);
