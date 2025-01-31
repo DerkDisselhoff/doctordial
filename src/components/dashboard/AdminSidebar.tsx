@@ -34,9 +34,11 @@ export function AdminSidebar() {
   const [userProfile, setUserProfile] = useState<{
     username?: string | null;
     avatar_url?: string | null;
+    preferred_language?: string | null;
   }>({
     username: "Dr. Sarah Johnson",
     avatar_url: "/assets/ai-agent.webp",
+    preferred_language: 'en'
   });
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export function AdminSidebar() {
       if (session) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('role, username, avatar_url')
+          .select('role, username, avatar_url, preferred_language')
           .eq('id', session.user.id)
           .single();
         
@@ -53,11 +55,47 @@ export function AdminSidebar() {
         setUserProfile({
           username: profile?.username || session.user.email?.split('@')[0],
           avatar_url: profile?.avatar_url,
+          preferred_language: profile?.preferred_language
         });
+
+        // Set the language from the profile if it exists
+        if (profile?.preferred_language) {
+          setLanguage(profile.preferred_language as 'en' | 'nl');
+        }
       }
     };
     fetchUserProfile();
-  }, []);
+  }, [setLanguage]);
+
+  const handleLanguageChange = async () => {
+    const newLanguage = language === 'nl' ? 'en' : 'nl';
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (session) {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ 
+          preferred_language: newLanguage,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', session.user.id);
+
+      if (error) {
+        toast({
+          title: t("dashboard.toast.saveError"),
+          description: t("dashboard.toast.tryAgain"),
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+    
+    setLanguage(newLanguage);
+    toast({
+      title: t("dashboard.toast.saveSuccess"),
+      description: newLanguage === 'nl' ? "Taal gewijzigd naar Nederlands" : "Language changed to English",
+    });
+  };
 
   const handleLogout = async () => {
     try {
@@ -180,7 +218,7 @@ export function AdminSidebar() {
                 <Button
                   variant="ghost"
                   className="w-full justify-start gap-3 px-3 py-2.5 text-gray hover:bg-mint/5 hover:text-gray-dark"
-                  onClick={() => setLanguage(language === 'nl' ? 'en' : 'nl')}
+                  onClick={handleLanguageChange}
                 >
                   <span className="w-5 h-5 rounded-full bg-blue-dark flex items-center justify-center text-[10px] text-white font-medium">
                     {language.toUpperCase()}

@@ -302,6 +302,7 @@ export type Database = {
           created_at: string
           id: string
           phone_number: string | null
+          preferred_language: string | null
           role: Database["public"]["Enums"]["user_role"] | null
           updated_at: string
           username: string | null
@@ -312,6 +313,7 @@ export type Database = {
           created_at?: string
           id: string
           phone_number?: string | null
+          preferred_language?: string | null
           role?: Database["public"]["Enums"]["user_role"] | null
           updated_at?: string
           username?: string | null
@@ -322,6 +324,7 @@ export type Database = {
           created_at?: string
           id?: string
           phone_number?: string | null
+          preferred_language?: string | null
           role?: Database["public"]["Enums"]["user_role"] | null
           updated_at?: string
           username?: string | null
