@@ -1,3 +1,4 @@
+
 import { MetricsCards } from "./metrics/MetricsCards";
 import { DashboardCharts } from "./charts/DashboardCharts";
 import { Toggle } from "@/components/ui/toggle";
@@ -11,6 +12,12 @@ import { useToast } from "@/hooks/use-toast";
 import Vapi from "@vapi-ai/web";
 
 type TimeFilter = 'today' | 'week' | 'month';
+
+// Add type definition for Vapi Call
+type VapiCall = {
+  stop: () => void;
+  on: (event: 'ended' | 'error', callback: (error?: any) => void) => void;
+};
 
 const FloatingIcon = ({ icon: Icon, delay, x, y }: { icon: any, delay: number, x: number, y: number }) => (
   <motion.div
@@ -38,7 +45,7 @@ export function OverviewDashboard() {
   const [isCallActive, setIsCallActive] = useState(false);
   const [isCallLoading, setIsCallLoading] = useState(false);
   const { toast } = useToast();
-  const activeCallRef = useRef<any>(null);
+  const activeCallRef = useRef<VapiCall | null>(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -109,12 +116,11 @@ export function OverviewDashboard() {
       setIsCallLoading(true);
       console.log('Starting call...');
       
-      // Add artificial delay of 1 second
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const vapi = new Vapi("9a63ea0f-c066-4221-857e-0b7edfcef3f4");
       await navigator.mediaDevices.getUserMedia({ audio: true });
-      const call = await vapi.start("d1dcfa30-8f3e-4be4-9b20-83d9f54e4877");
+      const call = await vapi.start("d1dcfa30-8f3e-4be4-9b20-83d9f54e4877") as VapiCall;
       activeCallRef.current = call;
 
       console.log('Call started successfully');
