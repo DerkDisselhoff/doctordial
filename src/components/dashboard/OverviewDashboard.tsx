@@ -61,8 +61,10 @@ export function OverviewDashboard() {
   const cleanupCall = useCallback(() => {
     if (activeCallRef.current) {
       try {
+        console.log('Cleaning up call...');
         activeCallRef.current.removeEventListener('ended', () => {});
         activeCallRef.current.removeEventListener('error', () => {});
+        activeCallRef.current.stop();
         activeCallRef.current = null;
       } catch (error) {
         console.error('Error cleaning up call:', error);
@@ -74,6 +76,7 @@ export function OverviewDashboard() {
 
   const endCall = useCallback(() => {
     try {
+      console.log('Ending call...');
       if (activeCallRef.current) {
         activeCallRef.current.stop();
         cleanupCall();
@@ -95,6 +98,7 @@ export function OverviewDashboard() {
 
   const handleCall = useCallback(async () => {
     if (isCallActive) {
+      console.log('Ending active call...');
       endCall();
       return;
     }
@@ -106,6 +110,7 @@ export function OverviewDashboard() {
 
     try {
       setIsCallLoading(true);
+      console.log('Starting call...');
       
       // Add artificial delay of 1 second
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -115,6 +120,7 @@ export function OverviewDashboard() {
       const call = await vapi.start("d1dcfa30-8f3e-4be4-9b20-83d9f54e4877");
       activeCallRef.current = call;
 
+      console.log('Call started successfully');
       setIsCallActive(true);
       setIsCallLoading(false);
       toast({
@@ -123,6 +129,7 @@ export function OverviewDashboard() {
       });
 
       call.addEventListener('ended', () => {
+        console.log('Call ended event received');
         cleanupCall();
         toast({
           title: "Call ended",
