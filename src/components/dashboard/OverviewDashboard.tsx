@@ -1,4 +1,3 @@
-
 import { MetricsCards } from "./metrics/MetricsCards";
 import { DashboardCharts } from "./charts/DashboardCharts";
 import { Toggle } from "@/components/ui/toggle";
@@ -10,6 +9,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import Vapi from "@vapi-ai/web";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type TimeFilter = 'today' | 'week' | 'month';
 
@@ -40,6 +40,7 @@ export function OverviewDashboard() {
   const [isCallLoading, setIsCallLoading] = useState(false);
   const { toast } = useToast();
   const activeCallRef = useRef<any>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -61,8 +62,8 @@ export function OverviewDashboard() {
   const cleanupCall = useCallback(() => {
     if (activeCallRef.current) {
       try {
-        activeCallRef.current.removeEventListener('ended', () => {});
-        activeCallRef.current.removeEventListener('error', () => {});
+        activeCallRef.current.off('ended');
+        activeCallRef.current.off('error');
         activeCallRef.current = null;
       } catch (error) {
         console.error('Error cleaning up call:', error);
@@ -78,20 +79,20 @@ export function OverviewDashboard() {
         activeCallRef.current.stop();
         cleanupCall();
         toast({
-          title: "Call ended",
-          description: "You've ended the call with the assistant.",
+          title: t('dashboard.toast.callEnded'),
+          description: t('dashboard.toast.callEndedDesc'),
         });
       }
     } catch (error) {
       console.error('Error ending call:', error);
       cleanupCall();
       toast({
-        title: "Error ending call",
-        description: "There was an error ending the call. Please try again.",
+        title: t('dashboard.toast.callError'),
+        description: t('dashboard.toast.callErrorDesc'),
         variant: "destructive",
       });
     }
-  }, [cleanupCall, toast]);
+  }, [cleanupCall, toast, t]);
 
   const handleCall = useCallback(async () => {
     if (isCallActive) {
@@ -118,24 +119,24 @@ export function OverviewDashboard() {
       setIsCallActive(true);
       setIsCallLoading(false);
       toast({
-        title: "Call connected",
-        description: "You are now connected to the assistant.",
+        title: t('dashboard.toast.callConnected'),
+        description: t('dashboard.toast.callConnectedDesc'),
       });
 
-      call.addEventListener('ended', () => {
+      call.on('ended', () => {
         cleanupCall();
         toast({
-          title: "Call ended",
-          description: "The call with the assistant has ended.",
+          title: t('dashboard.toast.callEnded'),
+          description: t('dashboard.toast.callEndedDesc'),
         });
       });
 
-      call.addEventListener('error', (error) => {
+      call.on('error', (error) => {
         console.error('VAPI call error:', error);
         cleanupCall();
         toast({
-          title: "Call error",
-          description: error?.message || "There was an error with the call. Please try again.",
+          title: t('dashboard.toast.callError'),
+          description: error?.message || t('dashboard.toast.callErrorDesc'),
           variant: "destructive",
         });
       });
@@ -144,12 +145,12 @@ export function OverviewDashboard() {
       console.error('Error starting VAPI call:', error);
       cleanupCall();
       toast({
-        title: "Call failed",
-        description: error instanceof Error ? error.message : "Failed to start the call",
+        title: t('dashboard.toast.callFailed'),
+        description: error instanceof Error ? error.message : t('dashboard.toast.callErrorDesc'),
         variant: "destructive",
       });
     }
-  }, [toast, isCallActive, isCallLoading, cleanupCall, endCall]);
+  }, [toast, isCallActive, isCallLoading, cleanupCall, endCall, t]);
 
   useEffect(() => {
     return () => {
@@ -162,7 +163,7 @@ export function OverviewDashboard() {
       return (
         <>
           <Loader className="w-4 h-4 animate-spin" />
-          <span>Connecting...</span>
+          <span>{t('dashboard.callButton.connecting')}</span>
         </>
       );
     }
@@ -170,14 +171,14 @@ export function OverviewDashboard() {
       return (
         <>
           <StopCircle className="w-4 h-4" />
-          <span>End Call</span>
+          <span>{t('dashboard.callButton.end')}</span>
         </>
       );
     }
     return (
       <>
         <PhoneCall className="w-4 h-4" />
-        <span>Call Assistant</span>
+        <span>{t('dashboard.callButton.start')}</span>
       </>
     );
   };
@@ -220,7 +221,7 @@ export function OverviewDashboard() {
                 onPressedChange={() => setTimeFilter('today')}
                 className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
               >
-                Today
+                {t('dashboard.filters.today')}
               </Toggle>
               <Toggle
                 variant="outline"
@@ -229,7 +230,7 @@ export function OverviewDashboard() {
                 onPressedChange={() => setTimeFilter('week')}
                 className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
               >
-                Last Week
+                {t('dashboard.filters.lastWeek')}
               </Toggle>
               <Toggle
                 variant="outline"
@@ -238,7 +239,7 @@ export function OverviewDashboard() {
                 onPressedChange={() => setTimeFilter('month')}
                 className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
               >
-                Last Month
+                {t('dashboard.filters.lastMonth')}
               </Toggle>
             </div>
           </motion.div>
