@@ -294,6 +294,22 @@ const translations = {
         description2: "Door gebruik te maken van de nieuwste medische inzichten en praktische kennis, zorgen we ervoor dat onze automatiseringsoplossingen veilig en nauwkeurig zijn, en diep afgestemd op de belangen van patiënten en zorgverleners.",
         description3: "Door de kracht van AI in te zetten, vergroot DoctorDial de capaciteit van artsen, verpleegkundigen en ondersteunend personeel - zonder ooit het welzijn van de patiënt uit het oog te verliezen. Onze toewijding is om de Nederlandse huisartsenzorg sterk en toegankelijk te houden terwijl we een snel veranderende toekomst tegemoet gaan en elke patiënt de aandacht krijgt die ze verdienen, precies wanneer ze die nodig hebben."
       }
+    },
+    demo: {
+      title: "Boek een Demo",
+      subtitle: "Ervaar de toekomst van gezondheidszorgcommunicatie",
+      firstName: "Voornaam",
+      lastName: "Achternaam",
+      email: "E-mailadres",
+      phone: "Telefoonnummer",
+      practice: "Naam Praktijk",
+      practitioners: "Aantal Artsen",
+      submit: "Demo Aanvragen",
+      submitting: "Aanvragen...",
+      success: {
+        title: "Bedankt voor je interesse!",
+        message: "We nemen binnenkort contact met je op om een demo in te plannen."
+      }
     }
   }
 };
