@@ -355,6 +355,30 @@ export type Database = {
         }
         Relationships: []
       }
+      translations: {
+        Row: {
+          created_at: string
+          id: string
+          language: string
+          translations: Json
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          language: string
+          translations?: Json
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          language?: string
+          translations?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
       vapi_conversations: {
         Row: {
           additional_questions: string | null
