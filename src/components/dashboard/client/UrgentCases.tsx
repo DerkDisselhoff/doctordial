@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -6,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getUrgencyColor } from "@/utils/urgencyUtils";
 import { Button } from "@/components/ui/button";
 import { Filter, List } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface CallLog {
   id: string;
@@ -53,6 +55,7 @@ interface UrgentCasesProps {
 
 export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const { data: calls, isLoading, error } = useQuery({
     queryKey: ['urgentCalls', isIrrelevant],
     queryFn: () => fetchUrgentCalls(isIrrelevant),
@@ -78,28 +81,15 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
     );
   }
 
-  const getEmotionColor = (emotion: string) => {
-    switch (emotion?.toLowerCase()) {
-      case 'happy':
-        return 'bg-green-500/20 border-green-500/30 text-green-500';
-      case 'sad':
-        return 'bg-blue-500/20 border-blue-500/30 text-blue-500';
-      case 'angry':
-        return 'bg-red-500/20 border-red-500/30 text-red-500';
-      case 'neutral':
-        return 'bg-gray-500/20 border-gray-500/30 text-gray-500';
-      default:
-        return 'bg-slate-500/20 border-slate-500/30 text-slate-500';
-    }
-  };
-
   return (
     <Card className="bg-white border border-gray-muted shadow-sm w-full">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <CardTitle className="text-gray-dark">
-              {isIrrelevant ? "Other cases (not forwarded)" : "Relevant Cases"}
+              {isIrrelevant 
+                ? t("dashboard.urgentCases.irrelevantTitle")
+                : t("dashboard.urgentCases.title")}
             </CardTitle>
             <div className="flex items-center gap-2">
               {isIrrelevant ? (
@@ -181,7 +171,17 @@ export function UrgentCases({ isIrrelevant = false }: UrgentCasesProps) {
                   {call.duration_seconds ? `${Math.round(parseFloat(call.duration_seconds))}s` : 'N/A'}
                 </TableCell>
                 <TableCell className="p-4 w-[15%]">
-                  <span className={`px-2 py-1 rounded-full text-xs border ${getEmotionColor(call.Emotion)}`}>
+                  <span className={`px-2 py-1 rounded-full text-xs border ${
+                    call.Emotion?.toLowerCase() === 'happy'
+                      ? 'bg-green-500/20 border-green-500/30 text-green-500'
+                      : call.Emotion?.toLowerCase() === 'sad'
+                      ? 'bg-blue-500/20 border-blue-500/30 text-blue-500'
+                      : call.Emotion?.toLowerCase() === 'angry'
+                      ? 'bg-red-500/20 border-red-500/30 text-red-500'
+                      : call.Emotion?.toLowerCase() === 'neutral'
+                      ? 'bg-gray-500/20 border-gray-500/30 text-gray-500'
+                      : 'bg-slate-500/20 border-slate-500/30 text-slate-500'
+                  }`}>
                     {call.Emotion || 'N/A'}
                   </span>
                 </TableCell>
