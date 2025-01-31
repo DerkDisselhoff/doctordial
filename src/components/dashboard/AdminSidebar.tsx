@@ -1,3 +1,4 @@
+
 import { 
   BarChart3, Users, Phone, Settings, Home, Building2, 
   DollarSign, FileText, Activity, LogOut, Shield, 
@@ -63,13 +64,13 @@ export function AdminSidebar() {
       await supabase.auth.signOut();
       navigate('/');
       toast({
-        title: "Logged out successfully",
-        description: "You have been logged out of your account",
+        title: t("dashboard.toast.loggedOut"),
+        description: t("dashboard.toast.loggedOutDesc"),
       });
     } catch (error) {
       toast({
-        title: "Error logging out",
-        description: "Please try again",
+        title: t("dashboard.toast.logoutError"),
+        description: t("dashboard.toast.tryAgain"),
         variant: "destructive",
       });
     }
@@ -97,31 +98,31 @@ export function AdminSidebar() {
   };
 
   const clientMenuItems = [
-    { title: "Overview", icon: Home, path: "/dashboard" },
-    { title: "Workflow", icon: GitBranch, path: "/dashboard/workflow" },
-    { title: "Worker Output", icon: Phone, path: "/dashboard/calls" },
+    { title: t("dashboard.menu.overview"), icon: Home, path: "/dashboard" },
+    { title: t("dashboard.menu.workflow"), icon: GitBranch, path: "/dashboard/workflow" },
+    { title: t("dashboard.menu.workerOutput"), icon: Phone, path: "/dashboard/calls" },
   ];
 
   const adminMenuItems = [
-    { title: "Overview", icon: Home, path: "/dashboard" },
-    { title: "Worker Output", icon: Phone, path: "/dashboard/calls" },
-    { title: "Appointments", icon: Calendar, path: "/dashboard/appointments" },
-    { title: "Calendar", icon: Calendar, path: "/dashboard/calendar" },
-    { title: "Clients", icon: Users, path: "/dashboard/clients" },
-    { title: "Practices", icon: Building2, path: "/dashboard/practices" },
-    { title: "Reports", icon: BarChart3, path: "/dashboard/reports" },
-    { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
-    { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
-    { title: "Activity", icon: Activity, path: "/dashboard/activity" },
+    { title: t("dashboard.menu.overview"), icon: Home, path: "/dashboard" },
+    { title: t("dashboard.menu.workerOutput"), icon: Phone, path: "/dashboard/calls" },
+    { title: t("dashboard.menu.appointments"), icon: Calendar, path: "/dashboard/appointments" },
+    { title: t("dashboard.menu.calendar"), icon: Calendar, path: "/dashboard/calendar" },
+    { title: t("dashboard.menu.clients"), icon: Users, path: "/dashboard/clients" },
+    { title: t("dashboard.menu.practices"), icon: Building2, path: "/dashboard/practices" },
+    { title: t("dashboard.menu.reports"), icon: BarChart3, path: "/dashboard/reports" },
+    { title: t("dashboard.menu.billing"), icon: DollarSign, path: "/dashboard/billing" },
+    { title: t("dashboard.menu.contracts"), icon: FileText, path: "/dashboard/contracts" },
+    { title: t("dashboard.menu.activity"), icon: Activity, path: "/dashboard/activity" },
   ];
 
   const settingsMenuItems = [
-    { title: "General", icon: Grid, path: "/dashboard/settings/general" },
-    { title: "Billing", icon: CreditCard, path: "/dashboard/settings/billing" },
-    { title: "Invoices", icon: Receipt, path: "/dashboard/settings/invoices" },
-    { title: "Security & Privacy", icon: Shield, path: "/dashboard/settings/security" },
-    { title: "Team", icon: Users, path: "/dashboard/settings/team" },
-    { title: "Integrations", icon: Building2, path: "/dashboard/settings/integrations" },
+    { title: t("dashboard.settings.general"), icon: Grid, path: "/dashboard/settings/general" },
+    { title: t("dashboard.settings.billing"), icon: CreditCard, path: "/dashboard/settings/billing" },
+    { title: t("dashboard.settings.invoices"), icon: Receipt, path: "/dashboard/settings/invoices" },
+    { title: t("dashboard.settings.security"), icon: Shield, path: "/dashboard/settings/security" },
+    { title: t("dashboard.settings.team"), icon: Users, path: "/dashboard/settings/team" },
+    { title: t("dashboard.settings.integrations"), icon: Building2, path: "/dashboard/settings/integrations" },
   ];
 
   const SettingsMenuItem = () => {
@@ -141,11 +142,11 @@ export function AdminSidebar() {
             <Settings className={`h-5 w-5 flex-shrink-0 transition-colors ${
               isSettingsActive ? 'text-mint' : 'text-gray/70 group-hover:text-mint'
             }`} />
-            <span>Settings</span>
+            <span>{t("dashboard.menu.settings")}</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-56 bg-white border border-gray-muted/50 shadow-lg rounded-lg"
+          className="w-56 bg-white border-gray-muted/50 shadow-lg rounded-lg"
           align="start"
           alignOffset={0}
           sideOffset={2}
@@ -218,10 +219,10 @@ export function AdminSidebar() {
                 </Avatar>
                 <div className="flex flex-col items-start text-left">
                   <span className="text-sm font-medium text-gray-dark">
-                    {userProfile?.username || 'User'}
+                    {userProfile?.username || t("dashboard.user.defaultName")}
                   </span>
                   <span className="text-xs text-gray">
-                    {userRole === 'admin' ? 'Administrator' : 'Practice Manager'}
+                    {userRole === 'admin' ? t("dashboard.user.admin") : t("dashboard.user.practiceManager")}
                   </span>
                 </div>
               </Button>
@@ -232,7 +233,7 @@ export function AdminSidebar() {
                 onClick={handleLogout}
               >
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
+                <span>{t("dashboard.menu.logout")}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

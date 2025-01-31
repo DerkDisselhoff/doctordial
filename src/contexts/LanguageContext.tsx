@@ -68,6 +68,21 @@ const translations = {
     },
     dashboard: {
       overview: "Overview",
+      menu: {
+        overview: "Overview",
+        workflow: "Workflow",
+        workerOutput: "Assistant Output",
+        appointments: "Appointments",
+        calendar: "Calendar",
+        clients: "Clients",
+        practices: "Practices",
+        reports: "Reports",
+        billing: "Billing",
+        contracts: "Contracts",
+        activity: "Activity",
+        settings: "Settings",
+        logout: "Log out"
+      },
       metrics: {
         todaysCalls: "Today's Calls",
         totalAppointments: "Total Appointments",
@@ -100,6 +115,10 @@ const translations = {
         callError: "Call error",
         callErrorDesc: "There was an error with the call. Please try again.",
         callFailed: "Call failed",
+        loggedOut: "Logged out",
+        loggedOutDesc: "You have been logged out successfully.",
+        logoutError: "Error logging out",
+        tryAgain: "Please try again",
         saveSuccess: "Changes saved",
         saveError: "Error saving changes",
         deleteSuccess: "Successfully deleted",
@@ -120,6 +139,11 @@ const translations = {
         billing: "Billing",
         team: "Team Management",
         integrations: "Integrations"
+      },
+      user: {
+        defaultName: "User",
+        admin: "Administrator",
+        practiceManager: "Practice Manager"
       },
       appointments: {
         title: "Appointments",
@@ -203,6 +227,21 @@ const translations = {
     },
     dashboard: {
       overview: "Overzicht",
+      menu: {
+        overview: "Overzicht",
+        workflow: "Workflow",
+        workerOutput: "Assistent Output",
+        appointments: "Afspraken",
+        calendar: "Kalender",
+        clients: "Cliënten",
+        practices: "Praktijken",
+        reports: "Rapporten",
+        billing: "Facturering",
+        contracts: "Contracten",
+        activity: "Activiteit",
+        settings: "Instellingen",
+        logout: "Uitloggen"
+      },
       metrics: {
         todaysCalls: "Gesprekken Vandaag",
         totalAppointments: "Totaal Afspraken",
@@ -235,6 +274,10 @@ const translations = {
         callError: "Fout in gesprek",
         callErrorDesc: "Er is een fout opgetreden. Probeer het opnieuw.",
         callFailed: "Gesprek mislukt",
+        loggedOut: "Uitgelogd",
+        loggedOutDesc: "U bent succesvol uitgelogd",
+        logoutError: "Fout bij uitloggen",
+        tryAgain: "Probeer het opnieuw",
         saveSuccess: "Wijzigingen opgeslagen",
         saveError: "Fout bij opslaan",
         deleteSuccess: "Succesvol verwijderd",
@@ -255,6 +298,11 @@ const translations = {
         billing: "Facturering",
         team: "Team Beheer",
         integrations: "Integraties"
+      },
+      user: {
+        defaultName: "Gebruiker",
+        admin: "Beheerder",
+        practiceManager: "Praktijkmanager"
       },
       appointments: {
         title: "Afspraken",
