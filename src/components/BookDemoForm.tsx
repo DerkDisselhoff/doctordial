@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -98,7 +99,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
                   <Input
                     id="name"
                     name="name"
-                    placeholder="Jane"
+                    placeholder={t("demo.firstName")}
                     className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                     required
                   />
@@ -108,7 +109,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
                   <Input
                     id="lastname"
                     name="lastname"
-                    placeholder="Smith"
+                    placeholder={t("demo.lastName")}
                     className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                     required
                   />
@@ -141,7 +142,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
                 <Input
                   id="practice"
                   name="practice"
-                  placeholder="Smith Medical Group"
+                  placeholder={t("demo.practice")}
                   className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                   required
                 />
