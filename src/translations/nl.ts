@@ -11,11 +11,14 @@ export const nlTranslations = {
   },
   footer: {
     description: "Zorgverleners ondersteunen met AI-gestuurde gespreksbeheersoplossingen voor betere patiëntenzorg.",
-    about: "Over Ons",
+    about: "Manifest",
     blog: "Blog",
     privacy: "Privacybeleid",
     terms: "Servicevoorwaarden",
-    rights: "Alle rechten voorbehouden."
+    rights: "Alle rechten voorbehouden.",
+    features: "Functies",
+    bookDemo: "Demo Aanvragen",
+    contact: "Contact"
   },
   capabilities: {
     title: "Digitale Medewerkers, Klaar voor Gebruik",
@@ -157,4 +160,3 @@ export const nlTranslations = {
     }
   }
 };
-
