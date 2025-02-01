@@ -10,10 +10,11 @@ interface LogoProps {
 export function Logo({ className = "", linkClassName = "" }: LogoProps) {
   return (
     <Link to="/" className={`flex items-center space-x-3 transition-all hover:opacity-80 ${linkClassName}`}>
-      <Stethoscope className="w-6 h-6 text-mint" />
-      <h1 className={`text-xl font-semibold tracking-tight ${className}`}>
+      <Stethoscope className="w-5 h-5 text-mint" />
+      <h1 className={`text-lg font-semibold tracking-tight ${className}`}>
         DoctorDial
       </h1>
     </Link>
   );
 }
+
