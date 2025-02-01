@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Logo } from "./Logo";
+import { BookDemoForm } from "./BookDemoForm";
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -22,14 +23,18 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><Link to="/sarah" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">Sarah</Link></li>
               <li><Link to="/about" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">{t("footer.about")}</Link></li>
-              <li><Link to="/features" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">{t("footer.features")}</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-medium mb-3 md:mb-4 text-gray-dark text-sm md:text-base">Contact</h4>
             <ul className="space-y-2">
-              <li><Link to="/demo" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">{t("footer.bookDemo")}</Link></li>
-              <li><Link to="/contact" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">{t("footer.contact")}</Link></li>
+              <li>
+                <BookDemoForm>
+                  <button className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors text-left">
+                    {t("footer.bookDemo")}
+                  </button>
+                </BookDemoForm>
+              </li>
             </ul>
           </div>
           <div>
