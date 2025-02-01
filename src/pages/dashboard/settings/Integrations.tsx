@@ -5,8 +5,8 @@ import { Plus, Check } from "lucide-react";
 
 const integrationCategories = [
   {
-    title: "Healthcare Information Systems",
-    description: "Connect your practice management software",
+    title: "Zorginformatiesystemen",
+    description: "Verbind je praktijkbeheersoftware",
     integrations: [
       { name: "Medicom", status: "connected", icon: "🏥" },
       { name: "Promedico-ASP", status: "available", icon: "🏥" },
@@ -15,8 +15,8 @@ const integrationCategories = [
     ],
   },
   {
-    title: "Call Providers",
-    description: "Integrate your telephony system",
+    title: "Telefonie Providers",
+    description: "Integreer je telefoniesysteem",
     integrations: [
       { name: "Voys", status: "connected", icon: "📞" },
       { name: "KPN", status: "available", icon: "📞" },
@@ -24,8 +24,8 @@ const integrationCategories = [
     ],
   },
   {
-    title: "Email Services",
-    description: "Connect your email provider",
+    title: "E-maildiensten",
+    description: "Verbind je e-mailprovider",
     integrations: [
       { name: "Zorgmail", status: "connected", icon: "✉️" },
       { name: "Gmail", status: "available", icon: "✉️" },
@@ -38,8 +38,8 @@ export default function Integrations() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-gray-dark">Integrations</h2>
-        <p className="text-gray">Connect your practice tools and services</p>
+        <h2 className="text-2xl font-bold text-gray-dark">Integraties</h2>
+        <p className="text-gray">Verbind je praktijktools en -diensten</p>
       </div>
 
       <div className="space-y-6">
@@ -71,11 +71,16 @@ export default function Integrations() {
                           }
                         >
                           {integration.status === "connected" ? (
-                            <Check className="w-3 h-3 mr-1" />
+                            <>
+                              <Check className="w-3 h-3 mr-1" />
+                              verbonden
+                            </>
                           ) : (
-                            <Plus className="w-3 h-3 mr-1" />
+                            <>
+                              <Plus className="w-3 h-3 mr-1" />
+                              beschikbaar
+                            </>
                           )}
-                          {integration.status}
                         </Badge>
                       </div>
                     </div>
@@ -87,7 +92,7 @@ export default function Integrations() {
                           : "cta-button"
                       }
                     >
-                      {integration.status === "connected" ? "Configure" : "Connect"}
+                      {integration.status === "connected" ? "Configureren" : "Verbinden"}
                     </Button>
                   </div>
                 ))}
@@ -98,4 +103,4 @@ export default function Integrations() {
       </div>
     </div>
   );
-};
+}

@@ -61,13 +61,13 @@ export function AdminSidebar() {
       await supabase.auth.signOut();
       navigate('/');
       toast({
-        title: "Logged out successfully",
-        description: "You have been logged out of your account",
+        title: "Uitgelogd",
+        description: "Je bent succesvol uitgelogd.",
       });
     } catch (error) {
       toast({
-        title: "Error logging out",
-        description: "Please try again",
+        title: "Fout bij uitloggen",
+        description: "Probeer het opnieuw.",
         variant: "destructive",
       });
     }
@@ -95,31 +95,31 @@ export function AdminSidebar() {
   };
 
   const clientMenuItems = [
-    { title: "Overview", icon: Home, path: "/dashboard" },
-    { title: "Workflow", icon: GitBranch, path: "/dashboard/workflow" },
-    { title: "Worker Output", icon: Phone, path: "/dashboard/calls" },
+    { title: "Overzicht", icon: Home, path: "/dashboard" },
+    { title: "Werkstroom", icon: GitBranch, path: "/dashboard/workflow" },
+    { title: "Assistent Output", icon: Phone, path: "/dashboard/calls" },
   ];
 
   const adminMenuItems = [
-    { title: "Overview", icon: Home, path: "/dashboard" },
-    { title: "Worker Output", icon: Phone, path: "/dashboard/calls" },
-    { title: "Appointments", icon: Calendar, path: "/dashboard/appointments" },
-    { title: "Calendar", icon: Calendar, path: "/dashboard/calendar" },
-    { title: "Clients", icon: Users, path: "/dashboard/clients" },
-    { title: "Practices", icon: Building2, path: "/dashboard/practices" },
-    { title: "Reports", icon: BarChart3, path: "/dashboard/reports" },
-    { title: "Billing", icon: DollarSign, path: "/dashboard/billing" },
-    { title: "Contracts", icon: FileText, path: "/dashboard/contracts" },
-    { title: "Activity", icon: Activity, path: "/dashboard/activity" },
+    { title: "Overzicht", icon: Home, path: "/dashboard" },
+    { title: "Assistent Output", icon: Phone, path: "/dashboard/calls" },
+    { title: "Afspraken", icon: Calendar, path: "/dashboard/appointments" },
+    { title: "Agenda", icon: Calendar, path: "/dashboard/calendar" },
+    { title: "Cliënten", icon: Users, path: "/dashboard/clients" },
+    { title: "Praktijken", icon: Building2, path: "/dashboard/practices" },
+    { title: "Rapporten", icon: BarChart3, path: "/dashboard/reports" },
+    { title: "Facturatie", icon: DollarSign, path: "/dashboard/billing" },
+    { title: "Contracten", icon: FileText, path: "/dashboard/contracts" },
+    { title: "Activiteit", icon: Activity, path: "/dashboard/activity" },
   ];
 
   const settingsMenuItems = [
-    { title: "General", icon: Grid, path: "/dashboard/settings/general" },
-    { title: "Billing", icon: CreditCard, path: "/dashboard/settings/billing" },
-    { title: "Invoices", icon: Receipt, path: "/dashboard/settings/invoices" },
-    { title: "Security & Privacy", icon: Shield, path: "/dashboard/settings/security" },
+    { title: "Algemeen", icon: Grid, path: "/dashboard/settings/general" },
+    { title: "Facturatie", icon: CreditCard, path: "/dashboard/settings/billing" },
+    { title: "Facturen", icon: Receipt, path: "/dashboard/settings/invoices" },
+    { title: "Beveiliging & Privacy", icon: Shield, path: "/dashboard/settings/security" },
     { title: "Team", icon: Users, path: "/dashboard/settings/team" },
-    { title: "Integrations", icon: Building2, path: "/dashboard/settings/integrations" },
+    { title: "Integraties", icon: Building2, path: "/dashboard/settings/integrations" },
   ];
 
   const SettingsMenuItem = () => {
@@ -139,7 +139,7 @@ export function AdminSidebar() {
             <Settings className={`h-5 w-5 flex-shrink-0 transition-colors ${
               isSettingsActive ? 'text-mint' : 'text-gray/70 group-hover:text-mint'
             }`} />
-            <span>Settings</span>
+            <span>Instellingen</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
@@ -201,15 +201,15 @@ export function AdminSidebar() {
                 <Avatar className="h-8 w-8 ring-2 ring-mint/20 group-hover:ring-mint/40 transition-all">
                   <AvatarImage src={userProfile?.avatar_url || ''} />
                   <AvatarFallback className="bg-mint/10 text-gray-dark">
-                    {userProfile?.username?.[0]?.toUpperCase() || 'U'}
+                    {userProfile?.username?.[0]?.toUpperCase() || 'G'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col items-start text-left">
                   <span className="text-sm font-medium text-gray-dark">
-                    {userProfile?.username || 'User'}
+                    {userProfile?.username || 'Gebruiker'}
                   </span>
                   <span className="text-xs text-gray">
-                    {userRole === 'admin' ? 'Administrator' : 'Practice Manager'}
+                    {userRole === 'admin' ? 'Beheerder' : 'Praktijkmanager'}
                   </span>
                 </div>
               </Button>
@@ -220,7 +220,7 @@ export function AdminSidebar() {
                 onClick={handleLogout}
               >
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
+                <span>Uitloggen</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

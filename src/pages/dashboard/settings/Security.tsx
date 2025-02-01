@@ -8,43 +8,43 @@ const SecuritySettings = () => {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-dark">Security & Privacy</h2>
-        <p className="text-gray">Manage your account security settings</p>
+        <h2 className="text-2xl font-bold text-gray-dark">Beveiliging & Privacy</h2>
+        <p className="text-gray">Beheer je accountbeveiligingsinstellingen</p>
       </div>
 
       <Card className="bg-white border-gray-muted shadow-sm">
         <CardHeader>
           <CardTitle className="text-gray-dark flex items-center gap-2">
             <Key className="w-5 h-5 text-mint" />
-            Password
+            Wachtwoord
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-gray-dark">Current Password</Label>
+            <Label className="text-gray-dark">Huidig Wachtwoord</Label>
             <Input
               type="password"
               className="bg-white border-gray-muted focus:border-mint focus:ring-mint/20"
-              placeholder="Enter current password"
+              placeholder="Voer huidig wachtwoord in"
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-gray-dark">New Password</Label>
+            <Label className="text-gray-dark">Nieuw Wachtwoord</Label>
             <Input
               type="password"
               className="bg-white border-gray-muted focus:border-mint focus:ring-mint/20"
-              placeholder="Enter new password"
+              placeholder="Voer nieuw wachtwoord in"
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-gray-dark">Confirm New Password</Label>
+            <Label className="text-gray-dark">Bevestig Nieuw Wachtwoord</Label>
             <Input
               type="password"
               className="bg-white border-gray-muted focus:border-mint focus:ring-mint/20"
-              placeholder="Confirm new password"
+              placeholder="Bevestig nieuw wachtwoord"
             />
           </div>
-          <Button className="cta-button">Update Password</Button>
+          <Button className="cta-button">Wachtwoord Bijwerken</Button>
         </CardContent>
       </Card>
 
@@ -52,7 +52,7 @@ const SecuritySettings = () => {
         <CardHeader>
           <CardTitle className="text-gray-dark flex items-center gap-2">
             <Smartphone className="w-5 h-5 text-mint" />
-            Two-Factor Authentication
+            Twee-factor Authenticatie
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -60,12 +60,12 @@ const SecuritySettings = () => {
             <div className="flex items-center space-x-4">
               <Shield className="w-5 h-5 text-mint" />
               <div>
-                <p className="font-medium text-gray-dark">Two-Factor Authentication</p>
-                <p className="text-sm text-gray">Add an extra layer of security</p>
+                <p className="font-medium text-gray-dark">Twee-factor Authenticatie</p>
+                <p className="text-sm text-gray">Voeg een extra beveiligingslaag toe</p>
               </div>
             </div>
             <Button variant="outline" className="border-gray-muted hover:bg-gray-50 text-gray-dark">
-              Enable 2FA
+              2FA Activeren
             </Button>
           </div>
         </CardContent>
@@ -75,14 +75,14 @@ const SecuritySettings = () => {
         <CardHeader>
           <CardTitle className="text-gray-dark flex items-center gap-2">
             <History className="w-5 h-5 text-mint" />
-            Login History
+            Inloggeschiedenis
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {[
-              { device: "Windows PC", location: "Amsterdam, NL", time: "2 hours ago" },
-              { device: "iPhone 13", location: "Amsterdam, NL", time: "1 day ago" },
+              { device: "Windows PC", location: "Amsterdam, NL", time: "2 uur geleden" },
+              { device: "iPhone 13", location: "Amsterdam, NL", time: "1 dag geleden" },
             ].map((login, index) => (
               <div key={index} className="flex justify-between items-center p-4 border border-gray-muted rounded-lg bg-white">
                 <div>
