@@ -9,7 +9,7 @@ interface LogoProps {
 
 export function Logo({ className = "", linkClassName = "" }: LogoProps) {
   return (
-    <Link to="/" className={`flex items-center space-x-3 transition-all hover:opacity-80 ${linkClassName}`}>
+    <Link to="/" className={`flex items-center space-x-3 pb-[0.6rem] transition-all hover:opacity-80 ${linkClassName}`}>
       <Stethoscope className="w-6 h-6 text-mint" />
       <h1 className={`text-xl font-semibold tracking-tight ${className}`}>
         DoctorDial
