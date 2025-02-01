@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { PhoneCall, Clock, Calendar, ThumbsUp, AlertCircle, DollarSign, Users } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
@@ -39,37 +40,37 @@ export function MetricsCards({ timeFilter = 'today' }: { timeFilter?: TimeFilter
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard 
           icon={PhoneCall}
-          label="Total Calls"
+          label="Totaal aantal gesprekken"
           value={isLoading ? '...' : (metrics?.totalCalls?.toString() || defaultMetrics.totalCalls)}
-          subtext={`From ${timeFilter}`}
+          subtext={`Van ${timeFilter === 'today' ? 'vandaag' : timeFilter === 'week' ? 'deze week' : 'deze maand'}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={Clock}
-          label="Avg. Call Duration"
+          label="Gem. gespreksduur"
           value={isLoading ? '...' : `${metrics?.avgDuration || defaultMetrics.avgDuration}s`}
-          subtext={`From ${timeFilter}`}
+          subtext={`Van ${timeFilter === 'today' ? 'vandaag' : timeFilter === 'week' ? 'deze week' : 'deze maand'}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={Calendar}
-          label="Calls Forwarded"
+          label="Doorverbonden"
           value={isLoading ? '...' : (metrics?.callsForwarded?.toString() || defaultMetrics.callsForwarded)}
-          subtext={`From ${timeFilter}`}
+          subtext={`Van ${timeFilter === 'today' ? 'vandaag' : timeFilter === 'week' ? 'deze week' : 'deze maand'}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={ThumbsUp}
-          label="Call Success"
+          label="Succes percentage"
           value={isLoading ? '...' : `${metrics?.callSuccess || defaultMetrics.callSuccess}%`}
-          subtext={`From ${timeFilter}`}
+          subtext={`Van ${timeFilter === 'today' ? 'vandaag' : timeFilter === 'week' ? 'deze week' : 'deze maand'}`}
           navigateTo="/dashboard/calls"
         />
         <StatCard 
           icon={AlertCircle}
-          label="Relevant Cases (U2-U4)"
+          label="Relevante gevallen (U2-U4)"
           value={isLoading ? '...' : (metrics?.relevantCases?.toString() || defaultMetrics.relevantCases)}
-          subtext={`From ${timeFilter}`}
+          subtext={`Van ${timeFilter === 'today' ? 'vandaag' : timeFilter === 'week' ? 'deze week' : 'deze maand'}`}
           navigateTo="/dashboard/calls"
         />
       </div>
@@ -80,30 +81,30 @@ export function MetricsCards({ timeFilter = 'today' }: { timeFilter?: TimeFilter
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <StatCard 
         icon={Users}
-        label="Total Clients"
+        label="Totaal aantal cliënten"
         value="2,350"
-        subtext="+180 from last month"
+        subtext="+180 t.o.v. vorige maand"
         navigateTo="/dashboard/clients"
       />
       <StatCard 
         icon={PhoneCall}
-        label="Total Calls"
+        label="Totaal aantal gesprekken"
         value="15,280"
-        subtext="+2,100 from last month"
+        subtext="+2,100 t.o.v. vorige maand"
         navigateTo="/dashboard/calls"
       />
       <StatCard 
         icon={Clock}
-        label="Avg. Call Duration"
+        label="Gem. gespreksduur"
         value="3m 45s"
-        subtext="-30s from last month"
+        subtext="-30s t.o.v. vorige maand"
         navigateTo="/dashboard/calls"
       />
       <StatCard 
         icon={DollarSign}
-        label="Monthly Revenue"
-        value="$23,500"
-        subtext="+$4,500 from last month"
+        label="Maandelijkse omzet"
+        value="€23,500"
+        subtext="+€4,500 t.o.v. vorige maand"
         navigateTo="/dashboard/billing"
       />
     </div>

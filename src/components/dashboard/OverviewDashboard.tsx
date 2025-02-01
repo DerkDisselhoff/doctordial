@@ -73,7 +73,7 @@ export function OverviewDashboard() {
                 onPressedChange={() => setTimeFilter('today')}
                 className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
               >
-                Today
+                Vandaag
               </Toggle>
               <Toggle
                 variant="outline"
@@ -82,7 +82,7 @@ export function OverviewDashboard() {
                 onPressedChange={() => setTimeFilter('week')}
                 className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
               >
-                Last Week
+                Afgelopen week
               </Toggle>
               <Toggle
                 variant="outline"
@@ -91,7 +91,7 @@ export function OverviewDashboard() {
                 onPressedChange={() => setTimeFilter('month')}
                 className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
               >
-                Last Month
+                Afgelopen maand
               </Toggle>
             </div>
           </motion.div>
