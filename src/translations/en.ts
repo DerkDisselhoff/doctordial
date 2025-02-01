@@ -3,7 +3,7 @@ export const enTranslations = {
   nav: {
     features: "Features",
     pricing: "Pricing",
-    about: "About",
+    about: "Manifesto",
     contact: "Contact",
     login: "Login",
     bookDemo: "Book a Demo",

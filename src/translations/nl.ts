@@ -3,7 +3,7 @@ export const nlTranslations = {
   nav: {
     features: "Functies",
     pricing: "Prijzen",
-    about: "Over Ons",
+    about: "Manifest",
     contact: "Contact",
     login: "Inloggen",
     bookDemo: "Demo Aanvragen",
