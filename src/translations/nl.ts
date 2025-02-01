@@ -121,7 +121,24 @@ export const nlTranslations = {
     location: "Opgericht in 2025, Amsterdam",
     title: "Het nieuwe tijdperk van Gezondheidszorg,",
     subtitle: "gedreven door AI",
-    description: "Zorgverleners in staat stellen zich te concentreren op wat het belangrijkst is: patiëntenzorg"
+    description: "Zorgverleners in staat stellen zich te concentreren op wat het belangrijkst is: patiëntenzorg",
+    challenge: {
+      title: "De Uitdaging",
+      text1: "In Nederland staat ons zorgstelsel op een kritiek punt. Een vergrijzende bevolking, stijgende kosten en een toegenomen vraag naar specialistische zorg zorgen voor een groeiende druk op ziekenhuizen, huisartsen en medisch personeel.",
+      text2: "Mensen verliezen vertrouwen in een systeem dat overbelast voelt. Wachttijden nemen toe en zorgverleners zijn overbelast, wat vooral een uitdaging vormt in de huisartsenpraktijk. Dit resulteert in een slechtere toegankelijkheid voor de patiënt.",
+      text3: "Wanneer patiënten niet tijdig aandacht kunnen krijgen, lijden ze zowel fysiek als mentaal. Chronische aandoeningen verergeren ongecontroleerd, kleine problemen worden groot en het vertrouwen in het systeem erodeert."
+    },
+    solution: {
+      title: "De Oplossing",
+      text1: "De technologie is zover gevorderd dat routinetaken betrouwbaar kunnen worden geautomatiseerd zonder het menselijke aspect te verliezen. Door administratief werk aan AI te delegeren, kunnen zorgverleners zich richten op zorg met de grootste impact.",
+      text2: "Stel je een intelligent triagesysteem voor dat snel initiële symptomen evalueert, afspraken plant en ervoor zorgt dat mensen die urgente aandacht nodig hebben als eerste een arts zien—terwijl routine controles en follow-ups net zo effectief worden afgehandeld."
+    },
+    vision: {
+      title: "Onze Visie",
+      text1: "DoctorDial bestaat om deze toekomst werkelijkheid te maken. Onze visie is om medisch personeel te ontlasten met een AI-gestuurd platform dat triage, planning en patiëntopvolging stroomlijnt, begeleid door onze eigen ervaren zorgprofessionals.",
+      text2: "Door gebruik te maken van de nieuwste medische inzichten en praktische kennis, zorgen we ervoor dat onze automatiseringsoplossingen veilig, nauwkeurig en diep afgestemd zijn op de belangen van patiënten en zorgverleners.",
+      text3: "Door de kracht van AI te benutten, versterkt DoctorDial de capaciteit van artsen, verpleegkundigen en ondersteunend personeel—zonder ooit het welzijn van de patiënt uit het oog te verliezen. Onze toewijding is om de Nederlandse huisartsenzorg sterk en toegankelijk te houden terwijl we een snel veranderende toekomst tegemoet gaan en elke patiënt de aandacht krijgt die ze verdienen, precies wanneer ze die nodig hebben."
+    }
   },
   demo: {
     title: "Boek een Demo",
@@ -140,3 +157,4 @@ export const nlTranslations = {
     }
   }
 };
+

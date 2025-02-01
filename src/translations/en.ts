@@ -121,7 +121,24 @@ export const enTranslations = {
     location: "Founded in 2025, Amsterdam",
     title: "The next era of Healthcare,",
     subtitle: "driven by AI",
-    description: "Empowering healthcare providers to focus on what matters most: patient care"
+    description: "Empowering healthcare providers to focus on what matters most: patient care",
+    challenge: {
+      title: "The Challenge",
+      text1: "In the Netherlands, our healthcare system stands at a critical juncture. An aging population, rising costs, and increased demand for specialized care are placing growing strain on Hospitals, GPs and medical staff.",
+      text2: "Individuals lose confidence in a system that feels overwhelmed. Waiting times are increasing, and healthcare professionals are stretched thin which is especially challenging in general practice. This results in poorer accessibility for the patient.",
+      text3: "When patients can't receive timely attention, they suffer physically and mentally. Chronic conditions progress unchecked, minor issues become major, and trust in the system erodes."
+    },
+    solution: {
+      title: "The Solution",
+      text1: "Technology has advanced to a point where it can confidently automate routine tasks without sacrificing a human touch. By delegating mundane administrative work to AI, healthcare providers free themselves to focus on high-impact patient care.",
+      text2: "Picture an intelligent triage system that quickly evaluates initial symptoms, schedules appointments, and ensures that those needing urgent attention see a doctor first—while routine checkups and follow-ups happen just as effectively."
+    },
+    vision: {
+      title: "Our Vision",
+      text1: "DoctorDial exists to bring this future to life. Our vision is to unburden medical staff with an AI-driven platform that streamlines triage, scheduling, and patient follow-up guided by our own experienced healthcare professionals.",
+      text2: "Drawing on the latest medical insights and practical know-how, we ensure that our automation solutions are safe, accurate, and deeply aligned with the best interests of patients and practitioners.",
+      text3: "By leveraging the power of AI, DoctorDial amplifies the capacity of doctors, nurses, and support staff—without ever losing sight of patient well-being. Our commitment is to keep Dutch GP healthcare strong and accessible as we move into a rapidly changing future and every patient receives the attention they deserve, precisely when they need it."
+    }
   },
   demo: {
     title: "Book a Demo",
@@ -140,3 +157,4 @@ export const enTranslations = {
     }
   }
 };
+
