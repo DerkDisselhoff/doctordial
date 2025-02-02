@@ -57,7 +57,7 @@ const NHGTriage = () => {
             </div>
           </div>
 
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex justify-start">
             <div className="inline-flex items-center space-x-2 bg-white border border-gray-muted rounded-full px-6 py-2">
               <img src="/assets/nhg-logo.svg" alt="NHG Logo" className="w-6 h-6" />
               <span className="text-sm text-gray">Officieel gebaseerd op NHG triagestandaarden</span>
