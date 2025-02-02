@@ -2,7 +2,6 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Logo } from "./Logo";
-import { BookDemoForm } from "./BookDemoForm";
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -14,39 +13,57 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           <div className="col-span-2 md:col-span-1 space-y-4">
             <Logo className="text-gray-dark" />
-            <p className="text-sm md:text-base text-gray max-w-xs">
+            <p className="text-body-sm md:text-body max-w-xs">
               {t("footer.description")}
             </p>
           </div>
           <div>
-            <h4 className="font-medium mb-3 md:mb-4 text-gray-dark text-sm md:text-base">Navigatie</h4>
-            <ul className="space-y-2">
-              <li><Link to="/sarah" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">Sarah</Link></li>
-              <li><Link to="/about" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">{t("footer.about")}</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-3 md:mb-4 text-gray-dark text-sm md:text-base">Contact</h4>
-            <ul className="space-y-2">
+            <h4 className="text-sm md:text-base font-medium mb-3 md:mb-4 text-gray-dark">Navigatie</h4>
+            <ul className="space-sm">
               <li>
-                <BookDemoForm>
-                  <button className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors text-left">
-                    {t("footer.bookDemo")}
-                  </button>
-                </BookDemoForm>
+                <Link 
+                  to="/sarah" 
+                  className="text-body-sm hover:text-blue-dark transition-colors"
+                >
+                  Sarah
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/about" 
+                  className="text-body-sm hover:text-blue-dark transition-colors"
+                >
+                  {t("footer.about")}
+                </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-3 md:mb-4 text-gray-dark text-sm md:text-base">Legal</h4>
-            <ul className="space-y-2">
-              <li><Link to="/privacy" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">{t("footer.privacy")}</Link></li>
-              <li><Link to="/terms" className="text-sm md:text-base text-gray hover:text-blue-dark transition-colors">{t("footer.terms")}</Link></li>
+            <h4 className="text-sm md:text-base font-medium mb-3 md:mb-4 text-gray-dark">Legal</h4>
+            <ul className="space-sm">
+              <li>
+                <Link 
+                  to="/privacy" 
+                  className="text-body-sm hover:text-blue-dark transition-colors"
+                >
+                  {t("footer.privacy")}
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/terms" 
+                  className="text-body-sm hover:text-blue-dark transition-colors"
+                >
+                  {t("footer.terms")}
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-muted mt-12 md:mt-16 pt-6 md:pt-8 text-center text-gray">
-          <p className="text-sm md:text-base">&copy; {currentYear} DoctorDial. {t("footer.rights")}</p>
+        <div className="border-t border-gray-muted mt-12 md:mt-16 pt-6 md:pt-8 text-center">
+          <p className="text-body-sm text-gray">
+            &copy; {currentYear} DoctorDial. {t("footer.rights")}
+          </p>
         </div>
       </div>
     </footer>

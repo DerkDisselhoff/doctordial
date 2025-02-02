@@ -1,3 +1,4 @@
+
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
@@ -7,7 +8,7 @@ import AIDoctorAssistant from "@/components/AIDoctorAssistant";
 
 const Index = () => {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white space-xl">
       <Navbar />
       <Hero />
       <AIDoctorAssistant />

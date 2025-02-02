@@ -74,82 +74,17 @@
     --radius: 0.5rem;
   }
 
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 8s ease infinite;
-  }
-
-  @keyframes float {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
-  }
-
-  @keyframes float-delayed {
-    0% {
-      transform: translateY(-10px);
-    }
-    50% {
-      transform: translateY(0px);
-    }
-    100% {
-      transform: translateY(-10px);
-    }
-  }
-
-  @keyframes float-slow {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-5px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
-  }
-
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  .animate-float-delayed {
-    animation: float-delayed 3s ease-in-out infinite;
-  }
-
-  .animate-float-slow {
-    animation: float-slow 4s ease-in-out infinite;
-  }
-
   /* Typography Scale */
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-medium tracking-tight text-gray-dark;
   }
 
-  h1 { @apply text-4xl md:text-5xl leading-tight font-bold; }
-  h2 { @apply text-3xl md:text-4xl leading-tight font-bold; }
-  h3 { @apply text-2xl md:text-3xl leading-tight font-semibold; }
-  h4 { @apply text-xl md:text-2xl leading-snug font-semibold; }
-  h5 { @apply text-lg md:text-xl leading-snug font-medium; }
-  h6 { @apply text-base md:text-lg leading-normal font-medium; }
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl leading-tight font-bold; }
+  h2 { @apply text-3xl md:text-4xl lg:text-5xl leading-tight font-bold; }
+  h3 { @apply text-2xl md:text-3xl lg:text-4xl leading-tight font-semibold; }
+  h4 { @apply text-xl md:text-2xl lg:text-3xl leading-snug font-semibold; }
+  h5 { @apply text-lg md:text-xl lg:text-2xl leading-snug font-medium; }
+  h6 { @apply text-base md:text-lg lg:text-xl leading-normal font-medium; }
 
   p { @apply font-sans text-gray leading-relaxed; }
 
@@ -160,25 +95,62 @@
   .text-body-sm { @apply font-sans text-sm leading-normal text-gray; }
   .text-body-xs { @apply font-sans text-xs leading-normal text-gray; }
 
-  /* Table Typography */
-  .table-header-cell {
-    @apply font-display text-sm font-medium;
-  }
-  
-  .table-cell {
-    @apply font-sans text-sm;
+  /* Space Scale */
+  .space-xs { @apply space-y-2 md:space-y-3; }
+  .space-sm { @apply space-y-3 md:space-y-4; }
+  .space-md { @apply space-y-4 md:space-y-6; }
+  .space-lg { @apply space-y-6 md:space-y-8; }
+  .space-xl { @apply space-y-8 md:space-y-12; }
+
+  /* Shadow System */
+  .shadow-elevation-1 { @apply shadow-sm; }
+  .shadow-elevation-2 { @apply shadow; }
+  .shadow-elevation-3 { @apply shadow-md; }
+  .shadow-elevation-4 { @apply shadow-lg; }
+
+  /* Component Base Styles */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium 
+           transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2;
   }
 
-  /* Menu Typography */
-  .menu-item {
-    @apply font-sans text-sm;
+  .btn-primary {
+    @apply btn bg-mint text-white hover:bg-mint-dark focus:ring-mint;
   }
 
-  .menu-header {
-    @apply font-display text-sm font-medium;
+  .btn-secondary {
+    @apply btn bg-blue text-blue-dark hover:bg-blue-dark hover:text-white focus:ring-blue-dark;
   }
 
-  ::selection {
-    @apply bg-mint-light text-gray-dark;
+  .btn-outline {
+    @apply btn border-2 border-gray hover:bg-gray-muted focus:ring-gray;
   }
+
+  .card {
+    @apply rounded-xl bg-white border border-gray-muted p-6 shadow-elevation-2 
+           hover:shadow-elevation-3 transition-shadow duration-200;
+  }
+
+  .form-input {
+    @apply w-full rounded-lg border border-gray-muted px-4 py-2 text-gray-dark 
+           focus:border-mint focus:ring-1 focus:ring-mint focus:outline-none;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-dark mb-1;
+  }
+
+  /* Animation Keyframes */
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Keep other existing styles */
+  /* Additional styles can be added here */
 }
