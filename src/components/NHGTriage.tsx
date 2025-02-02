@@ -4,7 +4,7 @@ import { Card } from "./ui/card";
 
 const NHGTriage = () => {
   return (
-    <section className="py-8 px-4 bg-blue-light">
+    <section className="py-16 px-4 bg-blue-light">
       <div className="container mx-auto max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
           {/* Main Title Column */}
