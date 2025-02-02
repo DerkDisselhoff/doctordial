@@ -5,6 +5,7 @@ import Features from "@/components/Features";
 import Certifications from "@/components/Certifications";
 import Footer from "@/components/Footer";
 import AIDoctorAssistant from "@/components/AIDoctorAssistant";
+import NHGTriage from "@/components/NHGTriage";
 
 const Index = () => {
   return (
@@ -13,6 +14,7 @@ const Index = () => {
       <Hero />
       <AIDoctorAssistant />
       <Features />
+      <NHGTriage />
       <Certifications />
       <Footer />
     </main>
