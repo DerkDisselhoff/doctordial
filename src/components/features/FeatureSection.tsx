@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { LucideIcon } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -17,7 +18,7 @@ interface FeatureSectionProps {
 }
 
 const ComponentMap = {
-  UrgencyLevels,
+  UrgencyLevels: UrgencyLevels,
   DailyCallsChart: DailyCallsPreview,
   ClientDistribution: ClientDistributionPreview,
   CallVolume: CallVolumePreview,
@@ -67,7 +68,7 @@ const FeatureSection = ({
       {/* Preview Component Side */}
       <div className="flex-1 w-full">
         <Card className="bg-white border-gray-muted overflow-hidden">
-          <PreviewComponent />
+          {PreviewComponent && <PreviewComponent />}
         </Card>
       </div>
     </div>
