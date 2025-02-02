@@ -2,7 +2,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
-import Certifications from "@/components/Certifications";
 import Footer from "@/components/Footer";
 import AIDoctorAssistant from "@/components/AIDoctorAssistant";
 import NHGTriage from "@/components/NHGTriage";
@@ -15,7 +14,6 @@ const Index = () => {
       <AIDoctorAssistant />
       <Features />
       <NHGTriage />
-      <Certifications />
       <Footer />
     </main>
   );
