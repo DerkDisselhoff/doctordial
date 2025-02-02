@@ -4,7 +4,7 @@ import { Activity, Clock, BrainCog } from "lucide-react";
 
 const PracticeValue = () => {
   return (
-    <section className="py-16 px-4 bg-[#F1F0FB]">
+    <section className="py-16 px-4 bg-[#F2FCE2]">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center mb-12">
@@ -133,3 +133,4 @@ const PracticeValue = () => {
 };
 
 export default PracticeValue;
+
