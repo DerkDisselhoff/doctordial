@@ -68,4 +68,3 @@ const NHGTriage = () => {
 };
 
 export default NHGTriage;
-
