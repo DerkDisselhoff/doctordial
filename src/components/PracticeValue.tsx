@@ -1,10 +1,9 @@
-
 import { motion } from "framer-motion";
 import { Activity, Clock, BrainCog } from "lucide-react";
 
 const PracticeValue = () => {
   return (
-    <section className="py-16 px-4 bg-[#F2FCE2]">
+    <section className="py-16 px-4 bg-[#D3E4FD]">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center mb-12">
@@ -133,4 +132,3 @@ const PracticeValue = () => {
 };
 
 export default PracticeValue;
-
