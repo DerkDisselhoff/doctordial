@@ -4,7 +4,7 @@ import { Activity, Clock, BrainCog } from "lucide-react";
 
 const PracticeValue = () => {
   return (
-    <section className="py-16 px-4 bg-gradient-to-b from-white to-blue/5">
+    <section className="py-16 px-4 bg-[#F1F0FB]">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center mb-12">
@@ -36,9 +36,9 @@ const PracticeValue = () => {
               <div className="relative h-24 mb-6">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative">
-                    <Activity className="w-12 h-12 text-[#9b87f5]" />
+                    <Activity className="w-12 h-12 text-mint" />
                     <motion.div
-                      className="absolute -inset-4 border-2 border-[#9b87f5]/20 rounded-full"
+                      className="absolute -inset-4 border-2 border-mint/20 rounded-full"
                       animate={{ 
                         scale: [1, 1.1, 1],
                         opacity: [0.7, 0.3, 0.7]
@@ -72,9 +72,9 @@ const PracticeValue = () => {
               <div className="relative h-24 mb-6">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative">
-                    <Clock className="w-12 h-12 text-[#7E69AB]" />
+                    <Clock className="w-12 h-12 text-emerald" />
                     <motion.div
-                      className="absolute -inset-4 border-2 border-[#7E69AB]/20 rounded-full"
+                      className="absolute -inset-4 border-2 border-emerald/20 rounded-full"
                       animate={{ rotate: 360 }}
                       transition={{ 
                         duration: 8,
@@ -105,9 +105,9 @@ const PracticeValue = () => {
               <div className="relative h-24 mb-6">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative">
-                    <BrainCog className="w-12 h-12 text-[#6E59A5]" />
+                    <BrainCog className="w-12 h-12 text-forest" />
                     <motion.div
-                      className="absolute -inset-4 border-2 border-dashed border-[#6E59A5]/40 rounded-full"
+                      className="absolute -inset-4 border-2 border-dashed border-forest/40 rounded-full"
                       animate={{ rotate: 360 }}
                       transition={{ 
                         duration: 20,
