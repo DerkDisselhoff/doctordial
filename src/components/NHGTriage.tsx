@@ -5,8 +5,8 @@ import { Card } from "./ui/card";
 const NHGTriage = () => {
   return (
     <section className="py-8 px-4 bg-gray-muted/30">
-      <div className="container mx-auto max-w-6xl">
-        <div className="bg-blue/5 backdrop-blur-sm border border-blue-muted shadow-sm rounded-2xl p-8">
+      <div className="container mx-auto max-w-6xl bg-blue/5 backdrop-blur-sm rounded-3xl p-8">
+        <div className="bg-white border border-blue-muted shadow-sm rounded-2xl p-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
             {/* Main Title Column */}
             <div className="lg:col-span-1">
@@ -70,4 +70,3 @@ const NHGTriage = () => {
 };
 
 export default NHGTriage;
-
