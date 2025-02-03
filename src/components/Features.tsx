@@ -1,3 +1,4 @@
+
 import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUrgencyDashboard";
 import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
@@ -61,8 +62,6 @@ const Features = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="relative group"
             >
-              <div className="absolute -inset-1 bg-gradient-to-r from-mint-light/20 to-blue-light/20 rounded-2xl blur-lg group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-gradient" />
-              
               {/* Desktop version - hidden on mobile */}
               <div className="relative hidden md:block max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-white/95 backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl hover:shadow-2xl transition-all duration-300 mb-8 md:mb-12 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left">
                 <EnhancedUrgencyDashboard />
