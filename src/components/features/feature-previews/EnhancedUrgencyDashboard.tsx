@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -126,7 +127,7 @@ export function EnhancedUrgencyDashboard() {
       <div className="flex justify-end px-4">
         <BookDemoForm>
           <Button 
-            className="bg-mint hover:bg-mint-dark text-white font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="bg-mint hover:bg-mint-dark text-white font-medium transition-colors duration-300"
           >
             Vraag een demo aan
           </Button>
