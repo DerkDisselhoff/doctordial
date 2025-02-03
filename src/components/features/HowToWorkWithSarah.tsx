@@ -19,6 +19,11 @@ const StepCard = ({
 }) => {
   return (
     <div className="flex flex-col items-start space-y-4 bg-white p-6 rounded-xl border border-mint/10 hover:border-mint/20 transition-all duration-300 h-[280px]">
+      {showAnimation && (
+        <div className="w-full h-32 -mt-2 mb-2">
+          <TrainSarahCard />
+        </div>
+      )}
       <div className="flex items-center space-x-4">
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-mint text-white font-semibold">
           {step}
@@ -33,11 +38,6 @@ const StepCard = ({
       <p className="text-gray-dark text-sm leading-relaxed text-left line-clamp-4 overflow-hidden">
         {description}
       </p>
-      {showAnimation && (
-        <div className="mt-4 w-full h-32">
-          <TrainSarahCard />
-        </div>
-      )}
     </div>
   );
 };
