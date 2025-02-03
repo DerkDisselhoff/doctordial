@@ -8,7 +8,8 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="pt-8 pb-12 md:pt-12 md:pb-20 px-4 border-t border-gray-muted bg-white">
+    <footer className="relative pt-8 pb-12 md:pt-12 md:pb-20 px-4">
+      <div className="absolute inset-0 bg-gradient-to-b from-mint-light/80 to-sage-light/90 -z-10" />
       <div className="container mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           <div className="col-span-2 md:col-span-1 space-y-4">
@@ -60,7 +61,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-muted mt-12 md:mt-16 pt-6 md:pt-8 text-center">
+        <div className="border-t border-gray-muted/30 mt-12 md:mt-16 pt-6 md:pt-8 text-center">
           <p className="text-body-sm text-gray">
             &copy; {currentYear} DoctorDial. {t("footer.rights")}
           </p>
@@ -71,3 +72,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
