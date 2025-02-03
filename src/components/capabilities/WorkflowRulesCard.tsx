@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 
 const WorkflowRulesCard = () => {
@@ -9,7 +10,7 @@ const WorkflowRulesCard = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        {/* Central Workflow Icon */}
+        {/* Central Medical Intelligence Icon */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16">
           <div className="w-full h-full rounded-full border-2 border-mint/20 flex items-center justify-center bg-mint/5">
             <svg className="w-8 h-8 text-mint" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,28 +32,46 @@ const WorkflowRulesCard = () => {
           />
         </div>
 
-        {/* Connection Points */}
+        {/* Learning Feedback Points */}
         <div className="absolute inset-0">
-          {[0, 120, 240].map((angle, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-3 h-3 bg-mint/20 rounded-full"
-              style={{
-                left: `${50 + 35 * Math.cos((angle * Math.PI) / 180)}%`,
-                top: `${50 + 35 * Math.sin((angle * Math.PI) / 180)}%`
-              }}
-              animate={{
-                scale: [1, 1.5, 1],
-                opacity: [0.5, 1, 0.5]
-              }}
-              transition={{
-                duration: 2,
-                delay: i * 0.3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
+          <motion.div
+            className="absolute left-[20%] top-[30%]"
+            initial={{ scale: 0 }}
+            animate={{ scale: [0, 1, 0] }}
+            transition={{ duration: 2, delay: 0.2, repeat: Infinity, repeatDelay: 1 }}
+          >
+            <div className="bg-mint/10 p-1.5 rounded-full">
+              <div className="w-6 h-6 bg-mint/20 rounded-full flex items-center justify-center text-mint text-xs font-medium">
+                +1
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="absolute right-[25%] top-[40%]"
+            initial={{ scale: 0 }}
+            animate={{ scale: [0, 1, 0] }}
+            transition={{ duration: 2, delay: 1.2, repeat: Infinity, repeatDelay: 1 }}
+          >
+            <div className="bg-blue/10 p-1.5 rounded-full">
+              <div className="w-6 h-6 bg-blue/20 rounded-full flex items-center justify-center text-blue-dark text-xs font-medium">
+                +1
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="absolute left-[30%] bottom-[35%]"
+            initial={{ scale: 0 }}
+            animate={{ scale: [0, 1, 0] }}
+            transition={{ duration: 2, delay: 2.2, repeat: Infinity, repeatDelay: 1 }}
+          >
+            <div className="bg-mint/10 p-1.5 rounded-full">
+              <div className="w-6 h-6 bg-mint/20 rounded-full flex items-center justify-center text-mint text-xs font-medium">
+                +1
+              </div>
+            </div>
+          </motion.div>
         </div>
       </motion.div>
     </div>
