@@ -132,6 +132,9 @@ export function EnhancedUrgencyDashboard() {
           <h2 className="text-gray-dark text-2xl md:text-3xl font-semibold">
             {t('features.callsTitle') || 'Van inkomende gesprekken tot triage en opvolgingen'}
           </h2>
+          <p className="text-gray text-base md:text-lg leading-relaxed">
+            Beheer alle patiëntinteracties efficiënt vanaf één dashboard
+          </p>
           <BookDemoForm>
             <Button 
               className="bg-blue hover:bg-blue/90 text-gray-dark font-medium transition-colors duration-300 rounded-full"
@@ -272,4 +275,3 @@ export function EnhancedUrgencyDashboard() {
     </div>
   );
 }
-
