@@ -49,7 +49,8 @@ export const nlTranslations = {
     urgencyLevels: "Urgentieniveaus",
     recentActivity: "Recente Activiteit",
     callVolume: "Belvolume",
-    callsTitle: "Van inkomende gesprekken tot triage en opvolgingen"
+    callsTitle: "Van inkomende gesprekken tot triage en opvolgingen",
+    callsSubtitle: "Beheer alle patiëntinteracties efficiënt vanaf één dashboard"
   },
   hero: {
     aiPowered: "AI-Gestuurde Gespreksafhandeling",

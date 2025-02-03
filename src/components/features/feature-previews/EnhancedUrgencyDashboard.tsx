@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -133,7 +132,7 @@ export function EnhancedUrgencyDashboard() {
             {t('features.callsTitle') || 'Van inkomende gesprekken tot triage en opvolgingen'}
           </h2>
           <p className="text-gray text-base md:text-lg leading-relaxed">
-            Beheer alle patiëntinteracties efficiënt vanaf één dashboard
+            {t('features.callsSubtitle')}
           </p>
           <BookDemoForm>
             <Button 

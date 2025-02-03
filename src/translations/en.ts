@@ -46,7 +46,8 @@ export const enTranslations = {
     urgencyLevels: "Urgency Levels",
     recentActivity: "Recent Activity",
     callVolume: "Call Volume",
-    callsTitle: "From incoming calls to triage and follow-ups"
+    callsTitle: "From incoming calls to triage and follow-ups",
+    callsSubtitle: "Manage all patient interactions efficiently from one dashboard"
   },
   hero: {
     aiPowered: "AI-Powered Call Management",
