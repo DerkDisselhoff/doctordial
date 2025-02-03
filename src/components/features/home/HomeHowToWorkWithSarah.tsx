@@ -5,6 +5,7 @@ import { Pointer, Settings, PhoneCall } from "lucide-react";
 import TrainSarahCard from "../../capabilities/TrainSarahCard";
 import WorkflowRulesCard from "../../capabilities/WorkflowRulesCard";
 import TakeCallsCard from "../../capabilities/TakeCallsCard";
+import { BookDemoForm } from "@/components/BookDemoForm";
 
 const StepCard = ({
   step,
@@ -82,9 +83,14 @@ const HomeHowToWorkWithSarah = () => {
 
   return (
     <div className="w-full bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
-      <h2 className="text-[1.875rem] font-semibold text-gray-dark text-left mb-8">
-        Hoe werk je met Sarah
-      </h2>
+      <div className="flex flex-col space-y-2 mb-8">
+        <h2 className="text-[1.875rem] font-semibold text-gray-dark text-left">
+          Hoe werk je met Sarah
+        </h2>
+        <p className="text-gray-dark/80 text-lg">
+          Ontdek hoe Sarah naadloos integreert met jouw praktijk
+        </p>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
         {steps.map((step, index) => (
           <motion.div
@@ -102,6 +108,13 @@ const HomeHowToWorkWithSarah = () => {
             />
           </motion.div>
         ))}
+      </div>
+      <div className="mt-8 flex justify-center">
+        <BookDemoForm>
+          <button className="px-6 py-3 bg-blue-dark hover:bg-blue-dark/90 text-white font-medium rounded-lg transition-colors">
+            Demo aanvragen
+          </button>
+        </BookDemoForm>
       </div>
     </div>
   );
