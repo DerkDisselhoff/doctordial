@@ -90,9 +90,9 @@ const HomeHowToWorkWithSarah = () => {
         <p className="text-gray-dark/80 text-lg text-left">
           Ontdek hoe Sarah naadloos integreert met jouw praktijk
         </p>
-        <div className="mt-4">
+        <div className="flex justify-start mt-4">
           <BookDemoForm>
-            <button className="px-6 py-3 bg-mint hover:bg-mint/90 text-white font-medium rounded-lg transition-colors">
+            <button className="px-6 py-3 bg-blue hover:bg-blue/90 text-gray-dark font-medium rounded-full transition-colors duration-300">
               Demo aanvragen
             </button>
           </BookDemoForm>
