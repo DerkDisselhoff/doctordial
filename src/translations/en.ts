@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   nav: {
     features: "Features",
@@ -46,7 +45,8 @@ export const enTranslations = {
     subtitle: "Experience the future of healthcare communication with our AI-powered system",
     urgencyLevels: "Urgency Levels",
     recentActivity: "Recent Activity",
-    callVolume: "Call Volume"
+    callVolume: "Call Volume",
+    callsTitle: "From incoming calls to triage and follow-ups"
   },
   hero: {
     aiPowered: "AI-Powered Call Management",
@@ -157,4 +157,3 @@ export const enTranslations = {
     }
   }
 };
-

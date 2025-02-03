@@ -1,4 +1,3 @@
-
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -49,7 +48,8 @@ export const nlTranslations = {
     subtitle: "Ervaar de toekomst van gezondheidszorgcommunicatie met ons AI-aangedreven systeem",
     urgencyLevels: "Urgentieniveaus",
     recentActivity: "Recente Activiteit",
-    callVolume: "Belvolume"
+    callVolume: "Belvolume",
+    callsTitle: "Van inkomende gesprekken tot triage en opvolgingen"
   },
   hero: {
     aiPowered: "AI-Gestuurde Gespreksafhandeling",

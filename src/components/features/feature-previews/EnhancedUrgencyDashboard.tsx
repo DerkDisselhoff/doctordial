@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -13,6 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 import { BookDemoForm } from "@/components/BookDemoForm";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Expanded dataset with more rows
 const mockUrgentCases = [
@@ -122,10 +122,15 @@ const StatCard = ({ icon: Icon, label, value, subtext }: { icon: any, label: str
 );
 
 export function EnhancedUrgencyDashboard() {
+  const { t } = useLanguage();
+
   return (
     <div className="space-y-6">      
       <div className="container mx-auto max-w-6xl bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
-        <div className="flex justify-start mb-4">
+        <div className="flex flex-col items-start gap-3 mb-4">
+          <h2 className="text-gray-dark text-xl font-medium">
+            {t('features.callsTitle') || 'Van inkomende gesprekken tot triage en opvolgingen'}
+          </h2>
           <BookDemoForm>
             <Button 
               className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium transition-colors duration-300 rounded-full"
