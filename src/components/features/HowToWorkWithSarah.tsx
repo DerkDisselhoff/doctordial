@@ -81,7 +81,7 @@ const HowToWorkWithSarah = () => {
   ];
 
   return (
-    <div className="px-4">
+    <div className="px-4 max-w-7xl mx-auto">
       <motion.h3
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ const HowToWorkWithSarah = () => {
       >
         {t("sarah.howToWork")}
       </motion.h3>
-      <div className="container mx-auto max-w-7xl bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
+      <div className="w-full bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
           {steps.map((step, index) => (
             <motion.div
