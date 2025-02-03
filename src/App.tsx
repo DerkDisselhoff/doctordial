@@ -8,7 +8,6 @@ import About from "@/pages/About";
 import Pricing from "@/pages/Pricing";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
-import Sarah from "@/pages/Sarah";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const App = () => {
@@ -21,7 +20,6 @@ const App = () => {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
-          <Route path="/sarah" element={<Sarah />} />
         </Routes>
         <Toaster />
       </Router>

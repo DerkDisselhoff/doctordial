@@ -1,9 +1,10 @@
+
 import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUrgencyDashboard";
 import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
 import SymptomTags from "./features/SymptomTags";
 import { useLanguage } from "@/contexts/LanguageContext";
-import HowToWorkWithSarah from "./features/HowToWorkWithSarah";
+import HomeHowToWorkWithSarah from "./features/home/HomeHowToWorkWithSarah";
 
 const Features = () => {
   const { t } = useLanguage();
@@ -123,7 +124,7 @@ const Features = () => {
 
             {/* How to work with Sarah section */}
             <div className="mt-16 relative">
-              <HowToWorkWithSarah />
+              <HomeHowToWorkWithSarah />
             </div>
 
           </div>
