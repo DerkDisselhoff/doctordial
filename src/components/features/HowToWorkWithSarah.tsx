@@ -81,7 +81,7 @@ const HowToWorkWithSarah = () => {
   ];
 
   return (
-    <div className="px-4 max-w-7xl mx-auto">
+    <div className="container px-4 max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto">
       <motion.h3
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
