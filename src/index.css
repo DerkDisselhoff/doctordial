@@ -13,16 +13,26 @@ html {
 
 /* Optimize animations */
 .motion-safe * {
-  will-change: transform, opacity;
+  will-change: auto;
+  transform: translate3d(0, 0, 0);
 }
 
 /* Improve performance for fixed elements */
 .fixed {
-  will-change: transform;
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
 }
 
 /* Optimize scroll performance */
 body {
   overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reduce motion when scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-content {
+    transform: translate3d(0, 0, 0);
+  }
 }

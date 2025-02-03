@@ -12,68 +12,69 @@ const Features = () => {
     <div className="bg-gradient-to-b from-white/0 to-mint-light">
       <AICapabilities />
       <section className="relative py-20 md:py-32 overflow-hidden">
-        {/* Background with enhanced gradient and overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-forest/90 to-forest-dark/95" />
+        {/* Simplified gradient background */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-b from-forest/90 to-forest-dark/95"
+          style={{ willChange: 'auto' }}
+        />
         
-        {/* Optimized animated background elements */}
-        <motion.div 
-          className="absolute inset-0 opacity-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.1 }}
-          transition={{ duration: 1 }}
-          style={{ willChange: 'transform, opacity' }}
-        >
+        {/* Simplified background elements with reduced motion */}
+        <div className="absolute inset-0 opacity-10">
           <div 
-            className="absolute top-0 left-1/4 w-96 h-96 bg-mint rounded-full mix-blend-multiply filter blur-3xl animate-float"
-            style={{ willChange: 'transform' }}
+            className="absolute top-0 left-1/4 w-96 h-96 bg-mint rounded-full mix-blend-multiply filter blur-3xl"
+            style={{ 
+              transform: 'translate3d(0, 0, 0)',
+              willChange: 'auto'
+            }}
           />
           <div 
-            className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-dark rounded-full mix-blend-multiply filter blur-3xl animate-float-delayed"
-            style={{ willChange: 'transform' }}
+            className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-dark rounded-full mix-blend-multiply filter blur-3xl"
+            style={{ 
+              transform: 'translate3d(0, 0, 0)',
+              willChange: 'auto'
+            }}
           />
-        </motion.div>
+        </div>
 
-        {/* Grid pattern overlay */}
+        {/* Simplified grid pattern */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0wIDBoNjB2NjBIMHoiLz48cGF0aCBkPSJNMzAgMzBoMzB2MzBIMzB6IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9Ii4wMiIvPjwvZz48L3N2Zz4=')] opacity-20" />
 
         <div className="container relative mx-auto px-4">
           <div className="text-center mb-16 md:mb-20">
-            {/* Enhanced heading with optimized animations */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-block transform-gpu"
-              style={{ willChange: 'transform' }}
+            {/* Simplified heading with reduced animations */}
+            <h2 
+              className="font-sans text-3xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white to-mint-light/90 tracking-tight transform-gpu"
+              style={{ 
+                transform: 'translate3d(0, 0, 0)',
+                willChange: 'auto'
+              }}
             >
-              <h2 className="font-sans text-3xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white to-mint-light/90 tracking-tight">
-                {t("features.title")}
-              </h2>
-            </motion.div>
+              {t("features.title")}
+            </h2>
 
-            {/* Enhanced subtitle with optimized animations */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            {/* Simplified subtitle */}
+            <p 
               className="text-base md:text-xl text-mint-light/80 max-w-3xl mx-auto mb-8 md:mb-12 px-4 transform-gpu"
-              style={{ willChange: 'transform' }}
+              style={{ 
+                transform: 'translate3d(0, 0, 0)',
+                willChange: 'auto'
+              }}
             >
               {t("features.subtitle")}
-            </motion.p>
+            </p>
 
             <SymptomTags />
 
-            {/* Dashboard preview with optimized container */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative group transform-gpu"
-              style={{ willChange: 'transform' }}
-            >
+            {/* Optimized dashboard preview container */}
+            <div className="relative group transform-gpu">
               {/* Desktop version - hidden on mobile */}
-              <div className="relative hidden md:block max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl hover:shadow-2xl transition-all duration-300 mb-8 md:mb-12 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left">
+              <div 
+                className="relative hidden md:block max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl hover:shadow-2xl transition-all duration-300 mb-8 md:mb-12 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left"
+                style={{ 
+                  transform: 'translate3d(0, 0, 0)',
+                  willChange: 'auto'
+                }}
+              >
                 <EnhancedUrgencyDashboard />
               </div>
 
@@ -118,7 +119,7 @@ const Features = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* How to work with Sarah section */}
             <div className="mt-16 relative">
