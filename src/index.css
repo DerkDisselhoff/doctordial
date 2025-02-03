@@ -1,6 +1,28 @@
+
 @import './styles/base.css';
 @import './styles/cards.css';
 @import './styles/tables.css';
 @import './styles/forms.css';
 @import './styles/charts.css';
 @import './styles/utilities.css';
+
+/* Add smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optimize animations */
+.motion-safe * {
+  will-change: transform, opacity;
+}
+
+/* Improve performance for fixed elements */
+.fixed {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Optimize scroll performance */
+body {
+  overscroll-behavior: none;
+}

@@ -1,4 +1,3 @@
-
 import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUrgencyDashboard";
 import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
@@ -16,15 +15,22 @@ const Features = () => {
         {/* Background with enhanced gradient and overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-forest/90 to-forest-dark/95" />
         
-        {/* Animated background elements */}
+        {/* Optimized animated background elements */}
         <motion.div 
           className="absolute inset-0 opacity-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.1 }}
           transition={{ duration: 1 }}
+          style={{ willChange: 'transform, opacity' }}
         >
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-mint rounded-full mix-blend-multiply filter blur-3xl animate-float" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-dark rounded-full mix-blend-multiply filter blur-3xl animate-float-delayed" />
+          <div 
+            className="absolute top-0 left-1/4 w-96 h-96 bg-mint rounded-full mix-blend-multiply filter blur-3xl animate-float"
+            style={{ willChange: 'transform' }}
+          />
+          <div 
+            className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-dark rounded-full mix-blend-multiply filter blur-3xl animate-float-delayed"
+            style={{ willChange: 'transform' }}
+          />
         </motion.div>
 
         {/* Grid pattern overlay */}
@@ -32,36 +38,39 @@ const Features = () => {
 
         <div className="container relative mx-auto px-4">
           <div className="text-center mb-16 md:mb-20">
-            {/* Enhanced heading with gradient text */}
+            {/* Enhanced heading with optimized animations */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-block"
+              className="inline-block transform-gpu"
+              style={{ willChange: 'transform' }}
             >
               <h2 className="font-sans text-3xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white to-mint-light/90 tracking-tight">
                 {t("features.title")}
               </h2>
             </motion.div>
 
-            {/* Enhanced subtitle */}
+            {/* Enhanced subtitle with optimized animations */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base md:text-xl text-mint-light/80 max-w-3xl mx-auto mb-8 md:mb-12 px-4"
+              className="text-base md:text-xl text-mint-light/80 max-w-3xl mx-auto mb-8 md:mb-12 px-4 transform-gpu"
+              style={{ willChange: 'transform' }}
             >
               {t("features.subtitle")}
             </motion.p>
 
             <SymptomTags />
 
-            {/* Dashboard preview with enhanced container */}
+            {/* Dashboard preview with optimized container */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative group"
+              className="relative group transform-gpu"
+              style={{ willChange: 'transform' }}
             >
               {/* Desktop version - hidden on mobile */}
               <div className="relative hidden md:block max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl hover:shadow-2xl transition-all duration-300 mb-8 md:mb-12 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left">
@@ -111,7 +120,7 @@ const Features = () => {
               </div>
             </motion.div>
 
-            {/* Adding How to work with Sarah section here */}
+            {/* How to work with Sarah section */}
             <div className="mt-16 relative">
               <HowToWorkWithSarah />
             </div>
