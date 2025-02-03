@@ -1,4 +1,3 @@
-
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -84,11 +83,11 @@ export const nlTranslations = {
     imageAlt: "Sarah AI Medische Assistent",
     howToWork: "Hoe werk je met Sarah",
     step1Title: "Train Sarah voor jouw zorgverlening",
-    step1Description: "Pas Sarah's kennisbank aan zodat deze perfect aansluit bij de specifieke medische diensten en protocollen van jouw praktijk. Ons AI-systeem leert van jouw input om nauwkeurige, praktijkspecifieke antwoorden en aanbevelingen te geven.",
-    step2Title: "Stel je workflow en doorverwijzingsregels in",
-    step2Description: "Configureer aangepaste workflows en regels voor het correct afhandelen van verschillende soorten patiëntvragen en urgentieniveaus. Definieer specifieke protocollen voor verschillende medische situaties en stel escalatiepaden in.",
-    step3Title: "Laat Sarah je telefoontjes beantwoorden",
-    step3Description: "Activeer Sarah om 24/7 patiëntgesprekken te behandelen, met professionele en consistente zorgcommunicatie volgens jouw vastgestelde protocollen. Sarah beheert routinevragen en schaalt urgente zaken intelligent op.",
+    step1Description: "Pas Sarah's kennisbank aan zodat deze perfect aansluit bij de specifieke medische diensten en protocollen van jouw praktijk.",
+    step2Title: "Kies doorverwijzingsregels",
+    step2Description: "Configureer aangepaste workflows en regels voor het correct afhandelen van verschillende soorten patiëntvragen en urgentieniveaus.",
+    step3Title: "Integreer telefonie",
+    step3Description: "Activeer Sarah om 24/7 patiëntgesprekken te behandelen, met professionele en consistente zorgcommunicatie volgens jouw vastgestelde protocollen.",
     conditionsTitle: "Getraind op Duizenden Medische Aandoeningen",
     readyTitle: "Klaar om je Praktijk te Transformeren?",
     readyDescription: "Sluit je aan bij het groeiende aantal medische praktijken die Sarah vertrouwen voor hun patiëntcommunicatie.",

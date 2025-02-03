@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   nav: {
     features: "Features",
@@ -81,11 +80,11 @@ export const enTranslations = {
     imageAlt: "Sarah AI Medical Assistant",
     howToWork: "How to work with Sarah",
     step1Title: "Train Sarah on the care that you provide",
-    step1Description: "Customize Sarah's knowledge base to align perfectly with your practice's specific medical services and protocols. Our AI system learns from your input to provide accurate, practice-specific responses and recommendations.",
-    step2Title: "Build your workflow and forwarding rules",
-    step2Description: "Set up custom workflows and rules to ensure proper handling of different types of patient inquiries and urgency levels. Define specific protocols for various medical situations and establish escalation pathways.",
-    step3Title: "Let Sarah take your calls",
-    step3Description: "Activate Sarah to handle patient calls 24/7, providing professional and consistent care communication while following your established protocols. Sarah manages routine inquiries and intelligently escalates urgent matters.",
+    step1Description: "Customize Sarah's knowledge base to align perfectly with your practice's specific medical services and protocols.",
+    step2Title: "Choose forwarding rules",
+    step2Description: "Set up custom workflows and rules to ensure proper handling of different types of patient inquiries and urgency levels.",
+    step3Title: "Integrate telephony",
+    step3Description: "Activate Sarah to handle patient calls 24/7, providing professional and consistent care communication while following your established protocols.",
     conditionsTitle: "Trained on Thousands of Medical Conditions",
     readyTitle: "Ready to Transform Your Practice?",
     readyDescription: "Join the growing number of medical practices that trust Sarah to handle their patient communications.",
