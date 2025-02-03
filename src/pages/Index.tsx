@@ -3,19 +3,19 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import Footer from "@/components/Footer";
-import AIDoctorAssistant from "@/components/AIDoctorAssistant";
-import NHGTriage from "@/components/NHGTriage";
-import PracticeValue from "@/components/PracticeValue";
+import { AISection } from "@/components/home/AISection";
+import { NHGTriageSection } from "@/components/home/NHGTriageSection";
+import { PracticeValueSection } from "@/components/home/PracticeValueSection";
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-white space-xl">
       <Navbar />
       <Hero />
-      <AIDoctorAssistant />
+      <AISection />
       <Features />
-      <PracticeValue />
-      <NHGTriage />
+      <PracticeValueSection />
+      <NHGTriageSection />
       <Footer />
     </main>
   );
