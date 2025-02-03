@@ -66,58 +66,55 @@ const Features = () => {
 
             <SymptomTags />
 
-            {/* Optimized dashboard preview container */}
-            <div className="relative group transform-gpu">
-              {/* Desktop version - hidden on mobile */}
-              <div 
-                className="relative hidden md:block max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl hover:shadow-2xl transition-all duration-300 mb-8 md:mb-12 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left"
-                style={{ 
-                  transform: 'translate3d(0, 0, 0)',
-                  willChange: 'auto'
-                }}
-              >
-                <EnhancedUrgencyDashboard />
+            {/* Desktop version - hidden on mobile */}
+            <div 
+              className="relative hidden md:block max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl hover:shadow-2xl transition-all duration-300 mb-8 md:mb-12 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left"
+              style={{ 
+                transform: 'translate3d(0, 0, 0)',
+                willChange: 'auto'
+              }}
+            >
+              <EnhancedUrgencyDashboard />
+            </div>
+
+            {/* Mobile version */}
+            <div className="md:hidden relative max-w-[calc(100vw-2rem)] mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl p-4 space-y-4">
+              <div className="flex justify-between items-center border-b border-gray-muted/10 pb-4">
+                <div className="text-left">
+                  <h3 className="text-sm font-medium text-gray-dark">Urgency Overview</h3>
+                  <p className="text-xs text-gray-light">Today's Statistics</p>
+                </div>
+                <span className="px-2 py-1 text-xs rounded-full bg-mint/10 text-mint">Live</span>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-gray-muted/5 rounded-lg p-3">
+                  <p className="text-xs text-gray-light mb-1">High Priority</p>
+                  <p className="text-lg font-semibold text-mint">3</p>
+                </div>
+                <div className="bg-gray-muted/5 rounded-lg p-3">
+                  <p className="text-xs text-gray-light mb-1">Medium</p>
+                  <p className="text-lg font-semibold text-blue-dark">7</p>
+                </div>
               </div>
 
-              {/* Mobile version */}
-              <div className="md:hidden relative max-w-[calc(100vw-2rem)] mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl p-4 space-y-4">
-                <div className="flex justify-between items-center border-b border-gray-muted/10 pb-4">
-                  <div className="text-left">
-                    <h3 className="text-sm font-medium text-gray-dark">Urgency Overview</h3>
-                    <p className="text-xs text-gray-light">Today's Statistics</p>
-                  </div>
-                  <span className="px-2 py-1 text-xs rounded-full bg-mint/10 text-mint">Live</span>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-dark">Recent Calls</span>
+                  <span className="text-gray-light">Last 24h</span>
                 </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gray-muted/5 rounded-lg p-3">
-                    <p className="text-xs text-gray-light mb-1">High Priority</p>
-                    <p className="text-lg font-semibold text-mint">3</p>
-                  </div>
-                  <div className="bg-gray-muted/5 rounded-lg p-3">
-                    <p className="text-xs text-gray-light mb-1">Medium</p>
-                    <p className="text-lg font-semibold text-blue-dark">7</p>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-gray-dark">Recent Calls</span>
-                    <span className="text-gray-light">Last 24h</span>
-                  </div>
-                  <div className="space-y-2">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="flex items-center justify-between bg-gray-muted/5 p-2 rounded-lg">
-                        <div className="text-left">
-                          <p className="text-xs font-medium text-gray-dark">Patient {i}</p>
-                          <p className="text-xs text-gray-light">2 min ago</p>
-                        </div>
-                        <span className="px-2 py-1 text-xs rounded-full bg-mint/10 text-mint">
-                          U{i}
-                        </span>
+                <div className="space-y-2">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="flex items-center justify-between bg-gray-muted/5 p-2 rounded-lg">
+                      <div className="text-left">
+                        <p className="text-xs font-medium text-gray-dark">Patient {i}</p>
+                        <p className="text-xs text-gray-light">2 min ago</p>
                       </div>
-                    ))}
-                  </div>
+                      <span className="px-2 py-1 text-xs rounded-full bg-mint/10 text-mint">
+                        U{i}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
