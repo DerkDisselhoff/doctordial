@@ -1,9 +1,9 @@
+
 import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUrgencyDashboard";
 import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
 import SymptomTags from "./features/SymptomTags";
 import { useLanguage } from "@/contexts/LanguageContext";
-import HowToWorkWithSarah from "./features/HowToWorkWithSarah";
 
 const Features = () => {
   const { t } = useLanguage();
@@ -120,12 +120,6 @@ const Features = () => {
                 </div>
               </div>
             </div>
-
-            {/* How to work with Sarah section */}
-            <div className="mt-16 relative">
-              <HowToWorkWithSarah />
-            </div>
-
           </div>
         </div>
 
@@ -137,3 +131,4 @@ const Features = () => {
 };
 
 export default Features;
+
