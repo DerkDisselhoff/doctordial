@@ -82,14 +82,6 @@ const HowToWorkWithSarah = () => {
 
   return (
     <div className="container px-4 max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto">
-      <motion.h3
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-2xl md:text-3xl font-bold text-center mb-12 text-white"
-      >
-        {t("sarah.howToWork")}
-      </motion.h3>
       <div className="w-full bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
         <h2 className="text-[1.875rem] font-semibold text-gray-dark text-left mb-8">
           Hoe werk je met Sarah
@@ -118,3 +110,4 @@ const HowToWorkWithSarah = () => {
 };
 
 export default HowToWorkWithSarah;
+
