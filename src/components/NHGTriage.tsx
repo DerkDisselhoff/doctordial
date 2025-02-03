@@ -28,9 +28,19 @@ const NHGTriage = () => {
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-dark mb-4 tracking-tight">
                   Gebouwd op NHG Triage Standaarden
                 </h2>
-                <p className="text-gray text-base md:text-lg">
+                <p className="text-gray text-base md:text-lg mb-4">
                   Betrouwbare patiëntenzorg met evidence-based triageprotocollen
                 </p>
+                <div className="flex justify-start">
+                  <div className="inline-flex items-center space-x-4 bg-white/80 backdrop-blur-sm border border-gray-muted rounded-full px-6 py-3 shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <img 
+                      src="/lovable-uploads/3db95113-2726-4ba8-8b57-5cb0843dff9a.png" 
+                      alt="NHG Logo" 
+                      className="w-[40px] h-[40px] object-contain flex-shrink-0" 
+                    />
+                    <span className="text-sm text-gray">Gebaseerd op NHG triagestandaarden</span>
+                  </div>
+                </div>
               </div>
 
               {/* Features Column - Now centered */}
@@ -67,17 +77,6 @@ const NHGTriage = () => {
                     </p>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="mt-8 flex justify-start">
-              <div className="inline-flex items-center space-x-4 bg-white/80 backdrop-blur-sm border border-gray-muted rounded-full px-6 py-3 shadow-sm hover:shadow-md transition-shadow duration-300">
-                <img 
-                  src="/lovable-uploads/3db95113-2726-4ba8-8b57-5cb0843dff9a.png" 
-                  alt="NHG Logo" 
-                  className="w-[40px] h-[40px] object-contain flex-shrink-0" 
-                />
-                <span className="text-sm text-gray">Gebaseerd op NHG triagestandaarden</span>
               </div>
             </div>
           </div>
