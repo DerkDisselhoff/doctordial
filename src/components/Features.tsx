@@ -1,4 +1,3 @@
-
 import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUrgencyDashboard";
 import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
@@ -113,10 +112,7 @@ const Features = () => {
 
             {/* Adding How to work with Sarah section here */}
             <div className="mt-16 relative">
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-mint-light/5 pointer-events-none" />
-              <div className="relative">
-                <HowToWorkWithSarah />
-              </div>
+              <HowToWorkWithSarah />
             </div>
 
           </div>
@@ -130,4 +126,3 @@ const Features = () => {
 };
 
 export default Features;
-
