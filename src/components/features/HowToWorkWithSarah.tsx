@@ -2,17 +2,20 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Pointer, Settings, PhoneCall } from "lucide-react";
+import TrainSarahCard from "../capabilities/TrainSarahCard";
 
 const StepCard = ({
   step,
   title,
   description,
-  icon: Icon
+  icon: Icon,
+  showAnimation = false
 }: {
   step: number;
   title: string;
   description: string;
   icon: React.ElementType;
+  showAnimation?: boolean;
 }) => {
   return (
     <div className="flex flex-col items-start space-y-4 bg-white p-6 rounded-xl border border-mint/10 hover:border-mint/20 transition-all duration-300 h-[280px]">
@@ -30,6 +33,11 @@ const StepCard = ({
       <p className="text-gray-dark text-sm leading-relaxed text-left line-clamp-4 overflow-hidden">
         {description}
       </p>
+      {showAnimation && (
+        <div className="mt-4 w-full h-32">
+          <TrainSarahCard />
+        </div>
+      )}
     </div>
   );
 };
@@ -79,6 +87,7 @@ const HowToWorkWithSarah = () => {
                 title={step.title}
                 description={step.description}
                 icon={step.icon}
+                showAnimation={index === 0} // Only show animation for the first card
               />
             </motion.div>
           ))}
@@ -89,4 +98,3 @@ const HowToWorkWithSarah = () => {
 };
 
 export default HowToWorkWithSarah;
-
