@@ -17,7 +17,17 @@ const NHGTriage = () => {
       />
       
       <div className="container relative mx-auto px-4 max-w-6xl">
-        <div className="relative bg-gradient-to-br from-mint-light/90 to-sage-light/90 backdrop-blur-sm rounded-3xl p-8 shadow-sm border border-mint/20">
+        {/* Updated medical blue gradient with shine effect */}
+        <div className="relative bg-gradient-to-br from-[#D3E4FD]/90 to-[#EDF4FF]/90 backdrop-blur-sm rounded-3xl p-8 shadow-sm border border-blue-dark/20 overflow-hidden">
+          {/* Shine effect overlay */}
+          <div 
+            className="absolute inset-0 animate-shine bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full"
+            style={{
+              backgroundSize: '200% 100%',
+              animation: 'shine 3s infinite linear'
+            }}
+          />
+          
           <div className="relative bg-white/95 backdrop-blur-sm border border-mint/20 shadow-sm rounded-2xl p-8 md:p-12 overflow-hidden">
             {/* Medical Grid Pattern Background */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
@@ -100,4 +110,3 @@ const NHGTriage = () => {
 };
 
 export default NHGTriage;
-
