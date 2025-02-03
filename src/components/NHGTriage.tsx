@@ -1,4 +1,3 @@
-
 import { BookOpen, ShieldCheck, Users } from "lucide-react";
 import { Card } from "./ui/card";
 
@@ -17,8 +16,8 @@ const NHGTriage = () => {
       />
       
       <div className="container relative mx-auto px-4 max-w-6xl">
-        {/* Updated gradient to use mint colors for a more medical/healthcare feel */}
-        <div className="relative bg-gradient-to-br from-mint-light/90 to-sage-light/90 backdrop-blur-sm rounded-3xl p-8 shadow-sm border border-mint-dark/10 overflow-hidden">
+        {/* Updated gradient to match NHG Triage logo colors */}
+        <div className="relative bg-gradient-to-br from-[#E8F1FE] to-[#D1FAE5] backdrop-blur-sm rounded-3xl p-8 shadow-sm border border-mint-dark/10 overflow-hidden">
           {/* Shine effect overlay */}
           <div 
             className="absolute inset-0 animate-shine bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full"
@@ -110,4 +109,3 @@ const NHGTriage = () => {
 };
 
 export default NHGTriage;
-
