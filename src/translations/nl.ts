@@ -1,3 +1,4 @@
+
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -93,7 +94,7 @@ export const nlTranslations = {
     readyDescription: "Sluit je aan bij het groeiende aantal medische praktijken die Sarah vertrouwen voor hun patiëntcommunicatie.",
     hire: "Huur Sarah in",
     useCases: {
-      title: "Hoe Sarah jouw Praktijk Helpt",
+      title: "Optimaliseer inkomende patientgesprekken",
       subtitle: "Ontdek de verschillende manieren waarop Sarah jouw medische praktijk kan ondersteunen",
       forward: {
         title: "Slim Doorverbinden",

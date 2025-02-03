@@ -1,3 +1,4 @@
+
 export const enTranslations = {
   nav: {
     features: "Features",
@@ -90,7 +91,7 @@ export const enTranslations = {
     readyDescription: "Join the growing number of medical practices that trust Sarah to handle their patient communications.",
     hire: "Hire Sarah",
     useCases: {
-      title: "How Sarah Helps Your Practice",
+      title: "Optimize incoming patient calls",
       subtitle: "Discover the many ways Sarah can assist your medical practice",
       forward: {
         title: "Smart Call Forwarding",
