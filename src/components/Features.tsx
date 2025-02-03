@@ -9,7 +9,7 @@ const Features = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="bg-gradient-to-b from-white to-mint-light/5">
+    <div className="bg-gradient-to-b from-white/0 to-mint-light/5">
       <AICapabilities />
       <section className="relative py-20 md:py-32 overflow-hidden">
         {/* Background with enhanced gradient and overlay */}
@@ -63,12 +63,12 @@ const Features = () => {
               className="relative group"
             >
               {/* Desktop version - hidden on mobile */}
-              <div className="relative hidden md:block max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-white/95 backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl hover:shadow-2xl transition-all duration-300 mb-8 md:mb-12 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left">
+              <div className="relative hidden md:block max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl hover:shadow-2xl transition-all duration-300 mb-8 md:mb-12 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left">
                 <EnhancedUrgencyDashboard />
               </div>
 
               {/* Mobile version */}
-              <div className="md:hidden relative max-w-[calc(100vw-2rem)] mx-auto bg-white/95 backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl p-4 space-y-4">
+              <div className="md:hidden relative max-w-[calc(100vw-2rem)] mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl p-4 space-y-4">
                 <div className="flex justify-between items-center border-b border-gray-muted/10 pb-4">
                   <div className="text-left">
                     <h3 className="text-sm font-medium text-gray-dark">Urgency Overview</h3>
@@ -120,3 +120,4 @@ const Features = () => {
 };
 
 export default Features;
+
