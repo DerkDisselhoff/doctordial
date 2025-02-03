@@ -39,17 +39,16 @@ const StepCard = ({
           {renderAnimation()}
         </div>
       </div>
-      <div className="flex items-center space-x-4 px-2">
-        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-mint text-white font-semibold">
-          {step}
-        </div>
-        <div className="w-12 h-12 rounded-lg bg-mint bg-opacity-10 flex items-center justify-center">
-          <Icon className="w-6 h-6 text-mint" />
+      <div className="flex items-center space-x-2 px-2">
+        <div className="flex items-center space-x-2">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-mint text-white font-semibold">
+            {step}
+          </div>
+          <h3 className="text-xl font-semibold text-gray-dark text-left">
+            {title}
+          </h3>
         </div>
       </div>
-      <h3 className="text-xl font-semibold text-gray-dark text-left px-2">
-        {title}
-      </h3>
       <p className="text-gray-dark text-sm leading-relaxed text-left line-clamp-4 overflow-hidden px-2">
         {description}
       </p>
@@ -62,19 +61,19 @@ const HowToWorkWithSarah = () => {
 
   const steps = [
     {
-      title: t("sarah.step1Title"),
+      title: `${t("sarah.step1Title")}`,
       description: t("sarah.step1Description"),
       icon: Pointer,
       animationType: "train" as const
     },
     {
-      title: t("sarah.step2Title"),
+      title: `${t("sarah.step2Title")}`,
       description: t("sarah.step2Description"),
       icon: Settings,
       animationType: "workflow" as const
     },
     {
-      title: t("sarah.step3Title"),
+      title: `${t("sarah.step3Title")}`,
       description: t("sarah.step3Description"),
       icon: PhoneCall,
       animationType: "calls" as const
@@ -102,7 +101,7 @@ const HowToWorkWithSarah = () => {
             >
               <StepCard
                 step={index + 1}
-                title={step.title}
+                title={`${index + 1}. ${step.title}`}
                 description={step.description}
                 icon={step.icon}
                 animationType={step.animationType}
