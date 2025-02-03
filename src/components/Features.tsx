@@ -4,6 +4,7 @@ import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
 import SymptomTags from "./features/SymptomTags";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SarahUseCases from "./features/SarahUseCases";
 
 const Features = () => {
   const { t } = useLanguage();
@@ -109,6 +110,11 @@ const Features = () => {
                 </div>
               </div>
             </motion.div>
+
+            {/* Added SarahUseCases component */}
+            <div className="mt-16 relative z-10">
+              <SarahUseCases />
+            </div>
           </div>
         </div>
 
@@ -120,4 +126,3 @@ const Features = () => {
 };
 
 export default Features;
-

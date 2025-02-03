@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { 
@@ -140,7 +139,7 @@ const SarahUseCases = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-16 md:py-24">
+    <section className="w-full bg-transparent">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -148,10 +147,10 @@ const SarahUseCases = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-dark">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-mint-light/90">
             {t("sarah.useCases.title")}
           </h2>
-          <p className="text-gray max-w-2xl mx-auto">
+          <p className="text-mint-light/80 max-w-2xl mx-auto">
             {t("sarah.useCases.subtitle")}
           </p>
         </motion.div>
@@ -174,7 +173,7 @@ const SarahUseCases = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl font-bold text-center mb-12 text-gray-dark"
+            className="text-2xl md:text-3xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-white to-mint-light/90"
           >
             {t("sarah.howToWork")}
           </motion.h3>
@@ -202,4 +201,3 @@ const SarahUseCases = () => {
 };
 
 export default SarahUseCases;
-
