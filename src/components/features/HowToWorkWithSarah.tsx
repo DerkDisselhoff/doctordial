@@ -56,7 +56,7 @@ const HowToWorkWithSarah = () => {
   ];
 
   return (
-    <div className="mt-16 md:mt-20 max-w-5xl mx-auto">
+    <div className="container mx-auto px-4">
       <motion.h3
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -65,7 +65,7 @@ const HowToWorkWithSarah = () => {
       >
         {t("sarah.howToWork")}
       </motion.h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-5xl mx-auto">
         {steps.map((step, index) => (
           <motion.div
             key={index}
@@ -87,4 +87,3 @@ const HowToWorkWithSarah = () => {
 };
 
 export default HowToWorkWithSarah;
-
