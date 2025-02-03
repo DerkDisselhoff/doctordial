@@ -83,15 +83,22 @@ const HomeHowToWorkWithSarah = () => {
 
   return (
     <div className="w-full bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
-      <div className="flex flex-col space-y-2 mb-8">
+      <div className="flex flex-col space-y-2">
         <h2 className="text-[1.875rem] font-semibold text-gray-dark text-left">
           Hoe werk je met Sarah
         </h2>
-        <p className="text-gray-dark/80 text-lg">
+        <p className="text-gray-dark/80 text-lg text-left">
           Ontdek hoe Sarah naadloos integreert met jouw praktijk
         </p>
+        <div className="mt-4">
+          <BookDemoForm>
+            <button className="px-6 py-3 bg-mint hover:bg-mint/90 text-white font-medium rounded-lg transition-colors">
+              Demo aanvragen
+            </button>
+          </BookDemoForm>
+        </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 mt-8">
         {steps.map((step, index) => (
           <motion.div
             key={index}
@@ -108,13 +115,6 @@ const HomeHowToWorkWithSarah = () => {
             />
           </motion.div>
         ))}
-      </div>
-      <div className="mt-8 flex justify-center">
-        <BookDemoForm>
-          <button className="px-6 py-3 bg-blue-dark hover:bg-blue-dark/90 text-white font-medium rounded-lg transition-colors">
-            Demo aanvragen
-          </button>
-        </BookDemoForm>
       </div>
     </div>
   );
