@@ -4,7 +4,7 @@ import { Card } from "./ui/card";
 
 const NHGTriage = () => {
   return (
-    <section className="relative py-8 px-4 bg-gradient-to-br from-mint-light/90 to-sage-light/90 overflow-hidden">
+    <section className="relative py-20 md:py-32 bg-gradient-to-br from-mint-light/90 to-sage-light/90 overflow-hidden">
       {/* Medical Grid Pattern Background */}
       <div className="absolute inset-0 opacity-[0.15]" 
            style={{
@@ -13,8 +13,8 @@ const NHGTriage = () => {
            }} 
       />
       
-      <div className="container mx-auto max-w-6xl bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
-        <div className="relative bg-white border border-blue-muted shadow-sm rounded-2xl p-8 overflow-hidden">
+      <div className="container relative mx-auto px-4 max-w-6xl">
+        <div className="relative bg-white/95 backdrop-blur-sm border border-mint/20 shadow-sm rounded-2xl p-8 md:p-12 overflow-hidden">
           {/* Medical Grid Pattern Background */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
             <div className="absolute inset-0" 
