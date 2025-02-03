@@ -18,13 +18,15 @@ const StepCard = ({
   showAnimation?: boolean;
 }) => {
   return (
-    <div className="flex flex-col items-start space-y-4 bg-white p-6 rounded-xl border border-mint/10 hover:border-mint/20 transition-all duration-300 h-[280px]">
-      {showAnimation && (
-        <div className="w-full h-32 -mt-2 mb-2">
-          <TrainSarahCard />
-        </div>
-      )}
-      <div className="flex items-center space-x-4">
+    <div className="flex flex-col items-start space-y-4">
+      <div className="w-full bg-white rounded-xl border border-mint/10 hover:border-mint/20 transition-all duration-300 h-[200px] overflow-hidden">
+        {showAnimation && (
+          <div className="w-full h-full">
+            <TrainSarahCard />
+          </div>
+        )}
+      </div>
+      <div className="flex items-center space-x-4 px-2">
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-mint text-white font-semibold">
           {step}
         </div>
@@ -32,10 +34,10 @@ const StepCard = ({
           <Icon className="w-6 h-6 text-mint" />
         </div>
       </div>
-      <h3 className="text-xl font-semibold text-gray-dark text-left">
+      <h3 className="text-xl font-semibold text-gray-dark text-left px-2">
         {title}
       </h3>
-      <p className="text-gray-dark text-sm leading-relaxed text-left line-clamp-4 overflow-hidden">
+      <p className="text-gray-dark text-sm leading-relaxed text-left line-clamp-4 overflow-hidden px-2">
         {description}
       </p>
     </div>
@@ -87,7 +89,7 @@ const HowToWorkWithSarah = () => {
                 title={step.title}
                 description={step.description}
                 icon={step.icon}
-                showAnimation={index === 0} // Only show animation for the first card
+                showAnimation={index === 0}
               />
             </motion.div>
           ))}
@@ -98,3 +100,4 @@ const HowToWorkWithSarah = () => {
 };
 
 export default HowToWorkWithSarah;
+
