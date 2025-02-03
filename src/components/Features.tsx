@@ -1,3 +1,4 @@
+
 import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUrgencyDashboard";
 import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
@@ -9,7 +10,7 @@ const Features = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="bg-gradient-to-b from-white/0 to-mint-light/5">
+    <div className="bg-gradient-to-b from-white/0 to-mint-light">
       <AICapabilities />
       <section className="relative py-20 md:py-32 overflow-hidden">
         {/* Background with enhanced gradient and overlay */}
