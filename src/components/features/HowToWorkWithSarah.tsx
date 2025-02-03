@@ -56,7 +56,7 @@ const HowToWorkWithSarah = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="px-4">
       <motion.h3
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
