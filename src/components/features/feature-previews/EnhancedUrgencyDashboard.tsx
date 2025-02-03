@@ -127,7 +127,7 @@ export function EnhancedUrgencyDashboard() {
       <div className="flex justify-end px-4">
         <BookDemoForm>
           <Button 
-            className="bg-mint hover:bg-mint-dark text-white font-medium transition-colors duration-300"
+            className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium transition-colors duration-300"
           >
             Vraag een demo aan
           </Button>
