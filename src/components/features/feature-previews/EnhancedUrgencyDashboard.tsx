@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -128,7 +129,7 @@ export function EnhancedUrgencyDashboard() {
     <div className="space-y-6">      
       <div className="container mx-auto max-w-6xl bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
         <div className="flex flex-col items-start gap-3 mb-4">
-          <h2 className="text-gray-dark text-xl font-medium">
+          <h2 className="text-gray-dark text-2xl md:text-3xl font-semibold">
             {t('features.callsTitle') || 'Van inkomende gesprekken tot triage en opvolgingen'}
           </h2>
           <BookDemoForm>
