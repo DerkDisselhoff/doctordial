@@ -33,35 +33,35 @@ const NHGTriage = () => {
                 </p>
               </div>
 
-              {/* Features Column */}
-              <div className="lg:col-span-1 space-y-6">
-                <div className="flex items-start space-x-4 group transition-all duration-300">
+              {/* Features Column - Now centered */}
+              <div className="lg:col-span-1 flex flex-col justify-center space-y-6">
+                <div className="flex items-center space-x-4 group transition-all duration-300">
                   <div className="w-10 h-10 rounded-full bg-mint-light flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                     <BookOpen className="w-5 h-5 text-mint" />
                   </div>
-                  <div>
+                  <div className="flex items-center">
                     <p className="text-sm text-gray font-medium">
                       AI model getrained op NHG triage datasets
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-4 group transition-all duration-300">
+                <div className="flex items-center space-x-4 group transition-all duration-300">
                   <div className="w-10 h-10 rounded-full bg-mint-light flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                     <Users className="w-5 h-5 text-mint" />
                   </div>
-                  <div>
+                  <div className="flex items-center">
                     <p className="text-sm text-gray font-medium">
                       Ontwikkeld met medische specialisten
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-4 group transition-all duration-300">
+                <div className="flex items-center space-x-4 group transition-all duration-300">
                   <div className="w-10 h-10 rounded-full bg-mint-light flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                     <ShieldCheck className="w-5 h-5 text-mint" />
                   </div>
-                  <div>
+                  <div className="flex items-center">
                     <p className="text-sm text-gray font-medium">
                       Continue verbetering met feedback
                     </p>
