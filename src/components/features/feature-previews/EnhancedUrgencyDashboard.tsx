@@ -134,7 +134,7 @@ export function EnhancedUrgencyDashboard() {
           </h2>
           <BookDemoForm>
             <Button 
-              className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium transition-colors duration-300 rounded-full"
+              className="bg-blue hover:bg-blue/90 text-gray-dark font-medium transition-colors duration-300 rounded-full"
             >
               Demo aanvragen
             </Button>
@@ -272,3 +272,4 @@ export function EnhancedUrgencyDashboard() {
     </div>
   );
 }
+
