@@ -13,7 +13,7 @@ const NHGTriage = () => {
            }} 
       />
       
-      <div className="container mx-auto max-w-6xl bg-blue/5 backdrop-blur-sm rounded-3xl p-8">
+      <div className="container mx-auto max-w-6xl bg-white/80 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/10">
         <div className="relative bg-white border border-blue-muted shadow-sm rounded-2xl p-8 overflow-hidden">
           {/* Medical Grid Pattern Background */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
