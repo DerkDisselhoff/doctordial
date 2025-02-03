@@ -2,5 +2,9 @@
 import NHGTriage from "@/components/NHGTriage";
 
 export const NHGTriageSection = () => {
-  return <NHGTriage />;
+  return (
+    <div className="w-full">
+      <NHGTriage />
+    </div>
+  );
 };
