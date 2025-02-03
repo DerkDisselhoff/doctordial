@@ -13,7 +13,14 @@ const Index = () => {
       <Navbar />
       <Hero />
       <AISection />
-      <SarahUseCases />
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-dark">
+            Hoe Sarah jouw Praktijk Helpt
+          </h2>
+          <SarahUseCases />
+        </div>
+      </section>
       <Features />
       <NHGTriageSection />
       <Footer />
@@ -22,3 +29,4 @@ const Index = () => {
 };
 
 export default Index;
+
