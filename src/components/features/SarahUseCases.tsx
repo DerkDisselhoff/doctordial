@@ -7,10 +7,7 @@ import {
   HeartPulse, 
   Building2, 
   FileText, 
-  SmilePlus,
-  Pointer,
-  Settings,
-  PhoneCall
+  SmilePlus
 } from "lucide-react";
 
 const UseCaseCard = ({ 
@@ -45,37 +42,6 @@ const UseCaseCard = ({
         <div className={`absolute inset-0 ${color} rounded-tl-[100px]`} />
       </div>
     </motion.div>
-  );
-};
-
-const StepCard = ({
-  step,
-  title,
-  description,
-  icon: Icon
-}: {
-  step: number;
-  title: string;
-  description: string;
-  icon: React.ElementType;
-}) => {
-  return (
-    <div className="flex flex-col items-start space-y-4">
-      <div className="flex items-center space-x-4">
-        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-mint text-white font-semibold">
-          {step}
-        </div>
-        <div className="w-12 h-12 rounded-lg bg-mint bg-opacity-10 flex items-center justify-center">
-          <Icon className="w-6 h-6 text-mint" />
-        </div>
-      </div>
-      <h3 className="text-xl font-semibold text-gray-dark">
-        {title}
-      </h3>
-      <p className="text-gray text-sm leading-relaxed">
-        {description}
-      </p>
-    </div>
   );
 };
 
@@ -121,24 +87,6 @@ const SarahUseCases = () => {
     }
   ];
 
-  const steps = [
-    {
-      title: t("sarah.step1Title"),
-      description: t("sarah.step1Description"),
-      icon: Pointer
-    },
-    {
-      title: t("sarah.step2Title"),
-      description: t("sarah.step2Description"),
-      icon: Settings
-    },
-    {
-      title: t("sarah.step3Title"),
-      description: t("sarah.step3Description"),
-      icon: PhoneCall
-    }
-  ];
-
   return (
     <section className="w-full bg-white py-16 md:py-24">
       <div className="container mx-auto px-4">
@@ -168,38 +116,9 @@ const SarahUseCases = () => {
             </motion.div>
           ))}
         </div>
-
-        <div className="mt-16 md:mt-20 max-w-5xl mx-auto">
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl font-bold text-center mb-12 text-gray-dark"
-          >
-            {t("sarah.howToWork")}
-          </motion.h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-              >
-                <StepCard
-                  step={index + 1}
-                  title={step.title}
-                  description={step.description}
-                  icon={step.icon}
-                />
-              </motion.div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
 };
 
 export default SarahUseCases;
-

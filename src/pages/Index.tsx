@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { AISection } from "@/components/home/AISection";
 import { NHGTriageSection } from "@/components/home/NHGTriageSection";
 import SarahUseCases from "@/components/features/SarahUseCases";
+import HowToWorkWithSarah from "@/components/features/HowToWorkWithSarah";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <Hero />
       <AISection />
       <Features />
+      <HowToWorkWithSarah />
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-b from-white via-mint-light/30 to-sage-light/20" />
         <div className="relative">
@@ -27,4 +29,3 @@ const Index = () => {
 };
 
 export default Index;
-
