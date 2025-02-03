@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -120,130 +121,132 @@ const StatCard = ({ icon: Icon, label, value, subtext }: { icon: any, label: str
 
 export function EnhancedUrgencyDashboard() {
   return (
-    <div className="p-4 bg-white rounded-xl border border-gray-muted">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <Logo className="text-gray-dark w-8 h-8" />
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="text-right">
-            <p className="text-gray-dark text-sm font-medium">Dr. Anna van der Meer</p>
-            <p className="text-gray text-xs">Practice Manager</p>
+    <div className="container mx-auto max-w-6xl bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
+      <div className="p-4 bg-white rounded-xl border border-gray-muted">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <Logo className="text-gray-dark w-8 h-8" />
           </div>
-          <Avatar className="w-8 h-8">
-            <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anna" />
-            <AvatarFallback>AM</AvatarFallback>
-          </Avatar>
-        </div>
-      </div>
-
-      {/* Layout */}
-      <div className="grid grid-cols-12 gap-4">
-        {/* Sidebar */}
-        <div className="col-span-2 space-y-1">
-          <MenuItem icon={LayoutDashboard} label="Dashboard" isActive />
-          <MenuItem icon={Users} label="Patients" />
-          <MenuItem icon={PhoneCall} label="Calls" />
-          <MenuItem icon={Calendar} label="Appointments" />
-          <MenuItem icon={ChartBar} label="Analytics" />
-        </div>
-
-        {/* Main Content */}
-        <div className="col-span-10 space-y-4">
-          {/* Stats Row */}
-          <div className="grid grid-cols-4 gap-3">
-            <StatCard 
-              icon={PhoneCall}
-              label="Total Calls Today"
-              value="47"
-              subtext="+12% vs yesterday"
-            />
-            <StatCard 
-              icon={Clock}
-              label="Average Duration"
-              value="3m 45s"
-              subtext="-30s vs last week"
-            />
-            <StatCard 
-              icon={Users}
-              label="New Appointments"
-              value="18"
-              subtext="8 urgent cases"
-            />
-            <StatCard 
-              icon={Calendar}
-              label="Available Slots"
-              value="12"
-              subtext="Next 24 hours"
-            />
-          </div>
-
-          {/* Table */}
-          <Card className="bg-white border-gray-muted">
-            <div className="p-3 border-b border-gray-muted">
-              <h3 className="text-sm font-semibold text-gray-dark">Recent Patient Interactions</h3>
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <p className="text-gray-dark text-sm font-medium">Dr. Anna van der Meer</p>
+              <p className="text-gray text-xs">Practice Manager</p>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-gray-muted">
-                    <th className="text-left p-2 text-xs font-medium text-gray">Patient</th>
-                    <th className="text-left p-2 text-xs font-medium text-gray">Symptoms</th>
-                    <th className="text-left p-2 text-xs font-medium text-gray">Urgency</th>
-                    <th className="text-left p-2 text-xs font-medium text-gray">Status</th>
-                    <th className="text-left p-2 text-xs font-medium text-gray">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="text-xs">
-                  {mockUrgentCases.map((case_) => (
-                    <tr key={case_.id} className="border-b border-gray-muted hover:bg-gray-50">
-                      <td className="p-2 text-gray-dark">{case_.patientName}</td>
-                      <td className="p-2 text-gray">
-                        <div className="max-w-[140px] truncate" title={case_.symptoms}>
-                          {case_.symptoms}
-                        </div>
-                      </td>
-                      <td className="p-2">
-                        <span className={`px-2 py-0.5 rounded-full text-xs ${getUrgencyColor(case_.urgencyLevel)}`}>
-                          {case_.urgencyLevel}
-                        </span>
-                      </td>
-                      <td className="p-2">
-                        <div className="flex items-center gap-1">
-                          <span className={`px-2 py-0.5 rounded-full text-xs ${
-                            case_.appointmentStatus === 'Scheduled' 
-                              ? 'bg-blue-light text-blue-dark' 
-                              : 'bg-yellow-100 text-yellow-700'
-                          }`}>
-                            {case_.appointmentStatus}
-                          </span>
-                          {case_.appointmentDate && (
-                            <span className="text-gray-light text-xs">
-                              {case_.appointmentDate}
-                            </span>
-                          )}
-                        </div>
-                      </td>
-                      <td className="p-2">
-                        <div className="flex gap-1">
-                          {case_.actions.map((action, i) => (
-                            <span 
-                              key={i}
-                              className="px-2 py-0.5 text-xs bg-blue-light text-blue-dark rounded-full"
-                              title={action}
-                            >
-                              {action}
-                            </span>
-                          ))}
-                        </div>
-                      </td>
+            <Avatar className="w-8 h-8">
+              <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anna" />
+              <AvatarFallback>AM</AvatarFallback>
+            </Avatar>
+          </div>
+        </div>
+
+        {/* Layout */}
+        <div className="grid grid-cols-12 gap-4">
+          {/* Sidebar */}
+          <div className="col-span-2 space-y-1">
+            <MenuItem icon={LayoutDashboard} label="Dashboard" isActive />
+            <MenuItem icon={Users} label="Patients" />
+            <MenuItem icon={PhoneCall} label="Calls" />
+            <MenuItem icon={Calendar} label="Appointments" />
+            <MenuItem icon={ChartBar} label="Analytics" />
+          </div>
+
+          {/* Main Content */}
+          <div className="col-span-10 space-y-4">
+            {/* Stats Row */}
+            <div className="grid grid-cols-4 gap-3">
+              <StatCard 
+                icon={PhoneCall}
+                label="Total Calls Today"
+                value="47"
+                subtext="+12% vs yesterday"
+              />
+              <StatCard 
+                icon={Clock}
+                label="Average Duration"
+                value="3m 45s"
+                subtext="-30s vs last week"
+              />
+              <StatCard 
+                icon={Users}
+                label="New Appointments"
+                value="18"
+                subtext="8 urgent cases"
+              />
+              <StatCard 
+                icon={Calendar}
+                label="Available Slots"
+                value="12"
+                subtext="Next 24 hours"
+              />
+            </div>
+
+            {/* Table */}
+            <Card className="bg-white border-gray-muted">
+              <div className="p-3 border-b border-gray-muted">
+                <h3 className="text-sm font-semibold text-gray-dark">Recent Patient Interactions</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-muted">
+                      <th className="text-left p-2 text-xs font-medium text-gray">Patient</th>
+                      <th className="text-left p-2 text-xs font-medium text-gray">Symptoms</th>
+                      <th className="text-left p-2 text-xs font-medium text-gray">Urgency</th>
+                      <th className="text-left p-2 text-xs font-medium text-gray">Status</th>
+                      <th className="text-left p-2 text-xs font-medium text-gray">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Card>
+                  </thead>
+                  <tbody className="text-xs">
+                    {mockUrgentCases.map((case_) => (
+                      <tr key={case_.id} className="border-b border-gray-muted hover:bg-gray-50">
+                        <td className="p-2 text-gray-dark">{case_.patientName}</td>
+                        <td className="p-2 text-gray">
+                          <div className="max-w-[140px] truncate" title={case_.symptoms}>
+                            {case_.symptoms}
+                          </div>
+                        </td>
+                        <td className="p-2">
+                          <span className={`px-2 py-0.5 rounded-full text-xs ${getUrgencyColor(case_.urgencyLevel)}`}>
+                            {case_.urgencyLevel}
+                          </span>
+                        </td>
+                        <td className="p-2">
+                          <div className="flex items-center gap-1">
+                            <span className={`px-2 py-0.5 rounded-full text-xs ${
+                              case_.appointmentStatus === 'Scheduled' 
+                                ? 'bg-blue-light text-blue-dark' 
+                                : 'bg-yellow-100 text-yellow-700'
+                            }`}>
+                              {case_.appointmentStatus}
+                            </span>
+                            {case_.appointmentDate && (
+                              <span className="text-gray-light text-xs">
+                                {case_.appointmentDate}
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="p-2">
+                          <div className="flex gap-1">
+                            {case_.actions.map((action, i) => (
+                              <span 
+                                key={i}
+                                className="px-2 py-0.5 text-xs bg-blue-light text-blue-dark rounded-full"
+                                title={action}
+                              >
+                                {action}
+                              </span>
+                            ))}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
