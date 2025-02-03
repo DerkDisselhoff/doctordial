@@ -1,3 +1,4 @@
+
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -82,7 +83,7 @@ export const nlTranslations = {
     learningDescription: "Voortdurend verbeterend door elke interactie met behoud van consistente zorgkwaliteit.",
     imageAlt: "Sarah AI Medische Assistent",
     howToWork: "Hoe werk je met Sarah",
-    step1Title: "Train Sarah voor jouw zorgverlening",
+    step1Title: "Geef Sarah instructies",
     step1Description: "Pas Sarah's kennisbank aan zodat deze perfect aansluit bij de specifieke medische diensten en protocollen van jouw praktijk.",
     step2Title: "Kies doorverwijzingsregels",
     step2Description: "Configureer aangepaste workflows en regels voor het correct afhandelen van verschillende soorten patiëntvragen en urgentieniveaus.",
