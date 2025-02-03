@@ -12,6 +12,7 @@ import StatsBadge from "@/components/hero/StatsBadge";
 import TrainSarahCard from "@/components/capabilities/TrainSarahCard";
 import WorkflowRulesCard from "@/components/capabilities/WorkflowRulesCard";
 import TakeCallsCard from "@/components/capabilities/TakeCallsCard";
+import PracticeValue from "@/components/PracticeValue";
 
 const Sarah = () => {
   const { t } = useLanguage();
@@ -184,6 +185,8 @@ const Sarah = () => {
           </motion.div>
         </div>
       </section>
+
+      <PracticeValue />
 
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
