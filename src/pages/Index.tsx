@@ -12,10 +12,10 @@ const Index = () => {
     <main className="min-h-screen bg-white space-xl">
       <Navbar />
       <Hero />
+      <NHGTriageSection />
       <AISection />
       <Features />
       <PracticeValueSection />
-      <NHGTriageSection />
       <Footer />
     </main>
   );
