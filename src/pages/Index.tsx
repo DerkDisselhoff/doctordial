@@ -17,14 +17,10 @@ const Index = () => {
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-b from-white via-mint-light/30 to-sage-light/20" />
         <div className="relative">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <HomeSarahUseCases />
-          </div>
-          <div className="container mx-auto px-4 max-w-6xl mb-32">
-            <NHGTriageSection />
-          </div>
+          <HomeSarahUseCases />
         </div>
       </div>
+      <NHGTriageSection />
       <Footer />
     </main>
   );

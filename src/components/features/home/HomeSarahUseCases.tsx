@@ -89,7 +89,7 @@ const HomeSarahUseCases = () => {
 
   return (
     <section className="w-full bg-white py-16 md:py-24">
-      <div className="w-full">
+      <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
