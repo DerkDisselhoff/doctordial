@@ -123,18 +123,18 @@ const StatCard = ({ icon: Icon, label, value, subtext }: { icon: any, label: str
 
 export function EnhancedUrgencyDashboard() {
   return (
-    <div className="space-y-6">
-      <div className="flex justify-end px-4">
-        <BookDemoForm>
-          <Button 
-            className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium transition-colors duration-300"
-          >
-            Vraag een demo aan
-          </Button>
-        </BookDemoForm>
-      </div>
-      
+    <div className="space-y-6">      
       <div className="container mx-auto max-w-6xl bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
+        <div className="flex justify-start mb-4">
+          <BookDemoForm>
+            <Button 
+              className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium transition-colors duration-300"
+            >
+              Vraag een demo aan
+            </Button>
+          </BookDemoForm>
+        </div>
+        
         <div className="p-4 bg-white rounded-xl border border-gray-muted">
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
