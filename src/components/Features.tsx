@@ -4,6 +4,7 @@ import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
 import SymptomTags from "./features/SymptomTags";
 import { useLanguage } from "@/contexts/LanguageContext";
+import HowToWorkWithSarah from "./features/HowToWorkWithSarah";
 
 const Features = () => {
   const { t } = useLanguage();
@@ -109,6 +110,15 @@ const Features = () => {
                 </div>
               </div>
             </motion.div>
+
+            {/* Adding How to work with Sarah section here */}
+            <div className="mt-16 relative">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-mint-light/5 pointer-events-none" />
+              <div className="relative">
+                <HowToWorkWithSarah />
+              </div>
+            </div>
+
           </div>
         </div>
 
