@@ -15,7 +15,7 @@ const StepCard = ({
   icon: React.ElementType;
 }) => {
   return (
-    <div className="flex flex-col items-start space-y-4 bg-[#ccebdf] p-6 rounded-xl border border-mint/10 hover:border-mint/20 transition-all duration-300">
+    <div className="flex flex-col items-start space-y-4 bg-white p-6 rounded-xl border border-mint/10 hover:border-mint/20 transition-all duration-300">
       <div className="flex items-center space-x-4">
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-mint text-white font-semibold">
           {step}
@@ -65,25 +65,28 @@ const HowToWorkWithSarah = () => {
       >
         {t("sarah.howToWork")}
       </motion.h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-5xl mx-auto">
-        {steps.map((step, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-          >
-            <StepCard
-              step={index + 1}
-              title={step.title}
-              description={step.description}
-              icon={step.icon}
-            />
-          </motion.div>
-        ))}
+      <div className="container mx-auto max-w-7xl bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+            >
+              <StepCard
+                step={index + 1}
+                title={step.title}
+                description={step.description}
+                icon={step.icon}
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default HowToWorkWithSarah;
+
