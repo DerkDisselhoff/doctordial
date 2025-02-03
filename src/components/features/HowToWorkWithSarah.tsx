@@ -83,7 +83,7 @@ const HowToWorkWithSarah = () => {
   return (
     <div className="container px-4 max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto">
       <div className="w-full bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
-        <h2 className="text-2xl font-semibold text-gray-dark text-left mb-8">
+        <h2 className="text-[1.875rem] font-semibold text-gray-dark text-left mb-8">
           {t("sarah.howToWork")}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
