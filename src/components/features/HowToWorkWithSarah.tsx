@@ -15,7 +15,7 @@ const StepCard = ({
   icon: React.ElementType;
 }) => {
   return (
-    <div className="flex flex-col items-start space-y-4 bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-mint/10 hover:border-mint/20 transition-all duration-300">
+    <div className="flex flex-col items-start space-y-4 bg-[#ccebdf] p-6 rounded-xl border border-mint/10 hover:border-mint/20 transition-all duration-300">
       <div className="flex items-center space-x-4">
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-mint text-white font-semibold">
           {step}
@@ -24,10 +24,10 @@ const StepCard = ({
           <Icon className="w-6 h-6 text-mint" />
         </div>
       </div>
-      <h3 className="text-xl font-semibold text-white">
+      <h3 className="text-xl font-semibold text-gray-dark text-left">
         {title}
       </h3>
-      <p className="text-mint-light/80 text-sm leading-relaxed">
+      <p className="text-gray-dark text-sm leading-relaxed text-left">
         {description}
       </p>
     </div>
@@ -65,7 +65,7 @@ const HowToWorkWithSarah = () => {
       >
         {t("sarah.howToWork")}
       </motion.h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-6xl mx-auto">
         {steps.map((step, index) => (
           <motion.div
             key={index}
