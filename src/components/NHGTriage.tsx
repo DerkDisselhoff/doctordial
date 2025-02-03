@@ -7,7 +7,7 @@ const NHGTriage = () => {
     <section className="py-8 px-4 bg-[#1A1F2C]">
       <div className="container mx-auto max-w-6xl bg-blue/5 backdrop-blur-sm rounded-3xl p-8">
         <div className="relative bg-white border border-blue-muted shadow-sm rounded-2xl p-8 overflow-hidden">
-          {/* Subtle Medical Grid Pattern Background */}
+          {/* Medical Grid Pattern Background */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
             <div className="absolute inset-0" 
                  style={{
@@ -17,7 +17,7 @@ const NHGTriage = () => {
             />
           </div>
           
-          {/* Subtle Gradient Overlay */}
+          {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-mint-light/10 to-transparent pointer-events-none" />
 
           {/* Content */}
@@ -43,7 +43,7 @@ const NHGTriage = () => {
                 </div>
               </div>
 
-              {/* Features Column - Now with equal padding */}
+              {/* Features Column */}
               <div className="lg:col-span-1 flex flex-col justify-center py-12 space-y-8">
                 <div className="flex items-center space-x-4 group transition-all duration-300">
                   <div className="w-10 h-10 rounded-full bg-mint-light flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
