@@ -5,6 +5,7 @@ import Features from "@/components/Features";
 import Footer from "@/components/Footer";
 import { AISection } from "@/components/home/AISection";
 import { NHGTriageSection } from "@/components/home/NHGTriageSection";
+import SarahUseCases from "@/components/features/SarahUseCases";
 
 const Index = () => {
   return (
@@ -12,6 +13,7 @@ const Index = () => {
       <Navbar />
       <Hero />
       <AISection />
+      <SarahUseCases />
       <Features />
       <NHGTriageSection />
       <Footer />
