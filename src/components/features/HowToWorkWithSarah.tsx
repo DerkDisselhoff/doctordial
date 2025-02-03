@@ -101,7 +101,7 @@ const HowToWorkWithSarah = () => {
             >
               <StepCard
                 step={index + 1}
-                title={`${index + 1}. ${step.title}`}
+                title={step.title}
                 description={step.description}
                 icon={step.icon}
                 animationType={step.animationType}
@@ -115,3 +115,4 @@ const HowToWorkWithSarah = () => {
 };
 
 export default HowToWorkWithSarah;
+
