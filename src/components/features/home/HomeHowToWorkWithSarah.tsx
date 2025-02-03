@@ -82,43 +82,44 @@ const HomeHowToWorkWithSarah = () => {
   ];
 
   return (
-    <div className="w-full bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
-      <div className="flex flex-col space-y-2">
-        <h2 className="text-[1.875rem] font-semibold text-gray-dark text-left">
-          Hoe werk je met Sarah
-        </h2>
-        <p className="text-gray-dark/80 text-lg text-left">
-          Ontdek hoe Sarah naadloos integreert met jouw praktijk
-        </p>
-        <div className="flex justify-start mt-4">
-          <BookDemoForm>
-            <button className="px-6 py-3 bg-blue hover:bg-blue/90 text-gray-dark font-medium rounded-full transition-colors duration-300">
-              Demo aanvragen
-            </button>
-          </BookDemoForm>
+    <div className="container mx-auto px-4 max-w-6xl">
+      <div className="w-full bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
+        <div className="flex flex-col space-y-2">
+          <h2 className="text-[1.875rem] font-semibold text-gray-dark text-left">
+            Hoe werk je met Sarah
+          </h2>
+          <p className="text-gray-dark/80 text-lg text-left">
+            Ontdek hoe Sarah naadloos integreert met jouw praktijk
+          </p>
+          <div className="flex justify-start mt-4">
+            <BookDemoForm>
+              <button className="px-6 py-3 bg-blue hover:bg-blue/90 text-gray-dark font-medium rounded-full transition-colors duration-300">
+                Demo aanvragen
+              </button>
+            </BookDemoForm>
+          </div>
         </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 mt-8">
-        {steps.map((step, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-          >
-            <StepCard
-              step={index + 1}
-              title={step.title}
-              description={step.description}
-              icon={step.icon}
-              animationType={step.animationType}
-            />
-          </motion.div>
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 mt-8">
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+            >
+              <StepCard
+                step={index + 1}
+                title={step.title}
+                description={step.description}
+                icon={step.icon}
+                animationType={step.animationType}
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default HomeHowToWorkWithSarah;
-
