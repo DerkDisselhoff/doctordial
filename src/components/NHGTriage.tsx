@@ -22,7 +22,7 @@ const NHGTriage = () => {
 
           {/* Content */}
           <div className="relative">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[300px]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               {/* Main Title Column */}
               <div className="lg:col-span-1">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-dark mb-4 tracking-tight">
@@ -33,7 +33,7 @@ const NHGTriage = () => {
                 </p>
               </div>
 
-              {/* Features Column - Centered */}
+              {/* Features Column - Now centered */}
               <div className="lg:col-span-1 flex flex-col justify-center space-y-6">
                 <div className="flex items-center space-x-4 group transition-all duration-300">
                   <div className="w-10 h-10 rounded-full bg-mint-light flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
@@ -88,4 +88,3 @@ const NHGTriage = () => {
 };
 
 export default NHGTriage;
-
