@@ -6,7 +6,7 @@ const NHGTriage = () => {
   return (
     <section className="relative py-20 md:py-32 -mb-32">
       {/* Extended gradient background that connects with footer */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-mint-light/80 to-sage-light/90" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-mint-light/80 to-[rgb(209,251,229)]" />
       
       {/* Medical Grid Pattern Background */}
       <div className="absolute inset-0 opacity-[0.15]" 
