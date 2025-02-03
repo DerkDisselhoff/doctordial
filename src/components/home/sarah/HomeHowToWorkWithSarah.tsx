@@ -81,7 +81,7 @@ const HomeHowToWorkWithSarah = () => {
   ];
 
   return (
-    <div className="w-full bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
+    <>
       <h2 className="text-[1.875rem] font-semibold text-gray-dark text-left mb-8">
         Hoe werk je met Sarah
       </h2>
@@ -103,7 +103,7 @@ const HomeHowToWorkWithSarah = () => {
           </motion.div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
