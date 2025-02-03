@@ -13,6 +13,7 @@ const Index = () => {
       <Navbar />
       <Hero />
       <AISection />
+      <Features />
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-b from-white via-mint-light/30 to-sage-light/20" />
         <div className="relative">
