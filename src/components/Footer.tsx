@@ -23,14 +23,6 @@ const Footer = () => {
             <ul className="space-sm">
               <li>
                 <Link 
-                  to="/sarah" 
-                  className="text-body-sm hover:text-blue-dark transition-colors"
-                >
-                  Sarah
-                </Link>
-              </li>
-              <li>
-                <Link 
                   to="/about" 
                   className="text-body-sm hover:text-blue-dark transition-colors"
                 >
@@ -72,4 +64,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
