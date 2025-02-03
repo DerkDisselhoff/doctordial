@@ -4,7 +4,15 @@ import { Card } from "./ui/card";
 
 const NHGTriage = () => {
   return (
-    <section className="py-8 px-4 bg-[#1A1F2C]">
+    <section className="relative py-8 px-4 bg-gradient-to-br from-mint-light/90 to-sage-light/90 overflow-hidden">
+      {/* Medical Grid Pattern Background */}
+      <div className="absolute inset-0 opacity-[0.15]" 
+           style={{
+             backgroundImage: 'radial-gradient(circle at 1px 1px, #10B981 1px, transparent 0)',
+             backgroundSize: '24px 24px'
+           }} 
+      />
+      
       <div className="container mx-auto max-w-6xl bg-blue/5 backdrop-blur-sm rounded-3xl p-8">
         <div className="relative bg-white border border-blue-muted shadow-sm rounded-2xl p-8 overflow-hidden">
           {/* Medical Grid Pattern Background */}
