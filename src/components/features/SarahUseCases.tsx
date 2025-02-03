@@ -169,7 +169,7 @@ const SarahUseCases = () => {
           ))}
         </div>
 
-        <div className="mt-24 max-w-5xl mx-auto">
+        <div className="mt-16 md:mt-20 max-w-5xl mx-auto">
           <motion.h3
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -202,3 +202,4 @@ const SarahUseCases = () => {
 };
 
 export default SarahUseCases;
+
