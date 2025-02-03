@@ -15,7 +15,7 @@ const StepCard = ({
   icon: React.ElementType;
 }) => {
   return (
-    <div className="flex flex-col items-start space-y-4 bg-white p-6 rounded-xl border border-mint/10 hover:border-mint/20 transition-all duration-300">
+    <div className="flex flex-col items-start space-y-4 bg-white p-6 rounded-xl border border-mint/10 hover:border-mint/20 transition-all duration-300 h-[280px]">
       <div className="flex items-center space-x-4">
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-mint text-white font-semibold">
           {step}
@@ -27,7 +27,7 @@ const StepCard = ({
       <h3 className="text-xl font-semibold text-gray-dark text-left">
         {title}
       </h3>
-      <p className="text-gray-dark text-sm leading-relaxed text-left">
+      <p className="text-gray-dark text-sm leading-relaxed text-left line-clamp-4 overflow-hidden">
         {description}
       </p>
     </div>
