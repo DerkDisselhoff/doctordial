@@ -4,7 +4,6 @@ import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
 import SymptomTags from "./features/SymptomTags";
 import { useLanguage } from "@/contexts/LanguageContext";
-import SarahUseCases from "./features/SarahUseCases";
 
 const Features = () => {
   const { t } = useLanguage();
@@ -61,7 +60,7 @@ const Features = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative group mb-16 md:mb-20"
+              className="relative group"
             >
               {/* Desktop version - hidden on mobile */}
               <div className="relative hidden md:block max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl hover:shadow-2xl transition-all duration-300 mb-8 md:mb-12 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left">
@@ -109,16 +108,6 @@ const Features = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
-
-            {/* Sarah Use Cases section */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="relative"
-            >
-              <SarahUseCases />
             </motion.div>
           </div>
         </div>
