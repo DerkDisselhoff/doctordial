@@ -6,7 +6,7 @@ const NHGTriage = () => {
   return (
     <section className="relative py-20 md:py-32 -mb-32">
       {/* Extended gradient background that connects with footer */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-light/80 to-[#D3E4FD]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-mint-light/80 to-[rgb(209,251,229)]" />
       
       {/* Medical Grid Pattern Background */}
       <div className="absolute inset-0 opacity-[0.15]" 
@@ -17,7 +17,7 @@ const NHGTriage = () => {
       />
       
       <div className="container relative mx-auto px-4 max-w-6xl">
-        <div className="relative bg-gradient-to-br from-blue-light/90 to-blue/90 backdrop-blur-sm rounded-3xl p-8 shadow-sm border border-blue-dark/20 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:animate-[shine_3s_ease-in-out_infinite] overflow-hidden">
+        <div className="relative bg-gradient-to-br from-mint-light/90 to-sage-light/90 backdrop-blur-sm rounded-3xl p-8 shadow-sm border border-mint/20">
           <div className="relative bg-white/95 backdrop-blur-sm border border-mint/20 shadow-sm rounded-2xl p-8 md:p-12 overflow-hidden">
             {/* Medical Grid Pattern Background */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
