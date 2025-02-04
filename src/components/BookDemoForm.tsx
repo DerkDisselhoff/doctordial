@@ -81,9 +81,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent 
-        className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white p-8 rounded-xl"
-      >
+      <DialogContent>
         {!isSubmitted ? (
           <>
             <DialogHeader className="mb-6">
