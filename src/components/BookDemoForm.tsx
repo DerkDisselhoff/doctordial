@@ -81,19 +81,23 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] bg-white p-8">
+      <DialogContent 
+        className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[90vw] max-w-[600px] max-h-[90vh] overflow-y-auto bg-white p-8 rounded-xl shadow-xl"
+        aria-labelledby="demo-form-title"
+        aria-describedby="demo-form-description"
+      >
         {!isSubmitted ? (
           <>
             <DialogHeader className="mb-6">
-              <DialogTitle className="text-3xl font-semibold text-forest">
+              <DialogTitle id="demo-form-title" className="text-3xl font-semibold text-forest">
                 {t("demo.title")}
               </DialogTitle>
-              <DialogDescription className="text-lg text-gray-600 mt-2">
+              <DialogDescription id="demo-form-description" className="text-lg text-gray-600 mt-2">
                 {t("demo.subtitle")}
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-gray-700 font-medium">{t("demo.firstName")}</Label>
                   <Input
@@ -102,6 +106,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
                     placeholder={t("demo.firstName")}
                     className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                     required
+                    aria-required="true"
                   />
                 </div>
                 <div className="space-y-2">
@@ -112,6 +117,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
                     placeholder={t("demo.lastName")}
                     className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                     required
+                    aria-required="true"
                   />
                 </div>
               </div>
@@ -124,6 +130,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
                   placeholder="jane.smith@practice.com"
                   className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                   required
+                  aria-required="true"
                 />
               </div>
               <div className="space-y-2">
@@ -135,6 +142,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
                   placeholder="+31 6 12345678"
                   className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                   required
+                  aria-required="true"
                 />
               </div>
               <div className="space-y-2">
@@ -145,6 +153,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
                   placeholder={t("demo.practice")}
                   className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                   required
+                  aria-required="true"
                 />
               </div>
               <div className="space-y-2">
@@ -157,12 +166,14 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
                   placeholder="1"
                   className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                   required
+                  aria-required="true"
                 />
               </div>
               <Button 
                 type="submit" 
                 className="w-full bg-blue-dark hover:bg-blue-dark/90 text-white h-12 text-lg"
                 disabled={isLoading}
+                aria-busy={isLoading}
               >
                 {isLoading ? t("demo.submitting") : t("demo.submit")}
               </Button>
