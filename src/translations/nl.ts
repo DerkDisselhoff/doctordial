@@ -54,7 +54,7 @@ export const nlTranslations = {
     callsSubtitle: "Beheer alle patiëntinteracties efficiënt vanaf één dashboard"
   },
   hero: {
-    aiPowered: "AI-Gestuurde Gespreksafhandeling",
+    aiPowered: "Voor Huisartspraktijken",
     titlePartOne: "Digitale Assistentes,",
     titlePartTwo: "Menselijke Ervaring",
     subtitle: "Laat AI de telefoongesprekken van jouw praktijk afhandelen met behoud van persoonlijk contact",
@@ -162,3 +162,4 @@ export const nlTranslations = {
     }
   }
 };
+

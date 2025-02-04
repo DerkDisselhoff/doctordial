@@ -1,3 +1,4 @@
+
 export const enTranslations = {
   nav: {
     features: "Features",
@@ -50,7 +51,7 @@ export const enTranslations = {
     callsSubtitle: "Manage all patient interactions efficiently from one dashboard"
   },
   hero: {
-    aiPowered: "AI-Powered Call Management",
+    aiPowered: "For General Practices",
     titlePartOne: "Digital Assistants,",
     titlePartTwo: "Human Experience",
     subtitle: "Let AI handle your practice's calls while maintaining the personal touch your patients expect.",
@@ -158,3 +159,4 @@ export const enTranslations = {
     }
   }
 };
+
