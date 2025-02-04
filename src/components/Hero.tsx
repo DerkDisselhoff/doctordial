@@ -1,3 +1,4 @@
+
 import HeroContent from "./hero/HeroContent";
 import { Brain, Heart, Shield, Sparkles } from "lucide-react";
 
