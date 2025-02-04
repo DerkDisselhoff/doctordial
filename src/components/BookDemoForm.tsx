@@ -81,18 +81,20 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent 
+        className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white p-8 rounded-xl"
+      >
         {!isSubmitted ? (
           <>
-            <DialogHeader>
-              <DialogTitle className="text-3xl font-semibold text-forest">
+            <DialogHeader className="mb-6">
+              <DialogTitle id="demo-form-title" className="text-3xl font-semibold text-forest">
                 {t("demo.title")}
               </DialogTitle>
-              <DialogDescription className="text-lg text-gray-600 mt-2">
+              <DialogDescription id="demo-form-description" className="text-lg text-gray-600 mt-2">
                 {t("demo.subtitle")}
               </DialogDescription>
             </DialogHeader>
-            <form onSubmit={handleSubmit} className="mt-6 space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-gray-700 font-medium">{t("demo.firstName")}</Label>
