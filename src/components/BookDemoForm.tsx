@@ -82,7 +82,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
         )}
       </DialogTrigger>
       <DialogContent 
-        className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white p-8 rounded-xl"
+        className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white p-8 rounded-xl animate-fade-in"
       >
         {!isSubmitted ? (
           <>
