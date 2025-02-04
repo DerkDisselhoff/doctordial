@@ -1,6 +1,6 @@
 
 import HeroContent from "./hero/HeroContent";
-import { Brain, Heart, Shield, Sparkles } from "lucide-react";
+import { Brain, Heart, Shield, Sparkles, Stethoscope, Users, Building2 } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -9,22 +9,22 @@ const Hero = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.05),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(37,99,235,0.05),transparent_50%)]" />
       
-      {/* Decorative elements */}
+      {/* Practice-focused decorative elements */}
       <div className="absolute top-20 left-1/4 w-64 h-64 bg-mint-light/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 right-1/4 w-64 h-64 bg-blue-light/10 rounded-full blur-3xl" />
       
-      {/* Floating icons with subtle animations */}
+      {/* Healthcare-themed floating icons with subtle animations */}
       <div className="absolute top-1/3 left-20 text-mint/20 animate-float-slow">
-        <Brain className="w-8 h-8" />
+        <Stethoscope className="w-8 h-8" />
       </div>
       <div className="absolute top-1/4 right-32 text-blue-dark/20 animate-float-delayed">
-        <Heart className="w-6 h-6" />
+        <Users className="w-6 h-6" />
       </div>
       <div className="absolute bottom-1/3 right-24 text-mint/20 animate-float">
-        <Shield className="w-5 h-5" />
+        <Building2 className="w-5 h-5" />
       </div>
       <div className="absolute bottom-1/4 left-32 text-blue-dark/20 animate-float-delayed">
-        <Sparkles className="w-4 h-4" />
+        <Heart className="w-4 h-4" />
       </div>
       
       {/* Centered content */}
@@ -32,7 +32,7 @@ const Hero = () => {
         <HeroContent />
       </div>
 
-      {/* Healthcare Network Graph Background */}
+      {/* Medical Network Pattern Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <svg className="absolute inset-0 w-full h-full opacity-20">
           <defs>
@@ -45,7 +45,7 @@ const Hero = () => {
           
           {/* Network Connections */}
           <g className="text-mint/20">
-            {/* Patient-Symptom Network */}
+            {/* Practice-Patient Network */}
             <circle cx="20%" cy="30%" r="8" fill="currentColor" />
             <circle cx="40%" cy="20%" r="6" fill="currentColor" />
             <circle cx="60%" cy="40%" r="7" fill="currentColor" />
