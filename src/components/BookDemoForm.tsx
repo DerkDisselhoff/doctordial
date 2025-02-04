@@ -82,15 +82,15 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
         )}
       </DialogTrigger>
       <DialogContent 
-        className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white p-8 rounded-xl animate-fade-in"
+        className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[90vw] sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white p-8 rounded-xl duration-200 data-[state=open]:animate-fade-in"
       >
         {!isSubmitted ? (
           <>
             <DialogHeader className="mb-6">
-              <DialogTitle id="demo-form-title" className="text-3xl font-semibold text-forest">
+              <DialogTitle className="text-3xl font-semibold text-forest">
                 {t("demo.title")}
               </DialogTitle>
-              <DialogDescription id="demo-form-description" className="text-lg text-gray-600 mt-2">
+              <DialogDescription className="text-lg text-gray-600 mt-2">
                 {t("demo.subtitle")}
               </DialogDescription>
             </DialogHeader>
