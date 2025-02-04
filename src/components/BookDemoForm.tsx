@@ -76,105 +76,102 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         {children || (
-          <Button className="bg-mint hover:bg-mint-dark text-white font-medium transition-colors">
+          <Button className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium">
             {t("nav.bookDemo")}
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] p-8 bg-white rounded-2xl border border-gray-200 shadow-lg data-[state=open]:animate-fade-in-up">
+      <DialogContent 
+        className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white p-8 rounded-xl"
+      >
         {!isSubmitted ? (
           <>
-            <DialogHeader className="mb-8">
-              <DialogTitle className="text-3xl font-semibold text-forest">
+            <DialogHeader className="mb-6">
+              <DialogTitle id="demo-form-title" className="text-3xl font-semibold text-forest">
                 {t("demo.title")}
               </DialogTitle>
-              <DialogDescription className="text-lg text-gray-600 mt-3">
+              <DialogDescription id="demo-form-description" className="text-lg text-gray-600 mt-2">
                 {t("demo.subtitle")}
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2.5">
-                  <Label htmlFor="name" className="text-gray-700 font-medium">
-                    {t("demo.firstName")}
-                  </Label>
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-gray-700 font-medium">{t("demo.firstName")}</Label>
                   <Input
                     id="name"
                     name="name"
                     placeholder={t("demo.firstName")}
-                    className="h-12 text-gray-900 bg-white border-gray-200 focus:border-mint focus:ring-mint rounded-lg"
+                    className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                     required
+                    aria-required="true"
                   />
                 </div>
-                <div className="space-y-2.5">
-                  <Label htmlFor="lastname" className="text-gray-700 font-medium">
-                    {t("demo.lastName")}
-                  </Label>
+                <div className="space-y-2">
+                  <Label htmlFor="lastname" className="text-gray-700 font-medium">{t("demo.lastName")}</Label>
                   <Input
                     id="lastname"
                     name="lastname"
                     placeholder={t("demo.lastName")}
-                    className="h-12 text-gray-900 bg-white border-gray-200 focus:border-mint focus:ring-mint rounded-lg"
+                    className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                     required
+                    aria-required="true"
                   />
                 </div>
               </div>
-              <div className="space-y-2.5">
-                <Label htmlFor="email" className="text-gray-700 font-medium">
-                  {t("demo.email")}
-                </Label>
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-gray-700 font-medium">{t("demo.email")}</Label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
                   placeholder="jane.smith@practice.com"
-                  className="h-12 text-gray-900 bg-white border-gray-200 focus:border-mint focus:ring-mint rounded-lg"
+                  className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                   required
+                  aria-required="true"
                 />
               </div>
-              <div className="space-y-2.5">
-                <Label htmlFor="phone" className="text-gray-700 font-medium">
-                  {t("demo.phone")}
-                </Label>
+              <div className="space-y-2">
+                <Label htmlFor="phone" className="text-gray-700 font-medium">{t("demo.phone")}</Label>
                 <Input
                   id="phone"
                   name="phone"
                   type="tel"
                   placeholder="+31 6 12345678"
-                  className="h-12 text-gray-900 bg-white border-gray-200 focus:border-mint focus:ring-mint rounded-lg"
+                  className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                   required
+                  aria-required="true"
                 />
               </div>
-              <div className="space-y-2.5">
-                <Label htmlFor="practice" className="text-gray-700 font-medium">
-                  {t("demo.practice")}
-                </Label>
+              <div className="space-y-2">
+                <Label htmlFor="practice" className="text-gray-700 font-medium">{t("demo.practice")}</Label>
                 <Input
                   id="practice"
                   name="practice"
                   placeholder={t("demo.practice")}
-                  className="h-12 text-gray-900 bg-white border-gray-200 focus:border-mint focus:ring-mint rounded-lg"
+                  className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                   required
+                  aria-required="true"
                 />
               </div>
-              <div className="space-y-2.5">
-                <Label htmlFor="practitioners" className="text-gray-700 font-medium">
-                  {t("demo.practitioners")}
-                </Label>
+              <div className="space-y-2">
+                <Label htmlFor="practitioners" className="text-gray-700 font-medium">{t("demo.practitioners")}</Label>
                 <Input
                   id="practitioners"
                   name="practitioners"
                   type="number"
                   min="1"
                   placeholder="1"
-                  className="h-12 text-gray-900 bg-white border-gray-200 focus:border-mint focus:ring-mint rounded-lg"
+                  className="h-12 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
                   required
+                  aria-required="true"
                 />
               </div>
               <Button 
                 type="submit" 
-                className="w-full bg-mint hover:bg-mint-dark text-white h-12 text-lg font-medium transition-colors rounded-lg"
+                className="w-full bg-blue-dark hover:bg-blue-dark/90 text-white h-12 text-lg"
                 disabled={isLoading}
+                aria-busy={isLoading}
               >
                 {isLoading ? t("demo.submitting") : t("demo.submit")}
               </Button>
