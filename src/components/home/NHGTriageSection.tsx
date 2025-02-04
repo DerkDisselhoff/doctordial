@@ -3,8 +3,12 @@ import NHGTriage from "@/components/NHGTriage";
 
 export const NHGTriageSection = () => {
   return (
-    <div className="container mx-auto px-4 max-w-7xl">
-      <NHGTriage />
-    </div>
+    <section className="w-full py-16">
+      <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto">
+          <NHGTriage />
+        </div>
+      </div>
+    </section>
   );
 };

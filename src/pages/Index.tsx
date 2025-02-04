@@ -6,21 +6,27 @@ import Footer from "@/components/Footer";
 import { AISection } from "@/components/home/AISection";
 import { NHGTriageSection } from "@/components/home/NHGTriageSection";
 import HomeSarahUseCases from "@/components/features/home/HomeSarahUseCases";
+import HomeHowToWorkWithSarah from "@/components/features/home/HomeHowToWorkWithSarah";
 
 const Index = () => {
   return (
-    <main className="min-h-screen bg-white space-xl">
+    <main className="min-h-screen bg-white">
       <Navbar />
       <Hero />
-      <AISection />
-      <Features />
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-mint-light/30 to-sage-light/20" />
+      <div className="space-y-24">
+        <AISection />
+        <Features />
         <div className="relative">
-          <HomeSarahUseCases />
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-mint-light/30 to-sage-light/20" />
+          <div className="relative">
+            <div className="space-y-24">
+              <HomeSarahUseCases />
+              <HomeHowToWorkWithSarah />
+            </div>
+          </div>
         </div>
+        <NHGTriageSection />
       </div>
-      <NHGTriageSection />
       <Footer />
     </main>
   );
