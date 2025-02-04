@@ -1,4 +1,3 @@
-
 import { EnhancedUrgencyDashboard } from "./features/feature-previews/EnhancedUrgencyDashboard";
 import AICapabilities from "./AICapabilities";
 import { motion } from "framer-motion";
@@ -40,9 +39,8 @@ const Features = () => {
         {/* Simplified grid pattern */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0wIDBoNjB2NjBIMHoiLz48cGF0aCBkPSJNMzAgMzBoMzB2MzBIMzB6IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9Ii4wMiIvPjwvZz48L3N2Zz4=')] opacity-20" />
 
-        <div className="container relative mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16 md:mb-20">
-            {/* Simplified heading with reduced animations */}
             <h2 
               className="font-sans text-3xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white to-mint-light/90 tracking-tight transform-gpu"
               style={{ 
@@ -53,7 +51,6 @@ const Features = () => {
               {t("features.title")}
             </h2>
 
-            {/* Simplified subtitle */}
             <p 
               className="text-base md:text-xl text-mint-light/80 max-w-3xl mx-auto mb-8 md:mb-12 px-4 transform-gpu"
               style={{ 
@@ -66,62 +63,58 @@ const Features = () => {
 
             <SymptomTags />
 
-            {/* Desktop version - hidden on mobile */}
-            <div 
-              className="relative hidden md:block max-w-[calc(100vw-2rem)] md:max-w-6xl mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl hover:shadow-2xl transition-all duration-300 mb-8 md:mb-12 overflow-x-auto touch-pan-x [&_td]:text-left [&_th]:text-left"
-              style={{ 
-                transform: 'translate3d(0, 0, 0)',
-                willChange: 'auto'
-              }}
-            >
-              <EnhancedUrgencyDashboard />
-            </div>
-
-            {/* Mobile version */}
-            <div className="md:hidden relative max-w-[calc(100vw-2rem)] mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl p-4 space-y-4">
-              <div className="flex justify-between items-center border-b border-gray-muted/10 pb-4">
-                <div className="text-left">
-                  <h3 className="text-sm font-medium text-gray-dark">Urgency Overview</h3>
-                  <p className="text-xs text-gray-light">Today's Statistics</p>
-                </div>
-                <span className="px-2 py-1 text-xs rounded-full bg-mint/10 text-mint">Live</span>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-muted/5 rounded-lg p-3">
-                  <p className="text-xs text-gray-light mb-1">High Priority</p>
-                  <p className="text-lg font-semibold text-mint">3</p>
-                </div>
-                <div className="bg-gray-muted/5 rounded-lg p-3">
-                  <p className="text-xs text-gray-light mb-1">Medium</p>
-                  <p className="text-lg font-semibold text-blue-dark">7</p>
-                </div>
+            <div className="space-y-8">
+              {/* Desktop version - hidden on mobile */}
+              <div className="relative hidden md:block">
+                <EnhancedUrgencyDashboard />
               </div>
 
-              <div className="space-y-3">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-dark">Recent Calls</span>
-                  <span className="text-gray-light">Last 24h</span>
+              {/* Mobile version */}
+              <div className="md:hidden relative max-w-[calc(100vw-2rem)] mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl p-4 space-y-4">
+                <div className="flex justify-between items-center border-b border-gray-muted/10 pb-4">
+                  <div className="text-left">
+                    <h3 className="text-sm font-medium text-gray-dark">Urgency Overview</h3>
+                    <p className="text-xs text-gray-light">Today's Statistics</p>
+                  </div>
+                  <span className="px-2 py-1 text-xs rounded-full bg-mint/10 text-mint">Live</span>
                 </div>
-                <div className="space-y-2">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="flex items-center justify-between bg-gray-muted/5 p-2 rounded-lg">
-                      <div className="text-left">
-                        <p className="text-xs font-medium text-gray-dark">Patient {i}</p>
-                        <p className="text-xs text-gray-light">2 min ago</p>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-gray-muted/5 rounded-lg p-3">
+                    <p className="text-xs text-gray-light mb-1">High Priority</p>
+                    <p className="text-lg font-semibold text-mint">3</p>
+                  </div>
+                  <div className="bg-gray-muted/5 rounded-lg p-3">
+                    <p className="text-xs text-gray-light mb-1">Medium</p>
+                    <p className="text-lg font-semibold text-blue-dark">7</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-gray-dark">Recent Calls</span>
+                    <span className="text-gray-light">Last 24h</span>
+                  </div>
+                  <div className="space-y-2">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="flex items-center justify-between bg-gray-muted/5 p-2 rounded-lg">
+                        <div className="text-left">
+                          <p className="text-xs font-medium text-gray-dark">Patient {i}</p>
+                          <p className="text-xs text-gray-light">2 min ago</p>
+                        </div>
+                        <span className="px-2 py-1 text-xs rounded-full bg-mint/10 text-mint">
+                          U{i}
+                        </span>
                       </div>
-                      <span className="px-2 py-1 text-xs rounded-full bg-mint/10 text-mint">
-                        U{i}
-                      </span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* How to work with Sarah section */}
-            <div className="mt-16 relative">
-              <HomeHowToWorkWithSarah />
+              {/* How to work with Sarah section */}
+              <div className="relative">
+                <HomeHowToWorkWithSarah />
+              </div>
             </div>
 
           </div>
