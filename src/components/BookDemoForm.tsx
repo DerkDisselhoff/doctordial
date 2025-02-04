@@ -82,9 +82,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
         )}
       </DialogTrigger>
       <DialogContent 
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[600px] max-h-[85vh] overflow-y-auto bg-white p-8 rounded-xl shadow-xl"
-        aria-labelledby="demo-form-title"
-        aria-describedby="demo-form-description"
+        className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white p-8 rounded-xl"
       >
         {!isSubmitted ? (
           <>
