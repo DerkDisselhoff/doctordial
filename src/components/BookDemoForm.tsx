@@ -81,7 +81,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="w-full max-w-lg bg-white p-6 rounded-lg">
+      <DialogContent className="sm:max-w-lg">
         {!isSubmitted ? (
           <>
             <DialogHeader>
