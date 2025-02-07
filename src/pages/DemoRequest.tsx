@@ -16,9 +16,9 @@ const DemoRequest = () => {
             <div className="mb-12">
               <Logo className="text-white mb-8" linkClassName="items-center" />
               <p className="text-sm font-medium text-mint mb-4 tracking-wide uppercase">{t("demo.title")}</p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight max-w-[90%] lg:max-w-[600px]">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight max-w-[90%] lg:max-w-[600px]">
                 {t("demo.subtitle")}
-              </h1>
+              </h2>
               <p className="text-xl text-gray-200 max-w-xl leading-relaxed">
                 {t("capabilities.title")}
               </p>
@@ -55,3 +55,4 @@ const DemoRequest = () => {
 };
 
 export default DemoRequest;
+
