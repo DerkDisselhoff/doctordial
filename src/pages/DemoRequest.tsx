@@ -15,7 +15,7 @@ const DemoRequest = () => {
           <div className="lg:sticky lg:top-8">          
             <div className="mb-12">
               <Logo className="text-white mb-8 w-48" />
-              <p className="text-sm font-medium text-mint mb-4 tracking-wide uppercase">{t("demo.title")}</p>
+              <p className="text-sm font-medium text-blue-dark mb-4 tracking-wide uppercase">{t("demo.title")}</p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight max-w-[90%] lg:max-w-[600px]">
                 {t("demo.subtitle")}
               </h1>
@@ -25,27 +25,27 @@ const DemoRequest = () => {
             </div>
 
             {/* Featured testimonial */}
-            <div className="bg-forest-dark/50 rounded-xl border border-mint/10 p-8 shadow-lg backdrop-blur-sm">
-              <Quote className="text-mint w-10 h-10 mb-6" />
+            <div className="bg-forest-dark/50 rounded-xl border border-blue-dark/10 p-8 shadow-lg backdrop-blur-sm">
+              <Quote className="text-blue-dark w-10 h-10 mb-6" />
               <p className="text-gray-200 text-xl leading-relaxed mb-8">
-                "DoctorDial has transformed how we handle patient calls. The AI system is incredibly accurate and has significantly reduced the workload on our staff. It's been a game-changer for our practice."
+                "DoctorDial heeft de manier waarop we patiëntgesprekken afhandelen getransformeerd. Het AI-systeem is ongelooflijk nauwkeurig en heeft de werkdruk voor ons personeel aanzienlijk verminderd. Het is een game-changer voor onze praktijk."
               </p>
               <div className="flex items-center gap-5">
                 <img
                   src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
                   alt="Dr. Sarah Chen"
-                  className="w-14 h-14 rounded-full object-cover border-2 border-mint/20"
+                  className="w-14 h-14 rounded-full object-cover border-2 border-blue-dark/20"
                 />
                 <div>
                   <p className="font-medium text-white text-lg">Dr. Sarah Chen</p>
-                  <p className="text-mint/80 font-medium">GP Practice Lead</p>
+                  <p className="text-blue-dark/80 font-medium">GP Practice Lead</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right side form */}
-          <div className="bg-forest-dark/50 rounded-xl border border-mint/10 p-8 backdrop-blur-sm">
+          <div className="bg-forest-dark/50 rounded-xl border border-blue-dark/10 p-8 backdrop-blur-sm">
             <MultiStepPricingForm />
           </div>
         </div>
