@@ -1,7 +1,6 @@
 
 import { MultiStepPricingForm } from "@/components/pricing2/MultiStepPricingForm";
 import { Logo } from "@/components/Logo";
-import { Quote } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const DemoRequest = () => {
@@ -22,25 +21,6 @@ const DemoRequest = () => {
               <p className="text-xl text-gray-200 max-w-xl leading-relaxed">
                 {t("capabilities.title")}
               </p>
-            </div>
-
-            {/* Featured testimonial */}
-            <div className="bg-forest-dark/50 rounded-xl border border-mint/10 p-8 shadow-lg backdrop-blur-sm">
-              <Quote className="text-mint w-10 h-10 mb-6" />
-              <p className="text-gray-200 text-xl leading-relaxed mb-8">
-                "DoctorDial has transformed how we handle patient calls. The AI system is incredibly accurate and has significantly reduced the workload on our staff. It's been a game-changer for our practice."
-              </p>
-              <div className="flex items-center gap-5">
-                <img
-                  src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
-                  alt="Dr. Sarah Chen"
-                  className="w-14 h-14 rounded-full object-cover border-2 border-mint/20"
-                />
-                <div>
-                  <p className="font-medium text-white text-lg">Dr. Sarah Chen</p>
-                  <p className="text-mint/80 font-medium">GP Practice Lead</p>
-                </div>
-              </div>
             </div>
           </div>
 
