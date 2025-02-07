@@ -11,11 +11,10 @@ export function Logo({ className = "", linkClassName = "" }: LogoProps) {
   return (
     <Link 
       to="/" 
-      className={`flex items-center space-x-3 pb-[0.6rem] transition-all duration-200 
-                 hover:opacity-80 ${linkClassName}`}
+      className={`flex items-center gap-3 hover:opacity-80 transition-all duration-200 ${linkClassName}`}
     >
-      <Stethoscope className="w-6 h-6 text-mint" />
-      <h1 className={`text-xl font-semibold tracking-tight ${className}`}>
+      <Stethoscope className="w-7 h-7 text-mint" />
+      <h1 className={`text-2xl font-medium tracking-tight ${className}`}>
         DoctorDial
       </h1>
     </Link>
