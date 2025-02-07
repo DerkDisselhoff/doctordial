@@ -14,7 +14,7 @@ const DemoRequest = () => {
           {/* Left side content */}
           <div className="lg:sticky lg:top-8">          
             <div className="mb-12">
-              <Logo className="text-white mb-8 w-48" />
+              <Logo className="text-white mb-8" linkClassName="items-center" />
               <p className="text-sm font-medium text-mint mb-4 tracking-wide uppercase">{t("demo.title")}</p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight max-w-[90%] lg:max-w-[600px]">
                 {t("demo.subtitle")}
@@ -55,4 +55,3 @@ const DemoRequest = () => {
 };
 
 export default DemoRequest;
-

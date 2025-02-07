@@ -1,4 +1,3 @@
-
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -46,7 +45,7 @@ export const nlTranslations = {
   },
   features: {
     title: "Transformeer Patiëntgesprekken naar Praktijkefficiëntie",
-    subtitle: "Ervaar de toekomst van gezondheidszorgcommunicatie met ons AI-aangedreven systeem",
+    subtitle: "Ervaar de toekomst van zorgcommunicatie met ons AI-aangedreven systeem",
     urgencyLevels: "Urgentieniveaus",
     recentActivity: "Recente Activiteit",
     callVolume: "Belvolume",
@@ -147,7 +146,7 @@ export const nlTranslations = {
   },
   demo: {
     title: "Boek een Demo",
-    subtitle: "Ervaar de toekomst van gezondheidszorgcommunicatie",
+    subtitle: "Ervaar de toekomst van zorgcommunicatie",
     firstName: "Voornaam",
     lastName: "Achternaam",
     email: "E-mailadres",
@@ -162,4 +161,3 @@ export const nlTranslations = {
     }
   }
 };
-
