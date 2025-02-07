@@ -14,10 +14,12 @@ const DemoRequest = () => {
           {/* Left side content */}
           <div className="lg:sticky lg:top-8">          
             <div className="mb-12">
-              <Logo className="text-mint mb-8 w-48" />
+              <Logo className="text-white mb-8 w-48" />
               <p className="text-sm font-medium text-mint mb-4 tracking-wide uppercase">{t("demo.title")}</p>
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight max-w-xl">{t("demo.subtitle")}</h1>
-              <p className="text-lg text-gray-200 max-w-xl leading-relaxed">
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight max-w-xl">
+                {t("demo.subtitle")}
+              </h1>
+              <p className="text-xl text-gray-200 max-w-xl leading-relaxed">
                 {t("capabilities.title")}
               </p>
             </div>
