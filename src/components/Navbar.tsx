@@ -37,7 +37,12 @@ const Navbar = () => {
               <LogIn className="w-4 h-4 mr-2" />
               {t("nav.login")}
             </Link>
-            <BookDemoForm />
+            <Link
+              to="/demo-request"
+              className="inline-flex items-center px-4 py-2 rounded-md bg-mint text-white hover:bg-mint/90 transition-colors"
+            >
+              {t("nav.bookDemo")}
+            </Link>
           </div>
 
           <button 
@@ -71,7 +76,13 @@ const Navbar = () => {
                 <LogIn className="w-5 h-5 mr-2" />
                 {t("nav.login")}
               </Link>
-              <BookDemoForm />
+              <Link
+                to="/demo-request"
+                className="inline-flex items-center justify-center px-4 py-3 rounded-md bg-mint text-white hover:bg-mint/90 transition-colors text-lg font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.bookDemo")}
+              </Link>
             </div>
           </div>
         )}

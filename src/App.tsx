@@ -5,7 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Toaster } from "@/components/ui/toaster";
 import Index from "@/pages/Index";
 import About from "@/pages/About";
-import Pricing from "@/pages/Pricing";
+import DemoRequest from "@/pages/DemoRequest";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -17,7 +17,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
-          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/demo-request" element={<DemoRequest />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
         </Routes>
