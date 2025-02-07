@@ -16,7 +16,7 @@ const DemoRequest = () => {
             <div className="mb-12">
               <Logo className="text-white mb-8 w-48" />
               <p className="text-sm font-medium text-mint mb-4 tracking-wide uppercase">{t("demo.title")}</p>
-              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight max-w-xl">
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight w-[600px]">
                 {t("demo.subtitle")}
               </h1>
               <p className="text-xl text-gray-200 max-w-xl leading-relaxed">
