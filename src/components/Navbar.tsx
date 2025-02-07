@@ -39,7 +39,7 @@ const Navbar = () => {
             </Link>
             <Link
               to="/demo-request"
-              className="inline-flex items-center px-4 py-2 rounded-md bg-mint text-white hover:bg-mint/90 transition-colors"
+              className="inline-flex items-center px-6 py-3 rounded-full bg-blue-dark hover:bg-blue-dark/90 text-white font-medium transition-colors duration-300"
             >
               {t("nav.bookDemo")}
             </Link>
@@ -78,7 +78,7 @@ const Navbar = () => {
               </Link>
               <Link
                 to="/demo-request"
-                className="inline-flex items-center justify-center px-4 py-3 rounded-md bg-mint text-white hover:bg-mint/90 transition-colors text-lg font-medium"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-blue-dark hover:bg-blue-dark/90 text-white font-medium transition-colors duration-300"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t("nav.bookDemo")}
