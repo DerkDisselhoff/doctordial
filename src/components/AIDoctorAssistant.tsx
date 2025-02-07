@@ -25,14 +25,6 @@ const AIDoctorAssistant = () => {
               <Stethoscope className="w-5 h-5 text-mint" />
               <span>{t("assistant.trainedOn")}</span>
             </div>
-
-            <div>
-              <Link to="/sarah">
-                <Button className="mt-4 bg-mint text-white hover:bg-mint-dark">
-                  {t("assistant.learnMore")}
-                </Button>
-              </Link>
-            </div>
           </div>
 
           {/* Image */}
