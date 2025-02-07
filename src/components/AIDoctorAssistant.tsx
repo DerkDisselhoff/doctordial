@@ -1,7 +1,7 @@
+
 import { Stethoscope } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { BookDemoForm } from "@/components/BookDemoForm";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const AIDoctorAssistant = () => {
@@ -56,14 +56,14 @@ const AIDoctorAssistant = () => {
 
               {/* Hire Button */}
               <div className="absolute top-6 right-6">
-                <BookDemoForm>
+                <Link to="/demo-request">
                   <Button 
                     variant="secondary" 
                     className="bg-blue-dark hover:bg-blue-dark/90 text-white font-medium rounded-full px-6"
                   >
                     {t("assistant.hire")}
                   </Button>
-                </BookDemoForm>
+                </Link>
               </div>
             </div>
           </div>
