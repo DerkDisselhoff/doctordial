@@ -93,7 +93,7 @@ const HomeHowToWorkWithSarah = () => {
         <div className="flex justify-start mt-4">
           <Link
             to="/demo-request"
-            className="inline-flex items-center px-6 py-3 rounded-full bg-blue-dark hover:bg-blue-dark/90 text-white font-medium transition-colors"
+            className="px-6 py-3 bg-blue hover:bg-blue/90 text-gray-dark font-medium rounded-full transition-colors duration-300"
           >
             Demo aanvragen
           </Link>
