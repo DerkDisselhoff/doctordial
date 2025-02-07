@@ -1,6 +1,6 @@
 
 import { Phone } from "lucide-react";
-import { BookDemoForm } from "@/components/BookDemoForm";
+import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroContent = () => {
@@ -29,7 +29,12 @@ const HeroContent = () => {
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
         <div className="z-10">
-          <BookDemoForm />
+          <Link 
+            to="/demo-request"
+            className="inline-flex items-center px-6 py-3 rounded-full bg-blue-dark hover:bg-blue-dark/90 text-white font-medium transition-colors"
+          >
+            {t("hero.bookDemo")}
+          </Link>
         </div>
         <div className="flex items-center gap-2 text-xs md:text-sm text-gray">
           <div className="w-2 h-2 rounded-full bg-mint animate-pulse"></div>
@@ -41,3 +46,4 @@ const HeroContent = () => {
 };
 
 export default HeroContent;
+

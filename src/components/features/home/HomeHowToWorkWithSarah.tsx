@@ -5,7 +5,7 @@ import { Pointer, Settings, PhoneCall } from "lucide-react";
 import TrainSarahCard from "../../capabilities/TrainSarahCard";
 import WorkflowRulesCard from "../../capabilities/WorkflowRulesCard";
 import TakeCallsCard from "../../capabilities/TakeCallsCard";
-import { BookDemoForm } from "@/components/BookDemoForm";
+import { Link } from "react-router-dom";
 
 const StepCard = ({
   step,
@@ -91,11 +91,12 @@ const HomeHowToWorkWithSarah = () => {
           Ontdek hoe Sarah naadloos integreert met jouw praktijk
         </p>
         <div className="flex justify-start mt-4">
-          <BookDemoForm>
-            <button className="px-6 py-3 bg-blue hover:bg-blue/90 text-gray-dark font-medium rounded-full transition-colors duration-300">
-              Demo aanvragen
-            </button>
-          </BookDemoForm>
+          <Link
+            to="/demo-request"
+            className="px-6 py-3 bg-blue hover:bg-blue/90 text-gray-dark font-medium rounded-full transition-colors duration-300"
+          >
+            Demo aanvragen
+          </Link>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 mt-8">
@@ -121,3 +122,4 @@ const HomeHowToWorkWithSarah = () => {
 };
 
 export default HomeHowToWorkWithSarah;
+
