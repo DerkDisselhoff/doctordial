@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,7 +10,7 @@ import {
   Clock
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { BookDemoForm } from "@/components/BookDemoForm";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -135,13 +134,12 @@ export function EnhancedUrgencyDashboard() {
           <p className="text-gray text-base md:text-lg leading-relaxed">
             {t('features.callsSubtitle')}
           </p>
-          <BookDemoForm>
-            <Button 
-              className="bg-blue hover:bg-blue/90 text-gray-dark font-medium transition-colors duration-300 rounded-full"
-            >
-              Demo aanvragen
-            </Button>
-          </BookDemoForm>
+          <Link 
+            to="/demo-request"
+            className="bg-blue hover:bg-blue/90 text-gray-dark font-medium transition-colors duration-300 rounded-full px-6 py-3"
+          >
+            Demo aanvragen
+          </Link>
         </div>
         
         <div className="p-4 bg-white rounded-xl border border-gray-muted">
