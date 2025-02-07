@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   nav: {
     features: "Features",
@@ -159,4 +158,3 @@ export const enTranslations = {
     }
   }
 };
-
