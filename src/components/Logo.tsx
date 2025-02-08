@@ -13,7 +13,9 @@ export function Logo({ className = "", linkClassName = "" }: LogoProps) {
       to="/" 
       className={`flex items-center gap-3 hover:opacity-80 transition-all duration-200 ${linkClassName}`}
     >
-      <Stethoscope className="w-7 h-7 text-mint" />
+      <span className="flex items-center">
+        <Stethoscope className="w-7 h-7 text-mint" />
+      </span>
       <h1 className={`text-2xl font-medium tracking-tight ${className}`}>
         DoctorDial
       </h1>
