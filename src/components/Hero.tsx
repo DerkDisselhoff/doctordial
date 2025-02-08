@@ -4,7 +4,7 @@ import { Brain, Heart, Shield, Sparkles } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="pt-32 pb-20 px-4 relative overflow-hidden bg-gradient-to-b from-white to-mint-light/5">
+    <section className="pt-24 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-white to-mint-light/5">
       {/* Enhanced background with multiple gradients */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.05),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(37,99,235,0.05),transparent_50%)]" />
