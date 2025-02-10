@@ -4,14 +4,22 @@ import { Brain, Heart, Shield, Sparkles } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="pt-24 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-white to-mint-light/5">
-      {/* Enhanced background with multiple gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.05),transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(37,99,235,0.05),transparent_50%)]" />
+    <section className="pt-24 pb-16 px-4 relative overflow-hidden">
+      {/* Primary gradient background with multiple layers */}
+      <div className="absolute inset-0 bg-gradient-to-br from-mint-light/40 via-blue-light/30 to-white" />
       
-      {/* Decorative elements */}
-      <div className="absolute top-20 left-1/4 w-64 h-64 bg-mint-light/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-1/4 w-64 h-64 bg-blue-light/10 rounded-full blur-3xl" />
+      {/* Abstract flowing shapes */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.15),transparent_50%)]" />
+        <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_30%,rgba(37,99,235,0.1),transparent_50%)]" />
+        <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_80%,rgba(16,185,129,0.1),transparent_40%)]" />
+      </div>
+      
+      {/* Soft wave-like overlay */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.05),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(37,99,235,0.05),transparent_70%)]" />
+      </div>
       
       {/* Floating icons with subtle animations */}
       <div className="absolute top-1/3 left-20 text-mint/20 animate-float-slow">
@@ -34,7 +42,7 @@ const Hero = () => {
 
       {/* Healthcare Network Graph Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <svg className="absolute inset-0 w-full h-full opacity-20">
+        <svg className="absolute inset-0 w-full h-full opacity-10">
           <defs>
             <pattern id="healthcare-grid" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
               {/* Medical cross pattern */}
@@ -70,3 +78,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
