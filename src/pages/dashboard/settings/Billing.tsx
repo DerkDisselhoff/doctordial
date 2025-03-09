@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CreditCard, Package, Receipt, Clock } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { Json } from "@/integrations/supabase/types";
+import { supabase } from "@/lib/supabaseClient";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Dialog,
   DialogContent,
@@ -84,17 +83,43 @@ const BillingSettings = () => {
         startOfMonth.setDate(1);
         startOfMonth.setHours(0, 0, 0, 0);
 
-        const { data: callLogs, error } = await supabase
-          .from('call_logs')
+        // Calculate usage metrics by querying multiple tables
+        let totalSeconds = 0;
+
+        // Query call_logs_triage
+        const { data: triageLogs, error: triageError } = await supabase
+          .from('call_logs_triage')
           .select('duration_seconds')
           .gte('created_at', startOfMonth.toISOString());
 
-        if (error) throw error;
+        if (triageError) throw triageError;
+        
+        // Query call_logs_medications
+        const { data: medicationLogs, error: medicationError } = await supabase
+          .from('call_logs_medications')
+          .select('duration_seconds')
+          .gte('created_at', startOfMonth.toISOString());
 
-        // Calculate total minutes used
-        const totalSeconds = callLogs?.reduce((acc, log) => {
-          return acc + (parseInt(log.duration_seconds || '0', 10));
-        }, 0) || 0;
+        if (medicationError) throw medicationError;
+
+        // Query call_logs_researchresults
+        const { data: researchLogs, error: researchError } = await supabase
+          .from('call_logs_researchresults')
+          .select('duration_seconds')
+          .gte('created_at', startOfMonth.toISOString());
+
+        if (researchError) throw researchError;
+
+        // Sum up durations from all tables
+        const sumDurations = (logs: any[]) => {
+          return logs?.reduce((acc, log) => {
+            return acc + (parseInt(log.duration_seconds || '0', 10));
+          }, 0) || 0;
+        };
+
+        totalSeconds += sumDurations(triageLogs || []);
+        totalSeconds += sumDurations(medicationLogs || []);
+        totalSeconds += sumDurations(researchLogs || []);
         
         const minutesUsed = Math.ceil(totalSeconds / 60);
         const minutesIncluded = currentPackage?.minutes_included || 0;

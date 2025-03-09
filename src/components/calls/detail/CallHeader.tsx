@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Edit2, Save, Flag } from "lucide-react";
 import {
@@ -30,8 +31,18 @@ export function CallHeader({
 
   const handleFlag = async (reason: string) => {
     try {
+      // Determine which table to update based on the URL
+      const pathname = window.location.pathname;
+      let tableName = 'call_logs_triage';
+      
+      if (pathname.includes('/medication')) {
+        tableName = 'call_logs_medications';
+      } else if (pathname.includes('/research')) {
+        tableName = 'call_logs_researchresults';
+      }
+      
       const { error } = await supabase
-        .from('call_logs')
+        .from(tableName)
         .update({ 
           flagging: {
             reason,

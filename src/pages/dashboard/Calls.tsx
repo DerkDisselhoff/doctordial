@@ -39,8 +39,8 @@ const Calls = () => {
         <Breadcrumb className="mb-4">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink as={Link} to="/dashboard/calls">
-                Assistant Output
+              <BreadcrumbLink>
+                <Link to="/dashboard/calls">Assistant Output</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>
@@ -48,16 +48,16 @@ const Calls = () => {
             </BreadcrumbSeparator>
             <BreadcrumbItem>
               {path.includes("/medication") ? (
-                <BreadcrumbLink as={Link} to="/dashboard/calls/medication">
-                  Medication
+                <BreadcrumbLink>
+                  <Link to="/dashboard/calls/medication">Medication</Link>
                 </BreadcrumbLink>
               ) : path.includes("/research") ? (
-                <BreadcrumbLink as={Link} to="/dashboard/calls/research">
-                  Research Results
+                <BreadcrumbLink>
+                  <Link to="/dashboard/calls/research">Research Results</Link>
                 </BreadcrumbLink>
               ) : (
-                <BreadcrumbLink as={Link} to="/dashboard/calls">
-                  Triage
+                <BreadcrumbLink>
+                  <Link to="/dashboard/calls">Triage</Link>
                 </BreadcrumbLink>
               )}
             </BreadcrumbItem>
@@ -65,9 +65,7 @@ const Calls = () => {
               <ChevronRight className="h-4 w-4" />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbLink>
-                Details
-              </BreadcrumbLink>
+              <BreadcrumbLink>Details</BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

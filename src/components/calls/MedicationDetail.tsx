@@ -7,7 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { CallHeader } from "./detail/CallHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Pill, Clock, Calendar, Phone, FileText, User, Prescription, Building } from "lucide-react";
+import { Pill, Clock, Calendar, Phone, FileText, User, FileSpreadsheet, Building } from "lucide-react";
 
 export interface MedicationLog {
   id: string;
@@ -158,7 +158,7 @@ export function MedicationDetail() {
                 
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold flex items-center gap-2">
-                    <Prescription className="h-5 w-5 text-mint" /> Medication Details
+                    <FileSpreadsheet className="h-5 w-5 text-mint" /> Medication Details
                   </h3>
                   <div className="grid grid-cols-1 gap-3">
                     <div className="flex flex-col">
