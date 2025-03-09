@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight } from "lucide-react";
@@ -13,7 +14,7 @@ export function CallSummary({ isEditing, editedCall, handleInputChange, call }: 
   return (
     <Card className="bg-white border border-gray-muted shadow-sm">
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-semibold text-gray-dark">Call Summary</CardTitle>
+        <CardTitle className="text-xl font-semibold text-gray-dark">Gespreksamenvatting</CardTitle>
       </CardHeader>
       <CardContent>
         {isEditing ? (
@@ -21,10 +22,10 @@ export function CallSummary({ isEditing, editedCall, handleInputChange, call }: 
             value={editedCall.conversation_summary || ''}
             onChange={(e) => handleInputChange('conversation_summary', e.target.value)}
             className="mb-4 bg-white text-gray-dark placeholder-gray border-gray-muted"
-            placeholder="Enter call summary"
+            placeholder="Voer gespreksamenvatting in"
           />
         ) : (
-          <p className="text-base text-gray leading-relaxed mb-4">{call.conversation_summary || 'No summary available'}</p>
+          <p className="text-base text-gray leading-relaxed mb-4">{call.conversation_summary || 'Geen samenvatting beschikbaar'}</p>
         )}
         
         <div className="space-y-3">
@@ -33,16 +34,16 @@ export function CallSummary({ isEditing, editedCall, handleInputChange, call }: 
             <div className="flex items-start space-x-3">
               <ArrowRight className="h-5 w-5 text-blue-dark mt-0.5" />
               <div>
-                <p className="text-base font-medium text-gray-dark mb-1">Forwarded</p>
+                <p className="text-base font-medium text-gray-dark mb-1">Doorgestuurd</p>
                 {isEditing ? (
                   <Textarea
                     value={editedCall.Action || ''}
                     onChange={(e) => handleInputChange('Action', e.target.value)}
                     className="bg-white text-gray-dark placeholder-gray border-gray-muted"
-                    placeholder="Enter forwarding details"
+                    placeholder="Voer doorstuurdetails in"
                   />
                 ) : (
-                  <p className="text-base text-gray leading-relaxed">{call.Action || 'No action required'}</p>
+                  <p className="text-base text-gray leading-relaxed">{call.Action || 'Geen actie vereist'}</p>
                 )}
               </div>
             </div>
