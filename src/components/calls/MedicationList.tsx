@@ -6,11 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { Search, Filter, Calendar, Pill, User, Package } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import { MedicationLog } from "./MedicationDetail";
 import { format } from "date-fns";
-import { Button } from "@/components/ui/button";
 
 export function MedicationList() {
   const [calls, setCalls] = useState<MedicationLog[]>([]);
@@ -21,6 +20,7 @@ export function MedicationList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -65,8 +65,8 @@ export function MedicationList() {
           setFilteredCalls(allCallData);
           setTotalPages(Math.ceil(allCallData.length / itemsPerPage));
           toast({
-            title: "Data loaded successfully",
-            description: `Found ${allCallData.length} medication records`,
+            title: "Data geladen",
+            description: `${allCallData.length} medicatie gesprekken gevonden`,
           });
         } else {
           console.log("No medication calls found in the database");
@@ -80,8 +80,8 @@ export function MedicationList() {
       } catch (error) {
         console.error('Error fetching medication calls:', error);
         toast({
-          title: "Error fetching medication calls",
-          description: "There was a problem loading the medication call history.",
+          title: "Fout bij het ophalen van gesprekken",
+          description: "Er was een probleem met het laden van de medicatie gesprekgeschiedenis.",
           variant: "destructive",
         });
         setLoading(false);
@@ -119,6 +119,10 @@ export function MedicationList() {
     } catch (e) {
       return dateString;
     }
+  };
+
+  const handleRowClick = (callId: string) => {
+    navigate(`/dashboard/calls/medication/${callId}`);
   };
 
   if (loading) {
@@ -199,7 +203,6 @@ export function MedicationList() {
                     <span>Verpakking</span>
                   </div>
                 </TableHead>
-                <TableHead className="text-left p-4 text-gray whitespace-nowrap font-semibold">Acties</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -207,7 +210,8 @@ export function MedicationList() {
                 paginatedCalls.map((call) => (
                   <TableRow 
                     key={call.id} 
-                    className="border-b border-gray-muted/20 hover:bg-gray-muted/5 transition-colors"
+                    className="border-b border-gray-muted/20 hover:bg-gray-muted/5 transition-colors cursor-pointer"
+                    onClick={() => handleRowClick(call.call_id || '')}
                   >
                     <TableCell className="p-4 text-gray-dark whitespace-nowrap">
                       {formatDate(call.created_at)}
@@ -232,13 +236,6 @@ export function MedicationList() {
                     <TableCell className="p-4 text-gray-dark whitespace-nowrap">
                       {call.Packages || "Niet gespecificeerd"}
                     </TableCell>
-                    <TableCell className="p-4 whitespace-nowrap">
-                      <Link to={`/dashboard/calls/medication/${call.call_id}`}>
-                        <Button variant="ghost" size="sm" className="h-8 text-mint hover:text-mint/80 hover:bg-mint/10">
-                          Details bekijken
-                        </Button>
-                      </Link>
-                    </TableCell>
                   </TableRow>
                 ))
               ) : (
@@ -255,27 +252,23 @@ export function MedicationList() {
         {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex items-center justify-between p-4 border-t border-gray-muted/10">
-            <Button
-              variant="outline"
-              size="sm"
+            <button
               onClick={() => setCurrentPage(page => Math.max(page - 1, 1))}
               disabled={currentPage === 1}
-              className="hover:bg-gray-muted/10 border-gray-muted/20"
+              className="px-3 py-1 text-sm border border-gray-muted/20 rounded hover:bg-gray-muted/10 disabled:opacity-50 disabled:pointer-events-none"
             >
               Vorige
-            </Button>
+            </button>
             <span className="text-sm text-gray">
               Pagina {currentPage} van {totalPages}
             </span>
-            <Button
-              variant="outline"
-              size="sm"
+            <button
               onClick={() => setCurrentPage(page => Math.min(page + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="hover:bg-gray-muted/10 border-gray-muted/20"
+              className="px-3 py-1 text-sm border border-gray-muted/20 rounded hover:bg-gray-muted/10 disabled:opacity-50 disabled:pointer-events-none"
             >
               Volgende
-            </Button>
+            </button>
           </div>
         )}
       </CardContent>
