@@ -3,13 +3,14 @@ import {
   BarChart3, Users, Phone, Settings, Home, Building2, 
   DollarSign, FileText, Activity, LogOut, Shield, 
   CreditCard, Grid, Receipt, Calendar, GitBranch,
-  Pill, Microscope
+  Pill, Microscope, ChevronRight
 } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
 } from "@/components/ui/sidebar";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
@@ -97,57 +98,30 @@ export function AdminSidebar() {
     );
   };
 
-  const AssistantOutputMenuItem = () => {
-    const isCallsActive = location.pathname.includes('/dashboard/calls');
+  const SubMenuItem = ({ icon: Icon, title, path }: { icon: any; title: string; path: string }) => {
+    const isActive = location.pathname === path;
     
     return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className={`w-full justify-start gap-3 px-3 py-2.5 group transition-all duration-200 ${
-              isCallsActive 
-                ? 'bg-mint/10 text-gray-dark font-semibold' 
-                : 'text-gray hover:bg-mint/5 hover:text-gray-dark hover:translate-x-1'
-            }`}
-          >
-            <Phone className={`h-5 w-5 flex-shrink-0 transition-colors ${
-              isCallsActive ? 'text-mint' : 'text-gray/70 group-hover:text-mint'
-            }`} />
-            <span>Assistant Output</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="w-56 bg-white border border-gray-muted/50 shadow-lg rounded-lg"
-          align="start"
-          alignOffset={0}
-          sideOffset={2}
-        >
-          <DropdownMenuItem
-            className="flex items-center px-3 py-2 text-sm text-gray hover:text-gray-dark hover:bg-mint/5 cursor-pointer transition-colors"
-            onClick={() => navigate("/dashboard/calls")}
-          >
-            <Phone className="mr-2 h-4 w-4 text-gray/70" />
-            <span>Triage</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="flex items-center px-3 py-2 text-sm text-gray hover:text-gray-dark hover:bg-mint/5 cursor-pointer transition-colors"
-            onClick={() => navigate("/dashboard/calls/medication")}
-          >
-            <Pill className="mr-2 h-4 w-4 text-gray/70" />
-            <span>Medication</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="flex items-center px-3 py-2 text-sm text-gray hover:text-gray-dark hover:bg-mint/5 cursor-pointer transition-colors"
-            onClick={() => navigate("/dashboard/calls/research")}
-          >
-            <Microscope className="mr-2 h-4 w-4 text-gray/70" />
-            <span>Research Results</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Button
+        variant="ghost"
+        className={`w-full justify-start gap-2 pl-7 pr-3 py-2 text-sm group transition-all duration-200 ${
+          isActive 
+            ? 'bg-mint/10 text-gray-dark font-semibold' 
+            : 'text-gray hover:bg-mint/5 hover:text-gray-dark hover:translate-x-1'
+        }`}
+        onClick={() => navigate(path)}
+      >
+        <Icon className={`h-4 w-4 flex-shrink-0 transition-colors ${
+          isActive ? 'text-mint' : 'text-gray/70 group-hover:text-mint'
+        }`} />
+        <span>{title}</span>
+      </Button>
     );
   };
+
+  const SectionTitle = ({ title }: { title: string }) => (
+    <div className="px-4 py-2 text-sm font-medium text-gray/80">{title}</div>
+  );
 
   const clientMenuItems = [
     { title: "Overzicht", icon: Home, path: "/dashboard" },
@@ -166,6 +140,12 @@ export function AdminSidebar() {
     { title: "Activiteit", icon: Activity, path: "/dashboard/activity" },
   ];
 
+  const assistantOutputItems = [
+    { title: "Triage", icon: Phone, path: "/dashboard/calls" },
+    { title: "Medication", icon: Pill, path: "/dashboard/calls/medication" },
+    { title: "Research Results", icon: Microscope, path: "/dashboard/calls/research" },
+  ];
+
   const settingsMenuItems = [
     { title: "Algemeen", icon: Grid, path: "/dashboard/settings/general" },
     { title: "Facturatie", icon: CreditCard, path: "/dashboard/settings/billing" },
@@ -174,47 +154,6 @@ export function AdminSidebar() {
     { title: "Team", icon: Users, path: "/dashboard/settings/team" },
     { title: "Integraties", icon: Building2, path: "/dashboard/settings/integrations" },
   ];
-
-  const SettingsMenuItem = () => {
-    const isSettingsActive = location.pathname.includes('/dashboard/settings');
-    
-    return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className={`w-full justify-start gap-3 px-3 py-2.5 group transition-all duration-200 ${
-              isSettingsActive 
-                ? 'bg-mint/10 text-gray-dark font-semibold' 
-                : 'text-gray hover:bg-mint/5 hover:text-gray-dark hover:translate-x-1'
-            }`}
-          >
-            <Settings className={`h-5 w-5 flex-shrink-0 transition-colors ${
-              isSettingsActive ? 'text-mint' : 'text-gray/70 group-hover:text-mint'
-            }`} />
-            <span>Instellingen</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="w-56 bg-white border border-gray-muted/50 shadow-lg rounded-lg"
-          align="start"
-          alignOffset={0}
-          sideOffset={2}
-        >
-          {settingsMenuItems.map((item) => (
-            <DropdownMenuItem
-              key={item.title}
-              className="flex items-center px-3 py-2 text-sm text-gray hover:text-gray-dark hover:bg-mint/5 cursor-pointer transition-colors"
-              onClick={() => navigate(item.path)}
-            >
-              <item.icon className="mr-2 h-4 w-4 text-gray/70" />
-              <span>{item.title}</span>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    );
-  };
 
   return (
     <Sidebar>
@@ -226,24 +165,39 @@ export function AdminSidebar() {
         <SidebarContent className="flex-1 px-3 py-6">
           <SidebarGroup>
             <SidebarGroupContent>
-              <div className="space-y-1">
-                {userRole === 'admin' ? (
-                  <>
-                    {adminMenuItems.map((item) => (
-                      <MenuItem key={item.title} {...item} />
-                    ))}
-                    <AssistantOutputMenuItem />
-                    <SettingsMenuItem />
-                  </>
-                ) : (
-                  <>
-                    {clientMenuItems.map((item) => (
-                      <MenuItem key={item.title} {...item} />
-                    ))}
-                    <AssistantOutputMenuItem />
-                    <SettingsMenuItem />
-                  </>
-                )}
+              <div className="space-y-6">
+                {/* Main Menu Items */}
+                <div className="space-y-1">
+                  {userRole === 'admin' ? (
+                    <>
+                      {adminMenuItems.map((item) => (
+                        <MenuItem key={item.title} {...item} />
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {clientMenuItems.map((item) => (
+                        <MenuItem key={item.title} {...item} />
+                      ))}
+                    </>
+                  )}
+                </div>
+
+                {/* Assistant Output Section */}
+                <div className="space-y-1">
+                  <SectionTitle title="Assistant Output" />
+                  {assistantOutputItems.map((item) => (
+                    <SubMenuItem key={item.title} {...item} />
+                  ))}
+                </div>
+
+                {/* Settings Section */}
+                <div className="space-y-1">
+                  <SectionTitle title="Instellingen" />
+                  {settingsMenuItems.map((item) => (
+                    <SubMenuItem key={item.title} {...item} />
+                  ))}
+                </div>
               </div>
             </SidebarGroupContent>
           </SidebarGroup>
