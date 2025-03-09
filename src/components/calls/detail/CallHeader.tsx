@@ -35,32 +35,23 @@ export function CallHeader({
       const pathname = window.location.pathname;
       
       if (pathname.includes('/medication')) {
-        // For medication logs, use RawBuilder to update even if flagging is not in the type
+        // For medication logs, use doctor_notes to store flagging info
+        // The doctor_notes field exists in the medications table type
         const { error } = await supabase
           .from('call_logs_medications')
           .update({
-            // Use a simple metadata object that can be stored in any JSON column
-            // This avoids TypeScript errors when column names aren't in the type definition
-            metadata: {
-              flagged: true,
-              reason,
-              timestamp: new Date().toISOString()
-            }
+            doctor_notes: `FLAGGED: ${reason} - ${new Date().toLocaleString()}`
           })
           .eq('call_id', callId);
           
         if (error) throw error;
       } else if (pathname.includes('/research')) {
-        // For research logs, use a similar approach
+        // For research logs, use findings field to store flagging info
+        // The findings field exists in the research results table type
         const { error } = await supabase
           .from('call_logs_researchresults')
           .update({
-            // Store flagging info in metadata JSON column instead
-            metadata: {
-              flagged: true,
-              reason,
-              timestamp: new Date().toISOString()
-            }
+            findings: `FLAGGED: ${reason} - ${new Date().toLocaleString()}`
           })
           .eq('call_id', callId);
           
