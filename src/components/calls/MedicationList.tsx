@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { Search, Filter, Calendar, Pill, Phone, Clock, User, Package } from "lucide-react";
+import { Search, Filter, Calendar, Pill, User, Package } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import { MedicationLog } from "./MedicationDetail";
-import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
 
 export function MedicationList() {
   const [calls, setCalls] = useState<MedicationLog[]>([]);
@@ -133,10 +134,7 @@ export function MedicationList() {
   return (
     <Card className="dashboard-card">
       <CardHeader className="border-b border-gray-muted">
-        <CardTitle className="text-gray-dark flex items-center">
-          <Pill className="mr-2 h-5 w-5 text-mint" />
-          Medicatie Geschiedenis
-        </CardTitle>
+        <CardTitle className="text-gray-dark">Medicatie Geschiedenis</CardTitle>
         <div className="mt-4 space-y-4">
           <div className="flex items-center gap-4">
             <div className="relative flex-1">
@@ -147,6 +145,19 @@ export function MedicationList() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 bg-white border-gray-muted text-gray-dark placeholder:text-gray"
               />
+            </div>
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-gray" />
+              <Select value="all">
+                <SelectTrigger className="w-[140px] bg-white border-gray-muted">
+                  <SelectValue placeholder="Filter" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Alle medicatie</SelectItem>
+                  <SelectItem value="recent">Recent voorgeschreven</SelectItem>
+                  <SelectItem value="recurring">Herhalingsrecepten</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
@@ -160,58 +171,57 @@ export function MedicationList() {
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Datum</TableHead>
-                <TableHead>Samenvatting gesprek</TableHead>
-                <TableHead>Patiënt</TableHead>
-                <TableHead>Geboorte datum</TableHead>
-                <TableHead>Medicatie</TableHead>
-                <TableHead>Dosering</TableHead>
-                <TableHead>Verpakkingen</TableHead>
-                <TableHead>Acties</TableHead>
+              <TableRow className="border-b border-gray-muted/10">
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap">
+                  <Calendar className="h-4 w-4" />
+                </TableHead>
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap">Samenvatting</TableHead>
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap">
+                  <User className="h-4 w-4" />
+                </TableHead>
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap">Geboortedatum</TableHead>
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap">
+                  <Pill className="h-4 w-4" />
+                </TableHead>
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap">Dosering</TableHead>
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap">
+                  <Package className="h-4 w-4" />
+                </TableHead>
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap">Acties</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {paginatedCalls.length > 0 ? (
                 paginatedCalls.map((call) => (
-                  <TableRow key={call.id}>
-                    <TableCell className="font-medium">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-gray" />
-                        {formatDate(call.created_at)}
-                      </div>
+                  <TableRow 
+                    key={call.id} 
+                    className="border-b border-gray-muted hover:bg-gray-muted/10 cursor-pointer transition-colors"
+                  >
+                    <TableCell className="p-4 text-gray-dark">
+                      {formatDate(call.created_at)}
                     </TableCell>
-                    <TableCell>
-                      <div className="max-w-[150px] truncate" title={call.conversation_summary || "Geen samenvatting"}>
+                    <TableCell className="p-4">
+                      <div className="max-w-[180px] truncate" title={call.conversation_summary || "Geen samenvatting"}>
                         {call.conversation_summary || "Geen samenvatting"}
                       </div>
                     </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-gray" />
-                        {call.patient_name || "Onbekend"}
-                      </div>
+                    <TableCell className="p-4 text-gray-dark">
+                      {call.patient_name || "Onbekend"}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="p-4 text-gray-dark">
                       {call.Date_of_birth || "Niet gespecificeerd"}
                     </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Pill className="h-4 w-4 text-mint" />
-                        {call.medication_name || "Niet gespecificeerd"}
-                      </div>
+                    <TableCell className="p-4 text-gray-dark">
+                      {call.medication_name || "Niet gespecificeerd"}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="p-4 text-gray-dark">
                       {call.dosage || "Niet gespecificeerd"}
                     </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Package className="h-4 w-4 text-gray" />
-                        {call.Packages || "Niet gespecificeerd"}
-                      </div>
+                    <TableCell className="p-4 text-gray-dark">
+                      {call.Packages || "Niet gespecificeerd"}
                     </TableCell>
-                    <TableCell>
-                      <Link to={`/dashboard/calls/medication/${call.call_id}`} className="inline-block">
+                    <TableCell className="p-4">
+                      <Link to={`/dashboard/calls/medication/${call.call_id}`}>
                         <Button variant="ghost" size="sm" className="h-8 text-mint hover:text-mint/80 hover:bg-mint/10">
                           Details bekijken
                         </Button>
@@ -232,12 +242,13 @@ export function MedicationList() {
         
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-center space-x-2 py-4">
+          <div className="flex items-center justify-between p-4 border-t border-gray-muted/10">
             <Button
               variant="outline"
               size="sm"
               onClick={() => setCurrentPage(page => Math.max(page - 1, 1))}
               disabled={currentPage === 1}
+              className="hover:bg-gray-muted/10 border-gray-muted/20"
             >
               Vorige
             </Button>
@@ -249,6 +260,7 @@ export function MedicationList() {
               size="sm"
               onClick={() => setCurrentPage(page => Math.min(page + 1, totalPages))}
               disabled={currentPage === totalPages}
+              className="hover:bg-gray-muted/10 border-gray-muted/20"
             >
               Volgende
             </Button>
