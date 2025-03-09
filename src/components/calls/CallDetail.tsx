@@ -63,7 +63,7 @@ export function CallDetail() {
     queryFn: async () => {
       try {
         const { data, error } = await supabase
-          .from('call_logs')
+          .from('call_logs_triage')
           .select('*')
           .eq('call_id', callId)
           .maybeSingle();
@@ -93,7 +93,7 @@ export function CallDetail() {
     try {
       console.log("Saving call data:", editedCall);
       const { error } = await supabase
-        .from('call_logs')
+        .from('call_logs_triage')
         .update(editedCall)
         .eq('call_id', callId);
 
@@ -126,22 +126,6 @@ export function CallDetail() {
     }));
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center p-4">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-mint"></div>
-      </div>
-    );
-  }
-
-  if (error || !call) {
-    return (
-      <div className="p-4 text-center text-gray">
-        Call not found
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-4">
       <CallHeader 
@@ -149,32 +133,48 @@ export function CallDetail() {
         isEditing={isEditing}
         setIsEditing={setIsEditing}
         handleSave={handleSave}
-        isFlagged={!!call.flagging}
+        isFlagged={!!call?.flagging}
         refetch={refetch}
       />
       
-      <CallOverview call={call} />
+      {!isLoading && !error && call && (
+        <>
+          <CallOverview call={call} />
+          
+          <CallSOEP 
+            isEditing={isEditing}
+            soepNotes={soepNotes}
+            editedCall={editedCall}
+            handleInputChange={handleInputChange}
+          />
+          
+          <CallSummary 
+            isEditing={isEditing}
+            editedCall={editedCall}
+            handleInputChange={handleInputChange}
+            call={call}
+          />
+          
+          <CallTranscript 
+            isEditing={isEditing}
+            editedCall={editedCall}
+            handleInputChange={handleInputChange}
+            transcriptMessages={transcriptMessages}
+          />
+        </>
+      )}
       
-      <CallSOEP 
-        isEditing={isEditing}
-        soepNotes={soepNotes}
-        editedCall={editedCall}
-        handleInputChange={handleInputChange}
-      />
+      {isLoading && (
+        <div className="flex justify-center p-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-mint"></div>
+        </div>
+      )}
       
-      <CallSummary 
-        isEditing={isEditing}
-        editedCall={editedCall}
-        handleInputChange={handleInputChange}
-        call={call}
-      />
-      
-      <CallTranscript 
-        isEditing={isEditing}
-        editedCall={editedCall}
-        handleInputChange={handleInputChange}
-        transcriptMessages={transcriptMessages}
-      />
+      {error && !isLoading && (
+        <div className="p-4 text-center text-gray">
+          Call not found
+        </div>
+      )}
     </div>
   );
 }

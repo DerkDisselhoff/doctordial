@@ -37,7 +37,7 @@ const fetchUrgentCalls = async (isIrrelevant: boolean = false) => {
   const urgencyLevels = isIrrelevant ? ['U1', 'U5'] : ['U2', 'U3', 'U4'];
 
   const { data, error } = await supabase
-    .from('call_logs')
+    .from('call_logs_triage')
     .select('*')
     .eq('assistant_id', assistantStatus.assistant_id)
     .in('Urgencylevel', urgencyLevels)

@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
@@ -47,7 +48,7 @@ const AppointmentDetail = () => {
       }
 
       const { data, error } = await supabase
-        .from('call_logs')
+        .from('call_logs_triage')
         .select('*')
         .eq('id', id)
         .maybeSingle();

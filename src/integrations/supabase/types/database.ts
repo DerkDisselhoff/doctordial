@@ -1,10 +1,14 @@
+
 import { Json } from './json';
 import {
   Profile,
   DemoRequest,
   PricingSubmission,
   VapiCall,
-  CompanySubscription
+  CompanySubscription,
+  CallLogTriage,
+  CallLogMedication,
+  CallLogResearchResult
 } from './tables';
 import { UserRole } from './enums';
 
@@ -35,6 +39,21 @@ export interface Database {
         Row: CompanySubscription;
         Insert: Omit<CompanySubscription, 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Omit<CompanySubscription, 'id'>>;
+      };
+      call_logs_triage: {
+        Row: CallLogTriage;
+        Insert: Omit<CallLogTriage, 'id' | 'created_at'>;
+        Update: Partial<CallLogTriage>;
+      };
+      call_logs_medications: {
+        Row: CallLogMedication;
+        Insert: Omit<CallLogMedication, 'id' | 'created_at' | 'updated_at'>;
+        Update: Partial<CallLogMedication>;
+      };
+      call_logs_researchresults: {
+        Row: CallLogResearchResult;
+        Insert: Omit<CallLogResearchResult, 'id' | 'created_at' | 'updated_at'>;
+        Update: Partial<CallLogResearchResult>;
       };
     };
     Views: {

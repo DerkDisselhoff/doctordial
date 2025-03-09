@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
 import { calculateMetrics } from "@/utils/metricsCalculations";
@@ -36,7 +37,7 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
       }
 
       const { data: callData, error: callError } = await supabase
-        .from('call_logs')
+        .from('call_logs_triage')
         .select('*')
         .eq('assistant_id', assistantData.assistant_id)
         .gte('start_time', startDate.toISOString())

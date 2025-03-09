@@ -47,7 +47,136 @@ export type Database = {
           },
         ]
       }
-      call_logs: {
+      call_logs_medications: {
+        Row: {
+          assistant_id: string | null
+          call_id: string | null
+          conversation_summary: string | null
+          created_at: string | null
+          doctor_notes: string | null
+          dosage: string | null
+          duration: string | null
+          frequency: string | null
+          id: string
+          instructions: string | null
+          medication_name: string | null
+          patient_id: string | null
+          patient_name: string | null
+          pharmacy_details: Json | null
+          phone_number: string | null
+          prescription_date: string | null
+          renewal_date: string | null
+          side_effects: string | null
+          transcript: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          assistant_id?: string | null
+          call_id?: string | null
+          conversation_summary?: string | null
+          created_at?: string | null
+          doctor_notes?: string | null
+          dosage?: string | null
+          duration?: string | null
+          frequency?: string | null
+          id?: string
+          instructions?: string | null
+          medication_name?: string | null
+          patient_id?: string | null
+          patient_name?: string | null
+          pharmacy_details?: Json | null
+          phone_number?: string | null
+          prescription_date?: string | null
+          renewal_date?: string | null
+          side_effects?: string | null
+          transcript?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          assistant_id?: string | null
+          call_id?: string | null
+          conversation_summary?: string | null
+          created_at?: string | null
+          doctor_notes?: string | null
+          dosage?: string | null
+          duration?: string | null
+          frequency?: string | null
+          id?: string
+          instructions?: string | null
+          medication_name?: string | null
+          patient_id?: string | null
+          patient_name?: string | null
+          pharmacy_details?: Json | null
+          phone_number?: string | null
+          prescription_date?: string | null
+          renewal_date?: string | null
+          side_effects?: string | null
+          transcript?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      call_logs_researchresults: {
+        Row: {
+          assistant_id: string | null
+          call_id: string | null
+          confidence_level: string | null
+          conversation_summary: string | null
+          created_at: string | null
+          findings: string | null
+          id: string
+          patient_id: string | null
+          patient_name: string | null
+          phone_number: string | null
+          recommendation: string | null
+          relevance_score: number | null
+          research_question: string | null
+          research_topic: string | null
+          sources: Json | null
+          transcript: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          assistant_id?: string | null
+          call_id?: string | null
+          confidence_level?: string | null
+          conversation_summary?: string | null
+          created_at?: string | null
+          findings?: string | null
+          id?: string
+          patient_id?: string | null
+          patient_name?: string | null
+          phone_number?: string | null
+          recommendation?: string | null
+          relevance_score?: number | null
+          research_question?: string | null
+          research_topic?: string | null
+          sources?: Json | null
+          transcript?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          assistant_id?: string | null
+          call_id?: string | null
+          confidence_level?: string | null
+          conversation_summary?: string | null
+          created_at?: string | null
+          findings?: string | null
+          id?: string
+          patient_id?: string | null
+          patient_name?: string | null
+          phone_number?: string | null
+          recommendation?: string | null
+          relevance_score?: number | null
+          research_question?: string | null
+          research_topic?: string | null
+          sources?: Json | null
+          transcript?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      call_logs_triage: {
         Row: {
           Action: string | null
           action_required: boolean | null

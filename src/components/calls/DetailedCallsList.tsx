@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
@@ -59,9 +60,9 @@ export function DetailedCallsList() {
 
         console.log("Found assistant ID:", assistantData.assistant_id);
 
-        // Fetch calls for this assistant
+        // Fetch calls for this assistant from the renamed table
         const { data: callData, error: callError } = await supabase
-          .from('call_logs')
+          .from('call_logs_triage')
           .select('*')
           .eq('assistant_id', assistantData.assistant_id)
           .order('start_time', { ascending: false });
@@ -74,7 +75,7 @@ export function DetailedCallsList() {
         console.log("Number of calls found:", callData?.length || 0);
         console.log("Call data:", callData);
 
-        // Transform call_logs data to match VapiCall interface
+        // Transform call_logs_triage data to match VapiCall interface
         const transformedCalls: VapiCall[] = callData.map(call => ({
           id: call.id,
           call_id: call.call_id || 'default',
@@ -82,7 +83,7 @@ export function DetailedCallsList() {
           recipient_number: call.phone_number || 'default',
           duration: parseInt(call.duration_seconds || '0'),
           status: call.Status || 'default',
-          transcription: call["Question Summary"] || 'No question summary available', // Updated this line
+          transcription: call["Question Summary"] || 'No question summary available',
           sentiment_analysis: {
             sentiment: call.Sentiment || 'neutral',
             urgency: call.Urgencylevel || 'low'

@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
@@ -67,61 +68,30 @@ serve(async (req) => {
     const body = await req.json()
     console.log('Received VAPI webhook payload:', JSON.stringify(body, null, 2))
 
-    // Process the webhook data and insert into both tables
-    const [vapiCallsResult, callLogsResult] = await Promise.all([
-      // Insert into vapi_calls
-      supabaseClient
-        .from('vapi_calls')
-        .upsert({
-          call_id: body.call_id,
-          caller_number: body.caller_number,
-          recipient_number: body.recipient_number,
-          duration: body.duration,
-          status: body.status,
-          transcription: body.transcription,
-          sentiment_analysis: body.sentiment_analysis,
-          summary: body.summary,
-          urgency_score: body.urgency_score,
-          assistant_name: body.assistant_name,
-          assistant_id: body.assistant_id,
-          caller_name: body.caller_name,
-          language: body.language,
-          recording_url: body.recording_url,
-          tags: body.tags,
-          follow_up_required: body.follow_up_required,
-          follow_up_notes: body.follow_up_notes,
-          call_type: body.call_type,
-          department: body.department,
-          priority_level: body.priority_level,
-          resolution_status: body.resolution_status,
-          callback_number: body.callback_number,
-          workflow_id: body.workflow_id,
-          workflow_name: body.workflow_name,
-          block_id: body.block_id,
-          block_name: body.block_name,
-          output_schema: body.output_schema,
-          messages: body.messages,
-          workflow_variables: body.workflow_variables,
-          block_outputs: body.block_outputs,
-          call_variables: body.call_variables,
-          patient_id: body.patient_id,
-          patient_name: body.patient_name,
-          patient_phone: body.patient_phone,
-          patient_email: body.patient_email,
-          appointment_status: body.appointment_status,
-          appointment_date: body.appointment_date,
-          medical_notes: body.medical_notes,
-          symptoms: Array.isArray(body.symptoms) ? body.symptoms : [],
-          action_required: body.action_required || false,
-          action_type: body.action_type,
-          action_deadline: body.action_deadline
-        }, {
-          onConflict: 'call_id'
-        }),
+    // Determine which table to insert into based on call type
+    let targetTable = 'call_logs_triage'; // Default table
+    
+    // Check if the call is medication related
+    if (body.call_type === 'medication' || 
+        (body.metadata && body.metadata.type === 'medication') ||
+        (body.tags && body.tags.includes('medication'))) {
+      targetTable = 'call_logs_medications';
+    }
+    // Check if the call is research related
+    else if (body.call_type === 'research' || 
+            (body.metadata && body.metadata.type === 'research') ||
+            (body.tags && body.tags.includes('research'))) {
+      targetTable = 'call_logs_researchresults';
+    }
 
-      // Insert into call_logs
-      supabaseClient
-        .from('call_logs')
+    console.log(`Inserting into table: ${targetTable}`);
+
+    // Process the webhook data and insert into the appropriate table
+    let insertResult;
+    
+    if (targetTable === 'call_logs_triage') {
+      insertResult = await supabaseClient
+        .from('call_logs_triage')
         .upsert({
           call_id: body.call_id,
           assistant_id: body.assistant_id,
@@ -147,20 +117,65 @@ serve(async (req) => {
           symptoms: Array.isArray(body.symptoms) ? body.symptoms : [],
           action_required: body.action_required || false,
           action_type: body.action_type,
-          action_deadline: body.action_deadline
+          action_deadline: body.action_deadline,
+          Name: body.patient_name || body.caller_name,
+          Urgencylevel: body.urgency_level || body.priority_level,
+          Status: body.status || body.resolution_status
         }, {
           onConflict: 'call_id'
-        })
-    ])
-
-    if (vapiCallsResult.error) {
-      console.error('Error inserting into vapi_calls:', vapiCallsResult.error)
-      throw vapiCallsResult.error
+        });
+    } 
+    else if (targetTable === 'call_logs_medications') {
+      insertResult = await supabaseClient
+        .from('call_logs_medications')
+        .upsert({
+          call_id: body.call_id,
+          assistant_id: body.assistant_id,
+          patient_id: body.patient_id,
+          patient_name: body.patient_name || body.caller_name,
+          phone_number: body.caller_number,
+          medication_name: body.medication_name || (body.metadata && body.metadata.medication_name),
+          dosage: body.dosage || (body.metadata && body.metadata.dosage),
+          frequency: body.frequency || (body.metadata && body.metadata.frequency),
+          duration: body.medication_duration || (body.metadata && body.metadata.duration),
+          side_effects: body.side_effects || (body.metadata && body.metadata.side_effects),
+          instructions: body.instructions || (body.metadata && body.metadata.instructions),
+          prescription_date: body.prescription_date || (body.metadata && body.metadata.prescription_date),
+          renewal_date: body.renewal_date || (body.metadata && body.metadata.renewal_date),
+          pharmacy_details: body.pharmacy_details || (body.metadata && body.metadata.pharmacy),
+          doctor_notes: body.doctor_notes || body.medical_notes,
+          conversation_summary: body.summary,
+          transcript: body.transcription
+        }, {
+          onConflict: 'call_id'
+        });
+    }
+    else if (targetTable === 'call_logs_researchresults') {
+      insertResult = await supabaseClient
+        .from('call_logs_researchresults')
+        .upsert({
+          call_id: body.call_id,
+          assistant_id: body.assistant_id,
+          patient_id: body.patient_id,
+          patient_name: body.patient_name || body.caller_name,
+          phone_number: body.caller_number,
+          research_topic: body.research_topic || (body.metadata && body.metadata.research_topic),
+          research_question: body.research_question || (body.metadata && body.metadata.research_question),
+          findings: body.findings || (body.metadata && body.metadata.findings),
+          sources: body.sources || (body.metadata && body.metadata.sources),
+          relevance_score: body.relevance_score || (body.metadata && body.metadata.relevance_score),
+          confidence_level: body.confidence_level || (body.metadata && body.metadata.confidence_level),
+          recommendation: body.recommendation || (body.metadata && body.metadata.recommendation),
+          conversation_summary: body.summary,
+          transcript: body.transcription
+        }, {
+          onConflict: 'call_id'
+        });
     }
 
-    if (callLogsResult.error) {
-      console.error('Error inserting into call_logs:', callLogsResult.error)
-      throw callLogsResult.error
+    if (insertResult.error) {
+      console.error(`Error inserting into ${targetTable}:`, insertResult.error)
+      throw insertResult.error
     }
 
     console.log('Successfully processed webhook data')
@@ -169,8 +184,8 @@ serve(async (req) => {
       JSON.stringify({ 
         success: true, 
         data: {
-          vapi_calls: vapiCallsResult.data,
-          call_logs: callLogsResult.data
+          table: targetTable,
+          result: insertResult.data
         }
       }),
       { 

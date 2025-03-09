@@ -1,3 +1,4 @@
+
 export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
   let processedCalls = 0;
   const errors: any[] = [];
@@ -100,30 +101,97 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
 
       console.log('Prepared common data for insertion:', commonData);
 
-      // Insert into call_logs
-      const callLogsResult = await supabaseClient
-        .from('call_logs')
-        .upsert({
-          ...commonData,
-          conversation_summary: call.summary || null,
-          transcript: call.transcript || call.transcription || null,
-          sentiment_score: call.sentiment_score || null,
-          intent: call.intent || null,
-          metadata: call.metadata || {},
-        }, {
-          onConflict: 'call_id',
-          ignoreDuplicates: false
-        });
+      // Determine which table to insert data into based on call type
+      let targetTable = 'call_logs_triage'; // Default table
+      
+      // Check if the call is medication related
+      if (call.type === 'medication' || 
+          (call.metadata && call.metadata.type === 'medication') ||
+          (call.tags && call.tags.includes('medication'))) {
+        targetTable = 'call_logs_medications';
+      }
+      // Check if the call is research related
+      else if (call.type === 'research' || 
+               (call.metadata && call.metadata.type === 'research') ||
+               (call.tags && call.tags.includes('research'))) {
+        targetTable = 'call_logs_researchresults';
+      }
 
-      if (callLogsResult.error) {
-        console.error('Error upserting into call_logs:', {
-          error: callLogsResult.error.message,
-          details: callLogsResult.error,
+      console.log(`Inserting into table: ${targetTable}`);
+
+      // Insert data based on the determined target table
+      let insertResult;
+
+      if (targetTable === 'call_logs_triage') {
+        insertResult = await supabaseClient
+          .from('call_logs_triage')
+          .upsert({
+            ...commonData,
+            conversation_summary: call.summary || null,
+            transcript: call.transcript || call.transcription || null,
+            sentiment_score: call.sentiment_score || null,
+            intent: call.intent || null,
+            metadata: call.metadata || {},
+          }, {
+            onConflict: 'call_id',
+            ignoreDuplicates: false
+          });
+      } 
+      else if (targetTable === 'call_logs_medications') {
+        insertResult = await supabaseClient
+          .from('call_logs_medications')
+          .upsert({
+            ...commonData,
+            patient_id: call.patient_id || null,
+            patient_name: call.patient_name || call.caller_name || null,
+            medication_name: call.medication_name || (call.metadata && call.metadata.medication_name) || null,
+            dosage: call.dosage || (call.metadata && call.metadata.dosage) || null,
+            frequency: call.frequency || (call.metadata && call.metadata.frequency) || null,
+            duration: call.medication_duration || (call.metadata && call.metadata.duration) || null,
+            side_effects: call.side_effects || (call.metadata && call.metadata.side_effects) || null,
+            instructions: call.instructions || (call.metadata && call.metadata.instructions) || null,
+            prescription_date: call.prescription_date || (call.metadata && call.metadata.prescription_date) || null,
+            renewal_date: call.renewal_date || (call.metadata && call.metadata.renewal_date) || null,
+            pharmacy_details: call.pharmacy_details || (call.metadata && call.metadata.pharmacy) || null,
+            doctor_notes: call.doctor_notes || call.medical_notes || null,
+            conversation_summary: call.summary || null,
+            transcript: call.transcript || call.transcription || null,
+          }, {
+            onConflict: 'call_id',
+            ignoreDuplicates: false
+          });
+      }
+      else if (targetTable === 'call_logs_researchresults') {
+        insertResult = await supabaseClient
+          .from('call_logs_researchresults')
+          .upsert({
+            ...commonData,
+            patient_id: call.patient_id || null,
+            patient_name: call.patient_name || call.caller_name || null,
+            research_topic: call.research_topic || (call.metadata && call.metadata.research_topic) || null,
+            research_question: call.research_question || (call.metadata && call.metadata.research_question) || null,
+            findings: call.findings || (call.metadata && call.metadata.findings) || null,
+            sources: call.sources || (call.metadata && call.metadata.sources) || null,
+            relevance_score: call.relevance_score || (call.metadata && call.metadata.relevance_score) || null,
+            confidence_level: call.confidence_level || (call.metadata && call.metadata.confidence_level) || null,
+            recommendation: call.recommendation || (call.metadata && call.metadata.recommendation) || null,
+            conversation_summary: call.summary || null,
+            transcript: call.transcript || call.transcription || null,
+          }, {
+            onConflict: 'call_id',
+            ignoreDuplicates: false
+          });
+      }
+
+      if (insertResult.error) {
+        console.error(`Error upserting into ${targetTable}:`, {
+          error: insertResult.error.message,
+          details: insertResult.error,
           data: commonData
         });
-        errors.push({ id: callId, table: 'call_logs', error: callLogsResult.error });
+        errors.push({ id: callId, table: targetTable, error: insertResult.error });
       } else {
-        console.log('Successfully inserted into call_logs');
+        console.log(`Successfully inserted into ${targetTable}`);
         processedCalls++;
       }
 
