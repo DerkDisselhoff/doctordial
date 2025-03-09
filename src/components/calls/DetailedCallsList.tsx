@@ -21,20 +21,26 @@ export function DetailedCallsList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [urgencyFilter, setUrgencyFilter] = useState("all");
   const [sentimentFilter, setSentimentFilter] = useState("all");
+  const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchCalls = async () => {
       try {
+        setLoading(true);
+        setError(null);
+        
         // First get the user's session
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         if (sessionError) {
           console.error("Session error:", sessionError);
+          setError("Session error: " + sessionError.message);
           throw sessionError;
         }
         if (!session) {
           console.log("No session found");
+          setError("No session found - please log in");
           throw new Error('No session found');
         }
         console.log("User ID:", session.user.id);
@@ -48,6 +54,7 @@ export function DetailedCallsList() {
 
         if (assistantError) {
           console.error("Error fetching assistant status:", assistantError);
+          setError("Error fetching assistant status: " + assistantError.message);
           throw assistantError;
         }
 
@@ -55,12 +62,13 @@ export function DetailedCallsList() {
 
         if (!assistantData?.assistant_id) {
           console.log("No assistant ID found for user");
+          setError("No assistant ID found - please configure your assistant");
           throw new Error('No assistant ID found');
         }
 
         console.log("Found assistant ID:", assistantData.assistant_id);
 
-        // Fetch calls for this assistant from the renamed table
+        // Fetch calls for this assistant from the triage table only
         const { data: callData, error: callError } = await supabase
           .from('call_logs_triage')
           .select('*')
@@ -69,12 +77,12 @@ export function DetailedCallsList() {
 
         if (callError) {
           console.error("Error fetching calls:", callError);
+          setError("Error fetching calls: " + callError.message);
           throw callError;
         }
 
-        console.log("Number of calls found:", callData?.length || 0);
-        console.log("Call data:", callData);
-
+        console.log("Number of triage calls found:", callData?.length || 0);
+        
         // Transform call_logs_triage data to match VapiCall interface
         const transformedCalls: VapiCall[] = callData.map(call => ({
           id: call.id,
@@ -115,17 +123,20 @@ export function DetailedCallsList() {
           call_variables: {}
         }));
 
-        console.log("Transformed calls:", transformedCalls);
+        toast({
+          title: "Data geladen",
+          description: `${transformedCalls.length} triage gesprekken gevonden`,
+        });
 
         setCalls(transformedCalls);
         setFilteredCalls(transformedCalls);
         setTotalPages(Math.ceil(transformedCalls.length / itemsPerPage));
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching calls:', error);
+        console.error('Error fetching triage calls:', error);
         toast({
-          title: "Error fetching calls",
-          description: "There was a problem loading the call history.",
+          title: "Fout bij het ophalen van gesprekken",
+          description: "Er was een probleem met het laden van de gesprekgeschiedenis.",
           variant: "destructive",
         });
         setLoading(false);
@@ -180,16 +191,28 @@ export function DetailedCallsList() {
     );
   }
 
+  if (error) {
+    return (
+      <Card className="dashboard-card">
+        <CardContent className="p-8">
+          <div className="text-center text-red-500">
+            <p>{error}</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="dashboard-card">
       <CardHeader className="border-b border-gray-muted">
-        <CardTitle className="text-gray-dark">Call History</CardTitle>
+        <CardTitle className="text-gray-dark">Triage Gesprekken</CardTitle>
         <div className="mt-4 space-y-4">
           <div className="flex items-center gap-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray" />
               <Input
-                placeholder="Search calls..."
+                placeholder="Zoeken op patiënt of symptomen..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 bg-white border-gray-muted text-gray-dark placeholder:text-gray"
@@ -199,10 +222,10 @@ export function DetailedCallsList() {
               <Filter className="h-4 w-4 text-gray" />
               <Select value={urgencyFilter} onValueChange={setUrgencyFilter}>
                 <SelectTrigger className="w-[140px] bg-white border-gray-muted">
-                  <SelectValue placeholder="Urgency" />
+                  <SelectValue placeholder="Urgentie" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Urgencies</SelectItem>
+                  <SelectItem value="all">Alle urgenties</SelectItem>
                   <SelectItem value="U1">U1</SelectItem>
                   <SelectItem value="U2">U2</SelectItem>
                   <SelectItem value="U3">U3</SelectItem>
@@ -215,10 +238,10 @@ export function DetailedCallsList() {
                   <SelectValue placeholder="Sentiment" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Sentiments</SelectItem>
-                  <SelectItem value="positive">Positive</SelectItem>
-                  <SelectItem value="negative">Negative</SelectItem>
-                  <SelectItem value="neutral">Neutral</SelectItem>
+                  <SelectItem value="all">Alle sentimenten</SelectItem>
+                  <SelectItem value="positive">Positief</SelectItem>
+                  <SelectItem value="negative">Negatief</SelectItem>
+                  <SelectItem value="neutral">Neutraal</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -230,9 +253,19 @@ export function DetailedCallsList() {
           <Table>
             <CallsTableHeader />
             <TableBody>
-              {paginatedCalls.map((call) => (
-                <CallsTableRow key={call.id} call={call} />
-              ))}
+              {filteredCalls.length > 0 ? (
+                filteredCalls
+                  .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                  .map((call) => (
+                    <CallsTableRow key={call.id} call={call} />
+                  ))
+              ) : (
+                <tr>
+                  <td colSpan={8} className="text-center py-8 text-gray">
+                    Geen triage gesprekken gevonden
+                  </td>
+                </tr>
+              )}
             </TableBody>
           </Table>
         </div>
