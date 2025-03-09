@@ -5,28 +5,26 @@ import { ResearchResultsList } from "@/components/calls/ResearchResultsList";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { CallDetail } from "@/components/calls/CallDetail";
 import { MedicationDetail } from "@/components/calls/MedicationDetail";
-import { 
-  Tabs, TabsList, TabsTrigger, TabsContent 
-} from "@/components/ui/tabs";
-import { 
-  Heart, Pill, Microscope, ChevronRight 
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const Calls = () => {
   const location = useLocation();
   const path = location.pathname;
 
-  // Determine which tab is active
-  let activeTab = "triage";
-  if (path.includes("/medication")) {
-    activeTab = "medication";
-  } else if (path.includes("/research")) {
-    activeTab = "research";
-  }
-
   // Determine if we're on a detail page
   const isDetailPage = path.includes("/calls/") && path.split("/").length > 3;
+
+  // Determine which type of calls we're viewing
+  const getPageTitle = () => {
+    if (path.includes("/medication")) {
+      return "Medication";
+    } else if (path.includes("/research")) {
+      return "Research Results";
+    } else {
+      return "Triage";
+    }
+  };
 
   return (
     <div className="space-y-8">
@@ -72,40 +70,9 @@ const Calls = () => {
       )}
 
       {!isDetailPage && (
-        <Tabs value={activeTab} className="mb-6">
-          <TabsList className="grid grid-cols-3 mb-8">
-            <TabsTrigger 
-              value="triage" 
-              asChild
-              className="flex items-center gap-2 data-[state=active]:bg-mint/10 data-[state=active]:text-mint data-[state=active]:border-mint"
-            >
-              <Link to="/dashboard/calls" className="flex items-center gap-2">
-                <Heart className="h-4 w-4" />
-                <span>Triage</span>
-              </Link>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="medication" 
-              asChild
-              className="flex items-center gap-2 data-[state=active]:bg-mint/10 data-[state=active]:text-mint data-[state=active]:border-mint"
-            >
-              <Link to="/dashboard/calls/medication" className="flex items-center gap-2">
-                <Pill className="h-4 w-4" />
-                <span>Medication</span>
-              </Link>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="research" 
-              asChild
-              className="flex items-center gap-2 data-[state=active]:bg-mint/10 data-[state=active]:text-mint data-[state=active]:border-mint"
-            >
-              <Link to="/dashboard/calls/research" className="flex items-center gap-2">
-                <Microscope className="h-4 w-4" />
-                <span>Research Results</span>
-              </Link>
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <div className="mb-6">
+          <h3 className="text-xl font-semibold text-gray-dark">{getPageTitle()}</h3>
+        </div>
       )}
 
       <Routes>

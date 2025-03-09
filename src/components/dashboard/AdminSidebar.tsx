@@ -1,7 +1,9 @@
+
 import { 
   BarChart3, Users, Phone, Settings, Home, Building2, 
   DollarSign, FileText, Activity, LogOut, Shield, 
-  CreditCard, Grid, Receipt, Calendar, GitBranch 
+  CreditCard, Grid, Receipt, Calendar, GitBranch,
+  Pill, Microscope
 } from "lucide-react";
 import {
   Sidebar,
@@ -75,7 +77,7 @@ export function AdminSidebar() {
 
   const MenuItem = ({ icon: Icon, title, path }: { icon: any; title: string; path: string }) => {
     const isActive = location.pathname === path || 
-                 (path.includes("/calls") && location.pathname.includes("/calls"));
+                 (path !== "/dashboard/calls" && location.pathname.includes(path));
     
     return (
       <Button
@@ -95,15 +97,65 @@ export function AdminSidebar() {
     );
   };
 
+  const AssistantOutputMenuItem = () => {
+    const isCallsActive = location.pathname.includes('/dashboard/calls');
+    
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className={`w-full justify-start gap-3 px-3 py-2.5 group transition-all duration-200 ${
+              isCallsActive 
+                ? 'bg-mint/10 text-gray-dark font-semibold' 
+                : 'text-gray hover:bg-mint/5 hover:text-gray-dark hover:translate-x-1'
+            }`}
+          >
+            <Phone className={`h-5 w-5 flex-shrink-0 transition-colors ${
+              isCallsActive ? 'text-mint' : 'text-gray/70 group-hover:text-mint'
+            }`} />
+            <span>Assistant Output</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          className="w-56 bg-white border border-gray-muted/50 shadow-lg rounded-lg"
+          align="start"
+          alignOffset={0}
+          sideOffset={2}
+        >
+          <DropdownMenuItem
+            className="flex items-center px-3 py-2 text-sm text-gray hover:text-gray-dark hover:bg-mint/5 cursor-pointer transition-colors"
+            onClick={() => navigate("/dashboard/calls")}
+          >
+            <Phone className="mr-2 h-4 w-4 text-gray/70" />
+            <span>Triage</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex items-center px-3 py-2 text-sm text-gray hover:text-gray-dark hover:bg-mint/5 cursor-pointer transition-colors"
+            onClick={() => navigate("/dashboard/calls/medication")}
+          >
+            <Pill className="mr-2 h-4 w-4 text-gray/70" />
+            <span>Medication</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex items-center px-3 py-2 text-sm text-gray hover:text-gray-dark hover:bg-mint/5 cursor-pointer transition-colors"
+            onClick={() => navigate("/dashboard/calls/research")}
+          >
+            <Microscope className="mr-2 h-4 w-4 text-gray/70" />
+            <span>Research Results</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  };
+
   const clientMenuItems = [
     { title: "Overzicht", icon: Home, path: "/dashboard" },
     { title: "Werkstroom", icon: GitBranch, path: "/dashboard/workflow" },
-    { title: "Assistant Output", icon: Phone, path: "/dashboard/calls" },
   ];
 
   const adminMenuItems = [
     { title: "Overzicht", icon: Home, path: "/dashboard" },
-    { title: "Assistant Output", icon: Phone, path: "/dashboard/calls" },
     { title: "Afspraken", icon: Calendar, path: "/dashboard/appointments" },
     { title: "Agenda", icon: Calendar, path: "/dashboard/calendar" },
     { title: "Cliënten", icon: Users, path: "/dashboard/clients" },
@@ -180,6 +232,7 @@ export function AdminSidebar() {
                     {adminMenuItems.map((item) => (
                       <MenuItem key={item.title} {...item} />
                     ))}
+                    <AssistantOutputMenuItem />
                     <SettingsMenuItem />
                   </>
                 ) : (
@@ -187,6 +240,7 @@ export function AdminSidebar() {
                     {clientMenuItems.map((item) => (
                       <MenuItem key={item.title} {...item} />
                     ))}
+                    <AssistantOutputMenuItem />
                     <SettingsMenuItem />
                   </>
                 )}
