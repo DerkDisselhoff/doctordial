@@ -51,15 +51,21 @@ export type Database = {
         Row: {
           assistant_id: string | null
           call_id: string | null
+          client_id: string | null
           conversation_summary: string | null
+          cost: number | null
           created_at: string | null
+          Date_of_birth: string | null
           doctor_notes: string | null
           dosage: string | null
           duration: string | null
+          duration_seconds: string | null
+          end_time: string | null
           frequency: string | null
           id: string
           instructions: string | null
           medication_name: string | null
+          Packages: number | null
           patient_id: string | null
           patient_name: string | null
           pharmacy_details: Json | null
@@ -67,21 +73,28 @@ export type Database = {
           prescription_date: string | null
           renewal_date: string | null
           side_effects: string | null
+          start_time: string | null
           transcript: string | null
           updated_at: string | null
         }
         Insert: {
           assistant_id?: string | null
           call_id?: string | null
+          client_id?: string | null
           conversation_summary?: string | null
+          cost?: number | null
           created_at?: string | null
+          Date_of_birth?: string | null
           doctor_notes?: string | null
           dosage?: string | null
           duration?: string | null
+          duration_seconds?: string | null
+          end_time?: string | null
           frequency?: string | null
           id?: string
           instructions?: string | null
           medication_name?: string | null
+          Packages?: number | null
           patient_id?: string | null
           patient_name?: string | null
           pharmacy_details?: Json | null
@@ -89,21 +102,28 @@ export type Database = {
           prescription_date?: string | null
           renewal_date?: string | null
           side_effects?: string | null
+          start_time?: string | null
           transcript?: string | null
           updated_at?: string | null
         }
         Update: {
           assistant_id?: string | null
           call_id?: string | null
+          client_id?: string | null
           conversation_summary?: string | null
+          cost?: number | null
           created_at?: string | null
+          Date_of_birth?: string | null
           doctor_notes?: string | null
           dosage?: string | null
           duration?: string | null
+          duration_seconds?: string | null
+          end_time?: string | null
           frequency?: string | null
           id?: string
           instructions?: string | null
           medication_name?: string | null
+          Packages?: number | null
           patient_id?: string | null
           patient_name?: string | null
           pharmacy_details?: Json | null
@@ -111,6 +131,7 @@ export type Database = {
           prescription_date?: string | null
           renewal_date?: string | null
           side_effects?: string | null
+          start_time?: string | null
           transcript?: string | null
           updated_at?: string | null
         }
@@ -120,9 +141,13 @@ export type Database = {
         Row: {
           assistant_id: string | null
           call_id: string | null
+          client_id: string | null
           confidence_level: string | null
           conversation_summary: string | null
+          cost: number | null
           created_at: string | null
+          duration_seconds: string | null
+          end_time: string | null
           findings: string | null
           id: string
           patient_id: string | null
@@ -133,15 +158,20 @@ export type Database = {
           research_question: string | null
           research_topic: string | null
           sources: Json | null
+          start_time: string | null
           transcript: string | null
           updated_at: string | null
         }
         Insert: {
           assistant_id?: string | null
           call_id?: string | null
+          client_id?: string | null
           confidence_level?: string | null
           conversation_summary?: string | null
+          cost?: number | null
           created_at?: string | null
+          duration_seconds?: string | null
+          end_time?: string | null
           findings?: string | null
           id?: string
           patient_id?: string | null
@@ -152,15 +182,20 @@ export type Database = {
           research_question?: string | null
           research_topic?: string | null
           sources?: Json | null
+          start_time?: string | null
           transcript?: string | null
           updated_at?: string | null
         }
         Update: {
           assistant_id?: string | null
           call_id?: string | null
+          client_id?: string | null
           confidence_level?: string | null
           conversation_summary?: string | null
+          cost?: number | null
           created_at?: string | null
+          duration_seconds?: string | null
+          end_time?: string | null
           findings?: string | null
           id?: string
           patient_id?: string | null
@@ -171,6 +206,7 @@ export type Database = {
           research_question?: string | null
           research_topic?: string | null
           sources?: Json | null
+          start_time?: string | null
           transcript?: string | null
           updated_at?: string | null
         }
@@ -183,6 +219,7 @@ export type Database = {
           appointment_date: string | null
           assistant_id: string | null
           call_id: string | null
+          client_id: string | null
           conversation_summary: string | null
           cost: number | null
           created_at: string | null
@@ -216,6 +253,7 @@ export type Database = {
           appointment_date?: string | null
           assistant_id?: string | null
           call_id?: string | null
+          client_id?: string | null
           conversation_summary?: string | null
           cost?: number | null
           created_at?: string | null
@@ -249,6 +287,7 @@ export type Database = {
           appointment_date?: string | null
           assistant_id?: string | null
           call_id?: string | null
+          client_id?: string | null
           conversation_summary?: string | null
           cost?: number | null
           created_at?: string | null

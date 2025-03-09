@@ -74,7 +74,8 @@ export function AdminSidebar() {
   };
 
   const MenuItem = ({ icon: Icon, title, path }: { icon: any; title: string; path: string }) => {
-    const isActive = location.pathname === path;
+    const isActive = location.pathname === path || 
+                 (path.includes("/calls") && location.pathname.includes("/calls"));
     
     return (
       <Button
@@ -97,12 +98,12 @@ export function AdminSidebar() {
   const clientMenuItems = [
     { title: "Overzicht", icon: Home, path: "/dashboard" },
     { title: "Werkstroom", icon: GitBranch, path: "/dashboard/workflow" },
-    { title: "Assistent Output", icon: Phone, path: "/dashboard/calls" },
+    { title: "Assistant Output", icon: Phone, path: "/dashboard/calls" },
   ];
 
   const adminMenuItems = [
     { title: "Overzicht", icon: Home, path: "/dashboard" },
-    { title: "Assistent Output", icon: Phone, path: "/dashboard/calls" },
+    { title: "Assistant Output", icon: Phone, path: "/dashboard/calls" },
     { title: "Afspraken", icon: Calendar, path: "/dashboard/appointments" },
     { title: "Agenda", icon: Calendar, path: "/dashboard/calendar" },
     { title: "Cliënten", icon: Users, path: "/dashboard/clients" },
