@@ -33,25 +33,45 @@ export function CallHeader({
     try {
       // Determine which table to update based on the URL
       const pathname = window.location.pathname;
-      let tableName = 'call_logs_triage';
       
       if (pathname.includes('/medication')) {
-        tableName = 'call_logs_medications';
+        const { error } = await supabase
+          .from('call_logs_medications')
+          .update({ 
+            flagging: {
+              reason,
+              timestamp: new Date().toISOString()
+            }
+          })
+          .eq('call_id', callId);
+          
+        if (error) throw error;
       } else if (pathname.includes('/research')) {
-        tableName = 'call_logs_researchresults';
+        const { error } = await supabase
+          .from('call_logs_researchresults')
+          .update({ 
+            flagging: {
+              reason,
+              timestamp: new Date().toISOString()
+            }
+          })
+          .eq('call_id', callId);
+          
+        if (error) throw error;
+      } else {
+        // Default to triage
+        const { error } = await supabase
+          .from('call_logs_triage')
+          .update({ 
+            flagging: {
+              reason,
+              timestamp: new Date().toISOString()
+            }
+          })
+          .eq('call_id', callId);
+          
+        if (error) throw error;
       }
-      
-      const { error } = await supabase
-        .from(tableName)
-        .update({ 
-          flagging: {
-            reason,
-            timestamp: new Date().toISOString()
-          }
-        })
-        .eq('call_id', callId);
-
-      if (error) throw error;
 
       toast({
         title: "Call flagged",
