@@ -7,7 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { CallHeader } from "./detail/CallHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Pill, Clock, Calendar, Phone, FileText, User, FileSpreadsheet, Building, ArrowRight } from "lucide-react";
+import { Pill, Clock, Calendar, Phone, FileText, User, FileSpreadsheet, Building, ArrowRight, Flag } from "lucide-react";
 import { format } from "date-fns";
 import { CallSummary } from "./detail/CallSummary";
 
