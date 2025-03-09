@@ -18,61 +18,63 @@ export function MedicationList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchCalls = async () => {
       try {
+        setLoading(true);
+        setError(null);
+        
         // First get the user's session
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         if (sessionError) {
           console.error("Session error:", sessionError);
+          setError("Session error: " + sessionError.message);
           throw sessionError;
         }
+        
         if (!session) {
           console.log("No session found");
+          setError("No session found - please log in");
           throw new Error('No session found');
         }
+        
         console.log("User ID:", session.user.id);
 
-        // Get the assistant_id from assistant_status
-        const { data: assistantData, error: assistantError } = await supabase
-          .from('assistant_status')
-          .select('assistant_id')
-          .eq('profile_id', session.user.id)
-          .maybeSingle();
-
-        if (assistantError) {
-          console.error("Error fetching assistant status:", assistantError);
-          throw assistantError;
-        }
-
-        console.log("Assistant data:", assistantData);
-
-        if (!assistantData?.assistant_id) {
-          console.log("No assistant ID found for user");
-          throw new Error('No assistant ID found');
-        }
-
-        console.log("Found assistant ID:", assistantData.assistant_id);
-
-        // Fetch medication calls for this assistant
-        const { data: callData, error: callError } = await supabase
+        // Fetch all medication calls without filtering by assistant_id first
+        const { data: allCallData, error: callError } = await supabase
           .from('call_logs_medications')
           .select('*')
-          .eq('assistant_id', assistantData.assistant_id)
           .order('created_at', { ascending: false });
 
         if (callError) {
           console.error("Error fetching medication calls:", callError);
+          setError("Error fetching medication calls: " + callError.message);
           throw callError;
         }
 
-        console.log("Number of medication calls found:", callData?.length || 0);
-        setCalls(callData || []);
-        setFilteredCalls(callData || []);
-        setTotalPages(Math.ceil((callData?.length || 0) / itemsPerPage));
+        // Log the raw data to see what we're getting
+        console.log("All medication calls data:", allCallData);
+        
+        if (allCallData && allCallData.length > 0) {
+          setCalls(allCallData);
+          setFilteredCalls(allCallData);
+          setTotalPages(Math.ceil(allCallData.length / itemsPerPage));
+          toast({
+            title: "Data loaded successfully",
+            description: `Found ${allCallData.length} medication records`,
+          });
+        } else {
+          console.log("No medication calls found in the database");
+          setError("No medication calls found in the database");
+          // Set empty arrays to ensure UI shows "no data" message
+          setCalls([]);
+          setFilteredCalls([]);
+        }
+        
         setLoading(false);
       } catch (error) {
         console.error('Error fetching medication calls:', error);
@@ -150,6 +152,11 @@ export function MedicationList() {
         </div>
       </CardHeader>
       <CardContent className="p-0">
+        {error && (
+          <div className="p-4 text-center text-red-500">
+            {error}
+          </div>
+        )}
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
