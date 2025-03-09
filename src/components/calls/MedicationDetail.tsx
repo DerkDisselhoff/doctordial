@@ -7,7 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { CallHeader } from "./detail/CallHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Pill, Clock, Calendar, Phone, FileText, User, FileSpreadsheet, Building, ArrowRight, Flag } from "lucide-react";
+import { Pill, Calendar, User, Flag } from "lucide-react";
 import { format } from "date-fns";
 import { CallSummary } from "./detail/CallSummary";
 import { CallTranscript } from "./detail/CallTranscript";
@@ -233,10 +233,6 @@ export function MedicationDetail() {
                     <span className="font-medium text-gray-dark">{call.dosage || "Niet gespecificeerd"}</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-sm text-gray">Frequentie</span>
-                    <span className="font-medium text-gray-dark">{call.frequency || "Niet gespecificeerd"}</span>
-                  </div>
-                  <div className="flex flex-col">
                     <span className="text-sm text-gray">Verpakkingen</span>
                     <span className="font-medium text-gray-dark">{call.Packages || "Niet gespecificeerd"}</span>
                   </div>
@@ -244,94 +240,6 @@ export function MedicationDetail() {
               </CardContent>
             </Card>
           </div>
-          
-          {/* Instructions & Notes */}
-          <Card className="bg-white border-gray-muted shadow-sm">
-            <CardContent className="pt-6">
-              <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">
-                <FileText className="h-5 w-5 text-mint" /> Instructies & Notities
-              </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {isEditing ? (
-                  <>
-                    <div className="flex flex-col">
-                      <span className="text-sm text-gray mb-1">Instructies</span>
-                      <textarea
-                        value={editedCall.instructions || ''}
-                        onChange={(e) => handleInputChange('instructions', e.target.value)}
-                        className="p-3 bg-white border border-gray-muted rounded-md min-h-24 w-full"
-                      />
-                    </div>
-                    
-                    <div className="flex flex-col">
-                      <span className="text-sm text-gray mb-1">Bijwerkingen</span>
-                      <textarea
-                        value={editedCall.side_effects || ''}
-                        onChange={(e) => handleInputChange('side_effects', e.target.value)}
-                        className="p-3 bg-white border border-gray-muted rounded-md min-h-24 w-full"
-                      />
-                    </div>
-                    
-                    <div className="col-span-1 md:col-span-2 flex flex-col">
-                      <span className="text-sm text-gray mb-1">Doktersnotities</span>
-                      <textarea
-                        value={editedCall.doctor_notes?.replace(/FLAGGED:.*? - .*?$/, '') || ''}
-                        onChange={(e) => handleInputChange('doctor_notes', e.target.value)}
-                        className="p-3 bg-white border border-gray-muted rounded-md min-h-24 w-full"
-                      />
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="flex flex-col">
-                      <span className="text-sm text-gray mb-1">Instructies</span>
-                      <p className="p-3 bg-gray-50 rounded-md min-h-24">
-                        {call.instructions || "Geen specifieke instructies opgegeven"}
-                      </p>
-                    </div>
-                    
-                    <div className="flex flex-col">
-                      <span className="text-sm text-gray mb-1">Bijwerkingen</span>
-                      <p className="p-3 bg-gray-50 rounded-md min-h-24">
-                        {call.side_effects || "Geen bijwerkingen vermeld"}
-                      </p>
-                    </div>
-                    
-                    <div className="col-span-1 md:col-span-2 flex flex-col">
-                      <span className="text-sm text-gray mb-1">Doktersnotities</span>
-                      <p className="p-3 bg-gray-50 rounded-md min-h-24">
-                        {call.doctor_notes?.replace(/FLAGGED:.*? - .*?$/, '') || "Geen doktersnotities beschikbaar"}
-                      </p>
-                    </div>
-                  </>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-          
-          {/* Pharmacy Details */}
-          {(call.pharmacy_details || call.Packages) && (
-            <Card className="bg-white border-gray-muted shadow-sm">
-              <CardContent className="pt-6">
-                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">
-                  <Building className="h-5 w-5 text-mint" /> Apotheekgegevens
-                </h3>
-                
-                <div className="p-3 bg-gray-50 rounded-md">
-                  {call.pharmacy_details ? (
-                    <pre className="whitespace-pre-wrap text-sm text-gray-dark">
-                      {typeof call.pharmacy_details === 'object' 
-                        ? JSON.stringify(call.pharmacy_details, null, 2) 
-                        : call.pharmacy_details}
-                    </pre>
-                  ) : (
-                    "Geen apotheekgegevens beschikbaar"
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          )}
           
           {/* Transcript */}
           {call.transcript && (
