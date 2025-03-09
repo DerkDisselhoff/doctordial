@@ -146,13 +146,15 @@ export function AdminSidebar() {
     { title: "Research Results", icon: Microscope, path: "/dashboard/calls/research" },
   ];
 
+  // Only show the General settings menu item and hide the others as requested
   const settingsMenuItems = [
     { title: "Algemeen", icon: Grid, path: "/dashboard/settings/general" },
-    { title: "Facturatie", icon: CreditCard, path: "/dashboard/settings/billing" },
-    { title: "Facturen", icon: Receipt, path: "/dashboard/settings/invoices" },
-    { title: "Beveiliging & Privacy", icon: Shield, path: "/dashboard/settings/security" },
-    { title: "Team", icon: Users, path: "/dashboard/settings/team" },
-    { title: "Integraties", icon: Building2, path: "/dashboard/settings/integrations" },
+    // The following items are hidden as requested
+    // { title: "Facturatie", icon: CreditCard, path: "/dashboard/settings/billing" },
+    // { title: "Facturen", icon: Receipt, path: "/dashboard/settings/invoices" },
+    // { title: "Beveiliging & Privacy", icon: Shield, path: "/dashboard/settings/security" },
+    // { title: "Team", icon: Users, path: "/dashboard/settings/team" },
+    // { title: "Integraties", icon: Building2, path: "/dashboard/settings/integrations" },
   ];
 
   return (
