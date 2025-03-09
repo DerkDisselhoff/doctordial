@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Pill, Clock, Calendar, Phone, FileText, User, FileSpreadsheet, Building, ArrowRight, Flag } from "lucide-react";
 import { format } from "date-fns";
 import { CallSummary } from "./detail/CallSummary";
+import { CallTranscript } from "./detail/CallTranscript";
 
 export interface MedicationLog {
   id: string;
@@ -33,11 +34,24 @@ export interface MedicationLog {
   Action?: string | null;
 }
 
+// Helper function to format transcript messages
+const formatTranscript = (transcript: string | null) => {
+  if (!transcript) return [];
+  return transcript.split(/(?=AI:|User:)/).filter(Boolean).map(message => {
+    const [role, ...content] = message.split(':');
+    return {
+      role: role.trim(),
+      content: content.join(':').trim()
+    };
+  });
+};
+
 export function MedicationDetail() {
   const { callId } = useParams();
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [editedCall, setEditedCall] = useState<Partial<MedicationLog>>({});
+  const [transcriptMessages, setTranscriptMessages] = useState<Array<{role: string, content: string}>>([]);
   
   const { data: call, isLoading, error, refetch } = useQuery({
     queryKey: ['medicationDetail', callId],
@@ -65,6 +79,7 @@ export function MedicationDetail() {
   useEffect(() => {
     if (call) {
       setEditedCall(call);
+      setTranscriptMessages(formatTranscript(call.transcript));
     }
   }, [call]);
 
@@ -320,18 +335,12 @@ export function MedicationDetail() {
           
           {/* Transcript */}
           {call.transcript && (
-            <Card className="bg-white border-gray-muted shadow-sm">
-              <CardContent className="pt-6">
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-mint" /> Transcript
-                </h3>
-                <div className="p-4 bg-gray-50 rounded-md max-h-96 overflow-y-auto">
-                  <pre className="whitespace-pre-wrap text-sm text-gray-dark">
-                    {call.transcript}
-                  </pre>
-                </div>
-              </CardContent>
-            </Card>
+            <CallTranscript 
+              isEditing={isEditing}
+              editedCall={editedCall}
+              handleInputChange={handleInputChange}
+              transcriptMessages={transcriptMessages}
+            />
           )}
         </>
       )}
