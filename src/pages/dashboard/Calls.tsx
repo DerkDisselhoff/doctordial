@@ -18,9 +18,9 @@ const Calls = () => {
   // Determine which type of calls we're viewing
   const getPageTitle = () => {
     if (path.includes("/medication")) {
-      return "Medication";
+      return "Medicatie";
     } else if (path.includes("/research")) {
-      return "Research Results";
+      return "Onderzoek uitslagen";
     } else {
       return "Triage";
     }
@@ -29,8 +29,8 @@ const Calls = () => {
   return (
     <div className="space-y-8">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-dark">Assistant Output</h2>
-        <p className="text-gray">Monitor and analyze assistant performance across services</p>
+        <h2 className="text-3xl font-bold text-gray-dark">AI Assistent gesprekken</h2>
+        <p className="text-gray">Monitor en analyseer de prestaties van de assistent in alle diensten</p>
       </div>
 
       {isDetailPage && (
@@ -38,7 +38,7 @@ const Calls = () => {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink>
-                <Link to="/dashboard/calls">Assistant Output</Link>
+                <Link to="/dashboard/calls">AI Assistent gesprekken</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>
@@ -47,11 +47,11 @@ const Calls = () => {
             <BreadcrumbItem>
               {path.includes("/medication") ? (
                 <BreadcrumbLink>
-                  <Link to="/dashboard/calls/medication">Medication</Link>
+                  <Link to="/dashboard/calls/medication">Medicatie</Link>
                 </BreadcrumbLink>
               ) : path.includes("/research") ? (
                 <BreadcrumbLink>
-                  <Link to="/dashboard/calls/research">Research Results</Link>
+                  <Link to="/dashboard/calls/research">Onderzoek uitslagen</Link>
                 </BreadcrumbLink>
               ) : (
                 <BreadcrumbLink>

@@ -142,8 +142,8 @@ export function AdminSidebar() {
 
   const assistantOutputItems = [
     { title: "Triage", icon: Phone, path: "/dashboard/calls" },
-    { title: "Medication", icon: Pill, path: "/dashboard/calls/medication" },
-    { title: "Research Results", icon: Microscope, path: "/dashboard/calls/research" },
+    { title: "Medicatie", icon: Pill, path: "/dashboard/calls/medication" },
+    { title: "Onderzoek uitslagen", icon: Microscope, path: "/dashboard/calls/research" },
   ];
 
   // Only show the General settings menu item and hide the others as requested
@@ -187,7 +187,7 @@ export function AdminSidebar() {
 
                 {/* Assistant Output Section */}
                 <div className="space-y-1">
-                  <SectionTitle title="Assistant Output" />
+                  <SectionTitle title="AI Assistent gesprekken" />
                   {assistantOutputItems.map((item) => (
                     <SubMenuItem key={item.title} {...item} />
                   ))}
