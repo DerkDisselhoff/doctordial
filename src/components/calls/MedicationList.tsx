@@ -171,23 +171,35 @@ export function MedicationList() {
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="border-b border-gray-muted/10">
-                <TableHead className="text-left p-4 text-gray whitespace-nowrap">
-                  <Calendar className="h-4 w-4" />
+              <TableRow className="border-b border-gray-muted/10 hover:bg-transparent">
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap font-semibold">
+                  <div className="flex items-center">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    <span>Datum</span>
+                  </div>
                 </TableHead>
-                <TableHead className="text-left p-4 text-gray whitespace-nowrap">Samenvatting</TableHead>
-                <TableHead className="text-left p-4 text-gray whitespace-nowrap">
-                  <User className="h-4 w-4" />
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap font-semibold">Samenvatting</TableHead>
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap font-semibold">
+                  <div className="flex items-center">
+                    <User className="h-4 w-4 mr-2" />
+                    <span>Patiënt</span>
+                  </div>
                 </TableHead>
-                <TableHead className="text-left p-4 text-gray whitespace-nowrap">Geboortedatum</TableHead>
-                <TableHead className="text-left p-4 text-gray whitespace-nowrap">
-                  <Pill className="h-4 w-4" />
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap font-semibold">Geboortedatum</TableHead>
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap font-semibold">
+                  <div className="flex items-center">
+                    <Pill className="h-4 w-4 mr-2" />
+                    <span>Medicatie</span>
+                  </div>
                 </TableHead>
-                <TableHead className="text-left p-4 text-gray whitespace-nowrap">Dosering</TableHead>
-                <TableHead className="text-left p-4 text-gray whitespace-nowrap">
-                  <Package className="h-4 w-4" />
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap font-semibold">Dosering</TableHead>
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap font-semibold">
+                  <div className="flex items-center">
+                    <Package className="h-4 w-4 mr-2" />
+                    <span>Verpakking</span>
+                  </div>
                 </TableHead>
-                <TableHead className="text-left p-4 text-gray whitespace-nowrap">Acties</TableHead>
+                <TableHead className="text-left p-4 text-gray whitespace-nowrap font-semibold">Acties</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -195,32 +207,32 @@ export function MedicationList() {
                 paginatedCalls.map((call) => (
                   <TableRow 
                     key={call.id} 
-                    className="border-b border-gray-muted hover:bg-gray-muted/10 cursor-pointer transition-colors"
+                    className="border-b border-gray-muted/20 hover:bg-gray-muted/5 transition-colors"
                   >
-                    <TableCell className="p-4 text-gray-dark">
+                    <TableCell className="p-4 text-gray-dark whitespace-nowrap">
                       {formatDate(call.created_at)}
                     </TableCell>
-                    <TableCell className="p-4">
-                      <div className="max-w-[180px] truncate" title={call.conversation_summary || "Geen samenvatting"}>
+                    <TableCell className="p-4 text-gray-dark">
+                      <div className="max-w-[200px] truncate" title={call.conversation_summary || "Geen samenvatting"}>
                         {call.conversation_summary || "Geen samenvatting"}
                       </div>
                     </TableCell>
-                    <TableCell className="p-4 text-gray-dark">
+                    <TableCell className="p-4 text-gray-dark whitespace-nowrap">
                       {call.patient_name || "Onbekend"}
                     </TableCell>
-                    <TableCell className="p-4 text-gray-dark">
+                    <TableCell className="p-4 text-gray-dark whitespace-nowrap">
                       {call.Date_of_birth || "Niet gespecificeerd"}
                     </TableCell>
-                    <TableCell className="p-4 text-gray-dark">
+                    <TableCell className="p-4 text-gray-dark whitespace-nowrap">
                       {call.medication_name || "Niet gespecificeerd"}
                     </TableCell>
-                    <TableCell className="p-4 text-gray-dark">
+                    <TableCell className="p-4 text-gray-dark whitespace-nowrap">
                       {call.dosage || "Niet gespecificeerd"}
                     </TableCell>
-                    <TableCell className="p-4 text-gray-dark">
+                    <TableCell className="p-4 text-gray-dark whitespace-nowrap">
                       {call.Packages || "Niet gespecificeerd"}
                     </TableCell>
-                    <TableCell className="p-4">
+                    <TableCell className="p-4 whitespace-nowrap">
                       <Link to={`/dashboard/calls/medication/${call.call_id}`}>
                         <Button variant="ghost" size="sm" className="h-8 text-mint hover:text-mint/80 hover:bg-mint/10">
                           Details bekijken
