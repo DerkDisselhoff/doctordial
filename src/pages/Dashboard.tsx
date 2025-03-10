@@ -1,4 +1,3 @@
-
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { OverviewDashboard } from "@/components/dashboard/OverviewDashboard";
 import { useEffect, useState } from "react";
@@ -78,9 +77,10 @@ const Dashboard = () => {
           <Route path="/" element={<OverviewDashboard />} />
           <Route path="/workflow" element={<Workflow />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/assistants" element={<AIAssistants />} />
+          
           {userRole === 'admin' ? (
             <>
-              <Route path="/assistants" element={<AIAssistants />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/practices" element={<Practices />} />
               <Route path="/reports" element={<Reports />} />

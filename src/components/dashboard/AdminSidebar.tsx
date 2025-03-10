@@ -1,3 +1,4 @@
+
 import { 
   BarChart3, Users, Phone, Settings, Home, Building2, 
   DollarSign, FileText, Activity, LogOut, Shield, 
@@ -124,6 +125,7 @@ export function AdminSidebar() {
 
   const clientMenuItems = [
     { title: "Overzicht", icon: Home, path: "/dashboard" },
+    { title: "AI Assistentes", icon: Bot, path: "/dashboard/assistants" },
     { title: "Werkstroom", icon: GitBranch, path: "/dashboard/workflow" },
   ];
 
