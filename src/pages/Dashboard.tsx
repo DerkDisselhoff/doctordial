@@ -1,4 +1,3 @@
-
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
@@ -87,7 +86,6 @@ const Dashboard = () => {
           <Route path="/assistants/research-settings" element={<ResearchSettingsPage />} />
           
           <Route path="/workflow" element={<Workflow />} />
-          <Route path="/calendar" element={<Calendar />} />
           
           {userRole === 'admin' ? (
             <>

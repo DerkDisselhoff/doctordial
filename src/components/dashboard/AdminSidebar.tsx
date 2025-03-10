@@ -124,7 +124,6 @@ export function AdminSidebar() {
 
   const clientMenuItems = [
     { title: "AI Assistentes", icon: Bot, path: "/dashboard/assistants" },
-    { title: "Werkstroom", icon: GitBranch, path: "/dashboard/assistants/triage-settings" },
   ];
 
   const adminMenuItems = [
