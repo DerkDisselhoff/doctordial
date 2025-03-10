@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
@@ -5,7 +6,7 @@ import About from './pages/About';
 import DemoRequest from './pages/DemoRequest';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import { LanguageProvider } from './components/LanguageContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import { Toaster } from "@/components/ui/toaster"
 import KnowledgeBaseDetail from './pages/KnowledgeBaseDetail';
 
