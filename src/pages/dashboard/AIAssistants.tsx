@@ -6,6 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Bot, Download, RefreshCcw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { MetricsCards } from "@/components/dashboard/metrics/MetricsCards";
+import { DashboardCharts } from "@/components/dashboard/charts/DashboardCharts";
+import { UrgentCases } from "@/components/dashboard/client/UrgentCases";
+import { Toggle } from "@/components/ui/toggle";
+import { TimeFilter } from "@/types/metrics";
+import { motion } from "framer-motion";
 
 interface AssistantStats {
   triage: {
@@ -38,11 +44,32 @@ const AIAssistants = () => {
     total: { calls: 0, avgDuration: '0:00', successRate: 0 }
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
+  const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
   const { toast } = useToast();
 
   useEffect(() => {
+    const fetchUserProfile = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .maybeSingle();
+        
+        setUserRole(profile?.role || null);
+      }
+    };
+
+    fetchUserProfile();
     fetchAssistantStats();
   }, []);
+
+  useEffect(() => {
+    // Refresh stats when time filter changes
+    fetchAssistantStats();
+  }, [timeFilter]);
 
   const fetchAssistantStats = async () => {
     setIsLoading(true);
@@ -148,6 +175,37 @@ const AIAssistants = () => {
           <p className="text-gray">Beheer en monitor de prestaties van je AI assistentes</p>
         </div>
         <div className="flex gap-2">
+          {userRole === 'client' && (
+            <div className="flex items-center space-x-4 text-sm text-gray mr-4">
+              <Toggle
+                variant="outline"
+                size="sm"
+                pressed={timeFilter === 'today'}
+                onPressedChange={() => setTimeFilter('today')}
+                className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
+              >
+                Vandaag
+              </Toggle>
+              <Toggle
+                variant="outline"
+                size="sm"
+                pressed={timeFilter === 'week'}
+                onPressedChange={() => setTimeFilter('week')}
+                className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
+              >
+                Afgelopen week
+              </Toggle>
+              <Toggle
+                variant="outline"
+                size="sm"
+                pressed={timeFilter === 'month'}
+                onPressedChange={() => setTimeFilter('month')}
+                className="h-auto px-0 hover:bg-transparent data-[state=on]:bg-transparent data-[state=on]:text-blue-dark data-[state=on]:underline hover:text-blue-dark"
+              >
+                Afgelopen maand
+              </Toggle>
+            </div>
+          )}
           <Button 
             variant="outline"
             className="bg-white border-gray-muted text-gray-dark hover:bg-gray-50"
@@ -166,6 +224,16 @@ const AIAssistants = () => {
           </Button>
         </div>
       </div>
+
+      {/* Metrics cards from the overview page */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="mb-8"
+      >
+        <MetricsCards timeFilter={timeFilter} />
+      </motion.div>
 
       {/* Overall stats card */}
       <Card className="border-gray-muted shadow-sm bg-white">
@@ -216,6 +284,34 @@ const AIAssistants = () => {
           stats={stats.research}
         />
       </div>
+
+      {/* Charts for admin users or UrgentCases for client users */}
+      {userRole === 'admin' ? (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.7 }}
+        >
+          <DashboardCharts />
+        </motion.div>
+      ) : (
+        <>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+          >
+            <UrgentCases isIrrelevant={false} />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+          >
+            <UrgentCases isIrrelevant={true} />
+          </motion.div>
+        </>
+      )}
     </div>
   );
 };

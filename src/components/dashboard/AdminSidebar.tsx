@@ -124,14 +124,14 @@ export function AdminSidebar() {
   );
 
   const clientMenuItems = [
-    { title: "Overzicht", icon: Home, path: "/dashboard" },
     { title: "AI Assistentes", icon: Bot, path: "/dashboard/assistants" },
+    { title: "Overzicht", icon: Home, path: "/dashboard/overview" },
     { title: "Werkstroom", icon: GitBranch, path: "/dashboard/workflow" },
   ];
 
   const adminMenuItems = [
-    { title: "Overzicht", icon: Home, path: "/dashboard" },
     { title: "AI Assistentes", icon: Bot, path: "/dashboard/assistants" },
+    { title: "Overzicht", icon: Home, path: "/dashboard/overview" },
     { title: "Afspraken", icon: Calendar, path: "/dashboard/appointments" },
     { title: "Agenda", icon: Calendar, path: "/dashboard/calendar" },
     { title: "Cliënten", icon: Users, path: "/dashboard/clients" },
