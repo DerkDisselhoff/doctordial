@@ -1,5 +1,5 @@
+
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
-import { OverviewDashboard } from "@/components/dashboard/OverviewDashboard";
 import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
@@ -77,9 +77,6 @@ const Dashboard = () => {
           {/* Redirect root to assistants */}
           <Route path="/" element={<Navigate to="/dashboard/assistants" replace />} />
           <Route path="/assistants" element={<AIAssistants />} />
-          
-          {/* Keep Overview page temporarily for backward compatibility */}
-          <Route path="/overview" element={<OverviewDashboard />} />
           
           <Route path="/workflow" element={<Workflow />} />
           <Route path="/calendar" element={<Calendar />} />
