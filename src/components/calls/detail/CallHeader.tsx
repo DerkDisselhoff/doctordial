@@ -1,6 +1,7 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Edit2, Save, Flag } from "lucide-react";
+import { Edit2, Save, Flag, AlertTriangle } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,6 +10,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/lib/supabaseClient";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface CallHeaderProps {
   callId: string;
@@ -28,30 +34,53 @@ export function CallHeader({
   refetch 
 }: CallHeaderProps) {
   const { toast } = useToast();
+  const [flagReason, setFlagReason] = useState<string>("");
+  const [showFlagDialog, setShowFlagDialog] = useState(false);
+  const [correctUrgency, setCorrectUrgency] = useState<string>("");
+  const [additionalNotes, setAdditionalNotes] = useState<string>("");
 
-  const handleFlag = async (reason: string) => {
+  const openFlagDialog = (reason: string) => {
+    setFlagReason(reason);
+    setShowFlagDialog(true);
+  };
+
+  const handleFlag = async () => {
     try {
       // Determine which table to update based on the URL
       const pathname = window.location.pathname;
       
+      // Format flag details
+      const flagDetails = {
+        reason: flagReason,
+        timestamp: new Date().toISOString(),
+        details: {}
+      };
+
+      // Add specific details based on flag reason
+      if (flagReason === "Wrong Urgency Level" && correctUrgency) {
+        flagDetails.details = { correctUrgency };
+      } else if (flagReason === "Other" && additionalNotes) {
+        flagDetails.details = { notes: additionalNotes };
+      } else if (additionalNotes) {
+        flagDetails.details = { notes: additionalNotes };
+      }
+      
       if (pathname.includes('/medication')) {
         // For medication logs, use doctor_notes to store flagging info
-        // The doctor_notes field exists in the medications table type
         const { error } = await supabase
           .from('call_logs_medications')
           .update({
-            doctor_notes: `FLAGGED: ${reason} - ${new Date().toLocaleString()}`
+            doctor_notes: JSON.stringify(flagDetails)
           })
           .eq('call_id', callId);
           
         if (error) throw error;
       } else if (pathname.includes('/research')) {
         // For research logs, use findings field to store flagging info
-        // The findings field exists in the research results table type
         const { error } = await supabase
           .from('call_logs_researchresults')
           .update({
-            findings: `FLAGGED: ${reason} - ${new Date().toLocaleString()}`
+            findings: JSON.stringify(flagDetails)
           })
           .eq('call_id', callId);
           
@@ -61,10 +90,7 @@ export function CallHeader({
         const { error } = await supabase
           .from('call_logs_triage')
           .update({ 
-            flagging: {
-              reason,
-              timestamp: new Date().toISOString()
-            }
+            flagging: flagDetails
           })
           .eq('call_id', callId);
           
@@ -73,9 +99,15 @@ export function CallHeader({
 
       toast({
         title: "Call flagged",
-        description: `The call has been flagged for ${reason}.`,
+        description: `The call has been flagged: ${flagReason}.`,
       });
 
+      // Close dialog and reset states
+      setShowFlagDialog(false);
+      setFlagReason("");
+      setCorrectUrgency("");
+      setAdditionalNotes("");
+      
       refetch();
     } catch (error) {
       console.error('Error flagging call:', error);
@@ -88,70 +120,138 @@ export function CallHeader({
   };
 
   return (
-    <div className="flex justify-between items-center">
-      <h2 className="text-2xl font-semibold text-gray-dark">Call Details</h2>
-      <div className="flex gap-2">
-        {!isEditing ? (
-          <>
-            <Button
-              onClick={() => setIsEditing(true)}
-              variant="outline"
-              className="border-mint hover:bg-mint-light/50 text-mint"
-            >
-              <Edit2 className="h-4 w-4 mr-2" />
-              Edit
-            </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  className={`border-mint ${isFlagged ? 'bg-mint-light/50' : ''} hover:bg-mint-light/50 text-mint`}
-                >
-                  <Flag className="h-4 w-4 mr-2" />
-                  {isFlagged ? 'Flagged' : 'Flag This Call'}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-white border-gray-muted">
-                <DropdownMenuItem 
-                  onClick={() => handleFlag('Needs Review')}
-                  className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
-                >
-                  Needs Review
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={() => handleFlag('Follow Up Required')}
-                  className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
-                >
-                  Follow Up Required
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={() => handleFlag('Incorrect Information')}
-                  className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
-                >
-                  Incorrect Information
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </>
-        ) : (
-          <>
-            <Button
-              onClick={() => setIsEditing(false)}
-              variant="outline"
-              className="border-mint hover:bg-mint-light/50 text-mint"
-            >
+    <>
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-semibold text-gray-dark">Call Details</h2>
+        <div className="flex gap-2">
+          {!isEditing ? (
+            <>
+              <Button
+                onClick={() => setIsEditing(true)}
+                variant="outline"
+                className="border-mint hover:bg-mint-light/50 text-mint"
+              >
+                <Edit2 className="h-4 w-4 mr-2" />
+                Edit
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className={`border-mint ${isFlagged ? 'bg-mint-light/50' : ''} hover:bg-mint-light/50 text-mint`}
+                  >
+                    <Flag className="h-4 w-4 mr-2" />
+                    {isFlagged ? 'Flagged' : 'Flag This Call'}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-white border-gray-muted">
+                  <DropdownMenuItem 
+                    onClick={() => openFlagDialog("Wrong Urgency Level")}
+                    className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
+                  >
+                    <AlertTriangle className="h-4 w-4 mr-2 text-yellow-500" />
+                    Wrong Urgency Level
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => openFlagDialog("Wrong Questions")}
+                    className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
+                  >
+                    <Flag className="h-4 w-4 mr-2 text-orange-500" />
+                    Wrong Questions from AI
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => openFlagDialog("Messy Conversation")}
+                    className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
+                  >
+                    <Flag className="h-4 w-4 mr-2 text-red-500" />
+                    Messy Conversation, Not Smooth
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => openFlagDialog("Other")}
+                    className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
+                  >
+                    <Flag className="h-4 w-4 mr-2 text-blue-500" />
+                    Other Issue
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={() => setIsEditing(false)}
+                variant="outline"
+                className="border-mint hover:bg-mint-light/50 text-mint"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSave}
+                className="bg-blue-dark hover:bg-blue-dark/90 text-white"
+              >
+                <Save className="h-4 w-4 mr-2" />
+                Save Changes
+              </Button>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Flag Dialog */}
+      <Dialog open={showFlagDialog} onOpenChange={setShowFlagDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Flag Call: {flagReason}</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            {flagReason === "Wrong Urgency Level" && (
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="correctUrgency" className="text-right">
+                  Correct Urgency
+                </Label>
+                <div className="col-span-3">
+                  <Select 
+                    onValueChange={setCorrectUrgency} 
+                    defaultValue={correctUrgency}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select correct urgency level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="U1">U1 - Immediately Life-threatening</SelectItem>
+                      <SelectItem value="U2">U2 - Urgent</SelectItem>
+                      <SelectItem value="U3">U3 - Less Urgent</SelectItem>
+                      <SelectItem value="U4">U4 - Non-urgent</SelectItem>
+                      <SelectItem value="U5">U5 - Advice</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            )}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="additionalNotes" className="text-right">
+                Notes
+              </Label>
+              <Textarea
+                id="additionalNotes"
+                className="col-span-3"
+                placeholder="Please provide additional details..."
+                value={additionalNotes}
+                onChange={(e) => setAdditionalNotes(e.target.value)}
+                rows={4}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => setShowFlagDialog(false)}>
               Cancel
             </Button>
-            <Button
-              onClick={handleSave}
-              className="bg-blue-dark hover:bg-blue-dark/90 text-white"
-            >
-              <Save className="h-4 w-4 mr-2" />
-              Save Changes
+            <Button type="button" onClick={handleFlag} className="bg-mint hover:bg-mint-dark text-white">
+              Submit Flag
             </Button>
-          </>
-        )}
-      </div>
-    </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
