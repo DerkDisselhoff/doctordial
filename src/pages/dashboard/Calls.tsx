@@ -5,6 +5,7 @@ import { ResearchResultsList } from "@/components/calls/ResearchResultsList";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { CallDetail } from "@/components/calls/CallDetail";
 import { MedicationDetail } from "@/components/calls/MedicationDetail";
+import { ResearchResultDetail } from "@/components/calls/ResearchResultDetail";
 import { ChevronRight } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
@@ -81,6 +82,7 @@ const Calls = () => {
         <Route path="medication" element={<MedicationList />} />
         <Route path="medication/:callId" element={<MedicationDetail />} />
         <Route path="research" element={<ResearchResultsList />} />
+        <Route path="research/:callId" element={<ResearchResultDetail />} />
       </Routes>
     </div>
   );
