@@ -36,16 +36,44 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
           break;
       }
 
-      const { data: callData, error: callError } = await supabase
+      // Get calls from triage assistant
+      const { data: triageData, error: triageError } = await supabase
         .from('call_logs_triage')
         .select('*')
         .eq('assistant_id', assistantData.assistant_id)
         .gte('start_time', startDate.toISOString())
         .lte('start_time', now.toISOString());
 
-      if (callError) throw callError;
+      if (triageError) console.error("Error fetching triage data:", triageError);
 
-      return calculateMetrics(callData);
+      // Get calls from medication assistant 
+      const { data: medicationData, error: medicationError } = await supabase
+        .from('call_logs_medications')
+        .select('*')
+        .eq('assistant_id', assistantData.assistant_id)
+        .gte('start_time', startDate.toISOString())
+        .lte('start_time', now.toISOString());
+
+      if (medicationError) console.error("Error fetching medication data:", medicationError);
+
+      // Get calls from research assistant
+      const { data: researchData, error: researchError } = await supabase
+        .from('call_logs_researchresults')
+        .select('*')
+        .eq('assistant_id', assistantData.assistant_id)
+        .gte('start_time', startDate.toISOString())
+        .lte('start_time', now.toISOString());
+
+      if (researchError) console.error("Error fetching research data:", researchError);
+
+      // Combine all calls data
+      const allCallsData = [
+        ...(triageData || []), 
+        ...(medicationData || []), 
+        ...(researchData || [])
+      ];
+
+      return calculateMetrics(allCallsData);
     },
   });
 };
