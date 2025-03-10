@@ -21,13 +21,31 @@ const KnowledgeBase = () => {
     {
       id: "test-script-triage",
       title: "Test Script Triage",
-      description: "Een handleiding voor het testen van de Digitale Assistenten in verschillende scenario's.",
+      description: "Een handleiding voor het testen van de AI-triage-assistent in verschillende scenario's.",
       type: "document",
       dateAdded: "2023-06-15",
       readTime: "5 min"
     },
-    // More items can be added here later
+    {
+      id: "test-script-medicatie",
+      title: "Test Script Medicatie (herhaalrecepten)",
+      description: "Een handleiding voor het testen van de AI-medicatie-assistent voor herhaalrecepten.",
+      type: "document",
+      dateAdded: "2023-09-10",
+      readTime: "4 min"
+    },
+    {
+      id: "test-script-onderzoek",
+      title: "Test Script Onderzoek uitslagen (terugbelverzoek)",
+      description: "Een handleiding voor het testen van de AI-assistent voor het communiceren van onderzoeksuitslagen.",
+      type: "document",
+      dateAdded: "2023-10-05",
+      readTime: "6 min"
+    }
   ];
+
+  // Featured item - we'll use the first item in the list
+  const featuredItem = knowledgeItems[0];
 
   return (
     <div className="space-y-8">
@@ -50,33 +68,39 @@ const KnowledgeBase = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="bg-white rounded-lg p-5 border border-gray-muted/30 hover:border-mint/30 transition-all group cursor-pointer">
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-mint/10 text-mint">
-                <FileText className="h-6 w-6" />
-              </div>
-              <div className="flex-grow">
-                <h3 className="text-xl font-semibold text-gray-dark group-hover:text-mint transition-colors">
-                  Test Script Triage
-                </h3>
-                <p className="text-gray mt-1">
-                  Een handleiding voor het testen van de Digitale Assistenten in verschillende scenario's.
-                </p>
-                <div className="flex items-center gap-4 mt-3 text-sm text-gray-muted">
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    5 min leestijd
-                  </span>
-                  <span className="flex items-center gap-1">
-                    Toegevoegd op 15 juni 2023
-                  </span>
+          <Link to={`/knowledge-base/${featuredItem.id}`} target="_blank" rel="noopener noreferrer">
+            <div className="bg-white rounded-lg p-5 border border-gray-muted/30 hover:border-mint/30 transition-all group cursor-pointer">
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-lg bg-mint/10 text-mint">
+                  <FileText className="h-6 w-6" />
                 </div>
+                <div className="flex-grow">
+                  <h3 className="text-xl font-semibold text-gray-dark group-hover:text-mint transition-colors">
+                    {featuredItem.title}
+                  </h3>
+                  <p className="text-gray mt-1">
+                    {featuredItem.description}
+                  </p>
+                  <div className="flex items-center gap-4 mt-3 text-sm text-gray-muted">
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-4 w-4" />
+                      {featuredItem.readTime} leestijd
+                    </span>
+                    <span className="flex items-center gap-1">
+                      Toegevoegd op {new Date(featuredItem.dateAdded).toLocaleDateString('nl-NL', {
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric'
+                      })}
+                    </span>
+                  </div>
+                </div>
+                <Button variant="ghost" className="text-mint">
+                  <ChevronRight className="h-5 w-5" />
+                </Button>
               </div>
-              <Button variant="ghost" className="text-mint">
-                <ChevronRight className="h-5 w-5" />
-              </Button>
             </div>
-          </div>
+          </Link>
         </CardContent>
       </Card>
 
@@ -101,7 +125,7 @@ const KnowledgeBase = () => {
                 transition={{ duration: 0.3 }}
                 className="bg-gray-50 rounded-lg p-5 border border-gray-muted/30 hover:border-mint/30 hover:bg-gray-50/80 transition-all group cursor-pointer"
               >
-                <a href={`/knowledge-base/${item.id}`} target="_blank" rel="noopener noreferrer" className="block">
+                <Link to={`/knowledge-base/${item.id}`} target="_blank" rel="noopener noreferrer" className="block">
                   <div className="flex items-start gap-4">
                     <div className="p-3 rounded-lg bg-mint/10 text-mint flex-shrink-0">
                       <FileText className="h-5 w-5" />
@@ -133,7 +157,7 @@ const KnowledgeBase = () => {
                       <ChevronRight className="h-5 w-5" />
                     </Button>
                   </div>
-                </a>
+                </Link>
               </motion.div>
             ))}
           </div>

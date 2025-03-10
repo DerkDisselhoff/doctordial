@@ -119,6 +119,234 @@ const TestScriptTriageContent = () => {
   );
 };
 
+const TestScriptMedicatieContent = () => {
+  return (
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold text-forest">Testinstructies voor de AI-medicatie-assistent (herhaalrecepten)</h1>
+      
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold text-forest">Introductie</h2>
+        <p className="text-gray-700">
+          Met deze testinstructies kunnen medewerkers van de praktijk de AI-medicatie-assistent bellen en de functionaliteit voor herhaalrecepten testen. 
+          Het doel is om te testen hoe de AI reageert op verschillende medicatieverzoeken, welke verificatievragen worden gesteld en hoe de verwerking van herhaalrecepten verloopt. 
+          Volg onderstaande stappen om de test uit te voeren:
+        </p>
+
+        <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+          <li><strong>Bel de AI-assistent:</strong> Gebruik het telefoonnummer of de toegangscode die is verstrekt voor de AI-medicatie-assistent.</li>
+          <li><strong>Kies een medicatieverzoek:</strong> Selecteer een van de 10 voorbeeldmedicaties uit de tabel hieronder.</li>
+          <li><strong>Start het gesprek:</strong> Begin met de voorgestelde openingszin (of een variatie daarop) om een herhaalrecept aan te vragen. Speel de rol van een patiënt en wees zo realistisch mogelijk.</li>
+          <li><strong>Beantwoord de vragen:</strong> Reageer op de verificatievragen die de AI stelt. Gebruik logische antwoorden die passen bij het medicatieverzoek (bijv. geboortedatum, contactgegevens, laatste controle).</li>
+          <li><strong>Noteer de uitkomst:</strong> Schrijf op hoe de AI reageert: welke vragen worden gesteld, hoe het verzoek wordt verwerkt, en of de reactie logisch en behulpzaam is.</li>
+          <li><strong>Herhaal met andere medicaties:</strong> Test meerdere medicatieverzoeken om een breed beeld te krijgen van de AI's prestaties.</li>
+          <li><strong>Rapporteer feedback:</strong> Geef eventuele opmerkingen of problemen door aan het ontwikkelteam (bijv. als de AI een medicatienaam verkeerd begrijpt of een onverwachte reactie geeft).</li>
+        </ol>
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold text-forest">Tips voor testers</h2>
+        <ul className="list-disc pl-5 space-y-2 text-gray-700">
+          <li>Spreek duidelijk en gebruik alledaagse taal, zoals een patiënt dat zou doen.</li>
+          <li>Test verschillende scenario's (bijv. reguliere medicatie, medicatie die specifieke monitoring vereist).</li>
+          <li>Test ook randgevallen zoals medicatie die langere tijd niet is gebruikt of net gewijzigde medicatie.</li>
+        </ul>
+      </div>
+
+      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mt-6">
+        <h2 className="text-xl font-semibold text-forest mb-4">Overzicht van 10 voorbeeldmedicaties met openingszinnen</h2>
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="whitespace-nowrap">Medicatie</TableHead>
+                <TableHead className="whitespace-nowrap">Type</TableHead>
+                <TableHead className="whitespace-nowrap">Voorbeeld patiëntverzoek</TableHead>
+                <TableHead className="whitespace-nowrap">Suggestie voor openingszin</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium">Metformine</TableCell>
+                <TableCell>Diabetes medicatie</TableCell>
+                <TableCell>"Ik heb een nieuw recept nodig voor mijn diabetes medicijnen."</TableCell>
+                <TableCell>"Goedemorgen, ik wil graag een herhaalrecept aanvragen voor mijn metformine tabletten voor diabetes."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Simvastatine</TableCell>
+                <TableCell>Cholesterol-verlager</TableCell>
+                <TableCell>"Mijn cholesterolpillen zijn bijna op."</TableCell>
+                <TableCell>"Hallo, ik heb nog maar voor 3 dagen aan simvastatine over en zou graag een herhaalrecept willen."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Omeprazol</TableCell>
+                <TableCell>Maagzuurremmer</TableCell>
+                <TableCell>"Ik heb weer last van mijn maag en mijn medicijnen zijn op."</TableCell>
+                <TableCell>"Goedemiddag, ik gebruik omeprazol voor mijn maagklachten en zou graag een nieuw recept ontvangen."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Levothyroxine</TableCell>
+                <TableCell>Schildklierhormoon</TableCell>
+                <TableCell>"Ik heb nieuwe schildkliermedicatie nodig."</TableCell>
+                <TableCell>"Hoi, ik neem dagelijks levothyroxine voor mijn schildklier en mijn voorraad raakt op. Kan ik een herhaalrecept krijgen?"</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Salbutamol</TableCell>
+                <TableCell>Luchtwegverwijder</TableCell>
+                <TableCell>"Mijn astma-inhalator is bijna leeg."</TableCell>
+                <TableCell>"Goedemorgen, ik gebruik een salbutamol inhalator voor mijn astma en heb een nieuwe nodig."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Enalapril</TableCell>
+                <TableCell>Bloeddrukverlager</TableCell>
+                <TableCell>"Ik moet mijn bloeddrukpillen vernieuwen."</TableCell>
+                <TableCell>"Hallo, zou ik een herhaalrecept kunnen krijgen voor mijn enalapril tabletten voor mijn bloeddruk?"</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Diclofenac</TableCell>
+                <TableCell>Pijnstiller/ontstekingsremmer</TableCell>
+                <TableCell>"Ik heb weer pijnstillers nodig voor mijn gewrichten."</TableCell>
+                <TableCell>"Hoi, ik zou graag diclofenac willen aanvragen voor mijn chronische gewrichtspijn."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Amoxicilline</TableCell>
+                <TableCell>Antibioticum</TableCell>
+                <TableCell>"Ik moet mijn antibioticakuur afmaken maar ben door mijn pillen heen."</TableCell>
+                <TableCell>"Goedemiddag, ik ben bezig met een antibioticakuur met amoxicilline maar heb niet genoeg om de kuur af te maken."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Desloratadine</TableCell>
+                <TableCell>Antihistaminicum</TableCell>
+                <TableCell>"Mijn allergiemedicijnen zijn op en het pollenseizoen begint."</TableCell>
+                <TableCell>"Goedemorgen, ik gebruik desloratadine voor mijn hooikoorts en zou graag een nieuw recept ontvangen."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Acenocoumarol</TableCell>
+                <TableCell>Antistollingsmiddel</TableCell>
+                <TableCell>"Ik heb nieuwe bloedverdunners nodig."</TableCell>
+                <TableCell>"Hallo, ik gebruik acenocoumarol als bloedverdunner en zou graag een herhaalrecept willen voor de komende periode."</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const TestScriptOnderzoekContent = () => {
+  return (
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold text-forest">Testinstructies voor de AI-onderzoeksuitslagen-assistent (terugbelverzoek)</h1>
+      
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold text-forest">Introductie</h2>
+        <p className="text-gray-700">
+          Met deze testinstructies kunnen medewerkers van de praktijk de AI-onderzoeksuitslagen-assistent bellen en de functionaliteit voor het opvragen van onderzoeksuitslagen testen. 
+          Het doel is om te testen hoe de AI reageert op verschillende verzoeken om uitslagen, welke verificatievragen worden gesteld en hoe terugbelverzoeken worden verwerkt. 
+          Volg onderstaande stappen om de test uit te voeren:
+        </p>
+
+        <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+          <li><strong>Bel de AI-assistent:</strong> Gebruik het telefoonnummer of de toegangscode die is verstrekt voor de AI-onderzoeksuitslagen-assistent.</li>
+          <li><strong>Kies een onderzoeksuitslag:</strong> Selecteer een van de 10 voorbeeldonderzoeken uit de tabel hieronder.</li>
+          <li><strong>Start het gesprek:</strong> Begin met de voorgestelde openingszin (of een variatie daarop) om te vragen naar een onderzoeksuitslag. Speel de rol van een patiënt en wees zo realistisch mogelijk.</li>
+          <li><strong>Beantwoord de vragen:</strong> Reageer op de verificatievragen die de AI stelt. Gebruik logische antwoorden die passen bij het verzoek (bijv. geboortedatum, datum van onderzoek).</li>
+          <li><strong>Noteer de uitkomst:</strong> Schrijf op hoe de AI reageert: welke vragen worden gesteld, hoe het terugbelverzoek wordt verwerkt, en of de reactie logisch en behulpzaam is.</li>
+          <li><strong>Herhaal met andere onderzoeken:</strong> Test meerdere onderzoeken om een breed beeld te krijgen van de AI's prestaties.</li>
+          <li><strong>Rapporteer feedback:</strong> Geef eventuele opmerkingen of problemen door aan het ontwikkelteam (bijv. als de AI een onderzoek verkeerd begrijpt of een onverwachte reactie geeft).</li>
+        </ol>
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold text-forest">Tips voor testers</h2>
+        <ul className="list-disc pl-5 space-y-2 text-gray-700">
+          <li>Spreek duidelijk en gebruik alledaagse taal, zoals een patiënt dat zou doen.</li>
+          <li>Test verschillende scenario's (bijv. routine bloedonderzoek, specifiek onderzoek na verwijzing).</li>
+          <li>Test ook scenario's waarbij een patiënt urgente uitslagen wil hebben versus routinematige uitslagen.</li>
+        </ul>
+      </div>
+
+      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mt-6">
+        <h2 className="text-xl font-semibold text-forest mb-4">Overzicht van 10 voorbeeldonderzoeken met openingszinnen</h2>
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="whitespace-nowrap">Onderzoek</TableHead>
+                <TableHead className="whitespace-nowrap">Type</TableHead>
+                <TableHead className="whitespace-nowrap">Voorbeeld patiëntverzoek</TableHead>
+                <TableHead className="whitespace-nowrap">Suggestie voor openingszin</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium">Bloedonderzoek</TableCell>
+                <TableCell>Algemeen bloedbeeld</TableCell>
+                <TableCell>"Ik wil graag de uitslag van mijn bloedonderzoek weten."</TableCell>
+                <TableCell>"Goedemorgen, ik heb vorige week bloed laten prikken en zou graag de resultaten willen weten."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Urineonderzoek</TableCell>
+                <TableCell>Urinekweek</TableCell>
+                <TableCell>"Is mijn urine-onderzoek al bekend?"</TableCell>
+                <TableCell>"Hallo, ik heb maandag een potje urine ingeleverd voor onderzoek en vraag me af of de resultaten al binnen zijn."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Cholesteroltest</TableCell>
+                <TableCell>Lipidenprofiel</TableCell>
+                <TableCell>"Hoe zit het met mijn cholesterol?"</TableCell>
+                <TableCell>"Goedemiddag, ik ben benieuwd naar de uitslag van mijn cholesteroltest die ik twee weken geleden heb gedaan."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Röntgenfoto</TableCell>
+                <TableCell>Röntgen borstkas</TableCell>
+                <TableCell>"Ik heb een longfoto laten maken en wil weten wat eruit kwam."</TableCell>
+                <TableCell>"Hoi, ik ben vorige week naar het ziekenhuis geweest voor een röntgenfoto van mijn longen en wil graag weten wat daaruit is gekomen."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Echo</TableCell>
+                <TableCell>Echografie buik</TableCell>
+                <TableCell>"Ik wacht nog op de uitslag van mijn echo."</TableCell>
+                <TableCell>"Goedemorgen, ik heb twee dagen geleden een echo van mijn buik gehad en vraag me af of de resultaten al bij u bekend zijn."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">COVID-19 test</TableCell>
+                <TableCell>PCR-test</TableCell>
+                <TableCell>"Ik moet weten of ik corona heb."</TableCell>
+                <TableCell>"Hallo, ik heb gisteren een coronatest gedaan en zou graag de uitslag willen weten om te bepalen of ik in isolatie moet blijven."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Allergie-test</TableCell>
+                <TableCell>Bepaling specifieke IgE</TableCell>
+                <TableCell>"Kan ik de resultaten krijgen van mijn allergietest?"</TableCell>
+                <TableCell>"Hoi, ik heb vorige maand een allergietest laten doen en zou graag weten waarvoor ik precies allergisch ben."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Schildklieronderzoek</TableCell>
+                <TableCell>TSH en vrij T4</TableCell>
+                <TableCell>"Heeft u de uitslagen van mijn schildklier al?"</TableCell>
+                <TableCell>"Goedemiddag, ik ben afgelopen week geprikt voor schildklieronderzoek en ben benieuwd naar de resultaten."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Uitstrijkje</TableCell>
+                <TableCell>Cervixcytologie</TableCell>
+                <TableCell>"Ik wil graag weten of mijn uitstrijkje goed was."</TableCell>
+                <TableCell>"Goedemorgen, ik heb twee weken geleden een uitstrijkje laten maken en zou graag de uitslag willen weten."</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Hartfilmpje</TableCell>
+                <TableCell>ECG</TableCell>
+                <TableCell>"Ik heb een hartfilmpje laten maken en wil weten wat er uit is gekomen."</TableCell>
+                <TableCell>"Hallo, de huisarts heeft vorige week een ECG bij mij gemaakt en ik zou graag willen weten wat de resultaten zijn."</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const KnowledgeBaseDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -133,6 +361,10 @@ const KnowledgeBaseDetail = () => {
     switch (id) {
       case "test-script-triage":
         return <TestScriptTriageContent />;
+      case "test-script-medicatie":
+        return <TestScriptMedicatieContent />;
+      case "test-script-onderzoek":
+        return <TestScriptOnderzoekContent />;
       default:
         return (
           <div className="text-center py-12">
