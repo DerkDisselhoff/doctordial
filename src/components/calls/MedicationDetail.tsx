@@ -31,6 +31,7 @@ export interface MedicationLog {
   Packages: any | null;
   Date_of_birth: string | null;
   created_at: string;
+  updated_at: string;
   Action?: string | null;
 }
 
