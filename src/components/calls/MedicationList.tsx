@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
@@ -214,7 +213,7 @@ export function MedicationList() {
                     onClick={() => handleRowClick(call.call_id || '')}
                   >
                     <TableCell className="p-4 text-gray-dark whitespace-nowrap">
-                      {formatDate(call.created_at)}
+                      {formatDate(call.updated_at)}
                     </TableCell>
                     <TableCell className="p-4 text-gray-dark">
                       <div className="max-w-[200px] truncate" title={call.conversation_summary || "Geen samenvatting"}>

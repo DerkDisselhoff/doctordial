@@ -35,6 +35,9 @@ export interface CallLog {
   assistant_id?: string;
   client_id?: string;
   patient_id?: string;
+  updated_at?: string;
+  created_at?: string;
+  Forwarded?: boolean;
 }
 
 export interface MetricsCardProps {
