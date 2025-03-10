@@ -137,10 +137,10 @@ export const AssistantCard = ({ title, description, type, stats }: AssistantCard
           checked={isActive} 
           onCheckedChange={handleStatusChange} 
           className={cn(
-            "transition-all duration-300",
+            "transition-all duration-300 border",
             isActive 
-              ? "bg-mint data-[state=checked]:bg-mint hover:bg-mint-dark data-[state=checked]:border-mint-dark" 
-              : "bg-gray-muted hover:bg-gray-muted/80"
+              ? "bg-mint border-mint-dark data-[state=checked]:bg-mint/90 hover:bg-mint-dark" 
+              : "bg-gray-muted border-gray-light hover:bg-gray-light/30"
           )}
         />
       </CardHeader>
