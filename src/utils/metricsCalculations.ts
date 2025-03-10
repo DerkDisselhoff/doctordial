@@ -3,18 +3,24 @@ import { CallLog } from "@/types/metrics";
 
 export const calculateMetrics = (callData: CallLog[] | null) => {
   if (!callData) return null;
+  console.log("Calculating metrics for", callData.length, "calls");
 
   const totalCalls = callData.length;
   
-  const avgDuration = callData.length > 0
-    ? Math.round(callData.reduce((acc, call) => 
-        acc + (parseInt(call.duration_seconds || '0') || 0), 0) / callData.length)
+  // Calculate average duration
+  const durations = callData
+    .filter(call => call.duration_seconds)
+    .map(call => parseInt(call.duration_seconds || '0') || 0);
+  
+  const avgDuration = durations.length > 0
+    ? Math.round(durations.reduce((sum, val) => sum + val, 0) / durations.length)
     : 0;
 
   // Count forwarded calls across all types
   const callsForwarded = callData.filter(call => 
     call.Action?.toLowerCase().includes('forward to doctor') || 
-    call.Status?.toLowerCase().includes('forwarded')
+    call.Status?.toLowerCase().includes('forwarded') ||
+    call.Forwarded === true
   ).length;
 
   // Calculate success rate (based on intent or relevant fields)
@@ -48,10 +54,18 @@ export const calculateMetrics = (callData: CallLog[] | null) => {
     }
     // For research calls, filter by relevance or findings
     else if (call.relevance_score || call.findings) {
-      return call.relevance_score > 50 || !!call.findings;
+      return (call.relevance_score && call.relevance_score > 50) || !!call.findings;
     }
     return false;
   }).length;
+
+  console.log("Metrics calculated:", {
+    totalCalls,
+    avgDuration,
+    callsForwarded,
+    callSuccess,
+    relevantCases
+  });
 
   return {
     totalCalls,

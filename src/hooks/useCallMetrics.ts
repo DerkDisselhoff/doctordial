@@ -18,6 +18,7 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
         .maybeSingle();
 
       if (!assistantData?.assistant_id) {
+        console.log("No assistant ID found for user");
         return null;
       }
 
@@ -36,35 +37,31 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
           break;
       }
 
+      console.log("Fetching call data from", startDate.toISOString(), "to", now.toISOString());
+
       // Get calls from triage assistant
       const { data: triageData, error: triageError } = await supabase
         .from('call_logs_triage')
-        .select('*')
-        .eq('assistant_id', assistantData.assistant_id)
-        .gte('start_time', startDate.toISOString())
-        .lte('start_time', now.toISOString());
+        .select('*');
 
       if (triageError) console.error("Error fetching triage data:", triageError);
+      console.log("Triage calls found:", triageData?.length || 0);
 
       // Get calls from medication assistant 
       const { data: medicationData, error: medicationError } = await supabase
         .from('call_logs_medications')
-        .select('*')
-        .eq('assistant_id', assistantData.assistant_id)
-        .gte('start_time', startDate.toISOString())
-        .lte('start_time', now.toISOString());
+        .select('*');
 
       if (medicationError) console.error("Error fetching medication data:", medicationError);
+      console.log("Medication calls found:", medicationData?.length || 0);
 
       // Get calls from research assistant
       const { data: researchData, error: researchError } = await supabase
         .from('call_logs_researchresults')
-        .select('*')
-        .eq('assistant_id', assistantData.assistant_id)
-        .gte('start_time', startDate.toISOString())
-        .lte('start_time', now.toISOString());
+        .select('*');
 
       if (researchError) console.error("Error fetching research data:", researchError);
+      console.log("Research calls found:", researchData?.length || 0);
 
       // Combine all calls data
       const allCallsData = [
@@ -73,7 +70,20 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
         ...(researchData || [])
       ];
 
-      return calculateMetrics(allCallsData);
+      console.log("Total combined calls:", allCallsData.length);
+
+      // Filter by date after combining
+      const filteredCallsData = allCallsData.filter(call => {
+        if (!call.start_time) return false;
+        
+        const callDate = new Date(call.start_time);
+        return callDate >= startDate && callDate <= now;
+      });
+
+      console.log("Calls after date filtering:", filteredCallsData.length);
+
+      return calculateMetrics(filteredCallsData);
     },
+    refetchOnWindowFocus: false,
   });
 };
