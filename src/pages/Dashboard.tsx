@@ -1,3 +1,4 @@
+
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
@@ -27,6 +28,7 @@ import AIAssistants from "./dashboard/AIAssistants";
 import TriageSettingsPage from "./dashboard/assistants/TriageSettings";
 import MedicationSettingsPage from "./dashboard/assistants/MedicationSettings";
 import ResearchSettingsPage from "./dashboard/assistants/ResearchSettings";
+import KnowledgeBase from "./dashboard/KnowledgeBase";
 
 const queryClient = new QueryClient();
 
@@ -86,6 +88,9 @@ const Dashboard = () => {
           <Route path="/assistants/research-settings" element={<ResearchSettingsPage />} />
           
           <Route path="/workflow" element={<Workflow />} />
+          
+          {/* Knowledge Base */}
+          <Route path="/knowledge-base" element={<KnowledgeBase />} />
           
           {userRole === 'admin' ? (
             <>
