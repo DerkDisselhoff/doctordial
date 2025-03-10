@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Edit2, Save, Flag, AlertTriangle } from "lucide-react";
 import {
@@ -38,6 +38,34 @@ export function CallHeader({
   const [showFlagDialog, setShowFlagDialog] = useState(false);
   const [correctUrgency, setCorrectUrgency] = useState<string>("");
   const [additionalNotes, setAdditionalNotes] = useState<string>("");
+  const [assistantName, setAssistantName] = useState<string>("");
+  const [userId, setUserId] = useState<string | null>(null);
+  
+  useEffect(() => {
+    // Get the current user ID for storing in the flags
+    const getUserId = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        setUserId(session.user.id);
+      }
+    };
+
+    // Get the assistant name from the call data
+    const getCallData = async () => {
+      const { data, error } = await supabase
+        .from('call_logs_triage')
+        .select('assistant_id')
+        .eq('call_id', callId)
+        .single();
+      
+      if (data && !error) {
+        setAssistantName(data.assistant_id || "Unknown Assistant");
+      }
+    };
+
+    getUserId();
+    getCallData();
+  }, [callId]);
 
   const openFlagDialog = (reason: string) => {
     setFlagReason(reason);
@@ -46,56 +74,28 @@ export function CallHeader({
 
   const handleFlag = async () => {
     try {
-      // Determine which table to update based on the URL
-      const pathname = window.location.pathname;
-      
-      // Format flag details
-      const flagDetails = {
-        reason: flagReason,
-        timestamp: new Date().toISOString(),
-        details: {}
-      };
+      if (!userId) {
+        toast({
+          title: "Authentication Error",
+          description: "You must be logged in to flag calls.",
+          variant: "destructive",
+        });
+        return;
+      }
 
-      // Add specific details based on flag reason
-      if (flagReason === "Wrong Urgency Level" && correctUrgency) {
-        flagDetails.details = { correctUrgency };
-      } else if (flagReason === "Other" && additionalNotes) {
-        flagDetails.details = { notes: additionalNotes };
-      } else if (additionalNotes) {
-        flagDetails.details = { notes: additionalNotes };
-      }
-      
-      if (pathname.includes('/medication')) {
-        // For medication logs, use doctor_notes to store flagging info
-        const { error } = await supabase
-          .from('call_logs_medications')
-          .update({
-            doctor_notes: JSON.stringify(flagDetails)
-          })
-          .eq('call_id', callId);
-          
-        if (error) throw error;
-      } else if (pathname.includes('/research')) {
-        // For research logs, use findings field to store flagging info
-        const { error } = await supabase
-          .from('call_logs_researchresults')
-          .update({
-            findings: JSON.stringify(flagDetails)
-          })
-          .eq('call_id', callId);
-          
-        if (error) throw error;
-      } else {
-        // Default to triage which has a flagging column defined
-        const { error } = await supabase
-          .from('call_logs_triage')
-          .update({ 
-            flagging: flagDetails
-          })
-          .eq('call_id', callId);
-          
-        if (error) throw error;
-      }
+      // Create a new flag entry in the call_flags table
+      const { error } = await supabase
+        .from('call_flags')
+        .insert({
+          call_id: callId,
+          reason: flagReason,
+          correct_urgency: flagReason === "Wrong Urgency Level" ? correctUrgency : null,
+          additional_notes: additionalNotes,
+          assistant_name: assistantName,
+          created_by: userId
+        });
+        
+      if (error) throw error;
 
       toast({
         title: "Call flagged",
@@ -153,14 +153,14 @@ export function CallHeader({
                     Wrong Urgency Level
                   </DropdownMenuItem>
                   <DropdownMenuItem 
-                    onClick={() => openFlagDialog("Wrong Questions")}
+                    onClick={() => openFlagDialog("Wrong Questions from AI")}
                     className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
                   >
                     <Flag className="h-4 w-4 mr-2 text-orange-500" />
                     Wrong Questions from AI
                   </DropdownMenuItem>
                   <DropdownMenuItem 
-                    onClick={() => openFlagDialog("Messy Conversation")}
+                    onClick={() => openFlagDialog("Messy Conversation, Not Smooth")}
                     className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
                   >
                     <Flag className="h-4 w-4 mr-2 text-red-500" />

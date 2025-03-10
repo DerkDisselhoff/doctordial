@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
@@ -57,6 +58,7 @@ export function CallDetail() {
   const [editedCall, setEditedCall] = useState<Partial<CallLog>>({});
   const [soepNotes, setSoepNotes] = useState<Record<string, string>>({});
   const [transcriptMessages, setTranscriptMessages] = useState<Array<{role: string, content: string}>>([]);
+  const [hasFlagEntry, setHasFlagEntry] = useState(false);
   
   const { data: call, isLoading, error, refetch } = useQuery({
     queryKey: ['callDetail', callId],
@@ -80,6 +82,30 @@ export function CallDetail() {
     },
     enabled: !!callId,
   });
+
+  // Check if there are any flags for this call in the call_flags table
+  const checkCallFlags = async () => {
+    if (!callId) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('call_flags')
+        .select('id')
+        .eq('call_id', callId)
+        .limit(1);
+        
+      if (error) throw error;
+      setHasFlagEntry(data && data.length > 0);
+    } catch (error) {
+      console.error("Error checking call flags:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (callId) {
+      checkCallFlags();
+    }
+  }, [callId]);
 
   useEffect(() => {
     if (call) {
@@ -126,6 +152,12 @@ export function CallDetail() {
     }));
   };
 
+  // Refresh flag status after any flagging action
+  const handleRefetch = () => {
+    refetch();
+    checkCallFlags();
+  };
+
   return (
     <div className="space-y-4">
       <CallHeader 
@@ -133,8 +165,8 @@ export function CallDetail() {
         isEditing={isEditing}
         setIsEditing={setIsEditing}
         handleSave={handleSave}
-        isFlagged={!!call?.flagging}
-        refetch={refetch}
+        isFlagged={call?.flagging || hasFlagEntry}
+        refetch={handleRefetch}
       />
       
       {!isLoading && !error && call && (

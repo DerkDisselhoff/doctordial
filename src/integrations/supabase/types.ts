@@ -47,6 +47,39 @@ export type Database = {
           },
         ]
       }
+      call_flags: {
+        Row: {
+          additional_notes: string | null
+          assistant_name: string | null
+          call_id: string
+          correct_urgency: string | null
+          created_at: string
+          created_by: string
+          id: string
+          reason: string
+        }
+        Insert: {
+          additional_notes?: string | null
+          assistant_name?: string | null
+          call_id: string
+          correct_urgency?: string | null
+          created_at?: string
+          created_by: string
+          id?: string
+          reason: string
+        }
+        Update: {
+          additional_notes?: string | null
+          assistant_name?: string | null
+          call_id?: string
+          correct_urgency?: string | null
+          created_at?: string
+          created_by?: string
+          id?: string
+          reason?: string
+        }
+        Relationships: []
+      }
       call_logs_medications: {
         Row: {
           assistant_id: string | null
