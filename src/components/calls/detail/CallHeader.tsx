@@ -40,8 +40,19 @@ export function CallHeader({
   const [additionalNotes, setAdditionalNotes] = useState<string>("");
   const [assistantName, setAssistantName] = useState<string>("");
   const [userId, setUserId] = useState<string | null>(null);
+  const [callType, setCallType] = useState<'triage' | 'medication' | 'research'>('triage');
   
   useEffect(() => {
+    // Determine call type based on URL
+    const path = window.location.pathname;
+    if (path.includes('/medication/')) {
+      setCallType('medication');
+    } else if (path.includes('/research/')) {
+      setCallType('research');
+    } else {
+      setCallType('triage');
+    }
+
     // Get the current user ID for storing in the flags
     const getUserId = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -50,10 +61,16 @@ export function CallHeader({
       }
     };
 
-    // Get the assistant name from the call data
+    // Get the assistant name from the appropriate call logs table
     const getCallData = async () => {
+      const table = callType === 'medication' 
+        ? 'call_logs_medications' 
+        : callType === 'research' 
+          ? 'call_logs_researchresults' 
+          : 'call_logs_triage';
+
       const { data, error } = await supabase
-        .from('call_logs_triage')
+        .from(table)
         .select('assistant_id')
         .eq('call_id', callId)
         .single();
@@ -65,7 +82,31 @@ export function CallHeader({
 
     getUserId();
     getCallData();
-  }, [callId]);
+  }, [callId, callType]);
+
+  const getFlagOptions = () => {
+    switch (callType) {
+      case 'medication':
+        return [
+          { reason: "Wrong questions from AI", icon: AlertTriangle, color: "text-yellow-500" },
+          { reason: "Messy conversation, not smooth", icon: Flag, color: "text-orange-500" },
+          { reason: "Other issue", icon: Flag, color: "text-blue-500" }
+        ];
+      case 'research':
+        return [
+          { reason: "Wrong questions from AI", icon: AlertTriangle, color: "text-yellow-500" },
+          { reason: "Messy conversation, not smooth", icon: Flag, color: "text-orange-500" },
+          { reason: "Other issue", icon: Flag, color: "text-blue-500" }
+        ];
+      default:
+        return [
+          { reason: "Wrong Urgency Level", icon: AlertTriangle, color: "text-yellow-500" },
+          { reason: "Wrong Questions from AI", icon: Flag, color: "text-orange-500" },
+          { reason: "Messy Conversation, Not Smooth", icon: Flag, color: "text-red-500" },
+          { reason: "Other", icon: Flag, color: "text-blue-500" }
+        ];
+    }
+  };
 
   const openFlagDialog = (reason: string) => {
     setFlagReason(reason);
@@ -145,34 +186,16 @@ export function CallHeader({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="bg-white border-gray-muted">
-                  <DropdownMenuItem 
-                    onClick={() => openFlagDialog("Wrong Urgency Level")}
-                    className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
-                  >
-                    <AlertTriangle className="h-4 w-4 mr-2 text-yellow-500" />
-                    Wrong Urgency Level
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => openFlagDialog("Wrong Questions from AI")}
-                    className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
-                  >
-                    <Flag className="h-4 w-4 mr-2 text-orange-500" />
-                    Wrong Questions from AI
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => openFlagDialog("Messy Conversation, Not Smooth")}
-                    className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
-                  >
-                    <Flag className="h-4 w-4 mr-2 text-red-500" />
-                    Messy Conversation, Not Smooth
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => openFlagDialog("Other")}
-                    className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
-                  >
-                    <Flag className="h-4 w-4 mr-2 text-blue-500" />
-                    Other Issue
-                  </DropdownMenuItem>
+                  {getFlagOptions().map(({ reason, icon: Icon, color }) => (
+                    <DropdownMenuItem 
+                      key={reason}
+                      onClick={() => openFlagDialog(reason)}
+                      className="text-gray-dark hover:bg-mint-light/50 cursor-pointer"
+                    >
+                      <Icon className={`h-4 w-4 mr-2 ${color}`} />
+                      {reason}
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
@@ -204,7 +227,7 @@ export function CallHeader({
             <DialogTitle>Flag Call: {flagReason}</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            {flagReason === "Wrong Urgency Level" && (
+            {flagReason === "Wrong Urgency Level" && callType === 'triage' && (
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="correctUrgency" className="text-right">
                   Correct Urgency
