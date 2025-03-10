@@ -124,7 +124,6 @@ export function AdminSidebar() {
 
   const clientMenuItems = [
     { title: "AI Assistentes", icon: Bot, path: "/dashboard/assistants" },
-    { title: "Kennisbank", icon: BookOpen, path: "/dashboard/knowledge-base" },
   ];
 
   const adminMenuItems = [
@@ -137,7 +136,6 @@ export function AdminSidebar() {
     { title: "Facturatie", icon: DollarSign, path: "/dashboard/billing" },
     { title: "Contracten", icon: FileText, path: "/dashboard/contracts" },
     { title: "Activiteit", icon: Activity, path: "/dashboard/activity" },
-    { title: "Kennisbank", icon: BookOpen, path: "/dashboard/knowledge-base" },
   ];
 
   const assistantOutputItems = [
@@ -154,6 +152,10 @@ export function AdminSidebar() {
     // { title: "Beveiliging & Privacy", icon: Shield, path: "/dashboard/settings/security" },
     // { title: "Team", icon: Users, path: "/dashboard/settings/team" },
     // { title: "Integraties", icon: Building2, path: "/dashboard/settings/integrations" },
+  ];
+  
+  const otherMenuItems = [
+    { title: "Kennisbank", icon: BookOpen, path: "/dashboard/knowledge-base" },
   ];
 
   return (
@@ -196,6 +198,14 @@ export function AdminSidebar() {
                 <div className="space-y-1">
                   <SectionTitle title="Instellingen" />
                   {settingsMenuItems.map((item) => (
+                    <SubMenuItem key={item.title} {...item} />
+                  ))}
+                </div>
+                
+                {/* Other Section - New section for Kennisbank */}
+                <div className="space-y-1">
+                  <SectionTitle title="Overig" />
+                  {otherMenuItems.map((item) => (
                     <SubMenuItem key={item.title} {...item} />
                   ))}
                 </div>
