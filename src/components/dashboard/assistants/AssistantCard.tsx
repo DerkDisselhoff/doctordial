@@ -8,7 +8,6 @@ import { supabase } from "@/lib/supabaseClient";
 import { Bot, Phone, Settings, Pill, Microscope, Clock, BarChart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
-import { AssistantSettingsDialog } from "./AssistantSettingsDialog";
 
 interface AssistantCardProps {
   title: string;
@@ -25,7 +24,6 @@ export const AssistantCard = ({ title, description, type, stats }: AssistantCard
   const [isActive, setIsActive] = useState(false);
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -108,84 +106,88 @@ export const AssistantCard = ({ title, description, type, stats }: AssistantCard
         return "/dashboard/calls";
     }
   };
+  
+  const getSettingsLink = () => {
+    switch (type) {
+      case 'triage':
+        return "/dashboard/assistants/triage-settings";
+      case 'medication':
+        return "/dashboard/assistants/medication-settings";
+      case 'research':
+        return "/dashboard/assistants/research-settings";
+      default:
+        return "/dashboard/assistants";
+    }
+  };
 
   return (
-    <>
-      <Card className={cn(
-        "border-gray-muted shadow-sm transition-all duration-300",
-        isActive ? "bg-gradient-to-br from-white via-mint-light/20 to-white" : "bg-white"
-      )}>
-        <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
-          <div className="flex space-x-4 items-center">
-            {getIcon()}
-            <div>
-              <CardTitle className="text-xl font-semibold text-gray-dark">{title}</CardTitle>
-              <p className="text-sm text-gray mt-1">{description}</p>
+    <Card className={cn(
+      "border-gray-muted shadow-sm transition-all duration-300",
+      isActive ? "bg-gradient-to-br from-white via-mint-light/20 to-white" : "bg-white"
+    )}>
+      <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
+        <div className="flex space-x-4 items-center">
+          {getIcon()}
+          <div>
+            <CardTitle className="text-xl font-semibold text-gray-dark">{title}</CardTitle>
+            <p className="text-sm text-gray mt-1">{description}</p>
+          </div>
+        </div>
+        <Switch 
+          checked={isActive} 
+          onCheckedChange={handleStatusChange} 
+          className={cn(
+            "transition-all duration-300",
+            isActive 
+              ? "bg-mint data-[state=checked]:bg-mint hover:bg-mint-dark data-[state=checked]:border-mint-dark" 
+              : "bg-gray-muted hover:bg-gray-muted/80"
+          )}
+        />
+      </CardHeader>
+      <CardContent>
+        <div className="mt-6 grid grid-cols-3 gap-4 border-t border-gray-muted pt-4">
+          <div className="text-center">
+            <div className="flex flex-col items-center justify-center">
+              <Phone className="h-4 w-4 text-gray" />
+              <span className="mt-1 text-2xl font-semibold text-gray-dark">{stats.calls}</span>
+              <span className="text-xs text-gray">Gesprekken</span>
             </div>
           </div>
-          <Switch 
-            checked={isActive} 
-            onCheckedChange={handleStatusChange} 
-            className={cn(
-              "transition-all duration-300",
-              isActive 
-                ? "bg-mint data-[state=checked]:bg-mint hover:bg-mint-dark data-[state=checked]:border-mint-dark" 
-                : "bg-gray-muted hover:bg-gray-muted/80"
-            )}
-          />
-        </CardHeader>
-        <CardContent>
-          <div className="mt-6 grid grid-cols-3 gap-4 border-t border-gray-muted pt-4">
-            <div className="text-center">
-              <div className="flex flex-col items-center justify-center">
-                <Phone className="h-4 w-4 text-gray" />
-                <span className="mt-1 text-2xl font-semibold text-gray-dark">{stats.calls}</span>
-                <span className="text-xs text-gray">Gesprekken</span>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="flex flex-col items-center justify-center">
-                <Clock className="h-4 w-4 text-gray" />
-                <span className="mt-1 text-2xl font-semibold text-gray-dark">{stats.avgDuration}</span>
-                <span className="text-xs text-gray">Gem. duur</span>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="flex flex-col items-center justify-center">
-                <BarChart className="h-4 w-4 text-gray" />
-                <span className="mt-1 text-2xl font-semibold text-gray-dark">{stats.successRate}%</span>
-                <span className="text-xs text-gray">Succesvol</span>
-              </div>
+          <div className="text-center">
+            <div className="flex flex-col items-center justify-center">
+              <Clock className="h-4 w-4 text-gray" />
+              <span className="mt-1 text-2xl font-semibold text-gray-dark">{stats.avgDuration}</span>
+              <span className="text-xs text-gray">Gem. duur</span>
             </div>
           </div>
+          <div className="text-center">
+            <div className="flex flex-col items-center justify-center">
+              <BarChart className="h-4 w-4 text-gray" />
+              <span className="mt-1 text-2xl font-semibold text-gray-dark">{stats.successRate}%</span>
+              <span className="text-xs text-gray">Succesvol</span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="mt-6 flex justify-between">
+          <Button 
+            variant="outline"
+            className="bg-white border-gray-muted text-gray-dark hover:bg-gray-50"
+            onClick={() => navigate(getLink())}
+          >
+            Bekijk gesprekken
+          </Button>
           
-          <div className="mt-6 flex justify-between">
-            <Button 
-              variant="outline"
-              className="bg-white border-gray-muted text-gray-dark hover:bg-gray-50"
-              onClick={() => navigate(getLink())}
-            >
-              Bekijk gesprekken
-            </Button>
-            
-            <Button
-              variant="ghost"
-              className="text-gray hover:bg-mint/5 hover:text-gray-dark"
-              onClick={() => setIsSettingsOpen(true)}
-            >
-              <Settings className="h-4 w-4 mr-2" />
-              Instellingen
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      <AssistantSettingsDialog
-        open={isSettingsOpen}
-        onOpenChange={setIsSettingsOpen}
-        assistantType={type}
-        title={title}
-      />
-    </>
+          <Button
+            variant="ghost"
+            className="text-gray hover:bg-mint/5 hover:text-gray-dark"
+            onClick={() => navigate(getSettingsLink())}
+          >
+            <Settings className="h-4 w-4 mr-2" />
+            Instellingen
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
   );
 };

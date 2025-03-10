@@ -25,6 +25,9 @@ import TeamSettings from "./dashboard/settings/Team";
 import IntegrationsSettings from "./dashboard/settings/Integrations";
 import Calendar from "./dashboard/Calendar";
 import AIAssistants from "./dashboard/AIAssistants";
+import TriageSettingsPage from "./dashboard/assistants/TriageSettings";
+import MedicationSettingsPage from "./dashboard/assistants/MedicationSettings";
+import ResearchSettingsPage from "./dashboard/assistants/ResearchSettings";
 
 const queryClient = new QueryClient();
 
@@ -77,6 +80,11 @@ const Dashboard = () => {
           {/* Redirect root to assistants */}
           <Route path="/" element={<Navigate to="/dashboard/assistants" replace />} />
           <Route path="/assistants" element={<AIAssistants />} />
+          
+          {/* Assistant settings routes */}
+          <Route path="/assistants/triage-settings" element={<TriageSettingsPage />} />
+          <Route path="/assistants/medication-settings" element={<MedicationSettingsPage />} />
+          <Route path="/assistants/research-settings" element={<ResearchSettingsPage />} />
           
           <Route path="/workflow" element={<Workflow />} />
           <Route path="/calendar" element={<Calendar />} />
