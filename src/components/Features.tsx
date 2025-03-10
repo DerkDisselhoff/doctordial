@@ -71,7 +71,7 @@ const Features = () => {
               </div>
 
               {/* Mobile version */}
-              <div className="md:hidden relative max-w-[calc(100vw-2rem)] mx-auto bg-transparent backdrop-blur-sm rounded-xl border border-mint/20 shadow-xl p-4 space-y-4">
+              <div className="md:hidden relative max-w-[calc(100vw-2rem)] mx-auto bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-xl border border-mint/20 shadow-sm p-4 space-y-4">
                 <div className="flex justify-between items-center border-b border-gray-muted/10 pb-4">
                   <div className="text-left">
                     <h3 className="text-sm font-medium text-gray-dark">Urgency Overview</h3>
