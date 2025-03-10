@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useParams, useNavigate } from "react-router-dom";
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
+import { supabase } from "@/lib/supabaseClient";
+import { useEffect, useState } from "react";
 
 const TestScriptTriageContent = () => {
   return (
@@ -397,11 +399,33 @@ const TestScriptOnderzoekContent = () => {
 const KnowledgeBaseDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate("/login");
+        return;
+      }
+      setIsLoading(false);
+    };
+
+    checkAuth();
+  }, [navigate]);
 
   // Handle back button 
   const handleBack = () => {
     window.close();
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-mint"></div>
+      </div>
+    );
+  }
 
   // Render content based on ID
   const renderContent = () => {
