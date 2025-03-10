@@ -129,6 +129,7 @@ export function AdminSidebar() {
 
   const adminMenuItems = [
     { title: "Overzicht", icon: Home, path: "/dashboard" },
+    { title: "AI Assistentes", icon: Bot, path: "/dashboard/assistants" },
     { title: "Afspraken", icon: Calendar, path: "/dashboard/appointments" },
     { title: "Agenda", icon: Calendar, path: "/dashboard/calendar" },
     { title: "Cliënten", icon: Users, path: "/dashboard/clients" },
@@ -137,7 +138,6 @@ export function AdminSidebar() {
     { title: "Facturatie", icon: DollarSign, path: "/dashboard/billing" },
     { title: "Contracten", icon: FileText, path: "/dashboard/contracts" },
     { title: "Activiteit", icon: Activity, path: "/dashboard/activity" },
-    { title: "AI Assistentes", icon: Bot, path: "/dashboard/assistants" },
   ];
 
   const assistantOutputItems = [
