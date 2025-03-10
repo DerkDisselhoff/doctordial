@@ -66,7 +66,7 @@ const HomeAIAssistants = () => {
     },
     {
       title: "Onderzoek Uitslagen Assistent",
-      description: "Analyseert en vat labuitslagen samen, identificeert afwijkingen en zorgt voor tijdige follow-up.",
+      description: "Maakt het mogelijk voor patienten om een terugbelverzoek in te dienen voor onderzoeksuitslagen.",
       icon: <Microscope className="h-7 w-7 text-forest" />,
       color: "forest",
       delay: 0.3
