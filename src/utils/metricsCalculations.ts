@@ -27,7 +27,11 @@ export const calculateMetrics = (callData: CallLog[] | null) => {
     ? Math.round((callsWithIntent.filter(call => 
         call.intent === true || 
         call.intent === 'true' ||
-        (call.confidence_level && parseInt(call.confidence_level) > 70)
+        (call.confidence_level && 
+          // Convert confidence_level to number before comparison
+          (typeof call.confidence_level === 'string' 
+            ? parseInt(call.confidence_level) > 70
+            : call.confidence_level > 70))
       ).length / callsWithIntent.length) * 100)
     : 0;
 
