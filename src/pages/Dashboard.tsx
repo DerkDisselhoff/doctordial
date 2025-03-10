@@ -80,13 +80,13 @@ const Dashboard = () => {
           <Route path="/calendar" element={<Calendar />} />
           {userRole === 'admin' ? (
             <>
+              <Route path="/assistants" element={<AIAssistants />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/practices" element={<Practices />} />
               <Route path="/reports" element={<Reports />} />
               <Route path="/billing" element={<Billing />} />
               <Route path="/contracts" element={<Contracts />} />
               <Route path="/activity" element={<Activity />} />
-              <Route path="/assistants" element={<AIAssistants />} />
             </>
           ) : null}
 

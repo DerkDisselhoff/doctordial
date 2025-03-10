@@ -146,7 +146,6 @@ export function AdminSidebar() {
     { title: "Onderzoek uitslagen", icon: Microscope, path: "/dashboard/calls/research" },
   ];
 
-  // Only show the General settings menu item and hide the others as requested
   const settingsMenuItems = [
     { title: "Algemeen", icon: Grid, path: "/dashboard/settings/general" },
     // The following items are hidden as requested
