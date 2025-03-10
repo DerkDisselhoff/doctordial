@@ -29,6 +29,7 @@ import TriageSettingsPage from "./dashboard/assistants/TriageSettings";
 import MedicationSettingsPage from "./dashboard/assistants/MedicationSettings";
 import ResearchSettingsPage from "./dashboard/assistants/ResearchSettings";
 import KnowledgeBase from "./dashboard/KnowledgeBase";
+import KnowledgeBaseDetail from "./KnowledgeBaseDetail";
 
 const queryClient = new QueryClient();
 

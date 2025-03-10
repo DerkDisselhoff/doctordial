@@ -1,32 +1,30 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Index from './pages/Index';
+import About from './pages/About';
+import DemoRequest from './pages/DemoRequest';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import { LanguageProvider } from './components/LanguageContext';
+import { Toaster } from "@/components/ui/toaster"
+import KnowledgeBaseDetail from './pages/KnowledgeBaseDetail';
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
-import { Toaster } from "@/components/ui/toaster";
-import Index from "@/pages/Index";
-import About from "@/pages/About";
-import DemoRequest from "@/pages/DemoRequest";
-import Login from "@/pages/Login";
-import Dashboard from "@/pages/Dashboard";
-import { LanguageProvider } from "@/contexts/LanguageContext";
-
-const App = () => {
+function App() {
   return (
-    <LanguageProvider>
-      <Router>
+    <BrowserRouter>
+      <LanguageProvider>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/demo-request" element={<DemoRequest />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/knowledge-base/:id" element={<KnowledgeBaseDetail />} />
         </Routes>
         <Toaster />
-      </Router>
-      <Analytics />
-      <SpeedInsights />
-    </LanguageProvider>
+      </LanguageProvider>
+    </BrowserRouter>
   );
-};
+}
 
 export default App;

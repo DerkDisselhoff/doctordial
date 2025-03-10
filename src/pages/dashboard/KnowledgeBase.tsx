@@ -19,8 +19,8 @@ const KnowledgeBase = () => {
   // Sample data for knowledge base items
   const knowledgeItems: KnowledgeBaseItem[] = [
     {
-      id: "test-script",
-      title: "Test script",
+      id: "test-script-triage",
+      title: "Test Script Triage",
       description: "Een handleiding voor het testen van de Digitale Assistenten in verschillende scenario's.",
       type: "document",
       dateAdded: "2023-06-15",
@@ -57,7 +57,7 @@ const KnowledgeBase = () => {
               </div>
               <div className="flex-grow">
                 <h3 className="text-xl font-semibold text-gray-dark group-hover:text-mint transition-colors">
-                  Test script
+                  Test Script Triage
                 </h3>
                 <p className="text-gray mt-1">
                   Een handleiding voor het testen van de Digitale Assistenten in verschillende scenario's.
@@ -101,7 +101,7 @@ const KnowledgeBase = () => {
                 transition={{ duration: 0.3 }}
                 className="bg-gray-50 rounded-lg p-5 border border-gray-muted/30 hover:border-mint/30 hover:bg-gray-50/80 transition-all group cursor-pointer"
               >
-                <Link to={`/dashboard/knowledge-base/${item.id}`} className="block">
+                <a href={`/knowledge-base/${item.id}`} target="_blank" rel="noopener noreferrer" className="block">
                   <div className="flex items-start gap-4">
                     <div className="p-3 rounded-lg bg-mint/10 text-mint flex-shrink-0">
                       <FileText className="h-5 w-5" />
@@ -133,7 +133,7 @@ const KnowledgeBase = () => {
                       <ChevronRight className="h-5 w-5" />
                     </Button>
                   </div>
-                </Link>
+                </a>
               </motion.div>
             ))}
           </div>
