@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
@@ -48,7 +49,7 @@ export function MedicationList() {
         const { data: allCallData, error: callError } = await supabase
           .from('call_logs_medications')
           .select('*')
-          .order('created_at', { ascending: false });
+          .order('updated_at', { ascending: false });
 
         if (callError) {
           console.error("Error fetching medication calls:", callError);
