@@ -1,3 +1,4 @@
+
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { OverviewDashboard } from "@/components/dashboard/OverviewDashboard";
 import { useEffect, useState } from "react";
@@ -24,6 +25,7 @@ import SecuritySettings from "./dashboard/settings/Security";
 import TeamSettings from "./dashboard/settings/Team";
 import IntegrationsSettings from "./dashboard/settings/Integrations";
 import Calendar from "./dashboard/Calendar";
+import AIAssistants from "./dashboard/AIAssistants";
 
 const queryClient = new QueryClient();
 
@@ -84,6 +86,7 @@ const Dashboard = () => {
               <Route path="/billing" element={<Billing />} />
               <Route path="/contracts" element={<Contracts />} />
               <Route path="/activity" element={<Activity />} />
+              <Route path="/assistants" element={<AIAssistants />} />
             </>
           ) : null}
 

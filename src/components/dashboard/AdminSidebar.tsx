@@ -2,7 +2,7 @@ import {
   BarChart3, Users, Phone, Settings, Home, Building2, 
   DollarSign, FileText, Activity, LogOut, Shield, 
   CreditCard, Grid, Receipt, Calendar, GitBranch,
-  Pill, Microscope, ChevronRight
+  Pill, Microscope, ChevronRight, Bot
 } from "lucide-react";
 import {
   Sidebar,
@@ -137,6 +137,7 @@ export function AdminSidebar() {
     { title: "Facturatie", icon: DollarSign, path: "/dashboard/billing" },
     { title: "Contracten", icon: FileText, path: "/dashboard/contracts" },
     { title: "Activiteit", icon: Activity, path: "/dashboard/activity" },
+    { title: "AI Assistentes", icon: Bot, path: "/dashboard/assistants" },
   ];
 
   const assistantOutputItems = [
