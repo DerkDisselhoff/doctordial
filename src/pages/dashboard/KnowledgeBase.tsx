@@ -44,9 +44,6 @@ const KnowledgeBase = () => {
     }
   ];
 
-  // Featured item - we'll use the first item in the list
-  const featuredItem = knowledgeItems[0];
-
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
@@ -55,54 +52,6 @@ const KnowledgeBase = () => {
           <p className="text-gray-500">Ontdek hulpmiddelen en informatie om het meeste uit uw digitale assistenten te halen</p>
         </div>
       </div>
-
-      {/* Featured Item */}
-      <Card className="bg-gradient-to-r from-mint-light/30 to-sage-light/20 border-mint/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-forest">
-            <BookOpen className="h-5 w-5 text-mint" />
-            Uitgelichte Inhoud
-          </CardTitle>
-          <CardDescription>
-            Onze meest recente toevoegingen aan de kennisbank
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Link to={`/knowledge-base/${featuredItem.id}`} target="_blank" rel="noopener noreferrer">
-            <div className="bg-white rounded-lg p-5 border border-gray-muted/30 hover:border-mint/30 transition-all group cursor-pointer">
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-lg bg-mint/10 text-mint">
-                  <FileText className="h-6 w-6" />
-                </div>
-                <div className="flex-grow">
-                  <h3 className="text-xl font-semibold text-gray-dark group-hover:text-mint transition-colors">
-                    {featuredItem.title}
-                  </h3>
-                  <p className="text-gray mt-1">
-                    {featuredItem.description}
-                  </p>
-                  <div className="flex items-center gap-4 mt-3 text-sm text-gray-muted">
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" />
-                      {featuredItem.readTime} leestijd
-                    </span>
-                    <span className="flex items-center gap-1">
-                      Toegevoegd op {new Date(featuredItem.dateAdded).toLocaleDateString('nl-NL', {
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric'
-                      })}
-                    </span>
-                  </div>
-                </div>
-                <Button variant="ghost" className="text-mint">
-                  <ChevronRight className="h-5 w-5" />
-                </Button>
-              </div>
-            </div>
-          </Link>
-        </CardContent>
-      </Card>
 
       {/* All Resources */}
       <Card className="bg-white">
