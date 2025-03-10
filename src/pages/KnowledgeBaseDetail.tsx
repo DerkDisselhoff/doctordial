@@ -257,6 +257,22 @@ const TestScriptOnderzoekContent = () => {
         </ol>
       </div>
 
+      {/* Video Demonstration */}
+      <div className="bg-white p-6 rounded-lg border border-gray-200 mt-6">
+        <h2 className="text-xl font-semibold text-forest mb-4">Video Demonstratie</h2>
+        <p className="text-gray-700 mb-4">
+          Bekijk onderstaande video voor een praktische demonstratie van hoe je de AI-onderzoeksuitslagen-assistent kunt testen:
+        </p>
+        <div className="relative pb-[53.02083333333333%] h-0 rounded-lg overflow-hidden">
+          <iframe 
+            src="https://www.loom.com/embed/d34ee032b79a4ee7b9b1caa60562ce14?sid=7a1db1f8-8302-473b-a696-cfcd7f47ba86" 
+            frameBorder="0" 
+            allowFullScreen 
+            className="absolute top-0 left-0 w-full h-full shadow-md"
+          ></iframe>
+        </div>
+      </div>
+
       <div className="space-y-4">
         <h2 className="text-xl font-semibold text-forest">Tips voor testers</h2>
         <ul className="list-disc pl-5 space-y-2 text-gray-700">
