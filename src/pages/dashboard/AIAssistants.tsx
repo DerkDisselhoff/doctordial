@@ -1,10 +1,9 @@
-
 import { useEffect, useState } from "react";
 import { AssistantCard } from "@/components/dashboard/assistants/AssistantCard";
 import { supabase } from "@/lib/supabaseClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Bot, Download, RefreshCcw } from "lucide-react";
+import { Bot, RefreshCcw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { MetricsCards } from "@/components/dashboard/metrics/MetricsCards";
 import { DashboardCharts } from "@/components/dashboard/charts/DashboardCharts";
@@ -213,14 +212,6 @@ const AIAssistants = () => {
           >
             <RefreshCcw className="h-4 w-4 mr-2" />
             Verversen
-          </Button>
-          <Button 
-            variant="outline"
-            className="bg-white border-gray-muted text-gray-dark hover:bg-gray-50"
-            onClick={handleExport}
-          >
-            <Download className="h-4 w-4 mr-2" />
-            Exporteren
           </Button>
         </div>
       </div>
