@@ -146,6 +146,7 @@ export type Database = {
           conversation_summary: string | null
           cost: number | null
           created_at: string | null
+          date_of_birth: string | null
           duration_seconds: string | null
           end_time: string | null
           findings: string | null
@@ -155,8 +156,9 @@ export type Database = {
           phone_number: string | null
           recommendation: string | null
           relevance_score: number | null
+          research_date: string | null
+          research_name: string | null
           research_question: string | null
-          research_topic: string | null
           sources: Json | null
           start_time: string | null
           transcript: string | null
@@ -170,6 +172,7 @@ export type Database = {
           conversation_summary?: string | null
           cost?: number | null
           created_at?: string | null
+          date_of_birth?: string | null
           duration_seconds?: string | null
           end_time?: string | null
           findings?: string | null
@@ -179,8 +182,9 @@ export type Database = {
           phone_number?: string | null
           recommendation?: string | null
           relevance_score?: number | null
+          research_date?: string | null
+          research_name?: string | null
           research_question?: string | null
-          research_topic?: string | null
           sources?: Json | null
           start_time?: string | null
           transcript?: string | null
@@ -194,6 +198,7 @@ export type Database = {
           conversation_summary?: string | null
           cost?: number | null
           created_at?: string | null
+          date_of_birth?: string | null
           duration_seconds?: string | null
           end_time?: string | null
           findings?: string | null
@@ -203,8 +208,9 @@ export type Database = {
           phone_number?: string | null
           recommendation?: string | null
           relevance_score?: number | null
+          research_date?: string | null
+          research_name?: string | null
           research_question?: string | null
-          research_topic?: string | null
           sources?: Json | null
           start_time?: string | null
           transcript?: string | null

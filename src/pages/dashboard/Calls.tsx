@@ -29,7 +29,7 @@ const Calls = () => {
   return (
     <div className="space-y-8">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-dark">AI Assistent gesprekken</h2>
+        <h2 className="text-3xl font-bold text-gray-dark">Gesprekken</h2>
         <p className="text-gray">Monitor en analyseer de prestaties van de assistent in alle diensten</p>
       </div>
 
@@ -38,7 +38,7 @@ const Calls = () => {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink>
-                <Link to="/dashboard/calls">AI Assistent gesprekken</Link>
+                <Link to="/dashboard/calls">Gesprekken</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>

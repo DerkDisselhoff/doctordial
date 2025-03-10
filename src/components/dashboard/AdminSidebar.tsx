@@ -1,4 +1,3 @@
-
 import { 
   BarChart3, Users, Phone, Settings, Home, Building2, 
   DollarSign, FileText, Activity, LogOut, Shield, 
@@ -187,7 +186,7 @@ export function AdminSidebar() {
 
                 {/* Assistant Output Section */}
                 <div className="space-y-1">
-                  <SectionTitle title="AI Assistent gesprekken" />
+                  <SectionTitle title="Gesprekken" />
                   {assistantOutputItems.map((item) => (
                     <SubMenuItem key={item.title} {...item} />
                   ))}
