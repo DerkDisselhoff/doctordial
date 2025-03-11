@@ -1,33 +1,20 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.47.0';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Log environment variables (without revealing values)
 console.log("Edge function initialized");
-console.log("RESEND_API_KEY present:", !!Deno.env.get("RESEND_API_KEY"));
-console.log("RESEND_API_KEY length:", Deno.env.get("RESEND_API_KEY")?.length || 0);
 console.log("SUPABASE_URL present:", !!Deno.env.get("SUPABASE_URL"));
 console.log("SUPABASE_SERVICE_ROLE_KEY present:", !!Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
-
-const resendApiKey = Deno.env.get("RESEND_API_KEY");
-if (!resendApiKey) {
-  console.error("CRITICAL ERROR: Missing RESEND_API_KEY environment variable");
-}
 
 // Initialize Supabase client
 const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
 const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
-
-// Initialize Resend client
-const resend = new Resend(resendApiKey);
 
 interface LeadData {
   id: number;
@@ -56,30 +43,6 @@ async function testNotificationFunction() {
       role: "Manager",
       created_at: new Date().toISOString()
     };
-
-    console.log("📊 Testing with Resend API key length:", resendApiKey?.length || 0);
-    console.log("📊 Testing with verified domain: doctordial.io");
-    
-    try {
-      // Test the most basic email send first with direct parameters
-      console.log("🔍 Attempting simple direct email test...");
-      const directTestResult = await resend.emails.send({
-        from: "noreply@doctordial.io", // Using verified domain
-        to: ["test@doctordial.com"],
-        subject: "Direct Test Email",
-        html: "<p>This is a direct test email</p>",
-      });
-      
-      console.log("✅ Direct test email result:", JSON.stringify(directTestResult));
-      
-      if (directTestResult.error) {
-        console.error("❌ Direct test failed:", directTestResult.error);
-        return;
-      }
-    } catch (directError) {
-      console.error("❌ Critical error in direct test:", directError);
-      return;
-    }
     
     // Fetch email configuration
     console.log("🔍 Fetching email configuration from database...");
@@ -96,7 +59,7 @@ async function testNotificationFunction() {
     
     // Use default config if none found in database
     const finalConfig = emailConfig || {
-      from_email: "noreply@doctordial.io", // Using verified domain
+      from_email: "noreply@doctordial.io",
       from_name: "DoctorDial",
       to_emails: ["test@doctordial.com"]
     };
@@ -129,25 +92,25 @@ async function testNotificationFunction() {
         <li><strong>Aantal Praktijken:</strong> ${testData.practice_count || 'Niet ingevuld'}</li>
       </ul>
     `;
-    
-    // Send test email
+
     try {
-      console.log("🔍 Attempting to send test notification email...");
-      const emailResult = await resend.emails.send({
-        from: `${finalConfig.from_name} <${finalConfig.from_email}>`,
-        to: finalConfig.to_emails,
+      // Send email using Supabase SMTP
+      console.log("🔍 Attempting to send test email via Supabase SMTP...");
+      const { error: emailError } = await supabase.auth.admin.sendRawEmail({
+        email: finalConfig.to_emails[0],
         subject: `[TEST] Nieuwe Lead: ${testData.name}${testData.company_name ? ` - ${testData.company_name}` : ''}`,
         html: emailContent,
+        headers: {
+          'from': `${finalConfig.from_name} <${finalConfig.from_email}>`
+        }
       });
-      
-      console.log("📬 Raw email result:", JSON.stringify(emailResult));
-      
-      if (emailResult.error) {
-        console.error("❌ Test failed: Resend API error:", emailResult.error);
+
+      if (emailError) {
+        console.error("❌ Test failed: Error sending email:", emailError);
         return;
       }
       
-      console.log("✅ Test successful: Email sent", emailResult.data);
+      console.log("✅ Test successful: Email sent via Supabase SMTP");
     } catch (sendError) {
       console.error("❌ Test failed: Error sending email:", sendError);
     }
@@ -246,7 +209,7 @@ serve(async (req) => {
       if (isTest) {
         console.log("Using default email configuration for test");
         emailConfig = {
-          from_email: "noreply@doctordial.io", // Using verified domain
+          from_email: "noreply@doctordial.io",
           from_name: "DoctorDial",
           to_emails: ["test@doctordial.com"]
         };
@@ -288,28 +251,23 @@ serve(async (req) => {
       </ul>
     `;
 
-    console.log("Preparing to send email with config:", {
-      from: `${emailConfig.from_name} <${emailConfig.from_email}>`,
-      to: emailConfig.to_emails,
-      subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`
-    });
-
     try {
-      // Send email using configuration from the database
-      const emailResult = await resend.emails.send({
-        from: `${emailConfig.from_name} <${emailConfig.from_email}>`,
-        to: emailConfig.to_emails,
+      // Send email using Supabase SMTP
+      console.log("Preparing to send email...");
+      const { error: emailError } = await supabase.auth.admin.sendRawEmail({
+        email: emailConfig.to_emails[0],
         subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
         html: emailContent,
+        headers: {
+          'from': `${emailConfig.from_name} <${emailConfig.from_email}>`
+        }
       });
 
-      console.log("Resend API response:", JSON.stringify(emailResult));
-      
-      if (emailResult.error) {
-        throw new Error(`Resend API error: ${emailResult.error.message || JSON.stringify(emailResult.error)}`);
+      if (emailError) {
+        throw new Error(`Failed to send email: ${emailError.message}`);
       }
       
-      console.log("Email notification sent successfully", emailResult.data);
+      console.log("Email notification sent successfully");
 
       return new Response(
         JSON.stringify({ success: true, message: "Email notification sent" }),
@@ -319,7 +277,7 @@ serve(async (req) => {
         }
       );
     } catch (sendError) {
-      console.error("Error from Resend API:", sendError);
+      console.error("Error sending email:", sendError);
       throw new Error(`Failed to send email: ${sendError.message}`);
     }
   } catch (error) {
