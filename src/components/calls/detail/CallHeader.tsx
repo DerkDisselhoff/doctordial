@@ -222,7 +222,7 @@ export function CallHeader({
 
       {/* Flag Dialog */}
       <Dialog open={showFlagDialog} onOpenChange={setShowFlagDialog}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md bg-white">
           <DialogHeader>
             <DialogTitle>Flag Call: {flagReason}</DialogTitle>
           </DialogHeader>
