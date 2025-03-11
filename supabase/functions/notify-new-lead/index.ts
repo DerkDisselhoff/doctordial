@@ -4,6 +4,10 @@ import { Resend } from "npm:resend@2.0.0";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.47.0';
 
 const resendApiKey = Deno.env.get("RESEND_API_KEY");
+if (!resendApiKey) {
+  throw new Error("Missing RESEND_API_KEY environment variable");
+}
+
 const resend = new Resend(resendApiKey);
 const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
 const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
@@ -57,6 +61,10 @@ serve(async (req) => {
     if (configError) {
       console.error("Error fetching email configuration:", configError);
       throw configError;
+    }
+
+    if (!emailConfig) {
+      throw new Error("No email configuration found");
     }
 
     console.log("Using email configuration:", emailConfig);
