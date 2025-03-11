@@ -1,4 +1,3 @@
-
 import { ArrowLeft, FileText, Flag, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -9,7 +8,7 @@ import { useEffect, useState } from "react";
 
 const TestScriptTriageContent = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold text-forest">Testinstructies voor de AI-triage-assistent</h1>
       
       <div className="space-y-4">
@@ -192,7 +191,7 @@ const TestScriptTriageContent = () => {
 
 const TestScriptMedicatieContent = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold text-forest">Testinstructies voor de AI-medicatie-assistent (herhaalrecepten)</h1>
       
       <div className="space-y-4">
@@ -371,7 +370,7 @@ const TestScriptMedicatieContent = () => {
 
 const TestScriptOnderzoekContent = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold text-forest">Testinstructies voor de AI-onderzoeksuitslagen-assistent (terugbelverzoek)</h1>
       
       <div className="space-y-4">
@@ -592,27 +591,33 @@ const KnowledgeBaseDetail = () => {
       content = <TestScriptOnderzoekContent />;
       break;
     default:
-      content = <div className="p-6">Document not found (ID: {id})</div>;
+      content = <div className="p-6 max-w-4xl mx-auto">Document not found (ID: {id})</div>;
   }
 
   return (
-    <div className="container mx-auto py-6">
-      <div className="flex items-center mb-6 gap-2">
+    <div className="min-h-screen bg-gray-50">
+      {/* White menu bar */}
+      <div className="bg-white shadow-sm py-4 px-6 flex items-center">
         <Button 
           onClick={goBack} 
           variant="ghost" 
           className="text-forest hover:text-forest/90 hover:bg-mint-light/20"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Knowledge Base
+          Terug naar Kennisbank
         </Button>
+        <h2 className="ml-4 text-lg font-medium text-forest">AI Assistenten Kennisbank</h2>
       </div>
       
-      <Card className="p-6">
-        {content}
-      </Card>
+      {/* Content with gray background */}
+      <div className="py-8 px-4">
+        <div className="max-w-5xl mx-auto">
+          {content}
+        </div>
+      </div>
     </div>
   );
 };
 
 export default KnowledgeBaseDetail;
+
