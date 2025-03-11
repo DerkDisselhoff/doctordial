@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { PracticeCountStep } from "./steps/PracticeCountStep";
@@ -26,17 +27,38 @@ export const MultiStepPricingForm = () => {
     company_name: "",
     role: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const progress = (step / 4) * 100;
 
   const handleSubmitData = async () => {
     try {
-      const { error } = await supabase
+      setIsSubmitting(true);
+      
+      // Insert the form data into the pricing_submissions table
+      const { data, error } = await supabase
         .from('pricing_submissions')
-        .insert([formData]);
+        .insert([formData])
+        .select();
 
       if (error) throw error;
+      
+      // Trigger the email notification function with the submitted data
+      if (data && data.length > 0) {
+        try {
+          const { error: notifyError } = await supabase.functions.invoke('notify-new-lead', {
+            body: data[0],
+          });
+          
+          if (notifyError) {
+            console.error("Error sending notification:", notifyError);
+          }
+        } catch (notifyErr) {
+          console.error("Failed to send notification:", notifyErr);
+          // Continue with the form submission flow even if notification fails
+        }
+      }
 
       toast({
         title: "Success!",
@@ -44,11 +66,14 @@ export const MultiStepPricingForm = () => {
       });
       setStep(4);
     } catch (error) {
+      console.error("Form submission error:", error);
       toast({
         title: "Error",
         description: "There was a problem submitting your information. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -100,6 +125,7 @@ export const MultiStepPricingForm = () => {
             updateFormData(data);
             await handleSubmitData();
           }}
+          isSubmitting={isSubmitting}
         />
       )}
       

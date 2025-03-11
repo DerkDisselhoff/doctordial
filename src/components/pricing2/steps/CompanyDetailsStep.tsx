@@ -1,60 +1,71 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ChevronLeft } from "lucide-react";
 
-type CompanyDetails = {
-  company_name: string;
-  role: string;
-};
+import { useState, useEffect } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
+
+interface CompanyDetailsStepProps {
+  data: {
+    company_name: string;
+    role: string;
+  };
+  onBack: () => void;
+  onNext: (data: { company_name: string; role: string }) => void;
+  isSubmitting?: boolean;
+}
 
 export const CompanyDetailsStep = ({
   data,
   onBack,
   onNext,
-}: {
-  data: CompanyDetails;
-  onBack: () => void;
-  onNext: (data: CompanyDetails) => void;
-}) => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  isSubmitting = false,
+}: CompanyDetailsStepProps) => {
+  const [companyName, setCompanyName] = useState(data.company_name);
+  const [role, setRole] = useState(data.role);
+  const [isComplete, setIsComplete] = useState(false);
+
+  useEffect(() => {
+    setIsComplete(companyName.trim() !== "" && role.trim() !== "");
+  }, [companyName, role]);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    onNext({
-      company_name: formData.get('company_name') as string,
-      role: formData.get('role') as string,
-    });
+    if (isComplete && !isSubmitting) {
+      onNext({ company_name: companyName, role });
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="text-center mb-8">
-        <p className="text-sm text-gray-500 mb-2">Step 3 of 3</p>
-        <h2 className="text-2xl font-semibold text-gray-900 mb-2">Practice Details</h2>
-        <p className="text-gray-500">Tell us about your medical practice</p>
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold text-gray-dark">Bedrijfsgegevens</h2>
+        <p className="text-gray">
+          Laat ons weten over uw organisatie zodat we u beter kunnen helpen.
+        </p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <Label htmlFor="company_name" className="text-gray-700">Practice Name</Label>
+          <Label htmlFor="companyName">Praktijk / Organisatie naam</Label>
           <Input
-            id="company_name"
-            name="company_name"
-            defaultValue={data.company_name}
-            placeholder="Smith Medical Group"
-            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
+            id="companyName"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            placeholder="Voer uw bedrijfsnaam in"
+            className="mt-1"
             required
           />
         </div>
-        
+
         <div>
-          <Label htmlFor="role" className="text-gray-700">Your Role</Label>
+          <Label htmlFor="role">Uw rol</Label>
           <Input
             id="role"
-            name="role"
-            defaultValue={data.role}
-            placeholder="General Practitioner"
-            className="mt-1 text-gray-900 bg-white border-gray-300 focus:border-mint focus:ring-mint"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            placeholder="Bijv. Huisarts, Praktijkmanager, etc."
+            className="mt-1"
             required
           />
         </div>
@@ -63,15 +74,31 @@ export const CompanyDetailsStep = ({
       <div className="flex justify-between pt-4">
         <Button
           type="button"
-          variant="ghost"
           onClick={onBack}
-          className="text-gray-600 hover:text-gray-900"
+          variant="outline"
+          className="bg-white border-gray-muted text-gray-dark flex items-center gap-2"
+          disabled={isSubmitting}
         >
-          <ChevronLeft className="w-4 h-4 mr-2" />
-          Back
+          <ArrowLeft className="h-4 w-4" />
+          Terug
         </Button>
-        <Button type="submit" className="bg-forest hover:bg-forest-light text-white">
-          Complete
+
+        <Button
+          type="submit"
+          className="bg-mint text-forest hover:bg-mint-light flex items-center gap-2"
+          disabled={!isComplete || isSubmitting}
+        >
+          {isSubmitting ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Versturen...
+            </>
+          ) : (
+            <>
+              Versturen
+              <ArrowRight className="h-4 w-4" />
+            </>
+          )}
         </Button>
       </div>
     </form>
