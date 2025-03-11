@@ -1,4 +1,3 @@
-
 import { ArrowLeft, FileText, Flag, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -274,7 +273,7 @@ const TestScriptMedicatieContent = () => {
                 <TableCell className="font-medium">Levothyroxine</TableCell>
                 <TableCell>Schildklierhormoon</TableCell>
                 <TableCell>"Ik heb nieuwe schildkliermedicatie nodig."</TableCell>
-                <TableCell>"Hoi, ik neem dagelijks levothyroxine voor mijn schildklier en mijn voorraad raakt op. Kan ik een herhaalrecept krijgen?"</TableCell>
+                <TableCell>"Hoi, ik neem dagelijks levothyroxine voor mijn schildklier en zou graag een herhaalrecept kunnen krijgen?"</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Salbutamol</TableCell>
@@ -547,3 +546,51 @@ const TestScriptOnderzoekContent = () => {
     </div>
   );
 };
+
+const KnowledgeBaseDetail = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
+  const goBack = () => {
+    navigate('/dashboard/knowledge-base');
+  };
+
+  let content;
+  
+  // Determine which content to display based on the ID parameter
+  switch (id) {
+    case 'triage-test-script':
+      content = <TestScriptTriageContent />;
+      break;
+    case 'medicatie-test-script':
+      content = <TestScriptMedicatieContent />;
+      break;
+    case 'onderzoek-test-script':
+      content = <TestScriptOnderzoekContent />;
+      break;
+    default:
+      content = <div className="p-6">Document not found</div>;
+  }
+
+  return (
+    <div className="container mx-auto py-6">
+      <div className="flex items-center mb-6 gap-2">
+        <Button 
+          onClick={goBack} 
+          variant="ghost" 
+          className="text-forest hover:text-forest/90 hover:bg-mint-light/20"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Knowledge Base
+        </Button>
+      </div>
+      
+      <Card className="p-6">
+        {content}
+      </Card>
+    </div>
+  );
+};
+
+export default KnowledgeBaseDetail;
