@@ -22,6 +22,7 @@ export function DetailedCallsList() {
   const [urgencyFilter, setUrgencyFilter] = useState("all");
   const [sentimentFilter, setSentimentFilter] = useState("all");
   const [error, setError] = useState<string | null>(null);
+  const [isDemoAccount, setIsDemoAccount] = useState(false);
   const { toast } = useToast();
   const itemsPerPage = 10;
 
@@ -44,6 +45,25 @@ export function DetailedCallsList() {
           throw new Error('No session found');
         }
         console.log("User ID:", session.user.id);
+
+        // Check if this is a demo account
+        const { data: profileData, error: profileError } = await supabase
+          .from('profiles')
+          .select('demo_account')
+          .eq('id', session.user.id)
+          .maybeSingle();
+        
+        if (profileError) {
+          console.error("Error fetching profile:", profileError);
+        } else if (profileData?.demo_account === true) {
+          console.log("Demo account detected - showing empty data");
+          setIsDemoAccount(true);
+          setCalls([]);
+          setFilteredCalls([]);
+          setTotalPages(0);
+          setLoading(false);
+          return;
+        }
 
         // Get the assistant_id from assistant_status
         const { data: assistantData, error: assistantError } = await supabase
@@ -191,7 +211,7 @@ export function DetailedCallsList() {
     );
   }
 
-  if (error) {
+  if (error && !isDemoAccount) {
     return (
       <Card className="dashboard-card">
         <CardContent className="p-8">
@@ -262,7 +282,9 @@ export function DetailedCallsList() {
               ) : (
                 <tr>
                   <td colSpan={8} className="text-center py-8 text-gray">
-                    Geen triage gesprekken gevonden
+                    {isDemoAccount ? 
+                      "Dit is een demo account. Er zijn nog geen triage gesprekken geconfigureerd." : 
+                      "Geen triage gesprekken gevonden"}
                   </td>
                 </tr>
               )}

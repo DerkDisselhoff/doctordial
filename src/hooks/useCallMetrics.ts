@@ -11,6 +11,25 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('No session');
 
+      // Check if the user is a demo account
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('demo_account')
+        .eq('id', session.user.id)
+        .maybeSingle();
+
+      // Return empty data for demo accounts
+      if (profileData?.demo_account === true) {
+        console.log("Demo account detected - returning empty metrics data");
+        return {
+          totalCalls: '0',
+          avgDuration: '0',
+          callsForwarded: '0',
+          callSuccess: '0',
+          relevantCases: '0'
+        };
+      }
+
       const { data: assistantData } = await supabase
         .from('assistant_status')
         .select('assistant_id')

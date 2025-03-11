@@ -537,6 +537,7 @@ export type Database = {
           avatar_url: string | null
           company_name: string | null
           created_at: string
+          demo_account: boolean | null
           id: string
           phone_number: string | null
           preferred_language: string | null
@@ -548,6 +549,7 @@ export type Database = {
           avatar_url?: string | null
           company_name?: string | null
           created_at?: string
+          demo_account?: boolean | null
           id: string
           phone_number?: string | null
           preferred_language?: string | null
@@ -559,6 +561,7 @@ export type Database = {
           avatar_url?: string | null
           company_name?: string | null
           created_at?: string
+          demo_account?: boolean | null
           id?: string
           phone_number?: string | null
           preferred_language?: string | null

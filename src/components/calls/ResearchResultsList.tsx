@@ -38,6 +38,7 @@ export function ResearchResultsList() {
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [isDemoAccount, setIsDemoAccount] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const itemsPerPage = 10;
@@ -63,6 +64,25 @@ export function ResearchResultsList() {
         }
         
         console.log("User ID:", session.user.id);
+
+        // Check if this is a demo account
+        const { data: profileData, error: profileError } = await supabase
+          .from('profiles')
+          .select('demo_account')
+          .eq('id', session.user.id)
+          .maybeSingle();
+        
+        if (profileError) {
+          console.error("Error fetching profile:", profileError);
+        } else if (profileData?.demo_account === true) {
+          console.log("Demo account detected - showing empty research data");
+          setIsDemoAccount(true);
+          setCalls([]);
+          setFilteredCalls([]);
+          setTotalPages(0);
+          setLoading(false);
+          return;
+        }
 
         // Fetch all research calls
         const { data: callData, error: callError } = await supabase
@@ -178,7 +198,7 @@ export function ResearchResultsList() {
         </div>
       </CardHeader>
       <CardContent className="p-0">
-        {error && (
+        {error && !isDemoAccount && (
           <div className="p-4 text-center text-red-500">
             {error}
           </div>
@@ -250,7 +270,9 @@ export function ResearchResultsList() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center py-8 text-gray">
-                    Geen onderzoek uitslagen gesprekken gevonden
+                    {isDemoAccount ? 
+                      "Dit is een demo account. Er zijn nog geen onderzoek uitslagen geconfigureerd." : 
+                      "Geen onderzoek uitslagen gesprekken gevonden"}
                   </TableCell>
                 </TableRow>
               )}
