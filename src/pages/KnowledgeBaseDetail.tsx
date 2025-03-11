@@ -1,3 +1,4 @@
+
 import { ArrowLeft, FileText, Flag, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -493,3 +494,56 @@ const TestScriptOnderzoekContent = () => {
             </TableBody>
           </Table>
         </div>
+      </div>
+      
+      {/* Flagging Section - Moved to bottom */}
+      <div className="bg-white p-6 rounded-lg border border-gray-200 mt-6">
+        <h2 className="text-xl font-semibold text-forest mb-4">Markeren van gesprekken (Flagging)</h2>
+        <p className="text-gray-700 mb-4">
+          Na het testen van de AI-onderzoeksuitslagen-assistent kun je de kwaliteit van het gesprek beoordelen door de "Flag This Call" functie te gebruiken:
+        </p>
+        
+        <div className="space-y-4">
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <h3 className="text-xl font-semibold text-forest mb-2">Hoe markeer je een gesprek?</h3>
+            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+              <li>Ga naar de gespreksdetailpagina van het geteste gesprek.</li>
+              <li>Klik op de knop <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded text-sm"><Flag className="h-3 w-3 text-mint" /> Flag This Call</span> rechtsboven in het scherm.</li>
+              <li>Kies in het dropdown menu een van de volgende opties:</li>
+            </ol>
+            
+            <div className="mt-3 pl-5">
+              <div className="bg-white rounded-md border border-gray-200 shadow-sm">
+                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                  <span>Wrong questions from AI</span>
+                </div>
+                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
+                  <Flag className="h-4 w-4 text-orange-500" />
+                  <span>Messy conversation, not smooth</span>
+                </div>
+                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
+                  <Flag className="h-4 w-4 text-blue-500" />
+                  <span>Other issue</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-4">
+              <h3 className="text-xl font-semibold text-forest mb-2">Bij het markeren:</h3>
+              <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                <li>Voor alle opties: Voeg aanvullende notities toe die het probleem beschrijven.</li>
+                <li>Wees zo specifiek mogelijk over wat er mis ging tijdens het gesprek.</li>
+                <li>Klik op "Submit Flag" om de markering te voltooien.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <p className="text-gray-700 mt-4">
+          Deze markeringen zijn essentieel om de AI-assistent te verbeteren. Ze worden regelmatig door ons team geanalyseerd om patronen te identificeren en aanpassingen te maken in de gespreksstromen.
+        </p>
+      </div>
+    </div>
+  );
+};
