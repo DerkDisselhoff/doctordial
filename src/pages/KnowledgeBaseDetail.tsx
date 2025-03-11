@@ -1,4 +1,3 @@
-
 import { ArrowLeft, FileText, Flag, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -46,60 +45,7 @@ const TestScriptTriageContent = () => {
           ></iframe>
         </div>
       </div>
-
-      {/* Flagging Section */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200 mt-6">
-        <h2 className="text-xl font-semibold text-forest mb-4">Markeren van gesprekken (Flagging)</h2>
-        <p className="text-gray-700 mb-4">
-          Na het testen van de AI-triage-assistent kun je de kwaliteit van het gesprek beoordelen door de "Flag This Call" functie te gebruiken:
-        </p>
-        
-        <div className="space-y-4">
-          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-            <h3 className="font-semibold text-forest mb-2">Hoe markeer je een gesprek?</h3>
-            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
-              <li>Ga naar de gespreksdetailpagina van het geteste gesprek.</li>
-              <li>Klik op de knop <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded text-sm"><Flag className="h-3 w-3 text-mint" /> Flag This Call</span> rechtsboven in het scherm.</li>
-              <li>Kies in het dropdown menu een van de volgende opties:</li>
-            </ol>
-            
-            <div className="mt-3 pl-5">
-              <div className="bg-white rounded-md border border-gray-200 shadow-sm">
-                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                  <span>Wrong Urgency Level</span>
-                </div>
-                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
-                  <Flag className="h-4 w-4 text-orange-500" />
-                  <span>Wrong Questions from AI</span>
-                </div>
-                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
-                  <Flag className="h-4 w-4 text-red-500" />
-                  <span>Messy Conversation, Not Smooth</span>
-                </div>
-                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
-                  <Flag className="h-4 w-4 text-blue-500" />
-                  <span>Other</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="mt-4">
-              <h3 className="font-semibold text-forest mb-2">Bij het markeren:</h3>
-              <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                <li>Voor "Wrong Urgency Level": Geef het juiste urgentieniveau aan (U1-U5).</li>
-                <li>Voor alle opties: Voeg aanvullende notities toe die het probleem beschrijven.</li>
-                <li>Klik op "Submit Flag" om de markering te voltooien.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        
-        <p className="text-gray-700 mt-4">
-          Deze markeringen zijn essentieel om de AI-assistent te verbeteren. Ze worden regelmatig door ons team geanalyseerd om patronen te identificeren en aanpassingen te maken.
-        </p>
-      </div>
-
+      
       <div className="space-y-4">
         <h2 className="text-xl font-semibold text-forest">Tips voor testers</h2>
         <ul className="list-disc pl-5 space-y-2 text-gray-700">
@@ -186,6 +132,59 @@ const TestScriptTriageContent = () => {
           </Table>
         </div>
       </div>
+
+      {/* Flagging Section - Moved to bottom */}
+      <div className="bg-white p-6 rounded-lg border border-gray-200 mt-6">
+        <h2 className="text-xl font-semibold text-forest mb-4">Markeren van gesprekken (Flagging)</h2>
+        <p className="text-gray-700 mb-4">
+          Na het testen van de AI-triage-assistent kun je de kwaliteit van het gesprek beoordelen door de "Flag This Call" functie te gebruiken:
+        </p>
+        
+        <div className="space-y-4">
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <h3 className="text-xl font-semibold text-forest mb-2">Hoe markeer je een gesprek?</h3>
+            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+              <li>Ga naar de gespreksdetailpagina van het geteste gesprek.</li>
+              <li>Klik op de knop <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded text-sm"><Flag className="h-3 w-3 text-mint" /> Flag This Call</span> rechtsboven in het scherm.</li>
+              <li>Kies in het dropdown menu een van de volgende opties:</li>
+            </ol>
+            
+            <div className="mt-3 pl-5">
+              <div className="bg-white rounded-md border border-gray-200 shadow-sm">
+                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                  <span>Wrong Urgency Level</span>
+                </div>
+                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
+                  <Flag className="h-4 w-4 text-orange-500" />
+                  <span>Wrong Questions from AI</span>
+                </div>
+                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
+                  <Flag className="h-4 w-4 text-red-500" />
+                  <span>Messy Conversation, Not Smooth</span>
+                </div>
+                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
+                  <Flag className="h-4 w-4 text-blue-500" />
+                  <span>Other</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-4">
+              <h3 className="text-xl font-semibold text-forest mb-2">Bij het markeren:</h3>
+              <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                <li>Voor "Wrong Urgency Level": Geef het juiste urgentieniveau aan (U1-U5).</li>
+                <li>Voor alle opties: Voeg aanvullende notities toe die het probleem beschrijven.</li>
+                <li>Klik op "Submit Flag" om de markering te voltooien.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <p className="text-gray-700 mt-4">
+          Deze markeringen zijn essentieel om de AI-assistent te verbeteren. Ze worden regelmatig door ons team geanalyseerd om patronen te identificeren en aanpassingen te maken.
+        </p>
+      </div>
     </div>
   );
 };
@@ -228,55 +227,6 @@ const TestScriptMedicatieContent = () => {
             className="absolute top-0 left-0 w-full h-full shadow-md"
           ></iframe>
         </div>
-      </div>
-
-      {/* Flagging Section */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200 mt-6">
-        <h2 className="text-xl font-semibold text-forest mb-4">Markeren van gesprekken (Flagging)</h2>
-        <p className="text-gray-700 mb-4">
-          Na het testen van de AI-medicatie-assistent kun je de kwaliteit van het gesprek beoordelen door de "Flag This Call" functie te gebruiken:
-        </p>
-        
-        <div className="space-y-4">
-          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-            <h3 className="font-semibold text-forest mb-2">Hoe markeer je een gesprek?</h3>
-            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
-              <li>Ga naar de gespreksdetailpagina van het geteste gesprek.</li>
-              <li>Klik op de knop <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded text-sm"><Flag className="h-3 w-3 text-mint" /> Flag This Call</span> rechtsboven in het scherm.</li>
-              <li>Kies in het dropdown menu een van de volgende opties:</li>
-            </ol>
-            
-            <div className="mt-3 pl-5">
-              <div className="bg-white rounded-md border border-gray-200 shadow-sm">
-                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                  <span>Wrong questions from AI</span>
-                </div>
-                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
-                  <Flag className="h-4 w-4 text-orange-500" />
-                  <span>Messy conversation, not smooth</span>
-                </div>
-                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
-                  <Flag className="h-4 w-4 text-blue-500" />
-                  <span>Other issue</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="mt-4">
-              <h3 className="font-semibold text-forest mb-2">Bij het markeren:</h3>
-              <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                <li>Voor alle opties: Voeg aanvullende notities toe die het probleem beschrijven.</li>
-                <li>Wees zo specifiek mogelijk over wat er mis ging tijdens het gesprek.</li>
-                <li>Klik op "Submit Flag" om de markering te voltooien.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        
-        <p className="text-gray-700 mt-4">
-          Deze markeringen zijn essentieel om de AI-assistent te verbeteren. Ze worden regelmatig door ons team geanalyseerd om patronen te identificeren en aanpassingen te maken in de gespreksstromen.
-        </p>
       </div>
 
       <div className="space-y-4">
@@ -365,6 +315,55 @@ const TestScriptMedicatieContent = () => {
           </Table>
         </div>
       </div>
+
+      {/* Flagging Section - Moved to bottom */}
+      <div className="bg-white p-6 rounded-lg border border-gray-200 mt-6">
+        <h2 className="text-xl font-semibold text-forest mb-4">Markeren van gesprekken (Flagging)</h2>
+        <p className="text-gray-700 mb-4">
+          Na het testen van de AI-medicatie-assistent kun je de kwaliteit van het gesprek beoordelen door de "Flag This Call" functie te gebruiken:
+        </p>
+        
+        <div className="space-y-4">
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <h3 className="text-xl font-semibold text-forest mb-2">Hoe markeer je een gesprek?</h3>
+            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+              <li>Ga naar de gespreksdetailpagina van het geteste gesprek.</li>
+              <li>Klik op de knop <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded text-sm"><Flag className="h-3 w-3 text-mint" /> Flag This Call</span> rechtsboven in het scherm.</li>
+              <li>Kies in het dropdown menu een van de volgende opties:</li>
+            </ol>
+            
+            <div className="mt-3 pl-5">
+              <div className="bg-white rounded-md border border-gray-200 shadow-sm">
+                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                  <span>Wrong questions from AI</span>
+                </div>
+                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
+                  <Flag className="h-4 w-4 text-orange-500" />
+                  <span>Messy conversation, not smooth</span>
+                </div>
+                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
+                  <Flag className="h-4 w-4 text-blue-500" />
+                  <span>Other issue</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-4">
+              <h3 className="text-xl font-semibold text-forest mb-2">Bij het markeren:</h3>
+              <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                <li>Voor alle opties: Voeg aanvullende notities toe die het probleem beschrijven.</li>
+                <li>Wees zo specifiek mogelijk over wat er mis ging tijdens het gesprek.</li>
+                <li>Klik op "Submit Flag" om de markering te voltooien.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <p className="text-gray-700 mt-4">
+          Deze markeringen zijn essentieel om de AI-assistent te verbeteren. Ze worden regelmatig door ons team geanalyseerd om patronen te identificeren en aanpassingen te maken in de gespreksstromen.
+        </p>
+      </div>
     </div>
   );
 };
@@ -407,55 +406,6 @@ const TestScriptOnderzoekContent = () => {
             className="absolute top-0 left-0 w-full h-full shadow-md"
           ></iframe>
         </div>
-      </div>
-
-      {/* Flagging Section */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200 mt-6">
-        <h2 className="text-xl font-semibold text-forest mb-4">Markeren van gesprekken (Flagging)</h2>
-        <p className="text-gray-700 mb-4">
-          Na het testen van de AI-onderzoeksuitslagen-assistent kun je de kwaliteit van het gesprek beoordelen door de "Flag This Call" functie te gebruiken:
-        </p>
-        
-        <div className="space-y-4">
-          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-            <h3 className="font-semibold text-forest mb-2">Hoe markeer je een gesprek?</h3>
-            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
-              <li>Ga naar de gespreksdetailpagina van het geteste gesprek.</li>
-              <li>Klik op de knop <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded text-sm"><Flag className="h-3 w-3 text-mint" /> Flag This Call</span> rechtsboven in het scherm.</li>
-              <li>Kies in het dropdown menu een van de volgende opties:</li>
-            </ol>
-            
-            <div className="mt-3 pl-5">
-              <div className="bg-white rounded-md border border-gray-200 shadow-sm">
-                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                  <span>Wrong questions from AI</span>
-                </div>
-                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
-                  <Flag className="h-4 w-4 text-orange-500" />
-                  <span>Messy conversation, not smooth</span>
-                </div>
-                <div className="py-1 px-2 hover:bg-mint-light/20 flex items-center gap-2">
-                  <Flag className="h-4 w-4 text-blue-500" />
-                  <span>Other issue</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="mt-4">
-              <h3 className="font-semibold text-forest mb-2">Bij het markeren:</h3>
-              <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                <li>Voor alle opties: Voeg aanvullende notities toe die het probleem beschrijven.</li>
-                <li>Geef duidelijk aan welke onderdelen van het gesprek verbetering nodig hebben.</li>
-                <li>Klik op "Submit Flag" om de markering te voltooien.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        
-        <p className="text-gray-700 mt-4">
-          Deze markeringen zijn essentieel om de AI-assistent te verbeteren. Ze worden regelmatig door ons team geanalyseerd om patronen te identificeren en aanpassingen te maken in de gespreksstromen.
-        </p>
       </div>
 
       <div className="space-y-4">
@@ -543,94 +493,3 @@ const TestScriptOnderzoekContent = () => {
             </TableBody>
           </Table>
         </div>
-      </div>
-    </div>
-  );
-};
-
-const KnowledgeBaseDetail = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate("/login");
-        return;
-      }
-      setIsLoading(false);
-    };
-
-    checkAuth();
-  }, [navigate]);
-
-  // Handle back button 
-  const handleBack = () => {
-    window.close();
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-mint"></div>
-      </div>
-    );
-  }
-
-  // Render content based on ID
-  const renderContent = () => {
-    switch (id) {
-      case "test-script-triage":
-        return <TestScriptTriageContent />;
-      case "test-script-medicatie":
-        return <TestScriptMedicatieContent />;
-      case "test-script-onderzoek":
-        return <TestScriptOnderzoekContent />;
-      default:
-        return (
-          <div className="text-center py-12">
-            <h2 className="text-xl font-semibold text-gray-700">Content niet gevonden</h2>
-            <p className="text-gray-500 mt-2">Het gevraagde kennisbank item bestaat niet of is verwijderd.</p>
-          </div>
-        );
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header with logo and back button */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-full bg-mint/10 text-mint">
-              <FileText className="h-5 w-5" />
-            </div>
-            <span className="font-semibold text-forest">AI Assistenten Kennisbank</span>
-          </div>
-          <Button variant="outline" size="sm" onClick={handleBack} className="text-gray-600">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Sluiten
-          </Button>
-        </div>
-      </header>
-
-      {/* Main content */}
-      <main className="container mx-auto px-4 py-8">
-        <Card className="max-w-4xl mx-auto bg-white p-8">
-          {renderContent()}
-        </Card>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 py-4 mt-8">
-        <div className="container mx-auto px-4 text-center text-sm text-gray-500">
-          © {new Date().getFullYear()} AI Assistenten - Alle rechten voorbehouden
-        </div>
-      </footer>
-    </div>
-  );
-};
-
-export default KnowledgeBaseDetail;
