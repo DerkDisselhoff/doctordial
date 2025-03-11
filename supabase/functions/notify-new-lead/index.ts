@@ -58,10 +58,10 @@ async function testNotificationFunction() {
     };
 
     console.log("📊 Testing with Resend API key length:", resendApiKey?.length || 0);
-    console.log("📊 Testing email with strict fallbacks for debugging");
+    console.log("📊 Testing with verified domain: doctordial.io");
     
     try {
-      // Test the most basic email send first with doctordial.io as the domain
+      // Test the most basic email send first with direct parameters
       console.log("🔍 Attempting simple direct email test...");
       const directTestResult = await resend.emails.send({
         from: "noreply@doctordial.io", // Using verified domain
@@ -96,7 +96,7 @@ async function testNotificationFunction() {
     
     // Use default config if none found in database
     const finalConfig = emailConfig || {
-      from_email: "noreply@doctordial.io", // Using your verified domain
+      from_email: "noreply@doctordial.io", // Using verified domain
       from_name: "DoctorDial",
       to_emails: ["test@doctordial.com"]
     };
@@ -246,7 +246,7 @@ serve(async (req) => {
       if (isTest) {
         console.log("Using default email configuration for test");
         emailConfig = {
-          from_email: "noreply@doctordial.io", // Using your verified domain
+          from_email: "noreply@doctordial.io", // Using verified domain
           from_name: "DoctorDial",
           to_emails: ["test@doctordial.com"]
         };
