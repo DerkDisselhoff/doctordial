@@ -3,10 +3,15 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.47.0';
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const resendApiKey = Deno.env.get("RESEND_API_KEY");
+const resend = new Resend(resendApiKey);
 const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
 const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
+
+console.log("Edge function initialized with Resend API key:", resendApiKey ? "Present" : "Missing");
+console.log("Supabase URL:", supabaseUrl);
+console.log("Supabase key:", supabaseKey ? "Present" : "Missing");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -82,6 +87,12 @@ serve(async (req) => {
         <li><strong>Aantal Praktijken:</strong> ${leadData.practice_count}</li>
       </ul>
     `;
+
+    console.log("Preparing to send email with config:", {
+      from: `${emailConfig.from_name} <${emailConfig.from_email}>`,
+      to: emailConfig.to_emails,
+      subject: `Nieuwe Lead: ${leadData.name} - ${leadData.company_name}`
+    });
 
     // Send email using configuration from the database
     const { data, error } = await resend.emails.send({

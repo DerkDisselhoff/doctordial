@@ -47,12 +47,14 @@ export const MultiStepPricingForm = () => {
       // Trigger the email notification function with the submitted data
       if (data && data.length > 0) {
         try {
+          console.log("Submitting data to notification function:", data[0]);
           const { error: notifyError } = await supabase.functions.invoke('notify-new-lead', {
             body: data[0],
           });
           
           if (notifyError) {
             console.error("Error sending notification:", notifyError);
+            // Continue with the form submission flow even if notification fails
           }
         } catch (notifyErr) {
           console.error("Failed to send notification:", notifyErr);
