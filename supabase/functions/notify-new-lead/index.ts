@@ -59,9 +59,9 @@ serve(async (req) => {
       </ul>
     `;
 
-    // Send email to both recipients with corrected email address
+    // Send email with the correct domain: doctordial.io
     const { data, error } = await resend.emails.send({
-      from: "DoctorDial Leads <leads@doctordial.com>",
+      from: "DoctorDial Leads <leads@doctordial.io>",
       to: ["jelmer.botman@doctordial.io", "derk.disselhoff@doctordial.io"],
       subject: `Nieuwe Lead: ${leadData.name} - ${leadData.company_name}`,
       html: emailContent,
