@@ -39,6 +39,94 @@ interface LeadData {
   created_at: string;
 }
 
+// Function to invoke a test of the edge function
+async function testNotificationFunction() {
+  try {
+    console.log("🧪 Running automated test of notify-new-lead function");
+    
+    // Test data
+    const testData = {
+      id: 9999,
+      name: "Test User",
+      email: "test@example.com",
+      phone: "+31612345678",
+      practice_count: "2-3",
+      company_name: "Test Practice",
+      role: "Manager",
+      created_at: new Date().toISOString()
+    };
+    
+    // Fetch email configuration
+    const { data: emailConfig, error: configError } = await supabase
+      .from('email_config')
+      .select('from_email, from_name, to_emails')
+      .eq('type', 'lead_notification')
+      .single();
+      
+    if (configError) {
+      console.error("❌ Test failed: Error fetching email configuration:", configError);
+      return;
+    }
+    
+    // Use default config if none found in database
+    const finalConfig = emailConfig || {
+      from_email: "noreply@doctordial.com",
+      from_name: "DoctorDial Test",
+      to_emails: ["test@doctordial.com"]
+    };
+    
+    console.log("📧 Test using email configuration:", finalConfig);
+    
+    // Format date for email
+    const formattedDate = new Date(testData.created_at).toLocaleString('nl-NL', {
+      day: '2-digit', 
+      month: '2-digit', 
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    // Configure email content
+    const emailContent = `
+      <h1>Nieuwe Lead via DoctorDial Pricing Formulier</h1>
+      <p><strong>Datum:</strong> ${formattedDate}</p>
+      <h2>Contact Informatie:</h2>
+      <ul>
+        <li><strong>Naam:</strong> ${testData.name}</li>
+        <li><strong>Email:</strong> ${testData.email}</li>
+        <li><strong>Telefoon:</strong> ${testData.phone || 'Niet ingevuld'}</li>
+        <li><strong>Rol:</strong> ${testData.role || 'Niet ingevuld'}</li>
+      </ul>
+      <h2>Praktijk Informatie:</h2>
+      <ul>
+        <li><strong>Bedrijfsnaam:</strong> ${testData.company_name || 'Niet ingevuld'}</li>
+        <li><strong>Aantal Praktijken:</strong> ${testData.practice_count || 'Niet ingevuld'}</li>
+      </ul>
+    `;
+    
+    // Send test email
+    try {
+      const emailResult = await resend.emails.send({
+        from: `${finalConfig.from_name} <${finalConfig.from_email}>`,
+        to: finalConfig.to_emails,
+        subject: `[TEST] Nieuwe Lead: ${testData.name}${testData.company_name ? ` - ${testData.company_name}` : ''}`,
+        html: emailContent,
+      });
+      
+      if (emailResult.error) {
+        console.error("❌ Test failed: Resend API error:", emailResult.error);
+        return;
+      }
+      
+      console.log("✅ Test successful: Email sent", emailResult.data);
+    } catch (sendError) {
+      console.error("❌ Test failed: Error sending email:", sendError);
+    }
+  } catch (error) {
+    console.error("❌ Test failed with error:", error);
+  }
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -53,6 +141,20 @@ serve(async (req) => {
     // Check if we're getting a test request
     const url = new URL(req.url);
     const isTest = url.searchParams.get('test') === 'true';
+    const isAutoTest = url.searchParams.get('autotest') === 'true';
+    
+    // If this is an automated test request, run the test function
+    if (isAutoTest) {
+      console.log("Running automated test function");
+      await testNotificationFunction();
+      return new Response(
+        JSON.stringify({ success: true, message: "Automated test completed, check logs for results" }),
+        {
+          status: 200,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
     
     let leadData: LeadData;
     
