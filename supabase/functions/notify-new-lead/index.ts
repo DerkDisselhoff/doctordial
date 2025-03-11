@@ -1,8 +1,12 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.47.0';
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
+const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -21,6 +25,12 @@ interface LeadData {
   created_at: string;
 }
 
+interface EmailConfig {
+  from_email: string;
+  from_name: string;
+  to_emails: string[];
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -31,6 +41,20 @@ serve(async (req) => {
     const leadData: LeadData = await req.json();
     
     console.log("Received lead data:", leadData);
+    
+    // Fetch email configuration from the database
+    const { data: emailConfig, error: configError } = await supabase
+      .from('email_config')
+      .select('from_email, from_name, to_emails')
+      .eq('type', 'lead_notification')
+      .single();
+    
+    if (configError) {
+      console.error("Error fetching email configuration:", configError);
+      throw configError;
+    }
+
+    console.log("Using email configuration:", emailConfig);
     
     // Format the date string
     const formattedDate = new Date(leadData.created_at).toLocaleString('nl-NL', {
@@ -59,10 +83,10 @@ serve(async (req) => {
       </ul>
     `;
 
-    // Send email with the correct domain: doctordial.io
+    // Send email using configuration from the database
     const { data, error } = await resend.emails.send({
-      from: "DoctorDial Leads <leads@doctordial.io>",
-      to: ["jelmer.botman@doctordial.io", "derk.disselhoff@doctordial.io"],
+      from: `${emailConfig.from_name} <${emailConfig.from_email}>`,
+      to: emailConfig.to_emails,
       subject: `Nieuwe Lead: ${leadData.name} - ${leadData.company_name}`,
       html: emailContent,
     });

@@ -430,6 +430,36 @@ export type Database = {
         }
         Relationships: []
       }
+      email_config: {
+        Row: {
+          created_at: string | null
+          from_email: string
+          from_name: string
+          id: string
+          to_emails: string[]
+          type: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          from_email: string
+          from_name: string
+          id?: string
+          to_emails: string[]
+          type: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          from_email?: string
+          from_name?: string
+          id?: string
+          to_emails?: string[]
+          type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       package_features: {
         Row: {
           created_at: string
