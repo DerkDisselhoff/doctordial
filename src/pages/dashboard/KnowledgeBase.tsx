@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, FileText, Clock, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
@@ -41,7 +42,7 @@ const KnowledgeBase = () => {
     );
   }
 
-  // Sample data for knowledge base items
+  // Sample data for knowledge base items - updated IDs to match with KnowledgeBaseDetail.tsx
   const knowledgeItems: KnowledgeBaseItem[] = [
     {
       id: "test-script-triage",
@@ -99,7 +100,7 @@ const KnowledgeBase = () => {
                 transition={{ duration: 0.3 }}
                 className="bg-gray-50 rounded-lg p-5 border border-gray-muted/30 hover:border-mint/30 hover:bg-gray-50/80 transition-all group cursor-pointer"
               >
-                <Link to={`/knowledge-base/${item.id}`} target="_blank" rel="noopener noreferrer" className="block">
+                <Link to={`/knowledge-base/${item.id}`} className="block">
                   <div className="flex items-start gap-4">
                     <div className="p-3 rounded-lg bg-mint/10 text-mint flex-shrink-0">
                       <FileText className="h-5 w-5" />
