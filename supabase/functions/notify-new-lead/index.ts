@@ -3,25 +3,30 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.47.0';
 
-const resendApiKey = Deno.env.get("RESEND_API_KEY");
-if (!resendApiKey) {
-  throw new Error("Missing RESEND_API_KEY environment variable");
-}
-
-const resend = new Resend(resendApiKey);
-const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
-const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-console.log("Edge function initialized with Resend API key:", resendApiKey ? "Present" : "Missing");
-console.log("Supabase URL:", supabaseUrl);
-console.log("Supabase key:", supabaseKey ? "Present" : "Missing");
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
 };
+
+// Log environment variables (without revealing values)
+console.log("Edge function initialized");
+console.log("RESEND_API_KEY present:", !!Deno.env.get("RESEND_API_KEY"));
+console.log("SUPABASE_URL present:", !!Deno.env.get("SUPABASE_URL"));
+console.log("SUPABASE_SERVICE_ROLE_KEY present:", !!Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
+
+const resendApiKey = Deno.env.get("RESEND_API_KEY");
+if (!resendApiKey) {
+  console.error("CRITICAL ERROR: Missing RESEND_API_KEY environment variable");
+}
+
+// Initialize Supabase client
+const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
+const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Initialize Resend client
+const resend = new Resend(resendApiKey);
 
 interface LeadData {
   id: number;
@@ -34,12 +39,6 @@ interface LeadData {
   created_at: string;
 }
 
-interface EmailConfig {
-  from_email: string;
-  from_name: string;
-  to_emails: string[];
-}
-
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -47,9 +46,33 @@ serve(async (req) => {
   }
 
   try {
-    const leadData: LeadData = await req.json();
+    console.log("Received request to notify-new-lead function");
     
-    console.log("Received lead data:", leadData);
+    // Validate request content type
+    const contentType = req.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new Error(`Invalid content type: ${contentType}`);
+    }
+    
+    // Get request body as text first for debugging
+    const bodyText = await req.text();
+    console.log("Request body (text):", bodyText);
+    
+    // Parse JSON (now separate step for better error handling)
+    let leadData: LeadData;
+    try {
+      leadData = JSON.parse(bodyText);
+    } catch (parseError) {
+      console.error("JSON parsing error:", parseError);
+      throw new Error(`Failed to parse request body as JSON: ${parseError.message}`);
+    }
+    
+    console.log("Lead data parsed successfully:", leadData);
+    
+    // Validate required fields in lead data
+    if (!leadData.name || !leadData.email) {
+      throw new Error("Missing required fields in lead data: must include name and email");
+    }
     
     // Fetch email configuration from the database
     const { data: emailConfig, error: configError } = await supabase
@@ -60,14 +83,19 @@ serve(async (req) => {
     
     if (configError) {
       console.error("Error fetching email configuration:", configError);
-      throw configError;
+      throw new Error(`Database error: Failed to fetch email configuration: ${configError.message}`);
     }
 
     if (!emailConfig) {
-      throw new Error("No email configuration found");
+      console.error("No email configuration found for lead_notification type");
+      throw new Error("No email configuration found for lead_notification type");
     }
 
     console.log("Using email configuration:", emailConfig);
+    
+    if (!emailConfig.from_email || !emailConfig.from_name || !emailConfig.to_emails || emailConfig.to_emails.length === 0) {
+      throw new Error("Email configuration is incomplete. Missing from_email, from_name, or to_emails.");
+    }
     
     // Format the date string
     const formattedDate = new Date(leadData.created_at).toLocaleString('nl-NL', {
@@ -86,48 +114,54 @@ serve(async (req) => {
       <ul>
         <li><strong>Naam:</strong> ${leadData.name}</li>
         <li><strong>Email:</strong> ${leadData.email}</li>
-        <li><strong>Telefoon:</strong> ${leadData.phone}</li>
-        <li><strong>Rol:</strong> ${leadData.role}</li>
+        <li><strong>Telefoon:</strong> ${leadData.phone || 'Niet ingevuld'}</li>
+        <li><strong>Rol:</strong> ${leadData.role || 'Niet ingevuld'}</li>
       </ul>
       <h2>Praktijk Informatie:</h2>
       <ul>
-        <li><strong>Bedrijfsnaam:</strong> ${leadData.company_name}</li>
-        <li><strong>Aantal Praktijken:</strong> ${leadData.practice_count}</li>
+        <li><strong>Bedrijfsnaam:</strong> ${leadData.company_name || 'Niet ingevuld'}</li>
+        <li><strong>Aantal Praktijken:</strong> ${leadData.practice_count || 'Niet ingevuld'}</li>
       </ul>
     `;
 
     console.log("Preparing to send email with config:", {
       from: `${emailConfig.from_name} <${emailConfig.from_email}>`,
       to: emailConfig.to_emails,
-      subject: `Nieuwe Lead: ${leadData.name} - ${leadData.company_name}`
+      subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`
     });
 
-    // Send email using configuration from the database
-    const { data, error } = await resend.emails.send({
-      from: `${emailConfig.from_name} <${emailConfig.from_email}>`,
-      to: emailConfig.to_emails,
-      subject: `Nieuwe Lead: ${leadData.name} - ${leadData.company_name}`,
-      html: emailContent,
-    });
+    try {
+      // Send email using configuration from the database
+      const emailResult = await resend.emails.send({
+        from: `${emailConfig.from_name} <${emailConfig.from_email}>`,
+        to: emailConfig.to_emails,
+        subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
+        html: emailContent,
+      });
 
-    if (error) {
-      console.error("Error sending email:", error);
-      throw error;
-    }
-
-    console.log("Email notification sent successfully", data);
-
-    return new Response(
-      JSON.stringify({ success: true, message: "Email notification sent" }),
-      {
-        status: 200,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      console.log("Resend API response:", emailResult);
+      
+      if (emailResult.error) {
+        throw new Error(`Resend API error: ${emailResult.error.message || JSON.stringify(emailResult.error)}`);
       }
-    );
+      
+      console.log("Email notification sent successfully", emailResult.data);
+
+      return new Response(
+        JSON.stringify({ success: true, message: "Email notification sent" }),
+        {
+          status: 200,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    } catch (sendError) {
+      console.error("Error from Resend API:", sendError);
+      throw new Error(`Failed to send email: ${sendError.message}`);
+    }
   } catch (error) {
     console.error("Error in notify-new-lead function:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: error.message, stack: error.stack }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

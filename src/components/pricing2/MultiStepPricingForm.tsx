@@ -35,6 +35,7 @@ export const MultiStepPricingForm = () => {
   const handleSubmitData = async () => {
     try {
       setIsSubmitting(true);
+      console.log("Starting form submission with data:", formData);
       
       // Insert the form data into the pricing_submissions table
       const { data, error } = await supabase
@@ -42,19 +43,32 @@ export const MultiStepPricingForm = () => {
         .insert([formData])
         .select();
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase insert error:", error);
+        throw error;
+      }
+      
+      console.log("Form data inserted successfully:", data);
       
       // Trigger the email notification function with the submitted data
       if (data && data.length > 0) {
         try {
           console.log("Submitting data to notification function:", data[0]);
-          const { error: notifyError } = await supabase.functions.invoke('notify-new-lead', {
+          
+          const functionResponse = await supabase.functions.invoke('notify-new-lead', {
             body: data[0],
+            headers: {
+              'Content-Type': 'application/json',
+            },
           });
           
-          if (notifyError) {
-            console.error("Error sending notification:", notifyError);
-            // Continue with the form submission flow even if notification fails
+          console.log("Edge function response:", functionResponse);
+          
+          if (functionResponse.error) {
+            console.error("Error from edge function:", functionResponse.error);
+            // We continue with the form submission flow even if notification fails
+          } else {
+            console.log("Notification sent successfully");
           }
         } catch (notifyErr) {
           console.error("Failed to send notification:", notifyErr);
