@@ -59,10 +59,10 @@ serve(async (req) => {
       </ul>
     `;
 
-    // Send email to both recipients
+    // Send email to both recipients with corrected email address
     const { data, error } = await resend.emails.send({
       from: "DoctorDial Leads <leads@doctordial.com>",
-      to: ["jelmer.botman@doctordial.io", "boudewijn.warbroek@doctordial.io"],
+      to: ["jelmer.botman@doctordial.io", "derk.disselhoff@doctordial.io"],
       subject: `Nieuwe Lead: ${leadData.name} - ${leadData.company_name}`,
       html: emailContent,
     });
