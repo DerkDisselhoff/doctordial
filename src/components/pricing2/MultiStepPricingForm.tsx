@@ -53,10 +53,12 @@ export const MultiStepPricingForm = () => {
       // Trigger the email notification function with the submitted data
       if (data && data.length > 0) {
         try {
-          console.log("Submitting data to notification function:", data[0]);
+          const submissionData = data[0];
+          console.log("Submitting data to notification function:", submissionData);
           
+          // Fix: Properly stringify the JSON body and set content-type header
           const functionResponse = await supabase.functions.invoke('notify-new-lead', {
-            body: data[0],
+            body: JSON.stringify(submissionData),
             headers: {
               'Content-Type': 'application/json',
             },

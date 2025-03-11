@@ -58,6 +58,11 @@ serve(async (req) => {
     const bodyText = await req.text();
     console.log("Request body (text):", bodyText);
     
+    // Validate that the body text is not empty
+    if (!bodyText || bodyText.trim() === '') {
+      throw new Error("Request body is empty");
+    }
+    
     // Parse JSON (now separate step for better error handling)
     let leadData: LeadData;
     try {
