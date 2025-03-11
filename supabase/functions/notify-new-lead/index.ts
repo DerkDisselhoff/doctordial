@@ -61,16 +61,16 @@ async function testNotificationFunction() {
     console.log("📊 Testing email with strict fallbacks for debugging");
     
     try {
-      // Test the most basic email send first
+      // Test the most basic email send first with doctordial.io as the domain
       console.log("🔍 Attempting simple direct email test...");
       const directTestResult = await resend.emails.send({
-        from: "onboarding@resend.dev",
+        from: "noreply@doctordial.io", // Using verified domain
         to: ["test@doctordial.com"],
         subject: "Direct Test Email",
         html: "<p>This is a direct test email</p>",
       });
       
-      console.log("✅ Direct test email result:", directTestResult);
+      console.log("✅ Direct test email result:", JSON.stringify(directTestResult));
       
       if (directTestResult.error) {
         console.error("❌ Direct test failed:", directTestResult.error);
@@ -96,8 +96,8 @@ async function testNotificationFunction() {
     
     // Use default config if none found in database
     const finalConfig = emailConfig || {
-      from_email: "onboarding@resend.dev", // Using Resend's default sending domain
-      from_name: "DoctorDial Test",
+      from_email: "noreply@doctordial.io", // Using your verified domain
+      from_name: "DoctorDial",
       to_emails: ["test@doctordial.com"]
     };
     
@@ -246,8 +246,8 @@ serve(async (req) => {
       if (isTest) {
         console.log("Using default email configuration for test");
         emailConfig = {
-          from_email: "onboarding@resend.dev", // Using Resend's default sending domain
-          from_name: "DoctorDial Test",
+          from_email: "noreply@doctordial.io", // Using your verified domain
+          from_name: "DoctorDial",
           to_emails: ["test@doctordial.com"]
         };
       } else {
@@ -303,7 +303,7 @@ serve(async (req) => {
         html: emailContent,
       });
 
-      console.log("Resend API response:", emailResult);
+      console.log("Resend API response:", JSON.stringify(emailResult));
       
       if (emailResult.error) {
         throw new Error(`Resend API error: ${emailResult.error.message || JSON.stringify(emailResult.error)}`);
