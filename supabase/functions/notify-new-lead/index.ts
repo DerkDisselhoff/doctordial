@@ -12,6 +12,7 @@ const corsHeaders = {
 // Log environment variables (without revealing values)
 console.log("Edge function initialized");
 console.log("RESEND_API_KEY present:", !!Deno.env.get("RESEND_API_KEY"));
+console.log("RESEND_API_KEY length:", Deno.env.get("RESEND_API_KEY")?.length || 0);
 console.log("SUPABASE_URL present:", !!Deno.env.get("SUPABASE_URL"));
 console.log("SUPABASE_SERVICE_ROLE_KEY present:", !!Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
 
@@ -55,8 +56,33 @@ async function testNotificationFunction() {
       role: "Manager",
       created_at: new Date().toISOString()
     };
+
+    console.log("📊 Testing with Resend API key length:", resendApiKey?.length || 0);
+    console.log("📊 Testing email with strict fallbacks for debugging");
+    
+    try {
+      // Test the most basic email send first
+      console.log("🔍 Attempting simple direct email test...");
+      const directTestResult = await resend.emails.send({
+        from: "onboarding@resend.dev",
+        to: ["test@doctordial.com"],
+        subject: "Direct Test Email",
+        html: "<p>This is a direct test email</p>",
+      });
+      
+      console.log("✅ Direct test email result:", directTestResult);
+      
+      if (directTestResult.error) {
+        console.error("❌ Direct test failed:", directTestResult.error);
+        return;
+      }
+    } catch (directError) {
+      console.error("❌ Critical error in direct test:", directError);
+      return;
+    }
     
     // Fetch email configuration
+    console.log("🔍 Fetching email configuration from database...");
     const { data: emailConfig, error: configError } = await supabase
       .from('email_config')
       .select('from_email, from_name, to_emails')
@@ -70,7 +96,7 @@ async function testNotificationFunction() {
     
     // Use default config if none found in database
     const finalConfig = emailConfig || {
-      from_email: "noreply@doctordial.com",
+      from_email: "onboarding@resend.dev", // Using Resend's default sending domain
       from_name: "DoctorDial Test",
       to_emails: ["test@doctordial.com"]
     };
@@ -106,12 +132,15 @@ async function testNotificationFunction() {
     
     // Send test email
     try {
+      console.log("🔍 Attempting to send test notification email...");
       const emailResult = await resend.emails.send({
         from: `${finalConfig.from_name} <${finalConfig.from_email}>`,
         to: finalConfig.to_emails,
         subject: `[TEST] Nieuwe Lead: ${testData.name}${testData.company_name ? ` - ${testData.company_name}` : ''}`,
         html: emailContent,
       });
+      
+      console.log("📬 Raw email result:", JSON.stringify(emailResult));
       
       if (emailResult.error) {
         console.error("❌ Test failed: Resend API error:", emailResult.error);
@@ -217,7 +246,7 @@ serve(async (req) => {
       if (isTest) {
         console.log("Using default email configuration for test");
         emailConfig = {
-          from_email: "noreply@doctordial.com",
+          from_email: "onboarding@resend.dev", // Using Resend's default sending domain
           from_name: "DoctorDial Test",
           to_emails: ["test@doctordial.com"]
         };
