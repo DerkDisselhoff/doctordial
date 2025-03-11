@@ -50,23 +50,43 @@ serve(async (req) => {
     console.log("Request method:", req.method);
     console.log("Request headers:", Object.fromEntries(req.headers.entries()));
     
-    // Log the raw request body first
-    const rawBody = await req.arrayBuffer();
-    const bodyString = new TextDecoder().decode(rawBody);
-    console.log("Raw request body:", bodyString);
+    // Check if we're getting a test request
+    const url = new URL(req.url);
+    const isTest = url.searchParams.get('test') === 'true';
     
-    // If body is empty, return error
-    if (!bodyString || bodyString.trim() === '') {
-      throw new Error("Request body is empty");
-    }
-    
-    // Try to parse as JSON
     let leadData: LeadData;
-    try {
-      leadData = JSON.parse(bodyString);
-    } catch (parseError) {
-      console.error("JSON parsing error:", parseError);
-      throw new Error(`Failed to parse request body as JSON: ${parseError.message}`);
+    
+    if (isTest) {
+      // Use test data if this is a test run
+      console.log("Using test data for email notification");
+      leadData = {
+        id: 9999,
+        name: "Test User",
+        email: "test@example.com",
+        phone: "+31612345678",
+        practice_count: "2-3",
+        company_name: "Test Practice",
+        role: "Manager",
+        created_at: new Date().toISOString()
+      };
+    } else {
+      // Normal flow - parse the request body
+      const rawBody = await req.arrayBuffer();
+      const bodyString = new TextDecoder().decode(rawBody);
+      console.log("Raw request body:", bodyString);
+      
+      // If body is empty, return error
+      if (!bodyString || bodyString.trim() === '') {
+        throw new Error("Request body is empty");
+      }
+      
+      // Try to parse as JSON
+      try {
+        leadData = JSON.parse(bodyString);
+      } catch (parseError) {
+        console.error("JSON parsing error:", parseError);
+        throw new Error(`Failed to parse request body as JSON: ${parseError.message}`);
+      }
     }
     
     console.log("Lead data parsed successfully:", leadData);
@@ -90,7 +110,18 @@ serve(async (req) => {
 
     if (!emailConfig) {
       console.error("No email configuration found for lead_notification type");
-      throw new Error("No email configuration found for lead_notification type");
+      
+      // For testing purposes, use a default config if none is found
+      if (isTest) {
+        console.log("Using default email configuration for test");
+        emailConfig = {
+          from_email: "noreply@doctordial.com",
+          from_name: "DoctorDial Test",
+          to_emails: ["test@doctordial.com"]
+        };
+      } else {
+        throw new Error("No email configuration found for lead_notification type");
+      }
     }
 
     console.log("Using email configuration:", emailConfig);
