@@ -55,7 +55,7 @@ const TestScriptTriageContent = () => {
         </ul>
       </div>
 
-      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mt-6">
+      <div className="bg-white p-6 rounded-lg border border-gray-200 mt-6">
         <h2 className="text-xl font-semibold text-forest mb-4">Overzicht van 10 voorbeeldonderwerpen met openingszinnen</h2>
         <div className="overflow-x-auto">
           <Table>
@@ -238,7 +238,7 @@ const TestScriptMedicatieContent = () => {
         </ul>
       </div>
 
-      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mt-6">
+      <div className="bg-white p-6 rounded-lg border border-gray-200 mt-6">
         <h2 className="text-xl font-semibold text-forest mb-4">Overzicht van 10 voorbeeldmedicaties met openingszinnen</h2>
         <div className="overflow-x-auto">
           <Table>
@@ -417,7 +417,7 @@ const TestScriptOnderzoekContent = () => {
         </ul>
       </div>
 
-      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mt-6">
+      <div className="bg-white p-6 rounded-lg border border-gray-200 mt-6">
         <h2 className="text-xl font-semibold text-forest mb-4">Overzicht van 10 voorbeeldonderzoeken met openingszinnen</h2>
         <div className="overflow-x-auto">
           <Table>
@@ -620,4 +620,3 @@ const KnowledgeBaseDetail = () => {
 };
 
 export default KnowledgeBaseDetail;
-
