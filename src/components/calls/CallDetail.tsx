@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
@@ -64,8 +63,24 @@ export function CallDetail() {
     queryKey: ['callDetail', callId],
     queryFn: async () => {
       try {
+        // Check if the user is a demo account
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) throw new Error('No session');
+
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('demo_account')
+          .eq('id', session.user.id)
+          .maybeSingle();
+        
+        const isDemo = profileData?.demo_account === true;
+        console.log("Is demo account:", isDemo);
+
+        // Determine which table to query
+        const tableToQuery = isDemo ? 'demo_call_logs_triage' : 'call_logs_triage';
+        
         const { data, error } = await supabase
-          .from('call_logs_triage')
+          .from(tableToQuery)
           .select('*')
           .eq('call_id', callId)
           .maybeSingle();
@@ -73,7 +88,7 @@ export function CallDetail() {
         if (error) throw error;
         if (!data) throw new Error('Call not found');
         
-        console.log("Retrieved call data:", data);
+        console.log(`Retrieved ${isDemo ? 'demo' : ''} call data:`, data);
         return data as CallLog;
       } catch (err) {
         console.error("Error fetching call details:", err);

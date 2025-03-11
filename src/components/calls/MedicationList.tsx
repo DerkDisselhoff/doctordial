@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
@@ -55,19 +54,18 @@ export function MedicationList() {
         
         if (profileError) {
           console.error("Error fetching profile:", profileError);
-        } else if (profileData?.demo_account === true) {
-          console.log("Demo account detected - showing empty medication data");
-          setIsDemoAccount(true);
-          setCalls([]);
-          setFilteredCalls([]);
-          setTotalPages(0);
-          setLoading(false);
-          return;
         }
+        
+        const isDemo = profileData?.demo_account === true;
+        setIsDemoAccount(isDemo);
+        console.log("Is demo account:", isDemo);
+
+        // Determine which table to query
+        const tableToQuery = isDemo ? 'demo_call_logs_medications' : 'call_logs_medications';
 
         // Fetch all medication calls without filtering by assistant_id first
         const { data: allCallData, error: callError } = await supabase
-          .from('call_logs_medications')
+          .from(tableToQuery)
           .select('*')
           .order('updated_at', { ascending: false });
 
@@ -78,7 +76,7 @@ export function MedicationList() {
         }
 
         // Log the raw data to see what we're getting
-        console.log("All medication calls data:", allCallData);
+        console.log(`All ${isDemo ? 'demo' : ''} medication calls data:`, allCallData);
         
         if (allCallData && allCallData.length > 0) {
           setCalls(allCallData);
@@ -89,7 +87,7 @@ export function MedicationList() {
             description: `${allCallData.length} medicatie gesprekken gevonden`,
           });
         } else {
-          console.log("No medication calls found in the database");
+          console.log(`No ${isDemo ? 'demo' : ''} medication calls found in the database`);
           // Set empty arrays to ensure UI shows "no data" message
           setCalls([]);
           setFilteredCalls([]);

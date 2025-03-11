@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
@@ -55,16 +54,15 @@ export function DetailedCallsList() {
         
         if (profileError) {
           console.error("Error fetching profile:", profileError);
-        } else if (profileData?.demo_account === true) {
-          console.log("Demo account detected - showing empty data");
-          setIsDemoAccount(true);
-          setCalls([]);
-          setFilteredCalls([]);
-          setTotalPages(0);
-          setLoading(false);
-          return;
         }
+        
+        const isDemo = profileData?.demo_account === true;
+        setIsDemoAccount(isDemo);
+        console.log("Is demo account:", isDemo);
 
+        // Determine which table to query
+        const tableToQuery = isDemo ? 'demo_call_logs_triage' : 'call_logs_triage';
+        
         // Get the assistant_id from assistant_status
         const { data: assistantData, error: assistantError } = await supabase
           .from('assistant_status')
@@ -88,9 +86,9 @@ export function DetailedCallsList() {
 
         console.log("Found assistant ID:", assistantData.assistant_id);
 
-        // Fetch calls for this assistant from the triage table only
+        // Fetch calls from the appropriate table based on account type
         const { data: callData, error: callError } = await supabase
-          .from('call_logs_triage')
+          .from(tableToQuery)
           .select('*')
           .eq('assistant_id', assistantData.assistant_id)
           .order('start_time', { ascending: false });
@@ -101,9 +99,9 @@ export function DetailedCallsList() {
           throw callError;
         }
 
-        console.log("Number of triage calls found:", callData?.length || 0);
+        console.log(`Number of ${isDemo ? 'demo' : 'triage'} calls found:`, callData?.length || 0);
         
-        // Transform call_logs_triage data to match VapiCall interface
+        // Transform call data to match VapiCall interface
         const transformedCalls: VapiCall[] = callData.map(call => ({
           id: call.id,
           call_id: call.call_id || 'default',

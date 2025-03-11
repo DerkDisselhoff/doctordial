@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
@@ -74,19 +73,18 @@ export function ResearchResultsList() {
         
         if (profileError) {
           console.error("Error fetching profile:", profileError);
-        } else if (profileData?.demo_account === true) {
-          console.log("Demo account detected - showing empty research data");
-          setIsDemoAccount(true);
-          setCalls([]);
-          setFilteredCalls([]);
-          setTotalPages(0);
-          setLoading(false);
-          return;
         }
+        
+        const isDemo = profileData?.demo_account === true;
+        setIsDemoAccount(isDemo);
+        console.log("Is demo account:", isDemo);
+
+        // Determine which table to query
+        const tableToQuery = isDemo ? 'demo_call_logs_researchresults' : 'call_logs_researchresults';
 
         // Fetch all research calls
         const { data: callData, error: callError } = await supabase
-          .from('call_logs_researchresults')
+          .from(tableToQuery)
           .select('*')
           .order('created_at', { ascending: false });
 
@@ -96,7 +94,7 @@ export function ResearchResultsList() {
           throw callError;
         }
 
-        console.log("Research results data:", callData);
+        console.log(`${isDemo ? 'Demo' : ''} Research results data:`, callData);
         
         if (callData && callData.length > 0) {
           setCalls(callData);
@@ -107,7 +105,7 @@ export function ResearchResultsList() {
             description: `${callData.length} onderzoeksresultaten gesprekken gevonden`,
           });
         } else {
-          console.log("No research calls found in the database");
+          console.log(`No ${isDemo ? 'demo' : ''} research calls found in the database`);
           // Set empty arrays to ensure UI shows "no data" message
           setCalls([]);
           setFilteredCalls([]);

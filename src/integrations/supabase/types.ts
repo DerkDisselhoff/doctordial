@@ -397,6 +397,282 @@ export type Database = {
           },
         ]
       }
+      demo_call_logs_medications: {
+        Row: {
+          assistant_id: string | null
+          call_id: string | null
+          client_id: string | null
+          conversation_summary: string | null
+          cost: number | null
+          created_at: string | null
+          Date_of_birth: string | null
+          doctor_notes: string | null
+          dosage: string | null
+          duration: string | null
+          duration_seconds: string | null
+          end_time: string | null
+          frequency: string | null
+          id: string
+          instructions: string | null
+          medication_name: string | null
+          Packages: number | null
+          patient_id: string | null
+          patient_name: string | null
+          pharmacy_details: Json | null
+          phone_number: string | null
+          prescription_date: string | null
+          renewal_date: string | null
+          side_effects: string | null
+          start_time: string | null
+          transcript: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          assistant_id?: string | null
+          call_id?: string | null
+          client_id?: string | null
+          conversation_summary?: string | null
+          cost?: number | null
+          created_at?: string | null
+          Date_of_birth?: string | null
+          doctor_notes?: string | null
+          dosage?: string | null
+          duration?: string | null
+          duration_seconds?: string | null
+          end_time?: string | null
+          frequency?: string | null
+          id?: string
+          instructions?: string | null
+          medication_name?: string | null
+          Packages?: number | null
+          patient_id?: string | null
+          patient_name?: string | null
+          pharmacy_details?: Json | null
+          phone_number?: string | null
+          prescription_date?: string | null
+          renewal_date?: string | null
+          side_effects?: string | null
+          start_time?: string | null
+          transcript?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          assistant_id?: string | null
+          call_id?: string | null
+          client_id?: string | null
+          conversation_summary?: string | null
+          cost?: number | null
+          created_at?: string | null
+          Date_of_birth?: string | null
+          doctor_notes?: string | null
+          dosage?: string | null
+          duration?: string | null
+          duration_seconds?: string | null
+          end_time?: string | null
+          frequency?: string | null
+          id?: string
+          instructions?: string | null
+          medication_name?: string | null
+          Packages?: number | null
+          patient_id?: string | null
+          patient_name?: string | null
+          pharmacy_details?: Json | null
+          phone_number?: string | null
+          prescription_date?: string | null
+          renewal_date?: string | null
+          side_effects?: string | null
+          start_time?: string | null
+          transcript?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      demo_call_logs_researchresults: {
+        Row: {
+          assistant_id: string | null
+          call_id: string | null
+          client_id: string | null
+          confidence_level: string | null
+          conversation_summary: string | null
+          cost: number | null
+          created_at: string | null
+          date_of_birth: string | null
+          duration_seconds: string | null
+          end_time: string | null
+          findings: string | null
+          id: string
+          patient_id: string | null
+          patient_name: string | null
+          phone_number: string | null
+          recommendation: string | null
+          relevance_score: number | null
+          research_date: string | null
+          research_name: string | null
+          research_question: string | null
+          sources: Json | null
+          start_time: string | null
+          transcript: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          assistant_id?: string | null
+          call_id?: string | null
+          client_id?: string | null
+          confidence_level?: string | null
+          conversation_summary?: string | null
+          cost?: number | null
+          created_at?: string | null
+          date_of_birth?: string | null
+          duration_seconds?: string | null
+          end_time?: string | null
+          findings?: string | null
+          id?: string
+          patient_id?: string | null
+          patient_name?: string | null
+          phone_number?: string | null
+          recommendation?: string | null
+          relevance_score?: number | null
+          research_date?: string | null
+          research_name?: string | null
+          research_question?: string | null
+          sources?: Json | null
+          start_time?: string | null
+          transcript?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          assistant_id?: string | null
+          call_id?: string | null
+          client_id?: string | null
+          confidence_level?: string | null
+          conversation_summary?: string | null
+          cost?: number | null
+          created_at?: string | null
+          date_of_birth?: string | null
+          duration_seconds?: string | null
+          end_time?: string | null
+          findings?: string | null
+          id?: string
+          patient_id?: string | null
+          patient_name?: string | null
+          phone_number?: string | null
+          recommendation?: string | null
+          relevance_score?: number | null
+          research_date?: string | null
+          research_name?: string | null
+          research_question?: string | null
+          sources?: Json | null
+          start_time?: string | null
+          transcript?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      demo_call_logs_triage: {
+        Row: {
+          Action: string | null
+          action_required: boolean | null
+          appointment_date: string | null
+          assistant_id: string | null
+          call_id: string | null
+          client_id: string | null
+          conversation_summary: string | null
+          cost: number | null
+          created_at: string | null
+          duration_seconds: string | null
+          Emotion: string | null
+          end_time: string | null
+          ended_reason: string | null
+          flagging: Json | null
+          follow_up_notes: string | null
+          Forwarded: boolean | null
+          id: string
+          intent: string | null
+          metadata: Json | null
+          Name: string | null
+          patient_email: string | null
+          patient_id: string | null
+          patient_phone: string | null
+          phone_number: string | null
+          "Question Summary": string | null
+          Sentiment: string | null
+          start_time: string | null
+          Status: string | null
+          Symptoms: Json | null
+          transcript: string | null
+          type: string | null
+          Urgencylevel: string | null
+        }
+        Insert: {
+          Action?: string | null
+          action_required?: boolean | null
+          appointment_date?: string | null
+          assistant_id?: string | null
+          call_id?: string | null
+          client_id?: string | null
+          conversation_summary?: string | null
+          cost?: number | null
+          created_at?: string | null
+          duration_seconds?: string | null
+          Emotion?: string | null
+          end_time?: string | null
+          ended_reason?: string | null
+          flagging?: Json | null
+          follow_up_notes?: string | null
+          Forwarded?: boolean | null
+          id?: string
+          intent?: string | null
+          metadata?: Json | null
+          Name?: string | null
+          patient_email?: string | null
+          patient_id?: string | null
+          patient_phone?: string | null
+          phone_number?: string | null
+          "Question Summary"?: string | null
+          Sentiment?: string | null
+          start_time?: string | null
+          Status?: string | null
+          Symptoms?: Json | null
+          transcript?: string | null
+          type?: string | null
+          Urgencylevel?: string | null
+        }
+        Update: {
+          Action?: string | null
+          action_required?: boolean | null
+          appointment_date?: string | null
+          assistant_id?: string | null
+          call_id?: string | null
+          client_id?: string | null
+          conversation_summary?: string | null
+          cost?: number | null
+          created_at?: string | null
+          duration_seconds?: string | null
+          Emotion?: string | null
+          end_time?: string | null
+          ended_reason?: string | null
+          flagging?: Json | null
+          follow_up_notes?: string | null
+          Forwarded?: boolean | null
+          id?: string
+          intent?: string | null
+          metadata?: Json | null
+          Name?: string | null
+          patient_email?: string | null
+          patient_id?: string | null
+          patient_phone?: string | null
+          phone_number?: string | null
+          "Question Summary"?: string | null
+          Sentiment?: string | null
+          start_time?: string | null
+          Status?: string | null
+          Symptoms?: Json | null
+          transcript?: string | null
+          type?: string | null
+          Urgencylevel?: string | null
+        }
+        Relationships: []
+      }
       demo_requests: {
         Row: {
           created_at: string

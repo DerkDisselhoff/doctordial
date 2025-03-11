@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
@@ -13,7 +12,6 @@ import { CallSummary } from "./detail/CallSummary";
 import { CallTranscript } from "./detail/CallTranscript";
 import { ResearchLog } from "./ResearchResultsList";
 
-// Helper function to format transcript messages
 const formatTranscript = (transcript: string | null) => {
   if (!transcript) return [];
   return transcript.split(/(?=AI:|User:)/).filter(Boolean).map(message => {
@@ -36,8 +34,22 @@ export function ResearchResultDetail() {
     queryKey: ['researchDetail', callId],
     queryFn: async () => {
       try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) throw new Error('No session');
+
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('demo_account')
+          .eq('id', session.user.id)
+          .maybeSingle();
+        
+        const isDemo = profileData?.demo_account === true;
+        console.log("Is demo account:", isDemo);
+
+        const tableToQuery = isDemo ? 'demo_call_logs_researchresults' : 'call_logs_researchresults';
+        
         const { data, error } = await supabase
-          .from('call_logs_researchresults')
+          .from(tableToQuery)
           .select('*')
           .eq('call_id', callId)
           .maybeSingle();
@@ -45,7 +57,7 @@ export function ResearchResultDetail() {
         if (error) throw error;
         if (!data) throw new Error('Research call not found');
         
-        console.log("Retrieved research data:", data);
+        console.log(`Retrieved ${isDemo ? 'demo' : ''} research data:`, data);
         return data as ResearchLog;
       } catch (err) {
         console.error("Error fetching research details:", err);
@@ -99,12 +111,10 @@ export function ResearchResultDetail() {
     }));
   };
 
-  // Format date for display
   const formatDate = (dateStr: string | null) => {
     if (!dateStr) return "Niet gespecificeerd";
     
     try {
-      // Handle both ISO string format and date-only format
       if (dateStr.includes('-')) return dateStr;
       
       const date = new Date(dateStr);
@@ -114,7 +124,6 @@ export function ResearchResultDetail() {
     }
   };
 
-  // Format created_at date
   const formatDateTime = (dateTimeStr: string) => {
     try {
       const date = new Date(dateTimeStr);
@@ -137,7 +146,6 @@ export function ResearchResultDetail() {
       
       {!isLoading && !error && call && (
         <>
-          {/* Call time and basic info */}
           <Card className="bg-white border-gray-muted shadow-sm">
             <CardContent className="pt-6">
               <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
@@ -155,7 +163,6 @@ export function ResearchResultDetail() {
             </CardContent>
           </Card>
           
-          {/* Call Summary */}
           <CallSummary 
             isEditing={isEditing}
             editedCall={editedCall}
@@ -163,7 +170,6 @@ export function ResearchResultDetail() {
             call={call}
           />
 
-          {/* Patient & Research Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Card className="bg-white border-gray-muted shadow-sm">
               <CardContent className="pt-6">
@@ -226,7 +232,6 @@ export function ResearchResultDetail() {
             </Card>
           </div>
           
-          {/* Transcript */}
           {call.transcript && (
             <CallTranscript 
               isEditing={isEditing}

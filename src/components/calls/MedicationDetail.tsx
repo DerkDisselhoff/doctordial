@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
@@ -35,7 +34,6 @@ export interface MedicationLog {
   Action?: string | null;
 }
 
-// Helper function to format transcript messages
 const formatTranscript = (transcript: string | null) => {
   if (!transcript) return [];
   return transcript.split(/(?=AI:|User:)/).filter(Boolean).map(message => {
@@ -58,8 +56,22 @@ export function MedicationDetail() {
     queryKey: ['medicationDetail', callId],
     queryFn: async () => {
       try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) throw new Error('No session');
+
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('demo_account')
+          .eq('id', session.user.id)
+          .maybeSingle();
+        
+        const isDemo = profileData?.demo_account === true;
+        console.log("Is demo account:", isDemo);
+
+        const tableToQuery = isDemo ? 'demo_call_logs_medications' : 'call_logs_medications';
+        
         const { data, error } = await supabase
-          .from('call_logs_medications')
+          .from(tableToQuery)
           .select('*')
           .eq('call_id', callId)
           .maybeSingle();
@@ -67,7 +79,7 @@ export function MedicationDetail() {
         if (error) throw error;
         if (!data) throw new Error('Medication call not found');
         
-        console.log("Retrieved medication data:", data);
+        console.log(`Retrieved ${isDemo ? 'demo' : ''} medication data:`, data);
         return data as MedicationLog;
       } catch (err) {
         console.error("Error fetching medication details:", err);
@@ -121,16 +133,12 @@ export function MedicationDetail() {
     }));
   };
 
-  // Check if the call is flagged (using doctor_notes field)
   const isFlagged = call?.doctor_notes?.includes('FLAGGED:') || false;
 
-  // Format date of birth for display
   const formatDateOfBirth = (dateStr: string | null) => {
     if (!dateStr) return "Niet gespecificeerd";
     
-    // Handle both ISO string format and date-only format
     try {
-      // If it's in DD-MM-YYYY format, return as is
       if (dateStr.includes('-')) return dateStr;
       
       const date = new Date(dateStr);
@@ -140,7 +148,6 @@ export function MedicationDetail() {
     }
   };
 
-  // Format created_at date
   const formatDateTime = (dateTimeStr: string) => {
     try {
       const date = new Date(dateTimeStr);
@@ -163,7 +170,6 @@ export function MedicationDetail() {
       
       {!isLoading && !error && call && (
         <>
-          {/* Call time and basic info */}
           <Card className="bg-white border-gray-muted shadow-sm">
             <CardContent className="pt-6">
               <div className="flex flex-col md:flex-row md:justify-between md:items-center">
@@ -181,7 +187,6 @@ export function MedicationDetail() {
             </CardContent>
           </Card>
           
-          {/* Call Summary */}
           <CallSummary 
             isEditing={isEditing}
             editedCall={editedCall}
@@ -189,7 +194,6 @@ export function MedicationDetail() {
             call={call}
           />
 
-          {/* Patient & Medication Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Card className="bg-white border-gray-muted shadow-sm">
               <CardContent className="pt-6">
@@ -242,7 +246,6 @@ export function MedicationDetail() {
             </Card>
           </div>
           
-          {/* Transcript */}
           {call.transcript && (
             <CallTranscript 
               isEditing={isEditing}

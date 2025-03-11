@@ -18,18 +18,10 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
         .eq('id', session.user.id)
         .maybeSingle();
 
-      // Return empty data for demo accounts
-      if (profileData?.demo_account === true) {
-        console.log("Demo account detected - returning empty metrics data");
-        return {
-          totalCalls: '0',
-          avgDuration: '0',
-          callsForwarded: '0',
-          callSuccess: '0',
-          relevantCases: '0'
-        };
-      }
+      const isDemo = profileData?.demo_account === true;
+      console.log("Is demo account:", isDemo);
 
+      // Get the assistant ID
       const { data: assistantData } = await supabase
         .from('assistant_status')
         .select('assistant_id')
@@ -58,9 +50,14 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
 
       console.log("Fetching call data from", startDate.toISOString(), "to", now.toISOString());
 
+      // Determine which tables to query based on account type
+      const triageTable = isDemo ? 'demo_call_logs_triage' : 'call_logs_triage';
+      const medicationTable = isDemo ? 'demo_call_logs_medications' : 'call_logs_medications';
+      const researchTable = isDemo ? 'demo_call_logs_researchresults' : 'call_logs_researchresults';
+
       // Get calls from triage assistant
       const { data: triageData, error: triageError } = await supabase
-        .from('call_logs_triage')
+        .from(triageTable)
         .select('*');
 
       if (triageError) console.error("Error fetching triage data:", triageError);
@@ -68,7 +65,7 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
 
       // Get calls from medication assistant 
       const { data: medicationData, error: medicationError } = await supabase
-        .from('call_logs_medications')
+        .from(medicationTable)
         .select('*');
 
       if (medicationError) console.error("Error fetching medication data:", medicationError);
@@ -76,7 +73,7 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
 
       // Get calls from research assistant
       const { data: researchData, error: researchError } = await supabase
-        .from('call_logs_researchresults')
+        .from(researchTable)
         .select('*');
 
       if (researchError) console.error("Error fetching research data:", researchError);
