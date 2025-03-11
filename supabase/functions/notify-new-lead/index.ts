@@ -47,26 +47,23 @@ serve(async (req) => {
 
   try {
     console.log("Received request to notify-new-lead function");
+    console.log("Request method:", req.method);
+    console.log("Request headers:", Object.fromEntries(req.headers.entries()));
     
-    // Validate request content type
-    const contentType = req.headers.get("content-type");
-    if (!contentType || !contentType.includes("application/json")) {
-      throw new Error(`Invalid content type: ${contentType}`);
-    }
+    // Log the raw request body first
+    const rawBody = await req.arrayBuffer();
+    const bodyString = new TextDecoder().decode(rawBody);
+    console.log("Raw request body:", bodyString);
     
-    // Get request body as text first for debugging
-    const bodyText = await req.text();
-    console.log("Request body (text):", bodyText);
-    
-    // Validate that the body text is not empty
-    if (!bodyText || bodyText.trim() === '') {
+    // If body is empty, return error
+    if (!bodyString || bodyString.trim() === '') {
       throw new Error("Request body is empty");
     }
     
-    // Parse JSON (now separate step for better error handling)
+    // Try to parse as JSON
     let leadData: LeadData;
     try {
-      leadData = JSON.parse(bodyText);
+      leadData = JSON.parse(bodyString);
     } catch (parseError) {
       console.error("JSON parsing error:", parseError);
       throw new Error(`Failed to parse request body as JSON: ${parseError.message}`);

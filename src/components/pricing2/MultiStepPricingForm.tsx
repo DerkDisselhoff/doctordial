@@ -56,9 +56,22 @@ export const MultiStepPricingForm = () => {
           const submissionData = data[0];
           console.log("Submitting data to notification function:", submissionData);
           
-          // Fix: Properly stringify the JSON body and set content-type header
+          // Send a simple object instead of the full submission data
+          const emailPayload = {
+            id: submissionData.id,
+            name: submissionData.name,
+            email: submissionData.email,
+            phone: submissionData.phone || "",
+            practice_count: submissionData.practice_count || "",
+            company_name: submissionData.company_name || "",
+            role: submissionData.role || "",
+            created_at: submissionData.created_at
+          };
+          
+          console.log("Email payload:", emailPayload);
+          
           const functionResponse = await supabase.functions.invoke('notify-new-lead', {
-            body: JSON.stringify(submissionData),
+            body: JSON.stringify(emailPayload),
             headers: {
               'Content-Type': 'application/json',
             },
