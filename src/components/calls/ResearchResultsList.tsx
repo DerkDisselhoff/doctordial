@@ -84,7 +84,7 @@ export function ResearchResultsList() {
         const tableToQuery = isDemo ? 'demo_call_logs_researchresults' : 'call_logs_researchresults';
         console.log("Using research table:", tableToQuery);
 
-        // Fetch all research calls
+        // Fetch all research calls - order by created_at to show most recent first
         const { data: callData, error: callError } = await supabase
           .from(tableToQuery)
           .select('*')

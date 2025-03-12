@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
@@ -65,9 +66,11 @@ export function DetailedCallsList() {
         console.log("Using table:", tableToQuery);
         
         // Fetch calls from the appropriate table based on account type
+        // Order by start_time in descending order to show most recent calls first
         const { data: callData, error: callError } = await supabase
           .from(tableToQuery)
-          .select('*');
+          .select('*')
+          .order('start_time', { ascending: false });
 
         if (callError) {
           console.error("Error fetching calls:", callError);
