@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { AssistantCard } from "@/components/dashboard/assistants/AssistantCard";
 import { supabase } from "@/lib/supabaseClient";
@@ -44,6 +45,7 @@ const AIAssistants = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
+  const [isDemoAccount, setIsDemoAccount] = useState(false);
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
   const { toast } = useToast();
 
@@ -53,11 +55,12 @@ const AIAssistants = () => {
       if (session) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('role')
+          .select('role, demo_account')
           .eq('id', session.user.id)
           .maybeSingle();
         
         setUserRole(profile?.role || null);
+        setIsDemoAccount(profile?.demo_account === true);
       }
     };
 
@@ -73,22 +76,46 @@ const AIAssistants = () => {
   const fetchAssistantStats = async () => {
     setIsLoading(true);
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('No session');
+      
+      // Check if this is a demo account
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('demo_account')
+        .eq('id', session.user.id)
+        .maybeSingle();
+      
+      const isDemo = profileData?.demo_account === true;
+      console.log("Is demo account:", isDemo);
+      
+      // Determine which tables to query
+      const triageTable = isDemo ? 'demo_call_logs_triage' : 'call_logs_triage';
+      const medicationTable = isDemo ? 'demo_call_logs_medications' : 'call_logs_medications';
+      const researchTable = isDemo ? 'demo_call_logs_researchresults' : 'call_logs_researchresults';
+
       // Fetch triage stats
       const { data: triageData, error: triageError } = await supabase
-        .from('call_logs_triage')
+        .from(triageTable)
         .select('*');
 
       // Fetch medication stats
       const { data: medicationData, error: medicationError } = await supabase
-        .from('call_logs_medications')
+        .from(medicationTable)
         .select('*');
 
       // Fetch research stats
       const { data: researchData, error: researchError } = await supabase
-        .from('call_logs_researchresults')
+        .from(researchTable)
         .select('*');
 
-      if (triageError || medicationError || researchError) throw new Error("Error fetching data");
+      if (triageError) console.error("Error fetching triage data:", triageError);
+      if (medicationError) console.error("Error fetching medication data:", medicationError);
+      if (researchError) console.error("Error fetching research data:", researchError);
+      
+      console.log("Triage calls found:", triageData?.length || 0);
+      console.log("Medication calls found:", medicationData?.length || 0);
+      console.log("Research calls found:", researchData?.length || 0);
 
       // Calculate statistics
       const triageStats = calculateStats(triageData || []);

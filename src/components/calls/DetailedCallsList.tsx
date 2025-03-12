@@ -89,9 +89,7 @@ export function DetailedCallsList() {
         // Fetch calls from the appropriate table based on account type
         const { data: callData, error: callError } = await supabase
           .from(tableToQuery)
-          .select('*')
-          .eq('assistant_id', assistantData.assistant_id)
-          .order('start_time', { ascending: false });
+          .select('*');
 
         if (callError) {
           console.error("Error fetching calls:", callError);
