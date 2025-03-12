@@ -88,13 +88,27 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
       ];
 
       console.log("Total combined calls:", allCallsData.length);
+      
+      // If we have data, log a sample to help with debugging
+      if (allCallsData.length > 0) {
+        console.log("Call data sample:", allCallsData[0]);
+      }
 
       // Filter by date after combining and check for valid dates
       const filteredCallsData = allCallsData.filter(call => {
-        if (!call.start_time || !isValidDate(call.start_time)) return false;
+        // First check if we have a valid date
+        if (!call.start_time || !isValidDate(call.start_time)) {
+          // Log invalid dates to help debug
+          if (call.start_time) {
+            console.warn("Invalid date found:", call.start_time, "for call ID:", call.call_id);
+          }
+          // Only filter out invalid dates, not calls after 3/11/2025
+          return false;
+        }
         
+        // Then apply the time filter
         const callDate = new Date(call.start_time);
-        return callDate >= startDate && callDate <= now;
+        return callDate >= startDate;
       });
 
       console.log("Calls after date filtering:", filteredCallsData.length);

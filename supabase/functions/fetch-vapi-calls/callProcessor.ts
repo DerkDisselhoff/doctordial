@@ -41,18 +41,52 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
 
       try {
         if (call.startedAt || call.started_at || call.start_time) {
-          startTime = new Date(call.startedAt || call.started_at || call.start_time).toISOString();
-          console.log('Parsed start time:', startTime);
+          const parsedDate = new Date(call.startedAt || call.started_at || call.start_time);
+          
+          // Validate the date before using it
+          if (!isNaN(parsedDate.getTime()) && 
+              // Reject dates from 1970 (Unix epoch)
+              !(parsedDate.getFullYear() === 1970 && parsedDate.getMonth() === 0) &&
+              // Reject dates too far in the future
+              parsedDate <= new Date(new Date().setDate(new Date().getDate() + 7))) {
+            startTime = parsedDate.toISOString();
+            console.log('Parsed and validated start time:', startTime);
+          } else {
+            console.warn('Invalid start date detected:', parsedDate);
+          }
         }
         
         if (call.endedAt || call.ended_at || call.end_time) {
-          endTime = new Date(call.endedAt || call.ended_at || call.end_time).toISOString();
-          console.log('Parsed end time:', endTime);
+          const parsedDate = new Date(call.endedAt || call.ended_at || call.end_time);
+          
+          // Validate the date before using it
+          if (!isNaN(parsedDate.getTime()) && 
+              !(parsedDate.getFullYear() === 1970 && parsedDate.getMonth() === 0) &&
+              parsedDate <= new Date(new Date().setDate(new Date().getDate() + 7))) {
+            endTime = parsedDate.toISOString();
+            console.log('Parsed and validated end time:', endTime);
+          } else {
+            console.warn('Invalid end date detected:', parsedDate);
+          }
         }
         
-        createdAt = call.created_at ? 
-          new Date(call.created_at).toISOString() : 
-          new Date().toISOString();
+        if (call.created_at) {
+          const parsedDate = new Date(call.created_at);
+          
+          // Validate the date before using it
+          if (!isNaN(parsedDate.getTime()) && 
+              !(parsedDate.getFullYear() === 1970 && parsedDate.getMonth() === 0) &&
+              parsedDate <= new Date(new Date().setDate(new Date().getDate() + 7))) {
+            createdAt = parsedDate.toISOString();
+          } else {
+            // Use current date as fallback if invalid
+            createdAt = new Date().toISOString();
+            console.warn('Invalid created_at date, using current date instead');
+          }
+        } else {
+          // Default to current date if missing
+          createdAt = new Date().toISOString();
+        }
       } catch (dateError) {
         console.error('Error parsing dates:', dateError);
         console.log('Raw date values:', {
@@ -63,6 +97,10 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
           ended_at: call.ended_at,
           end_time: call.end_time
         });
+        
+        // Skip this record if we couldn't parse dates properly
+        errors.push({ id: callId, error: 'Invalid date format', details: dateError });
+        continue;
       }
 
       // Process duration
@@ -100,6 +138,13 @@ export const processVapiCalls = async (supabaseClient: any, calls: any[]) => {
       };
 
       console.log('Prepared common data for insertion:', commonData);
+
+      // IMPORTANT: Skip this record if the key dates are missing or invalid
+      if (!startTime && !endTime) {
+        console.warn('Skipping record due to missing or invalid dates:', commonData);
+        errors.push({ id: callId, error: 'Missing or invalid dates', details: commonData });
+        continue;
+      }
 
       // Determine which table to insert data into based on call type
       let targetTable = 'call_logs_triage'; // Default table
