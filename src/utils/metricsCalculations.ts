@@ -88,8 +88,13 @@ export const calculateMetrics = (callData: CallLog[] | null) => {
       (hasProperty(call, 'relevance_score') && call.relevance_score) || 
       (hasProperty(call, 'findings') && call.findings)
     ) {
-      const relevanceScore = getNumberValue(call.relevance_score);
-      return relevanceScore > 50 || (hasProperty(call, 'findings') && !!call.findings);
+      // Need to check again for relevance_score since the type system doesn't remember our earlier check
+      if (hasProperty(call, 'relevance_score')) {
+        const relevanceScore = getNumberValue(call.relevance_score);
+        return relevanceScore > 50;
+      }
+      // If we have findings but no relevance score, consider it relevant
+      return true;
     }
     return false;
   }).length;
