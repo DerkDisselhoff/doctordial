@@ -1,8 +1,8 @@
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AdminSidebar } from "./AdminSidebar";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
-import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
@@ -16,7 +16,10 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     queryKey: ['profile'],
     queryFn: async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return null;
+      if (!session) {
+        navigate('/login');
+        return null;
+      }
       
       const { data } = await supabase
         .from('profiles')
@@ -87,8 +90,17 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     };
   }, [navigate]);
 
+  // If there's no profile data and no error, show loading
+  if (!profile && !error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-mint"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-[#FAFAFA]"> {/* Updated to an almost-white color */}
+    <div className="min-h-screen bg-[#FAFAFA]">
       <SidebarProvider>
         <div className="flex min-h-screen w-full">
           <div className="fixed top-0 left-0 h-full z-40">
