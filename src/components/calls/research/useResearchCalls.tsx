@@ -72,19 +72,39 @@ export function useResearchCalls() {
 
         console.log(`${isDemo ? 'Demo' : ''} Research results data:`, callData);
         
-        if (callData && callData.length > 0) {
-          setCalls(callData);
-          setFilteredCalls(callData);
-          setTotalPages(Math.ceil(callData.length / itemsPerPage));
+        // Filter out empty records that have no meaningful data
+        const validCallData = callData?.filter(call => {
+          // Check if the call has at least some meaningful content
+          return (
+            call.patient_name || 
+            call.research_name || 
+            call.findings || 
+            call.recommendation || 
+            (call.transcript && call.transcript.length > 10)
+          );
+        }) || [];
+        
+        console.log(`Found ${callData?.length || 0} total calls, ${validCallData.length} with valid data`);
+        
+        if (validCallData.length > 0) {
+          setCalls(validCallData);
+          setFilteredCalls(validCallData);
+          setTotalPages(Math.ceil(validCallData.length / itemsPerPage));
           toast({
             title: "Data geladen",
-            description: `${callData.length} onderzoeksresultaten gesprekken gevonden`,
+            description: `${validCallData.length} onderzoeksresultaten gesprekken gevonden`,
           });
         } else {
-          console.log(`No ${isDemo ? 'demo' : ''} research calls found in the database`);
+          console.log(`No valid ${isDemo ? 'demo' : ''} research calls found in the database`);
           // Set empty arrays to ensure UI shows "no data" message
           setCalls([]);
           setFilteredCalls([]);
+          
+          if (callData && callData.length > 0) {
+            toast({
+              description: `${callData.length} onderzoeksresultaten records gevonden, maar geen met bruikbare data`,
+            });
+          }
         }
         
         setLoading(false);
@@ -126,6 +146,23 @@ export function useResearchCalls() {
       return dateString;
     }
   };
+  
+  const hasEmptyRecords = (allCalls: ResearchLog[]) => {
+    if (!allCalls || allCalls.length === 0) return false;
+    
+    // Count calls that are mostly empty
+    const emptyCount = allCalls.filter(call => {
+      return !(
+        call.patient_name || 
+        call.research_name || 
+        call.findings || 
+        call.recommendation || 
+        (call.transcript && call.transcript.length > 10)
+      );
+    }).length;
+    
+    return emptyCount > 0;
+  };
 
   return {
     filteredCalls,
@@ -138,6 +175,7 @@ export function useResearchCalls() {
     searchQuery,
     setSearchQuery,
     setCurrentPage,
-    formatDate
+    formatDate,
+    hasEmptyRecords
   };
 }

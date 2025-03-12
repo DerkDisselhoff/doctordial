@@ -18,3 +18,14 @@ export interface ResearchLog {
   patient_id: string;
   sources: any;
 }
+
+// Helper function to check if a research log has meaningful data
+export function isEmptyResearchLog(log: ResearchLog): boolean {
+  return !(
+    log.patient_name || 
+    log.research_name || 
+    log.findings || 
+    log.recommendation || 
+    (log.transcript && log.transcript.length > 10)
+  );
+}
