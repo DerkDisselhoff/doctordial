@@ -109,9 +109,20 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
         }
         
         // Filter out calls that don't have meaningful information
-        if ((!call.Name && !call.patient_name) || 
-            (!call.conversation_summary && !call.transcript && 
-             !call.Symptoms && !call.medication_name && !call.findings)) {
+        // Use type-safe property access with optional chaining to avoid TypeScript errors
+        const hasName = 'Name' in call ? !!call.Name : false;
+        const hasPatientName = 'patient_name' in call ? !!call.patient_name : false;
+        
+        const hasConversationSummary = !!call.conversation_summary;
+        const hasTranscript = !!call.transcript;
+        
+        const hasSymptoms = 'Symptoms' in call ? !!call.Symptoms : false;
+        const hasMedicationName = 'medication_name' in call ? !!call.medication_name : false;
+        const hasFindings = 'findings' in call ? !!call.findings : false;
+        
+        if ((!hasName && !hasPatientName) || 
+            (!hasConversationSummary && !hasTranscript && 
+             !hasSymptoms && !hasMedicationName && !hasFindings)) {
           console.warn("Empty record found for call ID:", call.call_id);
           return false;
         }
