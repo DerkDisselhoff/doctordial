@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
@@ -9,9 +8,8 @@ import { VapiCall } from "@/services/vapiService";
 import { CallsTableHeader } from "./table/CallsTableHeader";
 import { CallsTableRow } from "./table/CallsTableRow";
 import { CallsPagination } from "./table/CallsPagination";
-import { Search, Filter, AlertTriangle } from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
-import { Button } from "@/components/ui/button";
 
 export function DetailedCallsList() {
   const [calls, setCalls] = useState<VapiCall[]>([]);
@@ -24,15 +22,11 @@ export function DetailedCallsList() {
   const [sentimentFilter, setSentimentFilter] = useState("all");
   const [error, setError] = useState<string | null>(null);
   const [isDemoAccount, setIsDemoAccount] = useState(false);
-  const [hasProblematicData, setHasProblematicData] = useState(false);
-  const [isCleaningData, setIsCleaningData] = useState(false);
   const { toast } = useToast();
   const itemsPerPage = 10;
 
   const cleanupProblematicData = async () => {
     try {
-      setIsCleaningData(true);
-      
       // Call the data cleanup function with mode=fix to actually delete problematic records
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/vapi-data-cleanup?mode=fix`, {
         method: 'GET',
@@ -48,23 +42,8 @@ export function DetailedCallsList() {
       
       const result = await response.json();
       console.log("Data cleanup result:", result);
-      
-      toast({
-        title: "Opschoning voltooid",
-        description: "Problematische gegevens zijn verwijderd. De pagina wordt vernieuwd.",
-      });
-      
-      // Reload the page to refresh the data
-      window.location.reload();
     } catch (error) {
       console.error("Error during data cleanup:", error);
-      toast({
-        title: "Fout bij opschonen",
-        description: error instanceof Error ? error.message : "Er is een fout opgetreden tijdens de opschoning",
-        variant: "destructive",
-      });
-    } finally {
-      setIsCleaningData(false);
     }
   };
 
@@ -135,8 +114,9 @@ export function DetailedCallsList() {
           });
           
           if (problematicRecords.length > 0) {
-            console.log(`Found ${problematicRecords.length} problematic records`);
-            setHasProblematicData(true);
+            console.log(`Found ${problematicRecords.length} problematic records - cleaning up automatically`);
+            // Automatically run the cleanup function
+            cleanupProblematicData();
           }
           
           // Filter out problematic records for display
@@ -292,17 +272,6 @@ export function DetailedCallsList() {
       <CardHeader className="border-b border-gray-muted">
         <div className="flex justify-between items-center">
           <CardTitle className="text-gray-dark">Triage Gesprekken</CardTitle>
-          
-          {hasProblematicData && (
-            <Button 
-              variant="destructive" 
-              size="sm" 
-              onClick={cleanupProblematicData}
-              disabled={isCleaningData}
-            >
-              {isCleaningData ? "Bezig met opschonen..." : "Lege gesprekken opschonen"}
-            </Button>
-          )}
         </div>
         
         <div className="mt-4 space-y-4">
@@ -345,13 +314,6 @@ export function DetailedCallsList() {
             </div>
           </div>
         </div>
-        
-        {hasProblematicData && (
-          <div className="mt-4 p-4 bg-amber-50 border-l-4 border-amber-400 text-amber-700 flex items-center">
-            <AlertTriangle className="h-5 w-5 mr-2 flex-shrink-0" />
-            <p>Er zijn lege of ongeldige gespreksrecords gevonden. Gebruik de "Lege gesprekken opschonen" knop om deze op te ruimen.</p>
-          </div>
-        )}
       </CardHeader>
       <CardContent className="p-0">
         <div className="overflow-x-auto">

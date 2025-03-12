@@ -146,11 +146,11 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
       console.log("Calls after filtering:", filteredCallsData.length);
       console.log("Calls filtered out due to invalid data:", allCallsData.length - filteredCallsData.length);
 
-      // Trigger cleanup of problematic records if needed
+      // Automatically trigger cleanup of problematic records if needed
       if (allCallsData.length - filteredCallsData.length > 0) {
         try {
-          // Just scan for now, don't fix automatically
-          const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/vapi-data-cleanup?mode=scan`, {
+          // Trigger actual cleanup
+          const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/vapi-data-cleanup?mode=fix`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
@@ -160,7 +160,7 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
           
           if (response.ok) {
             const result = await response.json();
-            console.log("Data cleanup scan result:", result);
+            console.log("Data cleanup result:", result);
           }
         } catch (error) {
           console.error("Error triggering data cleanup:", error);
