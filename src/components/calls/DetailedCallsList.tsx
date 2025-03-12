@@ -62,30 +62,8 @@ export function DetailedCallsList() {
 
         // Determine which table to query
         const tableToQuery = isDemo ? 'demo_call_logs_triage' : 'call_logs_triage';
+        console.log("Using table:", tableToQuery);
         
-        // Get the assistant_id from assistant_status
-        const { data: assistantData, error: assistantError } = await supabase
-          .from('assistant_status')
-          .select('assistant_id')
-          .eq('profile_id', session.user.id)
-          .maybeSingle();
-
-        if (assistantError) {
-          console.error("Error fetching assistant status:", assistantError);
-          setError("Error fetching assistant status: " + assistantError.message);
-          throw assistantError;
-        }
-
-        console.log("Assistant data:", assistantData);
-
-        if (!assistantData?.assistant_id) {
-          console.log("No assistant ID found for user");
-          setError("No assistant ID found - please configure your assistant");
-          throw new Error('No assistant ID found');
-        }
-
-        console.log("Found assistant ID:", assistantData.assistant_id);
-
         // Fetch calls from the appropriate table based on account type
         const { data: callData, error: callError } = await supabase
           .from(tableToQuery)
@@ -98,6 +76,7 @@ export function DetailedCallsList() {
         }
 
         console.log(`Number of ${isDemo ? 'demo' : 'triage'} calls found:`, callData?.length || 0);
+        console.log("Call data sample:", callData?.[0]);
         
         // Transform call data to match VapiCall interface
         const transformedCalls: VapiCall[] = callData.map(call => ({

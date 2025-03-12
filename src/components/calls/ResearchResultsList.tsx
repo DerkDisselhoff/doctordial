@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
@@ -81,6 +82,7 @@ export function ResearchResultsList() {
 
         // Determine which table to query
         const tableToQuery = isDemo ? 'demo_call_logs_researchresults' : 'call_logs_researchresults';
+        console.log("Using research table:", tableToQuery);
 
         // Fetch all research calls
         const { data: callData, error: callError } = await supabase
