@@ -57,6 +57,8 @@ interface MedicationCallLog extends BaseCallLog {
   pharmacy_details?: any;
   doctor_notes?: string;
   Packages?: number;
+  // Add intent field for consistency
+  intent?: string | boolean;
 }
 
 // Research-specific properties
@@ -71,6 +73,8 @@ interface ResearchCallLog extends BaseCallLog {
   date_of_birth?: string;
   sources?: any;
   recommendation?: string;
+  // Add intent field for consistency
+  intent?: string | boolean;
 }
 
 // Union type representing any call log type

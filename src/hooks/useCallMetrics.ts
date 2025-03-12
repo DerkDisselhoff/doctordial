@@ -5,6 +5,11 @@ import { calculateMetrics } from "@/utils/metricsCalculations";
 import { TimeFilter } from "@/types/metrics";
 import { isValidDate } from "@/components/calls/research/types";
 
+// Type guard to check if a property exists on an object
+const hasProperty = <T extends object, K extends string>(obj: T, prop: K): obj is T & Record<K, unknown> => {
+  return prop in obj;
+};
+
 export const useCallMetrics = (timeFilter: TimeFilter) => {
   return useQuery({
     queryKey: ['callMetrics', timeFilter],
@@ -109,16 +114,16 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
         }
         
         // Filter out calls that don't have meaningful information
-        // Use type-safe property access with optional chaining to avoid TypeScript errors
-        const hasName = 'Name' in call ? !!call.Name : false;
-        const hasPatientName = 'patient_name' in call ? !!call.patient_name : false;
+        // Use type-safe property access with hasProperty to avoid TypeScript errors
+        const hasName = hasProperty(call, 'Name') ? !!call.Name : false;
+        const hasPatientName = hasProperty(call, 'patient_name') ? !!call.patient_name : false;
         
         const hasConversationSummary = !!call.conversation_summary;
         const hasTranscript = !!call.transcript;
         
-        const hasSymptoms = 'Symptoms' in call ? !!call.Symptoms : false;
-        const hasMedicationName = 'medication_name' in call ? !!call.medication_name : false;
-        const hasFindings = 'findings' in call ? !!call.findings : false;
+        const hasSymptoms = hasProperty(call, 'Symptoms') ? !!call.Symptoms : false;
+        const hasMedicationName = hasProperty(call, 'medication_name') ? !!call.medication_name : false;
+        const hasFindings = hasProperty(call, 'findings') ? !!call.findings : false;
         
         if ((!hasName && !hasPatientName) || 
             (!hasConversationSummary && !hasTranscript && 
