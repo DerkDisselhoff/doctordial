@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
 import { calculateMetrics } from "@/utils/metricsCalculations";
 import { TimeFilter } from "@/types/metrics";
+import { isValidDate } from "@/components/calls/research/types";
 
 export const useCallMetrics = (timeFilter: TimeFilter) => {
   return useQuery({
@@ -88,15 +89,16 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
 
       console.log("Total combined calls:", allCallsData.length);
 
-      // Filter by date after combining
+      // Filter by date after combining and check for valid dates
       const filteredCallsData = allCallsData.filter(call => {
-        if (!call.start_time) return false;
+        if (!call.start_time || !isValidDate(call.start_time)) return false;
         
         const callDate = new Date(call.start_time);
         return callDate >= startDate && callDate <= now;
       });
 
       console.log("Calls after date filtering:", filteredCallsData.length);
+      console.log("Calls filtered out due to invalid dates:", allCallsData.length - filteredCallsData.length);
 
       return calculateMetrics(filteredCallsData);
     },

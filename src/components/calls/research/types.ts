@@ -29,3 +29,25 @@ export function isEmptyResearchLog(log: ResearchLog): boolean {
     (log.transcript && log.transcript.length > 10)
   );
 }
+
+// Helper function to check if a date is valid
+export function isValidDate(dateString: string | null): boolean {
+  if (!dateString) return false;
+  
+  const date = new Date(dateString);
+  
+  // Check if date is valid (not Invalid Date)
+  if (isNaN(date.getTime())) return false;
+  
+  // Check if date is not the Unix epoch (1/1/1970)
+  if (date.getFullYear() === 1970 && date.getMonth() === 0 && date.getDate() === 1) return false;
+  
+  // Check if date is not in the future (allow some margin for timezone differences)
+  const now = new Date();
+  const oneWeekInFuture = new Date();
+  oneWeekInFuture.setDate(now.getDate() + 7);
+  
+  if (date > oneWeekInFuture) return false;
+  
+  return true;
+}

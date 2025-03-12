@@ -45,6 +45,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           
           // Clear any local storage data
           localStorage.clear();
+          sessionStorage.clear(); // Also clear session storage
           
           // Redirect to login with error message
           navigate('/login');
@@ -67,6 +68,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       if (event === 'SIGNED_OUT') {
         // Clear any remaining local storage data
         localStorage.clear();
+        sessionStorage.clear(); // Also clear session storage
         navigate('/login');
       }
       

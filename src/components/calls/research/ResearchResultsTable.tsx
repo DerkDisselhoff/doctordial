@@ -1,6 +1,6 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ResearchLog } from "./types";
+import { ResearchLog, isValidDate } from "./types";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { Info } from "lucide-react";
@@ -13,13 +13,16 @@ interface ResearchResultsTableProps {
 }
 
 export function ResearchResultsTable({ calls, currentPage, itemsPerPage, formatDate }: ResearchResultsTableProps) {
-  // Get paginated calls
-  const paginatedCalls = calls.slice(
+  // Filter out calls with invalid dates before pagination
+  const validCalls = calls.filter(call => isValidDate(call.created_at));
+  
+  // Get paginated calls from the filtered list
+  const paginatedCalls = validCalls.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  if (calls.length === 0) {
+  if (validCalls.length === 0) {
     return (
       <div className="text-center py-8 text-gray flex flex-col items-center gap-2">
         <Info className="h-5 w-5 text-blue-400" />
@@ -29,8 +32,17 @@ export function ResearchResultsTable({ calls, currentPage, itemsPerPage, formatD
     );
   }
 
+  // Show a warning if some calls were filtered out
+  const filteredCount = calls.length - validCalls.length;
+
   return (
     <div className="overflow-x-auto">
+      {filteredCount > 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-md p-3 mb-4 text-amber-700 text-sm">
+          <Info className="h-4 w-4 inline-block mr-2" />
+          {filteredCount} record(s) met ongeldige datums worden niet weergegeven.
+        </div>
+      )}
       <Table>
         <TableHeader>
           <TableRow className="border-b border-gray-muted/10 hover:bg-transparent">
