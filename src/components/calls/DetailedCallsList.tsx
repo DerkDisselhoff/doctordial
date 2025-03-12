@@ -9,8 +9,9 @@ import { VapiCall } from "@/services/vapiService";
 import { CallsTableHeader } from "./table/CallsTableHeader";
 import { CallsTableRow } from "./table/CallsTableRow";
 import { CallsPagination } from "./table/CallsPagination";
-import { Search, Filter } from "lucide-react";
+import { Search, Filter, AlertTriangle } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
+import { Button } from "@/components/ui/button";
 
 export function DetailedCallsList() {
   const [calls, setCalls] = useState<VapiCall[]>([]);
@@ -23,8 +24,49 @@ export function DetailedCallsList() {
   const [sentimentFilter, setSentimentFilter] = useState("all");
   const [error, setError] = useState<string | null>(null);
   const [isDemoAccount, setIsDemoAccount] = useState(false);
+  const [hasProblematicData, setHasProblematicData] = useState(false);
+  const [isCleaningData, setIsCleaningData] = useState(false);
   const { toast } = useToast();
   const itemsPerPage = 10;
+
+  const cleanupProblematicData = async () => {
+    try {
+      setIsCleaningData(true);
+      
+      // Call the data cleanup function with mode=fix to actually delete problematic records
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/vapi-data-cleanup?mode=fix`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      
+      const result = await response.json();
+      console.log("Data cleanup result:", result);
+      
+      toast({
+        title: "Opschoning voltooid",
+        description: "Problematische gegevens zijn verwijderd. De pagina wordt vernieuwd.",
+      });
+      
+      // Reload the page to refresh the data
+      window.location.reload();
+    } catch (error) {
+      console.error("Error during data cleanup:", error);
+      toast({
+        title: "Fout bij opschonen",
+        description: error instanceof Error ? error.message : "Er is een fout opgetreden tijdens de opschoning",
+        variant: "destructive",
+      });
+    } finally {
+      setIsCleaningData(false);
+    }
+  };
 
   useEffect(() => {
     const fetchCalls = async () => {
@@ -70,7 +112,7 @@ export function DetailedCallsList() {
         const { data: callData, error: callError } = await supabase
           .from(tableToQuery)
           .select('*')
-          .order('start_time', { ascending: false });
+          .order('created_at', { ascending: false });
 
         if (callError) {
           console.error("Error fetching calls:", callError);
@@ -79,56 +121,100 @@ export function DetailedCallsList() {
         }
 
         console.log(`Number of ${isDemo ? 'demo' : 'triage'} calls found:`, callData?.length || 0);
-        console.log("Call data sample:", callData?.[0]);
         
-        // Transform call data to match VapiCall interface
-        const transformedCalls: VapiCall[] = callData.map(call => ({
-          id: call.id,
-          call_id: call.call_id || 'default',
-          caller_number: call.Name || 'Unknown',
-          recipient_number: call.phone_number || 'default',
-          duration: parseInt(call.duration_seconds || '0'),
-          status: call.Status || 'default',
-          transcription: call["Question Summary"] || 'No question summary available',
-          sentiment_analysis: {
-            sentiment: call.Sentiment || 'neutral',
-            urgency: call.Urgencylevel || 'low'
-          },
-          created_at: call.start_time || new Date().toISOString(),
-          summary: call.conversation_summary || 'No summary available',
-          urgency_score: 3,
-          assistant_name: 'Medi-Mere',
-          assistant_id: call.assistant_id || 'default',
-          caller_name: call.Name || 'Unknown',
-          language: 'en',
-          recording_url: 'default',
-          tags: [],
-          follow_up_required: false,
-          follow_up_notes: call.follow_up_notes || null,
-          call_type: 'inbound',
-          department: 'General Practice',
-          priority_level: call.Urgencylevel || 'low',
-          resolution_status: 'pending',
-          callback_number: call.phone_number || 'default',
-          workflow_id: 'default',
-          workflow_name: 'default',
-          block_id: 'default',
-          block_name: 'default',
-          output_schema: {},
-          messages: [],
-          workflow_variables: {},
-          block_outputs: {},
-          call_variables: {}
-        }));
+        // Check for problematic data (empty or invalid records)
+        if (callData && callData.length > 0) {
+          console.log("Call data sample:", callData[0]);
+          
+          const problematicRecords = callData.filter(call => {
+            // Check for empty or meaningless data
+            return !call.Name && 
+                  !call.Symptoms && 
+                  !call.conversation_summary && 
+                  !call.transcript;
+          });
+          
+          if (problematicRecords.length > 0) {
+            console.log(`Found ${problematicRecords.length} problematic records`);
+            setHasProblematicData(true);
+          }
+          
+          // Filter out problematic records for display
+          const validCallData = callData.filter(call => {
+            // Skip entries without names or any meaningful data
+            if (!call.Name && 
+                !call.Symptoms && 
+                !call.conversation_summary && 
+                !call.transcript) {
+              return false;
+            }
+            
+            // Skip entries with obviously invalid dates
+            if (call.start_time) {
+              const date = new Date(call.start_time);
+              if (isNaN(date.getTime()) || 
+                  (date.getFullYear() === 1970 && date.getMonth() === 0)) {
+                return false;
+              }
+            }
+            
+            return true;
+          });
+          
+          // Transform call data to match VapiCall interface
+          const transformedCalls: VapiCall[] = validCallData.map(call => ({
+            id: call.id,
+            call_id: call.call_id || 'default',
+            caller_number: call.Name || 'Unknown',
+            recipient_number: call.phone_number || 'default',
+            duration: parseInt(call.duration_seconds || '0'),
+            status: call.Status || 'default',
+            transcription: call["Question Summary"] || 'No question summary available',
+            sentiment_analysis: {
+              sentiment: call.Sentiment || 'neutral',
+              urgency: call.Urgencylevel || 'low'
+            },
+            created_at: call.start_time || call.created_at || new Date().toISOString(),
+            summary: call.conversation_summary || 'No summary available',
+            urgency_score: 3,
+            assistant_name: 'Medi-Mere',
+            assistant_id: call.assistant_id || 'default',
+            caller_name: call.Name || 'Unknown',
+            language: 'en',
+            recording_url: 'default',
+            tags: [],
+            follow_up_required: false,
+            follow_up_notes: call.follow_up_notes || null,
+            call_type: 'inbound',
+            department: 'General Practice',
+            priority_level: call.Urgencylevel || 'low',
+            resolution_status: 'pending',
+            callback_number: call.phone_number || 'default',
+            workflow_id: 'default',
+            workflow_name: 'default',
+            block_id: 'default',
+            block_name: 'default',
+            output_schema: {},
+            messages: [],
+            workflow_variables: {},
+            block_outputs: {},
+            call_variables: {}
+          }));
 
-        toast({
-          title: "Data geladen",
-          description: `${transformedCalls.length} triage gesprekken gevonden`,
-        });
-
-        setCalls(transformedCalls);
-        setFilteredCalls(transformedCalls);
-        setTotalPages(Math.ceil(transformedCalls.length / itemsPerPage));
+          setCalls(transformedCalls);
+          setFilteredCalls(transformedCalls);
+          setTotalPages(Math.ceil(transformedCalls.length / itemsPerPage));
+          
+          toast({
+            title: "Data geladen",
+            description: `${transformedCalls.length} triage gesprekken gevonden`,
+          });
+        } else {
+          setCalls([]);
+          setFilteredCalls([]);
+          setTotalPages(1);
+        }
+        
         setLoading(false);
       } catch (error) {
         console.error('Error fetching triage calls:', error);
@@ -204,7 +290,21 @@ export function DetailedCallsList() {
   return (
     <Card className="dashboard-card">
       <CardHeader className="border-b border-gray-muted">
-        <CardTitle className="text-gray-dark">Triage Gesprekken</CardTitle>
+        <div className="flex justify-between items-center">
+          <CardTitle className="text-gray-dark">Triage Gesprekken</CardTitle>
+          
+          {hasProblematicData && (
+            <Button 
+              variant="destructive" 
+              size="sm" 
+              onClick={cleanupProblematicData}
+              disabled={isCleaningData}
+            >
+              {isCleaningData ? "Bezig met opschonen..." : "Lege gesprekken opschonen"}
+            </Button>
+          )}
+        </div>
+        
         <div className="mt-4 space-y-4">
           <div className="flex items-center gap-4">
             <div className="relative flex-1">
@@ -245,6 +345,13 @@ export function DetailedCallsList() {
             </div>
           </div>
         </div>
+        
+        {hasProblematicData && (
+          <div className="mt-4 p-4 bg-amber-50 border-l-4 border-amber-400 text-amber-700 flex items-center">
+            <AlertTriangle className="h-5 w-5 mr-2 flex-shrink-0" />
+            <p>Er zijn lege of ongeldige gespreksrecords gevonden. Gebruik de "Lege gesprekken opschonen" knop om deze op te ruimen.</p>
+          </div>
+        )}
       </CardHeader>
       <CardContent className="p-0">
         <div className="overflow-x-auto">

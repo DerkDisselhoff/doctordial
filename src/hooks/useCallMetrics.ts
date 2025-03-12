@@ -59,7 +59,8 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
       // Get calls from triage assistant
       const { data: triageData, error: triageError } = await supabase
         .from(triageTable)
-        .select('*');
+        .select('*')
+        .eq('assistant_id', assistantData.assistant_id);
 
       if (triageError) console.error("Error fetching triage data:", triageError);
       console.log("Triage calls found:", triageData?.length || 0);
@@ -67,7 +68,8 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
       // Get calls from medication assistant 
       const { data: medicationData, error: medicationError } = await supabase
         .from(medicationTable)
-        .select('*');
+        .select('*')
+        .eq('assistant_id', assistantData.assistant_id);
 
       if (medicationError) console.error("Error fetching medication data:", medicationError);
       console.log("Medication calls found:", medicationData?.length || 0);
@@ -75,7 +77,8 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
       // Get calls from research assistant
       const { data: researchData, error: researchError } = await supabase
         .from(researchTable)
-        .select('*');
+        .select('*')
+        .eq('assistant_id', assistantData.assistant_id);
 
       if (researchError) console.error("Error fetching research data:", researchError);
       console.log("Research calls found:", researchData?.length || 0);
@@ -94,7 +97,7 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
         console.log("Call data sample:", allCallsData[0]);
       }
 
-      // Filter by date after combining and check for valid dates
+      // Filter by date and ensure we have valid data
       const filteredCallsData = allCallsData.filter(call => {
         // First check if we have a valid date
         if (!call.start_time || !isValidDate(call.start_time)) {
@@ -102,7 +105,14 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
           if (call.start_time) {
             console.warn("Invalid date found:", call.start_time, "for call ID:", call.call_id);
           }
-          // Only filter out invalid dates, not calls after 3/11/2025
+          return false;
+        }
+        
+        // Filter out calls that don't have meaningful information
+        if ((!call.Name && !call.patient_name) || 
+            (!call.conversation_summary && !call.transcript && 
+             !call.Symptoms && !call.medication_name && !call.findings)) {
+          console.warn("Empty record found for call ID:", call.call_id);
           return false;
         }
         
@@ -111,8 +121,29 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
         return callDate >= startDate;
       });
 
-      console.log("Calls after date filtering:", filteredCallsData.length);
-      console.log("Calls filtered out due to invalid dates:", allCallsData.length - filteredCallsData.length);
+      console.log("Calls after filtering:", filteredCallsData.length);
+      console.log("Calls filtered out due to invalid data:", allCallsData.length - filteredCallsData.length);
+
+      // Trigger cleanup of problematic records if needed
+      if (allCallsData.length - filteredCallsData.length > 0) {
+        try {
+          // Just scan for now, don't fix automatically
+          const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/vapi-data-cleanup?mode=scan`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          if (response.ok) {
+            const result = await response.json();
+            console.log("Data cleanup scan result:", result);
+          }
+        } catch (error) {
+          console.error("Error triggering data cleanup:", error);
+        }
+      }
 
       return calculateMetrics(filteredCallsData);
     },

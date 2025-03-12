@@ -86,14 +86,25 @@ serve(async (req) => {
           }
         }
         
+        // Also flag records that have no meaningful content
+        const hasNoContent = !record.Name && 
+                            !record.patient_name && 
+                            !record.conversation_summary && 
+                            !record.transcript && 
+                            !record.Symptoms && 
+                            !record.medication_name && 
+                            !record.findings;
+        
         // If record has issues, add it to the list
-        if (hasDateIssue) {
+        if (hasDateIssue || hasNoContent) {
           issueRecords.push({
             id: record.id,
             call_id: record.call_id,
             start_time: record.start_time,
             end_time: record.end_time,
-            created_at: record.created_at
+            created_at: record.created_at,
+            hasDateIssue,
+            hasNoContent
           });
           
           // If we're in fix mode, delete the problematic record
