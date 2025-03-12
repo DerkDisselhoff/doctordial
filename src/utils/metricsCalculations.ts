@@ -6,6 +6,28 @@ const hasProperty = <T extends object, K extends string>(obj: T, prop: K): obj i
   return prop in obj;
 };
 
+// Helper function to safely get string value
+const getStringValue = (value: unknown): string => {
+  if (typeof value === 'string') {
+    return value;
+  }
+  return '';
+};
+
+// Helper function to safely get number value
+const getNumberValue = (value: unknown): number => {
+  if (typeof value === 'number') {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const parsed = parseFloat(value);
+    if (!isNaN(parsed)) {
+      return parsed;
+    }
+  }
+  return 0;
+};
+
 export const calculateMetrics = (callData: CallLog[] | null) => {
   if (!callData) return null;
   console.log("Calculating metrics for", callData.length, "calls");
@@ -23,8 +45,8 @@ export const calculateMetrics = (callData: CallLog[] | null) => {
 
   // Count forwarded calls across all types - safely check for properties
   const callsForwarded = callData.filter(call => 
-    (hasProperty(call, 'Action') && call.Action?.toLowerCase().includes('forward to doctor')) || 
-    (hasProperty(call, 'Status') && call.Status?.toLowerCase().includes('forwarded')) ||
+    (hasProperty(call, 'Action') && getStringValue(call.Action).toLowerCase().includes('forward to doctor')) || 
+    (hasProperty(call, 'Status') && getStringValue(call.Status).toLowerCase().includes('forwarded')) ||
     call.Forwarded === true
   ).length;
 
@@ -37,15 +59,13 @@ export const calculateMetrics = (callData: CallLog[] | null) => {
   const callSuccess = callsWithIntentOrConfidence.length > 0
     ? Math.round((callsWithIntentOrConfidence.filter(call => {
         // Check for intent property
-        if (hasProperty(call, 'intent') && (call.intent === true || call.intent === 'true')) {
-          return true;
+        if (hasProperty(call, 'intent')) {
+          const intentValue = call.intent;
+          return intentValue === true || intentValue === 'true';
         }
         // Check for confidence_level property
-        if (hasProperty(call, 'confidence_level') && call.confidence_level) {
-          // Convert confidence_level to number before comparison
-          const confidenceValue = typeof call.confidence_level === 'string' 
-            ? parseInt(call.confidence_level) 
-            : call.confidence_level;
+        if (hasProperty(call, 'confidence_level')) {
+          const confidenceValue = getNumberValue(call.confidence_level);
           return confidenceValue > 70;
         }
         return false;
@@ -56,7 +76,7 @@ export const calculateMetrics = (callData: CallLog[] | null) => {
   const relevantCases = callData.filter(call => {
     // For triage calls, look at urgency levels
     if (hasProperty(call, 'Urgencylevel') && call.Urgencylevel) {
-      const urgencyLevel = call.Urgencylevel.toUpperCase();
+      const urgencyLevel = getStringValue(call.Urgencylevel).toUpperCase();
       return urgencyLevel === 'U2' || urgencyLevel === 'U3' || urgencyLevel === 'U4';
     }
     // For medication calls, all are considered relevant
@@ -68,8 +88,8 @@ export const calculateMetrics = (callData: CallLog[] | null) => {
       (hasProperty(call, 'relevance_score') && call.relevance_score) || 
       (hasProperty(call, 'findings') && call.findings)
     ) {
-      return (hasProperty(call, 'relevance_score') && call.relevance_score > 50) || 
-             (hasProperty(call, 'findings') && !!call.findings);
+      const relevanceScore = getNumberValue(call.relevance_score);
+      return relevanceScore > 50 || (hasProperty(call, 'findings') && !!call.findings);
     }
     return false;
   }).length;

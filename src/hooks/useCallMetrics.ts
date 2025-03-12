@@ -10,6 +10,14 @@ const hasProperty = <T extends object, K extends string>(obj: T, prop: K): obj i
   return prop in obj;
 };
 
+// Helper function to safely get string value
+const getStringValue = (value: unknown): string => {
+  if (typeof value === 'string') {
+    return value;
+  }
+  return '';
+};
+
 export const useCallMetrics = (timeFilter: TimeFilter) => {
   return useQuery({
     queryKey: ['callMetrics', timeFilter],
@@ -114,20 +122,18 @@ export const useCallMetrics = (timeFilter: TimeFilter) => {
         }
         
         // Filter out calls that don't have meaningful information
-        // Use type-safe property access with hasProperty to avoid TypeScript errors
-        const hasName = hasProperty(call, 'Name') ? !!call.Name : false;
-        const hasPatientName = hasProperty(call, 'patient_name') ? !!call.patient_name : false;
+        const hasNameOrPatient = 
+          (hasProperty(call, 'Name') && !!call.Name) || 
+          (hasProperty(call, 'patient_name') && !!call.patient_name);
         
-        const hasConversationSummary = !!call.conversation_summary;
-        const hasTranscript = !!call.transcript;
+        const hasContent = 
+          !!call.conversation_summary || 
+          !!call.transcript || 
+          (hasProperty(call, 'Symptoms') && !!call.Symptoms) || 
+          (hasProperty(call, 'medication_name') && !!call.medication_name) || 
+          (hasProperty(call, 'findings') && !!call.findings);
         
-        const hasSymptoms = hasProperty(call, 'Symptoms') ? !!call.Symptoms : false;
-        const hasMedicationName = hasProperty(call, 'medication_name') ? !!call.medication_name : false;
-        const hasFindings = hasProperty(call, 'findings') ? !!call.findings : false;
-        
-        if ((!hasName && !hasPatientName) || 
-            (!hasConversationSummary && !hasTranscript && 
-             !hasSymptoms && !hasMedicationName && !hasFindings)) {
+        if (!hasNameOrPatient || !hasContent) {
           console.warn("Empty record found for call ID:", call.call_id);
           return false;
         }

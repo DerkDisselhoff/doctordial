@@ -32,49 +32,47 @@ interface BaseCallLog {
 
 // Triage-specific properties
 interface TriageCallLog extends BaseCallLog {
-  Status?: string;
-  Sentiment?: string;
-  Urgencylevel?: string;
-  Action?: string;
-  intent?: string | boolean;
-  Name?: string;
+  Status?: unknown;
+  Sentiment?: unknown;
+  Urgencylevel?: unknown;
+  Action?: unknown;
+  intent?: unknown;
+  Name?: unknown;
   Symptoms?: any;
-  Emotion?: string;
+  Emotion?: unknown;
   patient_id?: string;
 }
 
 // Medication-specific properties
 interface MedicationCallLog extends BaseCallLog {
-  medication_name?: string;
-  dosage?: string;
-  frequency?: string;
-  duration?: string;
-  patient_name?: string;
+  medication_name?: unknown;
+  dosage?: unknown;
+  frequency?: unknown;
+  duration?: unknown;
+  patient_name?: unknown;
   patient_id?: string;
   Date_of_birth?: string;
-  side_effects?: string;
-  instructions?: string;
+  side_effects?: unknown;
+  instructions?: unknown;
   pharmacy_details?: any;
-  doctor_notes?: string;
+  doctor_notes?: unknown;
   Packages?: number;
-  // Add intent field for consistency
-  intent?: string | boolean;
+  intent?: unknown;
 }
 
 // Research-specific properties
 interface ResearchCallLog extends BaseCallLog {
-  research_name?: string;
-  findings?: string;
-  confidence_level?: string | number;
-  relevance_score?: number;
-  research_question?: string;
-  patient_name?: string;
+  research_name?: unknown;
+  findings?: unknown;
+  confidence_level?: unknown;
+  relevance_score?: unknown;
+  research_question?: unknown;
+  patient_name?: unknown;
   patient_id?: string;
   date_of_birth?: string;
   sources?: any;
-  recommendation?: string;
-  // Add intent field for consistency
-  intent?: string | boolean;
+  recommendation?: unknown;
+  intent?: unknown;
 }
 
 // Union type representing any call log type
