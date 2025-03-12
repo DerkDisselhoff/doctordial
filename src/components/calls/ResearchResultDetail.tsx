@@ -10,7 +10,7 @@ import { Microscope, Calendar, User, Flag, Clock } from "lucide-react";
 import { format } from "date-fns";
 import { CallSummary } from "./detail/CallSummary";
 import { CallTranscript } from "./detail/CallTranscript";
-import { ResearchLog } from "./ResearchResultsList";
+import { ResearchLog } from "./research/types";
 
 const formatTranscript = (transcript: string | null) => {
   if (!transcript) return [];
