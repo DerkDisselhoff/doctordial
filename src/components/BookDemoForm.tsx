@@ -52,7 +52,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
       
       console.log("Demo request saved successfully:", data);
       
-      // Send email notification
+      // Send email notification with improved error handling
       try {
         const submissionData = data[0];
         const emailPayload = {
@@ -80,12 +80,22 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
         if (functionResponse.error) {
           console.error("Error from edge function:", functionResponse.error);
           // Continue with form submission regardless of notification result
+          toast({
+            title: "Warning",
+            description: "Your request was saved, but we couldn't send notification emails. Our team will still receive your request.",
+            variant: "default",
+          });
         } else {
           console.log("Email notification sent successfully");
         }
       } catch (notifyErr) {
         console.error("Failed to send notification:", notifyErr);
         // Continue with form submission regardless of notification result
+        toast({
+          title: "Warning",
+          description: "Your request was saved, but we couldn't send notification emails. Our team will still receive your request.",
+          variant: "default",
+        });
       }
       
       setIsSubmitted(true);

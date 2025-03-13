@@ -43,11 +43,16 @@ export async function testEmailSending() {
     <h1>Test Email from DoctorDial Notification System</h1>
     <p>This is a test email to verify that the email sending functionality is working correctly.</p>
     <p>If you're receiving this email, it means that Resend is configured properly.</p>
+    <p>Time sent: ${new Date().toISOString()}</p>
   `;
   
   try {
+    console.log("📧 Attempting to send test email via Resend...");
+    console.log("Using API key of length:", resendApiKey?.length || 0);
+    console.log("First 4 chars of API key:", resendApiKey?.substring(0, 4) || "N/A");
+    
     const { data, error } = await resend.emails.send({
-      from: "DoctorDial <onboarding@resend.dev>",
+      from: "DoctorDial <notifications@doctordial.io>",
       to: ["jelmer@doctordial.com", "derk@doctordial.com"],
       subject: "[TEST] DoctorDial Email System Test",
       html: testEmailContent,
@@ -196,6 +201,7 @@ serve(async (req) => {
         <li><strong>Bedrijfsnaam:</strong> ${leadData.company_name || 'Niet ingevuld'}</li>
         <li><strong>Aantal Praktijken:</strong> ${leadData.practice_count || 'Niet ingevuld'}</li>
       </ul>
+      <p><em>Dit bericht is automatisch verzonden door het DoctorDial lead notification system op ${new Date().toISOString()}</em></p>
     `;
 
     try {
