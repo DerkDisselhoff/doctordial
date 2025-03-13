@@ -52,7 +52,10 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
       
       console.log("Demo request saved successfully:", data);
       
-      // Send email notification with improved error handling
+      // Mark form as submitted first to improve UX
+      setIsSubmitted(true);
+      
+      // Send email notification with improved error handling in background
       try {
         const submissionData = data[0];
         const emailPayload = {
@@ -68,37 +71,63 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
         
         console.log("Sending demo request notification:", emailPayload);
         
-        const functionResponse = await supabase.functions.invoke('notify-new-lead', {
-          body: JSON.stringify(emailPayload),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        // Make three attempts to send the email
+        let success = false;
+        let lastError = null;
         
-        console.log("Edge function complete response:", functionResponse);
+        for (let attempt = 1; attempt <= 3; attempt++) {
+          try {
+            console.log(`Email notification attempt ${attempt}/3...`);
+            
+            const functionResponse = await supabase.functions.invoke('notify-new-lead', {
+              body: JSON.stringify(emailPayload),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            
+            console.log(`Attempt ${attempt} response:`, functionResponse);
+            
+            if (functionResponse.error) {
+              console.error(`Error from edge function (attempt ${attempt}):`, functionResponse.error);
+              lastError = functionResponse.error;
+              // Continue to next attempt
+            } else {
+              console.log(`Email notification sent successfully on attempt ${attempt}`);
+              success = true;
+              break; // Break out of retry loop
+            }
+          } catch (attemptErr) {
+            console.error(`Exception during attempt ${attempt}:`, attemptErr);
+            lastError = attemptErr;
+            // Continue to next attempt
+          }
+          
+          // Wait a short time before retrying
+          if (attempt < 3) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+        }
         
-        if (functionResponse.error) {
-          console.error("Error from edge function:", functionResponse.error);
-          // Continue with form submission regardless of notification result
+        if (!success) {
+          console.error("All email notification attempts failed:", lastError);
+          // Form already submitted, so we'll just show a warning
           toast({
-            title: "Warning",
-            description: "Your request was saved, but we couldn't send notification emails. Our team will still receive your request.",
+            title: "Note",
+            description: "Your request was saved successfully, but we encountered an issue sending notification emails. Our team will still receive your request.",
             variant: "default",
           });
-        } else {
-          console.log("Email notification sent successfully");
         }
       } catch (notifyErr) {
         console.error("Failed to send notification:", notifyErr);
-        // Continue with form submission regardless of notification result
+        // Form already submitted, so we'll just show a warning
         toast({
-          title: "Warning",
-          description: "Your request was saved, but we couldn't send notification emails. Our team will still receive your request.",
+          title: "Note",
+          description: "Your request was saved successfully, but we encountered an issue sending notification emails. Our team will still receive your request.",
           variant: "default",
         });
       }
       
-      setIsSubmitted(true);
       toast({
         title: t("demo.success.title"),
         description: t("demo.success.message"),
@@ -110,6 +139,7 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
         description: "There was a problem submitting your request. Please try again.",
         variant: "destructive",
       });
+      // Don't set isSubmitted to true if there was an error
     } finally {
       setIsLoading(false);
     }

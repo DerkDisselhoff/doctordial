@@ -11,8 +11,12 @@ const corsHeaders = {
 console.log("🟢 Edge function initialized");
 console.log("SUPABASE_URL present:", !!Deno.env.get("SUPABASE_URL"));
 console.log("SUPABASE_SERVICE_ROLE_KEY present:", !!Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
-console.log("RESEND_API_KEY present:", !!Deno.env.get("RESEND_API_KEY"));
-console.log("RESEND_API_KEY length:", Deno.env.get("RESEND_API_KEY")?.length || 0);
+
+// Try both Resend API keys (the new one and the old one if present)
+const resendApiKey = Deno.env.get('Resend Key') || Deno.env.get('RESEND_API_KEY');
+console.log("Resend API key present:", !!resendApiKey);
+console.log("Resend API key length:", resendApiKey?.length || 0);
+console.log("First 4 chars of API key:", resendApiKey?.substring(0, 4) || "N/A");
 
 // Initialize Supabase client
 const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
@@ -20,9 +24,8 @@ const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Initialize Resend client
-const resendApiKey = Deno.env.get('RESEND_API_KEY');
 if (!resendApiKey) {
-  console.error("❌ ERROR: RESEND_API_KEY is missing or empty");
+  console.error("❌ ERROR: No Resend API key found! Checked both 'Resend Key' and 'RESEND_API_KEY'");
 }
 const resend = new Resend(resendApiKey);
 
@@ -44,6 +47,7 @@ export async function testEmailSending() {
     <p>This is a test email to verify that the email sending functionality is working correctly.</p>
     <p>If you're receiving this email, it means that Resend is configured properly.</p>
     <p>Time sent: ${new Date().toISOString()}</p>
+    <p>API Key used: ${resendApiKey ? "API key found with length " + resendApiKey.length : "No API key found!"}</p>
   `;
   
   try {
@@ -51,6 +55,7 @@ export async function testEmailSending() {
     console.log("Using API key of length:", resendApiKey?.length || 0);
     console.log("First 4 chars of API key:", resendApiKey?.substring(0, 4) || "N/A");
     
+    // Try with the verified domain
     const { data, error } = await resend.emails.send({
       from: "DoctorDial <notifications@doctordial.io>",
       to: ["jelmer@doctordial.com", "derk@doctordial.com"],
@@ -60,7 +65,23 @@ export async function testEmailSending() {
     
     if (error) {
       console.error("❌ Test email sending failed:", error);
-      return { success: false, error };
+      
+      // Try with default Resend domain as fallback
+      console.log("🔄 Trying with default Resend domain as fallback...");
+      const fallbackResult = await resend.emails.send({
+        from: "DoctorDial <onboarding@resend.dev>",
+        to: ["jelmer@doctordial.com", "derk@doctordial.com"],
+        subject: "[TEST - FALLBACK] DoctorDial Email System Test",
+        html: testEmailContent + "<p><strong>Note:</strong> This was sent using the fallback domain.</p>",
+      });
+      
+      if (fallbackResult.error) {
+        console.error("❌ Fallback test email also failed:", fallbackResult.error);
+        return { success: false, error, fallbackError: fallbackResult.error };
+      }
+      
+      console.log("✅ Fallback test email sent successfully:", fallbackResult);
+      return { success: true, data: fallbackResult.data, usedFallback: true };
     }
     
     console.log("✅ Test email sent successfully:", data);
@@ -211,18 +232,43 @@ serve(async (req) => {
       console.log("To:", finalConfig.to_emails);
       console.log("Subject:", `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`);
       
-      const emailResponse = await resend.emails.send({
-        from: `${finalConfig.from_name} <${finalConfig.from_email}>`,
-        to: finalConfig.to_emails,
-        subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
-        html: emailContent,
-      });
+      let emailResponse;
+      try {
+        // Try with the verified domain first
+        emailResponse = await resend.emails.send({
+          from: `${finalConfig.from_name} <${finalConfig.from_email}>`,
+          to: finalConfig.to_emails,
+          subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
+          html: emailContent,
+        });
+        
+        console.log("📧 Resend API response (primary domain):", emailResponse);
+        
+        if (emailResponse.error) {
+          throw emailResponse.error;
+        }
+      } catch (primaryDomainError) {
+        console.error("❌ Failed to send email with primary domain:", primaryDomainError);
+        
+        // Try with the default Resend domain as fallback
+        console.log("🔄 Trying with default Resend domain as fallback...");
+        emailResponse = await resend.emails.send({
+          from: "DoctorDial <onboarding@resend.dev>",
+          to: finalConfig.to_emails,
+          subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
+          html: emailContent + "<p><em>Note: This email was sent using the fallback domain because the primary domain failed.</em></p>",
+        });
+        
+        console.log("📧 Resend API response (fallback domain):", emailResponse);
+        
+        if (emailResponse.error) {
+          throw new Error(`Failed to send email with both primary and fallback domains: ${emailResponse.error.message}`);
+        }
+      }
 
-      console.log("📧 Resend API response:", emailResponse);
-
-      if (!emailResponse || emailResponse.error) {
-        console.error("❌ Failed to send email:", emailResponse?.error);
-        throw new Error(`Failed to send email: ${emailResponse?.error?.message || "Unknown error"}`);
+      if (!emailResponse) {
+        console.error("❌ No response from Resend API");
+        throw new Error("No response from Resend API");
       }
       
       console.log("✅ Email notification sent successfully!");
