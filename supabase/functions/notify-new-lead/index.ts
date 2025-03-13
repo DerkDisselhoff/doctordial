@@ -1,6 +1,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.47.0';
+import { Resend } from "https://esm.sh/resend@2.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -10,11 +11,16 @@ const corsHeaders = {
 console.log("Edge function initialized");
 console.log("SUPABASE_URL present:", !!Deno.env.get("SUPABASE_URL"));
 console.log("SUPABASE_SERVICE_ROLE_KEY present:", !!Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
+console.log("RESEND_API_KEY present:", !!Deno.env.get("RESEND_API_KEY"));
 
 // Initialize Supabase client
 const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
 const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Initialize Resend client
+const resendApiKey = Deno.env.get('RESEND_API_KEY');
+const resend = new Resend(resendApiKey);
 
 interface LeadData {
   id: number;
@@ -94,23 +100,21 @@ async function testNotificationFunction() {
     `;
 
     try {
-      // Send email using Supabase SMTP
-      console.log("🔍 Attempting to send test email via Supabase SMTP...");
-      const { error: emailError } = await supabase.auth.admin.sendRawEmail({
-        email: finalConfig.to_emails[0],
+      // Send email using Resend
+      console.log("🔍 Attempting to send test email via Resend...");
+      const emailResponse = await resend.emails.send({
+        from: `${finalConfig.from_name} <${finalConfig.from_email}>`,
+        to: finalConfig.to_emails,
         subject: `[TEST] Nieuwe Lead: ${testData.name}${testData.company_name ? ` - ${testData.company_name}` : ''}`,
         html: emailContent,
-        headers: {
-          'from': `${finalConfig.from_name} <${finalConfig.from_email}>`
-        }
       });
 
-      if (emailError) {
-        console.error("❌ Test failed: Error sending email:", emailError);
+      if (!emailResponse || emailResponse.error) {
+        console.error("❌ Test failed: Error sending email:", emailResponse?.error);
         return;
       }
       
-      console.log("✅ Test successful: Email sent via Supabase SMTP");
+      console.log("✅ Test successful: Email sent via Resend:", emailResponse);
     } catch (sendError) {
       console.error("❌ Test failed: Error sending email:", sendError);
     }
@@ -211,7 +215,7 @@ serve(async (req) => {
         emailConfig = {
           from_email: "noreply@doctordial.io",
           from_name: "DoctorDial",
-          to_emails: ["test@doctordial.com"]
+          to_emails: ["jelmer@doctordial.com", "derk@doctordial.com"]
         };
       } else {
         throw new Error("No email configuration found for lead_notification type");
@@ -252,22 +256,20 @@ serve(async (req) => {
     `;
 
     try {
-      // Send email using Supabase SMTP
-      console.log("Preparing to send email...");
-      const { error: emailError } = await supabase.auth.admin.sendRawEmail({
-        email: emailConfig.to_emails[0],
+      // Send email using Resend
+      console.log("Preparing to send email via Resend...");
+      const emailResponse = await resend.emails.send({
+        from: `${emailConfig.from_name} <${emailConfig.from_email}>`,
+        to: emailConfig.to_emails,
         subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
         html: emailContent,
-        headers: {
-          'from': `${emailConfig.from_name} <${emailConfig.from_email}>`
-        }
       });
 
-      if (emailError) {
-        throw new Error(`Failed to send email: ${emailError.message}`);
+      if (!emailResponse || emailResponse.error) {
+        throw new Error(`Failed to send email: ${emailResponse?.error?.message || "Unknown error"}`);
       }
       
-      console.log("Email notification sent successfully");
+      console.log("Email notification sent successfully via Resend:", emailResponse);
 
       return new Response(
         JSON.stringify({ success: true, message: "Email notification sent" }),

@@ -48,6 +48,39 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
         
       if (error) throw error;
       
+      // Send email notification
+      try {
+        const emailPayload = {
+          id: Date.now(), // Temporary ID for the notification system
+          name: `${demoRequest.first_name} ${demoRequest.last_name}`,
+          email: demoRequest.email,
+          phone: demoRequest.phone || "",
+          practice_count: String(demoRequest.practice_count) || "",
+          company_name: demoRequest.practice_name || "",
+          role: "",
+          created_at: new Date().toISOString()
+        };
+        
+        console.log("Sending demo request notification:", emailPayload);
+        
+        const functionResponse = await supabase.functions.invoke('notify-new-lead', {
+          body: JSON.stringify(emailPayload),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        console.log("Edge function response:", functionResponse);
+        
+        if (functionResponse.error) {
+          console.error("Error from edge function:", functionResponse.error);
+          // Continue with form submission regardless of notification result
+        }
+      } catch (notifyErr) {
+        console.error("Failed to send notification:", notifyErr);
+        // Continue with form submission regardless of notification result
+      }
+      
       setIsSubmitted(true);
       toast({
         title: t("demo.success.title"),
