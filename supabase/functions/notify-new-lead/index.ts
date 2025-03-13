@@ -9,25 +9,39 @@ const corsHeaders = {
 };
 
 console.log("🟢 Edge function initialized");
-console.log("SUPABASE_URL present:", !!Deno.env.get("SUPABASE_URL"));
-console.log("SUPABASE_SERVICE_ROLE_KEY present:", !!Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
 
-// Try both Resend API keys (the new one and the old one if present)
-const resendApiKey = Deno.env.get('Resend Key') || Deno.env.get('RESEND_API_KEY');
-console.log("Resend API key present:", !!resendApiKey);
-console.log("Resend API key length:", resendApiKey?.length || 0);
-console.log("First 4 chars of API key:", resendApiKey?.substring(0, 4) || "N/A");
+// Get all available environment variables for debugging
+const envVars = Object.keys(Deno.env.toObject());
+console.log("Available environment variables:", envVars);
+
+// Try all possible Resend API key environment variable names
+const possibleKeyNames = ['RESEND_API_KEY', 'Resend Key', 'RESEND_KEY', 'resend_api_key'];
+let resendApiKey = null;
+
+for (const keyName of possibleKeyNames) {
+  const key = Deno.env.get(keyName);
+  if (key) {
+    console.log(`✅ Found Resend API key in '${keyName}' with length: ${key.length}`);
+    console.log(`Key starts with: ${key.substring(0, 4)}...`);
+    resendApiKey = key;
+    break;
+  } else {
+    console.log(`❌ No key found in '${keyName}'`);
+  }
+}
+
+if (!resendApiKey) {
+  console.error("❌ CRITICAL ERROR: No Resend API key found in any environment variable!");
+}
 
 // Initialize Supabase client
 const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
 const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Initialize Resend client
-if (!resendApiKey) {
-  console.error("❌ ERROR: No Resend API key found! Checked both 'Resend Key' and 'RESEND_API_KEY'");
-}
-const resend = new Resend(resendApiKey);
+// Initialize Resend client with direct API key
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
+console.log("Resend client initialized:", !!resend);
 
 interface LeadData {
   id: number;
@@ -40,62 +54,84 @@ interface LeadData {
   created_at: string;
 }
 
-// Function to manually test the email sending
-export async function testEmailSending() {
-  const testEmailContent = `
-    <h1>Test Email from DoctorDial Notification System</h1>
-    <p>This is a test email to verify that the email sending functionality is working correctly.</p>
-    <p>If you're receiving this email, it means that Resend is configured properly.</p>
-    <p>Time sent: ${new Date().toISOString()}</p>
-    <p>API Key used: ${resendApiKey ? "API key found with length " + resendApiKey.length : "No API key found!"}</p>
-  `;
-  
-  try {
-    console.log("📧 Attempting to send test email via Resend...");
-    console.log("Using API key of length:", resendApiKey?.length || 0);
-    console.log("First 4 chars of API key:", resendApiKey?.substring(0, 4) || "N/A");
-    
-    // Try with the verified domain
-    const { data, error } = await resend.emails.send({
+// Function to try multiple email sending configurations
+async function tryMultipleEmailConfigs(toEmails, subject, htmlContent, fallbackContent) {
+  const attempts = [
+    // 1. Try verified domain with original API key
+    {
       from: "DoctorDial <notifications@doctordial.io>",
-      to: ["jelmer@doctordial.com", "derk@doctordial.com"],
-      subject: "[TEST] DoctorDial Email System Test",
-      html: testEmailContent,
-    });
-    
-    if (error) {
-      console.error("❌ Test email sending failed:", error);
+      description: "verified domain with main API key"
+    },
+    // 2. Try Resend default domain with original API key
+    {
+      from: "DoctorDial <onboarding@resend.dev>",
+      description: "Resend default domain with main API key"
+    }
+  ];
+  
+  let successResult = null;
+  const errors = [];
+  
+  for (const attempt of attempts) {
+    try {
+      console.log(`📧 Attempt: Sending via ${attempt.description}`);
       
-      // Try with default Resend domain as fallback
-      console.log("🔄 Trying with default Resend domain as fallback...");
-      const fallbackResult = await resend.emails.send({
-        from: "DoctorDial <onboarding@resend.dev>",
-        to: ["jelmer@doctordial.com", "derk@doctordial.com"],
-        subject: "[TEST - FALLBACK] DoctorDial Email System Test",
-        html: testEmailContent + "<p><strong>Note:</strong> This was sent using the fallback domain.</p>",
-      });
+      const emailPayload = {
+        from: attempt.from,
+        to: toEmails,
+        subject: subject,
+        html: attempt.description.includes("default") 
+          ? `${htmlContent}<p><em>(Sent using Resend default domain)</em></p>` 
+          : htmlContent
+      };
       
-      if (fallbackResult.error) {
-        console.error("❌ Fallback test email also failed:", fallbackResult.error);
-        return { success: false, error, fallbackError: fallbackResult.error };
+      console.log("Email payload:", JSON.stringify(emailPayload, null, 2));
+      
+      if (!resend) {
+        throw new Error("Resend client not initialized - API key missing");
       }
       
-      console.log("✅ Fallback test email sent successfully:", fallbackResult);
-      return { success: true, data: fallbackResult.data, usedFallback: true };
+      const result = await resend.emails.send(emailPayload);
+      
+      if (result.error) {
+        console.error(`❌ Error with ${attempt.description}:`, result.error);
+        errors.push({
+          attempt: attempt.description,
+          error: result.error
+        });
+      } else {
+        console.log(`✅ Success with ${attempt.description}:`, result.data);
+        successResult = {
+          success: true,
+          method: attempt.description,
+          data: result.data
+        };
+        break; // Stop trying if successful
+      }
+    } catch (error) {
+      console.error(`❌ Exception with ${attempt.description}:`, error);
+      errors.push({
+        attempt: attempt.description,
+        error: error.message
+      });
     }
-    
-    console.log("✅ Test email sent successfully:", data);
-    return { success: true, data };
-  } catch (error) {
-    console.error("❌ Test email sending exception:", error);
-    return { success: false, error };
+  }
+  
+  if (successResult) {
+    return successResult;
+  } else {
+    console.error("❌ All email sending attempts failed!");
+    return {
+      success: false,
+      errors: errors
+    };
   }
 }
 
 serve(async (req) => {
   console.log("🔵 Received request to notify-new-lead function");
   console.log("Request method:", req.method);
-  console.log("Request headers:", Object.fromEntries(req.headers.entries()));
+  console.log("Request URL:", req.url);
   
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -108,10 +144,25 @@ serve(async (req) => {
     const isTest = url.searchParams.get('test') === 'true';
     const isEmailTest = url.searchParams.get('testEmail') === 'true';
     
-    // If this is a test for email sending specifically
+    // Direct API key test to validate Resend connection
     if (isEmailTest) {
-      console.log("🧪 Running email send test");
-      const testResult = await testEmailSending();
+      console.log("🧪 Running direct API key test");
+      
+      const testHtml = `
+        <h1>DoctorDial Email System Test</h1>
+        <p>This is a direct API key test at ${new Date().toISOString()}</p>
+        <p>API key status: ${resendApiKey ? "Found" : "Missing"}</p>
+        <p>API key length: ${resendApiKey?.length || 0}</p>
+        <p>First 4 chars: ${resendApiKey?.substring(0, 4) || "N/A"}</p>
+      `;
+      
+      const testResult = await tryMultipleEmailConfigs(
+        ["jelmer@doctordial.com", "derk@doctordial.com"],
+        "[TEST] DoctorDial Direct API Test",
+        testHtml,
+        testHtml
+      );
+      
       return new Response(
         JSON.stringify(testResult),
         {
@@ -147,7 +198,6 @@ serve(async (req) => {
         throw new Error("Request body is empty");
       }
       
-      // Try to parse as JSON
       try {
         leadData = JSON.parse(bodyString);
         console.log("✅ Parsed lead data:", leadData);
@@ -163,39 +213,14 @@ serve(async (req) => {
       throw new Error("Missing required fields in lead data: must include name and email");
     }
     
-    // Fetch email configuration from the database
-    console.log("🔍 Fetching email configuration from database...");
-    const { data: emailConfig, error: configError } = await supabase
-      .from('email_config')
-      .select('from_email, from_name, to_emails')
-      .eq('type', 'lead_notification')
-      .single();
+    // Hardcoded email configuration for reliability
+    const finalConfig = {
+      from_email: "notifications@doctordial.io",
+      from_name: "DoctorDial",
+      to_emails: ["jelmer@doctordial.com", "derk@doctordial.com"]
+    };
     
-    if (configError) {
-      console.error("❌ Error fetching email configuration:", configError);
-      throw new Error(`Database error: Failed to fetch email configuration: ${configError.message}`);
-    }
-
-    let finalConfig;
-    if (!emailConfig) {
-      console.warn("⚠️ No email configuration found for lead_notification type. Using defaults.");
-      
-      // For testing purposes, use a default config if none is found
-      finalConfig = {
-        from_email: "notifications@doctordial.io",
-        from_name: "DoctorDial",
-        to_emails: ["jelmer@doctordial.com", "derk@doctordial.com"]
-      };
-    } else {
-      finalConfig = emailConfig;
-    }
-
     console.log("📧 Using email configuration:", finalConfig);
-    
-    if (!finalConfig.from_email || !finalConfig.from_name || !finalConfig.to_emails || finalConfig.to_emails.length === 0) {
-      console.error("❌ Email configuration is incomplete");
-      throw new Error("Email configuration is incomplete. Missing from_email, from_name, or to_emails.");
-    }
     
     // Format the date string
     const formattedDate = new Date(leadData.created_at).toLocaleString('nl-NL', {
@@ -226,49 +251,18 @@ serve(async (req) => {
     `;
 
     try {
-      // Send email using Resend
-      console.log("📤 Preparing to send email via Resend...");
-      console.log("From:", `${finalConfig.from_name} <${finalConfig.from_email}>`);
-      console.log("To:", finalConfig.to_emails);
-      console.log("Subject:", `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`);
+      // Send email using multiple configurations
+      console.log("📩 Sending lead notification email");
       
-      let emailResponse;
-      try {
-        // Try with the verified domain first
-        emailResponse = await resend.emails.send({
-          from: `${finalConfig.from_name} <${finalConfig.from_email}>`,
-          to: finalConfig.to_emails,
-          subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
-          html: emailContent,
-        });
-        
-        console.log("📧 Resend API response (primary domain):", emailResponse);
-        
-        if (emailResponse.error) {
-          throw emailResponse.error;
-        }
-      } catch (primaryDomainError) {
-        console.error("❌ Failed to send email with primary domain:", primaryDomainError);
-        
-        // Try with the default Resend domain as fallback
-        console.log("🔄 Trying with default Resend domain as fallback...");
-        emailResponse = await resend.emails.send({
-          from: "DoctorDial <onboarding@resend.dev>",
-          to: finalConfig.to_emails,
-          subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
-          html: emailContent + "<p><em>Note: This email was sent using the fallback domain because the primary domain failed.</em></p>",
-        });
-        
-        console.log("📧 Resend API response (fallback domain):", emailResponse);
-        
-        if (emailResponse.error) {
-          throw new Error(`Failed to send email with both primary and fallback domains: ${emailResponse.error.message}`);
-        }
-      }
-
-      if (!emailResponse) {
-        console.error("❌ No response from Resend API");
-        throw new Error("No response from Resend API");
+      const emailResponse = await tryMultipleEmailConfigs(
+        finalConfig.to_emails,
+        `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
+        emailContent,
+        emailContent
+      );
+      
+      if (!emailResponse.success) {
+        throw new Error(`All email sending attempts failed: ${JSON.stringify(emailResponse.errors)}`);
       }
       
       console.log("✅ Email notification sent successfully!");
@@ -287,7 +281,12 @@ serve(async (req) => {
   } catch (error) {
     console.error("❌ Error in notify-new-lead function:", error);
     return new Response(
-      JSON.stringify({ error: error.message, stack: error.stack }),
+      JSON.stringify({ 
+        error: error.message, 
+        stack: error.stack,
+        apiKeyPresent: !!resendApiKey,
+        apiKeyLength: resendApiKey?.length || 0
+      }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

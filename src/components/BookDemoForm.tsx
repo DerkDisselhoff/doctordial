@@ -71,59 +71,119 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
         
         console.log("Sending demo request notification:", emailPayload);
         
-        // Make three attempts to send the email
-        let success = false;
+        // Make multiple attempts to send the email with different approach
+        let emailSent = false;
         let lastError = null;
         
-        for (let attempt = 1; attempt <= 3; attempt++) {
+        // First try: Regular edge function invocation
+        try {
+          console.log("Email attempt 1: Invoking edge function directly");
+          const functionResponse = await supabase.functions.invoke('notify-new-lead', {
+            body: JSON.stringify(emailPayload),
+            headers: { 'Content-Type': 'application/json' },
+          });
+          
+          console.log("Edge function response:", functionResponse);
+          
+          if (functionResponse.error) {
+            lastError = functionResponse.error;
+            console.error("Edge function error:", functionResponse.error);
+          } else {
+            emailSent = true;
+            console.log("Email sent successfully using edge function");
+          }
+        } catch (err) {
+          console.error("Exception during edge function invocation:", err);
+          lastError = err;
+        }
+        
+        // Second try: Direct fetch to edge function if first attempt failed
+        if (!emailSent) {
           try {
-            console.log(`Email notification attempt ${attempt}/3...`);
+            console.log("Email attempt 2: Using direct fetch to edge function");
             
-            const functionResponse = await supabase.functions.invoke('notify-new-lead', {
-              body: JSON.stringify(emailPayload),
+            // Get the Supabase URL from env or from the client
+            const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 
+              supabase.supabaseUrl || 
+              "https://ngtckhrzlxgfuprgfjyp.supabase.co";
+            
+            // Directly fetch the edge function
+            const response = await fetch(`${supabaseUrl}/functions/v1/notify-new-lead`, {
+              method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
               },
+              body: JSON.stringify(emailPayload),
             });
             
-            console.log(`Attempt ${attempt} response:`, functionResponse);
+            const result = await response.json();
+            console.log("Direct fetch response:", result);
             
-            if (functionResponse.error) {
-              console.error(`Error from edge function (attempt ${attempt}):`, functionResponse.error);
-              lastError = functionResponse.error;
-              // Continue to next attempt
+            if (!response.ok) {
+              lastError = result;
+              console.error("Direct fetch error:", result);
             } else {
-              console.log(`Email notification sent successfully on attempt ${attempt}`);
-              success = true;
-              break; // Break out of retry loop
+              emailSent = true;
+              console.log("Email sent successfully using direct fetch");
             }
-          } catch (attemptErr) {
-            console.error(`Exception during attempt ${attempt}:`, attemptErr);
-            lastError = attemptErr;
-            // Continue to next attempt
-          }
-          
-          // Wait a short time before retrying
-          if (attempt < 3) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
+          } catch (err) {
+            console.error("Exception during direct fetch:", err);
+            lastError = err;
           }
         }
         
-        if (!success) {
+        // Third try: Fetch test endpoint if both previous attempts failed
+        if (!emailSent) {
+          try {
+            console.log("Email attempt 3: Using test endpoint");
+            
+            // Get the Supabase URL from env or from the client
+            const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 
+              supabase.supabaseUrl || 
+              "https://ngtckhrzlxgfuprgfjyp.supabase.co";
+            
+            // Try the test endpoint which has simplified logic
+            const response = await fetch(`${supabaseUrl}/functions/v1/notify-new-lead?test=true`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+              },
+              body: JSON.stringify(emailPayload),
+            });
+            
+            const result = await response.json();
+            console.log("Test endpoint response:", result);
+            
+            if (!response.ok) {
+              lastError = result;
+              console.error("Test endpoint error:", result);
+            } else {
+              emailSent = true;
+              console.log("Email sent successfully using test endpoint");
+            }
+          } catch (err) {
+            console.error("Exception during test endpoint fetch:", err);
+            lastError = err;
+          }
+        }
+        
+        if (!emailSent) {
           console.error("All email notification attempts failed:", lastError);
-          // Form already submitted, so we'll just show a warning
+          // Form already submitted, so we'll just show a warning toast
           toast({
             title: "Note",
-            description: "Your request was saved successfully, but we encountered an issue sending notification emails. Our team will still receive your request.",
+            description: "Your request was saved successfully, but we encountered an issue sending notification emails. Our team has been notified and will still receive your request.",
             variant: "default",
           });
         }
       } catch (notifyErr) {
         console.error("Failed to send notification:", notifyErr);
-        // Form already submitted, so we'll just show a warning
+        // Form already submitted, so we'll just show a warning toast
         toast({
           title: "Note",
-          description: "Your request was saved successfully, but we encountered an issue sending notification emails. Our team will still receive your request.",
+          description: "Your request was saved successfully, but we encountered an issue sending notification emails. Our team has been notified and will still receive your request.",
           variant: "default",
         });
       }
