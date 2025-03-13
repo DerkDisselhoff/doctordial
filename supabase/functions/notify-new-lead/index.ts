@@ -8,10 +8,11 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-console.log("Edge function initialized");
+console.log("🟢 Edge function initialized");
 console.log("SUPABASE_URL present:", !!Deno.env.get("SUPABASE_URL"));
 console.log("SUPABASE_SERVICE_ROLE_KEY present:", !!Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
 console.log("RESEND_API_KEY present:", !!Deno.env.get("RESEND_API_KEY"));
+console.log("RESEND_API_KEY length:", Deno.env.get("RESEND_API_KEY")?.length || 0);
 
 // Initialize Supabase client
 const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
@@ -20,6 +21,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Initialize Resend client
 const resendApiKey = Deno.env.get('RESEND_API_KEY');
+if (!resendApiKey) {
+  console.error("❌ ERROR: RESEND_API_KEY is missing or empty");
+}
 const resend = new Resend(resendApiKey);
 
 interface LeadData {
@@ -33,120 +37,59 @@ interface LeadData {
   created_at: string;
 }
 
-// Function to invoke a test of the edge function
-async function testNotificationFunction() {
+// Function to manually test the email sending
+export async function testEmailSending() {
+  const testEmailContent = `
+    <h1>Test Email from DoctorDial Notification System</h1>
+    <p>This is a test email to verify that the email sending functionality is working correctly.</p>
+    <p>If you're receiving this email, it means that Resend is configured properly.</p>
+  `;
+  
   try {
-    console.log("🧪 Running automated test of notify-new-lead function");
-    
-    // Test data
-    const testData = {
-      id: 9999,
-      name: "Test User",
-      email: "test@example.com",
-      phone: "+31612345678",
-      practice_count: "2-3",
-      company_name: "Test Practice",
-      role: "Manager",
-      created_at: new Date().toISOString()
-    };
-    
-    // Fetch email configuration
-    console.log("🔍 Fetching email configuration from database...");
-    const { data: emailConfig, error: configError } = await supabase
-      .from('email_config')
-      .select('from_email, from_name, to_emails')
-      .eq('type', 'lead_notification')
-      .single();
-      
-    if (configError) {
-      console.error("❌ Test failed: Error fetching email configuration:", configError);
-      return;
-    }
-    
-    // Use default config if none found in database
-    const finalConfig = emailConfig || {
-      from_email: "noreply@doctordial.io",
-      from_name: "DoctorDial",
-      to_emails: ["test@doctordial.com"]
-    };
-    
-    console.log("📧 Test using email configuration:", finalConfig);
-    
-    // Format date for email
-    const formattedDate = new Date(testData.created_at).toLocaleString('nl-NL', {
-      day: '2-digit', 
-      month: '2-digit', 
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    const { data, error } = await resend.emails.send({
+      from: "DoctorDial <onboarding@resend.dev>",
+      to: ["jelmer@doctordial.com", "derk@doctordial.com"],
+      subject: "[TEST] DoctorDial Email System Test",
+      html: testEmailContent,
     });
-
-    // Configure email content
-    const emailContent = `
-      <h1>Nieuwe Lead via DoctorDial Pricing Formulier</h1>
-      <p><strong>Datum:</strong> ${formattedDate}</p>
-      <h2>Contact Informatie:</h2>
-      <ul>
-        <li><strong>Naam:</strong> ${testData.name}</li>
-        <li><strong>Email:</strong> ${testData.email}</li>
-        <li><strong>Telefoon:</strong> ${testData.phone || 'Niet ingevuld'}</li>
-        <li><strong>Rol:</strong> ${testData.role || 'Niet ingevuld'}</li>
-      </ul>
-      <h2>Praktijk Informatie:</h2>
-      <ul>
-        <li><strong>Bedrijfsnaam:</strong> ${testData.company_name || 'Niet ingevuld'}</li>
-        <li><strong>Aantal Praktijken:</strong> ${testData.practice_count || 'Niet ingevuld'}</li>
-      </ul>
-    `;
-
-    try {
-      // Send email using Resend
-      console.log("🔍 Attempting to send test email via Resend...");
-      const emailResponse = await resend.emails.send({
-        from: `${finalConfig.from_name} <${finalConfig.from_email}>`,
-        to: finalConfig.to_emails,
-        subject: `[TEST] Nieuwe Lead: ${testData.name}${testData.company_name ? ` - ${testData.company_name}` : ''}`,
-        html: emailContent,
-      });
-
-      if (!emailResponse || emailResponse.error) {
-        console.error("❌ Test failed: Error sending email:", emailResponse?.error);
-        return;
-      }
-      
-      console.log("✅ Test successful: Email sent via Resend:", emailResponse);
-    } catch (sendError) {
-      console.error("❌ Test failed: Error sending email:", sendError);
+    
+    if (error) {
+      console.error("❌ Test email sending failed:", error);
+      return { success: false, error };
     }
+    
+    console.log("✅ Test email sent successfully:", data);
+    return { success: true, data };
   } catch (error) {
-    console.error("❌ Test failed with error:", error);
+    console.error("❌ Test email sending exception:", error);
+    return { success: false, error };
   }
 }
 
 serve(async (req) => {
+  console.log("🔵 Received request to notify-new-lead function");
+  console.log("Request method:", req.method);
+  console.log("Request headers:", Object.fromEntries(req.headers.entries()));
+  
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log("Received request to notify-new-lead function");
-    console.log("Request method:", req.method);
-    console.log("Request headers:", Object.fromEntries(req.headers.entries()));
-    
     // Check if we're getting a test request
     const url = new URL(req.url);
     const isTest = url.searchParams.get('test') === 'true';
-    const isAutoTest = url.searchParams.get('autotest') === 'true';
+    const isEmailTest = url.searchParams.get('testEmail') === 'true';
     
-    // If this is an automated test request, run the test function
-    if (isAutoTest) {
-      console.log("Running automated test function");
-      await testNotificationFunction();
+    // If this is a test for email sending specifically
+    if (isEmailTest) {
+      console.log("🧪 Running email send test");
+      const testResult = await testEmailSending();
       return new Response(
-        JSON.stringify({ success: true, message: "Automated test completed, check logs for results" }),
+        JSON.stringify(testResult),
         {
-          status: 200,
+          status: testResult.success ? 200 : 500,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         }
       );
@@ -156,7 +99,7 @@ serve(async (req) => {
     
     if (isTest) {
       // Use test data if this is a test run
-      console.log("Using test data for email notification");
+      console.log("🧪 Using test data for email notification");
       leadData = {
         id: 9999,
         name: "Test User",
@@ -171,7 +114,7 @@ serve(async (req) => {
       // Normal flow - parse the request body
       const rawBody = await req.arrayBuffer();
       const bodyString = new TextDecoder().decode(rawBody);
-      console.log("Raw request body:", bodyString);
+      console.log("📝 Raw request body:", bodyString);
       
       // If body is empty, return error
       if (!bodyString || bodyString.trim() === '') {
@@ -181,20 +124,21 @@ serve(async (req) => {
       // Try to parse as JSON
       try {
         leadData = JSON.parse(bodyString);
+        console.log("✅ Parsed lead data:", leadData);
       } catch (parseError) {
-        console.error("JSON parsing error:", parseError);
+        console.error("❌ JSON parsing error:", parseError);
         throw new Error(`Failed to parse request body as JSON: ${parseError.message}`);
       }
     }
     
-    console.log("Lead data parsed successfully:", leadData);
-    
     // Validate required fields in lead data
     if (!leadData.name || !leadData.email) {
+      console.error("❌ Missing required fields in lead data");
       throw new Error("Missing required fields in lead data: must include name and email");
     }
     
     // Fetch email configuration from the database
+    console.log("🔍 Fetching email configuration from database...");
     const { data: emailConfig, error: configError } = await supabase
       .from('email_config')
       .select('from_email, from_name, to_emails')
@@ -202,29 +146,28 @@ serve(async (req) => {
       .single();
     
     if (configError) {
-      console.error("Error fetching email configuration:", configError);
+      console.error("❌ Error fetching email configuration:", configError);
       throw new Error(`Database error: Failed to fetch email configuration: ${configError.message}`);
     }
 
+    let finalConfig;
     if (!emailConfig) {
-      console.error("No email configuration found for lead_notification type");
+      console.warn("⚠️ No email configuration found for lead_notification type. Using defaults.");
       
       // For testing purposes, use a default config if none is found
-      if (isTest) {
-        console.log("Using default email configuration for test");
-        emailConfig = {
-          from_email: "noreply@doctordial.io",
-          from_name: "DoctorDial",
-          to_emails: ["jelmer@doctordial.com", "derk@doctordial.com"]
-        };
-      } else {
-        throw new Error("No email configuration found for lead_notification type");
-      }
+      finalConfig = {
+        from_email: "notifications@doctordial.io",
+        from_name: "DoctorDial",
+        to_emails: ["jelmer@doctordial.com", "derk@doctordial.com"]
+      };
+    } else {
+      finalConfig = emailConfig;
     }
 
-    console.log("Using email configuration:", emailConfig);
+    console.log("📧 Using email configuration:", finalConfig);
     
-    if (!emailConfig.from_email || !emailConfig.from_name || !emailConfig.to_emails || emailConfig.to_emails.length === 0) {
+    if (!finalConfig.from_email || !finalConfig.from_name || !finalConfig.to_emails || finalConfig.to_emails.length === 0) {
+      console.error("❌ Email configuration is incomplete");
       throw new Error("Email configuration is incomplete. Missing from_email, from_name, or to_emails.");
     }
     
@@ -257,33 +200,40 @@ serve(async (req) => {
 
     try {
       // Send email using Resend
-      console.log("Preparing to send email via Resend...");
+      console.log("📤 Preparing to send email via Resend...");
+      console.log("From:", `${finalConfig.from_name} <${finalConfig.from_email}>`);
+      console.log("To:", finalConfig.to_emails);
+      console.log("Subject:", `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`);
+      
       const emailResponse = await resend.emails.send({
-        from: `${emailConfig.from_name} <${emailConfig.from_email}>`,
-        to: emailConfig.to_emails,
+        from: `${finalConfig.from_name} <${finalConfig.from_email}>`,
+        to: finalConfig.to_emails,
         subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
         html: emailContent,
       });
 
+      console.log("📧 Resend API response:", emailResponse);
+
       if (!emailResponse || emailResponse.error) {
+        console.error("❌ Failed to send email:", emailResponse?.error);
         throw new Error(`Failed to send email: ${emailResponse?.error?.message || "Unknown error"}`);
       }
       
-      console.log("Email notification sent successfully via Resend:", emailResponse);
+      console.log("✅ Email notification sent successfully!");
 
       return new Response(
-        JSON.stringify({ success: true, message: "Email notification sent" }),
+        JSON.stringify({ success: true, message: "Email notification sent", data: emailResponse }),
         {
           status: 200,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         }
       );
     } catch (sendError) {
-      console.error("Error sending email:", sendError);
+      console.error("❌ Error sending email:", sendError);
       throw new Error(`Failed to send email: ${sendError.message}`);
     }
   } catch (error) {
-    console.error("Error in notify-new-lead function:", error);
+    console.error("❌ Error in notify-new-lead function:", error);
     return new Response(
       JSON.stringify({ error: error.message, stack: error.stack }),
       {

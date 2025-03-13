@@ -42,23 +42,28 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
     };
     
     try {
-      const { error } = await supabase
+      console.log("Submitting demo request to Supabase:", demoRequest);
+      const { data, error } = await supabase
         .from('demo_requests')
-        .insert(demoRequest);
+        .insert(demoRequest)
+        .select();
         
       if (error) throw error;
       
+      console.log("Demo request saved successfully:", data);
+      
       // Send email notification
       try {
+        const submissionData = data[0];
         const emailPayload = {
-          id: Date.now(), // Temporary ID for the notification system
+          id: submissionData.id,
           name: `${demoRequest.first_name} ${demoRequest.last_name}`,
           email: demoRequest.email,
           phone: demoRequest.phone || "",
           practice_count: String(demoRequest.practice_count) || "",
           company_name: demoRequest.practice_name || "",
           role: "",
-          created_at: new Date().toISOString()
+          created_at: submissionData.created_at
         };
         
         console.log("Sending demo request notification:", emailPayload);
@@ -70,11 +75,13 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
           },
         });
         
-        console.log("Edge function response:", functionResponse);
+        console.log("Edge function complete response:", functionResponse);
         
         if (functionResponse.error) {
           console.error("Error from edge function:", functionResponse.error);
           // Continue with form submission regardless of notification result
+        } else {
+          console.log("Email notification sent successfully");
         }
       } catch (notifyErr) {
         console.error("Failed to send notification:", notifyErr);
