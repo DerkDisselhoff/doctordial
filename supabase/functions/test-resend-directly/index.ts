@@ -18,86 +18,85 @@ serve(async (req) => {
   }
 
   try {
-    // Collect all environment variables for debugging
-    const allEnvVars = Object.keys(Deno.env.toObject());
-    console.log("📋 Available environment variables:", allEnvVars);
-
-    // Try multiple potential API key names
-    const apiKeyOptions = [
-      Deno.env.get("RESEND_API_KEY"),
-      Deno.env.get("Resend Key"),
-      Deno.env.get("resend_api_key"),
-      Deno.env.get("RESEND_KEY")
-    ];
+    // Hard-code the DoctorDial Email API key for testing
+    // Note: We're only showing the beginning of the key for security, complete key will be accessed from env
+    const doctordialKeyPrefix = "re_9xurg";
     
-    const apiKey = apiKeyOptions.find(key => key && key.length > 10);
-    
-    console.log("🔑 API key status:", apiKey ? 
-      `Found valid API key (starting with ${apiKey.substring(0, 4)}...)` : 
-      "No valid API key found");
+    // Get the API key from environment
+    const apiKey = Deno.env.get("RESEND_API_KEY");
+    console.log("🔑 API key from env:", apiKey ? 
+      `Found (starts with ${apiKey.substring(0, 8)}...)` : 
+      "NOT FOUND in environment variables!");
     
     if (!apiKey) {
-      throw new Error("No valid Resend API key found in environment variables");
+      throw new Error("Resend API key not found in environment variables");
     }
-
-    // Initialize Resend with the API key
+    
+    // Verify if it's the key we expect (the DoctorDial Email one with full access)
+    const isExpectedKey = apiKey.startsWith(doctordialKeyPrefix);
+    console.log("🔑 Using expected DoctorDial Email key:", isExpectedKey ? "Yes" : "No");
+    
+    // Initialize Resend with explicit API key (no variable substitution)
     console.log("🔌 Initializing Resend client...");
     const resend = new Resend(apiKey);
     
-    // Extract parameters
+    // Extract recipient email
     const url = new URL(req.url);
     const recipient = url.searchParams.get('email') || "derk.disselhoff@doctordial.io";
-    console.log("📧 Recipient email:", recipient);
+    console.log("📧 Sending test email to:", recipient);
 
-    // First try with default domain (most reliable)
-    console.log("🧪 Testing with default Resend domain (onboarding@resend.dev)");
-    try {
-      const defaultDomainResult = await resend.emails.send({
-        from: "DoctorDial <onboarding@resend.dev>",
-        to: [recipient],
-        subject: "Test Email (Default Domain)",
-        html: `
-          <h1>This is a test email from DoctorDial</h1>
-          <p>This email was sent with the default Resend domain.</p>
-          <p>Timestamp: ${new Date().toISOString()}</p>
-        `,
-      });
-      
-      console.log("✅ Default domain result:", defaultDomainResult);
-      
-      return new Response(
-        JSON.stringify({ 
-          success: true, 
-          message: "Test email sent! Check Resend dashboard and your inbox.",
-          result: defaultDomainResult 
-        }),
-        {
-          status: 200,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
-      );
-    } catch (defaultErr) {
-      console.error("❌ Error with default domain:", defaultErr);
-      
-      return new Response(
-        JSON.stringify({ 
-          error: "Failed to send email", 
-          details: defaultErr.message,
-          recommendation: "Check your Resend API key and account status"
-        }),
-        {
-          status: 500,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
-      );
-    }
-  } catch (error) {
-    console.error("❌ Critical error in test function:", error);
+    console.log("📤 Sending direct test email...");
+    
+    // Send a test email with detailed metadata to help diagnose issues
+    const emailResult = await resend.emails.send({
+      from: "DoctorDial <onboarding@resend.dev>",
+      to: [recipient],
+      subject: "API Test - Direct Edge Function Call",
+      html: `
+        <h1>Resend API Test Email</h1>
+        <p>This is a direct test of the Resend API.</p>
+        <p><strong>Method:</strong> Direct edge function call</p>
+        <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
+        <p><strong>API Key Used:</strong> Starts with ${apiKey.substring(0, 8)}...</p>
+        <p><strong>Is DoctorDial key:</strong> ${isExpectedKey ? "Yes" : "No"}</p>
+        <hr>
+        <p>If you received this email, it confirms that the Resend API is working correctly from our Supabase Edge Functions.</p>
+      `,
+    });
+    
+    console.log("✅ Email result:", JSON.stringify(emailResult));
+    
+    // Return detailed response for debugging
     return new Response(
       JSON.stringify({ 
-        criticalError: error.message, 
+        success: true, 
+        message: "Test email sent directly via Resend API!", 
+        details: {
+          result: emailResult,
+          apiKeyInfo: {
+            keyPrefix: apiKey.substring(0, 8),
+            isExpectedKey,
+            keyLength: apiKey.length
+          },
+          timestamp: new Date().toISOString(),
+          recipient
+        }
+      }),
+      {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      }
+    );
+  } catch (error) {
+    console.error("❌ Error in direct test function:", error);
+    
+    // Return detailed error for debugging
+    return new Response(
+      JSON.stringify({ 
+        error: true, 
+        message: error.message,
         stack: error.stack,
-        recommendation: "Check your Supabase secrets configuration"
+        timestamp: new Date().toISOString()
       }),
       {
         status: 500,
