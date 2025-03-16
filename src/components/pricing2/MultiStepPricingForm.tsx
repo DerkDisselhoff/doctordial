@@ -37,19 +37,23 @@ export const MultiStepPricingForm = () => {
       setIsSubmitting(true);
       console.log("Starting form submission with data:", formData);
       
+      // Debug log to verify company_name and role are present
+      console.log("Company data being submitted:", {
+        company_name: formData.company_name,
+        role: formData.role
+      });
+      
       // Insert the form data into the pricing_submissions table
       const { data, error } = await supabase
         .from('pricing_submissions')
-        .insert([
-          {
-            practice_count: formData.practice_count,
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            company_name: formData.company_name,
-            role: formData.role
-          }
-        ])
+        .insert([{
+          practice_count: formData.practice_count,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company_name: formData.company_name, // Ensure this field is included
+          role: formData.role // Ensure this field is included
+        }])
         .select();
 
       if (error) {
@@ -72,8 +76,8 @@ export const MultiStepPricingForm = () => {
             email: submissionData.email,
             phone: submissionData.phone || "",
             practice_count: submissionData.practice_count || "",
-            company_name: submissionData.company_name || "",
-            role: submissionData.role || "",
+            company_name: submissionData.company_name || "", // Ensure this field is included
+            role: submissionData.role || "", // Ensure this field is included
             created_at: submissionData.created_at
           };
           
@@ -120,6 +124,7 @@ export const MultiStepPricingForm = () => {
 
   const updateFormData = (data: Partial<FormData>) => {
     setFormData(prev => ({ ...prev, ...data }));
+    console.log("Form data updated:", { ...formData, ...data });
   };
 
   return (
@@ -165,7 +170,8 @@ export const MultiStepPricingForm = () => {
           onNext={(data) => {
             updateFormData(data);
             console.log("Company details before submit:", data);
-            handleSubmitData();
+            // Add a small delay to ensure state is updated before submission
+            setTimeout(() => handleSubmitData(), 100);
           }}
           isSubmitting={isSubmitting}
         />

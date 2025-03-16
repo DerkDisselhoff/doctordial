@@ -32,6 +32,7 @@ export const CompanyDetailsStep = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isComplete && !isSubmitting) {
+      // Log the data being passed back to parent
       console.log("CompanyDetailsStep submitting:", { company_name: companyName, role });
       onNext({ company_name: companyName, role });
     }
@@ -51,6 +52,7 @@ export const CompanyDetailsStep = ({
           <Label htmlFor="companyName">Praktijk / Organisatie naam</Label>
           <Input
             id="companyName"
+            name="companyName"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             placeholder="Voer uw bedrijfsnaam in"
@@ -63,6 +65,7 @@ export const CompanyDetailsStep = ({
           <Label htmlFor="role">Uw rol</Label>
           <Input
             id="role"
+            name="role"
             value={role}
             onChange={(e) => setRole(e.target.value)}
             placeholder="Bijv. Huisarts, Praktijkmanager, etc."
