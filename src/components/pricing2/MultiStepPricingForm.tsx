@@ -40,7 +40,16 @@ export const MultiStepPricingForm = () => {
       // Insert the form data into the pricing_submissions table
       const { data, error } = await supabase
         .from('pricing_submissions')
-        .insert([formData])
+        .insert([
+          {
+            practice_count: formData.practice_count,
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            company_name: formData.company_name,
+            role: formData.role
+          }
+        ])
         .select();
 
       if (error) {
@@ -153,9 +162,10 @@ export const MultiStepPricingForm = () => {
             role: formData.role,
           }}
           onBack={() => setStep(2)}
-          onNext={async (data) => {
+          onNext={(data) => {
             updateFormData(data);
-            await handleSubmitData();
+            console.log("Company details before submit:", data);
+            handleSubmitData();
           }}
           isSubmitting={isSubmitting}
         />

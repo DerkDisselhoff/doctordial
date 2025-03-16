@@ -32,6 +32,7 @@ export const CompanyDetailsStep = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isComplete && !isSubmitting) {
+      console.log("CompanyDetailsStep submitting:", { company_name: companyName, role });
       onNext({ company_name: companyName, role });
     }
   };
