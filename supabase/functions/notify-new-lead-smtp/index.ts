@@ -1,15 +1,17 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@2.0.0";
+import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// This function is simplified and more focused on reliability
+console.log("🟢 SMTP Edge function initialized");
+
+// This function uses SMTP directly instead of Resend API - potentially more reliable
 serve(async (req) => {
-  console.log("🔵 Received request to notify-new-lead function");
+  console.log("🔵 Received request to notify-new-lead-smtp function");
   console.log("Request method:", req.method);
   console.log("Request URL:", req.url);
   
@@ -19,22 +21,6 @@ serve(async (req) => {
   }
 
   try {
-    // Get all available environment variables for debugging
-    const envVars = Object.keys(Deno.env.toObject());
-    console.log("Available environment variables:", envVars);
-    
-    // Try to get Resend API key
-    const resendApiKey = Deno.env.get('RESEND_API_KEY');
-    console.log("RESEND_API_KEY available:", !!resendApiKey, resendApiKey ? `(length: ${resendApiKey.length})` : "");
-    
-    if (!resendApiKey) {
-      throw new Error("Resend API key not found");
-    }
-    
-    // Initialize Resend client with API key
-    const resend = new Resend(resendApiKey);
-    
-    // Check if we're getting a test request
     const url = new URL(req.url);
     const isTest = url.searchParams.get('test') === 'true';
     
@@ -105,40 +91,58 @@ serve(async (req) => {
       </ul>
       <p><em>Dit bericht is automatisch verzonden door het DoctorDial lead notification system op ${new Date().toISOString()}</em></p>
     `;
-
-    // Try direct send with default Resend domain - most reliable method
-    console.log("📩 Sending email with default Resend domain");
+    
+    // Get SMTP client configuration for the client
+    const clientConfig = {
+      host: "smtp.resend.com",
+      port: 465,
+      username: "resend",
+      password: Deno.env.get("RESEND_API_KEY") || "",
+      tls: true,
+    };
+    
+    console.log("🔑 SMTP client config (without password):", {
+      ...clientConfig,
+      password: clientConfig.password ? "API KEY IS SET (length: " + clientConfig.password.length + ")" : "NO API KEY",
+    });
+    
+    // Create the SMTP client
+    const client = new SMTPClient(clientConfig);
+    
+    console.log("📧 Sending email with SMTP client...");
     
     const to = ["derk@doctordial.com", "jelmer@doctordial.com"];
     console.log("To emails:", to);
     
     try {
-      const emailResult = await resend.emails.send({
+      // Try to send email with the SMTP client
+      await client.send({
         from: "DoctorDial <onboarding@resend.dev>",
         to: to,
         subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
         html: emailContent,
       });
       
-      console.log("✅ Email result:", emailResult);
+      console.log("✅ Email sent successfully with SMTP!");
       
-      if (emailResult.error) {
-        throw emailResult.error;
-      }
+      await client.close();
       
       return new Response(
-        JSON.stringify({ success: true, message: "Email notification sent", data: emailResult }),
+        JSON.stringify({ success: true, message: "Email notification sent via SMTP" }),
         {
           status: 200,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         }
       );
-    } catch (emailError) {
-      console.error("❌ Error sending email:", emailError);
-      throw new Error(`Failed to send email: ${JSON.stringify(emailError)}`);
+    } catch (smtpError) {
+      console.error("❌ Error sending email with SMTP:", smtpError);
+      
+      await client.close();
+      
+      throw new Error(`Failed to send email via SMTP: ${smtpError.message}`);
     }
   } catch (error) {
-    console.error("❌ Error in notify-new-lead function:", error);
+    console.error("❌ Error in notify-new-lead-smtp function:", error);
     return new Response(
       JSON.stringify({ 
         error: error.message, 

@@ -57,58 +57,28 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
       
       // Send email notification with improved error handling in background
       try {
-        const submissionData = data[0];
-        const emailPayload = {
-          id: submissionData.id,
-          name: `${demoRequest.first_name} ${demoRequest.last_name}`,
-          email: demoRequest.email,
-          phone: demoRequest.phone || "",
-          practice_count: String(demoRequest.practice_count) || "",
-          company_name: demoRequest.practice_name || "",
-          role: "",
-          created_at: submissionData.created_at
-        };
-        
-        console.log("Sending demo request notification:", emailPayload);
-        
-        // Make multiple attempts to send the email with different approach
-        let emailSent = false;
-        let lastError = null;
-        
-        // First try: Regular edge function invocation
-        try {
-          console.log("Email attempt 1: Invoking edge function directly");
-          const functionResponse = await supabase.functions.invoke('notify-new-lead', {
-            body: JSON.stringify(emailPayload),
-            headers: { 'Content-Type': 'application/json' },
-          });
+        if (data && data.length > 0) {
+          const submissionData = data[0];
+          const emailPayload = {
+            id: submissionData.id,
+            name: `${demoRequest.first_name} ${demoRequest.last_name}`,
+            email: demoRequest.email,
+            phone: demoRequest.phone || "",
+            practice_count: String(demoRequest.practice_count) || "",
+            company_name: demoRequest.practice_name || "",
+            role: "",
+            created_at: submissionData.created_at
+          };
           
-          console.log("Edge function response:", functionResponse);
+          console.log("Sending demo request notification:", emailPayload);
           
-          if (functionResponse.error) {
-            lastError = functionResponse.error;
-            console.error("Edge function error:", functionResponse.error);
-          } else {
-            emailSent = true;
-            console.log("Email sent successfully using edge function");
-          }
-        } catch (err) {
-          console.error("Exception during edge function invocation:", err);
-          lastError = err;
-        }
-        
-        // Second try: Direct fetch to edge function if first attempt failed
-        if (!emailSent) {
+          // Try SMTP approach
+          const SUPABASE_URL = "https://ngtckhrzlxgfuprgfjyp.supabase.co";
+          
+          // Attempt 1: Direct SMTP approach
           try {
-            console.log("Email attempt 2: Using direct fetch to edge function");
-            
-            // Get the Supabase URL from env or from the client
-            const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 
-              supabase.supabaseUrl || 
-              "https://ngtckhrzlxgfuprgfjyp.supabase.co";
-            
-            // Directly fetch the edge function
-            const response = await fetch(`${supabaseUrl}/functions/v1/notify-new-lead`, {
+            console.log("Email attempt 1: Using direct SMTP approach");
+            const response = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-lead-smtp`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -118,33 +88,22 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
             });
             
             const result = await response.json();
-            console.log("Direct fetch response:", result);
+            console.log("SMTP approach response:", result);
             
             if (!response.ok) {
-              lastError = result;
-              console.error("Direct fetch error:", result);
+              console.error("SMTP approach error:", result);
+              // Continue to next attempt
             } else {
-              emailSent = true;
-              console.log("Email sent successfully using direct fetch");
+              console.log("Email sent successfully using SMTP approach");
             }
           } catch (err) {
-            console.error("Exception during direct fetch:", err);
-            lastError = err;
+            console.error("Exception during SMTP approach:", err);
           }
-        }
-        
-        // Third try: Fetch test endpoint if both previous attempts failed
-        if (!emailSent) {
+          
+          // Attempt 2: Standard API approach
           try {
-            console.log("Email attempt 3: Using test endpoint");
-            
-            // Get the Supabase URL from env or from the client
-            const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 
-              supabase.supabaseUrl || 
-              "https://ngtckhrzlxgfuprgfjyp.supabase.co";
-            
-            // Try the test endpoint which has simplified logic
-            const response = await fetch(`${supabaseUrl}/functions/v1/notify-new-lead?test=true`, {
+            console.log("Email attempt 2: Using standard API approach");
+            const response = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-lead`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -154,38 +113,20 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
             });
             
             const result = await response.json();
-            console.log("Test endpoint response:", result);
+            console.log("Standard API approach response:", result);
             
             if (!response.ok) {
-              lastError = result;
-              console.error("Test endpoint error:", result);
+              console.error("Standard API approach error:", result);
             } else {
-              emailSent = true;
-              console.log("Email sent successfully using test endpoint");
+              console.log("Email sent successfully using standard API approach");
             }
           } catch (err) {
-            console.error("Exception during test endpoint fetch:", err);
-            lastError = err;
+            console.error("Exception during standard API approach:", err);
           }
-        }
-        
-        if (!emailSent) {
-          console.error("All email notification attempts failed:", lastError);
-          // Form already submitted, so we'll just show a warning toast
-          toast({
-            title: "Note",
-            description: "Your request was saved successfully, but we encountered an issue sending notification emails. Our team has been notified and will still receive your request.",
-            variant: "default",
-          });
         }
       } catch (notifyErr) {
         console.error("Failed to send notification:", notifyErr);
-        // Form already submitted, so we'll just show a warning toast
-        toast({
-          title: "Note",
-          description: "Your request was saved successfully, but we encountered an issue sending notification emails. Our team has been notified and will still receive your request.",
-          variant: "default",
-        });
+        // Form already submitted, so we'll just log the error
       }
       
       toast({

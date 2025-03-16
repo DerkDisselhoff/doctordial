@@ -70,20 +70,55 @@ export const MultiStepPricingForm = () => {
           
           console.log("Email payload:", emailPayload);
           
-          const functionResponse = await supabase.functions.invoke('notify-new-lead', {
-            body: JSON.stringify(emailPayload),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
+          // Attempt 1: Try the new SMTP approach
+          const SUPABASE_URL = "https://ngtckhrzlxgfuprgfjyp.supabase.co";
           
-          console.log("Edge function response:", functionResponse);
+          try {
+            console.log("Trying SMTP approach for email notification");
+            const response = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-lead-smtp`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+              },
+              body: JSON.stringify(emailPayload),
+            });
+            
+            const result = await response.json();
+            console.log("SMTP approach response:", result);
+            
+            if (!response.ok) {
+              console.error("SMTP approach error:", result);
+              // Fall back to regular API
+            } else {
+              console.log("Email sent successfully using SMTP approach");
+            }
+          } catch (smtpErr) {
+            console.error("Exception during SMTP approach:", smtpErr);
+          }
           
-          if (functionResponse.error) {
-            console.error("Error from edge function:", functionResponse.error);
-            // We continue with the form submission flow even if notification fails
-          } else {
-            console.log("Notification sent successfully");
+          // Attempt 2: Fall back to regular API
+          try {
+            console.log("Trying original approach for email notification");
+            const response = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-lead`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+              },
+              body: JSON.stringify(emailPayload),
+            });
+            
+            const result = await response.json();
+            console.log("Original approach response:", result);
+            
+            if (!response.ok) {
+              console.error("Original approach error:", result);
+            } else {
+              console.log("Email sent successfully using original approach");
+            }
+          } catch (apiErr) {
+            console.error("Exception during original approach:", apiErr);
           }
         } catch (notifyErr) {
           console.error("Failed to send notification:", notifyErr);
