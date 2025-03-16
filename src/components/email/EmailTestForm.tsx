@@ -28,6 +28,15 @@ export function EmailTestForm() {
         created_at: new Date().toISOString()
       };
       
+      // Get the Supabase anon key from environment variables
+      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      if (!anonKey) {
+        throw new Error("Missing VITE_SUPABASE_ANON_KEY environment variable");
+      }
+      
+      console.log("Using anon key:", anonKey ? `${anonKey.substring(0, 8)}...` : 'undefined');
+      
       // Show test start notification
       toast({
         title: "Testing email delivery",
@@ -43,7 +52,7 @@ export function EmailTestForm() {
             method: "POST",
             headers: { 
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+              "Authorization": `Bearer ${anonKey}`
             },
             body: JSON.stringify(testPayload)
           }

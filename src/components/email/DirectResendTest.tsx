@@ -23,13 +23,22 @@ export function DirectResendTest() {
         description: `Sending a test email to ${email} using the new API key...`,
       });
       
+      // Get the Supabase anon key from environment variables
+      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      if (!anonKey) {
+        throw new Error("Missing VITE_SUPABASE_ANON_KEY environment variable");
+      }
+      
+      console.log("Using anon key:", anonKey ? `${anonKey.substring(0, 8)}...` : 'undefined');
+      
       const url = `https://ngtckhrzlxgfuprgfjyp.supabase.co/functions/v1/test-resend-directly?email=${encodeURIComponent(email)}`;
       
       const response = await fetch(url, {
         method: "GET",
         headers: { 
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+          "Authorization": `Bearer ${anonKey}`
         }
       });
       
