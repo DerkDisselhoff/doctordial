@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { PracticeCountStep } from "./steps/PracticeCountStep";
@@ -55,7 +56,7 @@ export const MultiStepPricingForm = () => {
           const submissionData = data[0];
           console.log("Submitting data to notification function:", submissionData);
           
-          // Send a simple object instead of the full submission data
+          // Updated to include proper email data formatting
           const emailPayload = {
             id: submissionData.id,
             name: submissionData.name,
@@ -69,11 +70,10 @@ export const MultiStepPricingForm = () => {
           
           console.log("Email payload:", emailPayload);
           
-          // Use the updated notify-new-lead function with Resend.com secret
           const SUPABASE_URL = "https://ngtckhrzlxgfuprgfjyp.supabase.co";
           
           try {
-            console.log("Sending email notification using updated endpoint");
+            console.log("Sending email notification using the updated endpoint");
             const response = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-lead`, {
               method: 'POST',
               headers: {
@@ -83,20 +83,24 @@ export const MultiStepPricingForm = () => {
               body: JSON.stringify(emailPayload),
             });
             
-            const result = await response.json();
-            console.log("Email notification response:", result);
-            
             if (!response.ok) {
-              console.error("Email notification error:", result);
+              throw new Error(`Email notification failed with status: ${response.status}`);
+            }
+            
+            const emailResult = await response.json();
+            console.log("Email notification response:", emailResult);
+            
+            if (emailResult.error) {
+              console.error("Email notification error response:", emailResult.error);
             } else {
               console.log("Email notification sent successfully");
             }
           } catch (apiErr) {
             console.error("Exception during email notification:", apiErr);
+            // Consider showing a toast here about the email delivery issue
           }
         } catch (notifyErr) {
           console.error("Failed to send notification:", notifyErr);
-          // Continue with the form submission flow even if notification fails
         }
       }
 

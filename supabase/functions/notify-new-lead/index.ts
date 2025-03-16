@@ -7,7 +7,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Updated function to use the Resend.com secret
+// This function uses the Resend.com API to send email notifications about new leads
 serve(async (req) => {
   console.log("🔵 Received request to notify-new-lead function");
   console.log("Request method:", req.method);
@@ -26,9 +26,6 @@ serve(async (req) => {
     if (!resendApiKey) {
       throw new Error("Resend API key not found in 'Resend.com' secret");
     }
-    
-    // Log first 4 characters of API key for debugging (safe to log)
-    console.log("First 4 chars of API key:", resendApiKey.substring(0, 4));
     
     // Initialize Resend client with API key
     const resend = new Resend(resendApiKey);
@@ -54,16 +51,15 @@ serve(async (req) => {
       };
     } else {
       // Normal flow - parse the request body
-      const rawBody = await req.arrayBuffer();
-      const bodyString = new TextDecoder().decode(rawBody);
-      console.log("📝 Raw request body:", bodyString);
-      
-      if (!bodyString || bodyString.trim() === '') {
-        throw new Error("Request body is empty");
-      }
-      
       try {
-        leadData = JSON.parse(bodyString);
+        const rawBody = await req.text();
+        console.log("📝 Raw request body:", rawBody);
+        
+        if (!rawBody || rawBody.trim() === '') {
+          throw new Error("Request body is empty");
+        }
+        
+        leadData = JSON.parse(rawBody);
         console.log("✅ Parsed lead data:", leadData);
       } catch (parseError) {
         console.error("❌ JSON parsing error:", parseError);
@@ -105,17 +101,16 @@ serve(async (req) => {
       <p><em>Dit bericht is automatisch verzonden door het DoctorDial lead notification system op ${new Date().toISOString()}</em></p>
     `;
 
-    // Send email with Resend
-    console.log("📩 Sending email with the new API key");
-    
-    // Using verified domain email address
-    const to = ["derk.disselhoff@doctordial.io"];
-    console.log("To email:", to);
+    // Recipients - make sure to include derk.disselhoff@doctordial.io as one of the recipients
+    const toEmails = ["derk.disselhoff@doctordial.io"];
+    console.log("To emails:", toEmails);
     
     try {
+      // Send email with Resend using verified domain email address
+      console.log("📩 Sending email with Resend API");
       const emailResult = await resend.emails.send({
-        from: "DoctorDial Team <team@doctordial.io>",
-        to: to,
+        from: "DoctorDial Team <team@doctordial.io>",  // Using verified domain
+        to: toEmails,
         subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
         html: emailContent,
       });
