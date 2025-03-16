@@ -220,7 +220,7 @@ serve(async (req) => {
       </html>
     `;
 
-    // Create a confirmation email template for the lead
+    // Create a confirmation email template for the lead with fixed button color and logo
     const leadConfirmationContent = `
       <!DOCTYPE html>
       <html>
@@ -292,11 +292,12 @@ serve(async (req) => {
             display: block;
             margin: 0 auto 15px auto;
             max-width: 180px;
+            height: auto;
           }
           .button {
             display: inline-block;
             background-color: ${colors.forest};
-            color: ${colors.white};
+            color: ${colors.white} !important;
             text-decoration: none;
             padding: 12px 24px;
             border-radius: 30px;
@@ -317,7 +318,7 @@ serve(async (req) => {
       <body>
         <div class="container">
           <div class="header">
-            <img src="https://doctordial.io/assets/logo.svg" alt="DoctorDial Logo" class="logo" />
+            <img src="https://doctordial.io/assets/logo.png" alt="DoctorDial Logo" class="logo" />
             <h1>Bedankt voor je aanvraag, ${leadData.name}!</h1>
           </div>
           <div class="content">
@@ -325,7 +326,7 @@ serve(async (req) => {
               <h2>We hebben je aanvraag ontvangen</h2>
               <p>Bedankt voor je interesse in DoctorDial. Ons team zal binnen 24 uur contact met je opnemen om de perfecte oplossing voor jouw praktijk te bespreken.</p>
               <p>Heb je in de tussentijd vragen? Aarzel niet om ons te contacteren.</p>
-              <a href="https://doctordial.io/contact" class="button">Neem Contact Op</a>
+              <a href="https://doctordial.io/contact" class="button" style="color: #FFFFFF !important;">Neem Contact Op</a>
             </div>
             <p>Met vriendelijke groet,<br>Het DoctorDial Team</p>
             <div class="social-links">
