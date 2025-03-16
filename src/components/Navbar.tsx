@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { BookDemoForm } from "./BookDemoForm";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { LogIn, Menu, X } from "lucide-react";
+import { LogIn, Menu, Mail, X } from "lucide-react";
 import { Logo } from "./Logo";
 
 const Navbar = () => {
@@ -24,6 +24,13 @@ const Navbar = () => {
                 className="py-2 text-gray hover:text-gray-dark transition-colors border-b-2 border-transparent hover:border-mint"
               >
                 {t("nav.about")}
+              </Link>
+              <Link 
+                to="/email-testing" 
+                className="py-2 text-gray hover:text-gray-dark transition-colors border-b-2 border-transparent hover:border-mint flex items-center gap-2"
+              >
+                <Mail className="h-4 w-4" />
+                Email Testing
               </Link>
             </div>
           </div>
@@ -64,6 +71,14 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t("nav.about")}
+              </Link>
+              <Link 
+                to="/email-testing" 
+                className="text-gray hover:text-gray-dark transition-colors text-lg font-medium flex items-center gap-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Mail className="h-5 w-5" />
+                Email Testing
               </Link>
             </div>
             <div className="flex flex-col space-y-4 pt-4 border-t border-gray-muted">
