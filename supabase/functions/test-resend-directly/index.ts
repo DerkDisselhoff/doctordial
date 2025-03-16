@@ -18,37 +18,25 @@ serve(async (req) => {
   }
 
   try {
-    // Get the API key directly - both from environment and as a parameter for testing
-    const url = new URL(req.url);
-    const apiKeyParam = url.searchParams.get('apiKey');
-    const apiKeyFromEnv = Deno.env.get("RESEND_API_KEY");
+    // Use the new Resend.com secret directly
+    const resendApiKey = Deno.env.get("Resend.com");
     
-    // Recipient from parameter or default
-    const recipient = url.searchParams.get('email') || "derk.disselhoff@doctordial.io";
+    // Log API key info (safely)
+    console.log("API key from Resend.com secret:", resendApiKey ? 
+      `Found (starts with ${resendApiKey.substring(0, 4)}..., length: ${resendApiKey.length})` : 
+      "NOT FOUND!");
     
-    // Log all environment variables to see what's available (without values)
-    const envVars = Object.keys(Deno.env.toObject());
-    console.log("Available environment variables:", envVars);
-    
-    // Log API key details (safely)
-    console.log("API key from env:", apiKeyFromEnv ? 
-      `Found (starts with ${apiKeyFromEnv.substring(0, 8)}..., length: ${apiKeyFromEnv.length})` : 
-      "NOT FOUND in environment variables!");
-    
-    console.log("API key from param:", apiKeyParam ? 
-      `Found (starts with ${apiKeyParam.substring(0, 8)}..., length: ${apiKeyParam.length})` : 
-      "Not provided in request parameters");
-    
-    // Decide which API key to use
-    const finalApiKey = apiKeyParam || apiKeyFromEnv;
-    
-    if (!finalApiKey) {
-      throw new Error("No Resend API key available - neither in environment variables nor provided as parameter");
+    if (!resendApiKey) {
+      throw new Error("No Resend API key available in the 'Resend.com' secret");
     }
     
-    // Initialize Resend with the selected API key
-    console.log("🔌 Initializing Resend client with API key starting with:", finalApiKey.substring(0, 8));
-    const resend = new Resend(finalApiKey);
+    // Get recipient from URL parameter or use default
+    const url = new URL(req.url);
+    const recipient = url.searchParams.get('email') || "derk.disselhoff@doctordial.io";
+    
+    // Initialize Resend with the API key
+    console.log("🔌 Initializing Resend client with key from 'Resend.com' secret");
+    const resend = new Resend(resendApiKey);
     
     console.log("📧 Sending test email to:", recipient);
     
@@ -56,40 +44,33 @@ serve(async (req) => {
     const timestamp = new Date().toISOString();
     const testId = Math.random().toString(36).substring(2, 10);
     
-    // Send a test email with detailed metadata to help diagnose issues
+    // Send a test email
     const emailResult = await resend.emails.send({
       from: "DoctorDial <onboarding@resend.dev>",
       to: [recipient],
-      subject: `API Test - Direct Edge Function [${testId}]`,
+      subject: `Test Email - New API Key [${testId}]`,
       html: `
         <h1>Resend API Test Email</h1>
-        <p>This is a direct test of the Resend API.</p>
+        <p>This is a test of the Resend API using the new API key.</p>
         <p><strong>Test ID:</strong> ${testId}</p>
-        <p><strong>Method:</strong> Direct edge function call</p>
         <p><strong>Timestamp:</strong> ${timestamp}</p>
-        <p><strong>API Key Used:</strong> Starts with ${finalApiKey.substring(0, 8)}...</p>
         <hr>
-        <p>If you received this email, it confirms that the Resend API is working correctly from our Supabase Edge Functions.</p>
+        <p>If you received this email, it confirms that the Resend API is working correctly.</p>
       `,
     });
     
     console.log("✅ Email result:", JSON.stringify(emailResult));
     
-    // Return detailed response for debugging
+    // Return success response
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: "Test email sent directly via Resend API!", 
+        message: "Test email sent via Resend API!", 
         details: {
           result: emailResult,
-          apiKeyInfo: {
-            keyPrefix: finalApiKey.substring(0, 8),
-            keyLength: finalApiKey.length,
-            timestamp,
-            testId,
-            recipient
-          },
-          environmentVariables: envVars
+          testId,
+          recipient,
+          timestamp
         }
       }),
       {
@@ -100,7 +81,7 @@ serve(async (req) => {
   } catch (error) {
     console.error("❌ Error in direct test function:", error);
     
-    // Return detailed error for debugging
+    // Return detailed error response
     return new Response(
       JSON.stringify({ 
         error: true, 

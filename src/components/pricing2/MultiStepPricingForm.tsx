@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { PracticeCountStep } from "./steps/PracticeCountStep";
@@ -70,36 +69,11 @@ export const MultiStepPricingForm = () => {
           
           console.log("Email payload:", emailPayload);
           
-          // Attempt 1: Try the new SMTP approach
+          // Use the updated notify-new-lead function with Resend.com secret
           const SUPABASE_URL = "https://ngtckhrzlxgfuprgfjyp.supabase.co";
           
           try {
-            console.log("Trying SMTP approach for email notification");
-            const response = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-lead-smtp`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-              },
-              body: JSON.stringify(emailPayload),
-            });
-            
-            const result = await response.json();
-            console.log("SMTP approach response:", result);
-            
-            if (!response.ok) {
-              console.error("SMTP approach error:", result);
-              // Fall back to regular API
-            } else {
-              console.log("Email sent successfully using SMTP approach");
-            }
-          } catch (smtpErr) {
-            console.error("Exception during SMTP approach:", smtpErr);
-          }
-          
-          // Attempt 2: Fall back to regular API
-          try {
-            console.log("Trying original approach for email notification");
+            console.log("Sending email notification using updated endpoint");
             const response = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-lead`, {
               method: 'POST',
               headers: {
@@ -110,15 +84,15 @@ export const MultiStepPricingForm = () => {
             });
             
             const result = await response.json();
-            console.log("Original approach response:", result);
+            console.log("Email notification response:", result);
             
             if (!response.ok) {
-              console.error("Original approach error:", result);
+              console.error("Email notification error:", result);
             } else {
-              console.log("Email sent successfully using original approach");
+              console.log("Email notification sent successfully");
             }
           } catch (apiErr) {
-            console.error("Exception during original approach:", apiErr);
+            console.error("Exception during email notification:", apiErr);
           }
         } catch (notifyErr) {
           console.error("Failed to send notification:", notifyErr);

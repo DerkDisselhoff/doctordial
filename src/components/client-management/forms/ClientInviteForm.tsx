@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,6 +48,35 @@ export const ClientInviteForm = () => {
 
       const response = await createSignatureRequest(request);
       console.log("Signature request response:", response);
+
+      // Send notification email
+      try {
+        const emailData = {
+          name: formData.clientName,
+          email: formData.clientEmail,
+          package: formData.packageName,
+          contract_length: formData.contractLength,
+          payment_frequency: formData.paymentFrequency,
+          created_at: new Date().toISOString()
+        };
+        
+        console.log("Sending email notification about new client:", emailData);
+        
+        const emailResponse = await fetch("https://ngtckhrzlxgfuprgfjyp.supabase.co/functions/v1/notify-new-lead", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify(emailData),
+        });
+        
+        const emailResult = await emailResponse.json();
+        console.log("Email notification result:", emailResult);
+      } catch (emailError) {
+        console.error("Error sending email notification:", emailError);
+        // Continue with the form flow even if email fails
+      }
 
       toast({
         title: "Client Invited Successfully",

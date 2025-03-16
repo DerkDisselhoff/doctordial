@@ -7,7 +7,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// This function is simplified and more focused on reliability
+// Updated function to use the Resend.com secret
 serve(async (req) => {
   console.log("🔵 Received request to notify-new-lead function");
   console.log("Request method:", req.method);
@@ -19,16 +19,12 @@ serve(async (req) => {
   }
 
   try {
-    // Get all available environment variables for debugging
-    const envVars = Object.keys(Deno.env.toObject());
-    console.log("Available environment variables:", envVars);
-    
-    // Try to get Resend API key
-    const resendApiKey = Deno.env.get('RESEND_API_KEY');
-    console.log("RESEND_API_KEY available:", !!resendApiKey, resendApiKey ? `(length: ${resendApiKey.length})` : "");
+    // Get API key from the Resend.com secret
+    const resendApiKey = Deno.env.get('Resend.com');
+    console.log("Resend.com secret available:", !!resendApiKey, resendApiKey ? `(length: ${resendApiKey.length})` : "");
     
     if (!resendApiKey) {
-      throw new Error("Resend API key not found");
+      throw new Error("Resend API key not found in 'Resend.com' secret");
     }
     
     // Initialize Resend client with API key
@@ -106,8 +102,8 @@ serve(async (req) => {
       <p><em>Dit bericht is automatisch verzonden door het DoctorDial lead notification system op ${new Date().toISOString()}</em></p>
     `;
 
-    // Try direct send with default Resend domain - most reliable method
-    console.log("📩 Sending email with default Resend domain");
+    // Send email with Resend
+    console.log("📩 Sending email with the new API key");
     
     const to = ["derk@doctordial.com", "jelmer@doctordial.com"];
     console.log("To emails:", to);

@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -72,37 +71,11 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
           
           console.log("Sending demo request notification:", emailPayload);
           
-          // Try SMTP approach
+          // Use the updated notification endpoint
           const SUPABASE_URL = "https://ngtckhrzlxgfuprgfjyp.supabase.co";
           
-          // Attempt 1: Direct SMTP approach
           try {
-            console.log("Email attempt 1: Using direct SMTP approach");
-            const response = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-lead-smtp`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-              },
-              body: JSON.stringify(emailPayload),
-            });
-            
-            const result = await response.json();
-            console.log("SMTP approach response:", result);
-            
-            if (!response.ok) {
-              console.error("SMTP approach error:", result);
-              // Continue to next attempt
-            } else {
-              console.log("Email sent successfully using SMTP approach");
-            }
-          } catch (err) {
-            console.error("Exception during SMTP approach:", err);
-          }
-          
-          // Attempt 2: Standard API approach
-          try {
-            console.log("Email attempt 2: Using standard API approach");
+            console.log("Sending notification with updated endpoint");
             const response = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-lead`, {
               method: 'POST',
               headers: {
@@ -113,15 +86,15 @@ export function BookDemoForm({ children }: BookDemoFormProps) {
             });
             
             const result = await response.json();
-            console.log("Standard API approach response:", result);
+            console.log("Notification response:", result);
             
             if (!response.ok) {
-              console.error("Standard API approach error:", result);
+              console.error("Notification error:", result);
             } else {
-              console.log("Email sent successfully using standard API approach");
+              console.log("Notification sent successfully");
             }
           } catch (err) {
-            console.error("Exception during standard API approach:", err);
+            console.error("Exception during notification:", err);
           }
         }
       } catch (notifyErr) {
