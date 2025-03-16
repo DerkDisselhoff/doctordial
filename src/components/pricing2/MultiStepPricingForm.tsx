@@ -70,37 +70,29 @@ export const MultiStepPricingForm = () => {
           
           console.log("Email payload:", emailPayload);
           
-          const SUPABASE_URL = "https://ngtckhrzlxgfuprgfjyp.supabase.co";
+          // Call the edge function directly
+          const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://ngtckhrzlxgfuprgfjyp.supabase.co";
+          const ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
           
-          try {
-            console.log("Sending email notification using the updated endpoint");
-            const response = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-lead`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-              },
-              body: JSON.stringify(emailPayload),
-            });
-            
-            if (!response.ok) {
-              throw new Error(`Email notification failed with status: ${response.status}`);
+          console.log("Calling the notify-new-lead function using Supabase client");
+          
+          // Use the Supabase client to call the function instead of fetch
+          const { data: functionData, error: functionError } = await supabase.functions.invoke(
+            'notify-new-lead',
+            {
+              body: emailPayload,
             }
-            
-            const emailResult = await response.json();
-            console.log("Email notification response:", emailResult);
-            
-            if (emailResult.error) {
-              console.error("Email notification error response:", emailResult.error);
-            } else {
-              console.log("Email notification sent successfully");
-            }
-          } catch (apiErr) {
-            console.error("Exception during email notification:", apiErr);
-            // Consider showing a toast here about the email delivery issue
+          );
+          
+          if (functionError) {
+            console.error("Error calling notify-new-lead function:", functionError);
+            throw new Error(`Function error: ${functionError.message}`);
           }
+          
+          console.log("Email notification response:", functionData);
         } catch (notifyErr) {
           console.error("Failed to send notification:", notifyErr);
+          // Continue with success flow even if email notification fails
         }
       }
 

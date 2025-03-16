@@ -52,18 +52,26 @@ serve(async (req) => {
     } else {
       // Normal flow - parse the request body
       try {
-        const rawBody = await req.text();
-        console.log("📝 Raw request body:", rawBody);
+        // Handle both text and JSON content types
+        const contentType = req.headers.get("content-type") || "";
         
-        if (!rawBody || rawBody.trim() === '') {
-          throw new Error("Request body is empty");
+        if (contentType.includes("application/json")) {
+          leadData = await req.json();
+          console.log("✅ Parsed JSON lead data:", leadData);
+        } else {
+          const rawBody = await req.text();
+          console.log("📝 Raw request body:", rawBody);
+          
+          if (!rawBody || rawBody.trim() === '') {
+            throw new Error("Request body is empty");
+          }
+          
+          leadData = JSON.parse(rawBody);
+          console.log("✅ Parsed lead data from text:", leadData);
         }
-        
-        leadData = JSON.parse(rawBody);
-        console.log("✅ Parsed lead data:", leadData);
       } catch (parseError) {
-        console.error("❌ JSON parsing error:", parseError);
-        throw new Error(`Failed to parse request body as JSON: ${parseError.message}`);
+        console.error("❌ Body parsing error:", parseError);
+        throw new Error(`Failed to parse request body: ${parseError.message}`);
       }
     }
     
