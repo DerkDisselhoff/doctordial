@@ -166,3 +166,4 @@ export const ClientInviteForm = () => {
       </Button>
     </form>
   );
+};
