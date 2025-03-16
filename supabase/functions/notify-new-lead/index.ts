@@ -27,6 +27,9 @@ serve(async (req) => {
       throw new Error("Resend API key not found in 'Resend.com' secret");
     }
     
+    // Log first 4 characters of API key for debugging (safe to log)
+    console.log("First 4 chars of API key:", resendApiKey.substring(0, 4));
+    
     // Initialize Resend client with API key
     const resend = new Resend(resendApiKey);
     
@@ -105,8 +108,9 @@ serve(async (req) => {
     // Send email with Resend
     console.log("📩 Sending email with the new API key");
     
-    const to = ["derk@doctordial.com", "jelmer@doctordial.com"];
-    console.log("To emails:", to);
+    // IMPORTANT: In free tier, we can only send to derk.disselhoff@doctordial.io
+    const to = ["derk.disselhoff@doctordial.io"];
+    console.log("To email:", to);
     
     try {
       const emailResult = await resend.emails.send({

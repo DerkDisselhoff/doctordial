@@ -153,6 +153,17 @@ export function EmailTestForm() {
                   <AlertCircle className="h-5 w-5 text-blue-500 mt-0.5" />
                   <div>
                     <p className="text-sm text-blue-800">
+                      <strong>Important:</strong> The notification function is currently set to only send emails to derk.disselhoff@doctordial.io due to Resend's free tier limitations. To send to other recipients, please verify a domain at <a href="https://resend.com/domains" target="_blank" className="underline">resend.com/domains</a>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="h-5 w-5 text-blue-500 mt-0.5" />
+                  <div>
+                    <p className="text-sm text-blue-800">
                       <strong>Next Steps:</strong> Check the Resend dashboard at <a href="https://resend.com/email" target="_blank" className="underline">resend.com/email</a> to verify email delivery.
                     </p>
                   </div>
