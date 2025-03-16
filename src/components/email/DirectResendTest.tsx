@@ -6,6 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
 
 export function DirectResendTest() {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,14 +24,15 @@ export function DirectResendTest() {
         description: `Sending a test email to ${email} using the new API key...`,
       });
       
-      // Get the Supabase anon key from environment variables
-      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      // Get the API key directly from the Supabase client
+      // This is a workaround to access the public anon key
+      const anonKey = (supabase as any).supabaseKey;
+      
+      console.log("Using Supabase anon key:", anonKey ? `${anonKey.substring(0, 8)}...` : 'undefined');
       
       if (!anonKey) {
-        throw new Error("Missing VITE_SUPABASE_ANON_KEY environment variable");
+        throw new Error("Unable to retrieve Supabase authentication key");
       }
-      
-      console.log("Using anon key:", anonKey ? `${anonKey.substring(0, 8)}...` : 'undefined');
       
       const url = `https://ngtckhrzlxgfuprgfjyp.supabase.co/functions/v1/test-resend-directly?email=${encodeURIComponent(email)}`;
       

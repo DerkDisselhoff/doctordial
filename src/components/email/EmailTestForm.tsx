@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/components/ui/use-toast";
 import { AlertCircle, CheckCircle, XCircle, Loader2 } from "lucide-react";
 import { DirectResendTest } from "./DirectResendTest";
+import { supabase } from "@/integrations/supabase/client";
 
 export function EmailTestForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,14 +29,15 @@ export function EmailTestForm() {
         created_at: new Date().toISOString()
       };
       
-      // Get the Supabase anon key from environment variables
-      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      // Get the API key directly from the Supabase client
+      // This is a workaround to access the public anon key
+      const anonKey = (supabase as any).supabaseKey;
+      
+      console.log("Using Supabase anon key:", anonKey ? `${anonKey.substring(0, 8)}...` : 'undefined');
       
       if (!anonKey) {
-        throw new Error("Missing VITE_SUPABASE_ANON_KEY environment variable");
+        throw new Error("Unable to retrieve Supabase authentication key");
       }
-      
-      console.log("Using anon key:", anonKey ? `${anonKey.substring(0, 8)}...` : 'undefined');
       
       // Show test start notification
       toast({
