@@ -101,8 +101,8 @@ serve(async (req) => {
       <p><em>Dit bericht is automatisch verzonden door het DoctorDial lead notification system op ${new Date().toISOString()}</em></p>
     `;
 
-    // Recipients - make sure to include derk.disselhoff@doctordial.io as one of the recipients
-    const toEmails = ["derk.disselhoff@doctordial.io"];
+    // Recipients - include both Derk and Jelmer as recipients
+    const toEmails = ["derk.disselhoff@doctordial.io", "jelmer.botman@doctordial.io"];
     console.log("To emails:", toEmails);
     
     try {
