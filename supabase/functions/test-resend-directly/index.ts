@@ -18,47 +18,56 @@ serve(async (req) => {
   }
 
   try {
-    // Hard-code the DoctorDial Email API key for testing
-    // Note: We're only showing the beginning of the key for security, complete key will be accessed from env
-    const doctordialKeyPrefix = "re_9xurg";
+    // Get the API key directly - both from environment and as a parameter for testing
+    const url = new URL(req.url);
+    const apiKeyParam = url.searchParams.get('apiKey');
+    const apiKeyFromEnv = Deno.env.get("RESEND_API_KEY");
     
-    // Get the API key from environment
-    const apiKey = Deno.env.get("RESEND_API_KEY");
-    console.log("🔑 API key from env:", apiKey ? 
-      `Found (starts with ${apiKey.substring(0, 8)}...)` : 
+    // Recipient from parameter or default
+    const recipient = url.searchParams.get('email') || "derk.disselhoff@doctordial.io";
+    
+    // Log all environment variables to see what's available (without values)
+    const envVars = Object.keys(Deno.env.toObject());
+    console.log("Available environment variables:", envVars);
+    
+    // Log API key details (safely)
+    console.log("API key from env:", apiKeyFromEnv ? 
+      `Found (starts with ${apiKeyFromEnv.substring(0, 8)}..., length: ${apiKeyFromEnv.length})` : 
       "NOT FOUND in environment variables!");
     
-    if (!apiKey) {
-      throw new Error("Resend API key not found in environment variables");
+    console.log("API key from param:", apiKeyParam ? 
+      `Found (starts with ${apiKeyParam.substring(0, 8)}..., length: ${apiKeyParam.length})` : 
+      "Not provided in request parameters");
+    
+    // Decide which API key to use
+    const finalApiKey = apiKeyParam || apiKeyFromEnv;
+    
+    if (!finalApiKey) {
+      throw new Error("No Resend API key available - neither in environment variables nor provided as parameter");
     }
     
-    // Verify if it's the key we expect (the DoctorDial Email one with full access)
-    const isExpectedKey = apiKey.startsWith(doctordialKeyPrefix);
-    console.log("🔑 Using expected DoctorDial Email key:", isExpectedKey ? "Yes" : "No");
+    // Initialize Resend with the selected API key
+    console.log("🔌 Initializing Resend client with API key starting with:", finalApiKey.substring(0, 8));
+    const resend = new Resend(finalApiKey);
     
-    // Initialize Resend with explicit API key (no variable substitution)
-    console.log("🔌 Initializing Resend client...");
-    const resend = new Resend(apiKey);
-    
-    // Extract recipient email
-    const url = new URL(req.url);
-    const recipient = url.searchParams.get('email') || "derk.disselhoff@doctordial.io";
     console.log("📧 Sending test email to:", recipient);
-
-    console.log("📤 Sending direct test email...");
+    
+    // Create a timestamp to uniquely identify this email
+    const timestamp = new Date().toISOString();
+    const testId = Math.random().toString(36).substring(2, 10);
     
     // Send a test email with detailed metadata to help diagnose issues
     const emailResult = await resend.emails.send({
       from: "DoctorDial <onboarding@resend.dev>",
       to: [recipient],
-      subject: "API Test - Direct Edge Function Call",
+      subject: `API Test - Direct Edge Function [${testId}]`,
       html: `
         <h1>Resend API Test Email</h1>
         <p>This is a direct test of the Resend API.</p>
+        <p><strong>Test ID:</strong> ${testId}</p>
         <p><strong>Method:</strong> Direct edge function call</p>
-        <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
-        <p><strong>API Key Used:</strong> Starts with ${apiKey.substring(0, 8)}...</p>
-        <p><strong>Is DoctorDial key:</strong> ${isExpectedKey ? "Yes" : "No"}</p>
+        <p><strong>Timestamp:</strong> ${timestamp}</p>
+        <p><strong>API Key Used:</strong> Starts with ${finalApiKey.substring(0, 8)}...</p>
         <hr>
         <p>If you received this email, it confirms that the Resend API is working correctly from our Supabase Edge Functions.</p>
       `,
@@ -74,12 +83,13 @@ serve(async (req) => {
         details: {
           result: emailResult,
           apiKeyInfo: {
-            keyPrefix: apiKey.substring(0, 8),
-            isExpectedKey,
-            keyLength: apiKey.length
+            keyPrefix: finalApiKey.substring(0, 8),
+            keyLength: finalApiKey.length,
+            timestamp,
+            testId,
+            recipient
           },
-          timestamp: new Date().toISOString(),
-          recipient
+          environmentVariables: envVars
         }
       }),
       {

@@ -119,7 +119,7 @@ export function EmailTestForm() {
   };
   
   return (
-    <Tabs defaultValue="standard" className="w-full max-w-3xl mx-auto">
+    <Tabs defaultValue="direct" className="w-full max-w-3xl mx-auto">
       <TabsList className="grid grid-cols-2 mb-4">
         <TabsTrigger value="standard">Standard Email Tests</TabsTrigger>
         <TabsTrigger value="direct">Direct Resend Test</TabsTrigger>
