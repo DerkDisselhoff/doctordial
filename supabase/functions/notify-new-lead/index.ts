@@ -90,47 +90,302 @@ serve(async (req) => {
       minute: '2-digit'
     });
 
-    // Configure the email content
-    const emailContent = `
-      <h1>Nieuwe Lead via DoctorDial Pricing Formulier</h1>
-      <p><strong>Datum:</strong> ${formattedDate}</p>
-      <h2>Contact Informatie:</h2>
-      <ul>
-        <li><strong>Naam:</strong> ${leadData.name}</li>
-        <li><strong>Email:</strong> ${leadData.email}</li>
-        <li><strong>Telefoon:</strong> ${leadData.phone || 'Niet ingevuld'}</li>
-        <li><strong>Rol:</strong> ${leadData.role || 'Niet ingevuld'}</li>
-      </ul>
-      <h2>Praktijk Informatie:</h2>
-      <ul>
-        <li><strong>Bedrijfsnaam:</strong> ${leadData.company_name || 'Niet ingevuld'}</li>
-        <li><strong>Aantal Praktijken:</strong> ${leadData.practice_count || 'Niet ingevuld'}</li>
-      </ul>
-      <p><em>Dit bericht is automatisch verzonden door het DoctorDial lead notification system op ${new Date().toISOString()}</em></p>
+    // DoctorDial brand colors
+    const colors = {
+      mint: "#10B981",
+      mintLight: "#D1FAE5",
+      forest: "#065F46",
+      forestDark: "#064E3B",
+      gray: "#4B5563",
+      grayLight: "#F3F4F6",
+      blue: "#2563EB",
+      white: "#FFFFFF"
+    };
+
+    // Configure the admin notification email with DoctorDial styling
+    const adminEmailContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+          body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: ${colors.gray};
+            background-color: ${colors.grayLight};
+            margin: 0;
+            padding: 0;
+          }
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: ${colors.white};
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+          }
+          .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid ${colors.mintLight};
+          }
+          .header h1 {
+            color: ${colors.forest};
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+            font-weight: 700;
+          }
+          .content {
+            padding: 0 15px;
+          }
+          .section {
+            background-color: ${colors.grayLight};
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+          }
+          .section h2 {
+            color: ${colors.forest};
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-weight: 600;
+          }
+          .field {
+            margin-bottom: 8px;
+          }
+          .field strong {
+            color: ${colors.gray};
+            font-weight: 500;
+          }
+          .footer {
+            text-align: center;
+            font-size: 12px;
+            color: ${colors.gray};
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid ${colors.mintLight};
+          }
+          .logo {
+            display: block;
+            margin: 0 auto 15px auto;
+            max-width: 180px;
+          }
+          .tag {
+            display: inline-block;
+            background-color: ${colors.mintLight};
+            color: ${colors.forest};
+            border-radius: 16px;
+            padding: 4px 12px;
+            font-size: 14px;
+            font-weight: 500;
+          }
+          .date {
+            font-size: 14px;
+            color: ${colors.gray};
+            margin-top: 5px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <img src="https://doctordial.io/assets/logo.svg" alt="DoctorDial Logo" class="logo" />
+            <h1>Nieuwe Lead via DoctorDial Pricing Formulier</h1>
+            <div class="date">Datum: ${formattedDate}</div>
+          </div>
+          <div class="content">
+            <div class="section">
+              <h2>Contact Informatie</h2>
+              <div class="field"><strong>Naam:</strong> ${leadData.name}</div>
+              <div class="field"><strong>Email:</strong> ${leadData.email}</div>
+              <div class="field"><strong>Telefoon:</strong> ${leadData.phone || 'Niet ingevuld'}</div>
+              <div class="field"><strong>Rol:</strong> ${leadData.role || 'Niet ingevuld'}</div>
+            </div>
+            <div class="section">
+              <h2>Praktijk Informatie</h2>
+              <div class="field"><strong>Bedrijfsnaam:</strong> ${leadData.company_name || 'Niet ingevuld'}</div>
+              <div class="field"><strong>Aantal Praktijken:</strong> <span class="tag">${leadData.practice_count || 'Niet ingevuld'}</span></div>
+            </div>
+          </div>
+          <div class="footer">
+            <p>Dit bericht is automatisch verzonden door het DoctorDial lead notification system</p>
+          </div>
+        </div>
+      </body>
+      </html>
     `;
 
-    // Recipients - include both Derk and Jelmer as recipients
-    const toEmails = ["derk.disselhoff@doctordial.io", "jelmer.botman@doctordial.io"];
-    console.log("To emails:", toEmails);
+    // Create a confirmation email template for the lead
+    const leadConfirmationContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+          body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: ${colors.gray};
+            background-color: ${colors.grayLight};
+            margin: 0;
+            padding: 0;
+          }
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: ${colors.white};
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+          }
+          .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid ${colors.mintLight};
+          }
+          .header h1 {
+            color: ${colors.forest};
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+            font-weight: 700;
+          }
+          .content {
+            padding: 0 15px;
+            text-align: center;
+          }
+          .confirmation-message {
+            background-color: ${colors.mintLight};
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+          }
+          .confirmation-message h2 {
+            color: ${colors.forest};
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-weight: 600;
+          }
+          .confirmation-message p {
+            color: ${colors.gray};
+            font-size: 16px;
+            margin: 0 0 16px 0;
+          }
+          .footer {
+            text-align: center;
+            font-size: 12px;
+            color: ${colors.gray};
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid ${colors.mintLight};
+          }
+          .logo {
+            display: block;
+            margin: 0 auto 15px auto;
+            max-width: 180px;
+          }
+          .button {
+            display: inline-block;
+            background-color: ${colors.forest};
+            color: ${colors.white};
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 500;
+            margin-top: 16px;
+          }
+          .social-links {
+            margin-top: 20px;
+          }
+          .social-links a {
+            display: inline-block;
+            margin: 0 8px;
+            color: ${colors.forest};
+            text-decoration: none;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <img src="https://doctordial.io/assets/logo.svg" alt="DoctorDial Logo" class="logo" />
+            <h1>Bedankt voor je aanvraag, ${leadData.name}!</h1>
+          </div>
+          <div class="content">
+            <div class="confirmation-message">
+              <h2>We hebben je aanvraag ontvangen</h2>
+              <p>Bedankt voor je interesse in DoctorDial. Ons team zal binnen 24 uur contact met je opnemen om de perfecte oplossing voor jouw praktijk te bespreken.</p>
+              <p>Heb je in de tussentijd vragen? Aarzel niet om ons te contacteren.</p>
+              <a href="https://doctordial.io/contact" class="button">Neem Contact Op</a>
+            </div>
+            <p>Met vriendelijke groet,<br>Het DoctorDial Team</p>
+            <div class="social-links">
+              <a href="https://linkedin.com/company/doctordial">LinkedIn</a> |
+              <a href="https://twitter.com/doctordial">Twitter</a> |
+              <a href="https://facebook.com/doctordial">Facebook</a>
+            </div>
+          </div>
+          <div class="footer">
+            <p>© ${new Date().getFullYear()} DoctorDial B.V. Alle rechten voorbehouden.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    // Recipients for admin notification - include both Derk and Jelmer
+    const adminEmails = ["derk.disselhoff@doctordial.io", "jelmer.botman@doctordial.io"];
+    console.log("Admin notification recipients:", adminEmails);
     
     try {
-      // Send email with Resend using verified domain email address
-      console.log("📩 Sending email with Resend API");
-      const emailResult = await resend.emails.send({
+      // 1. Send admin notification email with Resend
+      console.log("📩 Sending admin notification email to team");
+      const adminEmailResult = await resend.emails.send({
         from: "DoctorDial Team <team@doctordial.io>",  // Using verified domain
-        to: toEmails,
+        to: adminEmails,
         subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
-        html: emailContent,
+        html: adminEmailContent,
       });
       
-      console.log("✅ Email result:", emailResult);
+      console.log("✅ Admin email result:", adminEmailResult);
       
-      if (emailResult.error) {
-        throw emailResult.error;
+      if (adminEmailResult.error) {
+        console.error("❌ Admin email error:", adminEmailResult.error);
+        throw adminEmailResult.error;
+      }
+      
+      // 2. Send confirmation email to the lead
+      console.log("📩 Sending confirmation email to lead:", leadData.email);
+      const leadEmailResult = await resend.emails.send({
+        from: "DoctorDial Team <team@doctordial.io>",  // Using verified domain
+        to: [leadData.email],
+        subject: "Bedankt voor je aanvraag bij DoctorDial",
+        html: leadConfirmationContent,
+      });
+      
+      console.log("✅ Lead confirmation email result:", leadEmailResult);
+      
+      if (leadEmailResult.error) {
+        console.error("❌ Lead confirmation email error:", leadEmailResult.error);
+        // Log but don't throw - we still want to return success for the admin email
       }
       
       return new Response(
-        JSON.stringify({ success: true, message: "Email notification sent", data: emailResult }),
+        JSON.stringify({ 
+          success: true, 
+          message: "Email notifications sent", 
+          adminEmail: adminEmailResult,
+          leadEmail: leadEmailResult
+        }),
         {
           status: 200,
           headers: { ...corsHeaders, "Content-Type": "application/json" },

@@ -70,13 +70,9 @@ export const MultiStepPricingForm = () => {
           
           console.log("Email payload:", emailPayload);
           
-          // Call the edge function directly
-          const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://ngtckhrzlxgfuprgfjyp.supabase.co";
-          const ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-          
           console.log("Calling the notify-new-lead function using Supabase client");
           
-          // Use the Supabase client to call the function instead of fetch
+          // Use the Supabase client to call the function
           const { data: functionData, error: functionError } = await supabase.functions.invoke(
             'notify-new-lead',
             {
