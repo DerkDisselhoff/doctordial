@@ -44,9 +44,9 @@ serve(async (req) => {
     const timestamp = new Date().toISOString();
     const testId = Math.random().toString(36).substring(2, 10);
     
-    // Send a test email
+    // Send a test email using verified domain
     const emailResult = await resend.emails.send({
-      from: "DoctorDial <onboarding@resend.dev>",
+      from: "DoctorDial Team <team@doctordial.io>",
       to: [recipient],
       subject: `Test Email - New API Key [${testId}]`,
       html: `

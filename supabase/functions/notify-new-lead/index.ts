@@ -108,13 +108,13 @@ serve(async (req) => {
     // Send email with Resend
     console.log("📩 Sending email with the new API key");
     
-    // IMPORTANT: In free tier, we can only send to derk.disselhoff@doctordial.io
+    // Using verified domain email address
     const to = ["derk.disselhoff@doctordial.io"];
     console.log("To email:", to);
     
     try {
       const emailResult = await resend.emails.send({
-        from: "DoctorDial <onboarding@resend.dev>",
+        from: "DoctorDial Team <team@doctordial.io>",
         to: to,
         subject: `Nieuwe Lead: ${leadData.name}${leadData.company_name ? ` - ${leadData.company_name}` : ''}`,
         html: emailContent,
