@@ -1,0 +1,6 @@
+
+project_id = "ngtckhrzlxgfuprgfjyp"
+
+[functions]
+[functions.notify-call-flag]
+verify_jwt = false
