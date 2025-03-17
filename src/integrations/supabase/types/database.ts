@@ -8,7 +8,8 @@ import {
   CompanySubscription,
   CallLogTriage,
   CallLogMedication,
-  CallLogResearchResult
+  CallLogResearchResult,
+  CallFlag
 } from './tables';
 import { UserRole } from './enums';
 
@@ -54,6 +55,11 @@ export interface Database {
         Row: CallLogResearchResult;
         Insert: Omit<CallLogResearchResult, 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<CallLogResearchResult>;
+      };
+      call_flags: {
+        Row: CallFlag;
+        Insert: Omit<CallFlag, 'id' | 'created_at'>;
+        Update: Partial<Omit<CallFlag, 'id'>>;
       };
     };
     Views: {

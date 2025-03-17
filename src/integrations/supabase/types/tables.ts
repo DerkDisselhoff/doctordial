@@ -131,3 +131,14 @@ export interface CallLogResearchResult {
   created_at: string | null;
   updated_at: string | null;
 }
+
+export interface CallFlag {
+  id: string;
+  call_id: string;
+  reason: string;
+  correct_urgency: string | null;
+  additional_notes: string | null;
+  assistant_name: string | null;
+  created_by: string;
+  created_at: string;
+}
