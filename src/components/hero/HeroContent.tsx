@@ -31,7 +31,7 @@ const HeroContent = () => {
         <div className="z-10">
           <Link 
             to="/demo-request"
-            className="inline-flex items-center px-6 py-3 rounded-full bg-white hover:bg-white/90 text-forest font-medium transition-colors shadow-xl hover:shadow-2xl hover:shadow-mint/20"
+            className="inline-flex items-center px-6 py-3 rounded-full bg-blue-light/80 hover:bg-blue-dark/90 text-blue-dark hover:text-white font-medium transition-colors shadow-xl hover:shadow-2xl hover:shadow-blue/20"
           >
             {t("hero.bookDemo")}
           </Link>
