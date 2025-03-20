@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface CompanyDetailsStepProps {
   data: {
@@ -21,6 +22,7 @@ export const CompanyDetailsStep = ({
   onNext,
   isSubmitting = false,
 }: CompanyDetailsStepProps) => {
+  const { t } = useLanguage();
   const [companyName, setCompanyName] = useState(data.company_name);
   const [role, setRole] = useState(data.role);
   const [isComplete, setIsComplete] = useState(false);
@@ -41,34 +43,34 @@ export const CompanyDetailsStep = ({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-gray-dark">Bedrijfsgegevens</h2>
+        <h2 className="text-2xl font-bold text-gray-dark">{t("pricing.companyDetails.title")}</h2>
         <p className="text-gray">
-          Laat ons weten over uw organisatie zodat we u beter kunnen helpen.
+          {t("pricing.companyDetails.subtitle")}
         </p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <Label htmlFor="companyName">Praktijk / Organisatie naam</Label>
+          <Label htmlFor="companyName">{t("pricing.companyDetails.companyName")}</Label>
           <Input
             id="companyName"
             name="companyName"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
-            placeholder="Voer uw bedrijfsnaam in"
+            placeholder={t("pricing.companyDetails.placeholder.company")}
             className="mt-1"
             required
           />
         </div>
 
         <div>
-          <Label htmlFor="role">Uw rol</Label>
+          <Label htmlFor="role">{t("pricing.companyDetails.role")}</Label>
           <Input
             id="role"
             name="role"
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            placeholder="Bijv. Huisarts, Praktijkmanager, etc."
+            placeholder={t("pricing.companyDetails.placeholder.role")}
             className="mt-1"
             required
           />
@@ -84,7 +86,7 @@ export const CompanyDetailsStep = ({
           disabled={isSubmitting}
         >
           <ArrowLeft className="h-4 w-4" />
-          Terug
+          {t("pricing.buttons.back")}
         </Button>
 
         <Button
@@ -95,11 +97,11 @@ export const CompanyDetailsStep = ({
           {isSubmitting ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
-              Versturen...
+              {t("pricing.submitting")}
             </>
           ) : (
             <>
-              Versturen
+              {t("pricing.buttons.submit")}
               <ArrowRight className="h-4 w-4" />
             </>
           )}

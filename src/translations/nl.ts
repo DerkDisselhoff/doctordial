@@ -1,3 +1,4 @@
+
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -158,6 +159,49 @@ export const nlTranslations = {
     success: {
       title: "Bedankt voor je interesse!",
       message: "We nemen binnenkort contact met je op om een demo in te plannen."
+    }
+  },
+  pricing: {
+    step: "Stap {number} van 3",
+    practiceCount: {
+      title: "Hoeveel praktijken heeft u?",
+      subtitle: "Selecteer de optie die het beste bij uw organisatie past",
+      single: "Enkele Praktijk",
+      small: "2-3 Praktijken",
+      medium: "4-10 Praktijken",
+      large: "10+ Praktijken"
+    },
+    personalDetails: {
+      title: "Uw gegevens",
+      subtitle: "Vul uw naam en contactgegevens in",
+      fullName: "Volledige Naam",
+      email: "E-mailadres",
+      phone: "Telefoonnummer",
+      placeholder: {
+        name: "Dr. Jan Jansen",
+        email: "jan.jansen@praktijk.nl",
+        phone: "+31 6 12345678"
+      }
+    },
+    companyDetails: {
+      title: "Bedrijfsgegevens",
+      subtitle: "Laat ons weten over uw organisatie zodat we u beter kunnen helpen",
+      companyName: "Praktijk / Organisatie naam",
+      role: "Uw rol",
+      placeholder: {
+        company: "Voer uw bedrijfsnaam in",
+        role: "Bijv. Huisarts, Praktijkmanager, etc."
+      }
+    },
+    buttons: {
+      next: "Volgende Stap",
+      back: "Terug",
+      submit: "Versturen"
+    },
+    submitting: "Versturen...",
+    success: {
+      title: "Bedankt!",
+      message: "We hebben uw informatie ontvangen en nemen binnenkort contact met u op om de perfecte oplossing voor uw praktijk te bespreken."
     }
   }
 };

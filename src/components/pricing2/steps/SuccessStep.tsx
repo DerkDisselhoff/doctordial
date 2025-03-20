@@ -1,14 +1,18 @@
+
 import { Check } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const SuccessStep = () => {
+  const { t } = useLanguage();
+  
   return (
     <div className="text-center py-8">
       <div className="mx-auto w-16 h-16 bg-mint/10 rounded-full flex items-center justify-center mb-6">
         <Check className="h-8 w-8 text-mint" />
       </div>
-      <h2 className="text-2xl font-semibold text-mint mb-4">Thank You!</h2>
+      <h2 className="text-2xl font-semibold text-mint mb-4">{t("pricing.success.title")}</h2>
       <p className="text-gray-400 mb-6">
-        We've received your information and will be in touch shortly to discuss the perfect solution for your practice.
+        {t("pricing.success.message")}
       </p>
     </div>
   );
