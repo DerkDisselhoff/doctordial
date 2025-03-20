@@ -91,36 +91,8 @@ const HealthcareNetworkAnimation = () => {
         
         ctx.beginPath();
         
-        // Use different shapes for different node types
-        if (this.type === 'patient') {
-          // Circle for patients
-          ctx.arc(this.x, this.y, currentSize, 0, Math.PI * 2);
-        } else if (this.type === 'doctor') {
-          // Cross for doctors (medical symbol)
-          const crossSize = currentSize * 1.5;
-          ctx.moveTo(this.x - crossSize/2, this.y);
-          ctx.lineTo(this.x + crossSize/2, this.y);
-          ctx.moveTo(this.x, this.y - crossSize/2);
-          ctx.lineTo(this.x, this.y + crossSize/2);
-          ctx.lineWidth = currentSize / 2;
-          ctx.strokeStyle = this.color;
-          ctx.stroke();
-          return;
-        } else if (this.type === 'hospital') {
-          // Plus sign for hospitals
-          const crossSize = currentSize * 1.8;
-          ctx.moveTo(this.x - crossSize/2, this.y);
-          ctx.lineTo(this.x + crossSize/2, this.y);
-          ctx.moveTo(this.x, this.y - crossSize/2);
-          ctx.lineTo(this.x, this.y + crossSize/2);
-          ctx.lineWidth = currentSize / 1.5;
-          ctx.strokeStyle = this.color;
-          ctx.stroke();
-          return;
-        } else {
-          // Small data nodes
-          ctx.arc(this.x, this.y, currentSize, 0, Math.PI * 2);
-        }
+        // Use simple circles for all node types instead of using '+' symbols
+        ctx.arc(this.x, this.y, currentSize, 0, Math.PI * 2);
         
         ctx.fillStyle = this.color;
         ctx.globalAlpha = 0.15; // More transparency for softer look
