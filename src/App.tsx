@@ -9,7 +9,6 @@ import Dashboard from './pages/Dashboard';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { Toaster } from "@/components/ui/toaster"
 import KnowledgeBaseDetail from './pages/KnowledgeBaseDetail';
-import Test from './pages/Test';
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/knowledge-base/:id" element={<KnowledgeBaseDetail />} />
-          <Route path="/test" element={<Test />} />
         </Routes>
         <Toaster />
       </LanguageProvider>
