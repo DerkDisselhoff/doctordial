@@ -24,12 +24,12 @@ const HealthcareNetworkAnimation = () => {
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     
-    // Create more subtle gradient colors based on our design system
+    // Create gradient colors based on our design system
     const mainColor = '#1e634e'; // Base green color
-    const accentColor1 = '#D1FAE5'; // mint-light - much lighter
-    const accentColor2 = '#E8F1FE'; // blue-light - almost white
-    const accentColor3 = '#F2FCE2'; // Soft green - very subtle
-    const accentColor4 = '#F1F0FB'; // Soft gray - very subtle
+    const accentColor1 = '#10B981'; // mint
+    const accentColor2 = '#059669'; // mint-dark
+    const accentColor3 = '#84CC16'; // sage
+    const accentColor4 = '#D1FAE5'; // mint-light
     
     // Create a network of connected nodes representing a healthcare network
     class Node {
@@ -51,16 +51,16 @@ const HealthcareNetworkAnimation = () => {
         // Size based on node type
         if (type === 'patient') {
           this.size = Math.random() * 4 + 3;
-          this.color = accentColor4; // Soft gray for patients - more subtle
+          this.color = accentColor4; // Light mint for patients
         } else if (type === 'doctor') {
           this.size = Math.random() * 5 + 4;
-          this.color = accentColor2; // Blue light for doctors - more subtle
+          this.color = accentColor1; // Mint for doctors
         } else if (type === 'hospital') {
           this.size = Math.random() * 7 + 6;
-          this.color = accentColor3; // Soft green for hospitals - more subtle
+          this.color = accentColor3; // Sage for hospitals
         } else {
           this.size = Math.random() * 3 + 2;
-          this.color = accentColor1; // Mint light for data points - more subtle
+          this.color = accentColor2; // Mint-dark for data points
         }
         
         // Slower movement for a more subtle effect
@@ -123,7 +123,7 @@ const HealthcareNetworkAnimation = () => {
         }
         
         ctx.fillStyle = this.color;
-        ctx.globalAlpha = 0.1; // Even more transparency for softer look
+        ctx.globalAlpha = 0.15; // More transparency for softer look
         ctx.fill();
         ctx.globalAlpha = 1;
       }
@@ -140,7 +140,7 @@ const HealthcareNetworkAnimation = () => {
           
           // Only draw connections within a certain range
           if (distance < 150) {
-            const opacity = 0.02 * (1 - (distance / 150)); // Even lower opacity
+            const opacity = 0.03 * (1 - (distance / 150));
             ctx.beginPath();
             ctx.moveTo(this.x, this.y);
             ctx.lineTo(node.x, node.y);
@@ -223,7 +223,7 @@ const HealthcareNetworkAnimation = () => {
       heartbeatPhase += 0.01;
       if (Math.sin(heartbeatPhase) > 0.95) {
         ctx.fillStyle = accentColor1;
-        ctx.globalAlpha = 0.02; // Even more subtle pulse
+        ctx.globalAlpha = 0.03;
         ctx.fillRect(0, 0, width, height);
         ctx.globalAlpha = 1;
       }

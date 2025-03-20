@@ -11,21 +11,21 @@ const Hero = () => {
         <HealthcareNetworkAnimation />
       </div>
       
-      {/* Decorative elements - using more subtle colors */}
-      <div className="absolute top-20 left-1/4 w-64 h-64 bg-mint-light/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-1/4 w-64 h-64 bg-blue-light/5 rounded-full blur-3xl" />
+      {/* Decorative elements */}
+      <div className="absolute top-20 left-1/4 w-64 h-64 bg-mint-light/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 right-1/4 w-64 h-64 bg-blue-light/10 rounded-full blur-3xl" />
       
-      {/* Floating icons with subtle animations - using more subtle colors */}
-      <div className="absolute top-1/3 left-20 text-white/10 animate-float-slow">
+      {/* Floating icons with subtle animations */}
+      <div className="absolute top-1/3 left-20 text-mint-light/30 animate-float-slow">
         <Brain className="w-8 h-8" />
       </div>
-      <div className="absolute top-1/4 right-32 text-white/10 animate-float-delayed">
+      <div className="absolute top-1/4 right-32 text-mint-light/30 animate-float-delayed">
         <Heart className="w-6 h-6" />
       </div>
-      <div className="absolute bottom-1/3 right-24 text-white/10 animate-float">
+      <div className="absolute bottom-1/3 right-24 text-mint-light/30 animate-float">
         <Shield className="w-5 h-5" />
       </div>
-      <div className="absolute bottom-1/4 left-32 text-white/10 animate-float-delayed">
+      <div className="absolute bottom-1/4 left-32 text-mint-light/30 animate-float-delayed">
         <Sparkles className="w-4 h-4" />
       </div>
       
