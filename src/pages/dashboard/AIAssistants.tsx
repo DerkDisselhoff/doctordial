@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { AssistantCard } from "@/components/dashboard/assistants/AssistantCard";
 import { supabase } from "@/lib/supabaseClient";
@@ -12,6 +11,8 @@ import { UrgentCases } from "@/components/dashboard/client/UrgentCases";
 import { Toggle } from "@/components/ui/toggle";
 import { TimeFilter } from "@/types/metrics";
 import { motion } from "framer-motion";
+import { VideoTutorialButton } from "@/components/dashboard/tutorials/VideoTutorialButton";
+import { VideoTutorialDialog } from "@/components/dashboard/tutorials/VideoTutorialDialog";
 
 interface AssistantStats {
   triage: {
@@ -47,6 +48,7 @@ const AIAssistants = () => {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
   const [isDemoAccount, setIsDemoAccount] = useState(false);
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
+  const [showTutorial, setShowTutorial] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -69,7 +71,6 @@ const AIAssistants = () => {
   }, []);
 
   useEffect(() => {
-    // Refresh stats when time filter changes
     fetchAssistantStats();
   }, [timeFilter]);
 
@@ -79,7 +80,6 @@ const AIAssistants = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('No session');
       
-      // Check if this is a demo account
       const { data: profileData } = await supabase
         .from('profiles')
         .select('demo_account')
@@ -89,22 +89,18 @@ const AIAssistants = () => {
       const isDemo = profileData?.demo_account === true;
       console.log("Is demo account:", isDemo);
       
-      // Determine which tables to query
       const triageTable = isDemo ? 'demo_call_logs_triage' : 'call_logs_triage';
       const medicationTable = isDemo ? 'demo_call_logs_medications' : 'call_logs_medications';
       const researchTable = isDemo ? 'demo_call_logs_researchresults' : 'call_logs_researchresults';
 
-      // Fetch triage stats
       const { data: triageData, error: triageError } = await supabase
         .from(triageTable)
         .select('*');
 
-      // Fetch medication stats
       const { data: medicationData, error: medicationError } = await supabase
         .from(medicationTable)
         .select('*');
 
-      // Fetch research stats
       const { data: researchData, error: researchError } = await supabase
         .from(researchTable)
         .select('*');
@@ -117,12 +113,10 @@ const AIAssistants = () => {
       console.log("Medication calls found:", medicationData?.length || 0);
       console.log("Research calls found:", researchData?.length || 0);
 
-      // Calculate statistics
       const triageStats = calculateStats(triageData || []);
       const medicationStats = calculateStats(medicationData || []);
       const researchStats = calculateStats(researchData || []);
       
-      // Calculate total stats
       const totalCalls = (triageData?.length || 0) + (medicationData?.length || 0) + (researchData?.length || 0);
       const allData = [...(triageData || []), ...(medicationData || []), ...(researchData || [])];
       const totalStats = calculateStats(allData);
@@ -152,7 +146,6 @@ const AIAssistants = () => {
   const calculateStats = (data: any[]) => {
     if (!data.length) return { calls: 0, avgDuration: '0:00', successRate: 0 };
     
-    // Calculate average duration
     const durations = data
       .filter(item => item.duration_seconds)
       .map(item => parseInt(item.duration_seconds));
@@ -166,8 +159,6 @@ const AIAssistants = () => {
     const seconds = Math.floor(avgDurationSeconds % 60);
     const avgDuration = `${minutes}:${seconds.toString().padStart(2, '0')}`;
     
-    // Success rate calculation (simplified, could be based on various factors)
-    // For demo purposes, using a random value between 75-98%
     const successRate = Math.floor(75 + Math.random() * 23);
     
     return {
@@ -186,7 +177,6 @@ const AIAssistants = () => {
   };
 
   const handleExport = () => {
-    // Implementation for exporting data
     toast({
       title: "Export gestart",
       description: "De statistieken worden geëxporteerd. Je ontvangt een e-mail wanneer deze gereed is.",
@@ -232,6 +222,7 @@ const AIAssistants = () => {
               </Toggle>
             </div>
           )}
+          <VideoTutorialButton onClick={() => setShowTutorial(true)} />
           <Button 
             variant="outline"
             className="bg-white border-gray-muted text-gray-dark hover:bg-gray-50"
@@ -243,7 +234,11 @@ const AIAssistants = () => {
         </div>
       </div>
 
-      {/* Metrics cards from the overview page */}
+      <VideoTutorialDialog 
+        isOpen={showTutorial} 
+        onClose={() => setShowTutorial(false)} 
+      />
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -253,7 +248,6 @@ const AIAssistants = () => {
         <MetricsCards timeFilter={timeFilter} />
       </motion.div>
 
-      {/* Overall stats card */}
       <Card className="border-gray-muted shadow-sm bg-white">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-xl text-gray-dark">
@@ -279,7 +273,6 @@ const AIAssistants = () => {
         </CardContent>
       </Card>
 
-      {/* Individual assistant cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <AssistantCard 
           title="Triage Assistent" 
@@ -303,7 +296,6 @@ const AIAssistants = () => {
         />
       </div>
 
-      {/* Charts for admin users or UrgentCases for client users */}
       {userRole === 'admin' ? (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
