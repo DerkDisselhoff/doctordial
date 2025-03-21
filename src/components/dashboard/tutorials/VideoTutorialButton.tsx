@@ -16,7 +16,7 @@ export const VideoTutorialButton = () => {
       <div className="flex items-center">
         <div className="relative w-12 h-12 overflow-hidden rounded-l-md">
           <img 
-            src="https://cdn.loom.com/sessions/thumbnails/0291890e632d4457b24026775ec554e8-with-play.gif" 
+            src="/lovable-uploads/c657c5f5-ee8f-4990-b8db-a18d4822c220.png" 
             alt="Video preview" 
             className="absolute inset-0 w-full h-full object-cover"
           />

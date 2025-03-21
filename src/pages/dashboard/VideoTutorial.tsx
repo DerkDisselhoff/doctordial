@@ -35,7 +35,7 @@ const VideoTutorial = () => {
         </div>
       </div>
 
-      <div className="bg-blue-50 p-6 rounded-lg border border-blue-100 mt-8">
+      <div className="bg-mint-light p-6 rounded-lg border border-mint-light/50 mt-8">
         <h3 className="text-xl font-semibold text-gray-dark mb-2">Hulp nodig?</h3>
         <p className="text-gray mb-4">
           Heb je na het bekijken van deze video nog vragen over het gebruik van ons platform? 
@@ -43,7 +43,7 @@ const VideoTutorial = () => {
         </p>
         <Button 
           variant="default" 
-          className="bg-blue-dark hover:bg-blue-dark/90"
+          className="bg-mint hover:bg-mint-dark text-white"
           onClick={() => window.open('mailto:support@example.com', '_blank')}
         >
           Contact opnemen
