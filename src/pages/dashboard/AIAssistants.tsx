@@ -12,7 +12,6 @@ import { Toggle } from "@/components/ui/toggle";
 import { TimeFilter } from "@/types/metrics";
 import { motion } from "framer-motion";
 import { VideoTutorialButton } from "@/components/dashboard/tutorials/VideoTutorialButton";
-import { VideoTutorialDialog } from "@/components/dashboard/tutorials/VideoTutorialDialog";
 
 interface AssistantStats {
   triage: {
@@ -48,7 +47,6 @@ const AIAssistants = () => {
   const [userRole, setUserRole] = useState<'admin' | 'client' | null>(null);
   const [isDemoAccount, setIsDemoAccount] = useState(false);
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
-  const [showTutorial, setShowTutorial] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -176,13 +174,6 @@ const AIAssistants = () => {
     });
   };
 
-  const handleExport = () => {
-    toast({
-      title: "Export gestart",
-      description: "De statistieken worden geëxporteerd. Je ontvangt een e-mail wanneer deze gereed is.",
-    });
-  };
-
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
@@ -222,7 +213,7 @@ const AIAssistants = () => {
               </Toggle>
             </div>
           )}
-          <VideoTutorialButton onClick={() => setShowTutorial(true)} />
+          <VideoTutorialButton />
           <Button 
             variant="outline"
             className="bg-white border-gray-muted text-gray-dark hover:bg-gray-50"
@@ -233,11 +224,6 @@ const AIAssistants = () => {
           </Button>
         </div>
       </div>
-
-      <VideoTutorialDialog 
-        isOpen={showTutorial} 
-        onClose={() => setShowTutorial(false)} 
-      />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

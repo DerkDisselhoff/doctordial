@@ -1,21 +1,31 @@
 
 import { Button } from "@/components/ui/button";
-import { PlayCircle } from "lucide-react";
+import { Video } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-interface VideoTutorialButtonProps {
-  onClick: () => void;
-}
+export const VideoTutorialButton = () => {
+  const navigate = useNavigate();
 
-export const VideoTutorialButton = ({ onClick }: VideoTutorialButtonProps) => {
   return (
     <Button
       variant="outline"
-      onClick={onClick}
-      className="bg-white text-blue-dark border-blue-dark/30 hover:bg-blue-dark/5 relative overflow-hidden transition-all group"
+      onClick={() => navigate("/dashboard/video-tutorial")}
+      className="bg-white text-blue-dark border-blue-dark/30 hover:bg-blue-dark/5 relative overflow-hidden transition-all group h-auto p-0"
     >
       <div className="absolute inset-0 bg-gradient-to-r from-blue-dark/5 to-mint/10 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
-      <PlayCircle className="h-4 w-4 mr-2 text-blue-dark transition-all relative z-10" />
-      <span className="relative z-10">Platform instructies</span>
+      <div className="flex items-center">
+        <div className="relative w-12 h-12 overflow-hidden rounded-l-md">
+          <img 
+            src="https://cdn.loom.com/sessions/thumbnails/0291890e632d4457b24026775ec554e8-with-play.gif" 
+            alt="Video preview" 
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 flex items-center justify-center bg-blue-dark/20 group-hover:bg-blue-dark/10 transition-colors">
+            <Video className="h-5 w-5 text-white" />
+          </div>
+        </div>
+        <span className="px-3 py-2 relative z-10">Platform instructies</span>
+      </div>
     </Button>
   );
 };
