@@ -11,7 +11,6 @@ import { UrgentCases } from "@/components/dashboard/client/UrgentCases";
 import { Toggle } from "@/components/ui/toggle";
 import { TimeFilter } from "@/types/metrics";
 import { motion } from "framer-motion";
-import { VideoTutorialButton } from "@/components/dashboard/tutorials/VideoTutorialButton";
 
 interface AssistantStats {
   triage: {
@@ -213,7 +212,6 @@ const AIAssistants = () => {
               </Toggle>
             </div>
           )}
-          <VideoTutorialButton />
           <Button 
             variant="outline"
             className="bg-white border-gray-muted text-gray-dark hover:bg-gray-50"
