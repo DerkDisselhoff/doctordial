@@ -2,7 +2,7 @@ import {
   BarChart3, Users, Phone, Settings, Home, Building2, 
   DollarSign, FileText, Activity, LogOut, Shield, 
   CreditCard, Grid, Receipt, Calendar, GitBranch,
-  Pill, Microscope, ChevronRight, Bot, BookOpen
+  Pill, Microscope, ChevronRight, Bot, BookOpen, Video
 } from "lucide-react";
 import {
   Sidebar,
@@ -17,6 +17,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Logo } from "../Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { VideoTutorialButton } from "../dashboard/tutorials/VideoTutorialButton";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -146,12 +147,6 @@ export function AdminSidebar() {
 
   const settingsMenuItems = [
     { title: "Algemeen", icon: Grid, path: "/dashboard/settings/general" },
-    // The following items are hidden as requested
-    // { title: "Facturatie", icon: CreditCard, path: "/dashboard/settings/billing" },
-    // { title: "Facturen", icon: Receipt, path: "/dashboard/settings/invoices" },
-    // { title: "Beveiliging & Privacy", icon: Shield, path: "/dashboard/settings/security" },
-    // { title: "Team", icon: Users, path: "/dashboard/settings/team" },
-    // { title: "Integraties", icon: Building2, path: "/dashboard/settings/integrations" },
   ];
   
   const otherMenuItems = [
@@ -209,6 +204,11 @@ export function AdminSidebar() {
                     <SubMenuItem key={item.title} {...item} />
                   ))}
                 </div>
+
+                {/* Video Tutorial Section - Added at the bottom */}
+                <div className="mt-8 pt-4 border-t border-gray-muted">
+                  <VideoTutorialButton />
+                </div>
               </div>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -249,3 +249,4 @@ export function AdminSidebar() {
     </Sidebar>
   );
 }
+
