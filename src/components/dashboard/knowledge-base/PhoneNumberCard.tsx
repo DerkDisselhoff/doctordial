@@ -11,7 +11,7 @@ export const PhoneNumberCard = ({ testType }: PhoneNumberCardProps) => {
       case "triage":
         return {
           number: "+31 (970) 102 50810",
-          title: "Medi Mere - Triage expert [hoofd]",
+          title: "Triage Assistent",
           subtitle: "DoctorDial"
         };
       case "medicatie":
@@ -23,7 +23,7 @@ export const PhoneNumberCard = ({ testType }: PhoneNumberCardProps) => {
       case "onderzoek":
         return {
           number: "+31 (970) 102 52219",
-          title: "Medi Mere - Terugbelverzoek onderzoek",
+          title: "Terugbelverzoek onderzoek",
           subtitle: "Terugbelverzoek"
         };
       default:
