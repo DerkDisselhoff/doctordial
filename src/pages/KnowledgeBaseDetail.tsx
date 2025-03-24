@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
 import { supabase } from "@/lib/supabaseClient";
 import { useEffect, useState } from "react";
+import { PhoneNumberCard } from "@/components/dashboard/knowledge-base/PhoneNumberCard";
 
 const TestScriptTriageContent = () => {
   return (
@@ -578,17 +579,21 @@ const KnowledgeBaseDetail = () => {
   }
 
   let content;
+  let testType: "triage" | "medicatie" | "onderzoek" = "triage";
   
   // Determine which content to display based on the ID parameter
   switch (id) {
     case 'test-script-triage':
       content = <TestScriptTriageContent />;
+      testType = "triage";
       break;
     case 'test-script-medicatie':
       content = <TestScriptMedicatieContent />;
+      testType = "medicatie";
       break;
     case 'test-script-onderzoek':
       content = <TestScriptOnderzoekContent />;
+      testType = "onderzoek";
       break;
     default:
       content = <div className="p-6 max-w-4xl mx-auto">Document not found (ID: {id})</div>;
@@ -597,16 +602,21 @@ const KnowledgeBaseDetail = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* White menu bar */}
-      <div className="bg-white shadow-sm py-4 px-6 flex items-center">
-        <Button 
-          onClick={goBack} 
-          variant="ghost" 
-          className="text-forest hover:text-forest/90 hover:bg-mint-light/20"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Terug naar Kennisbank
-        </Button>
-        <h2 className="ml-4 text-lg font-medium text-forest">AI Assistenten Kennisbank</h2>
+      <div className="bg-white shadow-sm py-4 px-6 flex items-center justify-between">
+        <div className="flex items-center">
+          <Button 
+            onClick={goBack} 
+            variant="ghost" 
+            className="text-forest hover:text-forest/90 hover:bg-mint-light/20"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Terug naar Kennisbank
+          </Button>
+          <h2 className="ml-4 text-lg font-medium text-forest">AI Assistenten Kennisbank</h2>
+        </div>
+        
+        {/* Phone number card */}
+        <PhoneNumberCard testType={testType} />
       </div>
       
       {/* Content with gray background */}
@@ -620,3 +630,4 @@ const KnowledgeBaseDetail = () => {
 };
 
 export default KnowledgeBaseDetail;
+
