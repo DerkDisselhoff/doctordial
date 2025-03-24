@@ -38,16 +38,13 @@ export const PhoneNumberCard = ({ testType }: PhoneNumberCardProps) => {
   const { number, title, subtitle } = getPhoneInfo();
 
   return (
-    <div className="bg-gray-900 text-white rounded-lg p-4 mb-6 shadow-md max-w-sm">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="bg-mint/20 p-2 rounded-full">
-          <Phone className="h-5 w-5 text-mint" />
-        </div>
-        <h3 className="text-xl font-semibold">{number}</h3>
+    <div className="inline-flex items-center bg-white border border-purple-100 rounded-lg px-4 py-2 shadow-sm">
+      <div className="bg-[#9b87f5]/20 p-2 rounded-full mr-3">
+        <Phone className="h-4 w-4 text-[#7E69AB]" />
       </div>
-      <div className="text-gray-400 ml-12">
-        <p>{title}</p>
-        <p>{subtitle}</p>
+      <div>
+        <p className="text-[#1A1F2C] font-semibold text-sm">{number}</p>
+        <p className="text-[#8E9196] text-xs">{title}</p>
       </div>
     </div>
   );

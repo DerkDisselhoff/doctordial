@@ -10,7 +10,10 @@ import { PhoneNumberCard } from "@/components/dashboard/knowledge-base/PhoneNumb
 const TestScriptTriageContent = () => {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold text-forest">Testinstructies voor de AI-triage-assistent</h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold text-forest">Testinstructies voor de AI-triage-assistent</h1>
+        <PhoneNumberCard testType="triage" />
+      </div>
       
       <div className="space-y-4">
         <h2 className="text-xl font-semibold text-forest">Introductie</h2>
@@ -193,7 +196,10 @@ const TestScriptTriageContent = () => {
 const TestScriptMedicatieContent = () => {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold text-forest">Testinstructies voor de AI-medicatie-assistent (herhaalrecepten)</h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold text-forest">Testinstructies voor de AI-medicatie-assistent (herhaalrecepten)</h1>
+        <PhoneNumberCard testType="medicatie" />
+      </div>
       
       <div className="space-y-4">
         <h2 className="text-xl font-semibold text-forest">Introductie</h2>
@@ -372,7 +378,10 @@ const TestScriptMedicatieContent = () => {
 const TestScriptOnderzoekContent = () => {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold text-forest">Testinstructies voor de AI-onderzoeksuitslagen-assistent (terugbelverzoek)</h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold text-forest">Testinstructies voor de AI-onderzoeksuitslagen-assistent (terugbelverzoek)</h1>
+        <PhoneNumberCard testType="onderzoek" />
+      </div>
       
       <div className="space-y-4">
         <h2 className="text-xl font-semibold text-forest">Introductie</h2>
@@ -630,4 +639,3 @@ const KnowledgeBaseDetail = () => {
 };
 
 export default KnowledgeBaseDetail;
-
