@@ -1,4 +1,3 @@
-
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -159,6 +158,10 @@ export const nlTranslations = {
     success: {
       title: "Bedankt voor je interesse!",
       message: "We nemen binnenkort contact met je op om een demo in te plannen."
+    },
+    practiceCount: {
+      title: "Hoeveel praktijken heeft u?",
+      subtitle: "Selecteer de optie die het beste bij uw organisatie past"
     }
   },
   pricing: {

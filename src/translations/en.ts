@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   nav: {
     features: "Features",
@@ -159,6 +158,10 @@ export const enTranslations = {
     success: {
       title: "Thank you for your interest!",
       message: "We'll be in touch shortly to schedule your demo."
+    },
+    practiceCount: {
+      title: "How many practices do you have?",
+      subtitle: "Select the option that best fits your organization"
     }
   },
   assistants: {
@@ -185,5 +188,50 @@ export const enTranslations = {
     trained: "AI model trained on NHG triage datasets",
     developed: "Developed with medical specialists",
     feedback: "Continuous improvement with feedback"
+  },
+  pricing: {
+    title: "Pricing",
+    subtitle: "Explore our pricing options",
+    plans: {
+      title: "Plans",
+      description: "Choose the plan that best fits your needs",
+      free: {
+        title: "Free Plan",
+        description: "Access to basic features",
+        features: {
+          title: "Features",
+          items: [
+            "Basic triage and follow-up management",
+            "Access to basic reports",
+            "Basic customer support"
+          ]
+        }
+      },
+      basic: {
+        title: "Basic Plan",
+        description: "Access to all features",
+        features: {
+          title: "Features",
+          items: [
+            "Advanced triage and follow-up management",
+            "Access to advanced reports",
+            "Access to advanced customer support"
+          ]
+        }
+      },
+      premium: {
+        title: "Premium Plan",
+        description: "Access to all features",
+        features: {
+          title: "Features",
+          items: [
+            "Advanced triage and follow-up management",
+            "Access to advanced reports",
+            "Access to advanced customer support",
+            "Priority support"
+          ]
+        }
+      }
+    }
   }
 };
