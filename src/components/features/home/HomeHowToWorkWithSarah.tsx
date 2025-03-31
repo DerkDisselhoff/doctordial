@@ -85,17 +85,17 @@ const HomeHowToWorkWithSarah = () => {
     <div className="bg-gradient-to-br from-mint-light/90 to-blue-light/90 backdrop-blur-md rounded-3xl p-8 shadow-sm border border-mint/20">
       <div className="flex flex-col space-y-2">
         <h2 className="text-[1.875rem] font-semibold text-gray-dark text-left">
-          Hoe werk je met Sarah
+          {t("sarah.howToWork")}
         </h2>
         <p className="text-gray-dark/80 text-lg text-left">
-          Ontdek hoe Sarah naadloos integreert met jouw praktijk
+          {t("sarah.howToWorkSubtitle")}
         </p>
         <div className="flex justify-start mt-4">
           <Link
             to="/demo-request"
             className="px-6 py-3 bg-blue hover:bg-blue/90 text-gray-dark font-medium rounded-full transition-colors duration-300"
           >
-            Demo aanvragen
+            {t("sarah.requestDemo")}
           </Link>
         </div>
       </div>

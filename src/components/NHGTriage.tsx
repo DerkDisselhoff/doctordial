@@ -1,7 +1,11 @@
+
 import { BookOpen, ShieldCheck, Users } from "lucide-react";
 import { Card } from "./ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const NHGTriage = () => {
+  const { t } = useLanguage();
+  
   return (
     <section className="relative py-20 md:py-32 -mb-32">
       {/* Extended gradient background that connects with footer */}
@@ -47,10 +51,10 @@ const NHGTriage = () => {
                 {/* Main Title Column */}
                 <div className="lg:col-span-1">
                   <h2 className="text-2xl md:text-3xl font-bold text-gray-dark mb-4 tracking-tight">
-                    Gebouwd op NHG Triage Standaarden
+                    {t("nhgTriage.title")}
                   </h2>
                   <p className="text-gray text-base md:text-lg mb-4">
-                    Betrouwbare patiëntenzorg met evidence-based triageprotocollen
+                    {t("nhgTriage.subtitle")}
                   </p>
                   <div className="flex justify-start">
                     <div className="inline-flex items-center space-x-4 bg-white/80 backdrop-blur-sm border border-gray-muted rounded-full px-6 py-3 shadow-sm hover:shadow-md transition-shadow duration-300">
@@ -59,7 +63,7 @@ const NHGTriage = () => {
                         alt="NHG Logo" 
                         className="w-[40px] h-[40px] object-contain flex-shrink-0" 
                       />
-                      <span className="text-sm text-gray">Gebaseerd op NHG triagestandaarden</span>
+                      <span className="text-sm text-gray">{t("nhgTriage.based")}</span>
                     </div>
                   </div>
                 </div>
@@ -72,7 +76,7 @@ const NHGTriage = () => {
                     </div>
                     <div className="flex items-center">
                       <p className="text-sm text-gray font-medium">
-                        AI model getrained op NHG triage datasets
+                        {t("nhgTriage.trained")}
                       </p>
                     </div>
                   </div>
@@ -83,7 +87,7 @@ const NHGTriage = () => {
                     </div>
                     <div className="flex items-center">
                       <p className="text-sm text-gray font-medium">
-                        Ontwikkeld met medische specialisten
+                        {t("nhgTriage.developed")}
                       </p>
                     </div>
                   </div>
@@ -94,7 +98,7 @@ const NHGTriage = () => {
                     </div>
                     <div className="flex items-center">
                       <p className="text-sm text-gray font-medium">
-                        Continue verbetering met feedback
+                        {t("nhgTriage.feedback")}
                       </p>
                     </div>
                   </div>

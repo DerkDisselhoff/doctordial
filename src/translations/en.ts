@@ -1,3 +1,4 @@
+
 export const enTranslations = {
   nav: {
     features: "Features",
@@ -14,7 +15,8 @@ export const enTranslations = {
     blog: "Blog",
     privacy: "Privacy Policy",
     terms: "Terms of Service",
-    rights: "All rights reserved."
+    rights: "All rights reserved.",
+    navigation: "Navigation"
   },
   capabilities: {
     title: "Digital Workers, Ready to Deploy",
@@ -79,6 +81,8 @@ export const enTranslations = {
     learningDescription: "Constantly improving through each interaction while maintaining consistent quality of care.",
     imageAlt: "Sarah AI Medical Assistant",
     howToWork: "How to work with Sarah",
+    howToWorkSubtitle: "Discover how Sarah seamlessly integrates with your practice",
+    requestDemo: "Request a Demo",
     step1Title: "Train Sarah on the care that you provide",
     step1Description: "Customize Sarah's knowledge base to align perfectly with your practice's specific medical services and protocols.",
     step2Title: "Choose forwarding rules",
@@ -156,5 +160,30 @@ export const enTranslations = {
       title: "Thank you for your interest!",
       message: "We'll be in touch shortly to schedule your demo."
     }
+  },
+  assistants: {
+    title: "Our Digital Assistants",
+    description: "A team of specialized AI assistants, designed to support different aspects of patient care.",
+    triage: {
+      title: "Triage Assistant",
+      description: "Assesses symptoms, determines urgency levels, and directs patients to the appropriate care."
+    },
+    medication: {
+      title: "Repeat Prescriptions Assistant",
+      description: "Processes medication requests, checks prescription history, and prepares repeat prescriptions."
+    },
+    research: {
+      title: "Test Results Assistant",
+      description: "Enables patients to request callback for test results."
+    },
+    moreInfo: "More information"
+  },
+  nhgTriage: {
+    title: "Built on NHG Triage Standards",
+    subtitle: "Reliable patient care with evidence-based triage protocols",
+    based: "Based on NHG triage standards",
+    trained: "AI model trained on NHG triage datasets",
+    developed: "Developed with medical specialists",
+    feedback: "Continuous improvement with feedback"
   }
 };

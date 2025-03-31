@@ -19,7 +19,7 @@ const Footer = () => {
             </p>
           </div>
           <div>
-            <h4 className="text-sm md:text-base font-medium mb-3 md:mb-4 text-gray-dark">Navigatie</h4>
+            <h4 className="text-sm md:text-base font-medium mb-3 md:mb-4 text-gray-dark">{t("footer.navigation")}</h4>
             <ul className="space-sm">
               <li>
                 <Link 

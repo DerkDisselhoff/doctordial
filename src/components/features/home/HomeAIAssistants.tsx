@@ -15,6 +15,8 @@ interface AssistantCardProps {
 }
 
 const AssistantCard = ({ title, description, icon, color, delay }: AssistantCardProps) => {
+  const { t } = useLanguage();
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -37,7 +39,7 @@ const AssistantCard = ({ title, description, icon, color, delay }: AssistantCard
               variant="outline" 
               className={`border-${color} text-${color}-dark hover:bg-${color}/10 w-full`}
             >
-              Meer informatie
+              {t("assistants.moreInfo")}
             </Button>
           </Link>
         </CardContent>
@@ -51,22 +53,22 @@ const HomeAIAssistants = () => {
   
   const assistants = [
     {
-      title: "Triage Assistent",
-      description: "Beoordeelt symptomen, bepaalt urgentieniveaus en stuurt patiënten door naar de juiste zorg.",
+      title: t("assistants.triage.title"),
+      description: t("assistants.triage.description"),
       icon: <Phone className="h-7 w-7 text-mint" />,
       color: "mint",
       delay: 0.1
     },
     {
-      title: "Herhaalrecepten Assistent",
-      description: "Verwerkt medicatieaanvragen, controleert voorgeschiedenis en bereidt herhaalrecepten voor.",
+      title: t("assistants.medication.title"),
+      description: t("assistants.medication.description"),
       icon: <Pill className="h-7 w-7 text-sage" />,
       color: "sage",
       delay: 0.2
     },
     {
-      title: "Onderzoek Uitslagen Assistent",
-      description: "Maakt het mogelijk voor patienten om een terugbelverzoek in te dienen voor onderzoeksuitslagen.",
+      title: t("assistants.research.title"),
+      description: t("assistants.research.description"),
       icon: <Microscope className="h-7 w-7 text-forest" />,
       color: "forest",
       delay: 0.3
@@ -83,10 +85,10 @@ const HomeAIAssistants = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-dark">
-            Onze Digitale Assistenten
+            {t("assistants.title")}
           </h2>
           <p className="text-gray max-w-2xl mx-auto">
-            Een team van gespecialiseerde AI-assistenten, ontworpen om verschillende aspecten van de patiëntenzorg te ondersteunen.
+            {t("assistants.description")}
           </p>
         </motion.div>
 
