@@ -24,8 +24,8 @@ export const PracticeCountStep = ({
     <div className="space-y-6">
       <div className="text-center mb-8">
         <p className="text-sm font-medium text-mint mb-2">{t("pricing.step").replace("{number}", "1")}</p>
-        <h2 className="text-2xl font-semibold text-forest mb-2">{t("demo.practiceCount.title")}</h2>
-        <p className="text-gray-600">{t("demo.practiceCount.subtitle")}</p>
+        <h2 className="text-2xl font-semibold text-forest mb-2">{t("pricing.practiceCount.title")}</h2>
+        <p className="text-gray-600">{t("pricing.practiceCount.subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-4">

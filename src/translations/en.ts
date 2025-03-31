@@ -15,7 +15,10 @@ export const enTranslations = {
     privacy: "Privacy Policy",
     terms: "Terms of Service",
     rights: "All rights reserved.",
-    navigation: "Navigation"
+    navigation: "Navigation",
+    features: "Features",
+    bookDemo: "Book a Demo",
+    contact: "Contact"
   },
   capabilities: {
     title: "Digital Workers, Ready to Deploy",
@@ -190,8 +193,49 @@ export const enTranslations = {
     feedback: "Continuous improvement with feedback"
   },
   pricing: {
+    step: "Step {number} of 3",
     title: "Pricing",
     subtitle: "Explore our pricing options",
+    practiceCount: {
+      title: "How many practices do you have?",
+      subtitle: "Select the option that best fits your organization",
+      single: "Single Practice",
+      small: "2-3 Practices",
+      medium: "4-10 Practices",
+      large: "10+ Practices"
+    },
+    personalDetails: {
+      title: "Your Details",
+      subtitle: "Fill in your name and contact information",
+      fullName: "Full Name",
+      email: "Email Address",
+      phone: "Phone Number",
+      placeholder: {
+        name: "Dr. John Smith",
+        email: "john.smith@practice.com",
+        phone: "+31 6 12345678"
+      }
+    },
+    companyDetails: {
+      title: "Company Details",
+      subtitle: "Tell us about your organization so we can better assist you",
+      companyName: "Practice / Organization name",
+      role: "Your role",
+      placeholder: {
+        company: "Enter your company name",
+        role: "E.g. General Practitioner, Practice Manager, etc."
+      }
+    },
+    buttons: {
+      next: "Next Step",
+      back: "Back",
+      submit: "Submit"
+    },
+    submitting: "Submitting...",
+    success: {
+      title: "Thank you!",
+      message: "We've received your information and will be in touch shortly to discuss the perfect solution for your practice."
+    },
     plans: {
       title: "Plans",
       description: "Choose the plan that best fits your needs",

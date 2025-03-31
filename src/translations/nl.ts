@@ -17,7 +17,8 @@ export const nlTranslations = {
     rights: "Alle rechten voorbehouden.",
     features: "Functies",
     bookDemo: "Demo Aanvragen",
-    contact: "Contact"
+    contact: "Contact",
+    navigation: "Navigatie"
   },
   capabilities: {
     title: "Digitale Medewerkers, Klaar voor Gebruik",
