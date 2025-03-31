@@ -1,3 +1,4 @@
+
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Globe } from "lucide-react";
 import {
@@ -18,7 +19,7 @@ const LanguageSwitcher = () => {
           {language === 'en' ? 'English' : 'Nederlands'}
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[180px]">
+      <DropdownMenuContent align="end" className="w-[180px] bg-white">
         <DropdownMenuItem 
           onClick={() => setLanguage('en')}
           className="flex items-center gap-2"
