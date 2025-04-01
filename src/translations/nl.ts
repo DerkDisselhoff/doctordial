@@ -1,3 +1,4 @@
+
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -69,6 +70,31 @@ export const nlTranslations = {
     learnMore: "Meer informatie over Sarah",
     hire: "Huur Sarah in",
     support: "Patiëntondersteuning"
+  },
+  assistants: {
+    title: "Onze AI-gestuurde Medische Assistenten",
+    description: "Ontdek de verschillende digitale assistenten die we voor jouw praktijk kunnen inzetten",
+    moreInfo: "Meer Informatie",
+    triage: {
+      title: "Telefonie Assistent",
+      description: "Beantwoordt en beheert inkomende telefoontjes, trieert patiënten en plant afspraken in op basis van urgentie"
+    },
+    medication: {
+      title: "Medicatie Assistent",
+      description: "Handelt herhaalmedicatie aanvragen af en informeert patiënten over hun medicatie en mogelijke bijwerkingen"
+    },
+    research: {
+      title: "Onderzoek Assistent",
+      description: "Analyseert medische gegevens en ondersteunt bij het vinden van relevante onderzoeken voor complexe casussen"
+    }
+  },
+  nhgTriage: {
+    title: "Ondersteund door NHG-Triagestandaarden",
+    subtitle: "Onze AI is getraind op de officiële NHG-triagerichtlijnen voor betrouwbare en nauwkeurige patiëntbeoordeling",
+    based: "Gebaseerd op NHG standaarden",
+    trained: "Getraind op medische triageprotocollen voor hoge nauwkeurigheid",
+    developed: "Ontwikkeld in samenwerking met huisartsen en triagisten",
+    feedback: "Voortdurend verbeterd door professionele medische feedback"
   },
   sarah: {
     title: "Maak kennis met Sarah",
