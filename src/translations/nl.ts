@@ -76,7 +76,7 @@ export const nlTranslations = {
     description: "Ontdek de verschillende digitale assistenten die we voor jouw praktijk kunnen inzetten",
     moreInfo: "Meer Informatie",
     triage: {
-      title: "Telefonie Assistent",
+      title: "Triage Assistent",
       description: "Beantwoordt en beheert inkomende telefoontjes, trieert patiënten en plant afspraken in op basis van urgentie"
     },
     medication: {
