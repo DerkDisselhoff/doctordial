@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -144,14 +143,6 @@ const Pricing = () => {
                 </ToggleGroupItem>
               </ToggleGroup>
             </div>
-            {billingPeriod === 'yearly' && (
-              <div className="text-mint-dark text-sm font-medium">
-                <span className="inline-flex items-center gap-1">
-                  <CheckIcon className="h-4 w-4" />
-                  {t("pricing.save")} 20%
-                </span>
-              </div>
-            )}
           </div>
           
           {/* Pricing cards */}
