@@ -13,13 +13,26 @@ const Pricing = () => {
   const navigate = useNavigate();
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
 
+  // Calculate yearly price with 20% discount
+  const calculateYearlyPrice = (monthlyPrice: number): string => {
+    // Remove any non-numeric characters and convert to number
+    const yearlyPrice = monthlyPrice * 12 * 0.8; // 20% discount for yearly billing
+    
+    // Format the price based on its value
+    if (yearlyPrice >= 1000) {
+      return `€${(yearlyPrice / 1000).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })},${yearlyPrice % 1000 === 0 ? '000' : (yearlyPrice % 1000).toString().padStart(3, '0')}`;
+    }
+    
+    return `€${yearlyPrice}`;
+  };
+
   // Define pricing plans
   const plans = [
     {
       name: t("pricing.plans.basic.title"),
       description: t("pricing.plans.description"),
       icon: <Building2 size={24} className="text-mint" />,
-      price: billingPeriod === 'monthly' ? '€499' : '€4990',
+      price: billingPeriod === 'monthly' ? '€499' : calculateYearlyPrice(499),
       period: billingPeriod === 'monthly' ? '/month' : '/year',
       features: [
         t("pricing.plans.basic.features.agent"),
@@ -37,7 +50,7 @@ const Pricing = () => {
       name: t("pricing.plans.group.title"),
       description: t("pricing.plans.description"),
       icon: <BuildingIcon size={24} className="text-mint" />,
-      price: billingPeriod === 'monthly' ? '€999' : '€9990',
+      price: billingPeriod === 'monthly' ? '€999' : calculateYearlyPrice(999),
       period: billingPeriod === 'monthly' ? '/month' : '/year',
       features: [
         t("pricing.plans.group.features.agent"),
@@ -55,7 +68,7 @@ const Pricing = () => {
       name: t("pricing.plans.premium.title"),
       description: t("pricing.plans.description"),
       icon: <Building size={24} className="text-mint" />,
-      price: billingPeriod === 'monthly' ? '€1,999' : '€19,990',
+      price: billingPeriod === 'monthly' ? '€1,999' : calculateYearlyPrice(1999),
       period: billingPeriod === 'monthly' ? '/month' : '/year',
       features: [
         t("pricing.plans.premium.features.agent"),
