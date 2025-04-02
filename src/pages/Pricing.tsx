@@ -143,7 +143,14 @@ const Pricing = () => {
           {/* Pricing cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {plans.map((plan, index) => (
-              <div key={index} className="relative">
+              <div key={index} className={`relative ${plan.recommended ? 'pt-10' : ''}`}>
+                {plan.recommended && (
+                  <div className="absolute top-0 left-0 right-0 -mt-4 z-10">
+                    <div className="bg-blue-dark text-white text-center py-2 text-sm font-medium rounded-t-lg shadow-sm">
+                      {t("pricing.recommended")}
+                    </div>
+                  </div>
+                )}
                 <Card 
                   className={`border rounded-xl overflow-hidden h-full flex flex-col ${
                     plan.recommended 
