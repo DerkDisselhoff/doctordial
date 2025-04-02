@@ -1,0 +1,228 @@
+
+import React, { useState } from 'react';
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { CheckIcon, Users, Building2, BuildingIcon, BuildingSkyscraper } from 'lucide-react';
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from 'react-router-dom';
+
+const Pricing = () => {
+  const { t } = useLanguage();
+  const navigate = useNavigate();
+  const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
+
+  // Define pricing plans
+  const plans = [
+    {
+      name: t("pricing.plans.basic.title"),
+      description: t("pricing.plans.description"),
+      icon: <Building2 size={24} className="text-mint" />,
+      price: billingPeriod === 'monthly' ? '€499' : '€4990',
+      period: billingPeriod === 'monthly' ? '/month' : '/year',
+      features: [
+        '1 AI agent included',
+        'Up to 2,500 minutes/month',
+        'Basic customization',
+        'Standard support',
+        '€0.25 per extra minute'
+      ],
+      recommended: false,
+      clinics: '1-2 clinics',
+      ctaText: t("pricing.plans.basic.cta"),
+      ctaAction: () => navigate('/demo-request')
+    },
+    {
+      name: t("pricing.plans.group.title"),
+      description: t("pricing.plans.description"),
+      icon: <BuildingIcon size={24} className="text-mint" />,
+      price: billingPeriod === 'monthly' ? '€999' : '€9990',
+      period: billingPeriod === 'monthly' ? '/month' : '/year',
+      features: [
+        'Up to 5 AI agents',
+        'Up to 5,000 minutes/month',
+        'Enhanced customization',
+        'Priority support',
+        '€0.24 per extra minute'
+      ],
+      recommended: true,
+      clinics: '2-5 clinics',
+      ctaText: t("pricing.plans.group.cta"),
+      ctaAction: () => navigate('/demo-request')
+    },
+    {
+      name: t("pricing.plans.premium.title"),
+      description: t("pricing.plans.description"),
+      icon: <BuildingSkyscraper size={24} className="text-mint" />,
+      price: billingPeriod === 'monthly' ? '€1,999' : '€19,990',
+      period: billingPeriod === 'monthly' ? '/month' : '/year',
+      features: [
+        'Up to 15 AI agents',
+        'Up to 10,000 minutes/month',
+        'Advanced customization',
+        'Dedicated account manager',
+        '€0.23 per extra minute'
+      ],
+      recommended: false,
+      clinics: '5-15 clinics',
+      ctaText: t("pricing.plans.premium.cta"),
+      ctaAction: () => navigate('/demo-request')
+    },
+    {
+      name: t("pricing.plans.enterprise.title"),
+      description: t("pricing.plans.description"),
+      icon: <Users size={24} className="text-mint" />,
+      price: t("pricing.plans.enterprise.custom"),
+      period: '',
+      features: [
+        'Unlimited AI agents',
+        'Up to 25,000 minutes/month',
+        'Full customization',
+        'On-site support',
+        '€0.22 per extra minute'
+      ],
+      recommended: false,
+      clinics: '15+ clinics',
+      ctaText: t("pricing.plans.enterprise.cta"),
+      ctaAction: () => navigate('/demo-request')
+    }
+  ];
+
+  return (
+    <main className="min-h-screen bg-white">
+      <Navbar />
+      
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-mint-light/20 to-white opacity-50" />
+        
+        <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h1 className="text-4xl font-bold text-forest mb-4">{t("pricing.title")}</h1>
+            <p className="text-xl text-gray max-w-3xl mx-auto">{t("pricing.subtitle")}</p>
+          </div>
+          
+          {/* Billing toggle */}
+          <div className="flex justify-center mb-12">
+            <div className="inline-flex p-1 bg-gray-muted rounded-lg">
+              <button
+                onClick={() => setBillingPeriod('monthly')}
+                className={`px-6 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  billingPeriod === 'monthly' 
+                    ? 'bg-mint text-white' 
+                    : 'text-gray hover:text-forest'
+                }`}
+              >
+                {t("pricing.monthly")}
+              </button>
+              <button
+                onClick={() => setBillingPeriod('yearly')}
+                className={`px-6 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  billingPeriod === 'yearly' 
+                    ? 'bg-mint text-white' 
+                    : 'text-gray hover:text-forest'
+                }`}
+              >
+                {t("pricing.yearly")} <span className="text-mint-dark font-bold">(20% {t("pricing.save")})</span>
+              </button>
+            </div>
+          </div>
+          
+          {/* Pricing cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {plans.map((plan, index) => (
+              <Card 
+                key={index} 
+                className={`border rounded-xl overflow-hidden flex flex-col h-full ${
+                  plan.recommended 
+                    ? 'border-mint shadow-lg shadow-mint/20 relative' 
+                    : 'border-gray-muted'
+                }`}
+              >
+                {plan.recommended && (
+                  <div className="absolute top-0 inset-x-0 bg-mint text-white text-center py-1 text-sm font-medium">
+                    {t("pricing.recommended")}
+                  </div>
+                )}
+                
+                <div className={`p-6 ${plan.recommended ? 'pt-9' : ''}`}>
+                  <div className="flex items-center mb-4">
+                    <div className="mr-3 p-2 rounded-lg bg-mint-light">{plan.icon}</div>
+                    <h3 className="text-xl font-semibold text-forest">{plan.name}</h3>
+                  </div>
+                  
+                  <div className="mt-2 text-sm text-gray-light">{plan.clinics}</div>
+                  
+                  <div className="mt-4 flex items-baseline">
+                    <span className="text-3xl font-bold text-forest">{plan.price}</span>
+                    <span className="ml-1 text-gray">{plan.period}</span>
+                  </div>
+                  
+                  <ul className="mt-6 space-y-4">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start">
+                        <CheckIcon className="h-5 w-5 text-mint flex-shrink-0 mr-2" />
+                        <span className="text-gray">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  <div className="mt-8 pt-6">
+                    <Button 
+                      onClick={plan.ctaAction}
+                      className={`w-full py-3 ${
+                        plan.recommended
+                          ? 'bg-mint hover:bg-mint-dark text-white'
+                          : 'bg-gray-muted hover:bg-gray-light text-forest'
+                      }`}
+                    >
+                      {plan.ctaText}
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* FAQ Section */}
+      <section className="py-20 bg-gray-muted/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-forest mb-4">{t("pricing.faq.title")}</h2>
+            <p className="text-xl text-gray max-w-2xl mx-auto">{t("pricing.faq.subtitle")}</p>
+          </div>
+          
+          <div className="max-w-3xl mx-auto divide-y divide-gray-muted">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="py-6">
+                <h3 className="text-lg font-medium text-forest mb-2">{t(`pricing.faq.q${i + 1}`)}</h3>
+                <p className="text-gray">{t(`pricing.faq.a${i + 1}`)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="py-20 bg-forest text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-6">{t("pricing.cta.title")}</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">{t("pricing.cta.subtitle")}</p>
+          <Button 
+            onClick={() => navigate('/demo-request')}
+            className="bg-mint hover:bg-mint-dark text-white px-8 py-3 rounded-lg text-lg font-medium"
+          >
+            {t("pricing.cta.button")}
+          </Button>
+        </div>
+      </section>
+      
+      <Footer />
+    </main>
+  );
+};
+
+export default Pricing;

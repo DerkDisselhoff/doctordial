@@ -6,6 +6,7 @@ import About from './pages/About';
 import DemoRequest from './pages/DemoRequest';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Pricing from './pages/Pricing';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { Toaster } from "@/components/ui/toaster"
 import KnowledgeBaseDetail from './pages/KnowledgeBaseDetail';
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/demo-request" element={<DemoRequest />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard/*" element={<Dashboard />} />

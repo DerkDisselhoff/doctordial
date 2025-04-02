@@ -193,9 +193,50 @@ export const enTranslations = {
     feedback: "Continuous improvement with feedback"
   },
   pricing: {
+    title: "Pricing Plans for Every Practice",
+    subtitle: "Choose the plan that best fits your practice size and needs",
+    monthly: "Monthly",
+    yearly: "Yearly",
+    save: "save",
+    recommended: "Most Popular",
+    plans: {
+      description: "Perfect solution for practices of all sizes",
+      basic: {
+        title: "Basic Plan",
+        cta: "Get Started"
+      },
+      group: {
+        title: "Group Plan",
+        cta: "Get Started"
+      },
+      premium: {
+        title: "Premium Plan",
+        cta: "Get Started"
+      },
+      enterprise: {
+        title: "Enterprise Plan",
+        custom: "Custom Pricing",
+        cta: "Contact Sales"
+      }
+    },
+    faq: {
+      title: "Frequently Asked Questions",
+      subtitle: "Find answers to common questions about our pricing and services",
+      q1: "How does the minute-based billing work?",
+      a1: "We bill based on the total time your AI agents spend on calls with patients. Each plan includes a set number of minutes per month, with additional minutes billed at the rate specified in your plan.",
+      q2: "Can I upgrade or downgrade my plan?",
+      a2: "Yes, you can change your plan at any time. When upgrading, you'll get immediate access to the new plan's features. When downgrading, changes will take effect at the start of your next billing cycle.",
+      q3: "Do unused minutes roll over to the next month?",
+      a3: "No, unused minutes do not roll over. Each billing cycle starts with the full allocation of minutes specified in your plan.",
+      q4: "Is there a free trial available?",
+      a4: "We offer a demo of our service where you can experience our AI assistants in action. Contact us to schedule your personalized demo."
+    },
+    cta: {
+      title: "Ready to Transform Your Practice?",
+      subtitle: "Join the growing number of healthcare providers using our AI assistants to improve patient care and practice efficiency.",
+      button: "Book a Demo Today"
+    },
     step: "Step {number} of 3",
-    title: "Pricing",
-    subtitle: "Explore our pricing options",
     practiceCount: {
       title: "How many practices do you have?",
       subtitle: "Select the option that best fits your organization",
@@ -235,47 +276,6 @@ export const enTranslations = {
     success: {
       title: "Thank you!",
       message: "We've received your information and will be in touch shortly to discuss the perfect solution for your practice."
-    },
-    plans: {
-      title: "Plans",
-      description: "Choose the plan that best fits your needs",
-      free: {
-        title: "Free Plan",
-        description: "Access to basic features",
-        features: {
-          title: "Features",
-          items: [
-            "Basic triage and follow-up management",
-            "Access to basic reports",
-            "Basic customer support"
-          ]
-        }
-      },
-      basic: {
-        title: "Basic Plan",
-        description: "Access to all features",
-        features: {
-          title: "Features",
-          items: [
-            "Advanced triage and follow-up management",
-            "Access to advanced reports",
-            "Access to advanced customer support"
-          ]
-        }
-      },
-      premium: {
-        title: "Premium Plan",
-        description: "Access to all features",
-        features: {
-          title: "Features",
-          items: [
-            "Advanced triage and follow-up management",
-            "Access to advanced reports",
-            "Access to advanced customer support",
-            "Priority support"
-          ]
-        }
-      }
     }
   }
 };

@@ -1,4 +1,3 @@
-
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -192,6 +191,49 @@ export const nlTranslations = {
     }
   },
   pricing: {
+    title: "Prijsplannen voor Elke Praktijk",
+    subtitle: "Kies het plan dat het beste past bij de grootte en behoeften van uw praktijk",
+    monthly: "Maandelijks",
+    yearly: "Jaarlijks",
+    save: "besparing",
+    recommended: "Meest Gekozen",
+    plans: {
+      description: "Perfecte oplossing voor praktijken van alle groottes",
+      basic: {
+        title: "Basis Plan",
+        cta: "Aan de slag"
+      },
+      group: {
+        title: "Groeps Plan",
+        cta: "Aan de slag"
+      },
+      premium: {
+        title: "Premium Plan",
+        cta: "Aan de slag"
+      },
+      enterprise: {
+        title: "Enterprise Plan",
+        custom: "Aangepaste Prijzen",
+        cta: "Contact Verkoop"
+      }
+    },
+    faq: {
+      title: "Veelgestelde Vragen",
+      subtitle: "Vind antwoorden op veelgestelde vragen over onze prijzen en diensten",
+      q1: "Hoe werkt de facturering op basis van minuten?",
+      a1: "We factureren op basis van de totale tijd die uw AI-assistenten besteden aan gesprekken met patiënten. Elk plan bevat een bepaald aantal minuten per maand, waarbij extra minuten worden gefactureerd tegen het tarief dat in uw plan is aangegeven.",
+      q2: "Kan ik upgraden of downgraden van plan?",
+      a2: "Ja, u kunt uw plan op elk moment wijzigen. Bij een upgrade krijgt u direct toegang tot de functies van het nieuwe plan. Bij een downgrade worden wijzigingen van kracht aan het begin van uw volgende factureringscyclus.",
+      q3: "Worden ongebruikte minuten overgedragen naar de volgende maand?",
+      a3: "Nee, ongebruikte minuten worden niet overgedragen. Elke factureringscyclus begint met de volledige toewijzing van minuten die in uw plan zijn gespecificeerd.",
+      q4: "Is er een gratis proefversie beschikbaar?",
+      a4: "We bieden een demo van onze service waar u onze AI-assistenten in actie kunt ervaren. Neem contact met ons op om uw gepersonaliseerde demo te plannen."
+    },
+    cta: {
+      title: "Klaar om Uw Praktijk te Transformeren?",
+      subtitle: "Sluit u aan bij het groeiende aantal zorgverleners dat onze AI-assistenten gebruikt om de patiëntenzorg en de efficiëntie van de praktijk te verbeteren.",
+      button: "Boek Vandaag een Demo"
+    },
     step: "Stap {number} van 3",
     practiceCount: {
       title: "Hoeveel praktijken heeft u?",
