@@ -145,8 +145,8 @@ const Pricing = () => {
             {plans.map((plan, index) => (
               <div key={index} className="relative">
                 {plan.recommended && (
-                  <div className="absolute top-0 left-0 right-0 -mt-4 z-10">
-                    <div className="bg-mint text-white text-center py-1.5 text-sm font-medium rounded-t-lg shadow-sm">
+                  <div className="absolute top-0 left-0 right-0 -mt-6 z-10 flex justify-center">
+                    <div className="bg-mint text-white text-center px-4 py-1.5 text-sm font-medium rounded-full shadow-md">
                       {t("pricing.recommended")}
                     </div>
                   </div>
@@ -154,7 +154,7 @@ const Pricing = () => {
                 <Card 
                   className={`border rounded-xl overflow-hidden flex flex-col h-full ${
                     plan.recommended 
-                      ? 'border-mint shadow-lg shadow-mint/20 mt-4' 
+                      ? 'border-mint shadow-lg shadow-mint/20 mt-6' 
                       : 'border-gray-muted'
                   }`}
                 >
