@@ -201,20 +201,52 @@ export const nlTranslations = {
       description: "Perfecte oplossing voor praktijken van alle groottes",
       basic: {
         title: "Basis Plan",
-        cta: "Aan de slag"
+        cta: "Aan de slag",
+        clinics: "1-2 praktijken",
+        features: {
+          agent: "1 AI-agent inbegrepen",
+          minutes: "Tot 2.500 minuten/maand",
+          customization: "Basis aanpassingen",
+          support: "Standaard ondersteuning",
+          extra: "€0,25 per extra minuut"
+        }
       },
       group: {
         title: "Groeps Plan",
-        cta: "Aan de slag"
+        cta: "Aan de slag",
+        clinics: "2-5 praktijken",
+        features: {
+          agent: "Tot 5 AI-agents",
+          minutes: "Tot 5.000 minuten/maand",
+          customization: "Uitgebreide aanpassingen",
+          support: "Prioriteit ondersteuning",
+          extra: "€0,24 per extra minuut"
+        }
       },
       premium: {
         title: "Premium Plan",
-        cta: "Aan de slag"
+        cta: "Aan de slag",
+        clinics: "5-15 praktijken",
+        features: {
+          agent: "Tot 15 AI-agents",
+          minutes: "Tot 10.000 minuten/maand",
+          customization: "Geavanceerde aanpassingen",
+          support: "Dedicated accountmanager",
+          extra: "€0,23 per extra minuut"
+        }
       },
       enterprise: {
         title: "Enterprise Plan",
         custom: "Aangepaste Prijzen",
-        cta: "Contact Verkoop"
+        cta: "Contact Verkoop",
+        clinics: "15+ praktijken",
+        features: {
+          agent: "Onbeperkt AI-agents",
+          minutes: "Tot 25.000 minuten/maand",
+          customization: "Volledige aanpassing",
+          support: "On-site ondersteuning",
+          extra: "€0,22 per extra minuut"
+        }
       }
     },
     faq: {

@@ -22,14 +22,14 @@ const Pricing = () => {
       price: billingPeriod === 'monthly' ? '€499' : '€4990',
       period: billingPeriod === 'monthly' ? '/month' : '/year',
       features: [
-        '1 AI agent included',
-        'Up to 2,500 minutes/month',
-        'Basic customization',
-        'Standard support',
-        '€0.25 per extra minute'
+        t("pricing.plans.basic.features.agent"),
+        t("pricing.plans.basic.features.minutes"),
+        t("pricing.plans.basic.features.customization"),
+        t("pricing.plans.basic.features.support"),
+        t("pricing.plans.basic.features.extra")
       ],
       recommended: false,
-      clinics: '1-2 clinics',
+      clinics: t("pricing.plans.basic.clinics"),
       ctaText: t("pricing.plans.basic.cta"),
       ctaAction: () => navigate('/demo-request')
     },
@@ -40,14 +40,14 @@ const Pricing = () => {
       price: billingPeriod === 'monthly' ? '€999' : '€9990',
       period: billingPeriod === 'monthly' ? '/month' : '/year',
       features: [
-        'Up to 5 AI agents',
-        'Up to 5,000 minutes/month',
-        'Enhanced customization',
-        'Priority support',
-        '€0.24 per extra minute'
+        t("pricing.plans.group.features.agent"),
+        t("pricing.plans.group.features.minutes"),
+        t("pricing.plans.group.features.customization"),
+        t("pricing.plans.group.features.support"),
+        t("pricing.plans.group.features.extra")
       ],
       recommended: true,
-      clinics: '2-5 clinics',
+      clinics: t("pricing.plans.group.clinics"),
       ctaText: t("pricing.plans.group.cta"),
       ctaAction: () => navigate('/demo-request')
     },
@@ -58,14 +58,14 @@ const Pricing = () => {
       price: billingPeriod === 'monthly' ? '€1,999' : '€19,990',
       period: billingPeriod === 'monthly' ? '/month' : '/year',
       features: [
-        'Up to 15 AI agents',
-        'Up to 10,000 minutes/month',
-        'Advanced customization',
-        'Dedicated account manager',
-        '€0.23 per extra minute'
+        t("pricing.plans.premium.features.agent"),
+        t("pricing.plans.premium.features.minutes"),
+        t("pricing.plans.premium.features.customization"),
+        t("pricing.plans.premium.features.support"),
+        t("pricing.plans.premium.features.extra")
       ],
       recommended: false,
-      clinics: '5-15 clinics',
+      clinics: t("pricing.plans.premium.clinics"),
       ctaText: t("pricing.plans.premium.cta"),
       ctaAction: () => navigate('/demo-request')
     },
@@ -76,14 +76,14 @@ const Pricing = () => {
       price: t("pricing.plans.enterprise.custom"),
       period: '',
       features: [
-        'Unlimited AI agents',
-        'Up to 25,000 minutes/month',
-        'Full customization',
-        'On-site support',
-        '€0.22 per extra minute'
+        t("pricing.plans.enterprise.features.agent"),
+        t("pricing.plans.enterprise.features.minutes"),
+        t("pricing.plans.enterprise.features.customization"),
+        t("pricing.plans.enterprise.features.support"),
+        t("pricing.plans.enterprise.features.extra")
       ],
       recommended: false,
-      clinics: '15+ clinics',
+      clinics: t("pricing.plans.enterprise.clinics"),
       ctaText: t("pricing.plans.enterprise.cta"),
       ctaAction: () => navigate('/demo-request')
     }

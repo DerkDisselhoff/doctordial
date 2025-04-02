@@ -203,20 +203,52 @@ export const enTranslations = {
       description: "Perfect solution for practices of all sizes",
       basic: {
         title: "Basic Plan",
-        cta: "Get Started"
+        cta: "Get Started",
+        clinics: "1-2 clinics",
+        features: {
+          agent: "1 AI agent included",
+          minutes: "Up to 2,500 minutes/month",
+          customization: "Basic customization",
+          support: "Standard support",
+          extra: "€0.25 per extra minute"
+        }
       },
       group: {
         title: "Group Plan",
-        cta: "Get Started"
+        cta: "Get Started",
+        clinics: "2-5 clinics",
+        features: {
+          agent: "Up to 5 AI agents",
+          minutes: "Up to 5,000 minutes/month",
+          customization: "Enhanced customization",
+          support: "Priority support",
+          extra: "€0.24 per extra minute"
+        }
       },
       premium: {
         title: "Premium Plan",
-        cta: "Get Started"
+        cta: "Get Started",
+        clinics: "5-15 clinics",
+        features: {
+          agent: "Up to 15 AI agents",
+          minutes: "Up to 10,000 minutes/month",
+          customization: "Advanced customization",
+          support: "Dedicated account manager",
+          extra: "€0.23 per extra minute"
+        }
       },
       enterprise: {
         title: "Enterprise Plan",
         custom: "Custom Pricing",
-        cta: "Contact Sales"
+        cta: "Contact Sales",
+        clinics: "15+ clinics",
+        features: {
+          agent: "Unlimited AI agents",
+          minutes: "Up to 25,000 minutes/month",
+          customization: "Full customization",
+          support: "On-site support",
+          extra: "€0.22 per extra minute"
+        }
       }
     },
     faq: {
