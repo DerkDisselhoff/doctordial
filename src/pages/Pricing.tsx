@@ -7,6 +7,7 @@ import { CheckIcon, Users, Building2, BuildingIcon, Building } from 'lucide-reac
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const Pricing = () => {
   const { t } = useLanguage();
@@ -109,34 +110,28 @@ const Pricing = () => {
         
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-forest mb-4">{t("pricing.titleNew")}</h1>
-            <p className="text-xl text-gray max-w-3xl mx-auto">{t("pricing.subtitle")}</p>
-          </div>
-          
-          {/* Billing toggle */}
-          <div className="flex justify-center mb-12">
-            <div className="inline-flex p-1 bg-gray-muted rounded-lg">
-              <button
-                onClick={() => setBillingPeriod('monthly')}
-                className={`px-6 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  billingPeriod === 'monthly' 
-                    ? 'bg-mint text-white' 
-                    : 'text-gray hover:text-forest'
-                }`}
-              >
-                {t("pricing.monthly")}
-              </button>
-              <button
-                onClick={() => setBillingPeriod('yearly')}
-                className={`px-6 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  billingPeriod === 'yearly' 
-                    ? 'bg-mint text-white' 
-                    : 'text-gray hover:text-forest'
-                }`}
-              >
-                {t("pricing.yearly")} <span className="text-mint-dark font-bold">(20% {t("pricing.save")})</span>
-              </button>
+            <p className="text-xl text-gray max-w-3xl mx-auto mb-8">{t("pricing.subtitle")}</p>
+            
+            {/* Integrated billing toggle */}
+            <div className="inline-flex items-center justify-center p-1 bg-gray-muted rounded-lg mb-2">
+              <ToggleGroup type="single" value={billingPeriod} onValueChange={(value) => value && setBillingPeriod(value as 'monthly' | 'yearly')}>
+                <ToggleGroupItem value="monthly" className={`px-6 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  billingPeriod === 'monthly' ? 'bg-mint text-white' : 'text-gray hover:text-forest'
+                }`}>
+                  {t("pricing.monthly")}
+                </ToggleGroupItem>
+                <ToggleGroupItem value="yearly" className={`px-6 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  billingPeriod === 'yearly' ? 'bg-mint text-white' : 'text-gray hover:text-forest'
+                }`}>
+                  {t("pricing.yearly")} <span className="text-mint-dark font-bold">(20% {t("pricing.save")})</span>
+                </ToggleGroupItem>
+              </ToggleGroup>
+            </div>
+            
+            <div className="text-sm text-gray animate-pulse mb-4">
+              {billingPeriod === 'yearly' ? t("pricing.yearlyDiscountMessage") : t("pricing.monthlyMessage")}
             </div>
           </div>
           
