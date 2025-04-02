@@ -7,6 +7,7 @@ import { CheckIcon, Users, Building2, BuildingIcon, Building } from 'lucide-reac
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const Pricing = () => {
   const { t } = useLanguage();
@@ -109,39 +110,52 @@ const Pricing = () => {
         
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <h1 className="text-4xl font-bold text-forest mb-4">{t("pricing.titleNew")}</h1>
-            <p className="text-xl text-gray max-w-3xl mx-auto">{t("pricing.subtitle")}</p>
-          </div>
-          
-          {/* Billing toggle */}
-          <div className="flex justify-center mb-12">
-            <div className="inline-flex p-1 bg-gray-muted rounded-lg">
-              <button
-                onClick={() => setBillingPeriod('monthly')}
-                className={`px-6 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  billingPeriod === 'monthly' 
-                    ? 'bg-mint text-white' 
-                    : 'text-gray hover:text-forest'
-                }`}
+            <p className="text-xl text-gray max-w-3xl mx-auto mb-8">{t("pricing.subtitle")}</p>
+            
+            {/* Billing toggle */}
+            <div className="inline-flex items-center justify-center bg-gray-50 rounded-lg p-1 shadow-sm border border-gray-muted/30 mb-2">
+              <ToggleGroup 
+                type="single" 
+                value={billingPeriod}
+                onValueChange={(value) => value && setBillingPeriod(value as 'monthly' | 'yearly')} 
+                className="flex gap-1"
               >
-                {t("pricing.monthly")}
-              </button>
-              <button
-                onClick={() => setBillingPeriod('yearly')}
-                className={`px-6 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  billingPeriod === 'yearly' 
-                    ? 'bg-mint text-white' 
-                    : 'text-gray hover:text-forest'
-                }`}
-              >
-                {t("pricing.yearly")} <span className="text-mint-dark font-bold">(20% {t("pricing.save")})</span>
-              </button>
+                <ToggleGroupItem 
+                  value="monthly" 
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
+                    billingPeriod === 'monthly' 
+                      ? 'bg-white text-forest shadow-sm' 
+                      : 'text-gray hover:text-forest'
+                  }`}
+                >
+                  {t("pricing.monthly")}
+                </ToggleGroupItem>
+                <ToggleGroupItem 
+                  value="yearly" 
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
+                    billingPeriod === 'yearly' 
+                      ? 'bg-white text-forest shadow-sm' 
+                      : 'text-gray hover:text-forest'
+                  }`}
+                >
+                  {t("pricing.yearly")}
+                </ToggleGroupItem>
+              </ToggleGroup>
             </div>
+            {billingPeriod === 'yearly' && (
+              <div className="text-mint-dark text-sm font-medium">
+                <span className="inline-flex items-center gap-1">
+                  <CheckIcon className="h-4 w-4" />
+                  {t("pricing.save")} 20%
+                </span>
+              </div>
+            )}
           </div>
           
           {/* Pricing cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
             {plans.map((plan, index) => (
               <div key={index} className="relative">
                 {plan.recommended && (
