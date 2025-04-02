@@ -143,63 +143,65 @@ const Pricing = () => {
           {/* Pricing cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {plans.map((plan, index) => (
-              <Card 
-                key={index} 
-                className={`border rounded-xl overflow-hidden flex flex-col h-full ${
-                  plan.recommended 
-                    ? 'border-mint shadow-lg shadow-mint/20 relative' 
-                    : 'border-gray-muted'
-                }`}
-              >
+              <div key={index} className="relative">
                 {plan.recommended && (
-                  <div className="absolute top-0 inset-x-0 bg-mint text-white text-center py-1 text-sm font-medium">
-                    {t("pricing.recommended")}
+                  <div className="absolute top-0 left-0 right-0 -mt-4 z-10">
+                    <div className="bg-mint text-white text-center py-1.5 text-sm font-medium rounded-t-lg shadow-sm">
+                      {t("pricing.recommended")}
+                    </div>
                   </div>
                 )}
-                
-                <div className={`p-6 ${plan.recommended ? 'pt-9' : ''}`}>
-                  <div className="flex items-center mb-4">
-                    <div className="mr-3 p-2 rounded-lg bg-mint-light">{plan.icon}</div>
-                    <h3 className="text-xl font-semibold text-forest">{plan.name}</h3>
-                  </div>
-                  
-                  <div className="mt-2 text-sm text-gray-light">{plan.clinics}</div>
-                  
-                  <div className="mt-4">
-                    <div className="flex items-baseline">
-                      <span className="text-3xl font-bold text-forest">{plan.price}</span>
-                      <span className="ml-1 text-gray">{plan.period}</span>
+                <Card 
+                  className={`border rounded-xl overflow-hidden flex flex-col h-full ${
+                    plan.recommended 
+                      ? 'border-mint shadow-lg shadow-mint/20 mt-4' 
+                      : 'border-gray-muted'
+                  }`}
+                >
+                  <div className="p-6">
+                    <div className="flex items-center mb-4">
+                      <div className="mr-3 p-2 rounded-lg bg-mint-light">{plan.icon}</div>
+                      <h3 className="text-xl font-semibold text-forest">{plan.name}</h3>
                     </div>
-                    {plan.yearlyDiscount && (
-                      <div className="mt-1 text-sm text-mint-dark font-medium">
-                        {plan.yearlyDiscount}
+                    
+                    <div className="mt-2 text-sm text-gray-light">{plan.clinics}</div>
+                    
+                    <div className="mt-4">
+                      <div className="flex items-baseline">
+                        <span className="text-3xl font-bold text-forest">{plan.price}</span>
+                        <span className="ml-1 text-gray">{plan.period}</span>
                       </div>
-                    )}
+                      {plan.yearlyDiscount && (
+                        <div className="mt-1 text-sm text-mint-dark font-medium">
+                          {plan.yearlyDiscount}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <ul className="mt-6 space-y-4">
+                      {plan.features.map((feature, i) => (
+                        <li key={i} className="flex items-start">
+                          <CheckIcon className="h-5 w-5 text-mint flex-shrink-0 mr-2" />
+                          <span className="text-gray">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <div className="mt-8 pt-6">
+                      <Button 
+                        onClick={plan.ctaAction}
+                        className={`w-full py-3 ${
+                          plan.recommended
+                            ? 'bg-mint hover:bg-mint-dark text-white'
+                            : 'bg-gray-muted hover:bg-gray-light text-forest'
+                        }`}
+                      >
+                        {plan.ctaText}
+                      </Button>
+                    </div>
                   </div>
-                  
-                  <ul className="mt-6 space-y-4">
-                    {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-start">
-                        <CheckIcon className="h-5 w-5 text-mint flex-shrink-0 mr-2" />
-                        <span className="text-gray">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <div className="mt-8 pt-6">
-                    <Button 
-                      onClick={plan.ctaAction}
-                      className={`w-full py-3 ${
-                        plan.recommended
-                          ? 'bg-mint hover:bg-mint-dark text-white'
-                          : 'bg-gray-muted hover:bg-gray-light text-forest'
-                      }`}
-                    >
-                      {plan.ctaText}
-                    </Button>
-                  </div>
-                </div>
-              </Card>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
