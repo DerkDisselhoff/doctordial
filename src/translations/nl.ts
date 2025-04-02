@@ -203,7 +203,7 @@ export const nlTranslations = {
     plans: {
       description: "Perfecte oplossing voor praktijken van alle groottes",
       basic: {
-        title: "Receptie Lite",
+        title: "Basic",
         cta: "Aan de slag",
         clinics: "1-2 praktijken",
         features: {
@@ -215,7 +215,7 @@ export const nlTranslations = {
         }
       },
       group: {
-        title: "Praktijk Pro",
+        title: "Group",
         cta: "Aan de slag",
         clinics: "2-5 praktijken",
         features: {
@@ -227,7 +227,7 @@ export const nlTranslations = {
         }
       },
       premium: {
-        title: "Kliniek Expert",
+        title: "Premium",
         cta: "Aan de slag",
         clinics: "5-15 praktijken",
         features: {
@@ -239,7 +239,7 @@ export const nlTranslations = {
         }
       },
       enterprise: {
-        title: "Medisch Enterprise",
+        title: "Enterprise",
         custom: "Aangepaste Prijzen",
         cta: "Contact Verkoop",
         clinics: "15+ praktijken",

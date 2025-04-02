@@ -205,7 +205,7 @@ export const enTranslations = {
     plans: {
       description: "Perfect solution for practices of all sizes",
       basic: {
-        title: "Reception Lite",
+        title: "Basic",
         cta: "Get Started",
         clinics: "1-2 clinics",
         features: {
@@ -217,7 +217,7 @@ export const enTranslations = {
         }
       },
       group: {
-        title: "Practice Pro",
+        title: "Group",
         cta: "Get Started",
         clinics: "2-5 clinics",
         features: {
@@ -229,7 +229,7 @@ export const enTranslations = {
         }
       },
       premium: {
-        title: "Clinic Expert",
+        title: "Premium",
         cta: "Get Started",
         clinics: "5-15 clinics",
         features: {
@@ -241,7 +241,7 @@ export const enTranslations = {
         }
       },
       enterprise: {
-        title: "Medical Enterprise",
+        title: "Enterprise",
         custom: "Custom Pricing",
         cta: "Contact Sales",
         clinics: "15+ clinics",
