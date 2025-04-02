@@ -143,22 +143,15 @@ const Pricing = () => {
           {/* Pricing cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {plans.map((plan, index) => (
-              <div key={index} className={`relative flex ${plan.recommended ? 'pt-4' : 'pt-0'}`}>
-                {plan.recommended && (
-                  <div className="absolute top-0 left-0 right-0 -mt-4 z-10">
-                    <div className="bg-mint text-white text-center py-1.5 text-sm font-medium rounded-t-lg shadow-sm">
-                      {t("pricing.recommended")}
-                    </div>
-                  </div>
-                )}
+              <div key={index} className="relative">
                 <Card 
-                  className={`border rounded-xl overflow-hidden flex flex-col h-full w-full ${
+                  className={`border rounded-xl overflow-hidden h-full flex flex-col ${
                     plan.recommended 
                       ? 'border-mint shadow-lg shadow-mint/20' 
                       : 'border-gray-muted'
                   }`}
                 >
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col h-full">
                     <div className="flex items-center mb-4">
                       <div className="mr-3 p-2 rounded-lg bg-mint-light">{plan.icon}</div>
                       <h3 className="text-xl font-semibold text-forest">{plan.name}</h3>
@@ -178,7 +171,7 @@ const Pricing = () => {
                       )}
                     </div>
                     
-                    <ul className="mt-6 space-y-4">
+                    <ul className="mt-6 space-y-4 flex-grow">
                       {plan.features.map((feature, i) => (
                         <li key={i} className="flex items-start">
                           <CheckIcon className="h-5 w-5 text-mint flex-shrink-0 mr-2" />
