@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -109,7 +110,7 @@ const Pricing = () => {
         
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-10">
+          <div className="text-center mb-16">
             <h1 className="text-4xl font-bold text-forest mb-4">{t("pricing.titleNew")}</h1>
             <p className="text-xl text-gray max-w-3xl mx-auto mb-8">{t("pricing.subtitle")}</p>
             
@@ -148,7 +149,7 @@ const Pricing = () => {
           {/* Pricing cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
             {plans.map((plan, index) => (
-              <div key={index} className="relative">
+              <div key={index} className="relative group">
                 {plan.recommended && (
                   <div className="absolute top-0 left-0 right-0 -mt-6 z-10">
                     <div className="bg-blue-dark text-white text-center py-2 text-sm font-medium rounded-t-lg shadow-sm">
@@ -157,15 +158,15 @@ const Pricing = () => {
                   </div>
                 )}
                 <Card 
-                  className={`border rounded-xl overflow-hidden h-full flex flex-col ${
+                  className={`border rounded-xl overflow-hidden h-full flex flex-col transition-all duration-300 ${
                     plan.recommended 
-                      ? 'border-mint shadow-lg shadow-mint/20 rounded-t-none' 
-                      : 'border-gray-muted'
+                      ? 'border-mint shadow-lg shadow-mint/20 rounded-t-none group-hover:shadow-xl group-hover:shadow-mint/30' 
+                      : 'border-gray-muted group-hover:border-mint/50 group-hover:shadow-md'
                   }`}
                 >
                   <div className="p-6 flex flex-col h-full">
                     <div className="flex items-center mb-4">
-                      <div className="mr-3 p-2 rounded-lg bg-mint-light">{plan.icon}</div>
+                      <div className="mr-3 p-2 rounded-lg bg-mint-light transition-all duration-300 group-hover:bg-mint/20">{plan.icon}</div>
                       <h3 className="text-xl font-semibold text-forest">{plan.name}</h3>
                     </div>
                     
@@ -173,7 +174,7 @@ const Pricing = () => {
                     
                     <div className="mt-4">
                       <div className="flex items-baseline">
-                        <span className="text-3xl font-bold text-forest">{plan.price}</span>
+                        <span className="text-3xl font-bold text-forest transition-all duration-300 group-hover:text-mint-dark">{plan.price}</span>
                         <span className="ml-1 text-gray">{plan.period}</span>
                       </div>
                       {plan.yearlyDiscount && (
@@ -186,7 +187,7 @@ const Pricing = () => {
                     <ul className="mt-6 space-y-4 flex-grow">
                       {plan.features.map((feature, i) => (
                         <li key={i} className="flex items-start">
-                          <CheckIcon className="h-5 w-5 text-mint flex-shrink-0 mr-2" />
+                          <CheckIcon className="h-5 w-5 text-mint flex-shrink-0 mr-2 transition-all duration-300 group-hover:scale-110" />
                           <span className="text-gray">{feature}</span>
                         </li>
                       ))}
@@ -195,10 +196,10 @@ const Pricing = () => {
                     <div className="mt-8 pt-6">
                       <Button 
                         onClick={plan.ctaAction}
-                        className={`w-full py-3 ${
+                        className={`w-full py-3 transition-all duration-300 ${
                           plan.recommended
-                            ? 'bg-blue-dark hover:bg-blue-dark/90 text-white'
-                            : 'bg-gray-muted hover:bg-gray-light text-forest'
+                            ? 'bg-blue-dark hover:bg-blue-dark/90 text-white group-hover:translate-y-[-2px]'
+                            : 'bg-gray-muted hover:bg-mint-light text-forest hover:text-forest-dark group-hover:translate-y-[-2px]'
                         }`}
                       >
                         {plan.ctaText}
