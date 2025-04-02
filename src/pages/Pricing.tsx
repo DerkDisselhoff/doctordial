@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CheckIcon, Users, Building2, BuildingIcon, BuildingSkyscraper } from 'lucide-react';
+import { CheckIcon, Users, Building2, BuildingIcon, Building } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
@@ -54,7 +54,7 @@ const Pricing = () => {
     {
       name: t("pricing.plans.premium.title"),
       description: t("pricing.plans.description"),
-      icon: <BuildingSkyscraper size={24} className="text-mint" />,
+      icon: <Building size={24} className="text-mint" />,
       price: billingPeriod === 'monthly' ? '€1,999' : '€19,990',
       period: billingPeriod === 'monthly' ? '/month' : '/year',
       features: [
