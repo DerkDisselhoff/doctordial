@@ -1,3 +1,4 @@
+
 export const enTranslations = {
   nav: {
     features: "Features",
@@ -204,7 +205,7 @@ export const enTranslations = {
     plans: {
       description: "Perfect solution for practices of all sizes",
       basic: {
-        title: "Basic Plan",
+        title: "Triage Starter",
         cta: "Get Started",
         clinics: "1-2 clinics",
         features: {
@@ -216,7 +217,7 @@ export const enTranslations = {
         }
       },
       group: {
-        title: "Group Plan",
+        title: "Care Connect",
         cta: "Get Started",
         clinics: "2-5 clinics",
         features: {
@@ -228,7 +229,7 @@ export const enTranslations = {
         }
       },
       premium: {
-        title: "Premium Plan",
+        title: "Practice Plus",
         cta: "Get Started",
         clinics: "5-15 clinics",
         features: {
@@ -240,7 +241,7 @@ export const enTranslations = {
         }
       },
       enterprise: {
-        title: "Enterprise Plan",
+        title: "Health Network",
         custom: "Custom Pricing",
         cta: "Contact Sales",
         clinics: "15+ clinics",

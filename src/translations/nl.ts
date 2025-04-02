@@ -1,3 +1,4 @@
+
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -202,7 +203,7 @@ export const nlTranslations = {
     plans: {
       description: "Perfecte oplossing voor praktijken van alle groottes",
       basic: {
-        title: "Basis Plan",
+        title: "Triage Starter",
         cta: "Aan de slag",
         clinics: "1-2 praktijken",
         features: {
@@ -214,7 +215,7 @@ export const nlTranslations = {
         }
       },
       group: {
-        title: "Groeps Plan",
+        title: "Zorg Connect",
         cta: "Aan de slag",
         clinics: "2-5 praktijken",
         features: {
@@ -226,7 +227,7 @@ export const nlTranslations = {
         }
       },
       premium: {
-        title: "Premium Plan",
+        title: "Praktijk Plus",
         cta: "Aan de slag",
         clinics: "5-15 praktijken",
         features: {
@@ -238,7 +239,7 @@ export const nlTranslations = {
         }
       },
       enterprise: {
-        title: "Enterprise Plan",
+        title: "Gezondheidsnetwerk",
         custom: "Aangepaste Prijzen",
         cta: "Contact Verkoop",
         clinics: "15+ praktijken",
