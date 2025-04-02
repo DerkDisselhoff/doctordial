@@ -140,7 +140,7 @@ const Pricing = () => {
                       : 'text-gray hover:text-forest'
                   }`}
                 >
-                  {t("pricing.yearly")}
+                  {t("pricing.yearly")} ({t("pricing.save")} 20%)
                 </ToggleGroupItem>
               </ToggleGroup>
             </div>
