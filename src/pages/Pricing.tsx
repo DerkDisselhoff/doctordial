@@ -192,7 +192,7 @@ const Pricing = () => {
                         onClick={plan.ctaAction}
                         className={`w-full py-3 ${
                           plan.recommended
-                            ? 'bg-mint hover:bg-mint-dark text-white'
+                            ? 'bg-blue-dark hover:bg-blue-dark/90 text-white'
                             : 'bg-gray-muted hover:bg-gray-light text-forest'
                         }`}
                       >
