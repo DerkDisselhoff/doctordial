@@ -15,12 +15,12 @@ const Pricing = () => {
 
   // Calculate yearly price with 20% discount
   const calculateYearlyPrice = (monthlyPrice: number): string => {
-    // Remove any non-numeric characters and convert to number
-    const yearlyPrice = monthlyPrice * 12 * 0.8; // 20% discount for yearly billing
+    // Calculate yearly price with 20% discount (multiply by 12 months, then apply 0.8 for 20% off)
+    const yearlyPrice = Math.round(monthlyPrice * 12 * 0.8);
     
     // Format the price based on its value
     if (yearlyPrice >= 1000) {
-      return `€${(yearlyPrice / 1000).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })},${yearlyPrice % 1000 === 0 ? '000' : (yearlyPrice % 1000).toString().padStart(3, '0')}`;
+      return `€${Math.floor(yearlyPrice / 1000)},${(yearlyPrice % 1000).toString().padStart(3, '0')}`;
     }
     
     return `€${yearlyPrice}`;
@@ -106,7 +106,7 @@ const Pricing = () => {
     <main className="min-h-screen bg-white">
       <Navbar />
       
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-mint-light/20 to-white opacity-50" />
         
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
