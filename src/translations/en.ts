@@ -193,11 +193,13 @@ export const enTranslations = {
     feedback: "Continuous improvement with feedback"
   },
   pricing: {
+    titleNew: "Flexible Pricing Solutions for Healthcare Providers",
     title: "Pricing Plans for Every Practice",
     subtitle: "Choose the plan that best fits your practice size and needs",
     monthly: "Monthly",
     yearly: "Yearly",
     save: "save",
+    yearlyBilled: "Billed annually",
     recommended: "Most Popular",
     plans: {
       description: "Perfect solution for practices of all sizes",

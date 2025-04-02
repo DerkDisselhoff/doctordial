@@ -13,17 +13,11 @@ const Pricing = () => {
   const navigate = useNavigate();
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
 
-  // Calculate yearly price with 20% discount
-  const calculateYearlyPrice = (monthlyPrice: number): string => {
-    // Calculate yearly price with 20% discount (multiply by 12 months, then apply 0.8 for 20% off)
-    const yearlyPrice = Math.round(monthlyPrice * 12 * 0.8);
-    
-    // Format the price based on its value
-    if (yearlyPrice >= 1000) {
-      return `€${Math.floor(yearlyPrice / 1000)},${(yearlyPrice % 1000).toString().padStart(3, '0')}`;
-    }
-    
-    return `€${yearlyPrice}`;
+  // Calculate discounted monthly price for yearly billing
+  const calculateDiscountedMonthlyPrice = (monthlyPrice: number): string => {
+    // Apply 20% discount for yearly billing
+    const discountedPrice = Math.round(monthlyPrice * 0.8);
+    return `€${discountedPrice}`;
   };
 
   // Define pricing plans
@@ -32,8 +26,9 @@ const Pricing = () => {
       name: t("pricing.plans.basic.title"),
       description: t("pricing.plans.description"),
       icon: <Building2 size={24} className="text-mint" />,
-      price: billingPeriod === 'monthly' ? '€499' : calculateYearlyPrice(499),
-      period: billingPeriod === 'monthly' ? '/month' : '/year',
+      price: billingPeriod === 'monthly' ? '€499' : calculateDiscountedMonthlyPrice(499),
+      period: '/month',
+      yearlyDiscount: billingPeriod === 'yearly' ? t("pricing.yearlyBilled") : '',
       features: [
         t("pricing.plans.basic.features.agent"),
         t("pricing.plans.basic.features.minutes"),
@@ -50,8 +45,9 @@ const Pricing = () => {
       name: t("pricing.plans.group.title"),
       description: t("pricing.plans.description"),
       icon: <BuildingIcon size={24} className="text-mint" />,
-      price: billingPeriod === 'monthly' ? '€999' : calculateYearlyPrice(999),
-      period: billingPeriod === 'monthly' ? '/month' : '/year',
+      price: billingPeriod === 'monthly' ? '€999' : calculateDiscountedMonthlyPrice(999),
+      period: '/month',
+      yearlyDiscount: billingPeriod === 'yearly' ? t("pricing.yearlyBilled") : '',
       features: [
         t("pricing.plans.group.features.agent"),
         t("pricing.plans.group.features.minutes"),
@@ -68,8 +64,9 @@ const Pricing = () => {
       name: t("pricing.plans.premium.title"),
       description: t("pricing.plans.description"),
       icon: <Building size={24} className="text-mint" />,
-      price: billingPeriod === 'monthly' ? '€1,999' : calculateYearlyPrice(1999),
-      period: billingPeriod === 'monthly' ? '/month' : '/year',
+      price: billingPeriod === 'monthly' ? '€1,999' : calculateDiscountedMonthlyPrice(1999),
+      period: '/month',
+      yearlyDiscount: billingPeriod === 'yearly' ? t("pricing.yearlyBilled") : '',
       features: [
         t("pricing.plans.premium.features.agent"),
         t("pricing.plans.premium.features.minutes"),
@@ -88,6 +85,7 @@ const Pricing = () => {
       icon: <Users size={24} className="text-mint" />,
       price: t("pricing.plans.enterprise.custom"),
       period: '',
+      yearlyDiscount: '',
       features: [
         t("pricing.plans.enterprise.features.agent"),
         t("pricing.plans.enterprise.features.minutes"),
@@ -112,7 +110,7 @@ const Pricing = () => {
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold text-forest mb-4">{t("pricing.title")}</h1>
+            <h1 className="text-4xl font-bold text-forest mb-4">{t("pricing.titleNew")}</h1>
             <p className="text-xl text-gray max-w-3xl mx-auto">{t("pricing.subtitle")}</p>
           </div>
           
@@ -167,9 +165,16 @@ const Pricing = () => {
                   
                   <div className="mt-2 text-sm text-gray-light">{plan.clinics}</div>
                   
-                  <div className="mt-4 flex items-baseline">
-                    <span className="text-3xl font-bold text-forest">{plan.price}</span>
-                    <span className="ml-1 text-gray">{plan.period}</span>
+                  <div className="mt-4">
+                    <div className="flex items-baseline">
+                      <span className="text-3xl font-bold text-forest">{plan.price}</span>
+                      <span className="ml-1 text-gray">{plan.period}</span>
+                    </div>
+                    {plan.yearlyDiscount && (
+                      <div className="mt-1 text-sm text-mint-dark font-medium">
+                        {plan.yearlyDiscount}
+                      </div>
+                    )}
                   </div>
                   
                   <ul className="mt-6 space-y-4">
@@ -220,10 +225,10 @@ const Pricing = () => {
       </section>
       
       {/* CTA Section */}
-      <section className="py-20 bg-forest text-white">
+      <section className="py-20 bg-forest">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-6">{t("pricing.cta.title")}</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">{t("pricing.cta.subtitle")}</p>
+          <h2 className="text-3xl font-bold mb-6 text-white">{t("pricing.cta.title")}</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto text-white/90">{t("pricing.cta.subtitle")}</p>
           <Button 
             onClick={() => navigate('/demo-request')}
             className="bg-mint hover:bg-mint-dark text-white px-8 py-3 rounded-lg text-lg font-medium"

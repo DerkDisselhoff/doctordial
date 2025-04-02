@@ -191,11 +191,13 @@ export const nlTranslations = {
     }
   },
   pricing: {
+    titleNew: "Flexibele Prijsoplossingen voor Zorgverleners",
     title: "Prijsplannen voor Elke Praktijk",
     subtitle: "Kies het plan dat het beste past bij de grootte en behoeften van uw praktijk",
     monthly: "Maandelijks",
     yearly: "Jaarlijks",
     save: "besparing",
+    yearlyBilled: "Jaarlijks gefactureerd",
     recommended: "Meest Gekozen",
     plans: {
       description: "Perfecte oplossing voor praktijken van alle groottes",
