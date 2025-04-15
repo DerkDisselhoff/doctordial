@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   nav: {
     features: "Features",
@@ -83,7 +82,7 @@ export const enTranslations = {
     learning: "Continuous Learning",
     learningDescription: "Constantly improving through each interaction while maintaining consistent quality of care.",
     imageAlt: "Sarah AI Medical Assistant",
-    howToWork: "How to work with Sarah",
+    howToWork: "How to Work with Sarah",
     howToWorkSubtitle: "Discover how Sarah seamlessly integrates with your practice",
     requestDemo: "Request a Demo",
     step1Title: "Train Sarah on the care that you provide",
