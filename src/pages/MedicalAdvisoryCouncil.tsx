@@ -31,11 +31,10 @@ const MedicalAdvisoryCouncil = () => {
           </div>
         </section>
 
-        {/* Council Description */}
+        {/* Members Section */}
         <section className="bg-gray-50 py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto grid gap-12">
-              {/* Members Section */}
               <div className="space-y-6">
                 <div className="flex items-center gap-3 mb-6">
                   <Users className="w-6 h-6 text-mint" />
@@ -49,6 +48,7 @@ const MedicalAdvisoryCouncil = () => {
                     title="Vascular Surgeon, Phlebologist"
                     image="/lovable-uploads/27866be6-94e2-43c7-8927-10229f2ee38e.png"
                   />
+                  {/* Add more council members as needed */}
                 </div>
               </div>
 
