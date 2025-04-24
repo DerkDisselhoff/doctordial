@@ -6,7 +6,8 @@ export const enTranslations = {
     contact: "Contact",
     login: "Login",
     bookDemo: "Book a Demo",
-    sarah: "Sarah"
+    sarah: "Sarah",
+    mac: "Medical Advisory Council"
   },
   footer: {
     description: "Empowering healthcare providers with AI-powered call management solutions for better patient care.",
@@ -310,6 +311,23 @@ export const enTranslations = {
     success: {
       title: "Thank you!",
       message: "We've received your information and will be in touch shortly to discuss the perfect solution for your practice."
+    }
+  },
+  mac: {
+    label: "Medical Advisory Council",
+    title: "Our Medical Advisory Council",
+    subtitle: "Guiding the development of safe and effective AI solutions in healthcare",
+    composition: {
+      title: "Council Composition",
+      first: "The DoctorDial Physician Advisory Council consists of BIG-registered doctors and physician assistants (PAs) from leading hospitals and independent treatment centers.",
+      second: "In the future, a Nurse Advisory Council will be added to involve nurses, expanding the diversity and reach of the MAC.",
+      third: "The MAC reflects a mix of clinical expertise and practical experience, essential for developing AI that aligns with healthcare reality."
+    },
+    purpose: {
+      title: "Purpose & Mission",
+      first: "The primary goal is to guide the development of AI technology to ensure it is safe, ethical, and effective for use in healthcare.",
+      second: "The MAC ensures that AI applications meet medical quality standards, safety guidelines, and the needs of both healthcare providers and patients.",
+      third: "They serve as a bridge between technological innovation and clinical practice, providing feedback on workflows, patient interactions, and ethical considerations."
     }
   }
 };

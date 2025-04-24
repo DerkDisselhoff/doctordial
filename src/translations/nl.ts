@@ -6,7 +6,8 @@ export const nlTranslations = {
     contact: "Contact",
     login: "Inloggen",
     bookDemo: "Demo Aanvragen",
-    sarah: "Sarah"
+    sarah: "Sarah",
+    mac: "Medische Adviesraad"
   },
   footer: {
     description: "Zorgverleners ondersteunen met AI-gestuurde gespreksbeheersoplossingen voor betere patiëntenzorg.",
@@ -310,6 +311,23 @@ export const nlTranslations = {
     success: {
       title: "Bedankt!",
       message: "We hebben uw informatie ontvangen en nemen binnenkort contact met u op om de perfecte oplossing voor uw praktijk te bespreken."
+    }
+  },
+  mac: {
+    label: "Medische Adviesraad",
+    title: "Onze Medische Adviesraad",
+    subtitle: "Het begeleiden van de ontwikkeling van veilige en effectieve AI-oplossingen in de gezondheidszorg",
+    composition: {
+      title: "Samenstelling Raad",
+      first: "De Physician Advisory Council van DoctorDial bestaat uit BIG geregistreerde artsen en physician assistents (PA) van toonaangevende ziekenhuizen en zelfstandig behandelcentra.",
+      second: "In de toekomst wordt een Nurse Advisory Council toegevoegd om verpleegkundigen te betrekken, wat de diversiteit en reikwijdte van de MAC vergroot.",
+      third: "De MAC weerspiegelt een mix van klinische expertise en praktische ervaring, essentieel voor het ontwikkelen van AI die aansluit bij de realiteit van de zorg."
+    },
+    purpose: {
+      title: "Doel & Missie",
+      first: "Het primaire doel is het begeleiden van de ontwikkeling van AI-technologie zodat deze veilig, ethisch en effectief is voor gebruik in de gezondheidszorg.",
+      second: "De MAC zorgt ervoor dat de AI-toepassingen voldoen aan medische kwaliteitsnormen, veiligheidsrichtlijnen en de behoeften van zowel zorgverleners als patiënten.",
+      third: "Ze fungeren als een brug tussen technologische innovatie en klinische praktijk, waarbij ze feedback geven over workflows, patiëntinteracties en ethische overwegingen."
     }
   }
 };

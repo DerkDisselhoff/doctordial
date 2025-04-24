@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
@@ -11,6 +10,7 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import { Toaster } from "@/components/ui/toaster"
 import KnowledgeBaseDetail from './pages/KnowledgeBaseDetail';
 import VideoTutorial from './pages/dashboard/VideoTutorial';
+import MedicalAdvisoryCouncil from './pages/MedicalAdvisoryCouncil';
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
+          <Route path="/medical-advisory-council" element={<MedicalAdvisoryCouncil />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/demo-request" element={<DemoRequest />} />
           <Route path="/login" element={<Login />} />

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { BookDemoForm } from "./BookDemoForm";
@@ -24,6 +23,12 @@ const Navbar = () => {
                 className="py-2 text-gray hover:text-gray-dark transition-colors border-b-2 border-transparent hover:border-mint"
               >
                 {t("nav.about")}
+              </Link>
+              <Link 
+                to="/medical-advisory-council" 
+                className="py-2 text-gray hover:text-gray-dark transition-colors border-b-2 border-transparent hover:border-mint"
+              >
+                {t("nav.mac")}
               </Link>
             </div>
           </div>
@@ -64,6 +69,13 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t("nav.about")}
+              </Link>
+              <Link 
+                to="/medical-advisory-council" 
+                className="text-gray hover:text-gray-dark transition-colors text-lg font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.mac")}
               </Link>
             </div>
             <div className="flex flex-col space-y-4 pt-4 border-t border-gray-muted">
