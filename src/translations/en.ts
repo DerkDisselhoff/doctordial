@@ -328,6 +328,9 @@ export const enTranslations = {
       first: "The primary goal is to guide the development of AI technology to ensure it is safe, ethical, and effective for use in healthcare.",
       second: "The MAC ensures that AI applications meet medical quality standards, safety guidelines, and the needs of both healthcare providers and patients.",
       third: "They serve as a bridge between technological innovation and clinical practice, providing feedback on workflows, patient interactions, and ethical considerations."
+    },
+    members: {
+      title: "Council Members",
     }
   }
 };

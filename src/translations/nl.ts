@@ -328,6 +328,9 @@ export const nlTranslations = {
       first: "Het primaire doel is het begeleiden van de ontwikkeling van AI-technologie zodat deze veilig, ethisch en effectief is voor gebruik in de gezondheidszorg.",
       second: "De MAC zorgt ervoor dat de AI-toepassingen voldoen aan medische kwaliteitsnormen, veiligheidsrichtlijnen en de behoeften van zowel zorgverleners als patiënten.",
       third: "Ze fungeren als een brug tussen technologische innovatie en klinische praktijk, waarbij ze feedback geven over workflows, patiëntinteracties en ethische overwegingen."
+    },
+    members: {
+      title: "Raadsleden",
     }
   }
 };

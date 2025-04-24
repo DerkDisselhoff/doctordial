@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { useLanguage } from "@/contexts/LanguageContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Shield, Users } from "lucide-react";
+import { CouncilMember } from "@/components/mac/CouncilMember";
 
 const MedicalAdvisoryCouncil = () => {
   const { t } = useLanguage();
@@ -65,6 +65,23 @@ const MedicalAdvisoryCouncil = () => {
                       {t(`mac.purpose.${key}`)}
                     </p>
                   ))}
+                </div>
+              </div>
+
+              {/* Members Section */}
+              <div className="space-y-6 mt-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <Users className="w-6 h-6 text-mint" />
+                  <h2 className="text-2xl font-semibold text-gray-dark">
+                    {t("mac.members.title")}
+                  </h2>
+                </div>
+                <div className="grid gap-6">
+                  <CouncilMember
+                    name="Ben Disselhoff, MD, PhD"
+                    title="Vascular Surgeon, Phlebologist"
+                    image="/lovable-uploads/27866be6-94e2-43c7-8927-10229f2ee38e.png"
+                  />
                 </div>
               </div>
             </div>
