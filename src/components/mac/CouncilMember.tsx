@@ -15,10 +15,10 @@ export const CouncilMember = ({ name, title, image }: CouncilMemberProps) => {
     .toUpperCase();
 
   return (
-    <div className="flex items-start space-x-6 p-6 bg-white rounded-lg shadow-sm border border-gray-100">
-      <Avatar className="w-24 h-24">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 flex flex-col items-center text-center">
+      <Avatar className="w-32 h-32 mb-4">
         <AvatarImage src={image} alt={name} />
-        <AvatarFallback className="text-lg">{initials}</AvatarFallback>
+        <AvatarFallback className="text-xl">{initials}</AvatarFallback>
       </Avatar>
       <div className="space-y-2">
         <h3 className="text-xl font-semibold text-gray-dark">{name}</h3>
