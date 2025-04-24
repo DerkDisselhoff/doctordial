@@ -34,7 +34,7 @@ const MedicalAdvisoryCouncil = () => {
         {/* Council Description */}
         <section className="bg-gray-50 py-16">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto grid gap-12">
+            <div className="max-w-6xl mx-auto grid gap-12">
               {/* Members Section */}
               <div className="space-y-6">
                 <div className="flex items-center gap-3 mb-6">
@@ -43,7 +43,7 @@ const MedicalAdvisoryCouncil = () => {
                     {t("mac.members.title")}
                   </h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
                   <CouncilMember
                     name="Ben Disselhoff, MD, PhD"
                     title="Vascular Surgeon, Phlebologist"
