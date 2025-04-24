@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useLanguage } from "@/contexts/LanguageContext";
 import Navbar from "@/components/Navbar";
@@ -39,7 +40,7 @@ const MedicalAdvisoryCouncil = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                   <CouncilMember
                     name="Ben Disselhoff, MD, PhD"
-                    title="Vascular Surgeon, Phlebologist"
+                    title="Surgeon, Phlebologist"
                     image="/lovable-uploads/27866be6-94e2-43c7-8927-10229f2ee38e.png"
                   />
                   {/* Add more council members as needed */}
