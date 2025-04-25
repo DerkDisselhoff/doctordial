@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
@@ -13,6 +12,7 @@ import KnowledgeBaseDetail from './pages/KnowledgeBaseDetail';
 import VideoTutorial from './pages/dashboard/VideoTutorial';
 import MedicalAdvisoryCouncil from './pages/MedicalAdvisoryCouncil';
 import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 function App() {
   return (
@@ -26,6 +26,7 @@ function App() {
           <Route path="/demo-request" element={<DemoRequest />} />
           <Route path="/login" element={<Login />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/knowledge-base/:id" element={<KnowledgeBaseDetail />} />
           <Route path="/dashboard/video-tutorial" element={<VideoTutorial />} />
