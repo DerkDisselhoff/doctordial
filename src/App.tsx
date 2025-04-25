@@ -12,6 +12,7 @@ import { Toaster } from "@/components/ui/toaster"
 import KnowledgeBaseDetail from './pages/KnowledgeBaseDetail';
 import VideoTutorial from './pages/dashboard/VideoTutorial';
 import MedicalAdvisoryCouncil from './pages/MedicalAdvisoryCouncil';
+import Privacy from './pages/Privacy';
 
 function App() {
   return (
