@@ -1,4 +1,3 @@
-
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -60,7 +59,6 @@ export const nlTranslations = {
     titlePartOne: "Digitale Assistentes,",
     titlePartTwo: "Menselijke Ervaring",
     subtitle: "Laat onze Gen-AI oplossing inkomende telefoongesprekken van jouw praktijk afhandelen",
-    trainedOn: "Getraind op miljoenen medische gesprekken",
     bookDemo: "Demo Aanvragen",
     learnMore: "Meer Informatie"
   },

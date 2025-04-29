@@ -36,10 +36,6 @@ const HeroContent = () => {
             {t("hero.bookDemo")}
           </Link>
         </div>
-        <div className="flex items-center gap-2 text-xs md:text-sm text-white/80">
-          <div className="w-2 h-2 rounded-full bg-mint-light animate-pulse"></div>
-          {t("hero.trainedOn")}
-        </div>
       </div>
     </div>
   );

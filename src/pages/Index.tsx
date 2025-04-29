@@ -13,6 +13,19 @@ const Index = () => {
     <main className="min-h-screen bg-white space-xl">
       <Navbar />
       <Hero />
+      
+      {/* Disclaimer text */}
+      <div className="w-full bg-sage-light/10 py-4">
+        <div className="container mx-auto px-4">
+          <p className="text-gray-dark/80 text-sm md:text-base italic text-center max-w-3xl mx-auto">
+            DoctorDial is momenteel in pilot fase, en voldoet nog niet aan de MDR wetgeving. 
+            DoctorDial valt niet onder de verboden van de EU AI Act, wel moet het voldoen aan 
+            verschillende eisen uit de AI Act, waaronder risicomanagement, datagovernance, 
+            technische documentatie en transparantie en gebruikersinstructies.
+          </p>
+        </div>
+      </div>
+      
       <AISection />
       <HomeAIAssistants />
       <Features />
