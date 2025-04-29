@@ -1,3 +1,4 @@
+
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -72,19 +73,19 @@ export const nlTranslations = {
     support: "Patiëntondersteuning"
   },
   assistants: {
-    title: "Onze AI-gestuurde Medische Assistenten",
+    title: "Betrouwbare AI Agents afgestemd op je wensen",
     description: "Ontdek de verschillende digitale assistenten die we voor jouw praktijk kunnen inzetten",
     moreInfo: "Meer Informatie",
     triage: {
-      title: "Triage Assistent",
+      title: "Triage",
       description: "Beantwoordt en beheert inkomende telefoontjes, trieert patiënten en plant afspraken in op basis van urgentie"
     },
     medication: {
-      title: "Medicatie Assistent",
+      title: "Herhaalrecepten & medicatie",
       description: "Handelt herhaalmedicatie aanvragen af en informeert patiënten over hun medicatie en mogelijke bijwerkingen"
     },
     research: {
-      title: "Onderzoek Assistent",
+      title: "Onderzoek uitslagen",
       description: "Analyseert medische gegevens en ondersteunt bij het vinden van relevante onderzoeken voor complexe casussen"
     }
   },
