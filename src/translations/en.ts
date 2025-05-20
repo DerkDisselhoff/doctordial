@@ -21,6 +21,12 @@ export const enTranslations = {
     bookDemo: "Book a Demo",
     contact: "Contact"
   },
+  testimonials: {
+    title: "What GP practices say about DoctorDial",
+    mediMere: {
+      quote: "As Medi-Mere GP practices, we are always looking for innovative ideas to improve care and reduce workload. DoctorDial has proven to be very flexible and customer-friendly partners who directly respond to feedback and ensure improvements in a short timeframe. This, combined with innovative ideas, makes for a promising collaboration for the future."
+    }
+  },
   capabilities: {
     title: "Digital Workers, Ready to Deploy",
     subtitle: "Discover how our plug-and-play digital workers seamlessly integrate with your practice",

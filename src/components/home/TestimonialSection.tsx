@@ -1,6 +1,6 @@
 
 import { motion } from "framer-motion";
-import { MessageSquare, Quote } from "lucide-react";
+import { Quote } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const TestimonialSection = () => {
@@ -10,13 +10,6 @@ const TestimonialSection = () => {
     <section className="py-16 bg-gradient-to-b from-white to-mint-light/10">
       <div className="container mx-auto px-4">
         <div className="flex flex-col gap-4 items-center mb-8">
-          <div className="flex items-center justify-center gap-2 bg-mint/10 backdrop-blur-sm w-fit px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-mint/20 hover:border-mint/30 transition-colors">
-            <MessageSquare className="w-3 h-3 md:w-4 md:h-4 text-mint" />
-            <span className="text-gray-dark text-xs md:text-sm font-medium">
-              {t("testimonials.clientStories")}
-            </span>
-          </div>
-          
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-dark">
             {t("testimonials.title")}
           </h2>

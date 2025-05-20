@@ -22,10 +22,9 @@ export const nlTranslations = {
     navigation: "Navigatie"
   },
   testimonials: {
-    clientStories: "Wat klanten zeggen",
-    title: "Succesvolle samenwerkingen",
+    title: "Wat huisartspraktijken zeggen over DoctorDial",
     mediMere: {
-      quote: "Wij zijn als huisartsenpraktijken Medi-Mere altijd op zoek naar innovatieve ideeën waardoor wij de zorg kunnen verbeteren en de werkdruk verminderen. Jelmer en Derk van Doctor Dial hebben zich laten zien als zeer flexibele en klantvriendelijke samenwerkingspartners die direct feedback oppakken en zorgen voor een verbetering in kort tijdsbestek. Dit in combinatie met de innovatieve ideeën maakt een veelbelovende samenwerking voor de toekomst."
+      quote: "Wij zijn als huisartsenpraktijken Medi-Mere altijd op zoek naar innovatieve ideeën waardoor wij de zorg kunnen verbeteren en de werkdruk verminderen. DoctorDial heeft zich laten zien als zeer flexibele en klantvriendelijke samenwerkingspartners die direct feedback oppakken en zorgen voor een verbetering in kort tijdsbestek. Dit in combinatie met de innovatieve ideeën maakt een veelbelovende samenwerking voor de toekomst."
     }
   },
   capabilities: {
