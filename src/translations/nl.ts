@@ -21,6 +21,13 @@ export const nlTranslations = {
     contact: "Contact",
     navigation: "Navigatie"
   },
+  testimonials: {
+    clientStories: "Wat klanten zeggen",
+    title: "Succesvolle samenwerkingen",
+    mediMere: {
+      quote: "Wij zijn als huisartsenpraktijken Medi-Mere altijd op zoek naar innovatieve ideeën waardoor wij de zorg kunnen verbeteren en de werkdruk verminderen. Jelmer en Derk van Doctor Dial hebben zich laten zien als zeer flexibele en klantvriendelijke samenwerkingspartners die direct feedback oppakken en zorgen voor een verbetering in kort tijdsbestek. Dit in combinatie met de innovatieve ideeën maakt een veelbelovende samenwerking voor de toekomst."
+    }
+  },
   capabilities: {
     title: "Digitale Medewerkers, Klaar voor Gebruik",
     subtitle: "Ontdek hoe onze plug-and-play digitale medewerkers naadloos integreren met jouw praktijk",

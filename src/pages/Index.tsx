@@ -7,6 +7,7 @@ import { AISection } from "@/components/home/AISection";
 import { NHGTriageSection } from "@/components/home/NHGTriageSection";
 import HomeSarahUseCases from "@/components/features/home/HomeSarahUseCases";
 import HomeAIAssistants from "@/components/features/home/HomeAIAssistants";
+import TestimonialSection from "@/components/home/TestimonialSection";
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
       </div>
       
       <AISection />
+      <TestimonialSection />
       <HomeAIAssistants />
       <Features />
       <div className="relative">
