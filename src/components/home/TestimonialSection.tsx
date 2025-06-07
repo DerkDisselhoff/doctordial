@@ -46,7 +46,7 @@ const TestimonialSection = () => {
                   />
                   <div>
                     <p className="font-semibold text-gray-dark">Annabelle Wit</p>
-                    <p className="text-sm text-gray">Leidinggevende Communicatie Centrum</p>
+                    <p className="text-sm text-gray">Tactisch Manager</p>
                     <p className="text-sm text-mint">Huisartsenpraktijken Medi-Mere</p>
                   </div>
                 </div>
