@@ -15,15 +15,6 @@ const Index = () => {
       <Navbar />
       <Hero />
       
-      {/* Disclaimer text */}
-      <div className="w-full bg-sage-light/10 py-4">
-        <div className="container mx-auto px-4">
-          <p className="text-gray-dark/80 text-sm md:text-base italic text-center max-w-3xl mx-auto">
-            DoctorDial is momenteel in pilot fase, en voldoet nog niet aan de MDR wetgeving.
-          </p>
-        </div>
-      </div>
-      
       <AISection />
       <TestimonialSection />
       <HomeAIAssistants />
