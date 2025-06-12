@@ -1,5 +1,5 @@
 
-import { Phone, Pill, Microscope } from "lucide-react";
+import { Phone, Pill, Microscope, Calendar, Heart, HelpCircle, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent } from "@/components/ui/card";
@@ -64,14 +64,42 @@ const HomeAIAssistants = () => {
       description: t("assistants.medication.description"),
       icon: <Pill className="h-7 w-7 text-sage" />,
       color: "sage",
-      delay: 0.2
+      delay: 0.15
     },
     {
       title: t("assistants.research.title"),
       description: t("assistants.research.description"),
       icon: <Microscope className="h-7 w-7 text-forest" />,
       color: "forest",
+      delay: 0.2
+    },
+    {
+      title: t("assistants.appointments.title"),
+      description: t("assistants.appointments.description"),
+      icon: <Calendar className="h-7 w-7 text-mint" />,
+      color: "mint",
+      delay: 0.25
+    },
+    {
+      title: t("assistants.followUp.title"),
+      description: t("assistants.followUp.description"),
+      icon: <Heart className="h-7 w-7 text-sage" />,
+      color: "sage",
       delay: 0.3
+    },
+    {
+      title: t("assistants.faq.title"),
+      description: t("assistants.faq.description"),
+      icon: <HelpCircle className="h-7 w-7 text-forest" />,
+      color: "forest",
+      delay: 0.35
+    },
+    {
+      title: t("assistants.administrative.title"),
+      description: t("assistants.administrative.description"),
+      icon: <FileText className="h-7 w-7 text-mint" />,
+      color: "mint",
+      delay: 0.4
     }
   ];
 
@@ -92,7 +120,7 @@ const HomeAIAssistants = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {assistants.map((assistant, index) => (
             <AssistantCard key={index} {...assistant} />
           ))}

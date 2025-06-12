@@ -1,3 +1,4 @@
+
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -77,7 +78,7 @@ export const nlTranslations = {
     support: "Patiëntondersteuning"
   },
   assistants: {
-    title: "Betrouwbare AI Agents afgestemd op je wensen",
+    title: "Automatisering die het patiëntcontact verbetert",
     description: "Ontdek de verschillende digitale assistenten die we voor jouw praktijk kunnen inzetten",
     moreInfo: "Meer Informatie",
     triage: {
@@ -91,6 +92,22 @@ export const nlTranslations = {
     research: {
       title: "Onderzoek uitslagen",
       description: "Analyseert medische gegevens en ondersteunt bij het vinden van relevante onderzoeken voor complexe casussen"
+    },
+    appointments: {
+      title: "Afspraken plannen",
+      description: "Vermindert no-shows door afspraken te bevestigen, herinneringen te sturen en planning te optimaliseren"
+    },
+    followUp: {
+      title: "Nazorgcontact & opvolging",
+      description: "Voert nazorggesprekken, controleert welzijn en meet patiënttevredenheid voor betere continuïteit van zorg"
+    },
+    faq: {
+      title: "FAQ's",
+      description: "Beantwoordt alle veelgestelde vragen rondom behandelingen, procedures en praktijkinformatie"
+    },
+    administrative: {
+      title: "Administratieve en logistieke communicatie",
+      description: "Handelt verwijsinformatie, documentatie en andere administratieve zaken efficiënt af"
     }
   },
   nhgTriage: {
