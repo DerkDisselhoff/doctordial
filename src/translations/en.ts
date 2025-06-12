@@ -61,16 +61,16 @@ export const enTranslations = {
     callsSubtitle: "Manage all patient interactions efficiently from one dashboard"
   },
   hero: {
-    aiPowered: "For General Practices",
-    titlePartOne: "Digital Assistants,",
-    titlePartTwo: "Human Experience",
-    subtitle: "Let AI handle your practice's calls while maintaining the personal touch your patients expect.",
+    aiPowered: "For Healthcare Institutions",
+    titlePartOne: "AI Agents for Better",
+    titlePartTwo: "Patient Communication",
+    subtitle: "DoctorDial builds AI agents that handle patient communication and process administrative tasks for healthcare institutions",
     trainedOn: "Trained on millions of medical conversations",
     bookDemo: "Book a Demo",
     learnMore: "Learn More"
   },
   assistant: {
-    title: "Meet Your Digital Doctor's Assistant",
+    title: "Meet your new employee",
     subtitle: "Your dedicated digital medical assistant, available 24/7 to handle patient calls and triage cases with the precision of a trained professional.",
     trainedOn: "Trained on extensive medical protocols",
     learnMore: "Learn more about Sarah",
@@ -175,29 +175,45 @@ export const enTranslations = {
     }
   },
   assistants: {
-    title: "Our Digital Assistants",
-    description: "A team of specialized AI assistants, designed to support different aspects of patient care.",
+    title: "Automation that improves patient contact",
+    description: "Discover the various digital assistants we can deploy for your practice",
     triage: {
-      title: "Triage Assistant",
-      description: "Assesses symptoms, determines urgency levels, and directs patients to the appropriate care."
+      title: "Triage",
+      description: "Answers and manages incoming phone calls, triages patients and schedules appointments based on urgency"
     },
     medication: {
-      title: "Repeat Prescriptions Assistant",
-      description: "Processes medication requests, checks prescription history, and prepares repeat prescriptions."
+      title: "Repeat prescriptions & medication",
+      description: "Handles repeat medication requests and informs patients about their medication and possible side effects"
     },
     research: {
-      title: "Test Results Assistant",
-      description: "Enables patients to request callback for test results."
+      title: "Research results",
+      description: "Analyzes medical data and assists in finding relevant research for complex cases"
     },
-    moreInfo: "More information"
+    appointments: {
+      title: "Appointment scheduling",
+      description: "Reduces no-shows by confirming appointments, sending reminders and optimizing scheduling"
+    },
+    followUp: {
+      title: "Follow-up contact & monitoring",
+      description: "Conducts follow-up calls, checks well-being and measures patient satisfaction for better continuity of care"
+    },
+    faq: {
+      title: "FAQs",
+      description: "Answers all frequently asked questions about treatments, procedures and practice information"
+    },
+    administrative: {
+      title: "Administrative and logistical communication",
+      description: "Efficiently handles referral information, documentation and other administrative matters"
+    },
+    moreInfo: "More Information"
   },
   nhgTriage: {
     title: "Built on NHG Triage Standards",
-    subtitle: "Reliable patient care with evidence-based triage protocols",
-    based: "Based on NHG triage standards",
-    trained: "AI model trained on NHG triage datasets",
-    developed: "Developed with medical specialists",
-    feedback: "Continuous improvement with feedback"
+    subtitle: "Our AI is trained on official NHG triage guidelines for reliable and accurate patient assessment",
+    based: "Based on NHG standards",
+    trained: "Trained on medical triage protocols for high accuracy",
+    developed: "Developed in collaboration with GPs and triage specialists",
+    feedback: "Continuously improved through professional medical feedback"
   },
   pricing: {
     titleNew: "Flexible Pricing Solutions for Healthcare Providers",
