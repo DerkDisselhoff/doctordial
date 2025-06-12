@@ -15,8 +15,8 @@ const Index = () => {
       <Hero />
       
       <AISection />
-      <TestimonialSection />
       <HomeAIAssistants />
+      <TestimonialSection />
       <Features />
       <NHGTriageSection />
       <Footer />
