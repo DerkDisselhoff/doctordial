@@ -1,4 +1,3 @@
-
 export const nlTranslations = {
   nav: {
     features: "Functies",
@@ -70,7 +69,7 @@ export const nlTranslations = {
     learnMore: "Meer Informatie"
   },
   assistant: {
-    title: "Ontmoet Je Digitale Doktersassistent",
+    title: "Ontmoet je nieuwe werknemer",
     subtitle: "Je toegewijde digitale medische assistent, 24/7 beschikbaar om patiëntgesprekken te behandelen en gevallen te triageren met de precisie van een getrainde professional.",
     trainedOn: "Getraind op uitgebreide medische protocollen",
     learnMore: "Meer informatie over Sarah",
