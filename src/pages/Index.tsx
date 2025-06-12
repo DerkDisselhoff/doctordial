@@ -1,7 +1,6 @@
 
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Features from "@/components/Features";
 import Footer from "@/components/Footer";
 import { AISection } from "@/components/home/AISection";
 import { NHGTriageSection } from "@/components/home/NHGTriageSection";
@@ -17,7 +16,6 @@ const Index = () => {
       <AISection />
       <HomeAIAssistants />
       <TestimonialSection />
-      <Features />
       <NHGTriageSection />
       <Footer />
     </main>
