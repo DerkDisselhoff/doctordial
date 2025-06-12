@@ -61,10 +61,10 @@ export const nlTranslations = {
     callsSubtitle: "Beheer alle patiëntinteracties efficiënt vanaf één dashboard"
   },
   hero: {
-    aiPowered: "Voor Huisartspraktijken",
-    titlePartOne: "Digitale Assistentes,",
-    titlePartTwo: "Menselijke Ervaring",
-    subtitle: "Laat onze Gen-AI oplossing inkomende telefoongesprekken van jouw praktijk afhandelen",
+    aiPowered: "Voor zorginstellingen",
+    titlePartOne: "AI Agents voor Betere",
+    titlePartTwo: "Patiëntcommunicatie",
+    subtitle: "DoctorDial bouwt AI-agents die patiëntcommunicatie afhandelen en administratieve taken verwerken voor zorginstellingen",
     bookDemo: "Demo Aanvragen",
     learnMore: "Meer Informatie"
   },
