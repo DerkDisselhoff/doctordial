@@ -1,7 +1,6 @@
 
-import { Phone } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
 
 const HeroContent = () => {
   const { t } = useLanguage();
@@ -9,7 +8,6 @@ const HeroContent = () => {
   return (
     <div className="space-y-8 animate-fade-up text-center relative z-10">
       <div className="flex items-center justify-center gap-2 bg-white/20 backdrop-blur-sm w-fit px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/30 hover:border-white/40 transition-colors mx-auto">
-        <Phone className="w-3 h-3 md:w-4 md:h-4 text-white" />
         <span className="text-white text-xs md:text-sm font-medium">{t("hero.aiPowered")}</span>
       </div>
       
